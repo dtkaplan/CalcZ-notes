@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>Chapter 7 Constructing models | CalcZ Student Notes</title>
+<meta name="author" content="Daniel Kaplan">
+<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.2"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="libs/bootstrap-4.5.3/bootstrap.min.css" rel="stylesheet">
+<script src="libs/bootstrap-4.5.3/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.2.4/tabs.js"></script><script src="libs/bs3compat-0.2.4/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script><script src="libs/htmlwidgets-1.5.3/htmlwidgets.js"></script><link href="libs/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet">
+<script src="libs/datatables-binding-0.12/datatables.js"></script><link href="libs/dt-core-1.10.20/css/jquery.dataTables.min.css" rel="stylesheet">
+<link href="libs/dt-core-1.10.20/css/jquery.dataTables.extra.css" rel="stylesheet">
+<script src="libs/dt-core-1.10.20/js/jquery.dataTables.min.js"></script><link href="libs/crosstalk-1.1.1/css/crosstalk.css" rel="stylesheet">
+<script src="libs/crosstalk-1.1.1/js/crosstalk.min.js"></script><script src="libs/plotly-binding-4.9.3/plotly.js"></script><script src="libs/typedarray-0.1/typedarray.min.js"></script><link href="libs/plotly-htmlwidgets-css-1.57.1/plotly-htmlwidgets.css" rel="stylesheet">
+<script src="libs/plotly-main-1.57.1/plotly-latest.min.js"></script><script type="text/x-mathjax-config">
+  const popovers = document.querySelectorAll('a.footnote-ref[data-toggle="popover"]');
+  for (let popover of popovers){
+    const div = document.createElement('div');
+    div.setAttribute('style', 'position: absolute; top: 0, left:0; width:0, height:0, overflow: hidden; visibility: hidden;');
+    div.innerHTML = popover.getAttribute('data-content');
+    
+    // Will this work with TeX on its own line?
+    var has_math = div.querySelector("span.math");
+    if (has_math) {
+      document.body.appendChild(div);
+    	MathJax.Hub.Queue(["Typeset", MathJax.Hub, div]);
+    	MathJax.Hub.Queue(function(){
+        popover.setAttribute('data-content', div.innerHTML);
+    	})
+    }
+  }
+  </script><script src="https://cdn.jsdelivr.net/autocomplete.js/0/autocomplete.jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/mark.js@8.11.1/dist/mark.min.js"></script><!-- CSS --><link rel="stylesheet" href="css/CalcZ-style.css">
+</head>
+<body data-spy="scroll" data-target="#toc">
+
+<div class="container-fluid">
+<div class="row">
+  <header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
+
+    <div class="d-flex align-items-start justify-content-between">
+      <h1>
+        <a href="index.html" title="">CalcZ Student Notes</a>
+      </h1>
+      <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
+    </div>
+
+    <div id="main-nav" class="collapse-lg">
+      <form role="search">
+        <input id="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
+</form>
+
+      <nav aria-label="Table of contents"><h2>Table of contents</h2>
+        <ul class="book-toc list-unstyled">
+<li><a class="" href="index.html">Status</a></li>
+<li class="book-part">Block 1: Functions and quantity</li>
+<li><a class="" href="what-is-a-function.html"><span class="header-section-number">1</span> What is a function?</a></li>
+<li><a class="" href="graphs-graphics.html"><span class="header-section-number">2</span> Graphs &amp; Graphics</a></li>
+<li><a class="" href="notation-for-functions.html"><span class="header-section-number">3</span> Notation for functions</a></li>
+<li><a class="" href="the-basic-modeling-functions.html"><span class="header-section-number">4</span> The Basic Modeling Functions</a></li>
+<li><a class="" href="modeling-with-functions.html"><span class="header-section-number">5</span> Modeling with functions</a></li>
+<li><a class="" href="function-inverses-and-solving.html"><span class="header-section-number">6</span> Function inverses and “solving”</a></li>
+<li><a class="active" href="constructing-models.html"><span class="header-section-number">7</span> Constructing models</a></li>
+<li><a class="" href="dimensions-and-units.html"><span class="header-section-number">8</span> Dimensions and units</a></li>
+<li class="book-part">Block 2: Differences and differentiation</li>
+<li><a class="" href="difference-and-change.html"><span class="header-section-number">9</span> Difference and change</a></li>
+<li class="book-part">Block 3: Accumulation and anti-differentiation</li>
+<li><a class="" href="back-and-forth-with-functions.html"><span class="header-section-number">10</span> Back and forth with functions</a></li>
+<li class="book-part">Block 4: Linear combinations</li>
+<li><a class="" href="vectors-and-vector-operations.html"><span class="header-section-number">11</span> Vectors and Vector Operations</a></li>
+<li class="book-part">Block 5: Dynamical systems</li>
+<li><a class="" href="states-dynamics-trajectory.html"><span class="header-section-number">12</span> States, Dynamics, Trajectory </a></li>
+<li class="book-part">Interlude: Local and global, smooth and random</li>
+<li><a class="" href="walks-and-brownian-motion.html"><span class="header-section-number">13</span> Walks and Brownian Motion**</a></li>
+<li class="book-part">Decisions with calculus</li>
+<li><a class="" href="simple-comparisons-and-reductions-npv-and-expected-value.html"><span class="header-section-number">14</span> Simple Comparisons and reductions (NPV and expected value)</a></li>
+</ul>
+
+        <div class="book-extra">
+          <p><a id="book-repo" href="https://github.com/dtkaplan/CalcZ-notes">View book source <i class="fab fa-github"></i></a></p>
+        </div>
+      </nav>
+</div>
+  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="constructing-models" class="section level1">
+<h1>
+<span class="header-section-number">7</span> Constructing models<a class="anchor" aria-label="anchor" href="#constructing-models"><i class="fas fa-link"></i></a>
+</h1>
+<p>We turn now to using the basic modeling functions to represent real-world situations. It’s important to distinguish between two basic types of model:</p>
+<ol style="list-style-type: decimal">
+<li>
+<strong><em>Empirical models</em></strong> which are rooted in <strong><em>observation</em></strong> and <strong><em>data</em></strong>.</li>
+<li>
+<strong><em>Mechanistic models</em></strong> such as those created by applying fundamental laws of physics, chemistry, and such.</li>
+</ol>
+<p>We are going to put off mechanistic models for a while. There are two reasons why. First, the “fundamental laws of physics, chemistry, and such” are often expressed with the concepts and methods of calculus. We are heading there, but at this point you don’t yet know the core concepts and methods of calculus. Second, most students don’t make a careful study of the “fundamental laws of physics, chemistry, and such” until <em>after</em> they have studied calculus. So examples of mechanistic models will be a bit hollow at this point.</p>
+<p>Figure <a href="#fig:Fun-4-intro-1"><strong>??</strong></a> shows some data collected by Prof. Stan Wagon to support his making a detailed mechanistic model of an everyday phenomenon: <a href="https://www.researchgate.net/profile/Gianluca_Argentini/post/Is_analogy_reasoning_between_heat_transfert_and_electriocity_allows_to_apply_the_electricity_laws_about_resistance_to_thermal_resistances/attachment/59d6573379197b80779ada64/AS%3A533325451403264%401504166104259/download/Stan+WAGON+How+quickly+does+water+cool.pdf">The cooling of a mug of hot beverage to room temperature</a>. The mug started at room temperature, which was measured at 26 degrees C. At time 0 he poured in boiling water from a kettle and measured the temperature of the water over the next few hours.</p>
+<div class="inline-figure">
+<img src="CalcZ-notes_files/figure-html/Fun-4-intro-1-1.png" width="672">
+Our task this data in the form of a function that takes time as input and returns temperature as output. Such a model would be useful for, say, filling in the gaps of the data. For instance, we might want to find the temperature of the water immediately after being poured from the kettle into the mug.</div>
+<p>There are several ways to construct such a model but for our purposes here we want to build one using the basic modeling functions:
+- straight-line: <span class="math inline">\(m t + b\)</span>
+- exponential: <span class="math inline">\(\exp(kt)\)</span>
+- power-law: <span class="math inline">\(t^n\)</span>
+- log: <span class="math inline">\(\ln(t)\)</span>
+- sinusoid: <span class="math inline">\(\sin(2\pi t/P)\)</span>
+- hump: <code><a href="https://rdrr.io/r/stats/Normal.html">dnorm(x, mean, sd)</a></code>
+- sigmoid <code><a href="https://rdrr.io/r/stats/Normal.html">pnorm(x, mean, sd)</a></code></p>
+<p>The temperature decreases along a curve: cooling fast at first and then more slowly. Which of our basic modeling functions can show this behavior? The curve suggests an exponential or a power-law function, or perhaps the right side of a hump function or even the bottom half of a sigmoid flipped left-for-right. The periodicity of a sinusoid is nowhere to be seen, so rule that out. And <span class="math inline">\(\ln(t)\)</span> has a different curvature: The data are a curve facing up, whereas the graph of the logarithm is a curve facing down.</p>
+<p>Trying to find the single basic modeling function whose graph most resembles the shape of the data is a fool’s errand. Several of the basic modeling functions have more or less similar shapes over some limited domain, and data are always on a limited domain. And it’s not just the shape of the data that need to be matched: the numerical value of the function needs to match too. For instance, we’ve seen that the exponential function <span class="math inline">\(e^{kt}\)</span> with <span class="math inline">\(k=-1\)</span> becomes flat for large <span class="math inline">\(t\)</span>. The water temperature also flattens out for large <span class="math inline">\(t\)</span>. But the exponential <em>always</em> flattens out at a level of 0. Not so for the water; the water is cooling to room temperature, not freezing!</p>
+<p>Instead of trying to match a single basic modeling function to data, a more productive strategy is to use a <strong><em>combination</em></strong> of the functions.</p>
+<p>One of the most widely used sorts of combination is called a <strong><em>linear combinations</em></strong>. The mathematics of linear combination is, it happens, at the core of the use of math in applications, whether that be constructing a Google-like search engine or analyzing medical data to see if a treatment has a positive effect.</p>
+<p>Suppose we have a set of functions, for instance, <span class="math inline">\(g_1(t), g_2(t), g_3(t), \ldots\)</span>.
+To make a linear combination we select one or more of the functions. The selected functions are called the <strong><em>basis functions</em></strong>, perhaps because they provide the basis for constructing the combination. Each selected basis function gets multiplied by a number, called a <strong><em>scalar</em></strong> since it sets the vertical scale. Then add up all the variously scaled basis functions.</p>
+<p>For instance, here is one linear combination of the <span class="math inline">\(g_i()\)</span> functions:
+<span class="math display">\[3 g_1(x) + 6.5 g_2(x) - 2.1 g_3(x)\]</span> Another linear combination of the <span class="math inline">\(g_i(x)\)</span> is <span class="math display">\[\frac{1}{5} g_1(x) + 10 g_3(x)\]</span>. There are all sorts. The scalars used in a linear combination (for instance, (3, 6.5, -2.1) or (0.5, 10) in the previous examples) are called <strong><em>coefficients</em></strong>.</p>
+<p>The framework of linear combinations provides a powerful and flexible means of constructing models. Indeed, <strong>any smooth function</strong> can be constructed as a linear combination of basic modeling functions. (We haven’t said what “smooth” means, but all of our basic modeling functions are smooth.)</p>
+<p>Even better, there is an automatic, reliable, and fast algorithm for finding the coefficients on any set of basis functions in order to match data as closely as possible. So the modeler just has to select the basis functions, the computer can find the coefficients. That’s one reason why we’ve put the basic modeling functions at the very start of this course. (We’ll explore the mathematics and methods of linear combinations, usually called <strong><em>linear algebra</em></strong>, later in CalcZ.)</p>
+<p>You have worked with linear combinations of functions for many years, although probably nobody used that term. Consider this linear combination of power-law functions:
+<span class="math display">\[P(x) = 3 x^2 - 16 x + 4\]</span>
+The basis functions <span class="math inline">\(x^0\)</span>, <span class="math inline">\(x^1\)</span>, <span class="math inline">\(x^2\)</span>, <span class="math inline">\(x^3\)</span>, and so on have a specific name: they are the <strong><em>monomials</em></strong>. (Monomials all belong to the family of power-law functions.) A linear combination of monomials is called a <strong><em>polynomial</em></strong>, just as a big molecule called a polymer is constructed out of many monomers.</p>
+<div id="working-with-data" class="section level2">
+<h2>
+<span class="header-section-number">7.1</span> Working with data<a class="anchor" aria-label="anchor" href="#working-with-data"><i class="fas fa-link"></i></a>
+</h2>
+<div class="todo">
+<p>Instructions for accessing data in R here.</p>
+<ol style="list-style-type: lower-roman">
+<li>data frames: <code><a href="https://rdrr.io/r/base/names.html">names()</a></code>, <code><a href="https://rdrr.io/r/utils/head.html">head()</a></code>, <code>gf_point()</code>
+</li>
+<li>graphical layers and piping: Combining gf_point() and slice_plot()</li>
+</ol>
+</div>
+</div>
+<div id="the-straight-line-model" class="section level2">
+<h2>
+<span class="header-section-number">7.2</span> The straight-line model<a class="anchor" aria-label="anchor" href="#the-straight-line-model"><i class="fas fa-link"></i></a>
+</h2>
+<p>Objective: (Fun-4-a-1) <em>Construct a straight-line model that fits data</em></p>
+<p>Until we learn to use a computer to find the coefficients in a linear combination that best matches data, we will do things by hand and eye.</p>
+<p>This also you have been doing for years, making a linear combination of two simple functions:</p>
+<p><span class="math display">\[\mbox{one}(x) \equiv 1\ \ \mbox{and}\ \ \mbox{identity}(x) \equiv x\]</span>
+The linear combinations of these two simple functions are all just a matter for finding two coefficients, which we’ll call <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span> for the moment. The combination is:</p>
+<p><span class="math display">\[f(x) \equiv A\, \mbox{one}(x) + B\, \mbox{identity}(x)\]</span>
+You’ve probably never seen this form before, even though you have been using it. The reason is a tradition in pre-computer era mathematics notation of not using the names of the simple basis function but using their formulas instead. So perhaps this looks more familiar:
+<span class="math display">\[f(x) \equiv A\, 1 + B\, x\]</span>
+This still may seem a little strange, since you have been carefully taught not to write “multiplication by 1” explicitly. So you would write instead
+<span class="math display">\[f(x) \equiv A + B x\]</span> which is recognizably the formula for the straight-line function.</p>
+<p>You already know a lot about straight-line functions, so they are a good place to warm up in constructing a function that fits data out of the basic modeling functions.</p>
+<p>Let’s return to the cooling mug of water. Figure <a href="#fig:Fun-4-a"><strong>??</strong></a> shows the data along with a dozen candidate straight line functions, each one drawn in its own color.</p>
+<pre><code>## Warning: geom_abline(): Ignoring `mapping` because `slope` and/or `intercept`
+## were provided.
+
+## Warning: geom_abline(): Ignoring `mapping` because `slope` and/or `intercept`
+## were provided.
+
+## Warning: geom_abline(): Ignoring `mapping` because `slope` and/or `intercept`
+## were provided.
+
+## Warning: geom_abline(): Ignoring `mapping` because `slope` and/or `intercept`
+## were provided.
+
+## Warning: geom_abline(): Ignoring `mapping` because `slope` and/or `intercept`
+## were provided.</code></pre>
+<div class="inline-figure"><img src="CalcZ-notes_files/figure-html/Fun-4-a-1.png" width="672"></div>
+<p>Some of the straight-line models are a much better match to the data than others. The blue-shaded functions are pretty good fits, the greenish functions are maybe OK but a little sketchy, and the purple-shaded functions are just horrible.</p>
+<p>The first step in fitting a straight-line model by hand and eye is to draw a reasonable line that passes through and is closely aligned with the data. There is a range of good choices, but there are also clearly bad choices.</p>
+<p>Next step: Find the parameters that correspond to the line you drew. You already know how to find the slope and intercept of a straight line from a graph. For the straight-line model, that’s what the coefficients B and A amount to.</p>
+</div>
+<div id="modeling-growth-and-decay" class="section level2">
+<h2>
+<span class="header-section-number">7.3</span> Modeling growth and decay<a class="anchor" aria-label="anchor" href="#modeling-growth-and-decay"><i class="fas fa-link"></i></a>
+</h2>
+<p>Objectives: [Note: The objective IDs follow the original format of Capt. Davis’s collection. The file name is different because I’ve deviated from that format.]</p>
+<ol style="list-style-type: lower-roman">
+<li>(Fun-5a) <em>Given numerical or graphical data, determine if an exponential model is appropriate</em>
+</li>
+<li>(Fun-5b) <em>Estimate half-life/doubling time for an exponential function</em>
+</li>
+<li>(Fun-5c) <em>Estimate the baseline of an exponential function for exponential growth and decay</em>
+</li>
+</ol>
+<p>Let’s now consider an A/B model using the exponential.</p>
+<p><span class="math display">\[f(t) \equiv A + B\, e^{kt}\]</span>
+The procedure is a little different from using a straight-line model; finding slopes and intercepts won’t help.</p>
+<p><strong>Step 0</strong>: Check that the data show an exponential pattern, namely a smooth increase or decrease and leveling out beyond some value of <span class="math inline">\(t\)</span>. If this isn’t true, reconsider whether you should be using an exponential function in the first place.</p>
+<p><strong>Step 1</strong> Do the data show exponential growth or exponential decay? If it’s exponential growth, then the flat region in Step 0 will be to the left and <span class="math inline">\(k\)</span> will be positive. If exponential decay, the flat region will be to the right and <span class="math inline">\(k\)</span> will be negative.</p>
+<p>Notice that the question of “growth or decay” depends only on the sign of the parameter <span class="math inline">\(k\)</span>. You can have an exponentially decaying process that’s increasing. Consider, for instance, the speed of a car as it merges onto a highway from a slow speed on the entrance ramp. The car’s velocity is increasing, but as you approach highway speed the rate of increase gets smaller. That’s exponential decay.</p>
+<p><strong>Step 2</strong> Where is the baseline? We’re going to put aside <span class="math inline">\(k\)</span> for the moment and find the value of the output that is being approached asymptotically, that is, the height of the level zone of the data. This height is the coefficient <span class="math inline">\(A\)</span> in the linear combination.</p>
+<p><strong>Step 3</strong> Once you know the baseline, you’re set to find a numerical value for the parameter <span class="math inline">\(k\)</span>.</p>
+<ol style="list-style-type: lower-roman">
+<li>Pick a point in the data far from the baseline. Call the input <span class="math inline">\(t_1\)</span>.</li>
+<li>Scan forward or backward in time to find a point in the data that’s vertically half way from the original point toward the baseline. Call the input at that point <span class="math inline">\(t_{1/2}\)</span>. The difference between these, <span class="math inline">\(t_1 - t_{1/2}\)</span> is called the <strong><em>half-life</em></strong> or <strong><em>halving-time</em></strong> if it’s negative and the <strong><em>doubling time</em></strong> if it’s positive.</li>
+<li>The parameter <span class="math inline">\(k\)</span> is <span class="math inline">\(0.693 / (t_1 - t_{1/2})\)</span>. Double check the sign of <span class="math inline">\(k\)</span> to make sure it’s consistent with what you saw in Step 1. (Incidently, <span class="math inline">\(0.693 = \ln(2)\)</span>. The 2 is the same as the 2 in doubling or halving.)</li>
+</ol>
+<p><strong>Step 4</strong> Now that you have numerical values for the baseline <span class="math inline">\(A\)</span> and the parameter <span class="math inline">\(k\)</span>, calculating the value of <span class="math inline">\(B\)</span> is straightforward.<br>
+i. Pick a <span class="math inline">\(t_0\)</span> that’s reasonably well represented in your data. Find the vertical coordinate represented by the data near that <span class="math inline">\(t_0\)</span>. Call that <span class="math inline">\({\cal D}\)</span>.
+ii. Solve with respect to <span class="math inline">\(B\)</span> the equation <span class="math inline">\(A + B e^{k t_0} = {\cal D}\)</span>. Things are particularly easy if you can use <span class="math inline">\(t_0 = 0\)</span>. Then you just straight off calculate <span class="math inline">\(B = {\cal D} - A\)</span>.</p>
+<p><strong>Step 5</strong> Plot the function <span class="math inline">\(A + B e^{k t}\)</span> using the values for <span class="math inline">\(A\)</span>, <span class="math inline">\(B\)</span>, and <span class="math inline">\(t\)</span> that you just found. If you are not satisfied, tweak the parameters a bit until you are.</p>
+<p>Let’s illustrate this process on the water-cooling data, redrawn in Figure <a href="#fig:Fun-4-a-2-1"><strong>??</strong></a>.</p>
+<div class="inline-figure"><img src="CalcZ-notes_files/figure-html/Fun-4-a-2-1-1.png" width="672"></div>
+<p>Step 0: The data indicate a smooth curve. As <span class="math inline">\(t\)</span> gets large, the curve approaches a constant. So an exponential model is reasonable.</p>
+<p>Step 1: The flat zone of the data is to the right. So we’ve got exponential decay and <span class="math inline">\(k &lt; 0\)</span>.</p>
+<p>Step 2: The curve looks like it’s leveling out at a temperature of about 25 degrees C for large <span class="math inline">\(t\)</span>. So <span class="math inline">\(A \approx 25^{\circ} \text{C}\)</span>.</p>
+<p>Step 3:</p>
+<ol style="list-style-type: lower-roman">
+<li>The point furthest from the baseline is located at <span class="math inline">\(t_1 = 15 \text{sec}\)</span> with a value <span class="math inline">\({\cal D} \approx 80^\circ\text{C}\)</span>.</li>
+<li>This if <span class="math inline">\(55^\circ\text{C}\)</span> from the baseline. We want to find the value of <span class="math inline">\(t_1\)</span> where the temperature will be half way from 80 to the baseline. That’s a temperature of about <span class="math inline">\(80 - 55/2 = 53.5\)</span>. Scanning over to the right, the function that I can imagine going through the data crossed <span class="math inline">\(53^\circ\)</span> at about <span class="math inline">\(t_{1/2} = 40\)</span>. Thus, the half-life is estimated at 25s.</li>
+<li>The parameter <span class="math inline">\(k\)</span> is therefore $k<span class="math inline">\(0.693 / \mbox{half-life}) = - 0.63 / 25 = -0.0277\)</span>. Since we identified in Step 1 that exponential decay is involved, we expect <span class="math inline">\(k\)</span> to be negative. It is.</li>
+</ol>
+<p>Step 4.</p>
+<ol style="list-style-type: lower-roman">
+<li>We know <span class="math inline">\(A \approx 25\)</span> and <span class="math inline">\(k \approx -0.0277\)</span>. We also now that for <span class="math inline">\(t=15\)</span> the function output is about <span class="math inline">\({\cal D} = 80^\circ\)</span>.</li>
+<li>This means <span class="math inline">\(25^\circ + B e^{- 0.0277 \times 15} \approx 80^\circ = 25 + 0.66 B\)</span>. Solving for <span class="math inline">\(B\)</span> gives <span class="math inline">\(B = (80 - 25)/0.66 = 83.3\)</span>
+</li>
+</ol>
+<p>Step 5. Graph the function over the data.</p>
+<div class="inline-figure"><img src="CalcZ-notes_files/figure-html/Fun-4-a-2-2-1.png" width="672"></div>
+<p>It looks like our estimate of the half-life is a bit too small; the data doesn’t seem to decay at the rate implied by <span class="math inline">\(k = -0.0277\)</span>. Perhaps we should try <span class="math inline">\(k = -0.2\)</span> and go on from there.</p>
+<p>EXERCISE: Have them try <span class="math inline">\(k=0.02\)</span> and iterate until they get something they like.</p>
+<p>Later in CalcZ, we’ll study <strong><em>optimization</em></strong>. There are optimization techniques for directing the computer to refine the parameters to best match the data. Just to illustrate, here’s what we get:</p>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">refined_params</span> <span class="op">&lt;-</span> <span class="fu">fitModel</span><span class="op">(</span><span class="va">temp</span> <span class="op">~</span> <span class="va">A</span> <span class="op">+</span> <span class="va">B</span><span class="op">*</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html">exp</a></span><span class="op">(</span><span class="va">k</span><span class="op">*</span><span class="va">time</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">Stans_data</span>, 
+         start <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>A <span class="op">=</span> <span class="fl">25</span>, B <span class="op">=</span> <span class="fl">83.3</span>, k <span class="op">=</span> <span class="op">-</span><span class="fl">0.0277</span><span class="op">)</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/stats/coef.html">coef</a></span><span class="op">(</span><span class="va">refined_params</span><span class="op">)</span></code></pre></div>
+<pre><code>##           A           B           k 
+## 25.92628463 60.69255269 -0.01892572</code></pre>
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">new_f</span> <span class="op">&lt;-</span> <span class="fu">makeFun</span><span class="op">(</span><span class="va">refined_params</span><span class="op">)</span>
+<span class="fu">gf_point</span><span class="op">(</span><span class="va">temp</span> <span class="op">~</span> <span class="va">time</span>, data <span class="op">=</span> <span class="va">Stans_data</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu">slice_plot</span><span class="op">(</span><span class="fu">new_f</span><span class="op">(</span><span class="va">time</span><span class="op">)</span> <span class="op">~</span> <span class="va">time</span>, color<span class="op">=</span><span class="st">"blue"</span><span class="op">)</span></code></pre></div>
+<div class="inline-figure"><img src="CalcZ-notes_files/figure-html/Fun-4-a-2-3-1.png" width="672"></div>
+<p>The refined parameters give a much better fit to the data than our original rough estimates by eye.</p>
+<p>We had two rounds of the <strong><em>modeling cycle</em></strong>. First, choice of an A/B expontential model and a rough estimate of the parameters A, B, and <span class="math inline">\(k\)</span>. Second, refinement of those parameters using the computer.</p>
+<p>Looking at the results of the second round, the experienced modeler can see some disturbing discrepancies. First, the estimated baseline appears to be too high. Related, the initial decay of the model function doesn’t seem to be fast enough and the decay of the model function for large <span class="math inline">\(t\)</span> appears to be too slow. Prof. Stan Wagon noticed this. He used additional data to fill in the gaps for small <span class="math inline">\(t\)</span> and refined his model further by changing the basis functions in the linear combination. He hypothesized that there are at least two different cooling processes. First, the newly poured water raises the temperature of the mug itself. Since the water and mug are in direct contact, this is a fast process. Then, the complete water/mug unit comes slowly into equilibrium with the room temperature.</p>
+<p>The newly refined model was a even better match to the data. But nothing’s perfect and Prof. Wagon saw an opportunity for additional refinement based on the idea that there is a third physical mechanism of cooling: evaporation from the surface of the hot water. Prof. Wagon’s additional circuits of the modeling cycle were appropriate to his purpose, which was to develop a detailed understanding of the process of cooling. For other purposes, such as demonstrating the appropriateness of an exponential process or interpolating between the data points, earlier cycles might have sufficed.</p>
+<p>Here’s a graph of the model Prof. Wagon constructed to match the data.</p>
+<div class="inline-figure"><img src="www/Wagon-water-fit.png" width="156"></div>
+<p>This is an excellent match to the data. But … matching the data isn’t always the only goal of modeling. Prof. Wagon wanted to make sure the model was physically plausible. And looking at the refined parameters, which include two exponential processes with parameters <span class="math inline">\(k_1\)</span> and <span class="math inline">\(k_2\)</span>, he saw something wrong:</p>
+<blockquote>
+<p><em>But what can we make of <span class="math inline">\(k_1\)</span>, whose [positive value] violates the laws of thermodynamics by suggesting that the water gets hotter by virtue of its presence in the cool air? The most likely problem is that our simple model (the proportionality assumption) is not adequate near the boiling point. There are many complicated factors that affect heat transportation, such as air movement, boundary layer dissipation, and diffusion, and our use of a single linear relationship appears to be inadequate. In the next section [of our paper] we suggest some further experiments, but we also hope that our experiments might inspire readers to come up with a better mathematical model.</em></p>
+</blockquote>
+<p>The modeling cycle can go round and round!</p>
+</div>
+<div id="modeling-periodicity" class="section level2">
+<h2>
+<span class="header-section-number">7.4</span> Modeling periodicity<a class="anchor" aria-label="anchor" href="#modeling-periodicity"><i class="fas fa-link"></i></a>
+</h2>
+<p>Objectives: [Again, the objective IDs are out of sync with this document’s name]</p>
+<ol style="list-style-type: lower-roman">
+<li>(Fun-7a) <em>Know how the parameter values in a sinusoidal function affect the amplitude, period, phase shift, and vertical shift (table page 185)</em>
+</li>
+<li>(Fun-7b) <em>Given a sinusoidal graph, be able to estimate the amplitude, period, phase shift, and vertical shift (table page 185)</em>
+</li>
+<li>(Fun-7c) <em>Recognize when a sinusoidal model is appropriate</em>
+</li>
+</ol>
+<p>Figure <a href="#fig:Fun-4-a-3"><strong>??</strong></a> shows the tide level in <a href="https://www.google.com/maps/place/Providence,+RI/@41.8071,-71.4012,14z/data=!4m5!3m4!1s0x89e444e0437e735d:0x69df7c4d48b3b627!8m2!3d41.8071!4d-71.4012">Providence, Rhode Island</a>, starting at midnight on April 1, 2020 and recorded every minute for four and a half days. (These data were collected by the US National Oceanic and Atmospheric Administration. <a href="https://tidesandcurrents.noaa.gov/api/datagetter?begin_date=20200401%2010:00&amp;end_date=20200405%201:59&amp;station=8454000&amp;product=one_minute_water_level&amp;datum=mllw&amp;units=metric&amp;time_zone=gmt&amp;application=web_services&amp;format=csv">Link</a>)</p>
+<div class="inline-figure"><img src="CalcZ-notes_files/figure-html/Fun-4-a-3-1-1.png" width="672"></div>
+<p>It’s not too hard to see what’s going on. The tide rises and falls about every 12 hours. The difference between high tide and low tide is a little more than one meter. The tide gauge is calibrated so that a typical reading is 1 meter, although we don’t know what that is respect to. (Certainly not sea level, since then the typical reading would be around zero.)</p>
+<p>This simple description tells almost everything needed to construct an A/B model of the tide level using a sinusoid, that is, a function of the form <span class="math display">\[A + B \sin(2\pi t/P)\]</span> The procedure is straightforward:</p>
+<p><strong>Step 0</strong>: Determine whether a sinusoid model is appropriate. As you know, sinusoids oscillate up and down repeatedly with a steady <strong><em>period</em></strong>. That certainly seems the case here. But sinusoids are also steady in the <strong><em>peak</em></strong> and <strong><em>trough</em></strong> values for each cycle. That’s only approximately true in the Providence data. Models inevitably involve approximation. We’ll have to keep an eye on whether the <strong><em>fixed amplitude</em></strong> feature of sinusoids</p>
+<p><strong>Step 1</strong>: Choose a sensible value to represent the low point repeatedly reached. 0.5 m seems appropriate here, but obviously the exact position of the trough of each cycle varies over the 4.5 day duration of the data. Similarly, the peak is near 1.6 m. Parameter <span class="math inline">\(A\)</span> is the mean of the peak and trough values: <span class="math inline">\(\frac{1.6 + 0.5}{2} = 1.05\)</span> m here. Parameter <span class="math inline">\(B\)</span> is half the difference between the peak and trough values: <span class="math inline">\(\frac{1.6 - 0.5}{2} = 0.55\)</span>. Parameter <span class="math inline">\(A\)</span> is called the <strong><em>baseline</em></strong> of the sinusoid. Paramter <span class="math inline">\(B\)</span> is the <strong><em>amplitude</em></strong>. (Note that by convention, the amplitude is always <em>half</em> the high-to-low range of the sinusoid.)</p>
+<p><strong>Step 2</strong>: Estimate the period <span class="math inline">\(P\)</span> of the sinusoid. This can be done with a ruler: the horizontal duration of a complete cycle. I like to use the time between peaks, but the time between troughs would work just as well. Another good choice is the time between positive sloping crossings of the baseline. (But be careful. The time between <em>successive</em> baseline crossings, one positive sloping and the other negative, give just <em>half</em> the period.)</p>
+<p>On the scale of the above plot, it’s hard to read off the time of the first peak. So, zoom in until it becomes more obvious.</p>
+<p><img src="CalcZ-notes_files/figure-html/Fun-4-a-3-2-1.png" width="50%"><img src="CalcZ-notes_files/figure-html/Fun-4-a-3-2-2.png" width="50%"></p>
+<p>The left panel in Figure <a href="#fig:Fun-4-a-3-2"><strong>??</strong></a> shows about 24 hours at the start of the record. The first peak is at about 7 hours, the second at about 18 hours. That indicates that the period is 18 - 7 = 11 hours.</p>
+<p><strong>Step 3</strong> Plot out the model over the data. Replacing the symbols <span class="math inline">\(A\)</span>, <span class="math inline">\(B\)</span>, and <span class="math inline">\(P\)</span> with our estimates, the model is</p>
+<p><span class="math display">\[\require{color}
+{\color{green}\mbox{tide}(t) \equiv 1.05 + 0.55 \sin(2\pi t/11)}\]</span></p>
+<p>Figure <a href="#fig:Fun-4-a-3-3"><strong>??</strong></a> shows this model in <span class="math inline">\(\color{green}\mbox{green}\)</span>.</p>
+<p><img src="CalcZ-notes_files/figure-html/Fun-4-a-3-3-1.png" width="50%"><img src="CalcZ-notes_files/figure-html/Fun-4-a-3-3-2.png" width="50%"></p>
+<p><strong>Step 4</strong>: Evaluate and refine. The green model would make poor predictions. The model says “high tide” when the data say otherwise. What’s missing is the <strong><em>phase</em></strong> of the sinusoid. A model that incorporates the phase is</p>
+<p><span class="math display">\[{\color{blue}\mbox{tide}(t) \equiv 1.05 + 0.55 \sin(2\pi (t - t_0)/11)}\]</span></p>
+<p>The new parameter, <span class="math inline">\(t_0\)</span>, should be set to be the time of a positive-going crossing of the baseline. There’s such a crossing at about time = 17. Happily, changing the phase does not itself necessitate re-estimating the other parameters: baseline, amplitude, period. This model, incorporating the phase, has been graphed in <span class="math inline">\(\color{blue}\mbox{blue}\)</span>.</p>
+<p><img src="CalcZ-notes_files/figure-html/Fun-4-a-3-4-1.png" width="50%"><img src="CalcZ-notes_files/figure-html/Fun-4-a-3-4-2.png" width="50%"></p>
+<p>For some modeling purposes, such as prediction of future tides, the phase information is impossible. For others, say, description of the amplitude of the tides, not. But getting the phase roughly right can help point out other problems. For instance, having the blue sinusoid for comparison makes it clear that the estimated period of 11 hours is too short. Maybe 13 hours would be better. Better still, since at <span class="math inline">\(t=t_0 = 17\)</span> the model is a close match to the data, let’s use that as the estimate of the start of a cycle. But then, let’s move much further along in the data to find another baseline crossing. To judge from the right panel, there is a baseline crossing at <span class="math inline">\(t=103\)</span>. The difference between these two times is <span class="math inline">\(103 - 17 = 86\)</span> hours. Of course, the period is not 86 hours. Looking back at the whole set of data we can see 7 complete cycles between <span class="math inline">\(t=17\)</span> and <span class="math inline">\(t=103\)</span>. So our new estimate of the period is <span class="math inline">\(86/7 = 12.3\)</span> hours.</p>
+<p>With this refinement the model is
+<span class="math display">\[{\color{violet}\mbox{tide}(t) \equiv 1.05 + 0.55 \sin(2\pi (t - 17)/12.3)}\]</span></p>
+<div class="inline-figure">
+<img src="CalcZ-notes_files/figure-html/Fun-4-a-3-5-1.png" width="672">
+That’s a pretty good match to the data! We might call it quits at that. First, let’s polish up the parameter estimates, letting the computer do the tedious work of trying little tweaks to see if it can improve the fit.</div>
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">tide_mod</span> <span class="op">&lt;-</span> 
+  <span class="fu">fitModel</span><span class="op">(</span><span class="va">level</span> <span class="op">~</span> <span class="va">A</span> <span class="op">+</span> <span class="va">B</span><span class="op">*</span><span class="fu"><a href="https://rdrr.io/r/base/Trig.html">sin</a></span><span class="op">(</span><span class="fl">2</span><span class="op">*</span><span class="va">pi</span><span class="op">*</span><span class="op">(</span><span class="va">hour</span><span class="op">-</span><span class="va">hzero</span><span class="op">)</span><span class="op">/</span><span class="va">P</span><span class="op">)</span>,
+  data <span class="op">=</span> <span class="va">RI_tide</span>,
+  start<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>A<span class="op">=</span><span class="fl">1.05</span>, B<span class="op">=</span><span class="fl">0.55</span>, hzero<span class="op">=</span><span class="fl">17</span>, P<span class="op">=</span><span class="fl">12.3</span><span class="op">)</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/stats/coef.html">coef</a></span><span class="op">(</span><span class="va">tide_mod</span><span class="op">)</span></code></pre></div>
+<pre><code>##          A          B      hzero          P 
+##  1.0220540  0.4998367 15.3899905 12.5593556</code></pre>
+<div class="inline-figure">
+<img src="CalcZ-notes_files/figure-html/Fun-4-a-3-6-1.png" width="672">
+This last model seems capable of making reasonable predictions, so if we collected up-to-date data we might be able to fit a new model to predict the tide level pretty accurately a few days ahead of time. Also, the excellent alignment of the model peaks with the data tell us that the cyclic tide has a period that constant, at least so far as well can tell.</div>
+<p>With the period estimate <span class="math inline">\(P=12.56\)</span> hours, we can go looking for other phenomena that might account for the tides. The period of the day-night cycle is, of course 24 hours. So the tides in Providence come in and out twice a day. But not exactly. Something else must be going on.</p>
+<p>Isaac Newton was the first to propose that the tides were caused by the gravitational attraction of the Moon. A complete cycle of the Moon—moon rise to moon rise—takes about 50 minutes longer than a full day: the Earth revolves once every 24 hours, but in that time the Moon has moved a bit further on in its orbit of the Earth. So the Moon’s period, seen from a fixed place on Earth is about 24.8 hours. Half of this, 12.4 hours, is awfully close to our estimate of the tidal period: 12.56 hours. The difference in periods, 8 minutes a day, might be hard to observe over only 4 days. Maybe with more data we’d get a better match between the tides and the moon.</p>
+<p>This is the modeling cycle at work: Propose a model form (A/B model with sinusoid), adjust parameters to match what we know (the Providence tide record), compare the model to the data, observe discrepancies, propose a refined model. You can stop the model when it is giving you what you need. The period 12.56 hour model seems good enough to make a prediction of the tide level a few days ahead, and is certainly better than the “two tides a day” model. But our model is not yet able to implicate precisely the Moon’s orbit in in tidal oscillations.</p>
+<p>Discrepancies between a model and data play two roles: they help us decide if the model is fit for the purpose we have in mind and they can point the way to improved models. That the tidal data deviates from the steady amplitude of our model can be a clue for where to look next. It’s not always obvious where this will lead.</p>
+<p>Historically, careful analysis of tides led to a highly detailed, highly accurate model: a linear combination of sinusoids with diurnal periods 12.42, 12.00, 12.66, and 11.97 hours as well components with period 23.93, 25.82, 24.07, 26.87, and 24.00 hours. A tide-prediction model is constructed by finding the coefficients of the linear combination; these differ from locale to locale.</p>
+</div>
+<div id="combining-and-composing-functions" class="section level2">
+<h2>
+<span class="header-section-number">7.5</span> Combining and composing functions<a class="anchor" aria-label="anchor" href="#combining-and-composing-functions"><i class="fas fa-link"></i></a>
+</h2>
+<p>Objectives:</p>
+<ol style="list-style-type: lower-roman">
+<li>(Fun-4-c-1) <em>Use linear combination and direct multiplication of functions of one variable to produce functions of multiple variables</em>
+</li>
+<li>(Fun-4-c-2) <em>Recognize that composition of functions does not itself create a function of multiple variables.</em>
+</li>
+</ol>
+<p>Linear combination and composition of functions are often used hand-in-hand to construct models. For instance, our model of the data from cooling water was a linear combination of a constant function and a sinusoidal function <span class="math display">\[\mbox{temperature}(t) \equiv 25.9 + 60.7\, e^{-0.019 t}\]</span>
+Similarly, our model from the Providence tide data was
+<span class="math display">\[\mbox{tide}(t) \equiv 1.02 + 0.50 \sin(2\pi (t - 15.4)/12.56)\]</span>
+In both cases, the sine part of the combination is a mathematical (<span class="math inline">\(\exp(x)\)</span> or <span class="math inline">\(\sin(x)\)</span>) function composed with a linear interior function: <span class="math inline">\(-0.019 t\)</span> for the cooling water, and <span class="math inline">\(2\pi (t - 15.4)/12.56\)</span> for the tides.</p>
+<p>Each of these models was a function of one input. (Coincidentally, the input in both cases was “time”, measured in minutes in the cooling-water example and hours in the tide example.)</p>
+<p>But linear combinations are a powerful way to construct functions of multiple inputs. This can be as simple as <span class="math display">\[h(x, t) \equiv A + B f(x) + C g(t)\]</span></p>
+<p>Example: Earlier we introduced a model of natural gas consumption (ccf) in the author’s home during a month as a function of the average temperature during that month. Using <span class="math inline">\(T\)</span> for temperature, the model, constructed from the record of utility bills, was: <span class="math display">\[ccf(T) \equiv 293.1 - 4.62 T\]</span> the blue line in Figure <a href="#fig:Fun-1-c-1"><strong>??</strong></a>.</p>
+<div class="inline-figure"><img src="CalcZ-notes_files/figure-html/Fun-1-c-1-1.png" width="672"></div>
+<p>The amount of natural gas needed to heat the home presumably depends on many other factors as well: how windy was the weather, the thermostat setting, how often the back door was left open, ….</p>
+<p>For the sake of demonstration, here is model matched to the data of the natural gas ccf as a function of both temperature <em>and</em> the amount of electricity (E) used each month.</p>
+<p><span class="math display">\[\mbox{ccf}(T, E) \equiv 295.8 - 4.66\, T - 0.0010\, E\]</span></p>
+<p>The coefficients suggest that more electricity use corresponds to less natural gas use, perhaps because light bulbs are partially heating the home. But the effect, if any is very small: a doubling of monthly electricity use (from, say 400 kWh to 800 kWh) has about the same effect of 1/8 degree increase in outdoor temperature. That would be useful to know if you were having, say, an argument with your brother-in-law about whether it’s OK to leave the lights on in an empty room, because it saves natural gas.</p>
+<p>Although linear combinations of functions of different variables are a very common way of constructing functions of multiple variables, function <strong><em>composition</em></strong> is useless when it comes to this.</p>
+<p>For instance, consider the two functions <span class="math inline">\(f(x)\)</span> and <span class="math inline">\(g(t)\)</span>. The composition <span class="math inline">\(f(g(t))\)</span> has only <strong>one</strong> input: <span class="math inline">\(t\)</span>. Similarly, <span class="math inline">\(g(f(x))\)</span> has only one input: <span class="math inline">\(x\)</span>.</p>
+<p>In contrast to composition, multiplication of two functions is very effective for constructing functions of multiple variables: <span class="math inline">\(h(x,y) \equiv f(x) g(y)\)</span>.</p>
+<p>::: {.workedexample data-latex=""}</p>
+<p><strong>A wave packet</strong></p>
+<p>An important idea in physics and communication is the “wave packet.” This is a function that is local, like a hump, but periodic within the hump.</p>
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">wave_packet</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span>, <span class="va">A</span><span class="op">=</span><span class="fl">1</span>, <span class="va">center</span> <span class="op">=</span> <span class="fl">0</span>, <span class="va">width</span> <span class="op">=</span> <span class="fl">5</span>, <span class="va">P</span><span class="op">=</span><span class="fl">1</span>, <span class="va">phase</span> <span class="op">=</span> <span class="fl">0</span><span class="op">)</span> <span class="op">{</span>
+  <span class="va">A</span><span class="op">*</span><span class="fu"><a href="https://rdrr.io/r/base/Trig.html">sin</a></span><span class="op">(</span><span class="fl">2</span><span class="op">*</span><span class="va">pi</span><span class="op">*</span><span class="va">x</span><span class="op">/</span><span class="va">P</span><span class="op">)</span><span class="op">*</span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">dnorm</a></span><span class="op">(</span><span class="op">(</span><span class="va">x</span> <span class="op">-</span> <span class="va">center</span><span class="op">)</span><span class="op">/</span><span class="va">width</span><span class="op">)</span>
+<span class="op">}</span>
+<span class="fu">slice_plot</span><span class="op">(</span><span class="fu">wave_packet</span><span class="op">(</span><span class="va">x</span>, A<span class="op">=</span><span class="fl">2</span>, center<span class="op">=</span><span class="fl">3</span>, width  <span class="op">=</span> <span class="fl">4</span>, P  <span class="op">=</span> <span class="fl">2</span> <span class="op">)</span> <span class="op">~</span> <span class="va">x</span>, 
+           <span class="fu">domain</span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">15</span>, <span class="fl">15</span><span class="op">)</span><span class="op">)</span>, npts <span class="op">=</span> <span class="fl">500</span><span class="op">)</span></code></pre></div>
+<div class="inline-figure"><img src="CalcZ-notes_files/figure-html/unnamed-chunk-26-1.png" width="672"></div>
+<p><strong>Example</strong>: A simple but powerful and general framework for constructing functions of two variables to match data or to assemble into one function facts about a relationship among three variables is the linear combination of four simple functions: <span class="math display">\[a_0 + a_x\, x + a_y\, y + a_{xy}\, xy\]</span>
+The coefficients in the linear combination are <span class="math inline">\(a_0\)</span>, <span class="math inline">\(a_x\)</span>, <span class="math inline">\(a_y\)</span>, and <span class="math inline">\(a_{xy}\)</span>. Those names were selected to make it easier to keep track of which coefficient scales which function, but ultimately they are just scalars and could have been called <span class="math inline">\(a, b, c\)</span>, and <span class="math inline">\(d\)</span>.</p>
+<p>The basis function <span class="math inline">\(g_4(x, y) \equiv x y\)</span> is called an <strong><em>interaction term</em></strong> and arises very often in models of phenemona such as the spread of epidemics, the population dynamics of predator and prey animals, and the rates of chemical reactions
+.</p>
+<p>EXERCISE:</p>
+<p>Recall the Pythagorean theorem: <span class="math inline">\(C^2 = A^2 + B^2\)</span>. Let’s write this as a function that takes as inputs the lengths of the two legs and produces as output the length of the hypotenuse.</p>
+<p><span class="math display">\[\mbox{hypotenuse}(x, y) \equiv \sqrt{\strut x^2 + y^2}\]</span></p>
+<p>This can be seen as a composition of a function <span class="math inline">\(f()\)</span> together with a linear combination of two power-law functions <span class="math inline">\(g()\)</span> and <span class="math inline">\(h()\)</span> of different inputs. What is the function <span class="math inline">\(f()\)</span>? What are <span class="math inline">\(g()\)</span> and <span class="math inline">\(h()\)</span>? What are the coefficients in the linear combination?</p>
+</div>
+<div id="piecewise-models" class="section level2">
+<h2>
+<span class="header-section-number">7.6</span> Piecewise models<a class="anchor" aria-label="anchor" href="#piecewise-models"><i class="fas fa-link"></i></a>
+</h2>
+<p>Objectives:</p>
+<ol style="list-style-type: lower-roman">
+<li>(Fun-4-b-4a) <em>Identify graphs of a piecewise linear function</em>
+</li>
+<li>(Fun-4-b-4b) <em>Recognize traditional curly-brace notation for piecewise functions</em>
+</li>
+<li>(Fun-4-b-4c) <em>Be able to create a piecewise function in R</em>
+</li>
+<li>(Fun-4-b-4d) <em>Distinguish between continuous and discontinuous functions</em>
+</li>
+<li>(Fun-4-b-4e) <em>Identify “division by zero” as a source of interruption in the domain of a function. Redefine the function to avoid the disruption</em>
+</li>
+</ol>
+<p>Piecing together functions</p>
+<p><strong>Example: Piecewise functions in machine learning</strong></p>
+
+</div>
+</div>
+  <div class="chapter-nav">
+<div class="prev"><a href="function-inverses-and-solving.html"><span class="header-section-number">6</span> Function inverses and “solving”</a></div>
+<div class="next"><a href="dimensions-and-units.html"><span class="header-section-number">8</span> Dimensions and units</a></div>
+</div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
+    <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
+      <ul class="nav navbar-nav">
+<li><a class="nav-link" href="#constructing-models"><span class="header-section-number">7</span> Constructing models</a></li>
+<li><a class="nav-link" href="#working-with-data"><span class="header-section-number">7.1</span> Working with data</a></li>
+<li><a class="nav-link" href="#the-straight-line-model"><span class="header-section-number">7.2</span> The straight-line model</a></li>
+<li><a class="nav-link" href="#modeling-growth-and-decay"><span class="header-section-number">7.3</span> Modeling growth and decay</a></li>
+<li><a class="nav-link" href="#modeling-periodicity"><span class="header-section-number">7.4</span> Modeling periodicity</a></li>
+<li><a class="nav-link" href="#combining-and-composing-functions"><span class="header-section-number">7.5</span> Combining and composing functions</a></li>
+<li><a class="nav-link" href="#piecewise-models"><span class="header-section-number">7.6</span> Piecewise models</a></li>
+</ul>
+
+      <div class="book-extra">
+        <ul class="list-unstyled">
+<li><a id="book-source" href="https://github.com/dtkaplan/CalcZ-notes/blob/master/Fun-modeling.Rmd">View source <i class="fab fa-github"></i></a></li>
+          <li><a id="book-edit" href="https://github.com/dtkaplan/CalcZ-notes/edit/master/Fun-modeling.Rmd">Edit this page <i class="fab fa-github"></i></a></li>
+        </ul>
+</div>
+    </nav>
+</div>
+
+</div>
+</div> <!-- .container -->
+
+<footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>"<strong>CalcZ Student Notes</strong>" was written by Daniel Kaplan. It was last built on 2021-05-08.</p>
+  </div>
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
+  </div>
+
+</div></div>
+</footer><!-- dynamically load mathjax for compatibility with self-contained --><script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+</html>
