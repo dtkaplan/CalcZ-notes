@@ -24,3 +24,6 @@ show_objectives <- function() {
     paste(collapse="\n") %>%
     knitr::asis_output()
 }
+
+# A blank image for spacing
+BlankImage <- gf_blank(hp ~ wt, data=mtcars) %>% gf_theme(theme_void())
