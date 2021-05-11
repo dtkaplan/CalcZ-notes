@@ -47,12 +47,7 @@
 </form>
 
       <nav aria-label="Table of contents"><h2>Table of contents</h2>
-        <ul class="book-toc list-unstyled">
-<li><a class="" href="index.html">Status</a></li>
-<li class="book-part">Block 2: Differences and differentiation</li>
-<li><a class="active" href="functions-and-patterns.html"><span class="header-section-number">1</span> Functions and patterns</a></li>
-<li><a class="" href="difference-and-change.html"><span class="header-section-number">2</span> Difference and change</a></li>
-</ul>
+        <ul class="book-toc list-unstyled"><li><a class="" href="index.html"><span class="header-section-number">Chapter 1</span> Functions and patterns</a></li></ul>
 
         <div class="book-extra">
           <p><a id="book-repo" href="https://github.com/dtkaplan/CalcZ-notes">View book source <i class="fab fa-github"></i></a></p>
@@ -79,133 +74,68 @@ The algorithm that forms the body of the function describes arithmetic and other
 <p>What you’re mainly seeing in the photo is the <strong><em>slant</em></strong> or <strong><em>slope</em></strong> of the surface. The light has transformed <em>elevation</em> as a function of <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span> into <em>slant</em> as a function of <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span> and then encoded the slant as brightness, in much the same way the background of a contour plot encodes the output of the function as a color.</p>
 <p>The moral here is that sometimes the data in a function is not in the right form for us to extract useful information. But by transforming that data to represent contrast or difference or slope, the information can be revealed.</p>
 <p>This Block is about transforming functions to show difference and slope. Such transformation, accomplished by mathematics rather than the raking light of the sun, can take a pattern that we’re presented with and turn it into another pattern that can tell us what we want to know.</p>
-<div id="modeling-a-model" class="section level2">
+<div id="average-rate-of-change" class="section level2">
 <h2>
-<span class="header-section-number">1.1</span> Modeling a model<a class="anchor" aria-label="anchor" href="#modeling-a-model"><i class="fas fa-link"></i></a>
-</h2>
-<p>At the core of what we will do in this block to represent a function <strong><em>locally</em></strong> as a straight-line function. For instance, the exponential function has a curving shape. But let’s look what happens when we zoom in on the function in different local domains.</p>
-<div class="inline-figure"><img src="CalcZ-notes_files/figure-html/unnamed-chunk-3-1.png" width="672"></div>
-<p><img src="CalcZ-notes_files/figure-html/unnamed-chunk-4-1.png" width="20%"><img src="CalcZ-notes_files/figure-html/unnamed-chunk-4-2.png" width="20%"><img src="CalcZ-notes_files/figure-html/unnamed-chunk-4-3.png" width="20%"><img src="CalcZ-notes_files/figure-html/unnamed-chunk-4-4.png" width="20%"><img src="CalcZ-notes_files/figure-html/unnamed-chunk-4-5.png" width="20%"></p>
-<p><img src="CalcZ-notes_files/figure-html/unnamed-chunk-5-1.png" width="13%"><img src="CalcZ-notes_files/figure-html/unnamed-chunk-5-2.png" width="13%"><img src="CalcZ-notes_files/figure-html/unnamed-chunk-5-3.png" width="13%"><img src="CalcZ-notes_files/figure-html/unnamed-chunk-5-4.png" width="13%"><img src="CalcZ-notes_files/figure-html/unnamed-chunk-5-5.png" width="13%"><img src="CalcZ-notes_files/figure-html/unnamed-chunk-5-6.png" width="13%"><img src="CalcZ-notes_files/figure-html/unnamed-chunk-5-7.png" width="13%"></p>
-<p>The straight-line function <span class="math inline">\(a + b x\)</span> is, naturally a <strong><em>global</em></strong></p>
-</div>
-<div id="difference" class="section level2">
-<h2>
-<span class="header-section-number">1.2</span> Difference<a class="anchor" aria-label="anchor" href="#difference"><i class="fas fa-link"></i></a>
+<span class="header-section-number">1.1</span> Average rate of change<a class="anchor" aria-label="anchor" href="#average-rate-of-change"><i class="fas fa-link"></i></a>
 </h2>
 <div class="objectives" latex-data="">
 <ol>
 <li>
-<strong>[Deriv-2a]</strong> <em>Understand that specifying two different inputs to a function defines an input. The length of that interval between the “run”. The “rise” is the difference in output at the two input points. calculating a “rise over run” as a ratio gives the </em><strong>average rate of change</strong>* of a function over the interval*</li>
+<strong>[Deriv-2a]</strong> <em>Identify the “average rate of change” of a function over an interval as the overall change in output divided by the change in input.</em>
+</li>
 </ol>
 </div>
-<p>Comparing the value of a function <span class="math inline">\(f()\)</span> at two inputs is a matter of evaluating the function at two inputs, say <span class="math inline">\(x_0\)</span> and <span class="math inline">\(x_1\)</span>. Often, our interest is in comparing the output at two <strong><em>nearby</em></strong> inputs. To convey this idea of nearby, we can write the two nearby inputs as <span class="math inline">\(x_0\)</span> and <span class="math inline">\(x_0 + h\)</span>. The lower-case letter <span class="math inline">\(h\)</span> will be used throughout these notes to signify a <strong><em>small</em></strong> increment, typically positive, in the input to a function. (Note: The function <span class="math inline">\(h()\)</span> is not necessarily about small increments. It’s just a generic pronoun for a function.)</p>
-<p>The <strong><em>finite difference</em></strong> between function outputs at the two nearby inputs is <span class="math inline">\(f(x_0 + h) - f(x_0)\)</span>. We could just as well consider <span class="math inline">\(f(x_0) - f(x_0 - h)\)</span>. Are these two differences the same? That depends on the function <span class="math inline">\(f()\)</span>.</p>
+<p>As you know, one way to calculate the slope of a straight-line function <span class="math inline">\(f()\)</span> is to pick two different values for the input: call the larger of them <span class="math inline">\(x_1\)</span> and the smaller <span class="math inline">\(x_0\)</span>. Think of these input values as the endpoints of an <strong><em>interval</em></strong> or <strong><em>neighborhood</em></strong> of the domain. The length of this domain is <span class="math inline">\(x_1 - x_0\)</span>.</p>
+<p>Evaluate the function at those endpoints and calculate the slope simply as the difference in output divided by the length of the interval: <span class="math display">\[\frac{f(x_1) - f(x_0)}{x_1 - x_0}\]</span></p>
+<p>“Slope” is a natural metaphor when thinking of a function as a graph. But a more general way to describe the concept is the <strong><em>rate of change</em></strong> of the output with respect to the input. The change in the output from one end of the interval is <span class="math inline">\(f(x_1) - f(x_0)\)</span>, the change in the input is <span class="math inline">\(x_1 - x_0\)</span>. If the input is time (in hours), and the output is the position of a car (in miles), then the rate of change is <em>miles-per-hour</em>: the car’s velocity.</p>
+<p>For a straight-line function—think of a car driving at constant speed on a highway—it doesn’t matter what you choose for <span class="math inline">\(x_1\)</span> and <span class="math inline">\(x_0\)</span> (so long as they are not identical). But for other functions, the choice does matter.</p>
+<p>Imagine a graph of the position of a car along a road as in Figure @ref{fig:stop-and-go}. Over the course of an hour, the car travelled about 25 miles. In other words, the <strong><em>average</em></strong> speed is 25 miles/hour: the <em>slope</em> of the red line segment. Given the traffic, sometimes the car was stopped (time C), sometimes crawling (time D) and sometimes much faster than average (time B).</p>
+<div class="inline-figure"><img src="CalcZ-notes_files/figure-html/stop-and-go-1.png" width="672"></div>
+<p>During the interval from B to C, the car was travelling relatively fast. The slope of the brown segment connecting the position at times B and C is the <strong><em>average</em></strong> rate of change between times B and C. It’s easy to see that the average rate of change from B to C is larger than the overall average from <span class="math inline">\(t=0\)</span> to <span class="math inline">\(t=1\)</span>. Calculating that slope is a matter of evaluating the position at the endpoints and dividing by the length of the interval.</p>
 <div class="workedexample" latex-data="">
-<p>Consider the simple A/B combination of a power-law function and a constant function: <span class="math inline">\(g(x) \equiv x^2 + 3\)</span>. Taking <span class="math inline">\(h\)</span> to be 0.1 and <span class="math inline">\(x_0\)</span> to be 1, what is the finite difference of <span class="math inline">\(g(x)\)</span>? How about for <span class="math inline">\(h=0.01\)</span>?</p>
-<p>The finite difference is <span class="math display">\[g(x_0 + h) - g(x_0) = (x_0 + h)^2 + 3 - \left(x_0^2 + 3\right)\]</span>
-When <span class="math inline">\(h=1\)</span> this gives <span class="math display">\[1.1^2 + 3 - (1.1 +3) = 1.21 - 1.1 = 0.21\]</span> When <span class="math inline">\(h=1.01\)</span> it is <span class="math display">\[1.01^2 - 1.01 = 1.0201 - 1.01 = 0.0101\]</span></p>
-</div>
-<p>We will often need to consider the finite difference as a function. This involves making a tiny change in notation. Instead of <span class="math inline">\(x_0\)</span>, which by our notation convention suggests a <em>specific value</em> for the input, we’ll write <span class="math inline">\(x\)</span> as in <span class="math display">\[f(x+h) - f(x)\]</span></p>
-<div class="workedexample" latex-data="">
-<p>Continuing the previous example … What is the finite difference function for <span class="math inline">\(g(x)\)</span>? Evaluate it at <span class="math inline">\(x = 1\)</span> and <span class="math inline">\(2\)</span> with <span class="math inline">\(h=0.10\)</span> and <span class="math inline">\(h=0.01\)</span></p>
-<p>The formula, as we have seen, is <span class="math display">\[(x+h)^2 + 3 - \left(x^2 + 3\right) = x^2 + 2h x + h^2 + 3 - (x^2 + 3) = 2h x + h^2\]</span></p>
-<p>Evaluating this:</p>
-<ul>
-<li>
-<p>At <span class="math inline">\(x=1\)</span>:</p>
-<ul>
-<li>For <span class="math inline">\(h=0.10\)</span> the finite difference function evaluates to <span class="math inline">\(2 \times 0.1 \times 1 + 0.1^2 = 0.2 + 0.01 = 0.21\)</span>.</li>
-<li>Setting <span class="math inline">\(h=0.01\)</span> gives <span class="math inline">\(2 \times 0.01 \times 1 + 0.01^2 = 0.0201\)</span>.</li>
-</ul>
-</li>
-<li>
-<p>At <span class="math inline">\(x=2\)</span>:</p>
-<ul>
-<li>For <span class="math inline">\(h=0.10\)</span> the finite difference function evaluates to <span class="math inline">\(2 \times 0.1 \times 2 + 0.1^2 = 0.4 + 0.01 = 0.041\)</span>.</li>
-<li>For <span class="math inline">\(h=0.01\)</span>, it is <span class="math inline">\(2 \times 0.01 \times 2 + 0.01^2 = 0.0401\)</span>.</li>
-</ul>
-</li>
-</ul>
-<p>As you can see, the value of the finite difference function depends both on <span class="math inline">\(x\)</span> <em>and on</em> <span class="math inline">\(h\)</span>. Not a surprize. When <span class="math inline">\(h=0.01\)</span> the values are roughly 10-times smaller than for <span class="math inline">\(h=0.10\)</span>.</p>
-</div>
-<p>This idea of a <strong><em>finite-difference function</em></strong> is mainly just a step on the path to another kind of function that will be of primary importance in calculus, the <strong><em>finite rate of change</em></strong>, often called the <strong><em>average rate of change</em></strong>: <span class="math display">\[\frac{f(x + h) - f(x)}{h}\]</span>
-Recognize this as “rise over run,” in other words a “slope.”</p>
-<p>Let’s give this particular function a name to help us talk about it. A tradition is to use a Greek letter, <span class="math inline">\(\Delta\)</span> (“delta”), here. The finite rate of change function for <span class="math inline">\(f()\)</span> is <span class="math display">\[\Delta f(x) \equiv \frac{f(x+h) - f(x)}{h}\]</span> In computer notation, we might write <code>delta_f()</code>. Remember, <span class="math inline">\(\Delta f\)</span> is just the <strong>name</strong> we’ve given to the function. Any other name could have been used.</p>
-<div class="workedexample" latex-data="">
-<p>Find the finite rate of change function for <span class="math inline">\(g(x)\)</span> and evaluate it at <span class="math inline">\(x=1\)</span> for <span class="math inline">\(h=0.1\)</span> and <span class="math inline">\(h=0.01\)</span>.</p>
-<p>Following the <span class="math inline">\(\Delta\)</span> naming convention, we’ll call the finite rate of change function <span class="math display">\[\Delta g(x) \equiv \frac{g(x+h) - g(x)}{h} = \frac{2 h x + h^2}{h} = 2 x + h\]</span></p>
-<p>Evaluating <span class="math inline">\(\Delta g(1)\)</span> for <span class="math inline">\(h=0.10\)</span> and <span class="math inline">\(h=0.01\)</span>, we get:</p>
-<ul>
-<li>
-<span class="math inline">\(h=0.10\)</span> gives <span class="math inline">\(2 + 0.10 = 2.10\)</span>
-</li>
-<li>
-<span class="math inline">\(h=0.01\)</span> gives <span class="math inline">\(2 + 0.01 = 2.01\)</span>
-</li>
-</ul>
-<p>In contrast to the finite difference function, where <span class="math inline">\(h\)</span> strongly shapes the output, for the finite rate of change function <span class="math inline">\(h\)</span> hardly matters at all!</p>
-</div>
-<p>From the way we’ve defined <span class="math inline">\(\Delta f(x)\)</span>, it’s reasonable to assume that <span class="math inline">\(h\)</span> is a <strong><em>parameter</em></strong>: a symbol naming a numerical value that has to be specified before <span class="math inline">\(\Delta f(x)\)</span> can be evaluated at a specific <span class="math inline">\(x\)</span>. But <span class="math inline">\(h\)</span> actually is a character in the play of calculus, a character that plays a central role but whose numerical value is usually of no interest whatsoever besides being “small.”</p>
-<div class="workedexample" latex-data="">
-<p>We said that <span class="math inline">\(h\)</span> in the finite rate of change function <span class="math inline">\(\Delta g()\)</span>, so long as <span class="math inline">\(h\)</span> is small, plays both a central role and has hardly any effect. An economizing director, re-writes the play to take <span class="math inline">\(h\)</span> out of it, setting <span class="math inline">\(h=0\)</span>: a non-speaking role. With this choice, what’s <span class="math inline">\(\Delta g(x)\)</span>?</p>
-<p>We’ve already seen that <span class="math display">\[\Delta g(x) = 2 x + h\]</span> Re-writing by replacing <span class="math inline">\(h\)</span> with 0 streamlines the play, turning <span class="math inline">\(\Delta g()\)</span> from a dialog into a monologue: <span class="math inline">\(\Delta g(x) = 2 x\)</span>. Simple.</p>
-<p>And yet … the director gets a letter from the Actors Equity Union.</p>
-<blockquote>
-<p><em>We observe that you have eliminated the role of <span class="math inline">\(h\)</span> from your play. This is in violation of Union regulations. Recall that a finite rate of change function <span class="math inline">\(\Delta g(x)\)</span> is defined as a ratio: <span class="math display">\[\Delta g(x) \equiv \frac{g(x+h) - g(x)}{h}\]</span> Although the name <span class="math inline">\(h\)</span> does not need to appear in the argument list of <span class="math inline">\(\Delta g(x)\)</span>, eliminating <span class="math inline">\(h\)</span> entirely by replacing her with zero is a <strong>division by zero error</strong> forbidden by Article 3.16§B¶2 of the Unified Laws of Arithmetic. We ask that you comply with this Article by re-instating the role of <span class="math inline">\(h\)</span> in all evaluations of <span class="math inline">\(\Delta g(x)\)</span>.</em></p>
-</blockquote>
-<p>Reading this, the director calls her lawyer. Is there a loophole to deal with Article 3.16§B¶2 without <span class="math inline">\(h\)</span>?</p>
+<p>What is the average rate of change in the car’s position during the interval <span class="math inline">\(t_B = 0.40\)</span> to <span class="math inline">\(t_C=0.54\)</span>?</p>
+<p>The length of the interval is <span class="math inline">\(t_C - t_B = 0.54-0.40=0.14\)</span>.</p>
+<p>Evaluating the function gives <span class="math inline">\(x(t_C) = 18\)</span> and <span class="math inline">\(x(t_B) = 12.6\)</span>.</p>
+<p>Rise is <span class="math inline">\(x(t_C) - x(t_B) = 18 - 12.6 = 5.4\)</span>.</p>
+<p>Run is <span class="math inline">\(t_C - t_B = 0.54-0.40=0.14\)</span>.</p>
+<p>The average rate of change during the interval is $5.4/0.14 = 38.6 $ miles/hour.</p>
 </div>
 </div>
-<div id="the-delta-operator" class="section level2">
+<div id="instantaneous-rate-of-change" class="section level2">
 <h2>
-<span class="header-section-number">1.3</span> The <span class="math inline">\(\Delta\)</span> operator<a class="anchor" aria-label="anchor" href="#the-delta-operator"><i class="fas fa-link"></i></a>
+<span class="header-section-number">1.2</span> Instantaneous rate of change<a class="anchor" aria-label="anchor" href="#instantaneous-rate-of-change"><i class="fas fa-link"></i></a>
 </h2>
-<p>Up until now, we used only functions that take numerical quantities as inputs and produce a numerical quantity as an output. It’s time now to broaden our perspective a bit.</p>
-<p>Imagine a function named <span class="math inline">\(\Delta()\)</span> defined like this:
-<span class="math display">\[\Delta(f) \equiv \frac{f(x+h) - f(x)}{h}\]</span>
-<span class="math inline">\(\Delta()\)</span> takes as input a <strong>function</strong>. You might have guessed this because the definition uses the name <span class="math inline">\(f\)</span> for the input to <span class="math inline">\(\Delta()\)</span>, but the name of an input does not matter so long as it is used consistently in the body of the function. Looking at the body, you can that the name <span class="math inline">\(f\)</span> is being used (twice!) in the position of a function’s name.</p>
-<p>For instance:</p>
-<ul>
-<li><span class="math inline">\(\Delta(\sin) = \frac{\sin(x+h) - \sin(x)}{h}\)</span></li>
-<li><span class="math inline">\(\Delta(x^2) = \frac{(x+h)^2 - x^2}{h}\)</span></li>
-<li><span class="math inline">\(\Delta(a + b x) = \frac{a + b(x + h) - \left(a + b x\right)}{h}\)</span></li>
-</ul>
-<div class="why" latex-data="">
-<p>Why did you use <span class="math inline">\(=\)</span> in the above statements rather than the <span class="math inline">\(\equiv\)</span>?</p>
-<p><span class="math inline">\(\equiv\)</span> means “is defined as” or “is the name of.” When we wrote <span class="math display">\[\Delta(f) \equiv \frac{f(x+h) - f(x)}{h}\]</span> we were giving a name to a function. But writing <span class="math inline">\(\Delta(a + b x)\)</span> means to apply the already defined function <span class="math inline">\(\Delta\)</span> to an input, that input being the straight-line function <span class="math inline">\(a + b x\)</span>. Rather than <em>defining</em> what is <span class="math inline">\(\Delta(a + b x)\)</span> we are <em>deducing</em> it from objects that have already been defined.</p>
-</div>
-<p>What is the output of <span class="math inline">\(\Delta()\)</span>? It takes a <em>function</em> as an input and returns … a function as an output.</p>
-<p>We might choose to give a name to the output, for example fred() or betty() or, more helpfully, <span class="math inline">\(\mbox{rate}_\sin\)</span> or <span class="math inline">\(\Delta \sin\)</span>, but our naming conventions, particularly the use of <span class="math inline">\(x\)</span> indicate that $ is a function.</p>
-<p>In calculus, there are a handful of celebrity functions that take a function as input and return a function as output. Notice that the word “function” appeared three times in the previous sentence. To avoid this sort of sleep-inducing repetition, we’ll call such functions <strong><em>operators</em></strong>.</p>
-<blockquote>
-<p>An <strong><em>operator</em></strong> (as we will use the word) is a function that, like all functions, has an input and an output. The input is itself a function, the output is also a function, typically (but not always) different from the input.</p>
-</blockquote>
 <div class="objectives" latex-data="">
 <ol>
 <li>
-<strong>[Diff-1a]</strong> <em>Understand the relations between position, velocity, and acceleration as “change relations.”</em>
+<strong>[Deriv-2b]</strong> <em>Distinguish the “average rate of change” from the “instantaneous rate of change”.</em>
 </li>
 </ol>
 </div>
+<p>The car’s speedometer shows the speed at each moment—or <strong><em>instant</em></strong>—of the trip. As you can see in Figure @ref{fig:stop-and-go}, the speed varies and is sometimes less than the average speed, sometimes greater, and occasionally equal to the average speed over the trip. The general term for the kind of quantity presented by the speedometer is the <strong><em>instantaneous rate of change</em></strong> of the position function with respect to the input to that function.</p>
+<p>Figure @ref{fig:instant-speed} shows the instantaneous rate of change of position with respect to time.</p>
+<div class="inline-figure">
+<img src="CalcZ-notes_files/figure-html/instant-speed-1.png" width="672">
+The two graphs in Figures @ref{fig:stop-and-go} and @ref{fig:instant-speed} show exactly the same car trip. The presentation of the data in the different graphs makes it easy to see some things and hard to see others. For instance, figuring out when the car is at a stand-still is harder in the position-vs-time graph than in the speed-vs-time graph. This is very much in the spirit of the sand-furrows example at the start of this chapter: it’s much easier to perceive the furrows because the lighting highlights areas sloping toward the sun as bright and areas sloping away from the sun as dark. In Figure @ref{fig:instant-speed} we’re not using light-and-dark for the display. Instead, we’re showing the instantaneous speed as the vertical position</div>
+<p>Recall that the interval between <span class="math inline">\(t_B\)</span> and <span class="math inline">\(t_C\)</span> had an <strong><em>average rate of change</em></strong> of about 39 miles-per-hour. Looking at the <strong><em>instantaneous rate of change</em></strong> tells the story differently: at time <span class="math inline">\(t_B\)</span> the car was accelerating to about 60 miles-per-hour. Then it gradually slowed, coming to a stop just before time <span class="math inline">\(t_C\)</span>.</p>
+<p>Figure @ref{fig:stop-and-go} shows the function <span class="math inline">\(\mbox{position}(t)\)</span>. Figure @ref{fig:instant-speed} shows a different function, <span class="math inline">\(\mbox{speed}(t)\)</span>. Although the two functions are different, they are intimately related: <span class="math inline">\(\mbox{speed}(t)\)</span> is the <strong><em>instantaneous rate of change</em></strong> of <span class="math inline">\(\mbox{position}(t)\)</span>.</p>
+<p>Two central operations in calculus are:</p>
+<ol style="list-style-type: decimal">
+<li>Given a function <span class="math inline">\(f(t)\)</span>, find the function <span class="math inline">\(g(t)\)</span> giving the instantaneous rate of change of <span class="math inline">\(f()\)</span>. This process of deriving <span class="math inline">\(g(t)\)</span> from <span class="math inline">\(f(t)\)</span> is called <strong><em>differentiation</em></strong>.</li>
+<li>Given a function <span class="math inline">\(g(t)\)</span>, find the <span class="math inline">\(f(t)\)</span> of which <span class="math inline">\(g(t)\)</span> is the instantaneous rate of change. This process of finding <span class="math inline">\(f()\)</span> given <span class="math inline">\(g()\)</span> is called <strong><em>anti-differentiation</em></strong>.</li>
+</ol>
 </div>
 </div>
   <div class="chapter-nav">
-<div class="prev"><a href="index.html">Status</a></div>
-<div class="next"><a href="difference-and-change.html"><span class="header-section-number">2</span> Difference and change</a></div>
+<div class="empty"></div>
+<div class="empty"></div>
 </div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
     <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
-      <ul class="nav navbar-nav">
-<li><a class="nav-link" href="#functions-and-patterns"><span class="header-section-number">1</span> Functions and patterns</a></li>
-<li><a class="nav-link" href="#modeling-a-model"><span class="header-section-number">1.1</span> Modeling a model</a></li>
-<li><a class="nav-link" href="#difference"><span class="header-section-number">1.2</span> Difference</a></li>
-<li><a class="nav-link" href="#the-delta-operator"><span class="header-section-number">1.3</span> The \(\Delta\) operator</a></li>
-</ul>
+      <div id="book-on-this-page"></div>
 
       <div class="book-extra">
         <ul class="list-unstyled">
-<li><a id="book-source" href="https://github.com/dtkaplan/CalcZ-notes/blob/master/Diff-intro.Rmd">View source <i class="fab fa-github"></i></a></li>
-          <li><a id="book-edit" href="https://github.com/dtkaplan/CalcZ-notes/edit/master/Diff-intro.Rmd">Edit this page <i class="fab fa-github"></i></a></li>
+          
         </ul>
 </div>
     </nav>
@@ -217,7 +147,7 @@ Recognize this as “rise over run,” in other words a “slope.”</p>
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>CalcZ Student Notes</strong>" was written by Daniel Kaplan. It was last built on 2021-05-10.</p>
+    <p>"<strong>CalcZ Student Notes</strong>" was written by Daniel Kaplan. It was last built on 2021-05-11.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">
