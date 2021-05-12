@@ -1,6 +1,6 @@
 # Instantaneous rate of change
 
-## Average $\rightarrow$ instant
+## From average to instant
 
 YOU HAVE KNOWN HOW TO CALCULATE AN AVERAGE RATE OF CHANGE for a long time. But possibly you don't yet fully know what the **use** of such a calculation is other than to help you pass a math test. In this section, we're going to show how to calculate the ***instantaneous rate of change*** function and show some of the many things this is useful for.
 
@@ -12,72 +12,86 @@ To orient you to what's going to happen ...
 
 In short, this section will introduce you to the operation called ***differentiation***.
 
+## The $h$ framework
+
+Calculating an average rate of change involved specifying an interval of the function domain: the left side $t_A$ and the right side $t_B$. Let's change this notation a little:
+
+- Left endpoint of domain: $t_0$
+- Right endpoint of domain: $t_0 + h$
+
+There is nothing fundamentally new here. The interval is still specified by two numbers, but now they are called $t_0$ and $h$. The width of the interval is just $h$, which is a little easier to write than $t_B - t_A$, but is still just the width.
+
+The ***average rate of change*** in the new notation is $$\frac{f(t_0 + h) - f(t_0)}{h}\ \ \mbox{rather than}\ \ \frac{f(t_B) - f(t_A)}{t_B - t_A}$$
+
+::: {.why latex-data=""}
+Why are you using $t$ instead of $x$?
+
+Remember, the *name* of an input can be anything at all so long as you use it consistently on the left side of $\equiv$ and on the right side. All of these are the same definition:
+$$g(t) \equiv e^{kt},\ \ g(x) \equiv e^{kx},\ \ g(y) \equiv e^{ky},\ \ g(\mbox{altitude}) \equiv e^{k\,{\small{\text{altitude}}}}$$
+When we work with functions of two or more variables, it will be essential to give easily distinguished names to the inputs. We're trying to get you in the habit of paying attention to the names of inputs and break a *bad habit* from high-school math of calling the input $x$ and the output $y$.
+:::
+
+Now we are going to make a small, subtle, and important change. Instead of thinking of the average rate of change *at a specific interval* $t_0$ to $t_0 + h$, we're going to write an average-rate-of-change ***function***. And since we're in the habit of giving *names* to functions, we'll be careful to name average-rate-of-change functions in a way that makes explicit the connection to the function $f(t)$ whose rate of change is being calculated. 
+
+Our convention will be to use two additional components in the names of average-rate-of-change functions. The first component is to lead with a "D" in a caligraphic font: $\cal D$. The second component will be the name of the input whose interval is being used in calculating the rate of change. So ...
+
+$${\cal D}_t\, f(t) \equiv \frac{f(t + h) - f(t)}{h}$$
+You can pronounce ${\cal D}_t$ as "difference with respect to $t$." But remember that the function name is the whole deal, ${\cal D}_t\, f()$, which is to be read as "difference with respect to $t$ of $f()$." Admittedly a long name. Don't be surprised later when we start using *nicknames* like Liz (for Elizabeth) or Bill (for William). For instance, later we'll save ink and breath by using the nickname $\dot{f}()$ instead of ${\cal D}_t\, f()$.
+
+
+
 FOLLOWING NEEDS TO BE SORTED OUT ...
 
-Comparing the value of a function $f()$ at two inputs is a matter of evaluating the function at two inputs, say $x_0$ and $x_1$. Often, our interest is in comparing the output at two ***nearby*** inputs. To convey this idea of nearby, we can write the two nearby inputs as $x_0$ and $x_0 + h$. The lower-case letter $h$ will be used throughout these notes to signify a ***small*** increment, typically positive, in the input to a function. (Note: The function $h()$ is not necessarily about small increments. It's just a generic pronoun for a function.)
 
-The ***finite difference*** between function outputs at the two nearby inputs is $f(x_0 + h) - f(x_0)$. We could just as well consider $f(x_0) - f(x_0 - h)$. Are these two differences the same? That depends on the function $f()$.
+From the way we've defined ${\cal D}_t f(t)$, it's reasonable to assume that $h$ is a ***parameter***: a symbol naming a numerical value that has to be specified before ${\cal D}_t\, f(t)$ can be evaluated at a specific $t$. 
 
 ::: {.workedexample latex-data=""}
-Consider the simple A/B combination of a power-law function and a constant function: $g(x) \equiv x^2 + 3$. Taking $h$ to be 0.1 and $x_0$ to be 1, what is the finite difference of $g(x)$? How about for $h=0.01$?
+Find an average-rate-of-change function with respect to $x$ of $g(x) \equiv x^2$. 
 
-The finite difference  is $$g(x_0 + h) - g(x_0) = (x_0 + h)^2 + 3 - \left(x_0^2 + 3\right)$$
-When $h=1$ this gives $$1.1^2 + 3 - (1.1 +3) = 1.21 - 1.1 = 0.21$$ When $h=1.01$ it is $$1.01^2 - 1.01 = 1.0201 - 1.01 = 0.0101$$
+$${\cal D}_x g(x) = \frac{(x + h)^2 - x^2}{h}\\
+= \frac{x^2 + 2 x h + h^2 - x^2}{h}\\
+= \frac{2 x h + h^2}{h} = 2 x + h$$
 :::
 
-We will often need to consider the finite difference as a function. This involves making a tiny change in notation. Instead of $x_0$, which by our notation convention suggests a *specific value* for the input, we'll write $x$ as in $$f(x+h) - f(x)$$ 
+
+I like to think of $h$ as a kind of *tire iron*, a small tool used to stretch the bead of a bicycle tire in order to pull it over the wheel rim. 
+
+```{r echo=FALSE, out.width="30%", fig.cap="A tire iron in use", fig.align="center"}
+knitr::include_graphics("www/tire-iron.png")
+```
+
+Once the tire iron has done its job, it's removed and you would never know that it was ever there (except that the tire is now successfully mounted on the wheel).
 
 ::: {.workedexample latex-data=""}
-Continuing the previous example ... What is the finite difference function for $g(x)$? Evaluate it at $x = 1$ and $2$ with $h=0.10$ and $h=0.01$ 
+Find an average-rate-of-change function with respect to $x$ of $g(x) \equiv x^2$, but remove the tire iron $h$ when you're done. 
 
-The formula, as we have seen, is $$(x+h)^2 + 3 - \left(x^2 + 3\right) = x^2 + 2h x + h^2 + 3 - (x^2 + 3) = 2h x + h^2$$
+$${\cal D}_x g(x) 
+= \frac{(x + h)^2 - x^2}{h}\ \ \mbox{stretch $x$ a bit}\\
+= \frac{x^2 + 2 x h + h^2 - x^2}{h}\ \ \mbox{pull over rim}\\
+= \frac{2 x h + h^2}{h} \ \ \mbox{still pulling ...}\\
+= 2 x + h \ \ \mbox{success!}$$
 
-Evaluating this:
-
-* At $x=1$: 
-
-    - For $h=0.10$ the finite difference function evaluates to $2 \times 0.1 \times 1 + 0.1^2 = 0.2 + 0.01 = 0.21$. 
-    - Setting $h=0.01$  gives $2 \times 0.01 \times 1 + 0.01^2 = 0.0201$.
-
-* At $x=2$: 
-
-    - For $h=0.10$ the finite difference function evaluates to $2 \times 0.1 \times 2 + 0.1^2 = 0.4 + 0.01 = 0.041$. 
-    - For $h=0.01$, it is $2 \times 0.01 \times 2 + 0.01^2 = 0.0401$.
-
-As you can see, the value of the finite difference function depends both on $x$ *and on* $h$. Not a surprize. When $h=0.01$ the values are roughly 10-times smaller than for $h=0.10$.
+Now remove the tire iron to get $${\cal D}_x g(x) = 2x$$.
 :::
 
-This idea of a ***finite-difference function*** is mainly just a step on the path to another kind of function that will be of primary importance in calculus, the ***finite rate of change***, often called the ***average rate of change***: $$\frac{f(x + h) - f(x)}{h}$$
-Recognize this as "rise over run," in other words a "slope."
+But this is calculus, not bicycle mechanics. How do we know that removing the tire iron isn't damaging the mathematical wheel? Historically, this has been a serious debate, resolved only with great difficulty more than a century after calculus started being used successfully. 
 
-Let's give this particular function a name to help us talk about it. A tradition is to use a Greek letter, $\Delta$ ("delta"), here. The finite rate of change function for $f()$ is $$\Delta f(x) \equiv \frac{f(x+h) - f(x)}{h}$$ In computer notation, we might write `delta_f()`. Remember, $\Delta f$ is just the **name** we've given to the function. Any other name could have been used.
-
-::: {.workedexample latex-data=""}
-Find the finite rate of change function for $g(x)$ and evaluate it at $x=1$ for $h=0.1$ and $h=0.01$.
-
-Following the $\Delta$ naming convention, we'll call the finite rate of change function $$\Delta g(x) \equiv \frac{g(x+h) - g(x)}{h} = \frac{2 h x + h^2}{h} = 2 x + h$$
-
-Evaluating $\Delta g(1)$ for $h=0.10$ and $h=0.01$, we get:
-
-- $h=0.10$ gives $2 + 0.10 = 2.10$
-- $h=0.01$ gives $2 + 0.01 = 2.01$
-
-In contrast to the finite difference function, where $h$ strongly shapes the output, for the finite rate of change function $h$ hardly matters at all!
-:::
-
-From the way we've defined $\Delta f(x)$, it's reasonable to assume that $h$ is a ***parameter***: a symbol naming a numerical value that has to be specified before $\Delta f(x)$ can be evaluated at a specific $x$. But $h$ actually is a character in the play of calculus, a character that plays a central role but whose numerical value is usually of no interest whatsoever besides being "small." 
+Still in the spirit of having fun, let's try a more serious metaphor... imagining $h$ is actually a central character in a calculus play. The character $h$ is in the middle of the story but *never appears in the play*, like the missing character Godot in the famous play *[Waiting for Godot](https://en.wikipedia.org/wiki/Waiting_for_Godot#Godot)*. 
 
 ::: {.workedexample latex-data=""}
-We said that $h$ in the finite rate of change function $\Delta g()$, so long as $h$ is small, plays both a central role and has hardly any effect. An economizing director, re-writes the play to take $h$ out of it, setting $h=0$: a non-speaking role. With this choice, what's $\Delta g(x)$?
+We said that $h$ in the finite rate of change function ${\cal D}_x g()$, so long as $h$ is small, plays both a central role and has hardly any effect. An economizing director re-writes the play to take $h$ out of it, setting $h=0$: a non-speaking, offstage role.
 
-We've already seen that $$\Delta g(x) = 2 x + h$$ Re-writing by replacing $h$ with 0 streamlines the play, turning $\Delta g()$ from a dialog into a monologue: $\Delta g(x) = 2 x$. Simple.
+We've already seen using legitimate algebra that $${\cal D}_x g(x) = 2 x + h$$. Re-writing by replacing $h$ with 0 streamlines the play, turning $\Delta g()$ from a dialog involving both $x$ and $h$ into a monologue with $h$ absent: $$\{cal D} g(x) = 2 x$$. Simple.
 
 And yet ... the director gets a letter from the Actors Equity Union. 
 
-> *We observe that you have eliminated the role of $h$ from your play. This is in violation of Union regulations. Recall that a finite rate of change function $\Delta g(x)$ is defined as a ratio: $$\Delta g(x) \equiv \frac{g(x+h) - g(x)}{h}$$ Although the name $h$ does not need to appear in the argument list of $\Delta g(x)$, eliminating $h$ entirely by replacing her with zero is a **division by zero error** forbidden by Article 3.16§B¶2 of the Unified Laws of Arithmetic. We ask that you comply with this Article by re-instating the role of $h$ in all evaluations of $\Delta g(x)$.*
+> *We observe that you have eliminated the role of $h$ in the final production version of ${\cal D}_x g(x)$. This is a violation of Union regulations. Recall that the rate-of-change function ${\cal D}_x g(x)$ is defined as a ratio: $${\cal D}_x g(x) \equiv \frac{g(x+h) - g(x)}{h}$$ Although the name $h$ does not need to appear in the argument list of ${\cal D}_x g(x)$, eliminating $h$ entirely by replacing her with zero is a **division by zero error** forbidden by Article 3.16§B¶2 of the Unified Laws of Arithmetic. We ask that you comply with this Article by re-instating the role of $h$ in all evaluations of ${\cal D} g(x)$.*
 
-Reading this, the director calls her lawyer. Is there a loophole to deal with Article 3.16§B¶2 without $h$?
+Reading this, the director calls her lawyer. Is there a loophole for removing $h$ without breaking the mathematical prohibition on dividing by zero? 
 :::
+
+
+YOU GOT HERE.
 
 ## The $\Delta$ operator
 

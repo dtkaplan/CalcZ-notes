@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>Chapter 1 Instantaneous rate of change | CalcZ Student Notes</title>
+<meta name="author" content="Daniel Kaplan">
+<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.2"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="libs/bootstrap-4.5.3/bootstrap.min.css" rel="stylesheet">
+<script src="libs/bootstrap-4.5.3/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.2.4/tabs.js"></script><script src="libs/bs3compat-0.2.4/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script><script type="text/x-mathjax-config">
+  const popovers = document.querySelectorAll('a.footnote-ref[data-toggle="popover"]');
+  for (let popover of popovers){
+    const div = document.createElement('div');
+    div.setAttribute('style', 'position: absolute; top: 0, left:0; width:0, height:0, overflow: hidden; visibility: hidden;');
+    div.innerHTML = popover.getAttribute('data-content');
+    
+    // Will this work with TeX on its own line?
+    var has_math = div.querySelector("span.math");
+    if (has_math) {
+      document.body.appendChild(div);
+    	MathJax.Hub.Queue(["Typeset", MathJax.Hub, div]);
+    	MathJax.Hub.Queue(function(){
+        popover.setAttribute('data-content', div.innerHTML);
+    	})
+    }
+  }
+  </script><script src="https://cdn.jsdelivr.net/autocomplete.js/0/autocomplete.jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/mark.js@8.11.1/dist/mark.min.js"></script><!-- CSS --><link rel="stylesheet" href="css/CalcZ-style.css">
+</head>
+<body data-spy="scroll" data-target="#toc">
+
+<div class="container-fluid">
+<div class="row">
+  <header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
+
+    <div class="d-flex align-items-start justify-content-between">
+      <h1>
+        <a href="index.html" title="">CalcZ Student Notes</a>
+      </h1>
+      <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
+    </div>
+
+    <div id="main-nav" class="collapse-lg">
+      <form role="search">
+        <input id="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
+</form>
+
+      <nav aria-label="Table of contents"><h2>Table of contents</h2>
+        <ul class="book-toc list-unstyled"><li><a class="" href="index.html"><span class="header-section-number">Chapter 1</span> Instantaneous rate of change</a></li></ul>
+
+        <div class="book-extra">
+          <p><a id="book-repo" href="https://github.com/dtkaplan/CalcZ-notes">View book source <i class="fab fa-github"></i></a></p>
+        </div>
+      </nav>
+</div>
+  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="instantaneous-rate-of-change-1" class="section level1">
+<h1>
+<span class="header-section-number">1</span> Instantaneous rate of change<a class="anchor" aria-label="anchor" href="#instantaneous-rate-of-change-1"><i class="fas fa-link"></i></a>
+</h1>
+<div id="from-average-to-instant" class="section level2">
+<h2>
+<span class="header-section-number">1.1</span> From average to instant<a class="anchor" aria-label="anchor" href="#from-average-to-instant"><i class="fas fa-link"></i></a>
+</h2>
+<p>YOU HAVE KNOWN HOW TO CALCULATE AN AVERAGE RATE OF CHANGE for a long time. But possibly you don’t yet fully know what the <strong>use</strong> of such a calculation is other than to help you pass a math test. In this section, we’re going to show how to calculate the <strong><em>instantaneous rate of change</em></strong> function and show some of the many things this is useful for.</p>
+<p>To orient you to what’s going to happen …</p>
+<ol style="list-style-type: decimal">
+<li>We’re going to set up the familiar average-rate-of-change calculation in a new framework.</li>
+<li>Using that framework, you’ll be able to calculate an average-rate-of-change <em>function</em>.</li>
+<li>Then, by turning a knob on the calculation in (2), you’ll be able to calculate the <strong><em>instantaneous</em></strong> rate of change function. By the way, the knob is called <span class="math inline">\(h\)</span>.</li>
+</ol>
+<p>In short, this section will introduce you to the operation called <strong><em>differentiation</em></strong>.</p>
+</div>
+<div id="the-h-framework" class="section level2">
+<h2>
+<span class="header-section-number">1.2</span> The <span class="math inline">\(h\)</span> framework<a class="anchor" aria-label="anchor" href="#the-h-framework"><i class="fas fa-link"></i></a>
+</h2>
+<p>Calculating an average rate of change involved specifying an interval of the function domain: the left side <span class="math inline">\(t_A\)</span> and the right side <span class="math inline">\(t_B\)</span>. Let’s change this notation a little:</p>
+<ul>
+<li>Left endpoint of domain: <span class="math inline">\(t_0\)</span>
+</li>
+<li>Right endpoint of domain: <span class="math inline">\(t_0 + h\)</span>
+</li>
+</ul>
+<p>There is nothing fundamentally new here. The interval is still specified by two numbers, but now they are called <span class="math inline">\(t_0\)</span> and <span class="math inline">\(h\)</span>. The width of the interval is just <span class="math inline">\(h\)</span>, which is a little easier to write than <span class="math inline">\(t_B - t_A\)</span>, but is still just the width.</p>
+<p>The <strong><em>average rate of change</em></strong> in the new notation is <span class="math display">\[\frac{f(t_0 + h) - f(t_0)}{h}\ \ \mbox{rather than}\ \ \frac{f(t_B) - f(t_A)}{t_B - t_A}\]</span></p>
+<div class="why" latex-data="">
+<p>Why are you using <span class="math inline">\(t\)</span> instead of <span class="math inline">\(x\)</span>?</p>
+<p>Remember, the <em>name</em> of an input can be anything at all so long as you use it consistently on the left side of <span class="math inline">\(\equiv\)</span> and on the right side. All of these are the same definition:
+<span class="math display">\[g(t) \equiv e^{kt},\ \ g(x) \equiv e^{kx},\ \ g(y) \equiv e^{ky},\ \ g(\mbox{altitude}) \equiv e^{k\,{\small{\text{altitude}}}}\]</span>
+When we work with functions of two or more variables, it will be essential to give easily distinguished names to the inputs. We’re trying to get you in the habit of paying attention to the names of inputs and break a <em>bad habit</em> from high-school math of calling the input <span class="math inline">\(x\)</span> and the output <span class="math inline">\(y\)</span>.</p>
+</div>
+<p>Now we are going to make a small, subtle, and important change. Instead of thinking of the average rate of change <em>at a specific interval</em> <span class="math inline">\(t_0\)</span> to <span class="math inline">\(t_0 + h\)</span>, we’re going to write an average-rate-of-change <strong><em>function</em></strong>. And since we’re in the habit of giving <em>names</em> to functions, we’ll be careful to name average-rate-of-change functions in a way that makes explicit the connection to the function <span class="math inline">\(f(t)\)</span> whose rate of change is being calculated.</p>
+<p>Our convention will be to use two additional components in the names of average-rate-of-change functions. The first component is to lead with a “D” in a caligraphic font: <span class="math inline">\(\cal D\)</span>. The second component will be the name of the input whose interval is being used in calculating the rate of change. So …</p>
+<p><span class="math display">\[{\cal D}_t\, f(t) \equiv \frac{f(t + h) - f(t)}{h}\]</span>
+You can pronounce <span class="math inline">\({\cal D}_t\)</span> as “difference with respect to <span class="math inline">\(t\)</span>.” But remember that the function name is the whole deal, <span class="math inline">\({\cal D}_t\, f()\)</span>, which is to be read as “difference with respect to <span class="math inline">\(t\)</span> of <span class="math inline">\(f()\)</span>.” Admittedly a long name. Don’t be surprised later when we start using <em>nicknames</em> like Liz (for Elizabeth) or Bill (for William). For instance, later we’ll save ink and breath by using the nickname <span class="math inline">\(\dot{f}()\)</span> instead of <span class="math inline">\({\cal D}_t\, f()\)</span>.</p>
+<p>FOLLOWING NEEDS TO BE SORTED OUT …</p>
+<p>From the way we’ve defined <span class="math inline">\({\cal D}_t f(t)\)</span>, it’s reasonable to assume that <span class="math inline">\(h\)</span> is a <strong><em>parameter</em></strong>: a symbol naming a numerical value that has to be specified before <span class="math inline">\({\cal D}_t\, f(t)\)</span> can be evaluated at a specific <span class="math inline">\(t\)</span>.</p>
+<div class="workedexample" latex-data="">
+<p>Find an average-rate-of-change function with respect to <span class="math inline">\(x\)</span> of <span class="math inline">\(g(x) \equiv x^2\)</span>.</p>
+<p><span class="math display">\[{\cal D}_x g(x) = \frac{(x + h)^2 - x^2}{h}\\
+= \frac{x^2 + 2 x h + h^2 - x^2}{h}\\
+= \frac{2 x h + h^2}{h} = 2 x + h\]</span></p>
+</div>
+A tire iron in use.
+
+<p>I like to think of <span class="math inline">\(h\)</span> as a kind of <em>tire iron</em>, a small tool used to stretch the bead of a bicycle tire in order to pull it over the wheel rim.</p>
+<div class="figure" style="text-align: center">
+<span id="fig:unnamed-chunk-3"></span>
+<img src="www/tire-iron.png" alt="A tire iron in use" width="30%"><p class="caption">
+Figure 1.1: A tire iron in use
+</p>
+</div>
+<p>Once the tire iron has done its job, it’s removed and you would never know that it was ever there (except that the tire is now successfully mounted on the wheel).</p>
+<div class="workedexample" latex-data="">
+<p>Find an average-rate-of-change function with respect to <span class="math inline">\(x\)</span> of <span class="math inline">\(g(x) \equiv x^2\)</span>, but remove the tire iron <span class="math inline">\(h\)</span> when you’re done.</p>
+<p><span class="math display">\[{\cal D}_x g(x) 
+= \frac{(x + h)^2 - x^2}{h}\ \ \mbox{stretch $x$ a bit}\\
+= \frac{x^2 + 2 x h + h^2 - x^2}{h}\ \ \mbox{pull over rim}\\
+= \frac{2 x h + h^2}{h} \ \ \mbox{still pulling ...}
+= 2 x + h \ \ \mbox{success!}\]</span></p>
+<p>Now remove the tire iron to get <span class="math display">\[{\cal D}_x g(x) = 2x\]</span>.</p>
+</div>
+<p>But <span class="math inline">\(h\)</span> actually is a central character in the play of calculus, a character that plays a central role but who <em>never appears in the play</em>, like the missing character Godot in the famous play <em><a href="https://en.wikipedia.org/wiki/Waiting_for_Godot#Godot">Waiting for Godot</a></em>.</p>
+<div class="workedexample" latex-data="">
+<p>We said that <span class="math inline">\(h\)</span> in the finite rate of change function <span class="math inline">\(\Delta g()\)</span>, so long as <span class="math inline">\(h\)</span> is small, plays both a central role and has hardly any effect. An economizing director, re-writes the play to take <span class="math inline">\(h\)</span> out of it, setting <span class="math inline">\(h=0\)</span>: a non-speaking role. With this choice, what’s <span class="math inline">\(\Delta g(x)\)</span>?</p>
+<p>We’ve already seen that <span class="math display">\[\Delta g(x) = 2 x + h\]</span> Re-writing by replacing <span class="math inline">\(h\)</span> with 0 streamlines the play, turning <span class="math inline">\(\Delta g()\)</span> from a dialog into a monologue: <span class="math inline">\(\Delta g(x) = 2 x\)</span>. Simple.</p>
+<p>And yet … the director gets a letter from the Actors Equity Union.</p>
+<blockquote>
+<p><em>We observe that you have eliminated the role of <span class="math inline">\(h\)</span> from your play. This is in violation of Union regulations. Recall that a finite rate of change function <span class="math inline">\(\Delta g(x)\)</span> is defined as a ratio: <span class="math display">\[\Delta g(x) \equiv \frac{g(x+h) - g(x)}{h}\]</span> Although the name <span class="math inline">\(h\)</span> does not need to appear in the argument list of <span class="math inline">\(\Delta g(x)\)</span>, eliminating <span class="math inline">\(h\)</span> entirely by replacing her with zero is a <strong>division by zero error</strong> forbidden by Article 3.16§B¶2 of the Unified Laws of Arithmetic. We ask that you comply with this Article by re-instating the role of <span class="math inline">\(h\)</span> in all evaluations of <span class="math inline">\(\Delta g(x)\)</span>.</em></p>
+</blockquote>
+<p>Reading this, the director calls her lawyer. Is there a loophole to deal with Article 3.16§B¶2 without <span class="math inline">\(h\)</span>?</p>
+</div>
+</div>
+<div id="the-delta-operator" class="section level2">
+<h2>
+<span class="header-section-number">1.3</span> The <span class="math inline">\(\Delta\)</span> operator<a class="anchor" aria-label="anchor" href="#the-delta-operator"><i class="fas fa-link"></i></a>
+</h2>
+<p>Up until now, we used only functions that take numerical quantities as inputs and produce a numerical quantity as an output. It’s time now to broaden our perspective a bit.</p>
+<p>Imagine a function named <span class="math inline">\(\Delta()\)</span> defined like this:
+<span class="math display">\[\Delta(f) \equiv \frac{f(x+h) - f(x)}{h}\]</span>
+<span class="math inline">\(\Delta()\)</span> takes as input a <strong>function</strong>. You might have guessed this because the definition uses the name <span class="math inline">\(f\)</span> for the input to <span class="math inline">\(\Delta()\)</span>, but the name of an input does not matter so long as it is used consistently in the body of the function. Looking at the body, you can that the name <span class="math inline">\(f\)</span> is being used (twice!) in the position of a function’s name.</p>
+<p>For instance:</p>
+<ul>
+<li><span class="math inline">\(\Delta(\sin) = \frac{\sin(x+h) - \sin(x)}{h}\)</span></li>
+<li><span class="math inline">\(\Delta(x^2) = \frac{(x+h)^2 - x^2}{h}\)</span></li>
+<li><span class="math inline">\(\Delta(a + b x) = \frac{a + b(x + h) - \left(a + b x\right)}{h}\)</span></li>
+</ul>
+<div class="why" latex-data="">
+<p>Why did you use <span class="math inline">\(=\)</span> in the above statements rather than the <span class="math inline">\(\equiv\)</span>?</p>
+<p><span class="math inline">\(\equiv\)</span> means “is defined as” or “is the name of.” When we wrote <span class="math display">\[\Delta(f) \equiv \frac{f(x+h) - f(x)}{h}\]</span> we were giving a name to a function. But writing <span class="math inline">\(\Delta(a + b x)\)</span> means to apply the already defined function <span class="math inline">\(\Delta\)</span> to an input, that input being the straight-line function <span class="math inline">\(a + b x\)</span>. Rather than <em>defining</em> what is <span class="math inline">\(\Delta(a + b x)\)</span> we are <em>deducing</em> it from objects that have already been defined.</p>
+</div>
+<p>What is the output of <span class="math inline">\(\Delta()\)</span>? It takes a <em>function</em> as an input and returns … a function as an output.</p>
+<p>We might choose to give a name to the output, for example fred() or betty() or, more helpfully, <span class="math inline">\(\mbox{rate}_\sin\)</span> or <span class="math inline">\(\Delta \sin\)</span>, but our naming conventions, particularly the use of <span class="math inline">\(x\)</span> indicate that $ is a function.</p>
+<p>In calculus, there are a handful of celebrity functions that take a function as input and return a function as output. Notice that the word “function” appeared three times in the previous sentence. To avoid this sort of sleep-inducing repetition, we’ll call such functions <strong><em>operators</em></strong>.</p>
+<blockquote>
+<p>An <strong><em>operator</em></strong> (as we will use the word) is a function that, like all functions, has an input and an output. The input is itself a function, the output is also a function, typically (but not always) different from the input.</p>
+</blockquote>
+<div class="objectives" latex-data="">
+<ol>
+<li>
+<strong>[Diff-1a]</strong> <em>Understand the relations between position, velocity, and acceleration as “change relations.”</em>
+</li>
+</ol>
+</div>
+</div>
+</div>
+  <div class="chapter-nav">
+<div class="empty"></div>
+<div class="empty"></div>
+</div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
+    <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
+      <div id="book-on-this-page"></div>
+
+      <div class="book-extra">
+        <ul class="list-unstyled">
+          
+        </ul>
+</div>
+    </nav>
+</div>
+
+</div>
+</div> <!-- .container -->
+
+<footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>"<strong>CalcZ Student Notes</strong>" was written by Daniel Kaplan. It was last built on 2021-05-12.</p>
+  </div>
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
+  </div>
+
+</div></div>
+</footer><!-- dynamically load mathjax for compatibility with self-contained --><script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+</html>
