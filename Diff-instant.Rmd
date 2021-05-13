@@ -90,6 +90,31 @@ And yet ... the director gets a letter from the Bit Players Union.
 Reading this, the director calls her lawyer. Is there a loophole for removing $h$ without breaking the mathematical prohibition on dividing by zero? 
 :::
 
+## The derivative operator
+
+Let's put aside for the moment the issue of the disappearing $h$. Historically, such "putting aside" has incurred a great deal of criticism. In 1734, famous philosopher [George Berkeley](https://en.wikipedia.org/wiki/George_Berkeley) (1685-1753) published a long-titled book: *The Analyst: A Discourse Addressed to an Infidel Mathematician: Wherein It Is Examined Whether the Object, Principles, and Inferences of the Modern Analysis Are More Distinctly Conceived, or More Evidently Deduced, Than Religious Mysteries and Points of Faith*. In *The Analyst*, Berkeley took issue with the arguments of that time that it is legitimate to divide by $h$ when, ultimately, $h$ will be replaced by zero. Calling $h$ an "evanescent increment," he asked, 
+
+> *"And what are these same evanescent Increments? They are neither finite Quantities nor Quantities infinitely small, nor yet nothing. May we not call them the ghosts of departed quantities?"*
+
+Interesting, Berkeley believed that the ghost of $h$ yielded correct results. His objection was that the framers of calculus had made two, canceling errors. 
+
+> *"[B]y virtue of a two fold mistake you arrive, though not at science, yet truth."*
+
+Berkeley was saying that calculus had not yet been put on a solid logical foundation. It was more than a century after Berkeley's death that this work was accomplished. Once accomplished, the results that had been claimed true all along were confirmed.
+
+I propose that we start with the results, which is what everyone *uses*. Later, we can introduce the new concepts on which the new logic was based. The names of the concepts---continuity, smoothness, singularity---are widely and effectively used in talking about functions, but the names, like many words in English, can be put to good and accurate use without memorizing the precise definitions.
+
+On to the results ...
+
+1. Every "smooth" function $h(x)$ has a corresponding function that is its derivative $\partial_x h(x)$.
+2. Finding the algorithm for $\partial_x h(x)$, called ***differentiating $h()$***, is *automatic* in the sense that it can be done by computer without human intervention or judgment. 
+3. When there is an algebraic formula for $h(x)$, the computer can find the algebraic formula for $\partial_x h(x)$. This is called ***symbolic differentiation***.
+4. When there is no algebraic formula for $h()$, the computer can use ***numerical differentiation*** which involves a non-zero $h$. The results of numerical differentiation on functions with formulas can differ subtly from the results from symbolic differentiation. Usually the difference is too small to notice, but in extreme cases it is not. It's important for the user of numerical differentiation to know how to identify extreme cases and deal with them.
+
+YOU WERE HERE.
+
+
+
 
 Often, we use a function so briefly that it's not worth naming. For instance, rather than saying
 
@@ -103,7 +128,7 @@ The word "evanescent" means, "lasting for only a short time, then disappearing q
 
 We can easily evaluate an ***average rate of change function***, for instance ${\cal D}_t g(t)$ by evaluating $g(t)$ at two different inputs and dividing by the distance between the inputs:
 $${\cal D}_t g(t) = \frac{g(t+h) - g(t)}{h}$$
-So if you know $g()$, you know ${\cal D}_t g(t)$. By making $h$ very small, the "average" starts to look like "instantaneous." Over a small interval of length $h$, every smooth function looks like a straight line and so the average rate of change is very close to the instantaneous rate of change.
+So if you know $g()$, you know ${\cal D}_t g(t)$. By making $h$ very small, the "average" starts to look like "instantaneous." Over a small interval of length $h$, every smooth function looks like a straight line. For a straight line, the average rate of change is exactly the same as the instantaneous rate of change.
 
 We'd like to take $h$ out of the picture, imagining that it is zero but not dealing with "divide by zero" if we can avoid it. To signify this idea of neglecting $h$, we'll use a new notation. Rather than ${\cal D}_t g(t)$ which has that pesky $h$ in it, we'll write $\partial_t g(t)$, using the lower-case $\partial$. The function $\partial_t g(t)$ can properly be called the ***instantaneous rate of change*** of $g(t)$. But everyone calls it the ***derivative of $g(t)$ with respect to $t$***  Many people leave out the "with respect to" part, which I suppose is fine for a function like $g(t)$ which has only one input. But functions constructed in modeling generally have multiple inputs, so it's a bad habit to neglect to identify which one the derivative is "with respect to." We'll always sneak the "with respect to" by putting the little subscript on $\partial_t$.
 
@@ -122,15 +147,59 @@ There are people who do actual calculations with $\lim_{h\rightarrow 0}$ but nob
 
 We're going to leave $\partial_x \mbox{hump}(x)$ alone for now until we have a more complete understanding of derivatives. But other than that, notice that the derivative of every one of these mathematical functions---exponential, power-law, sinusoid---is also in the set of the basic functions.
 
-How can we know that these formulas are right? There are two answers: 
+::: {.workedexample latex-data=""}
+How can we know that these formulas are right? Let's start by comparing them to the functions computed from the ${\cal D}_x$ formula when $h$ is very small.
 
-1. We can confirm them by doing the calculations involved in $\lim_{h\rightarrow 0}$. 
-2. We can support them by noting that these same formulas appear in any calculus text you choose to use.
-3. We can further support them by comparing them to the functions computed from the ${\cal D}_x$ formula when $h$ is very small.
+Consider $\partial_x e^x$, which is claimed to be $e^x$. Figure \@ref{fig:exp-h} plots $e^x$ (in green) as well as a function ARC$(x, h)$ (**A**verage **R**ate of **C**hange) that takes both $x$ and $h$ as inputs: $$\mbox{ARC}(x, h) \equiv {\cal D}_x e^x = \frac{e^{x+h} - e^x}{h} = e^x \frac{e^h - 1}{h}$$
 
-Only (1) is hard. (2) might be doubted by conspiracy theorists. Let's work with (3) to begin.
+```{r exp-h, echo=FALSE}
+colors <- heat.colors(5)
+ARC <- makeFun(exp(x)*(exp(h)-1)/h ~ x + h)
+factor <- makeFun((exp(h)-1)/h ~ h)
+P1 <- slice_plot(exp(x) ~ x, domain(x=c(-2,2)), 
+           size=3, color="green", alpha=0.4) %>%
+  slice_plot(ARC(x, h=1) ~ x, color=colors[1],
+             label_text="h=1", label_x=1) %>%
+  slice_plot(ARC(x, h=0.5) ~ x, color=colors[2],
+             label_text="h=0.5", label_x=1) %>%
+  slice_plot(ARC(x, h=0.1) ~ x, color=colors[3],
+             label_text="h=0.1", label_x=0.9) %>%
+  slice_plot(ARC(x, h=0.01) ~ x, color=colors[4],
+             label_text="h=0.01", label_x=0.8) %>%
+  slice_plot(ARC(x, h=0.001) ~ x, color=colors[5],
+             label_text="h=0.001", label_x=7)
+P1
+```
+
+You can see at a glance that $\mbox{ARC}(x, h)$ gets closer and closer to the claimed derivative, $e^x$, as $h$ gets smaller. 
+
+A better view of things comes from recognizing that $$\mbox{ARC}(x, h) = e^x \left[\frac{e^h - 1}{h}\right]$$
+Let's look at the quantity in brackets as $h$ gets small. If that goes to 1 for small $h$, then $\mbox{ARC}(x, h)$ goes to $e^x$.
+
+$h$ | $\frac{e^h - 1}{h}$ 
+:----|-------------------
+1   | `r format(factor(1), digits=15)`
+0.1   | `r format(factor(0.1), digits=15)`
+0.01   | `r format(factor(0.01), digits=15)`
+0.001   | `r format(factor(0.001), digits=15)`
+0.0001   | `r format(factor(0.0001), digits=15)`
+0.00001   | `r format(factor(0.00001), digits=15)`
+0.000001   | `r format(factor(0.000001), digits=15)`
+0.0000001   | `r format(factor(0.0000001), digits=15)`
+0.00000001   | `r format(factor(0.00000001), digits=15)`
+0.000000001   | `r format(factor(0.000000001), digits=15)`
 
 
+
+:::
+
+NEXT STEP. The linear expansion ...
+
+$f(x + h) \approx f(x) + h \partial_x f(x)$
+
+
+
+D f(g(x)) = f(g(x+h)) - f(g(x)) = f
 
 
 
