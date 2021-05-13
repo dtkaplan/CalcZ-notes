@@ -81,9 +81,9 @@ Still in the spirit of having fun, let's try a more serious metaphor... imaginin
 ::: {.workedexample latex-data=""}
 We said that $h$ in the finite rate of change function ${\cal D}_x g()$, so long as $h$ is small, plays both a central role and has hardly any effect. An economizing director re-writes the play to take $h$ out of it, setting $h=0$: a non-speaking, offstage role.
 
-We've already seen using legitimate algebra that $${\cal D}_x g(x) = 2 x + h$$. Re-writing by replacing $h$ with 0 streamlines the play, turning $\Delta g()$ from a dialog involving both $x$ and $h$ into a monologue with $h$ absent: $$\{cal D} g(x) = 2 x$$. Simple.
+We've already seen using legitimate algebra that $${\cal D}_x g(x) = 2 x + h$$ Re-writing by replacing $h$ with 0 streamlines the play, turning $\Delta g()$ from a dialog involving both $x$ and $h$ into a monologue with $h$ absent: $${\cal D}_x g(x) = 2 x$$. Simple.
 
-And yet ... the director gets a letter from the Actors Equity Union. 
+And yet ... the director gets a letter from the Bit Players Union. 
 
 > *We observe that you have eliminated the role of $h$ in the final production version of ${\cal D}_x g(x)$. This is a violation of Union regulations. Recall that the rate-of-change function ${\cal D}_x g(x)$ is defined as a ratio: $${\cal D}_x g(x) \equiv \frac{g(x+h) - g(x)}{h}$$ Although the name $h$ does not need to appear in the argument list of ${\cal D}_x g(x)$, eliminating $h$ entirely by replacing her with zero is a **division by zero error** forbidden by Article 3.16§B¶2 of the Unified Laws of Arithmetic. We ask that you comply with this Article by re-instating the role of $h$ in all evaluations of ${\cal D} g(x)$.*
 
@@ -91,9 +91,60 @@ Reading this, the director calls her lawyer. Is there a loophole for removing $h
 :::
 
 
+Often, we use a function so briefly that it's not worth naming. For instance, rather than saying
+
+> "Consider the function $h(x) = \sin(2\pi x/P)$ and the corresponding average rate of change function ${\cal D}_x h(x)$ ..."
+
+We'll write: ${\cal D}_x [\sin(2\pi x/P)]$
+
+## Evanescent $h$
+
+The word "evanescent" means, "lasting for only a short time, then disappearing quickly and being forgotten." ([Source](https://dictionary.cambridge.org/us/dictionary/english/evanescent)) Another dictionary definition is "tending to vanish like vapor." ([Source](https://www.merriam-webster.com/dictionary/evanescent)) I've used metaphors for $h$: tire irons, dramatic characters who never appear or speak. Here's another one: the solvent in ink or paint. Ink and paint are liquid yet become solid when brushed on a surface. This can happen because the solid pigments are suspended in liquid. Exposed to the air, the liquid vaporizes and is forgotten. The solid pigment remains on the surface.
+
+We can easily evaluate an ***average rate of change function***, for instance ${\cal D}_t g(t)$ by evaluating $g(t)$ at two different inputs and dividing by the distance between the inputs:
+$${\cal D}_t g(t) = \frac{g(t+h) - g(t)}{h}$$
+So if you know $g()$, you know ${\cal D}_t g(t)$. By making $h$ very small, the "average" starts to look like "instantaneous." Over a small interval of length $h$, every smooth function looks like a straight line and so the average rate of change is very close to the instantaneous rate of change.
+
+We'd like to take $h$ out of the picture, imagining that it is zero but not dealing with "divide by zero" if we can avoid it. To signify this idea of neglecting $h$, we'll use a new notation. Rather than ${\cal D}_t g(t)$ which has that pesky $h$ in it, we'll write $\partial_t g(t)$, using the lower-case $\partial$. The function $\partial_t g(t)$ can properly be called the ***instantaneous rate of change*** of $g(t)$. But everyone calls it the ***derivative of $g(t)$ with respect to $t$***  Many people leave out the "with respect to" part, which I suppose is fine for a function like $g(t)$ which has only one input. But functions constructed in modeling generally have multiple inputs, so it's a bad habit to neglect to identify which one the derivative is "with respect to." We'll always sneak the "with respect to" by putting the little subscript on $\partial_t$.
+
+We lose something by letting $h$ vaporize. There is an easy formula for ${\cal D}_t g(t)$, but without $h$ we can't write down such a formula for the derivative. Mathematicians like to bridge the gap between ${\cal D}$ and $\partial$, that is between average and instantaneous rates of change, by writing the formula for the derivative with a little "caution" sign out front.
+$$\partial_t g(t) = \lim_{h\rightarrow 0} \frac{g(t+h) - g(t)}{h}$$
+The caution sign is mysterious to newcomers because it is saying something absurd: "Remember to forget $h$."
+
+There are people who do actual calculations with $\lim_{h\rightarrow 0}$ but nobody needs to any more unless they invent a brand-new function that can't be written with existing functions. If you do happen to invent such a brand-new function, please remember that you should also invent the derivative of that function. Fortunately for us, the inventors of the past have done the work for us. Here's a list of what they found for the mathematical functions that underlie our basic modeling functions:
+
+* $\partial_x e^x = e^x$
+* $\partial_x x^0 = 0$
+* $\partial_x x^p = p\, x^{p-1}$. unless $p=0$. 
+* $\partial_x \sin(x) = \cos(x)$
+* $\partial_x \cos(x) = -\sin(x)$
+* $\partial_x \mbox{sigmoid}(x) = \mbox{hump}(x)$
+
+We're going to leave $\partial_x \mbox{hump}(x)$ alone for now until we have a more complete understanding of derivatives. But other than that, notice that the derivative of every one of these mathematical functions---exponential, power-law, sinusoid---is also in the set of the basic functions.
+
+How can we know that these formulas are right? There are two answers: 
+
+1. We can confirm them by doing the calculations involved in $\lim_{h\rightarrow 0}$. 
+2. We can support them by noting that these same formulas appear in any calculus text you choose to use.
+3. We can further support them by comparing them to the functions computed from the ${\cal D}_x$ formula when $h$ is very small.
+
+Only (1) is hard. (2) might be doubted by conspiracy theorists. Let's work with (3) to begin.
+
+
+
+
+
+How we 
+When we are interested in an ***instantaneous rate of change function***, 
+
+
+
+
 YOU GOT HERE.
 
 ## The $\Delta$ operator
+
+CHANGE THIS TO ${\cal D}$ and introduce it once you have gotten rid of $h$.
 
 Up until now, we used only functions that take numerical quantities as inputs and produce a numerical quantity as an output. It's time now to broaden our perspective a bit.
 
@@ -108,14 +159,14 @@ For instance:
 - $\Delta(a + b x) = \frac{a + b(x + h) - \left(a + b x\right)}{h}$
 
 ::: {.why latex-data=""}
-Why did you use $=$ in the above statements rather than the $\equiv$?
+Why did you use $=$ in the above statements rather than the $\equiv$ ?
 
 $\equiv$ means "is defined as" or "is the name of." When we wrote $$\Delta(f) \equiv \frac{f(x+h) - f(x)}{h}$$ we were giving a name to a function. But writing $\Delta(a + b x)$ means to apply the already defined function $\Delta$ to an input, that input being the straight-line function $a + b x$. Rather than *defining* what is $\Delta(a + b x)$ we are *deducing* it from objects that have already been defined.
 :::
 
 What is the output of $\Delta()$? It takes a *function* as an input and returns ... a function as an output.
 
-We might choose to give a name to the output, for example fred() or betty() or, more helpfully, $\mbox{rate}_\sin$ or $\Delta \sin$, but our naming conventions, particularly the use of $x$ indicate that \frac{\sin(x+h) - \sin(x)}{h}$ is a function.
+We might choose to give a name to the output, for example fred() or betty() or, more helpfully, $\mbox{rate}_{\sin}$ or $\Delta \sin$, but our naming conventions, particularly the use of $x$ indicate that \frac{\sin(x+h) - \sin(x)}{h}$ is a function.
 
 In calculus, there are a handful of celebrity functions that take a function as input and return a function as output. Notice that the word "function" appeared three times in the previous sentence. To avoid this sort of sleep-inducing repetition, we'll call such functions ***operators***. 
 
