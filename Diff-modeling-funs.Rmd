@@ -1,0 +1,102 @@
+# Derivatives of the basic modeling functions
+
+* $\partial_x e^{k x} = k\,e^{k x}$
+* $\partial_x x^0 = 0$
+* $\partial_x x^p = p\, x^{p-1}$. unless $p=0$. 
+* $\partial_x \sin(\frac{2\pi}{P} x) = \frac{2\pi}{P}\cos(\frac{2\pi}{P}x)$
+* $\partial_x \cos(\frac{2\pi}{P} x) = \frac{2\pi}{P}\sin(\frac{2\pi}{P}x)$
+* $\partial_x \mbox{sigmoid}(x, \text{center}, \text{width}) = \frac{1}{\text{center}}\mbox{hump}(x, \text{center}, \text{width})$
+
+We're going to leave $\partial_x \mbox{hump}(x)$ alone for now until we have a more complete understanding of derivatives. But other than that, notice that the derivative of every one of these mathematical functions---exponential, power-law, sinusoid---is also in the set of the basic functions.
+
+::: {.workedexample latex-data=""}
+How can we know that these formulas are right? Let's start by comparing them to the functions computed from the ${\cal D}_x$ formula when $h$ is very small.
+
+Consider $\partial_x e^x$, which is claimed to be $e^x$. Figure \@ref{fig:exp-h} plots $e^x$ (in green) as well as a function ARC$(x, h)$ (**A**verage **R**ate of **C**hange) that takes both $x$ and $h$ as inputs: $$\mbox{ARC}(x, h) \equiv {\cal D}_x e^x = \frac{e^{x+h} - e^x}{h} = e^x \frac{e^h - 1}{h}$$
+
+```{r exp-h, echo=FALSE}
+colors <- heat.colors(5)
+ARC <- makeFun(exp(x)*(exp(h)-1)/h ~ x + h)
+factor <- makeFun((exp(h)-1)/h ~ h)
+P1 <- slice_plot(exp(x) ~ x, domain(x=c(-2,2)), 
+           size=3, color="green", alpha=0.4) %>%
+  slice_plot(ARC(x, h=1) ~ x, color=colors[1],
+             label_text="h=1", label_x=1) %>%
+  slice_plot(ARC(x, h=0.5) ~ x, color=colors[2],
+             label_text="h=0.5", label_x=1) %>%
+  slice_plot(ARC(x, h=0.1) ~ x, color=colors[3],
+             label_text="h=0.1", label_x=0.9) %>%
+  slice_plot(ARC(x, h=0.01) ~ x, color=colors[4],
+             label_text="h=0.01", label_x=0.8) %>%
+  slice_plot(ARC(x, h=0.001) ~ x, color=colors[5],
+             label_text="h=0.001", label_x=7)
+P1
+```
+
+You can see at a glance that $\mbox{ARC}(x, h)$ gets closer and closer to the claimed derivative, $e^x$, as $h$ gets smaller. 
+
+A better view of things comes from recognizing that $$\mbox{ARC}(x, h) = e^x \left[\frac{e^h - 1}{h}\right]$$
+Let's look at the quantity in brackets as $h$ gets small. If that goes to 1 for small $h$, then $\mbox{ARC}(x, h)$ goes to $e^x$.
+
+$h$ | $\frac{e^h - 1}{h}$ 
+:----|-------------------
+1   | `r format(factor(1), digits=15)`
+0.1   | `r format(factor(0.1), digits=15)`
+0.01   | `r format(factor(0.01), digits=15)`
+0.001   | `r format(factor(0.001), digits=15)`
+0.0001   | `r format(factor(0.0001), digits=15)`
+0.00001   | `r format(factor(0.00001), digits=15)`
+0.000001   | `r format(factor(0.000001), digits=15)`
+0.0000001   | `r format(factor(0.0000001), digits=15)`
+0.00000001   | `r format(factor(0.00000001), digits=15)`
+0.000000001   | `r format(factor(0.000000001), digits=15)`
+
+
+
+:::
+
+NEXT STEP. The linear expansion ...
+
+$f(x + h) \approx f(x) + h \partial_x f(x)$
+
+
+
+D f(g(x)) = f(g(x+h)) - f(g(x)) = f
+
+
+
+How we 
+When we are interested in an ***instantaneous rate of change function***, 
+
+
+
+
+YOU GOT HERE.
+
+## The $\Delta$ operator
+
+CHANGE THIS TO ${\cal D}$ and introduce it once you have gotten rid of $h$.
+
+Up until now, we used only functions that take numerical quantities as inputs and produce a numerical quantity as an output. It's time now to broaden our perspective a bit.
+
+Imagine a function named $\Delta()$ defined like this:
+$$\Delta(f) \equiv \frac{f(x+h) - f(x)}{h}$$
+$\Delta()$ takes as input a **function**. You might have guessed this because the definition uses the name $f$ for the input to $\Delta()$, but the name of an input does not matter so long as it is used consistently in the body of the function. Looking at the body, you can that the name $f$ is being used (twice!) in the position of a function's name.
+
+For instance:
+
+- $\Delta(\sin) = \frac{\sin(x+h) - \sin(x)}{h}$
+- $\Delta(x^2) = \frac{(x+h)^2 - x^2}{h}$
+- $\Delta(a + b x) = \frac{a + b(x + h) - \left(a + b x\right)}{h}$
+
+::: {.why latex-data=""}
+Why did you use $=$ in the above statements rather than the $\equiv$ ?
+
+$\equiv$ means "is defined as" or "is the name of." When we wrote $$\Delta(f) \equiv \frac{f(x+h) - f(x)}{h}$$ we were giving a name to a function. But writing $\Delta(a + b x)$ means to apply the already defined function $\Delta$ to an input, that input being the straight-line function $a + b x$. Rather than *defining* what is $\Delta(a + b x)$ we are *deducing* it from objects that have already been defined.
+:::
+
+What is the output of $\Delta()$? It takes a *function* as an input and returns ... a function as an output.
+
+We might choose to give a name to the output, for example fred() or betty() or, more helpfully, $\mbox{rate}_{\sin}$ or $\Delta \sin$, but our naming conventions, particularly the use of $x$ indicate that $\frac{\sin(x+h) - \sin(x)}{h}$ is a function.
+
+In calculus, there are a handful of celebrity functions that take a function as input and return a function as output. Notice that the word "function" appeared three times in the previous sentence. To avoid this sort of sleep-inducing repetition, we'll call such functions ***operators***. 

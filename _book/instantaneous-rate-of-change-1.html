@@ -4,29 +4,34 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>Chapter 1 Instantaneous rate of change | CalcZ Student Notes</title>
+<title>Chapter 7 Instantaneous rate of change | CalcZ Student Notes</title>
 <meta name="author" content="Daniel Kaplan">
-<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.2"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="libs/bootstrap-4.5.3/bootstrap.min.css" rel="stylesheet">
-<script src="libs/bootstrap-4.5.3/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.2.4/tabs.js"></script><script src="libs/bs3compat-0.2.4/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
-<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script><script type="text/x-mathjax-config">
-  const popovers = document.querySelectorAll('a.footnote-ref[data-toggle="popover"]');
-  for (let popover of popovers){
-    const div = document.createElement('div');
-    div.setAttribute('style', 'position: absolute; top: 0, left:0; width:0, height:0, overflow: hidden; visibility: hidden;');
-    div.innerHTML = popover.getAttribute('data-content');
-    
-    // Will this work with TeX on its own line?
-    var has_math = div.querySelector("span.math");
-    if (has_math) {
-      document.body.appendChild(div);
-    	MathJax.Hub.Queue(["Typeset", MathJax.Hub, div]);
-    	MathJax.Hub.Queue(function(){
-        popover.setAttribute('data-content', div.innerHTML);
-    	})
+<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.2"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/header-attrs-2.6/header-attrs.js"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.2.5/tabs.js"></script><script src="libs/bs3compat-0.2.5/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="libs/htmlwidgets-1.5.3/htmlwidgets.js"></script><link href="libs/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet">
+<script src="libs/datatables-binding-0.16/datatables.js"></script><link href="libs/dt-core-1.10.20/css/jquery.dataTables.min.css" rel="stylesheet">
+<link href="libs/dt-core-1.10.20/css/jquery.dataTables.extra.css" rel="stylesheet">
+<script src="libs/dt-core-1.10.20/js/jquery.dataTables.min.js"></script><link href="libs/crosstalk-1.1.1/css/crosstalk.css" rel="stylesheet">
+<script src="libs/crosstalk-1.1.1/js/crosstalk.min.js"></script><script src="libs/plotly-binding-4.9.3/plotly.js"></script><script src="libs/typedarray-0.1/typedarray.min.js"></script><link href="libs/plotly-htmlwidgets-css-1.57.1/plotly-htmlwidgets.css" rel="stylesheet">
+<script src="libs/plotly-main-1.57.1/plotly-latest.min.js"></script><script type="text/x-mathjax-config">
+    const popovers = document.querySelectorAll('a.footnote-ref[data-toggle="popover"]');
+    for (let popover of popovers){
+      const div = document.createElement('div');
+      div.setAttribute('style', 'position: absolute; top: 0, left:0; width:0, height:0, overflow: hidden; visibility: hidden;');
+      div.innerHTML = popover.getAttribute('data-content');
+      
+      // Will this work with TeX on its own line?
+      var has_math = div.querySelector("span.math");
+      if (has_math) {
+        document.body.appendChild(div);
+      	MathJax.Hub.Queue(["Typeset", MathJax.Hub, div]);
+      	MathJax.Hub.Queue(function(){
+          popover.setAttribute('data-content', div.innerHTML);
+      	})
+      }
     }
-  }
-  </script><script src="https://cdn.jsdelivr.net/autocomplete.js/0/autocomplete.jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/mark.js@8.11.1/dist/mark.min.js"></script><!-- CSS --><link rel="stylesheet" href="css/CalcZ-style.css">
+    </script><script src="https://cdn.jsdelivr.net/autocomplete.js/0/autocomplete.jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/mark.js@8.11.1/dist/mark.min.js"></script><!-- CSS --><link rel="stylesheet" href="css/CalcZ-style.css">
 </head>
 <body data-spy="scroll" data-target="#toc">
 
@@ -47,22 +52,38 @@
 </form>
 
       <nav aria-label="Table of contents"><h2>Table of contents</h2>
-        <ul class="book-toc list-unstyled"><li><a class="" href="index.html"><span class="header-section-number">Chapter 1</span> Instantaneous rate of change</a></li></ul>
+        <ul class="book-toc list-unstyled">
+<li><a class="" href="index.html">Status</a></li>
+<li class="book-part">Block 1: Functions and quantity</li>
+<li><a class="" href="what-is-a-function.html"><span class="header-section-number">1</span> What is a function?</a></li>
+<li><a class="" href="graphs-graphics.html"><span class="header-section-number">2</span> Graphs &amp; Graphics</a></li>
+<li><a class="" href="notation-for-functions.html"><span class="header-section-number">3</span> Notation for functions</a></li>
+<li><a class="" href="the-basic-modeling-functions.html"><span class="header-section-number">4</span> The Basic Modeling Functions</a></li>
+<li><a class="" href="modeling-with-functions.html"><span class="header-section-number">5</span> Modeling with functions</a></li>
+<li class="book-part">Block 2: Differences and differentiation</li>
+<li><a class="" href="functions-and-patterns.html"><span class="header-section-number">6</span> Functions and patterns</a></li>
+<li><a class="active" href="instantaneous-rate-of-change-1.html"><span class="header-section-number">7</span> Instantaneous rate of change</a></li>
+<li><a class="" href="continuity-and-smoothness.html"><span class="header-section-number">8</span> Continuity and smoothness</a></li>
+<li><a class="" href="derivatives-of-the-basic-modeling-functions.html"><span class="header-section-number">9</span> Derivatives of the basic modeling functions</a></li>
+<li><a class="" href="evanescent-h.html"><span class="header-section-number">10</span> Evanescent \(h\)</a></li>
+</ul>
 
         <div class="book-extra">
           <p><a id="book-repo" href="https://github.com/dtkaplan/CalcZ-notes">View book source <i class="fab fa-github"></i></a></p>
         </div>
       </nav>
 </div>
-  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="instantaneous-rate-of-change-1" class="section level1">
+  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="instantaneous-rate-of-change-1" class="section level1" number="7">
 <h1>
-<span class="header-section-number">1</span> Instantaneous rate of change<a class="anchor" aria-label="anchor" href="#instantaneous-rate-of-change-1"><i class="fas fa-link"></i></a>
+<span class="header-section-number">7</span> Instantaneous rate of change<a class="anchor" aria-label="anchor" href="#instantaneous-rate-of-change-1"><i class="fas fa-link"></i></a>
 </h1>
-<div id="from-average-to-instant" class="section level2">
+<div id="from-average-to-instant" class="section level2" number="7.1">
 <h2>
-<span class="header-section-number">1.1</span> From average to instant<a class="anchor" aria-label="anchor" href="#from-average-to-instant"><i class="fas fa-link"></i></a>
+<span class="header-section-number">7.1</span> From average to instant<a class="anchor" aria-label="anchor" href="#from-average-to-instant"><i class="fas fa-link"></i></a>
 </h2>
-<p>YOU HAVE KNOWN HOW TO CALCULATE AN AVERAGE RATE OF CHANGE for a long time. But possibly you don’t yet fully know what the <strong>use</strong> of such a calculation is other than to help you pass a math test. In this section, we’re going to show how to calculate the <strong><em>instantaneous rate of change</em></strong> function and show some of the many things this is useful for.</p>
+<p>::: {.objectives}
+#. <strong>[Deriv-2b]</strong> <em>Understand how calculating the slope (using a small value of h) of a function reflects the instantaneous rate of change of the function at that point.</em></p>
+<p>You have known how to calculate an average rate of change for a long time. But possibly you don’t yet fully know what the <strong>use</strong> of such a calculation is other than to help you pass a math test. In this section, we’re going to show how to calculate the <strong><em>instantaneous rate of change</em></strong> function and show some of the many things this is useful for.</p>
 <p>To orient you to what’s going to happen …</p>
 <ol style="list-style-type: decimal">
 <li>We’re going to set up the familiar average-rate-of-change calculation in a new framework.</li>
@@ -71,9 +92,9 @@
 </ol>
 <p>In short, this section will introduce you to the operation called <strong><em>differentiation</em></strong>.</p>
 </div>
-<div id="the-h-framework" class="section level2">
+<div id="the-h-framework" class="section level2" number="7.2">
 <h2>
-<span class="header-section-number">1.2</span> The <span class="math inline">\(h\)</span> framework<a class="anchor" aria-label="anchor" href="#the-h-framework"><i class="fas fa-link"></i></a>
+<span class="header-section-number">7.2</span> The <span class="math inline">\(h\)</span> framework<a class="anchor" aria-label="anchor" href="#the-h-framework"><i class="fas fa-link"></i></a>
 </h2>
 <p>Calculating an average rate of change involved specifying an interval of the function domain: the left side <span class="math inline">\(t_A\)</span> and the right side <span class="math inline">\(t_B\)</span>. Let’s change this notation a little:</p>
 <ul>
@@ -84,6 +105,9 @@
 </ul>
 <p>There is nothing fundamentally new here. The interval is still specified by two numbers, but now they are called <span class="math inline">\(t_0\)</span> and <span class="math inline">\(h\)</span>. The width of the interval is just <span class="math inline">\(h\)</span>, which is a little easier to write than <span class="math inline">\(t_B - t_A\)</span>, but is still just the width.</p>
 <p>The <strong><em>average rate of change</em></strong> in the new notation is <span class="math display">\[\frac{f(t_0 + h) - f(t_0)}{h}\ \ \mbox{rather than}\ \ \frac{f(t_B) - f(t_A)}{t_B - t_A}\]</span></p>
+<div class="todo">
+<p>Write an app showing a function, the derivative of the function at a given point, and a finite-difference with <span class="math inline">\(h\)</span> defined by dragging the mouse. Click on a point and enter that point in a plot of the derivative. Checkbox to show whole derivative function.</p>
+</div>
 <div class="why" latex-data="">
 <p>Why are you using <span class="math inline">\(t\)</span> instead of <span class="math inline">\(x\)</span>?</p>
 <p>Remember, the <em>name</em> of an input can be anything at all so long as you use it consistently on the left side of <span class="math inline">\(\equiv\)</span> and on the right side. All of these are the same definition:
@@ -97,16 +121,16 @@ You can pronounce <span class="math inline">\({\cal D}_t\)</span> as “differen
 <p>FOLLOWING NEEDS TO BE SORTED OUT …</p>
 <p>From the way we’ve defined <span class="math inline">\({\cal D}_t f(t)\)</span>, it’s reasonable to assume that <span class="math inline">\(h\)</span> is a <strong><em>parameter</em></strong>: a symbol naming a numerical value that has to be specified before <span class="math inline">\({\cal D}_t\, f(t)\)</span> can be evaluated at a specific <span class="math inline">\(t\)</span>.</p>
 <div class="workedexample" latex-data="">
-<p>Find an average-rate-of-change function with respect to <span class="math inline">\(x\)</span> of <span class="math inline">\(g(x) \equiv x^2\)</span>.</p>
+<p>Find a formula for <span class="math inline">\({\cal D}_x\, g(t)\)</span>the average-rate-of-change function with respect to <span class="math inline">\(x\)</span> of <span class="math inline">\(g(x) \equiv x^2\)</span>.</p>
 <p><span class="math display">\[{\cal D}_x g(x) = \frac{(x + h)^2 - x^2}{h}\\
 = \frac{x^2 + 2 x h + h^2 - x^2}{h}\\
 = \frac{2 x h + h^2}{h} = 2 x + h\]</span></p>
 </div>
 <p>I like to think of <span class="math inline">\(h\)</span> as a kind of <em>tire iron</em>, a small tool used to stretch the bead of a bicycle tire in order to pull it over the wheel rim.</p>
 <div class="figure" style="text-align: center">
-<span id="fig:unnamed-chunk-3"></span>
+<span id="fig:unnamed-chunk-27"></span>
 <img src="www/tire-iron.png" alt="A tire iron in use" width="30%"><p class="caption">
-Figure 1.1: A tire iron in use
+Figure 7.1: A tire iron in use
 </p>
 </div>
 <p>Once the tire iron has done its job, it’s removed and you would never know that it was ever there (except that the tire is now successfully mounted on the wheel).</p>
@@ -123,124 +147,39 @@ Figure 1.1: A tire iron in use
 <p>Still in the spirit of having fun, let’s try a more serious metaphor… imagining <span class="math inline">\(h\)</span> is actually a central character in a calculus play. The character <span class="math inline">\(h\)</span> is in the middle of the story but <em>never appears in the play</em>, like the missing character Godot in the famous play <em><a href="https://en.wikipedia.org/wiki/Waiting_for_Godot#Godot">Waiting for Godot</a></em>.</p>
 <div class="workedexample" latex-data="">
 <p>We said that <span class="math inline">\(h\)</span> in the finite rate of change function <span class="math inline">\({\cal D}_x g()\)</span>, so long as <span class="math inline">\(h\)</span> is small, plays both a central role and has hardly any effect. An economizing director re-writes the play to take <span class="math inline">\(h\)</span> out of it, setting <span class="math inline">\(h=0\)</span>: a non-speaking, offstage role.</p>
-<p>We’ve already seen using legitimate algebra that <span class="math display">\[{\cal D}_x g(x) = 2 x + h\]</span> Re-writing by replacing <span class="math inline">\(h\)</span> with 0 streamlines the play, turning <span class="math inline">\(\Delta g()\)</span> from a dialog involving both <span class="math inline">\(x\)</span> and <span class="math inline">\(h\)</span> into a monologue with <span class="math inline">\(h\)</span> absent: <span class="math display">\[{\cal D}_x g(x) = 2 x\]</span>. Simple.</p>
+<p>We’ve already seen using legitimate algebra that <span class="math display">\[{\cal D}_x g(x) = 2 x + h\]</span> Re-writing by replacing <span class="math inline">\(h\)</span> with 0 streamlines the play, turning <span class="math inline">\(\Delta g()\)</span> from a dialog involving both <span class="math inline">\(x\)</span> and <span class="math inline">\(h\)</span> into a monologue with <span class="math inline">\(h\)</span> absent: <span class="math display">\[{\cal D}_x g(x) = 2 x\]</span> Simple.</p>
 <p>And yet … the director gets a letter from the Bit Players Union.</p>
 <blockquote>
 <p><em>We observe that you have eliminated the role of <span class="math inline">\(h\)</span> in the final production version of <span class="math inline">\({\cal D}_x g(x)\)</span>. This is a violation of Union regulations. Recall that the rate-of-change function <span class="math inline">\({\cal D}_x g(x)\)</span> is defined as a ratio: <span class="math display">\[{\cal D}_x g(x) \equiv \frac{g(x+h) - g(x)}{h}\]</span> Although the name <span class="math inline">\(h\)</span> does not need to appear in the argument list of <span class="math inline">\({\cal D}_x g(x)\)</span>, eliminating <span class="math inline">\(h\)</span> entirely by replacing her with zero is a <strong>division by zero error</strong> forbidden by Article 3.16§B¶2 of the Unified Laws of Arithmetic. We ask that you comply with this Article by re-instating the role of <span class="math inline">\(h\)</span> in all evaluations of <span class="math inline">\({\cal D} g(x)\)</span>.</em></p>
 </blockquote>
 <p>Reading this, the director calls her lawyer. Is there a loophole for removing <span class="math inline">\(h\)</span> without breaking the mathematical prohibition on dividing by zero?</p>
 </div>
-<p>Often, we use a function so briefly that it’s not worth naming. For instance, rather than saying</p>
+</div>
+<div id="the-derivative-operator" class="section level2" number="7.3">
+<h2>
+<span class="header-section-number">7.3</span> The derivative operator<a class="anchor" aria-label="anchor" href="#the-derivative-operator"><i class="fas fa-link"></i></a>
+</h2>
+<p>Let’s put aside for the moment the issue of the disappearing <span class="math inline">\(h\)</span>.</p>
+<div class="forinstructor" latex-data="">
+<p>Historically, such “putting aside” has incurred a great deal of criticism. In 1734, famous philosopher <a href="https://en.wikipedia.org/wiki/George_Berkeley">George Berkeley</a> (1685-1753) published a long-titled book: <em>The Analyst: A Discourse Addressed to an Infidel Mathematician: Wherein It Is Examined Whether the Object, Principles, and Inferences of the Modern Analysis Are More Distinctly Conceived, or More Evidently Deduced, Than Religious Mysteries and Points of Faith</em>. In <em>The Analyst</em>, Berkeley took issue with the arguments of that time that it is legitimate to divide by <span class="math inline">\(h\)</span> when, ultimately, <span class="math inline">\(h\)</span> will be replaced by zero. Calling <span class="math inline">\(h\)</span> an “evanescent increment,” he asked,</p>
 <blockquote>
-<p>“Consider the function <span class="math inline">\(h(x) = \sin(2\pi x/P)\)</span> and the corresponding average rate of change function <span class="math inline">\({\cal D}_x h(x)\)</span> …”</p>
+<p><em>“And what are these same evanescent Increments? They are neither finite Quantities nor Quantities infinitely small, nor yet nothing. May we not call them the ghosts of departed quantities?”</em></p>
 </blockquote>
-<p>We’ll write: <span class="math inline">\({\cal D}_x [\sin(2\pi x/P)]\)</span></p>
+<p>Interesting, Berkeley believed that the ghost of <span class="math inline">\(h\)</span> yielded correct results. His objection was that the framers of calculus had made two, canceling errors.</p>
+<blockquote>
+<p><em>“[B]y virtue of a two fold mistake you arrive, though not at science, yet truth.”</em></p>
+</blockquote>
+<p>Berkeley was saying that calculus had not yet been put on a solid logical foundation. It was to be more than a century after Berkeley’s death until this work was accomplished. Once accomplished, the results that had been claimed true all along were confirmed.</p>
+<p>I propose that we start with the results, which is what everyone <em>uses</em>. Later, we can introduce the new concepts on which the new logic was based. The names of the concepts—continuity, smoothness, singularity—are widely and effectively used in talking about functions, but the names, like many words in English, can be put to good and accurate use without memorizing the precise definitions.</p>
 </div>
-<div id="evanescent-h" class="section level2">
-<h2>
-<span class="header-section-number">1.3</span> Evanescent <span class="math inline">\(h\)</span><a class="anchor" aria-label="anchor" href="#evanescent-h"><i class="fas fa-link"></i></a>
-</h2>
-<p>The word “evanescent” means, “lasting for only a short time, then disappearing quickly and being forgotten.” (<a href="https://dictionary.cambridge.org/us/dictionary/english/evanescent">Source</a>) Another dictionary definition is “tending to vanish like vapor.” (<a href="https://www.merriam-webster.com/dictionary/evanescent">Source</a>) I’ve used metaphors for <span class="math inline">\(h\)</span>: tire irons, dramatic characters who never appear or speak. Here’s another one: the solvent in ink or paint. Ink and paint are liquid yet become solid when brushed on a surface. This can happen because the solid pigments are suspended in liquid. Exposed to the air, the liquid vaporizes and is forgotten. The solid pigment remains on the surface.</p>
-<p>We can easily evaluate an <strong><em>average rate of change function</em></strong>, for instance <span class="math inline">\({\cal D}_t g(t)\)</span> by evaluating <span class="math inline">\(g(t)\)</span> at two different inputs and dividing by the distance between the inputs:
-<span class="math display">\[{\cal D}_t g(t) = \frac{g(t+h) - g(t)}{h}\]</span>
-So if you know <span class="math inline">\(g()\)</span>, you know <span class="math inline">\({\cal D}_t g(t)\)</span>. By making <span class="math inline">\(h\)</span> very small, the “average” starts to look like “instantaneous.” Over a small interval of length <span class="math inline">\(h\)</span>, every smooth function looks like a straight line and so the average rate of change is very close to the instantaneous rate of change.</p>
-<p>We’d like to take <span class="math inline">\(h\)</span> out of the picture, imagining that it is zero but not dealing with “divide by zero” if we can avoid it. To signify this idea of neglecting <span class="math inline">\(h\)</span>, we’ll use a new notation. Rather than <span class="math inline">\({\cal D}_t g(t)\)</span> which has that pesky <span class="math inline">\(h\)</span> in it, we’ll write <span class="math inline">\(\partial_t g(t)\)</span>, using the lower-case <span class="math inline">\(\partial\)</span>. The function <span class="math inline">\(\partial_t g(t)\)</span> can properly be called the <strong><em>instantaneous rate of change</em></strong> of <span class="math inline">\(g(t)\)</span>. But everyone calls it the <strong><em>derivative of <span class="math inline">\(g(t)\)</span> with respect to <span class="math inline">\(t\)</span></em></strong> Many people leave out the “with respect to” part, which I suppose is fine for a function like <span class="math inline">\(g(t)\)</span> which has only one input. But functions constructed in modeling generally have multiple inputs, so it’s a bad habit to neglect to identify which one the derivative is “with respect to.” We’ll always sneak the “with respect to” by putting the little subscript on <span class="math inline">\(\partial_t\)</span>.</p>
-<p>We lose something by letting <span class="math inline">\(h\)</span> vaporize. There is an easy formula for <span class="math inline">\({\cal D}_t g(t)\)</span>, but without <span class="math inline">\(h\)</span> we can’t write down such a formula for the derivative. Mathematicians like to bridge the gap between <span class="math inline">\({\cal D}\)</span> and <span class="math inline">\(\partial\)</span>, that is between average and instantaneous rates of change, by writing the formula for the derivative with a little “caution” sign out front.
-<span class="math display">\[\partial_t g(t) = \lim_{h\rightarrow 0} \frac{g(t+h) - g(t)}{h}\]</span>
-The caution sign is mysterious to newcomers because it is saying something absurd: “Remember to forget <span class="math inline">\(h\)</span>.”</p>
-<p>There are people who do actual calculations with <span class="math inline">\(\lim_{h\rightarrow 0}\)</span> but nobody needs to any more unless they invent a brand-new function that can’t be written with existing functions. If you do happen to invent such a brand-new function, please remember that you should also invent the derivative of that function. Fortunately for us, the inventors of the past have done the work for us. Here’s a list of what they found for the mathematical functions that underlie our basic modeling functions:</p>
-<ul>
-<li><span class="math inline">\(\partial_x e^x = e^x\)</span></li>
-<li><span class="math inline">\(\partial_x x^0 = 0\)</span></li>
-<li>
-<span class="math inline">\(\partial_x x^p = p\, x^{p-1}\)</span>. unless <span class="math inline">\(p=0\)</span>.</li>
-<li><span class="math inline">\(\partial_x \sin(x) = \cos(x)\)</span></li>
-<li><span class="math inline">\(\partial_x \cos(x) = -\sin(x)\)</span></li>
-<li><span class="math inline">\(\partial_x \mbox{sigmoid}(x) = \mbox{hump}(x)\)</span></li>
-</ul>
-<p>We’re going to leave <span class="math inline">\(\partial_x \mbox{hump}(x)\)</span> alone for now until we have a more complete understanding of derivatives. But other than that, notice that the derivative of every one of these mathematical functions—exponential, power-law, sinusoid—is also in the set of the basic functions.</p>
-<div class="workedexample" latex-data="">
-<p>How can we know that these formulas are right? Let’s start by comparing them to the functions computed from the <span class="math inline">\({\cal D}_x\)</span> formula when <span class="math inline">\(h\)</span> is very small.</p>
-<p>Consider <span class="math inline">\(\partial_x e^x\)</span>, which is claimed to be <span class="math inline">\(e^x\)</span>. Figure @ref{fig:exp-h} plots <span class="math inline">\(e^x\)</span> (in green) as well as a function ARC<span class="math inline">\((x, h)\)</span> (<strong>A</strong>verage <strong>R</strong>ate of <strong>C</strong>hange) that takes both <span class="math inline">\(x\)</span> and <span class="math inline">\(h\)</span> as inputs: <span class="math display">\[\mbox{ARC}(x, h) \equiv {\cal D}_x e^x = \frac{e^{x+h} - e^x}{h} = e^x \frac{e^h - 1}{h}\]</span></p>
-<div class="inline-figure"><img src="CalcZ-notes_files/figure-html/exp-h-1.png" width="672"></div>
-<p>You can see at a glance that <span class="math inline">\(\mbox{ARC}(x, h)\)</span> gets closer and closer to the claimed derivative, <span class="math inline">\(e^x\)</span>, as <span class="math inline">\(h\)</span> gets smaller.</p>
-<p>A better view of things comes from recognizing that <span class="math display">\[\mbox{ARC}(x, h) = e^x \left[\frac{e^h - 1}{h}\right]\]</span>
-Let’s look at the quantity in brackets as <span class="math inline">\(h\)</span> gets small. If that goes to 1 for small <span class="math inline">\(h\)</span>, then <span class="math inline">\(\mbox{ARC}(x, h)\)</span> goes to <span class="math inline">\(e^x\)</span>.</p>
-<div class="inline-table"><table class="table table-sm">
-<thead><tr class="header">
-<th align="left"><span class="math inline">\(h\)</span></th>
-<th><span class="math inline">\(\frac{e^h - 1}{h}\)</span></th>
-</tr></thead>
-<tbody>
-<tr class="odd">
-<td align="left">1</td>
-<td>1.71828182845905</td>
-</tr>
-<tr class="even">
-<td align="left">0.1</td>
-<td>1.05170918075648</td>
-</tr>
-<tr class="odd">
-<td align="left">0.01</td>
-<td>1.00501670841679</td>
-</tr>
-<tr class="even">
-<td align="left">0.001</td>
-<td>1.00050016670838</td>
-</tr>
-<tr class="odd">
-<td align="left">0.0001</td>
-<td>1.00005000166714</td>
-</tr>
-<tr class="even">
-<td align="left">0.00001</td>
-<td>1.00000500000696</td>
-</tr>
-<tr class="odd">
-<td align="left">0.000001</td>
-<td>1.00000049996218</td>
-</tr>
-<tr class="even">
-<td align="left">0.0000001</td>
-<td>1.00000004943368</td>
-</tr>
-<tr class="odd">
-<td align="left">0.00000001</td>
-<td>0.999999993922529</td>
-</tr>
-<tr class="even">
-<td align="left">0.000000001</td>
-<td>1.00000008274037</td>
-</tr>
-</tbody>
-</table></div>
-</div>
-<p>How we
-When we are interested in an <strong><em>instantaneous rate of change function</em></strong>,</p>
-<p>YOU GOT HERE.</p>
-</div>
-<div id="the-delta-operator" class="section level2">
-<h2>
-<span class="header-section-number">1.4</span> The <span class="math inline">\(\Delta\)</span> operator<a class="anchor" aria-label="anchor" href="#the-delta-operator"><i class="fas fa-link"></i></a>
-</h2>
-<p>CHANGE THIS TO <span class="math inline">\({\cal D}\)</span> and introduce it once you have gotten rid of <span class="math inline">\(h\)</span>.</p>
-<p>Up until now, we used only functions that take numerical quantities as inputs and produce a numerical quantity as an output. It’s time now to broaden our perspective a bit.</p>
-<p>Imagine a function named <span class="math inline">\(\Delta()\)</span> defined like this:
-<span class="math display">\[\Delta(f) \equiv \frac{f(x+h) - f(x)}{h}\]</span>
-<span class="math inline">\(\Delta()\)</span> takes as input a <strong>function</strong>. You might have guessed this because the definition uses the name <span class="math inline">\(f\)</span> for the input to <span class="math inline">\(\Delta()\)</span>, but the name of an input does not matter so long as it is used consistently in the body of the function. Looking at the body, you can that the name <span class="math inline">\(f\)</span> is being used (twice!) in the position of a function’s name.</p>
-<p>For instance:</p>
-<ul>
-<li><span class="math inline">\(\Delta(\sin) = \frac{\sin(x+h) - \sin(x)}{h}\)</span></li>
-<li><span class="math inline">\(\Delta(x^2) = \frac{(x+h)^2 - x^2}{h}\)</span></li>
-<li><span class="math inline">\(\Delta(a + b x) = \frac{a + b(x + h) - \left(a + b x\right)}{h}\)</span></li>
-</ul>
-<div class="why" latex-data="">
-<p>Why did you use <span class="math inline">\(=\)</span> in the above statements rather than the <span class="math inline">\(\equiv\)</span> ?</p>
-<p><span class="math inline">\(\equiv\)</span> means “is defined as” or “is the name of.” When we wrote <span class="math display">\[\Delta(f) \equiv \frac{f(x+h) - f(x)}{h}\]</span> we were giving a name to a function. But writing <span class="math inline">\(\Delta(a + b x)\)</span> means to apply the already defined function <span class="math inline">\(\Delta\)</span> to an input, that input being the straight-line function <span class="math inline">\(a + b x\)</span>. Rather than <em>defining</em> what is <span class="math inline">\(\Delta(a + b x)\)</span> we are <em>deducing</em> it from objects that have already been defined.</p>
-</div>
-<p>What is the output of <span class="math inline">\(\Delta()\)</span>? It takes a <em>function</em> as an input and returns … a function as an output.</p>
-<p>We might choose to give a name to the output, for example fred() or betty() or, more helpfully, <span class="math inline">\(\mbox{rate}_{\sin}\)</span> or <span class="math inline">\(\Delta \sin\)</span>, but our naming conventions, particularly the use of <span class="math inline">\(x\)</span> indicate that $ is a function.</p>
-<p>In calculus, there are a handful of celebrity functions that take a function as input and return a function as output. Notice that the word “function” appeared three times in the previous sentence. To avoid this sort of sleep-inducing repetition, we’ll call such functions <strong><em>operators</em></strong>.</p>
+<p>On to the results …</p>
+<ol style="list-style-type: decimal">
+<li>Every “smooth” function <span class="math inline">\(h(x)\)</span> has a corresponding function that is its derivative <span class="math inline">\(\partial_x h(x)\)</span>.</li>
+<li>Finding the algorithm for <span class="math inline">\(\partial_x h(x)\)</span>, called <strong><em>differentiating <span class="math inline">\(h()\)</span></em></strong>, is <em>automatic</em> in the sense that it can be done by computer without human intervention or judgment.</li>
+<li>When there is an algebraic formula for <span class="math inline">\(h(x)\)</span>, the computer can find the algebraic formula for <span class="math inline">\(\partial_x h(x)\)</span>. This is called <strong><em>symbolic differentiation</em></strong>.</li>
+<li>When there is no algebraic formula for <span class="math inline">\(h()\)</span>, the computer can use <strong><em>numerical differentiation</em></strong> which involves a non-zero <span class="math inline">\(h\)</span>. The results of numerical differentiation on functions with formulas can differ subtly from the results from symbolic differentiation. Usually the difference is too small to notice, but in extreme cases it is not. It’s important for the user of numerical differentiation to know how to identify extreme cases and deal with them.</li>
+<li>The derivatives of each of the basic modeling functions (aside from <span class="math inline">\(\text{hump}()\)</span>) can be expressed in terms of a basic modeling function.</li>
+</ol>
 <blockquote>
 <p>An <strong><em>operator</em></strong> (as we will use the word) is a function that, like all functions, has an input and an output. The input is itself a function, the output is also a function, typically (but not always) different from the input.</p>
 </blockquote>
@@ -251,18 +190,34 @@ When we are interested in an <strong><em>instantaneous rate of change function</
 </li>
 </ol>
 </div>
+<div class="todo">
+<p>ROUGH ROUGH ROUGH</p>
+<p>Lidar measured distance to ground. The function value doesn’t really matter. What matters is how the value at a point relates to the values at nearby points. Seeing this difference is how you can spot the Maya ruins.</p>
+<div class="inline-figure"><img src="www/mayan-ruins.jpg" width="684"></div>
+<p>Instituto Nacional de Estadística y Geografía/Nacional Center for Airborne Laser Mapping</p>
+<p>"The map, published in 2011 by Mexico’s National Institute of Statistics and Geography, covered 4,440 square miles in the Mexican states of Tabasco and Chiapas. It was made as part of the institute’s mission to create accurate maps to be used by businesses and researchers.</p>
+<p>“Dr. Inomata learned about the map from Rodrigo Liendo, an archaeologist at the National Autonomous University of Mexico. The resolution of the map was low. But the outlines of countless archaeological sites stood out to Dr. Inomata. So far, he has used it to identify the ruins of 27 previously unknown Maya ceremonial centers that contain a type of construction that archaeologists had never seen before. These sites may hold insights into the origins of Maya civilization.”</p>
+<p><a href="https://www.nytimes.com/2019/10/08/science/archaeology-lidar-maya.html">NYTimes article</a></p>
+</div>
+
 </div>
 </div>
   <div class="chapter-nav">
-<div class="empty"></div>
-<div class="empty"></div>
+<div class="prev"><a href="functions-and-patterns.html"><span class="header-section-number">6</span> Functions and patterns</a></div>
+<div class="next"><a href="continuity-and-smoothness.html"><span class="header-section-number">8</span> Continuity and smoothness</a></div>
 </div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
     <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
-      <div id="book-on-this-page"></div>
+      <ul class="nav navbar-nav">
+<li><a class="nav-link" href="#instantaneous-rate-of-change-1"><span class="header-section-number">7</span> Instantaneous rate of change</a></li>
+<li><a class="nav-link" href="#from-average-to-instant"><span class="header-section-number">7.1</span> From average to instant</a></li>
+<li><a class="nav-link" href="#the-h-framework"><span class="header-section-number">7.2</span> The \(h\) framework</a></li>
+<li><a class="nav-link" href="#the-derivative-operator"><span class="header-section-number">7.3</span> The derivative operator</a></li>
+</ul>
 
       <div class="book-extra">
         <ul class="list-unstyled">
-          
+<li><a id="book-source" href="https://github.com/dtkaplan/CalcZ-notes/blob/master/Diff-instant.Rmd">View source <i class="fab fa-github"></i></a></li>
+          <li><a id="book-edit" href="https://github.com/dtkaplan/CalcZ-notes/edit/master/Diff-instant.Rmd">Edit this page <i class="fab fa-github"></i></a></li>
         </ul>
 </div>
     </nav>
@@ -274,7 +229,7 @@ When we are interested in an <strong><em>instantaneous rate of change function</
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>CalcZ Student Notes</strong>" was written by Daniel Kaplan. It was last built on 2021-05-13.</p>
+    <p>"<strong>CalcZ Student Notes</strong>" was written by Daniel Kaplan. It was last built on 2021-05-14.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">
