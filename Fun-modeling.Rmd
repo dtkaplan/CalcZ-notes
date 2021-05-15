@@ -1,7 +1,5 @@
 # Constructing models
 
-
-
 We turn now to using the basic modeling functions to represent real-world situations. It's important to distinguish between two basic types of model:
 
 1. ***Empirical models*** which are rooted in ***observation*** and ***data***.
@@ -62,6 +60,9 @@ ii. graphical layers and piping: Combining gf_point() and slice_plot()
 :::
 
 ## The straight-line model
+
+FIX THE FORMATING OF THE OBJECTIVES
+
 
 Objective: (Fun-4-a-1) *Construct a straight-line model that fits data*
 
@@ -347,8 +348,10 @@ Historically, careful analysis of tides led to a highly detailed, highly accurat
 
 Objectives:
 
+::: {.objectives}
 i. (Fun-4-c-1) *Use linear combination and direct multiplication of functions of one variable to produce functions of multiple variables*
 ii. (Fun-4-c-2) *Recognize that composition of functions does not itself create a function of multiple variables.*
+:::
 
 Linear combination and composition of functions are often used hand-in-hand to construct models. For instance, our model of the data from cooling water was a linear combination of a constant function and a sinusoidal function $$\mbox{temperature}(t) \equiv 25.9 + 60.7\, e^{-0.019 t}$$
 Similarly, our model from the Providence tide data was 
@@ -359,7 +362,8 @@ Each of these models was a function of one input. (Coincidentally, the input in 
 
 But linear combinations are a powerful way to construct functions of multiple inputs. This can be as simple as $$h(x, t) \equiv A + B f(x) + C g(t)$$
 
-Example: Earlier we introduced a model of natural gas consumption (ccf) in the author's home during a month as a function of the average temperature during that month. Using $T$ for temperature, the model, constructed from the record of utility bills, was: $$ccf(T) \equiv 293.1 - 4.62 T$$ the blue line in Figure \@ref(fig:Fun-1-c-1).
+::: {.workedexample}
+Earlier we introduced a model of natural gas consumption (ccf) in the author's home during a month as a function of the average temperature during that month. Using $T$ for temperature, the model, constructed from the record of utility bills, was: $$ccf(T) \equiv 293.1 - 4.62 T$$ the blue line in Figure \@ref(fig:Fun-1-c-1).
 
 ```{r Fun-1-c-1, echo=FALSE}
 gf_point(ccf ~ temp, data = Home_utilities) %>%
@@ -381,6 +385,7 @@ The coefficients suggest that more electricity use corresponds to less natural g
 mod <- lm(ccf ~ temp + kwh, 
    data = Home_utilities %>% filter(temp < 59, ccf > 20))
 ```   
+:::
 
 Although linear combinations of functions of different variables are a very common way of constructing functions of multiple variables, function ***composition*** is useless when it comes to this. 
 
@@ -401,16 +406,16 @@ wave_packet <- function(x, A=1, center = 0, width = 5, P=1, phase = 0) {
 slice_plot(wave_packet(x, A=2, center=3, width  = 4, P  = 2 ) ~ x, 
            domain(x = c(-15, 15)), npts = 500)
 ```
+:::
 
-
-
-**Example**: A simple but powerful and general framework for constructing functions of two variables to match data or to assemble into one function facts about a relationship among three variables is the linear combination of four simple functions: $$a_0 + a_x\, x + a_y\, y + a_{xy}\, xy$$
+::: {.workedexample}
+A simple but powerful and general framework for constructing functions of two variables to match data or to assemble into one function facts about a relationship among three variables is the linear combination of four simple functions: $$a_0 + a_x\, x + a_y\, y + a_{xy}\, xy$$
 The coefficients in the linear combination are $a_0$, $a_x$, $a_y$, and $a_{xy}$. Those names were selected to make it easier to keep track of which coefficient scales which function, but ultimately they are just scalars and could have been called $a, b, c$, and $d$.
 
 The basis function $g_4(x, y) \equiv x y$ is called an ***interaction term*** and arises very often in models of phenemona such as the spread of epidemics, the population dynamics of predator and prey animals, and the rates of chemical reactions
 . 
 
-
+:::
 
 
 
@@ -429,14 +434,15 @@ This can be seen as a composition of a function $f()$ together with a linear com
 
 ## Piecewise models
 
-Objectives:
+::: {.objectives}
+```{r echo=FALSE, results="asis"}
+state_objective("Fun-4-b-4a", "Identify graphs of a piecewise linear function.")
+state_objective("Fun-1C-d", "Construct a hock-stick function by piecewise combination of a constant function and a straight-line function with non-zero slope.")
+state_objective("Fun-4-b-4b", "Recognize traditional curly-brace notation for piecewise functions.")
+state_objective("Fun-4-b-4c", "Be able to create a piecewise function in R.")
+state_objective("Fun-4-b-4d", "Distinguish between continuous and discontinuous functions")
+```
+:::
 
-i. (Fun-4-b-4a) *Identify graphs of a piecewise linear function*
-ii. (Fun-4-b-4b) *Recognize traditional curly-brace notation for piecewise functions*
-iii. (Fun-4-b-4c) *Be able to create a piecewise function in R*
-iv. (Fun-4-b-4d) *Distinguish between continuous and discontinuous functions*
-v. (Fun-4-b-4e) *Identify "division by zero" as a source of interruption in the domain of a function. Redefine the function to avoid the disruption*
-
-Piecing together functions
 
 **Example: Piecewise functions in machine learning**

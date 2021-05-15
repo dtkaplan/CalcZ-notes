@@ -1,9 +1,12 @@
 # Dimensions and units
 
-Objectives:
+::: {.objectives}
+```{r echo=FALSE, results="asis"}
+state_objective("Fun-10e", "Know when [mathematical] operations with ~~units~~ [dimension] are valid or undefined.")
+state_objective("Fun-10f", "Use dimensional arithmetic to solve for the dimensions of an unknown term")
+```
+:::
 
-#. (Fun-10e) *Know when [mathematical] operations with ~~units~~ [dimension] are valid or undefined.*
-#. (Fun-10f) *Use dimensional arithmetic to solve for the dimensions of an unknown term*
 
 Next time you're at a family gathering with your 10-year old cousin, give her the following math quiz.
 
@@ -41,15 +44,15 @@ Evidently, it makes sense to *multiply* and *divide* different types of quantiti
 
 This section is about the mathematical structure of combining quantities; which kinds of mathematical operations are legitimate and which are not. 
 
+## Mathematics of quantity
 
-
-
-
-
-
-i. (Fun-10a) *Know the definition of a fundamental dimension and the notation for the most common ones (definition page 241-242)*
-ii. (Fun-10b) *Understand how derived dimensions are formed from fundamental dimensions (definition page 241-242)*
-iii. (Fun-10c) *Know that units are ways of measuring dimensions and derived dimensions.*
+::: {.objectives}
+```{r echo=FALSE, results="asis"}
+state_objective("Fun-10a", "Know the definition of a fundamental dimension and the notation for the most common ones (definition page 241-242)")
+state_objective("Fun-10b", "Understand how derived dimensions are formed from fundamental dimensions (definition page 241-242)")
+state_objective("Fun-10c", "Know that units are ways of measuring dimensions and derived dimensions.")
+```
+:::
 
 The first step in understanding the mathematics of quantity is to make an absolute distinction between two concepts that, in everyday life, are used interchangeably: ***dimension*** and ***unit***.
 
@@ -87,7 +90,12 @@ You will hear it said that a kilogram is 2.2 pounds. That's not strictly true. A
 
 It's also potentially confusing that sometimes different dimensions are used to get at the same idea. For instance, the same car that gets 35 miles / gallon in the US (dimension $\text{L}/\text{L}^3 = 1/\text{L}^2$) will use 6.7 liters per 100 kilometers ($\text{L}^3 / L = \text{L}^2$) in Europe. Same car. Same fuel. Different conventions using different dimensions.
 
-#. (Fun-10d) *Understand the bracket notation and how it works with dimensional arithmetic.*
+::: {.objectives}
+```{r echo=FALSE, results="asis"}
+state_objective("Fun-10d", "Understand the bracket notation and how it works with dimensional arithmetic.")
+```
+:::
+
 
 Keeping track of the various compound dimensions can be tricky. For many people, it's easier to keep track of the physical relationships involved and use that knowledge to put together the dimensions appropriately. Often, the relationship can be described using specific calculus operations, so knowing dimensions and units helps you use calculus successfully. 
 
@@ -130,7 +138,19 @@ Non-physics dimensions
 "people"/"passengers"/"customers"/"patients"/"children"/"students"/"professors" --- these are different dimensions and not really units: no fixed translation between them as you would have with units.
 "money": Units are dollars (in many varieties: US, Canadian, Australian, New Zealand), euros, yuan (synonym: renminbi), yen, pounds (many varieties: UK, Egypt, Syria, Lebanon, Sudan and South Sudan), pesos (many varieties), dinar, franc (Swiss, CFA), rand, riyal, rupee, won, and many others. Conversion rates depend on situation and national policy.
 
+## Naked core functions
 
+::: {.underconstructon}
+The basic modeling functions such as $e^{kx}$,  $\sin(\frac{2 \pi}{P} x)$, $\text{hump}(x, \text{center}, \text{spread})$, $\text{sigmoid}(x, \text{center}, \text{spread})$ did not come in to the world fully clothed with parameters. The clothes are needed to deal with a modeling necessity: inputs to functions used for modeling are quantities with dimension and units.
+
+Underneath the clothing of basic modeling function, you'll find what we will frivolously call the ***naked core functions***. These are without parameters: $e^x$, $\sin(x)$, $\text{hump}(x)$, $\text{sigmoid}(x)$. For each of these functions, $x$ must be a ***pure number***, that is, a quantity without physical dimensions.
+
+DEVELOP THIS: $e^x$ and $\sin(x)$, when used for modeling are composed with a proportionality function. $\text{hump}()$ and $\text{sigmoid}()$ are composed with a straight-line function.
+
+The proportionality and straight-line functions handle the conversion from dimensionful quantities with units into the pure numbers.
+
+HOW THE HUMP AND SIGMOID GOT THEIR PARAMETERS: WE'RE ABSTRACTING FROM A COMPLICATED FORMULA, so it's easier to call them out by name.
+:::
 
 
 ## Notes from 2020

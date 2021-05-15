@@ -1,5 +1,3 @@
-# The Basic Modeling Functions
-
 # Modeling with functions
 
 A central task in solving problems with mathematical modeling is the construction of appropriate functions to capture important features of the real-world situation you are working with. You've seen the notation that we're going to use to describe functions to either the computer or the mathematical reader, and learned some of the terminology: function name, inputs, output, arguments, argument names, parameters, default values for parameters, algorithm, `makeFun()`, tilde expressions, and so on.
@@ -35,11 +33,14 @@ While we're making the list, we'll add two functions that appear in often in com
 
 ## The straight-line family
 
-    i. (Fun-1C-a) *Review (from previous math classes) the parameters of the straight-line function: y-intercept and slope.*
-    ii. (Fun-1C-b) *Use a straight-line function in a modeling context.*
-    iii. (Fun-1C-c) *Spot discrepancies of data from a straight-line model.*
-    iv. (Fun-1C-d) *Construct a hock-stick function by piecewise combination of a constant function and a straight-line function with non-zero slope.*
-
+::: {.objectives}
+```{r echo=FALSE, results="asis"}
+state_objective("Fun-1C-a", "Review (from previous math classes) the parameters of the straight-line function: y-intercept and slope.")
+state_objective("Fun-1C-b", "Use a straight-line function in a modeling context.")
+state_objective("Fun-1C-c", "Spot discrepancies of data from a straight-line model.")
+```
+:::
+  
 We'll start with a simple function that appears throughout calculus and mathematical modeling. You probably have heard this function called a "linear function," but we prefer to call it a "straight-line" function since its graph is a straight line. (Aside for the mathematically experienced: Strictly speaking, what's called the linear function does not have the technical property of ***linearity***, which in mathematics means something subtly different than "straight line." We'll need the mathematical property of linearity later in CalcZ.)
 
 Let's define a function $g()$ which is a straight-line function: $$g(x) \equiv m x + b$$ You likely have worked a lot with this kind of function in your previous math courses. If so, recall that there are two parameters, $m$ and $b$ called the ***slope*** and ***y-intercept*** respectively.
@@ -172,10 +173,12 @@ Write CONTENT FOR Fun-2c
 
 ## Power-law family
 
-Objectives:
-
-#. (Fun-2d) Distinguish between exponential functions and power-law functions.
-#. (Fun-2e) Relate power-law functions to physical quantities.
+::: {.objectives}
+```{r echo=FALSE, results="asis"}
+state_objective("Fun-2d", "Distinguish between exponential functions and power-law functions.")
+state_objective("Fun-2e", "Relate power-law functions to physical quantities.")
+```
+:::
 
 Exponential functions such as $f(t) \equiv e^{kt}$ or $f_2(t) \equiv 2^{k_2 t}$ and $f_{10}(t) \equiv 10^{k_{10} t}$ (all of which can be arranged to produce exactly the same output for corresponding values of $k$, $k_2$, and $k_{10}$) can be remembered as such because the function **input** appears as an *exponent* in the function formula.
 
@@ -223,7 +226,11 @@ SHOW SOME ALLOMETRIC GRAPH
 
 ## Logarithm and magnitude
 
-Objective (Fun-3a1) *Understand a logarithm (base-10) as signifying the magnitude of a number by the digit count. See $\log_2()$ and $\log_{10}()$ as counting digits in base-2 and -10 respectively.* 
+::: {.objectives}
+```{r echo=FALSE, results="asis"}
+state_objective("Fun-3a1", "Understand a logarithm (base-10) as signifying the magnitude of a number by the digit count.") state_objective("Fun-magnitude", "See $\log_2()$ and $\log_{10}()$ as counting digits in base-2 and -10 respectively.")
+```
+:::
 
 
 Let's talk about logs. For many students, logarithms are the breaking point in their mathematical studies. I've encountered well educated professionals who are evidently afraid of logarithms and take the word itself as a promise that what's coming will be hard to understand. I suspect that some of this comes from being introduced to logarithms as a means of dealing algebraically with power-law and exponential functions.
@@ -322,7 +329,11 @@ my_log <- function(x) {
 
 ## Sinusoid family
 
-Objective (Fun-3B-a) *Become familiar with the sinusoid functions and the period parameter. Be able to identify the period from the graph of a sinusoid-like function.*
+::: {.objectives}
+```{r echo=FALSE, results="asis"}
+state_objective("Fun-3B-a", "Become familiar with the sinusoid functions and the period parameter. Be able to identify the period from the graph of a sinusoid-like function.")
+```
+:::
 
 Onward to our next basic modeling function: the ***sinusoid***. The word "sinusoid" may bring to mind your studies of trigonometry. As you know, "trigonometry" is the study and measurement of triangles, that is, polygons with three sides. Admittedly, the word "trigon" does not bring to mind a triangle as well as the words "pentagon," "hexagon," and "octagon" are associated with 5-, 6-, and 8-sided polygons. 
 
@@ -353,11 +364,13 @@ A more general parameterization of a sinusoid is $\sin(2\pi(t-t_0)/P)$. $P$ is s
 
 ## Humps and sigmoids
 
-Objectives 
-
-i. (Fun-3B-a) *Recognize general graphical features of sigmoidal functions and their associated hump functions*
-#. (Fun-3B-b) *Explain why the slope function of a sigmoidal function is a hump function*
-#. (Fun-3B-c) OPTIONAL *Be aware of different formulations for the hump sigmoidal functions.*
+::: {.objectives}
+```{r echo=FALSE, results="asis"}
+state_objective("Fun-3B-a", "Recognize general graphical features of sigmoidal functions and their associated hump functions")
+state_objective("Fun-3B-b", "Explain why the slope function of a sigmoidal function is a hump function.")
+state_objective("Fun-3B-c", "OPTIONAL Be aware of different formulations for the hump sigmoidal functions.")
+```
+:::
 
 Our last two basic modeling functions express an important idea in modeling: ***localness***. To put this in concrete terms, imagine creating a function to depict the elevation above sea level of a long road as a function of distance in miles, $x$, from the start of the road. If the road were level at 1200 feet elevation, a sensible model would be $\mbox{elevation}(x) = 1200 \text{ft}$. If the road were gently sloping, a better model would be $\mbox{elevation}(x) = 1200 + 3 x$. 
 
