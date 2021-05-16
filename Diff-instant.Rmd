@@ -8,6 +8,7 @@ state_objective("Deriv-2b",
                 "Understand how calculating the slope (using a small value of h) of a function reflects the instantaneous rate of change of the function at that point."
 )
 ```
+:::
 
 You have known how to calculate an average rate of change for a long time. But possibly you don't yet fully know what the **use** of such a calculation is other than to help you pass a math test. In this section, we're going to show how to calculate the ***instantaneous rate of change*** function and show some of the many things this is useful for.
 
@@ -48,12 +49,7 @@ Now we are going to make a small, subtle, and important change. Instead of think
 Our convention will be to use two additional components in the names of average-rate-of-change functions. The first component is to lead with a "D" in a caligraphic font: $\cal D$. The second component will be the name of the input whose interval is being used in calculating the rate of change. So ...
 
 $${\cal D}_t\, f(t) \equiv \frac{f(t + h) - f(t)}{h}$$
-You can pronounce ${\cal D}_t$ as "difference with respect to $t$." But remember that the function name is the whole deal, ${\cal D}_t\, f()$, which is to be read as "difference with respect to $t$ of $f()$." Admittedly a long name. Don't be surprised later when we start using *nicknames* like Liz (for Elizabeth) or Bill (for William). For instance, later we'll save ink and breath by using the nickname $\dot{f}()$ instead of ${\cal D}_t\, f()$.
-
-
-
-FOLLOWING NEEDS TO BE SORTED OUT ...
-
+You can pronounce ${\cal D}_t$ as "difference with respect to $t$." But remember that the function name is the whole deal, ${\cal D}_t\, f()$, which is to be read as "difference with respect to $t$ of $f()$." Admittedly a long name. Don't be surprised later when we start using *nicknames* like Liz (for Elizabeth) or Bill (for William). For instance, later we'll save ink and breath by using the nickname $\dot{f}()$ instead of ${\cal D}_t\, f()$.
 
 From the way we've defined ${\cal D}_t f(t)$, it's reasonable to assume that $h$ is a ***parameter***: a symbol naming a numerical value that has to be specified before ${\cal D}_t\, f(t)$ can be evaluated at a specific $t$. 
 
@@ -181,7 +177,7 @@ Science generally describes relationships between different things in the natura
 Which BMF is the ~~~child~~~ derivative of the exponential function?
 
 We can turn the crank with the `D()` function.
-```{r}
+```{r warning=FALSE}
 child_of_exp <- D(exp(x) ~ x)
 slice_plot(child_of_exp(x) ~ x, domain(x=c(-2, 2)))
 slice_plot(child_of_exp(x) ~ x, domain(x=c(-2, 2))) %>%

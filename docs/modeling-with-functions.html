@@ -93,6 +93,8 @@
 <li><a class="" href="walks-and-brownian-motion.html"><span class="header-section-number">31</span> Walks and Brownian Motion**</a></li>
 <li class="book-part">Block 6: Decisions with calculus</li>
 <li><a class="" href="simple-comparisons-and-reductions-npv-and-expected-value.html"><span class="header-section-number">32</span> Simple Comparisons and reductions (NPV and expected value)</a></li>
+<li class="book-part">Appendices</li>
+<li><a class="" href="objectives.html"><span class="header-section-number">A</span> Objectives</a></li>
 </ul>
 
         <div class="book-extra">
@@ -135,10 +137,19 @@ Figure 4.1: <a href="https://www.mardens.com/what-we-sell/hardware/">Source</a> 
 <h2>
 <span class="header-section-number">4.1</span> The straight-line family<a class="anchor" aria-label="anchor" href="#the-straight-line-family"><i class="fas fa-link"></i></a>
 </h2>
-<pre><code>i. (Fun-1C-a) *Review (from previous math classes) the parameters of the straight-line function: y-intercept and slope.*
-ii. (Fun-1C-b) *Use a straight-line function in a modeling context.*
-iii. (Fun-1C-c) *Spot discrepancies of data from a straight-line model.*
-iv. (Fun-1C-d) *Construct a hock-stick function by piecewise combination of a constant function and a straight-line function with non-zero slope.*</code></pre>
+<div class="objectives">
+<ol>
+<li>
+<strong>[Fun-1C-a]</strong> <em>Review (from previous math classes) the parameters of the straight-line function: y-intercept and slope.</em>
+</li>
+<li>
+<strong>[Fun-1C-b]</strong> <em>Use a straight-line function in a modeling context.</em>
+</li>
+<li>
+<strong>[Fun-1C-c]</strong> <em>Spot discrepancies of data from a straight-line model.</em>
+</li>
+</ol>
+</div>
 <p>We’ll start with a simple function that appears throughout calculus and mathematical modeling. You probably have heard this function called a “linear function,” but we prefer to call it a “straight-line” function since its graph is a straight line. (Aside for the mathematically experienced: Strictly speaking, what’s called the linear function does not have the technical property of <strong><em>linearity</em></strong>, which in mathematics means something subtly different than “straight line.” We’ll need the mathematical property of linearity later in CalcZ.)</p>
 <p>Let’s define a function <span class="math inline">\(g()\)</span> which is a straight-line function: <span class="math display">\[g(x) \equiv m x + b\]</span> You likely have worked a lot with this kind of function in your previous math courses. If so, recall that there are two parameters, <span class="math inline">\(m\)</span> and <span class="math inline">\(b\)</span> called the <strong><em>slope</em></strong> and <strong><em>y-intercept</em></strong> respectively.</p>
 <p>The straight-line function might be thought of as the <em>default</em> modeling function. If you want to describe a relationship between two quantities, using the straight-line function can often be just what’s required.</p>
@@ -164,7 +175,7 @@ iv. (Fun-1C-d) *Construct a hock-stick function by piecewise combination of a co
 <p>Exercise: Compare the straight-line model fitted to <em>all</em> the ccf data to the model fitted to data where the temperature was less than 60 degrees. Implement as <code>heating_ccf(temp)</code></p>
 <p>Exercise: Make a straight-line model for the energy used for cooking and heating. Implement as <code>other_ccf(temp)</code></p>
 <p>Exercise: Piece together the two models to make a more comprehensive model of energy use. Show the computer implementation of this function.</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">all_ccf</span> <span class="op">&lt;-</span> <span class="fu">makeFun</span><span class="op">(</span>
               <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="va">temp</span> <span class="op">&lt;</span> <span class="fl">60</span>, 
                      <span class="fu">heating_ccf</span><span class="op">(</span><span class="va">temp</span><span class="op">)</span> <span class="op">+</span> <span class="fu">other_ccf</span><span class="op">(</span><span class="va">temp</span><span class="op">)</span>,
@@ -196,7 +207,13 @@ Some features of the members of the exponential family <span class="math inline"
 <li>When <span class="math inline">\(k &gt; 0\)</span>, the value of <span class="math inline">\(g(x)\)</span> becomes very small when <span class="math inline">\(x\)</span> is negative but large (that is, to the left). When <span class="math inline">\(k &lt; 0\)</span>, the value <span class="math inline">\(g(x)\)</span> becomes very small when <span class="math inline">\(x\)</span> is positive and large. A way to say this in symbols is that, for negative <span class="math inline">\(k\)</span>, the limit as <span class="math inline">\(x \rightarrow \infty\)</span> is zero. Similarly, for positive <span class="math inline">\(k\)</span>, the limit <span class="math inline">\(x \rightarrow -\infty\)</span> is zero. We use the word <strong><em>asymptotic</em></strong> to denote such limits.</li>
 </ul>
 <p>Notice that as the value of <span class="math inline">\(g(x) \rightarrow 0\)</span> the function gets flatter. That is, as <span class="math inline">\(g(x) \rightarrow 0\)</span>, the slope of <span class="math inline">\(g(x)\)</span> also goes to zero. And when <span class="math inline">\(g(x)\)</span> is large, the slope is also large and either positive or negative depending on <span class="math inline">\(k\)</span>.</p>
-<p>Objective (Fun-2b) <em>Know that exponential functions have the property that their slope (rate of change) at each input is proportional to the height of the function at that same input. And that the slopes approach zero in one of the directions</em></p>
+<div class="objectives">
+<ol>
+<li>
+<strong>[Fun-2b]</strong> <em>Know that exponential functions have the property that their slope (rate of change) at each input is proportional to the height of the function at that same input. And that the slopes approach zero in one of the directions.</em>
+</li>
+</ol>
+</div>
 <p>Look back at Figure <a href="#fig:Fun-2a-3"><strong>??</strong></a>.</p>
 <p>Clearly the slope of each of the functions is different for different values of the input <span class="math inline">\(x\)</span>. Better to say this using function language: The slope of the exponential function <span class="math inline">\(f(x)\)</span> is itself a function of <span class="math inline">\(x\)</span>.</p>
 <p>With this sort of language in mind, we can return to the description of the slope of a straight-line function and say any of these: “the slope of the straight line function <span class="math inline">\(g(x) \equiv m x + b\)</span> is <em>not</em> a function of <span class="math inline">\(x\)</span>” or “the slope of <span class="math inline">\(g(x)\)</span> is constant with respect to <span class="math inline">\(x\)</span>,” or “the slope of <span class="math inline">\(g(x)\)</span> is a <strong><em>constant function</em></strong> with respect to <span class="math inline">\(x\)</span>. A”constant function" is one whose output does not depend on the input, for instance <span class="math inline">\(\text{const}(x) = 7\)</span>. (In terms of an office building, a constant function is a building where the worker at every door gives exactly the same response, here 7.)</p>
@@ -211,8 +228,14 @@ Look carefully at the term <span class="math inline">\((e^h - 1)/h\)</span>. Not
 <p>EXERCISE: Compute <span class="math inline">\((e^h - 1)/h\)</span> for <span class="math inline">\(h=2, 1, .1, .01, .001\)</span>. Describe what happens. (We might write, “As <span class="math inline">\(h \rightarrow 0\)</span>, the quantity <span class="math inline">\(\frac{e^h - 1}{h} \rightarrow 1\)</span>.”)</p>
 <p>The exponential function is particularly useful when the quantity we want to model shows <strong><em>constant proportional increase</em></strong>. Many quantities in everyday life are this way. For instance, if you get an increase in salary you typically say something like “a 3% increase.” The population growth of a country is often presented as “percent per year.” Inflation in the price of goods is similarly described in percent per year. Interest on money in a bank savings account is also described as percent per year. But if you have the bad fortune to owe money to a loan shark, the proportional increase might be described as “percent per month” or “percent per week.”</p>
 <p>EXERCISE: Go back to Figure <a href="#fig:Fun-2a-2"><strong>??</strong></a> and calculate the <strong><em>percent increase</em></strong> in the output of <span class="math inline">\(g(x)\)</span> when <span class="math inline">\(x\)</span> is increased by one unit. LEAD THEM THROUGH DOING THIS FROM x=0 to 1, and then for other starting points.</p>
-<p>Objective (Fun-2c) <em>Know how changing the values of C and k affect the properties of the exponential model <span class="math inline">\(g(x) \equiv C e^{kt}\)</span> (table page 62)</em></p>
-<p>Objective Revised (Fun-2c) <em>Understand that <span class="math inline">\(e^{kt}\)</span>, <span class="math inline">\(2^{k_2 t}\)</span>, and <span class="math inline">\(10^{k_{10} t}\)</span> are all the same function, when <span class="math inline">\(k = k_2 \ln(2) = k_{10} \ln(10)\)</span>. Relate <span class="math inline">\(k_2\)</span> to the doubling time and <span class="math inline">\(k_{10}\)</span> to the time to increase 10-fold.</em></p>
+<div class="objectives">
+<ol>
+<li>
+<strong>[Fun-2c]</strong> <em>Understand that <span class="math inline">\(e^{kt}\)</span>, <span class="math inline">\(2^{k_2 t}\)</span>, and <span class="math inline">\(10^{k_{10} t}\)</span> are all the same function, when <span class="math inline">\(k = k_2 \ln(2) = k_{10} \ln(10)\)</span>. Relate <span class="math inline">\(k_2\)</span> to the doubling time and <span class="math inline">\(k_{10}\)</span> to the time to increase 10-fold.</em>
+</li>
+</ol>
+<p>Revised from “Know how changing the values of C and k affect the properties of the exponential model <span class="math inline">\(g(x) \equiv C e^{kt}\)</span> (table page 62)”</p>
+</div>
 <div class="todo">
 <p>Write CONTENT FOR Fun-2c</p>
 </div>
@@ -221,11 +244,16 @@ Look carefully at the term <span class="math inline">\((e^h - 1)/h\)</span>. Not
 <h2>
 <span class="header-section-number">4.3</span> Power-law family<a class="anchor" aria-label="anchor" href="#power-law-family"><i class="fas fa-link"></i></a>
 </h2>
-<p>Objectives:</p>
+<div class="objectives">
 <ol>
-<li>(Fun-2d) Distinguish between exponential functions and power-law functions.</li>
-<li>(Fun-2e) Relate power-law functions to physical quantities.</li>
+<li>
+<strong>[Fun-2d]</strong> <em>Distinguish between exponential functions and power-law functions.</em>
+</li>
+<li>
+<strong>[Fun-2e]</strong> <em>Relate power-law functions to physical quantities.</em>
+</li>
 </ol>
+</div>
 <p>Exponential functions such as <span class="math inline">\(f(t) \equiv e^{kt}\)</span> or <span class="math inline">\(f_2(t) \equiv 2^{k_2 t}\)</span> and <span class="math inline">\(f_{10}(t) \equiv 10^{k_{10} t}\)</span> (all of which can be arranged to produce exactly the same output for corresponding values of <span class="math inline">\(k\)</span>, <span class="math inline">\(k_2\)</span>, and <span class="math inline">\(k_{10}\)</span>) can be remembered as such because the function <strong>input</strong> appears as an <em>exponent</em> in the function formula.</p>
 <p>There is a very different kind of function, called a <strong><em>power-law function</em></strong>, which is different from an exponential, and has different uses, yet is very often confused. In a power-law function, the input is being raised to a power, for example, <span class="math inline">\(g(t) \equiv t^2\)</span>. The exponent is a parameter and the input is being raised to the indicated power, for instance 2 for <span class="math inline">\(g(t)\)</span>.</p>
 <p>Figure <a href="#fig:Fun-2e-1"><strong>??</strong></a> shows a few members of the power-law family with different exponents, both positive and negative. For contrast, one exponential function is also drawn (in green).</p>
@@ -296,7 +324,16 @@ Look carefully at the term <span class="math inline">\((e^h - 1)/h\)</span>. Not
 <h2>
 <span class="header-section-number">4.4</span> Logarithm and magnitude<a class="anchor" aria-label="anchor" href="#logarithm-and-magnitude"><i class="fas fa-link"></i></a>
 </h2>
-<p>Objective (Fun-3a1) <em>Understand a logarithm (base-10) as signifying the magnitude of a number by the digit count. See <span class="math inline">\(\log_2()\)</span> and <span class="math inline">\(\log_{10}()\)</span> as counting digits in base-2 and -10 respectively.</em></p>
+<div class="objectives">
+<ol>
+<li>
+<strong>[Fun-3a1]</strong> <em>Understand a logarithm (base-10) as signifying the magnitude in terms of the number of digits.</em>
+</li>
+<li>
+<strong>[Fun-magnitude]</strong> <em>See <span class="math inline">\(\log_2()\)</span> and <span class="math inline">\(\log_{10}()\)</span> as counting digits in base-2 and -10 respectively.</em>
+</li>
+</ol>
+</div>
 <p>Let’s talk about logs. For many students, logarithms are the breaking point in their mathematical studies. I’ve encountered well educated professionals who are evidently afraid of logarithms and take the word itself as a promise that what’s coming will be hard to understand. I suspect that some of this comes from being introduced to logarithms as a means of dealing algebraically with power-law and exponential functions.</p>
 <p>If logarithms are a source of anxiety because of their association with algebra and concerns about what use they could otherwise be for, take a step back, close your eyes, and we’ll start over, but more gently.</p>
 <p>Undoubtedly you are comfortable with the standard way of writing numbers, for instance 33 or 512 or 1051. Elementary school students master the comparison of such numbers to one another. Which is greater: 512 or 33? Which is less, 1051 or 512? You can answer such questions at a glance because the comparison here can be accomplished simply by counting the number of digits. 1051 has four digits, so it is larger than the three-digit number 512. There are two digits in 33, so it smaller than 512. When two numerals have the same number of digits—say, 337 and 512—you can’t answer the “greater than” question by simple counting. Instead, you proceed from left to write and compare the number in each place. So, for 512 and 337, you compare 5 to 3 and … since 5 is greater than 3, 512 is greater than 337. If the two leading digits are the same, go on to the next digit and so on for all the digits in turn.</p>
@@ -341,7 +378,7 @@ The typographically shorter number is the largest, and vice versa. Even when two
 <div class="inline-figure"><img src="www/Briggs-starttable.png" width="100%" style="display: block; margin: auto;"></div>
 <p>The table was called the <em>Chilias prima</em>, Latin for “First group of one thousand.” True to its name, the table gives the output of digits() for the inputs 1, 2, 3, …, 998, 999, 1000. For instance, as you can see from the top row of the right-most column, digits(67) = 1.82607480270082.</p>
 <p>In everyday speech, 67 has two digits. The authors of <em>Chilias prima</em> sensibly didn’t use the name “digit()” for the function. They chose something more abstract: “logarithm()”. Nowadays, this function is named <span class="math inline">\(\log_{10}()\)</span>. In R, the function is called <code><a href="https://rdrr.io/r/base/Log.html">log10()</a></code>.</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/Log.html">log10</a></span><span class="op">(</span><span class="fl">67</span><span class="op">)</span></code></pre></div>
 <pre><code>## [1] 1.826075</code></pre>
 <p>Our main use for <span class="math inline">\(\log_{10}()\)</span>/<code><a href="https://rdrr.io/r/base/Log.html">log10()</a></code> will be to count digits in order to quickly compare the magnitude of numbers. The difference digits(<span class="math inline">\(x\)</span>) - digits(<span class="math inline">\(y\)</span>) tells how many factors of 10 separate the magnitude of the <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span>.</p>
@@ -352,7 +389,7 @@ The typographically shorter number is the largest, and vice versa. Even when two
 <p>EXERCISE: How many binary digits in 64? in 127?</p>
 <p>EXERCISE: <span class="math inline">\(\log_{10}(x)\)</span> and <span class="math inline">\(\log_2(x)\)</span> are proportional to one another. What’s the constant of proportionality?</p>
 <p>POSSIBLE COMPUTATIONAL ENRICHMENT: AN EXAMPLE OF A FUNCTION DESCRIBED AS A COMBINATION OF A FORMULA AND A COMPUTER ALGORITHM</p>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">small_log</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span>
   <span class="kw">if</span> <span class="op">(</span><span class="va">x</span> <span class="op">&lt;</span> <span class="fl">.99</span> <span class="op">||</span> <span class="va">x</span> <span class="op">&gt;</span> <span class="fl">1.01</span><span class="op">)</span> <span class="kw"><a href="https://rdrr.io/r/base/stop.html">stop</a></span><span class="op">(</span><span class="st">"x must be in range 0.99 to 1.01."</span><span class="op">)</span>
   <span class="va">x</span> <span class="op">&lt;-</span> <span class="va">x</span> <span class="op">-</span> <span class="fl">1</span>
@@ -370,7 +407,13 @@ The typographically shorter number is the largest, and vice versa. Even when two
 <h2>
 <span class="header-section-number">4.5</span> Sinusoid family<a class="anchor" aria-label="anchor" href="#sinusoid-family"><i class="fas fa-link"></i></a>
 </h2>
-<p>Objective (Fun-3B-a) <em>Become familiar with the sinusoid functions and the period parameter. Be able to identify the period from the graph of a sinusoid-like function.</em></p>
+<div class="objectives">
+<ol>
+<li>
+<strong>[Fun-3B-a]</strong> <em>Become familiar with the sinusoid functions and the period parameter. Be able to identify the period from the graph of a sinusoid-like function.</em>
+</li>
+</ol>
+</div>
 <p>Onward to our next basic modeling function: the <strong><em>sinusoid</em></strong>. The word “sinusoid” may bring to mind your studies of trigonometry. As you know, “trigonometry” is the study and measurement of triangles, that is, polygons with three sides. Admittedly, the word “trigon” does not bring to mind a triangle as well as the words “pentagon,” “hexagon,” and “octagon” are associated with 5-, 6-, and 8-sided polygons.</p>
 <p>Trigonometry is a standard part of the high-school mathematics curriculum, so I’m going to assume that you know the names of various trigonometric functions, e.g. <span class="math inline">\(\sin()\)</span>, <span class="math inline">\(\cos()\)</span>, <span class="math inline">\(\tan()\)</span>, and a host of others that have names that are easily confused or forgotten.</p>
 <p>Trigonometry has always been an important mathematical topic because of its use in surveying (George Washington was a trained surveyor), navigation, building and design, and other trades. It is still well worthwhile for any technical worker to master the use of trigonometry. But this is not why it’s coming up here in CalcZ.</p>
@@ -387,15 +430,19 @@ The typographically shorter number is the largest, and vice versa. Even when two
 <h2>
 <span class="header-section-number">4.6</span> Humps and sigmoids<a class="anchor" aria-label="anchor" href="#humps-and-sigmoids"><i class="fas fa-link"></i></a>
 </h2>
-<p>Objectives</p>
-<ol style="list-style-type: lower-roman">
-<li>(Fun-3B-a) <em>Recognize general graphical features of sigmoidal functions and their associated hump functions</em>
+<div class="objectives">
+<ol>
+<li>
+<strong>[Fun-3B-a]</strong> <em>Recognize general graphical features of sigmoidal functions and their associated hump functions</em>
 </li>
-<li>(Fun-3B-b) <em>Explain why the slope function of a sigmoidal function is a hump function</em>
+<li>
+<strong>[Fun-3B-b]</strong> <em>Explain why the slope function of a sigmoidal function is a hump function.</em>
 </li>
-<li>(Fun-3B-c) OPTIONAL <em>Be aware of different formulations for the hump sigmoidal functions.</em>
+<li>
+<strong>[Fun-3B-c]</strong> <em>OPTIONAL Be aware of different formulations for the hump sigmoidal functions.</em>
 </li>
 </ol>
+</div>
 <p>Our last two basic modeling functions express an important idea in modeling: <strong><em>localness</em></strong>. To put this in concrete terms, imagine creating a function to depict the elevation above sea level of a long road as a function of distance in miles, <span class="math inline">\(x\)</span>, from the start of the road. If the road were level at 1200 feet elevation, a sensible model would be <span class="math inline">\(\mbox{elevation}(x) = 1200 \text{ft}\)</span>. If the road were gently sloping, a better model would be <span class="math inline">\(\mbox{elevation}(x) = 1200 + 3 x\)</span>.</p>
 <p>Now let’s add a bump to the road. A bump is a local feature, often only a few feet wide. Or, perhaps the road is crossing a mountain range. That’s also a local feature, but unlike a bump in the road a mountain range extends for many miles.</p>
 <p>The basic modeling function suited to represent bumps in the road, or potholes, or mountain ranges is called a <strong><em>hump function</em></strong>.</p>

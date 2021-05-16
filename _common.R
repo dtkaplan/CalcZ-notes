@@ -2,7 +2,8 @@ library(mosaic)
 library(mosaicCalc)
 library(math141Z) # REPLACE THIS WHEN PACKAGES ARE RE-ALIGNED
 
-objective_list <- list()
+if (!exists("objective_list"))
+  objective_list <- list()
 
 add_objective <- function(ID, text) {
   objective_list[[length(objective_list) + 1]] <<-
