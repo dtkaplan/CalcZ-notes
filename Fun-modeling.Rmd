@@ -9,12 +9,13 @@ We are going to put off mechanistic models for a while. There are two reasons wh
 
 Figure \@ref(fig:Fun-4-intro-1) shows some data collected by Prof. Stan Wagon to support his making a detailed mechanistic model of an everyday phenomenon: [The cooling of a mug of hot beverage to room temperature](https://www.researchgate.net/profile/Gianluca_Argentini/post/Is_analogy_reasoning_between_heat_transfert_and_electriocity_allows_to_apply_the_electricity_laws_about_resistance_to_thermal_resistances/attachment/59d6573379197b80779ada64/AS%3A533325451403264%401504166104259/download/Stan+WAGON+How+quickly+does+water+cool.pdf). The mug started at room temperature, which was measured at 26 degrees C. At time 0 he poured in boiling water from a kettle and measured the temperature of the water over the next few hours.
 
-```{r Fun-4-intro-1, echo=FALSE}
+```{r Fun-4-intro-1, echo=FALSE, fig.cap="Stan's data"}
 set.seed(101)
 gf_point(temp ~ time, data=CoolingWater %>% sample_n(20)) %>%
   gf_labs(x = "Time (minutes)", y="Temperature (deg. C)")
 ```
-Our task this data in the form of a function that takes time as input and returns temperature as output. Such a model would be useful for, say, filling in the gaps of the data. For instance, we might want to find the temperature of the water immediately after being poured from the kettle into the mug.
+
+Our task is to translate this data into the form of a function that takes time as input and returns temperature as output. Such a model would be useful for, say, filling in the gaps of the data. For instance, we might want to find the temperature of the water immediately after being poured from the kettle into the mug.
 
 There are several ways to construct such a model but for our purposes here we want to build one using the basic modeling functions: 
    - straight-line: $m t + b$
@@ -84,7 +85,7 @@ You already know a lot about straight-line functions, so they are a good place t
 
 Let's return to the cooling mug of water. Figure \@ref(fig:Fun-4-a) shows the data along with a dozen candidate straight line functions, each one drawn in its own color.
 
-```{r Fun-4-a, echo=FALSE, warning=FALSE}
+```{r Fun-4-a, echo=FALSE, warning=FALSE, fig.cap="Some candidate straight-line function models plotted on top of the cooling water data. Which one(s) would you pick as good matches to the data?"}
 set.seed(101)
 gf_point(temp ~ time, data=CoolingWater %>% sample_n(20)) %>%
   gf_labs(x = "Time (minutes)", y="Temperature (deg. C)") %>%
@@ -148,7 +149,7 @@ iii. The parameter $k$ is $0.693 / (t_1 - t_{1/2})$. Double check the sign of $k
 
 Let's illustrate this process on the water-cooling data, redrawn in Figure \@ref(fig:Fun-4-a-2-1).
 
-```{r Fun-4-a-2-1, echo=FALSE}
+```{r Fun-4-a-2-1, echo=FALSE, fig.cap="The cooling-water data, repeated here for convenience."}
 set.seed(101)
 gf_point(temp ~ time, data=CoolingWater %>% sample_n(20)) %>%
   gf_lims(y = c(20, NA))
@@ -173,7 +174,7 @@ ii. This means $25^\circ + B e^{- 0.0277 \times 15} \approx 80^\circ = 25 + 0.66
 
 Step 5. Graph the function over the data.
 
-```{r Fun-4-a-2-2, echo=FALSE}
+```{r Fun-4-a-2-2, echo=FALSE, fig.cap="An exponential function that roughly aligns with the data."}
 set.seed(101)
 gf_point(temp ~ time, data=CoolingWater %>% sample_n(20)) %>%
   gf_lims(y = c(20, NA)) %>%
@@ -191,9 +192,10 @@ set.seed(101)
 Stans_data <- CoolingWater %>% sample_n(20)
 ```
 
-```{r Fun-4-a-2-3}
-refined_params <- fitModel(temp ~ A + B*exp(k*time), data = Stans_data, 
-         start = list(A = 25, B = 83.3, k = -0.0277))
+```{r Fun-4-a-2-3, fig.cap="Polishing the fit using the rough model as a starting point."}
+refined_params <- 
+  fitModel(temp ~ A + B*exp(k*time), data = Stans_data, 
+           start = list(A = 25, B = 83.3, k = -0.0277))
 coef(refined_params)
 new_f <- makeFun(refined_params)
 gf_point(temp ~ time, data = Stans_data) %>%
@@ -210,7 +212,7 @@ The newly refined model was a even better match to the data. But nothing's perfe
 
 Here's a graph of the model Prof. Wagon constructed to match the data.
 
-```{r Fun-4-a-2-4, echo=FALSE, out.width="70%", fig.align="center"}
+```{r Fun-4-a-2-4, echo=FALSE, out.width="70%", fig.align="center", fig.cap="A model that combines three exponentials provides an excellent fit."}
 knitr::include_graphics(normalizePath("www/Wagon-water-fit.png"))
 ```
 
@@ -232,7 +234,7 @@ state_objective("Fun-7c", "Recognize when a sinusoidal model is appropriate.")
 
 Figure \@ref(fig:Fun-4-a-3) shows the tide level in [Providence, Rhode Island](https://www.google.com/maps/place/Providence,+RI/@41.8071,-71.4012,14z/data=!4m5!3m4!1s0x89e444e0437e735d:0x69df7c4d48b3b627!8m2!3d41.8071!4d-71.4012), starting at midnight on April 1, 2020 and recorded every minute for four and a half days. (These data were collected by the US National Oceanic and Atmospheric Administration. [Link](https://tidesandcurrents.noaa.gov/api/datagetter?begin_date=20200401%2010:00&end_date=20200405%201:59&station=8454000&product=one_minute_water_level&datum=mllw&units=metric&time_zone=gmt&application=web_services&format=csv))
 
-```{r Fun-4-a-3-1, echo=FALSE}
+```{r Fun-4-a-3-1, echo=FALSE, fig.cap="About four days of tide-level data from Providence, Rhode Island"}
 #gf_line(level ~ hour, data = math141Z::Anchorage_tide[1:1000,])
 gf_line(level ~ hour, data = math141Z::RI_tide) %>%
   gf_labs(y="Water level (meters)", x="Time (hours)", title="Tide level in Providence, Rhode Island") %>%
@@ -251,7 +253,7 @@ This simple description tells almost everything needed to construct an A/B model
 
 On the scale of the above plot, it's hard to read off the time of the first peak. So, zoom in until it becomes more obvious.
 
-```{r Fun-4-a-3-2, echo=FALSE, out.width="50%", fig.show="hold"}
+```{r Fun-4-a-3-2, echo=FALSE, out.width="50%", fig.show="hold", fig.cap="Zooming in on the start of the data (left) and on the last part of the data (right)."}
 gf_line(level ~ hour, 
          data = math141Z::RI_tide %>% filter(hour < 25)) %>%
   gf_labs(y="Water level (meters)", x="Time (hours)",
@@ -273,7 +275,7 @@ $$\require{color}
 
 Figure \@ref(fig:Fun-4-a-3-3) shows this model in $\color{green}\mbox{green}$.
 
-```{r Fun-4-a-3-3, echo=FALSE, out.width="50%", fig.show="hold"}
+```{r Fun-4-a-3-3, echo=FALSE, out.width="50%", fig.show="hold", fig.cap="The sinusoid fails to align with the timing of peaks and troughs."}
 mod1 <- makeFun(1.05 + 0.55*sin(2*pi*hour/11) ~ hour)
 mod2 <- makeFun(1.05 + 0.55*sin(2*pi*(hour-17)/11) ~ hour)
 gf_line(level ~ hour, 
@@ -294,7 +296,7 @@ $${\color{blue}\mbox{tide}(t) \equiv 1.05 + 0.55 \sin(2\pi (t - t_0)/11)}$$
 
 The new parameter, $t_0$, should be set to be the time of a positive-going crossing of the baseline. There's such a crossing at about time = 17. Happily, changing the phase does not itself necessitate re-estimating the other parameters: baseline, amplitude, period. This model, incorporating the phase, has been graphed in $\color{blue}\mbox{blue}$.
 
-```{r Fun-4-a-3-4, echo=FALSE, out.width="50%", fig.show="hold"}
+```{r Fun-4-a-3-4, echo=FALSE, out.width="50%", fig.show="hold", fig.cap="Shifting the **phase** of the sinusoid gives the flexibility needed to align the peaks and troughs of the model with the data. Performing this alignment for one peak makes it clear that the period is wrong."}
 mod1 <- makeFun(1.05 + 0.55*sin(2*pi*hour/11) ~ hour)
 mod2 <- makeFun(1.05 + 0.55*sin(2*pi*(hour-17)/11) ~ hour)
 gf_line(level ~ hour, 
@@ -314,7 +316,7 @@ For some modeling purposes, such as prediction of future tides, the phase inform
 With this refinement the model is
 $${\color{violet}\mbox{tide}(t) \equiv 1.05 + 0.55 \sin(2\pi (t - 17)/12.3)}$$
 
-```{r Fun-4-a-3-5, echo=FALSE}
+```{r Fun-4-a-3-5, echo=FALSE, fig.cap="With the phase about right, a better estimate can be made of the period: 12.3 hours."}
 mod3 <- makeFun(1.05 + 0.55*sin(2*pi*(hour-17)/12.3) ~ hour)
 gf_line(level ~ hour, data = math141Z::RI_tide) %>%
   slice_plot(mod3(hour) ~ hour, color="violet") %>%
@@ -330,7 +332,7 @@ tide_mod <-
   start=list(A=1.05, B=0.55, hzero=17, P=12.3))
 coef(tide_mod)
 ```
-```{r Fun-4-a-3-6, echo=FALSE}
+```{r Fun-4-a-3-6, echo=FALSE, fig.cap="Polishing the parameters of the sinusoid"}
 mod4 <- makeFun(tide_mod)
 gf_line(level ~ hour, data = math141Z::RI_tide) %>%
   slice_plot(mod4(hour) ~ hour, color="red", npts=200) %>%
@@ -372,7 +374,7 @@ But linear combinations are a powerful way to construct functions of multiple in
 ::: {.workedexample}
 Earlier we introduced a model of natural gas consumption (ccf) in the author's home during a month as a function of the average temperature during that month. Using $T$ for temperature, the model, constructed from the record of utility bills, was: $$ccf(T) \equiv 293.1 - 4.62 T$$ the blue line in Figure \@ref(fig:Fun-1-c-1).
 
-```{r Fun-1-c-1, echo=FALSE}
+```{r Fun-1-c-1, echo=FALSE, fig.cap="Natural gas used (ccf) versus average outdoor temperature for the author's home in Saint Paul, Minnesota."}
 gf_point(ccf ~ temp, data = Home_utilities) %>%
   gf_labs(title="Household natural gas use", x = "Average temperature for the month (deg. F)", y = "Volume of gas used (cubic feet)") %>%
   gf_lims(x = c(0, 85)) %>% 
@@ -406,7 +408,7 @@ In contrast to composition, multiplication of two functions is very effective fo
 
 An important idea in physics and communication is the "wave packet." This is a function that is local, like a hump, but periodic within the hump.
 
-```{r}
+```{r fig.cap="A *wave packet* constructed by multiplying a sinusoid by a hump function."}
 wave_packet <- function(x, A=1, center = 0, width = 5, P=1, phase = 0) {
   A*sin(2*pi*x/P)*dnorm((x - center)/width)
 }

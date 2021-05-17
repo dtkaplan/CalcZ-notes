@@ -20,6 +20,10 @@ format_objective <- function(obj) {
 }
 
 show_objectives <- function() {
+  Tmp <- lapply(objective_list, tibble::as_tibble) %>%
+    bind_rows()
+  readr::write_csv(Tmp, file="objective-list.csv")
+
   lapply(objective_list, format_objective) %>%
     unlist() %>%
     paste(collapse="\n") %>%

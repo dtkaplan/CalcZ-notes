@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>Chapter 16 Limits: evanescent \(h\) | CalcZ Student Notes</title>
+<title>Chapter 35 Method of Least Squares (Day 2) | CalcZ Student Notes</title>
 <meta name="author" content="Daniel Kaplan">
 <!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.2"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="libs/bootstrap-4.5.3/bootstrap.min.css" rel="stylesheet">
@@ -71,7 +71,7 @@
 <li><a class="" href="approximating-functions.html"><span class="header-section-number">13</span> Approximating functions</a></li>
 <li><a class="" href="a-framework-for-modeling.html"><span class="header-section-number">14</span> A framework for modeling</a></li>
 <li><a class="" href="partial-change.html"><span class="header-section-number">15</span> Partial change</a></li>
-<li><a class="active" href="limits-evanescent-h.html"><span class="header-section-number">16</span> Limits: evanescent \(h\)</a></li>
+<li><a class="" href="limits-evanescent-h.html"><span class="header-section-number">16</span> Limits: evanescent \(h\)</a></li>
 <li><a class="" href="practice-with-the-rules.html"><span class="header-section-number">17</span> Practice with the “Rules”</a></li>
 <li><a class="" href="optimization.html"><span class="header-section-number">18</span> Optimization</a></li>
 <li class="book-part">Interlude: Iteration</li>
@@ -92,7 +92,7 @@
 <li><a class="" href="solutions-of-linear-combination-day-1.html"><span class="header-section-number">32</span> Solutions of Linear Combination (Day 1)</a></li>
 <li><a class="" href="solutions-of-linear-combination-day-2.html"><span class="header-section-number">33</span> Solutions of Linear Combination (Day 2)</a></li>
 <li><a class="" href="method-of-least-squares-day-1.html"><span class="header-section-number">34</span> Method of Least Squares (Day 1)</a></li>
-<li><a class="" href="method-of-least-squares-day-2.html"><span class="header-section-number">35</span> Method of Least Squares (Day 2)</a></li>
+<li><a class="active" href="method-of-least-squares-day-2.html"><span class="header-section-number">35</span> Method of Least Squares (Day 2)</a></li>
 <li class="book-part">Block 5: Dynamical systems</li>
 <li><a class="" href="states-dynamics-trajectory.html"><span class="header-section-number">36</span> States, Dynamics, Trajectory</a></li>
 <li><a class="" href="difference-equations-in-1-dimension.html"><span class="header-section-number">37</span> Difference equations in 1 dimension</a></li>
@@ -121,48 +121,39 @@
         </div>
       </nav>
 </div>
-  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="limits-evanescent-h" class="section level1">
+  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="method-of-least-squares-day-2" class="section level1">
 <h1>
-<span class="header-section-number">16</span> Limits: evanescent <span class="math inline">\(h\)</span><a class="anchor" aria-label="anchor" href="#limits-evanescent-h"><i class="fas fa-link"></i></a>
+<span class="header-section-number">35</span> Method of Least Squares (Day 2)<a class="anchor" aria-label="anchor" href="#method-of-least-squares-day-2"><i class="fas fa-link"></i></a>
 </h1>
 <div class="objectives">
 <ol>
 <li>
-<strong>[Deriv-6a]</strong> <em>Recognize the various types of discontinuities.</em>
+<strong>[Vec-7a]</strong> <em>Understand that “continuous” functions can be approximated by vectors of discrete function value samples</em>
 </li>
 <li>
-<strong>[Deriv-6b]</strong> <em>Understand limit notation and what <span class="math inline">\(\lim_{h\rightarrow 0}\)</span> means.</em>
+<strong>[Vec-7b]</strong> <em>Be aware that the word “transform” in this class’ context relates to the “Fourier Transform.”</em>
 </li>
 <li>
-<strong>[Deriv-6c]</strong> <em>Understand how a limit is used to find the derivative at a single point.</em>
-</li>
-<li>
-<strong>[Deriv-6d]</strong> <em>Calculate limits for horizontal asymptote problems.</em>
+<strong>[Vec-7c]</strong> <em>Understand that the “transform” technique amounts to designing the matrix in the target problem to break up the function into meaningful components</em>
 </li>
 </ol>
 </div>
-<p>The word “evanescent” means, “lasting for only a short time, then disappearing quickly and being forgotten.” (<a href="https://dictionary.cambridge.org/us/dictionary/english/evanescent">Source</a>) Another dictionary definition is “tending to vanish like vapor.” (<a href="https://www.merriam-webster.com/dictionary/evanescent">Source</a>) I’ve used metaphors for <span class="math inline">\(h\)</span>: tire irons, dramatic characters who never appear or speak. Here’s another one: the solvent in ink or paint. Ink and paint are liquid yet become solid when brushed on a surface. This can happen because the solid pigments are suspended in liquid. Exposed to the air, the liquid vaporizes and is forgotten. The solid pigment remains on the surface.</p>
-<p>We can easily evaluate an <strong><em>average rate of change function</em></strong>, for instance <span class="math inline">\({\cal D}_t g(t)\)</span> by evaluating <span class="math inline">\(g(t)\)</span> at two different inputs and dividing by the distance between the inputs:
-<span class="math display">\[{\cal D}_t g(t) = \frac{g(t+h) - g(t)}{h}\]</span>
-So if you know <span class="math inline">\(g()\)</span>, you know <span class="math inline">\({\cal D}_t g(t)\)</span>. By making <span class="math inline">\(h\)</span> very small, the “average” starts to look like “instantaneous.” Over a small interval of length <span class="math inline">\(h\)</span>, every smooth function looks like a straight line. For a straight line, the average rate of change is exactly the same as the instantaneous rate of change.</p>
-<p>We’d like to take <span class="math inline">\(h\)</span> out of the picture, imagining that it is zero but not dealing with “divide by zero” if we can avoid it. To signify this idea of neglecting <span class="math inline">\(h\)</span>, we’ll use a new notation. Rather than <span class="math inline">\({\cal D}_t g(t)\)</span> which has that pesky <span class="math inline">\(h\)</span> in it, we’ll write <span class="math inline">\(\partial_t g(t)\)</span>, using the lower-case <span class="math inline">\(\partial\)</span>. The function <span class="math inline">\(\partial_t g(t)\)</span> can properly be called the <strong><em>instantaneous rate of change</em></strong> of <span class="math inline">\(g(t)\)</span>. But everyone calls it the <strong><em>derivative of <span class="math inline">\(g(t)\)</span> with respect to <span class="math inline">\(t\)</span></em></strong> Many people leave out the “with respect to” part, which I suppose is fine for a function like <span class="math inline">\(g(t)\)</span> which has only one input. But functions constructed in modeling generally have multiple inputs, so it’s a bad habit to neglect to identify which one the derivative is “with respect to.” We’ll always sneak the “with respect to” by putting the little subscript on <span class="math inline">\(\partial_t\)</span>.</p>
-<p>We lose something by letting <span class="math inline">\(h\)</span> vaporize. There is an easy formula for <span class="math inline">\({\cal D}_t g(t)\)</span>, but without <span class="math inline">\(h\)</span> we can’t write down such a formula for the derivative. Mathematicians like to bridge the gap between <span class="math inline">\({\cal D}\)</span> and <span class="math inline">\(\partial\)</span>, that is between average and instantaneous rates of change, by writing the formula for the derivative with a little “caution” sign out front.
-<span class="math display">\[\partial_t g(t) = \lim_{h\rightarrow 0} \frac{g(t+h) - g(t)}{h}\]</span>
-The caution sign is mysterious to newcomers because it is saying something absurd: “Remember to forget <span class="math inline">\(h\)</span>.”</p>
-<p>There are people who do actual calculations with <span class="math inline">\(\lim_{h\rightarrow 0}\)</span> but nobody needs to any more unless they invent a brand-new function that can’t be written with existing functions. If you do happen to invent such a brand-new function, please remember that you should also invent the derivative of that function. Fortunately for us, the inventors of the past have done the work for us.</p>
 
 </div>
+
+
+
   <div class="chapter-nav">
-<div class="prev"><a href="partial-change.html"><span class="header-section-number">15</span> Partial change</a></div>
-<div class="next"><a href="practice-with-the-rules.html"><span class="header-section-number">17</span> Practice with the “Rules”</a></div>
+<div class="prev"><a href="method-of-least-squares-day-1.html"><span class="header-section-number">34</span> Method of Least Squares (Day 1)</a></div>
+<div class="next"><a href="states-dynamics-trajectory.html"><span class="header-section-number">36</span> States, Dynamics, Trajectory</a></div>
 </div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
     <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
-      <ul class="nav navbar-nav"><li><a class="nav-link" href="#limits-evanescent-h"><span class="header-section-number">16</span> Limits: evanescent \(h\)</a></li></ul>
+      <ul class="nav navbar-nav"><li><a class="nav-link" href="#method-of-least-squares-day-2"><span class="header-section-number">35</span> Method of Least Squares (Day 2)</a></li></ul>
 
       <div class="book-extra">
         <ul class="list-unstyled">
-<li><a id="book-source" href="https://github.com/dtkaplan/CalcZ-notes/blob/master/Diff-evanescent-h.Rmd">View source <i class="fab fa-github"></i></a></li>
-          <li><a id="book-edit" href="https://github.com/dtkaplan/CalcZ-notes/edit/master/Diff-evanescent-h.Rmd">Edit this page <i class="fab fa-github"></i></a></li>
+<li><a id="book-source" href="https://github.com/dtkaplan/CalcZ-notes/blob/master/LA-intro.Rmd">View source <i class="fab fa-github"></i></a></li>
+          <li><a id="book-edit" href="https://github.com/dtkaplan/CalcZ-notes/edit/master/LA-intro.Rmd">Edit this page <i class="fab fa-github"></i></a></li>
         </ul>
 </div>
     </nav>
