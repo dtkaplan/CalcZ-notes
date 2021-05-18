@@ -1,0 +1,100 @@
+---
+title: "Boyle's data"
+author: "Daniel Kaplan"
+---
+
+```{r include=FALSE}
+library(etude2)
+library(mosaic)
+library(mosaicCalc)
+library(math141Z)
+```
+
+
+Robert Boyle (1627-1691) iwas a founder of modern chemistry and of the scientific method in general. As any chemistry student already knows, Boyle sought to understand the properties of gasses. His results are summarized in *Boyle's Law*.
+
+We going to examine some data from Boyle's lab notebooks. (They are preserved at the Royal Society in London. The data have been copied from [this source](
+https://chem.libretexts.org/Courses/University_of_California_Davis/UCD_Chem_002A/UCD_Chem_2A/Text/Unit_III%3A_Physical_Properties_of_Gases/06.03_Relationships_among_Pressure%2C_Temperature%2C_Volume%2C_and_Amount).) The data are available to you as the data frame `Boyle`.  The units of pressure are mmHg and the units of volume are cubic inches.
+
+Open a sandbox to carry out some calculations with Boyle's data. To see how the data frame is organized, use the `head(Boyle)` and `names(Boyle)` commands. 
+
+::: {.scaffolding}
+The scaffolding here contains a command for plotting out Boyle's data. It also includes a command, `gf_lm()` that will add a graph of the best straight-line model to the plotted points. Recall that the `#` symbol turns what follows on the line into a *comment*,  which is ignored by R. By removing the `#` selectively you can turn on the display of log axes.
+
+```{r}
+gf_point(pressure ~ volume, data = Boyle) %>%
+  gf_refine(
+     # scale_x_log10(),
+     # scale_y_log10()
+  ) %>%
+  gf_lm()
+```
+:::
+
+
+```{r daily-digital-06-QA5, echo=FALSE}
+etude2::etudeQ(
+  prompt = "**(A)** In the sandbox, plot pressure versus volume using linear, semi-log, and log-log axes. Based on the plot, and the straight-line function drawn, which of these is a good model of the relationship between pressure and volume?",
+    "linear" = "This would look like a straight line on linear axes.",
+    "exponential" = "This would look like a straight line on semi-log axes.",
+    "+power-law+"
+)
+```
+
+::: {.scaffolding}
+We want to find the slope and intercept of the straight-line model. This can be hard to read off a graph with log scales, so you will use a special purpose function to find the formula for the straight-line function that fits the data. Here's an example of how to use it.
+```{r results="hide"}
+fitModel(log(pressure) ~ a + b*volume, data = Boyle) %>%
+  coefficients()
+```
+
+Notice that we use `log(pressure)` in the formula in the scaffolding. This would be appropriate if you think the data fall on a straight-line on semi-log axes. To use log-log axes, you would want to use `log(volume)` on the right side of the tilde expression. Or, if you're using linear axes, leave out the logs altogether. 
+:::
+
+
+```{r daily-digital-06-QA6, echo=FALSE}
+etude2::etudeQ(
+  prompt = "**(B)** What is the slope produced by `fitModel()` when fitting the correct model type from part (1)?",
+    "Roughly -1" = "You must be a very precise person!",
+    "+Almost exactly -1+" = "",
+    "About -1.5" = "I'm not sure how you arrived at this answer.",
+    "Slope $> 0$" = "You should be able to see from the graph you made in part (1) that the slope is negative.",
+  random_answer_order = FALSE
+)
+```
+
+According to the appropriate model that you found in (A) and (B), interpret the function you found relating pressure and volume.
+
+
+```{r daily-digital-06-QA7, echo=FALSE}
+etude2::etudeQ(
+  "**(C)** As the volume becomes very large, what happens to the pressure?",
+    "+Pressure becomes very small.+" = "",
+    "Pressure stays constant" = "You can see from the graph in part (A) that pressure does change with volume.",
+    "Pressure also becomes large." = "You can see from the graph in part (A) that pressure goes down as volume goes up.",
+    "None of the above" = "",
+  inline = FALSE
+)
+```
+
+Return to your use of `fitModel()` to find the slope of the straight-line fit to the appropriately log-transformed model. When you carried out the log transformation, you could have used the so-called "natural logarithm" with expressions like `log(pressure)`.  Alternatively, you could have used the log base-10 or the log base-2, with expressions like `log(pressure, base = 10)` or `log(volume, base = 2)`.  Whichever you use, you should use the same base for all the logarithmic transformations when finding the straight-line parameters.
+
+
+```{r daily-digital-06-QA8, echo=FALSE}
+etude2::etudeQ(
+  prompt = "**(D)** Does the **slope** of the  straight line found by `fitModel()` depend on which base is used?",
+    "+No+",
+    "Yes" = "Did you use the same base for both logarithms in your `fitModel()` expression?",
+    "There's no way to tell." = "Yes, there is. Try using `fitModel()` with the different bases of log."
+)
+```
+
+```{r daily-digital-06-QA9, echo=FALSE}
+etude2::etudeQ(
+  "**(E)** Does the **intercept** of the  straight line found by `fitModel()` depend on which base is used?",
+  "+Yes+" = "Good. But this will come out in the wash when you calculate the parameter $C$ in $C x^b$, since $C$ will be either $2^\\mbox{intercept}$ or $10^\\mbox{intercept}$ or $e^\\mbox{intercept}$ depending on the base log you use.",
+  "No" = "Are you sure you tried different bases?",
+  random_answer_order = FALSE
+)
+```
+

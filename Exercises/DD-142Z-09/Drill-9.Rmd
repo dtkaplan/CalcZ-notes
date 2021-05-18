@@ -1,0 +1,61 @@
+---
+title: "Drill 9: Basic, substitution, parts"
+date: "MMM DD YYYY"
+output: learnr::tutorial
+runtime: shiny_prerendered
+---
+
+```{r include=FALSE}
+library(gradethis)
+library(etude2)
+library(shiny)
+library(mosaic)
+library(mosaicCalc)
+knitr::opts_chunk$set(echo = FALSE)
+learnr::tutorial_options(exercise.timelimit = 60,
+                 exercise.checker = gradethis::grade_learnr)
+```
+
+```{r context="server"}
+if (!exists("apps_state"))
+  apps_state <- reactiveValues()
+```
+
+```{r context="server"}
+Integrate_method <- function() {
+  direction <- "forward"
+  tibble::tribble(
+    ~ question,  ~ answer,  ~ group,
+    "$$\\sin(3x + 2)$$", "yes", 1,
+    "$$\\sin((3+ 7)x + 2)$$", "yes", 1,
+    "$$\\sin(9 + 2)$$", "no", 1,
+    "$$(-4 x + 5)^{1}$$", "yes", 1,
+    "$$-4 x + 5$$", "yes",1,
+    "$$e^{kx}$$", "yes", 1,
+    "$$exp(k \\ln(x))$$", "no", 1,
+    "$$\\frac{1}{\\sqrt{x + 2}}$$", "yes", 1,
+    "$$\\frac{1}{\\sqrt{\\sqrt{x} + 2}}$$", "no", 1,
+    "$$\\frac{1}{\\sqrt{x^2} + 2}}$$", "no", 1,
+  ) %>%
+    mutate(id = "Integrate method",
+           direction = direction,
+           forward = "Which method can be used to carry out the integration?",
+           backward = "")
+}
+
+    
+
+
+```
+
+```{r}
+etude2::QuizUI()
+```
+
+```{r context="server", include=FALSE}
+library(shinyjs, quietly=TRUE)
+etude2:::QuizServer(input, output, session,
+                            antiD_interior(), # the questions
+                            "DD4-drill", # label for scoring
+                            apps_state)
+```

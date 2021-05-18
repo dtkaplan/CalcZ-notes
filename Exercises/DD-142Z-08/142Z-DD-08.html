@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+
+
+<meta name="progressive" content="false" />
+<meta name="allow-skip" content="false" />
+
+<title>Daily Digital 08</title>
+
+
+<!-- highlightjs -->
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+<!-- taken from https://github.com/rstudio/rmarkdown/blob/67b7f5fc779e4cfdfd0f021d3d7745b6b6e17149/inst/rmd/h/default.html#L296-L362 -->
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("section-TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+<!-- end tabsets -->
+
+
+
+</head>
+
+<body>
+
+
+
+<div class="pageContent band">
+<div class="bandContent page">
+
+<div class="topics">
+
+<div id="section-objectives" class="section level2">
+<h2>Objectives</h2>
+<ol style="list-style-type: lower-alpha">
+<li>Understand the relationship between the hump function and the sigmoidal function.</li>
+<li>Discuss the scientific application of probability density and cumulative probability.</li>
+</ol>
+</div>
+<div id="section-integrals-and-basic-modeling-functions-review" class="section level2">
+<h2>Integrals and basic modeling functions (review)</h2>
+<p>Throughout the course, we’ve been building models from a small set of modeling functions:</p>
+<ol style="list-style-type: lower-roman">
+<li>exponentials <span class="math inline">\(e^{kt}\)</span></li>
+<li>power-law functions <span class="math inline">\(x^{n}\)</span></li>
+<li>sinusoids: sines and cosines, e.g., <span class="math inline">\(\sin(\omega x)\)</span></li>
+<li>logarithm</li>
+<li>hump functions, a go-to function for something that happens locally</li>
+<li>sigmoidal functions, a related function for modeling something that “builds up” or “matures” to a final value.</li>
+</ol>
+<p>In terms of derivatives, exponentials, power-law functions, and sinusoids have a remarkable property:</p>
+<blockquote>
+<p>The derivative of a <span class="math inline">\(\left\{\begin{array}{c}\mbox{exponential}\\\mbox{power-law}\\\mbox{sinusoid}\end{array}\right\}\)</span> is a <span class="math inline">\(\left\{\begin{array}{c}\mbox{exponential}\\\mbox{power-law}\\\mbox{sinusoid}\end{array}\right\}\)</span></p>
+</blockquote>
+<p>The same property can also be stated in terms of anti-derivatives :</p>
+<blockquote>
+<p>The anti-derivative of a <span class="math inline">\(\left\{\begin{array}{c}\mbox{exponential}\\\mbox{power-law}\\\mbox{sinusoid}\end{array}\right\}\)</span> is a <span class="math inline">\(\left\{\begin{array}{c}\mbox{exponential}\\\mbox{power-law}\\\mbox{sinusoid}\end{array}\right\}\)</span> <span class="math inline">\(+ C\)</span>.</p>
+</blockquote>
+<p>Logarithm functions don’t have this property: the derivative of a logarithm is <strong>not</strong> a logarithm function. But they are not that far afield. They border on exponentials (the log function is the inverse of an exponential function) and also power-law functions; the anti-derivative of <span class="math inline">\(x^{-1}\)</span> is <span class="math inline">\(\ln(x) + C\)</span> and, of course, the derivative of <span class="math inline">\(\ln(x)\)</span> is <span class="math inline">\(x^{-1}\)</span>.</p>
+<p>Sigmoids and hump functions similarly do <strong>not</strong> have this property. The derivative of a sigmoid is not a sigmoid and the derivative of a hump is not a hump. But …</p>
+<blockquote>
+<p>The <span class="math inline">\(\left\{\begin{array}{c}\mbox{derivative}\\\mbox{anti-derivative}\end{array}\right\}\)</span> derivative of a <span class="math inline">\(\left\{\begin{array}{c}\mbox{sigmoid}\\\mbox{hump}\end{array}\right\}\)</span> is a <span class="math inline">\(\left\{\begin{array}{c}\mbox{hump}\\\mbox{sigmoid}\end{array}\right\}\)</span></p>
+</blockquote>
+<p>In this Daily Digital, you’re going to explore humps and sigmoids in a specific setting: uncertainty and risk. It turns out that each hump and its corresponding sigmoid provide different perspectives on the same phenomenon.</p>
+</div>
+<div id="section-quantifying-uncertainty-with-probability" class="section level2">
+<h2>Quantifying uncertainty with probability</h2>
+<p>Note: <em>This section introduces some new technical words, such as “probability,” “variance,” “state space,” and “cumulative” that are broadly important in quantitative work but not traditionally considered part of calculus. Try to understand what these words mean. That will help you in your later studies in downstream courses. But you will not be examined on the details in this course.</em></p>
+<p>Uncertainty is the state of being unreliable or undetermined. Probability is—in modern usage—a way of quantifying uncertainty, of putting uncertainty on a scale. Before the modern era, probability was a kind of opposite to uncertainty, a state of being reliable or determined. This almost complete reversal of the definition of probability reflects the difficulty untrained people have in doing probability calculations correctly.</p>
+<p>In the mathematical formulation of probability, central components are the “event” and the “state space.” An event is something that happens, think of one flip of a coin as an event, or one frame in bowling, or the wind speed at a particular instant. The state space is the set of <strong>all</strong> possible outcomes of an event. The state space of a coin flip is famously heads or tails. The state space of a frame in bowling is the numbers 0 through 10 reflecting the number of pins bowled over. (We’re ignoring “strikes” here.) The state space of wind speed is a non-negative number as might be read off of an anemometer.</p>
+<p>A probability is a number assigned to an element of a state space. For instance, in a coin flip, the number 1/2 is conventionally assigned to each of the possible outcomes: heads or tails. There are two essential properties that these assigned numbers must have to be valid probabilities:</p>
+<ol style="list-style-type: decimal">
+<li>the number must be between zero and one (inclusive). You can’t have a probability of -0.2 or 13.</li>
+<li>added up across all the elements of a state space, the probability numbers must sum to 1.</li>
+</ol>
+<p>The probability number 0 is assigned to elements of the state space that need not have been listed in the first place, because they <em>cannot happen</em>.</p>
+<p>The probability number 1 is assigned to a single element of the state space that is inevitable.</p>
+<p>Other than the possibly unfamiliar formal vocabulary used in the preceding, the statements (1) and (2) are intuitive to many people. What might calculus have to contribute?</p>
+<p>This course being calculus, we are concerned particularly with quantities that are continuous, e.g. the location of a point on the number line, the weight of a bucket after it’s been rained on, etc. For a continuous quantity, the state space will be the number line <span class="math inline">\(-\infty &lt; x &lt; \infty\)</span> or some finite segments of the number line, e.g. <span class="math inline">\(0 \leq x \leq 1\)</span>. Either way, the state space consists of an <em>infinite number</em> of possible values. For example, one member of the <span class="math inline">\(0 \leq x \leq 1\)</span> state space is 0.963012894848362656100076390430914821056649089340673461090773. Another is 0.4204042488709096655207811854786639390334021305202371464110919373058862984183853728834073997986972243. Still others are <span class="math inline">\(1/\sqrt{2}\)</span> and <span class="math inline">\(1/\pi\)</span> and <span class="math inline">\(1/e\)</span> and on and on without end.</p>
+<p>To illustrate, the sandbox allows you to specify any target number you like between 0 and 1, which we’ll call <span class="math inline">\(\tau\)</span> (tau). Using a professional quality “random number generator” called <code>rnorm()</code>, we’ll generate 100 or 1000 or 1,000,000 events, each of which is a random number between 0 and 1. Then calculate how many of those events hit your specific target. You can look at each of the events by uncommenting the middle line. The last line counts how many of the events “hit the target.” (0 means, “none of them hit the target.”)</p>
+<p>Play the game as many times as you like, with whatever number <span class="math inline">\(0 \leq \tau \leq 1\)</span> you think will be most lucky. The integer argument to <code>rnorm()</code> specifies how many trials to run. For the sake of not burdening the computers serving the Daily Digital, don’t make the argument much bigger than 1,000,000. You only need to change the numbers in blue font to play the game and hit the check your answer button.</p>
+<div class="tutorial-exercise" data-label="rnorm" data-caption="Hit the target by firing randomly" data-completion="1" data-diagnostics="1" data-startover="1" data-lines="0">
+<pre class="text"><code>tau &lt;- 1/3 # or whatever number you like between 0 and 1
+# rnorm(100) == beta # look at each of the events
+sum(rnorm(10000) == tau) # 10,000 events</code></pre>
+<script type="application/json" data-opts-chunk="1">{"fig.width":6.5,"fig.height":4,"fig.retina":2,"fig.align":"default","fig.keep":"high","fig.show":"asis","out.width":624,"warning":true,"error":false,"message":true,"exercise.df_print":"paged","exercise.timelimit":60,"exercise.checker":["function (label = NULL, solution_code = NULL, user_code = NULL, ","    check_code = NULL, envir_result = NULL, evaluate_result = NULL, ","    envir_prep = NULL, last_value = NULL, ...) ","{","    (utils::getFromNamespace(\"grade_learnr_\", \"gradethis\"))(label = label, ","        solution_code = solution_code, user_code = user_code, ","        check_code = check_code, envir_result = envir_result, ","        evaluate_result = evaluate_result, envir_prep = envir_prep, ","        last_value = last_value, ...)","}"]}</script>
+</div>
+<div class="tutorial-exercise-support" data-label="rnorm-check" data-caption="Code" data-completion="1" data-diagnostics="1" data-startover="1" data-lines="0">
+<pre class="text"><code>options(gradethis_glue_correct = &quot;All misses!! Don&#39;t feel bad. { .message } { .correct }&quot;,
+        gradethis_glue_incorrect = &quot;Really? {.message}&quot;)
+gradethis::grade_result(
+  pass_if( ~ sum(.result) == 0, 
+           message = &quot;This is what we expected. There are so many possibilities when we work in continuous space. But feel free to try again and again and again and ...&quot;),
+  fail_if( ~ sum(.result) == 1, 
+           message = &quot;That&#39;s amazing! We&#39;ve never seen such a thing before. And likely we will never see such a thing again. In fact, we&#39;re sure there was some bug in the software or a computer malfunction and that you wouldn&#39;t have gotten any hits if things were working. Nonetheless, please leave this as your answer (even though it&#39;s marked &#39;wrong&#39;) so that we can know who is  the most lucky student of all our students, ever!&quot;),
+  fail_if( ~ TRUE, 
+           message = &quot;Ask Dr. Kaplan to tell you the story of the man who got the equivalent of this at the Montreal casino in the 1990s ... and what happened after he was released from jail!&quot;)
+)</code></pre>
+</div>
+</div>
+<div id="section-calculus-and-probability" class="section level2">
+<h2>Calculus and probability</h2>
+<p>Given the result from the “randomly hit the target” experiment, it would be reasonable to conclude that <code>runif(0)</code> picks numbers each of which has a probability of 0. It would be better to say that the probability is <em>infinitesimal</em>, just like the <span class="math inline">\(h\)</span> in the definition of the derivative or the <span class="math inline">\(dx\)</span> in the way we write integrals.</p>
+<p>Calculus provides the means to assign such infinitesimal probabilities to the elements of a continuous state space. The strategy is this:</p>
+<ol style="list-style-type: decimal">
+<li>Assign a <strong>function</strong> whose output, over the state space, never negative.</li>
+<li>Ensure that, over the state space, e.g. for <span class="math inline">\(x\)</span> in the interval <span class="math inline">\(a \leq x \leq b\)</span> that <span class="math display">\[\int_a^b\! f(x) dx = 1\]</span></li>
+</ol>
+<p>Such functions are called “probability density functions.” Here’s one probability density function:</p>
+<p><span class="math display">\[\mbox{uniform} (x) \equiv \left\{\begin{array}{cl}\frac{1}{b-a} &amp; \mbox{when} \ a \leq x \leq b\\0&amp;\mbox{otherwise} \end{array}\right.\]</span> Consider a question like, “What’s the probability that the outcome of an event governed by the uniform probability density will be <span class="math inline">\(c\)</span>?”</p>
+<p>The answer is <strong>not</strong> <span class="math inline">\(f(c)\)</span>. Neither is it <span class="math inline">\(f(c) dx\)</span>.</p>
+<p>Instead, the answer is <span class="math inline">\(\int_c^c f(x) dx = 0\)</span>.</p>
+<p>Many non-mathematicians might answer the question by saying that the probability is <span class="math inline">\(f(c) dx\)</span>. There’s something to that answer, but remember that <span class="math inline">\(dx\)</span> is a notation meaning “take the limit as it goes to zero,” <span class="math inline">\(f(c)dx\)</span> is a limit rather than a number. (Save yourself from trying to sort this out with a shortcut: <span class="math inline">\(f(c) dx\)</span> isn’t a number. But <span class="math inline">\(\int_c^c f(x) dx\)</span> is a number, namely 0.)</p>
+<p><span class="math inline">\(f(c)\)</span> is much like the concept of “density.” We can meaningfully say that a material has a <em>density</em> at each point. But it’s not useful to say that a material has a <em>mass</em> at each point. The <em>mass</em> of a material is the integral of the density over the space occupied by the material.</p>
+<div class="panel panel-default">
+<div data-label="unif1" class="tutorial-question panel-body">
+<div id="unif1-answer_container" class="shiny-html-output"></div>
+<div id="unif1-message_container" class="shiny-html-output"></div>
+<div id="unif1-action_button_container" class="shiny-html-output"></div>
+<script>if (Tutorial.triggerMathJax) Tutorial.triggerMathJax()</script>
+</div>
+</div>
+<div class="panel panel-default">
+<div data-label="unif2" class="tutorial-question panel-body">
+<div id="unif2-answer_container" class="shiny-html-output"></div>
+<div id="unif2-message_container" class="shiny-html-output"></div>
+<div id="unif2-action_button_container" class="shiny-html-output"></div>
+<script>if (Tutorial.triggerMathJax) Tutorial.triggerMathJax()</script>
+</div>
+</div>
+<div class="panel panel-default">
+<div data-label="unif3" class="tutorial-question panel-body">
+<div id="unif3-answer_container" class="shiny-html-output"></div>
+<div id="unif3-message_container" class="shiny-html-output"></div>
+<div id="unif3-action_button_container" class="shiny-html-output"></div>
+<script>if (Tutorial.triggerMathJax) Tutorial.triggerMathJax()</script>
+</div>
+</div>
+<div class="panel panel-default">
+<div data-label="unif4" class="tutorial-question panel-body">
+<div id="unif4-answer_container" class="shiny-html-output"></div>
+<div id="unif4-message_container" class="shiny-html-output"></div>
+<div id="unif4-action_button_container" class="shiny-html-output"></div>
+<script>if (Tutorial.triggerMathJax) Tutorial.triggerMathJax()</script>
+</div>
+</div>
+</div>
+<div id="section-the-probability-density-function" class="section level2">
+<h2>The probability density function</h2>
+<p>The probability density function is a helpful way of visualizing the possible outcomes of an event. By looking at a graph of the density function, you can see which outcomes are relatively likely and which are not.</p>
+<p>For instance, here is a probability density function called an “exponential density.” <span class="math display">\[p(t) \equiv k\, e^{-t/k}\]</span> Exponential densities are often used to model things like the time between earthquakes or the time between engine failures. As an example, if <span class="math inline">\(t\)</span> is measured in years and <span class="math inline">\(k=1/100\)</span>, the exponential density is the standard model of the time between consecutive 100-year storms at a location.</p>
+<p><img src="142Z-DD-08_files/figure-html/unnamed-chunk-3-1.png" width="624" /></p>
+<p>Notice that the probability density is zero for negative time. That’s just common sense at work; the time between consecutive storms can’t be negative. Perhaps more surprisingly, there’s a substantially non-zero probability density for the time between storms being just 10 years, or even less! And notice the very small numbers on the y-axis; the density is much less than 1. But that’s OK, because a probability density is not the same as a probability.</p>
+<div class="panel panel-default">
+<div data-label="cdfstorm1" class="tutorial-question panel-body">
+<div id="cdfstorm1-answer_container" class="shiny-html-output"></div>
+<div id="cdfstorm1-message_container" class="shiny-html-output"></div>
+<div id="cdfstorm1-action_button_container" class="shiny-html-output"></div>
+<script>if (Tutorial.triggerMathJax) Tutorial.triggerMathJax()</script>
+</div>
+</div>
+<div class="panel panel-default">
+<div data-label="cdfstorm2" class="tutorial-question panel-body">
+<div id="cdfstorm2-answer_container" class="shiny-html-output"></div>
+<div id="cdfstorm2-message_container" class="shiny-html-output"></div>
+<div id="cdfstorm2-action_button_container" class="shiny-html-output"></div>
+<script>if (Tutorial.triggerMathJax) Tutorial.triggerMathJax()</script>
+</div>
+</div>
+</div>
+<div id="section-the-cumulative-distribution" class="section level2">
+<h2>The cumulative distribution</h2>
+<p>The <strong>cumulative</strong> distribution translates the probability density into an actual probability (a number between zero and one). Formally, the cumulative distribution is <span class="math display">\[P(t) \equiv \int_{-\infty}^t p(t) dt\]</span></p>
+<p>Evaluating <span class="math inline">\(P(t)\)</span> at given value of <span class="math inline">\(t\)</span> gives a probability. For instance, <span class="math inline">\(P(10) \approx 0.095\)</span>, roughly 10%. In terms of storms, this means that according to the standard model of these things, the time between consequtive 100-year storms has a 10% chance of being 10 years or less!</p>
+<p>A graph of the <strong>cumulative</strong> distribution shows what you might have anticipated: the hump function <span class="math inline">\(p(t)\)</span> has an integral that is a sigmoid function.</p>
+<p><img src="142Z-DD-08_files/figure-html/unnamed-chunk-4-1.png" width="624" /></p>
+<div class="panel panel-default">
+<div data-label="exp1" class="tutorial-question panel-body">
+<div id="exp1-answer_container" class="shiny-html-output"></div>
+<div id="exp1-message_container" class="shiny-html-output"></div>
+<div id="exp1-action_button_container" class="shiny-html-output"></div>
+<script>if (Tutorial.triggerMathJax) Tutorial.triggerMathJax()</script>
+</div>
+</div>
+<div class="panel panel-default">
+<div data-label="exp2" class="tutorial-question panel-body">
+<div id="exp2-answer_container" class="shiny-html-output"></div>
+<div id="exp2-message_container" class="shiny-html-output"></div>
+<div id="exp2-action_button_container" class="shiny-html-output"></div>
+<script>if (Tutorial.triggerMathJax) Tutorial.triggerMathJax()</script>
+</div>
+</div>
+</div>
+<div id="section-the-expectation-value" class="section level2">
+<h2>The expectation value</h2>
+<p>The <em>expectation value</em> is an important way to summarize a probability density function. It can be a valuable way to inform decisions, a topic we’ll save for another day. Here, we’ll focus on the calculation of the expectation value itself.</p>
+<p>Expectation values are useful, for example, in deciding whether to make an investment. Suppose you have been offered a “ground floor” opportunity in a start-up company. The statistics of start-ups show that 50% fail in their first year and another 50% of the survivors fail each year after that. You’ll have to forego salary, but you will be given stock options. You think, after 5 years, if the company gets that far, the options will be worth $5M. Should you take the job, instead of, say, a job paying $50K/year with a long-established company? Your simple model is that there is a 1/32 chance that the options will come through for $5M, otherwise they will be worthless. The expectation value is $5,000,000 <span class="math inline">\(\times 1/32 =\)</span> $156,250. This is less than what you would make working for the long-established company during the 5 years. A simple form of decision-making compares the expectation value of the start-up ($156,250) with the expectation value of then $50K/year job over five years.</p>
+<p>Calculus provides tools for working with more subtle models. You are working with a process where each event generates a numerical outcome according to a probability density function <span class="math inline">\(f(x)\)</span>. We collect the outcomes from many events: a series of numbers. As you know, the <em>average</em> of the numbers is often used to represent a “typical” outcome, a shorthand way of summarizing the sequence itself.</p>
+<p>The expectation value is the value we would get for the average if we could construct an infinitely long series of events. “Infinitely long series” is an imaginary, theoretical construct. But calculus provides a way to simulate an infinitely long series. The expectation value corresponding to a probability density function <span class="math inline">\(f(x)\)</span> is an integral: <span class="math display">\[\int_{-\infty}^\infty x \cdot f(x) dx\]</span></p>
+<div class="panel panel-default">
+<div data-label="expect1" class="tutorial-question panel-body">
+<div id="expect1-answer_container" class="shiny-html-output"></div>
+<div id="expect1-message_container" class="shiny-html-output"></div>
+<div id="expect1-action_button_container" class="shiny-html-output"></div>
+<script>if (Tutorial.triggerMathJax) Tutorial.triggerMathJax()</script>
+</div>
+</div>
+<p>The sandbox below gives the probability density function for the exponential process used in the example of the time interval between successive 100 year storms. Your task is to compute the expectation value for the time between storms. In symbols, this is <span class="math display">\[\int_{-\infty}^\infty t\times p(t)\, dt\]</span> You can use <code>antiD()</code> to find the antiderivative and <code>Inf</code> to stand for infinity.</p>
+<div class="tutorial-exercise" data-label="expect2" data-caption="Expectation value for time between 100-year storms" data-completion="1" data-diagnostics="1" data-startover="1" data-lines="0">
+<pre class="text"><code># probability density
+p &lt;- makeFun(ifelse(t &lt; 0, 0, exp(-t/100)/100) ~ t)
+# For the expectation value, we want to integrate t*p(t) 
+F &lt;- antiD(...integrand... ~ t)
+# Evaluate
+F(...upper...) - F(...lower...)</code></pre>
+<script type="application/json" data-opts-chunk="1">{"fig.width":6.5,"fig.height":4,"fig.retina":2,"fig.align":"default","fig.keep":"high","fig.show":"asis","out.width":624,"warning":true,"error":false,"message":true,"exercise.df_print":"paged","exercise.timelimit":60,"exercise.checker":["function (label = NULL, solution_code = NULL, user_code = NULL, ","    check_code = NULL, envir_result = NULL, evaluate_result = NULL, ","    envir_prep = NULL, last_value = NULL, ...) ","{","    (utils::getFromNamespace(\"grade_learnr_\", \"gradethis\"))(label = label, ","        solution_code = solution_code, user_code = user_code, ","        check_code = check_code, envir_result = envir_result, ","        evaluate_result = evaluate_result, envir_prep = envir_prep, ","        last_value = last_value, ...)","}"]}</script>
+</div>
+<div class="tutorial-exercise-support" data-label="expect2-check" data-caption="Code" data-completion="1" data-diagnostics="1" data-startover="1" data-lines="0">
+<pre class="text"><code>grade_result(
+  pass_if(~ abs(.result - 100) &lt; .0001, message=&quot;Since you&#39;re integrating out to infinity, don&#39;t be surprised if there&#39;s some round-off error.&quot;),
+  fail_if( ~ TRUE)
+)</code></pre>
+</div>
+<!--
+## Parameters of humps
+
+IN DRAFT ... Present the gaussian. Show the analytic form for the gaussian. Expectation value is the "center" parameter. The density function and the cumulative distribution function are so important that they have been given names in R, `dnorm()` and `pnorm()` respectively.
+
+Here's another probability density function that looks very complicated but is nonetheless important in many fields. Physicists and engineers tend to call it the "Gaussian" distribution, but in many other fields it is simply called the "normal" distribution, that's how common it is. 
+
+$$g(x) \equiv \frac{1}{\sqrt{2\pi\sigma^2}} \exp\left(- \frac{1}{2}\frac{(x - m)^2}{\sigma^2}\right)$$
+-->
+<!-- outline. XX means "not included in the above"
+
+1. Hump / sigmoid pair
+    i. Probability of generating a specific random number from a continuous prob. density is zero. 
+    ii. You need to integrate it up over a finite domain.
+2. Expectation value  and XX standard width (variance) 
+3. Important prob cumulatives/densities: uniform, XX normal, exponential, XXbeta
+4. $p(x = \alpha) = 0$, but $p(x < \alpha) \neq 0$. Finding $p(\alpha \leq x \leq \beta)$ as a definite integral. 
+    i. Probility earthquake will happen in next 10 years.
+    ii. 95% central interval
+5. XX Probabilities of probabilities: Bayesian reasoning and the space shuttle.
+
+-->
+</div>
+<div id="section-integral-of-the-day" class="section level2">
+<h2>Integral of the Day</h2>
+<p>Work out this anti-derivative on paper.</p>
+<div style="font-size: 40px; text-align:center;">
+<span class="math inline">\(\int A \sin(Bx + C) + D\ dt?\)</span>
+</div>
+<p>Once you have your result, translate it into a correct R <em>function</em>.</p>
+<div class="tutorial-exercise" data-label="IOD-H" data-caption="Integral of the day" data-completion="1" data-diagnostics="1" data-startover="1" data-lines="5">
+<pre class="text"><code>F &lt;- makeFun(  ~ x)</code></pre>
+<script type="application/json" data-opts-chunk="1">{"fig.width":6.5,"fig.height":4,"fig.retina":2,"fig.align":"default","fig.keep":"high","fig.show":"asis","out.width":624,"warning":true,"error":false,"message":true,"exercise.df_print":"paged","exercise.timelimit":60,"exercise.checker":["function (label = NULL, solution_code = NULL, user_code = NULL, ","    check_code = NULL, envir_result = NULL, evaluate_result = NULL, ","    envir_prep = NULL, last_value = NULL, ...) ","{","    (utils::getFromNamespace(\"grade_learnr_\", \"gradethis\"))(label = label, ","        solution_code = solution_code, user_code = user_code, ","        check_code = check_code, envir_result = envir_result, ","        evaluate_result = evaluate_result, envir_prep = envir_prep, ","        last_value = last_value, ...)","}"]}</script>
+</div>
+<div class="tutorial-exercise-support" data-label="IOD-H-check" data-caption="Code" data-completion="1" data-diagnostics="1" data-startover="1" data-lines="0">
+<pre class="text"><code>library(magrittr)
+gradethis::grade_result(
+  fail_if( ~ !is.function(.result), message = &quot;Your result should be in the form of a function.&quot;),
+  fail_if( ~ !&quot;t&quot; %in% names(formals(.result)), 
+           message = &quot;Shouldn&#39;t t be involved in this?&quot;),
+  fail_if( ~ !all(correct_arguments %in% names(formals(.result))),
+           message = &quot;You don&#39;t seem to have the right argument name.&quot;),
+  pass_if( ~ all(.result(t=1:10, x=5, A=1,B=2,C=3, D=4) ==
+                          answer_fun(t=1:10,x=5, A=1,B=2, C=3, D=4))),
+  fail_if( ~ TRUE, message=&quot;Correct arguments, but not the right function.&quot;)
+)  </code></pre>
+</div>
+<p>Now that you have the correct answer, use Latex to typeset the formula in the function here. Some Latex tips: <code>\sin()</code> will produce <span class="math inline">\(\sin()\)</span>. Note that the backslash at the start of <code>\sin()</code> does something. Without the backslash, that is <code>sin()</code>, you get <span class="math inline">\(sin()\)</span>. If you don’t see the difference, don’t worry about it. But fastidious typesetters (like the author) are obsessive about such things.</p>
+<table><tr>
+<td id=latex-H-feedback class="shiny-html-output" style="color: green; font-size:20px;"></td>
+<td>   </td>
+<td><input id=latex-H-latex type="text" class="form-control" placeholder="Type Latex here." style="font-size: 15px"></input></td>
+<td>   </td>
+<td><span id=latex-H-rendered class="shiny-html-output" style="font-size:20px;"></span></td>
+</tr></table>
+</div>
+<div id="section-hand-in-your-work" class="section level2">
+<h2>Hand in your work</h2>
+<p>REMEMBER: Press the REFRESH button before copying the hash code and submitting it at the <a href="https://forms.microsoft.com/Pages/ResponsePage.aspx?id=Bgq4einwwEWE0X2tGc48YcCKijCKVrhDla481YPh1UJUMVdERUtVT0VOSEpMMEdPQU1aWlpYTTA0RS4u" target = "_blank">USAFA Math 142Z site</a></p>
+<div>
+<button id="get_state" type="button" class="btn btn-default action-button">Refresh summary of responses</button>
+<pre id="hash_output" class="shiny-text-output" style="white-space: pre-wrap;"></pre>
+<div id="current_answers" class="shiny-html-output"></div>
+<br/>
+<br/>
+<br/>
+</div>
+<hr />
+<p>Location: CalcZ/_DailyDigitals/DailyDocuments/inst/DD-142Z-08/142Z-DD-08.Rmd DD-142Z-08</p>
+
+<script type="application/shiny-prerendered" data-context="server-start">
+### Boilerplate: Packages relating to `{learnr}` and 
+### submission functionality.
+library(mosaicCalc)
+library(learnr)
+library(gradethis)
+library(etude2)
+library(learnrhash)
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+learnr:::register_http_handlers(session, metadata = NULL)
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+learnr:::clear_exercise_setup_chunks()
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+session$onSessionEnded(function() {
+        learnr:::session_stop_event(session)
+      })
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server-start">
+# Good practice to include these in any document bringing
+# with the answer submission system
+etude2::set_master_id("DD-08") # Add the DD number
+etude2::etude_document_name("DD-142Z-08") # Add the DD number
+# Fill this data frame in when document is completed. See etude2 documentation
+document_roster <- tibble::tribble(
+  ~ id,
+)
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+`tutorial-exercise-rnorm-result` <- learnr:::setup_exercise_handler(reactive(req(input$`tutorial-exercise-rnorm-code-editor`)), session)
+output$`tutorial-exercise-rnorm-output` <- renderUI({
+  `tutorial-exercise-rnorm-result`()
+})
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "DD-08-1-unif1",     question = structure("What is \\[\\int_a^b dx\\ \\ \\mbox{?}\\]", html = TRUE, class = c("html",     "character")), answers = list(structure(list(id = "lnr_ans_fcb794d",         option = "You haven't said what the function to be integrated is.",         value = "You haven't said what the function to be integrated is.",         label = structure("You haven&#39;t said what the function to be integrated is.", html = TRUE, class = c("html",         "character")), correct = FALSE, message = structure("Let&#39;s rewrite the integral in the question as \\[\\int_a^b 1 dx\\]. The function being integrated is the one where the output is 1, regardless of the input.", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer")), structure(list(id = "lnr_ans_12f68d6",         option = "$b-a$", value = "$b-a$", label = structure("\\(b-a\\)", html = TRUE, class = c("html",         "character")), correct = TRUE, message = structure("", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer")), structure(list(id = "lnr_ans_4a46fdc",         option = "$b - a + C$", value = "$b - a + C$", label = structure("\\(b - a + C\\)", html = TRUE, class = c("html",         "character")), correct = FALSE, message = structure("This is a <strong>definite<\u002fstrong> integral. There will be no constant of integration. Or, said another way, the answer is \\((b+C) - (a+C)\\), with the constant of integration attaching to both the evaluations of the anti-derivative at the limits of integration. The two \\(C\\) terms cancel out.", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer")), structure(list(id = "lnr_ans_a83aeec",         option = "1.4", value = "1.4", label = structure("1.4", html = TRUE, class = c("html",         "character")), correct = FALSE, message = structure("Reasonable answer insofar as a definite integral, with numerical limits of integration, evaluates to a number. But here the limits of integration (\\(a\\) and \\(b\\)) are parameters, so the definite integral is a function of those parameters.", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer"))), button_labels = list(submit = structure("Check answer (ID: DD-08-1)", html = TRUE, class = c("html",     "character")), try_again = structure("Try again (ID: DD-08-1)", html = TRUE, class = c("html",     "character"))), messages = list(correct = structure("Right!", html = TRUE, class = c("html",     "character")), try_again = structure("Sorry.", html = TRUE, class = c("html",     "character")), incorrect = structure("Sorry.", html = TRUE, class = c("html",     "character")), message = NULL, post_message = NULL), ids = list(        answer = "unif1-answer", question = "unif1"), loading = structure("<strong>Loading:<\u002fstrong> \nWhat is \\[\\int_a^b dx\\ \\ \\mbox{?}\\]\n<br/><br/><br/>", html = TRUE, class = c("html",     "character")), random_answer_order = FALSE, allow_retry = TRUE,     seed = 1413668176.34171, options = list(id = "DD-08-1")), class = c("learnr_radio", "tutorial_question")))
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "DD-08-2-unif2",     question = structure("According to the definition of uniform\\((x)\\), what is \\[\\int_{-\\infty}^a \\mbox{uniform}(x) dx\\ \\ \\mbox{?}\\]", html = TRUE, class = c("html",     "character")), answers = list(structure(list(id = "lnr_ans_a68f68f",         option = "0", value = "0", label = structure("0", html = TRUE, class = c("html",         "character")), correct = TRUE, message = structure("Right. The value of uniform\\((x)\\) is zero everywhere on the interval \\(- \\infty \\leq x \\leq a\\).", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer")), structure(list(id = "lnr_ans_b2cfe5f",         option = "1", value = "1", label = structure("1", html = TRUE, class = c("html",         "character")), correct = FALSE, message = structure("This would be if the bounds of integration were a to b. Remember a is the lower bound of the uniform function.", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer")), structure(list(id = "lnr_ans_b17dc9",         option = "$b - a$", value = "$b - a$", label = structure("\\(b - a\\)", html = TRUE, class = c("html",         "character")), correct = FALSE, message = structure("Remember a is the lower bound of the uniform function.", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer")), structure(list(id = "lnr_ans_7584f4f",         option = "$a - b$", value = "$a - b$", label = structure("\\(a - b\\)", html = TRUE, class = c("html",         "character")), correct = FALSE, message = structure("Remember a is the lower bound of the uniform function.", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer"))), button_labels = list(submit = structure("Check answer (ID: DD-08-2)", html = TRUE, class = c("html",     "character")), try_again = structure("Try again (ID: DD-08-2)", html = TRUE, class = c("html",     "character"))), messages = list(correct = structure("Right!", html = TRUE, class = c("html",     "character")), try_again = structure("Sorry.", html = TRUE, class = c("html",     "character")), incorrect = structure("Sorry.", html = TRUE, class = c("html",     "character")), message = NULL, post_message = NULL), ids = list(        answer = "unif2-answer", question = "unif2"), loading = structure("<strong>Loading:<\u002fstrong> \nAccording to the definition of uniform\\((x)\\), what is \\[\\int_{-\\infty}^a \\mbox{uniform}(x) dx\\ \\ \\mbox{?}\\]\n<br/><br/><br/>", html = TRUE, class = c("html",     "character")), random_answer_order = FALSE, allow_retry = TRUE,     seed = 1188975712.44634, options = list(id = "DD-08-2")), class = c("learnr_radio", "tutorial_question")))
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "DD-08-3-unif3",     question = structure("According to the definition of uniform\\((x)\\), what is \\[\\int_a^b\\mbox{uniform}(x) dx\\ \\ \\mbox{?}\\]", html = TRUE, class = c("html",     "character")), answers = list(structure(list(id = "lnr_ans_4e717d7",         option = "0", value = "0", label = structure("0", html = TRUE, class = c("html",         "character")), correct = FALSE, message = structure("uniform(x) by definition is a probability density function.", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer")), structure(list(id = "lnr_ans_32edc5a",         option = "1", value = "1", label = structure("1", html = TRUE, class = c("html",         "character")), correct = TRUE, message = structure("You can see this using the fact that \\[\\int_a^b  dx = b - a\\], so \\(\\int_a^b \\mbox{uniform}(x) dx = 1\\).", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer")), structure(list(id = "lnr_ans_9734e98",         option = "$b - a$", value = "$b - a$", label = structure("\\(b - a\\)", html = TRUE, class = c("html",         "character")), correct = FALSE, message = structure("uniform(x) by definition is a probability density function.", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer")), structure(list(id = "lnr_ans_a92fd1e",         option = "$a - b$", value = "$a - b$", label = structure("\\(a - b\\)", html = TRUE, class = c("html",         "character")), correct = FALSE, message = structure("uniform(x) by definition is a probability density function.", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer")), structure(list(id = "lnr_ans_2290fa7",         option = "Not enough information to know.", value = "Not enough information to know.",         label = structure("Not enough information to know.", html = TRUE, class = c("html",         "character")), correct = FALSE, message = structure("uniform(x) by definition is a probability density function.", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer"))), button_labels = list(submit = structure("Check answer (ID: DD-08-3)", html = TRUE, class = c("html",     "character")), try_again = structure("Try again (ID: DD-08-3)", html = TRUE, class = c("html",     "character"))), messages = list(correct = structure("Right!", html = TRUE, class = c("html",     "character")), try_again = structure("Sorry.", html = TRUE, class = c("html",     "character")), incorrect = structure("Sorry.", html = TRUE, class = c("html",     "character")), message = NULL, post_message = NULL), ids = list(        answer = "unif3-answer", question = "unif3"), loading = structure("<strong>Loading:<\u002fstrong> \nAccording to the definition of uniform\\((x)\\), what is \\[\\int_a^b\\mbox{uniform}(x) dx\\ \\ \\mbox{?}\\]\n<br/><br/><br/>", html = TRUE, class = c("html",     "character")), random_answer_order = FALSE, allow_retry = TRUE,     seed = 1415449700.34088, options = list(id = "DD-08-3")), class = c("learnr_radio", "tutorial_question")))
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "DD-08-4-unif4",     question = structure("Using the results from the previous questions, what is \\[\\int_{-\\infty}^{\\infty} \\mbox{uniform}(x) dx\\ \\ \\mbox{?}\\]", html = TRUE, class = c("html",     "character")), answers = list(structure(list(id = "lnr_ans_b8c2334",         option = "0", value = "0", label = structure("0", html = TRUE, class = c("html",         "character")), correct = FALSE, message = structure("", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer")), structure(list(id = "lnr_ans_982912",         option = "1", value = "1", label = structure("1", html = TRUE, class = c("html",         "character")), correct = TRUE, message = structure("That&#39;s part of the definition of a  probability density function, that the integral over all possible values of \\(x\\) must be 1.", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer")), structure(list(id = "lnr_ans_7bc146",         option = "$b-a$", value = "$b-a$", label = structure("\\(b-a\\)", html = TRUE, class = c("html",         "character")), correct = FALSE, message = structure("", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer")), structure(list(id = "lnr_ans_6a71c5e",         option = "$a-b$", value = "$a-b$", label = structure("\\(a-b\\)", html = TRUE, class = c("html",         "character")), correct = FALSE, message = structure("", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer"))), button_labels = list(submit = structure("Check answer (ID: DD-08-4)", html = TRUE, class = c("html",     "character")), try_again = structure("Try again (ID: DD-08-4)", html = TRUE, class = c("html",     "character"))), messages = list(correct = structure("Right!", html = TRUE, class = c("html",     "character")), try_again = structure("Sorry.", html = TRUE, class = c("html",     "character")), incorrect = structure("Sorry.", html = TRUE, class = c("html",     "character")), message = NULL, post_message = NULL), ids = list(        answer = "unif4-answer", question = "unif4"), loading = structure("<strong>Loading:<\u002fstrong> \nUsing the results from the previous questions, what is \\[\\int_{-\\infty}^{\\infty} \\mbox{uniform}(x) dx\\ \\ \\mbox{?}\\]\n<br/><br/><br/>", html = TRUE, class = c("html",     "character")), random_answer_order = FALSE, allow_retry = TRUE,     seed = 837853618.109844, options = list(id = "DD-08-4")), class = c("learnr_radio", "tutorial_question")))
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "DD-08-5-cdfstorm1",     question = structure("How much probability corresponds to one small gray square of area in the graph?", html = TRUE, class = c("html",     "character")), answers = list(structure(list(id = "lnr_ans_500d17e",         option = "1", value = "1", label = structure("1", html = TRUE, class = c("html",         "character")), correct = FALSE, message = structure("pick a gray box, what are its dimensions?", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer")), structure(list(id = "lnr_ans_d2d5a6e",         option = ".0625", value = ".0625", label = structure(".0625", html = TRUE, class = c("html",         "character")), correct = TRUE, message = structure("that is 6.25%", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer")), structure(list(id = "lnr_ans_ec1fd9e",         option = ".125", value = ".125", label = structure(".125", html = TRUE, class = c("html",         "character")), correct = FALSE, message = structure("pick a gray box, what are its dimensions?", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer")), structure(list(id = "lnr_ans_57d6902",         option = ".25", value = ".25", label = structure(".25", html = TRUE, class = c("html",         "character")), correct = FALSE, message = structure("This is four gray boxes, not one and 25%", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer"))), button_labels = list(submit = structure("Check answer (ID: DD-08-5)", html = TRUE, class = c("html",     "character")), try_again = structure("Try again (ID: DD-08-5)", html = TRUE, class = c("html",     "character"))), messages = list(correct = structure("Right!", html = TRUE, class = c("html",     "character")), try_again = structure("Sorry.", html = TRUE, class = c("html",     "character")), incorrect = structure("Sorry.", html = TRUE, class = c("html",     "character")), message = NULL, post_message = NULL), ids = list(        answer = "cdfstorm1-answer", question = "cdfstorm1"),     loading = structure("<strong>Loading:<\u002fstrong> \nHow much probability corresponds to one small gray square of area in the graph?\n<br/><br/><br/>", html = TRUE, class = c("html",     "character")), random_answer_order = FALSE, allow_retry = TRUE,     seed = 1040205727.01562, options = list(id = "DD-08-5")), class = c("learnr_radio", "tutorial_question")))
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "DD-08-6-cdfstorm2",     question = structure("Using your answer from the previous question, estimate the probability (by counting gray boxes) of the time between 100 year storms being 50 years or less?", html = TRUE, class = c("html",     "character")), answers = list(structure(list(id = "lnr_ans_269c9d0",         option = "1", value = "1", label = structure("1", html = TRUE, class = c("html",         "character")), correct = FALSE, message = structure("your bounds for t are between 0 and 50 years", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer")), structure(list(id = "lnr_ans_ccdc67e",         option = ".0039", value = ".0039", label = structure(".0039", html = TRUE, class = c("html",         "character")), correct = FALSE, message = structure("This answer is not a percent", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer")), structure(list(id = "lnr_ans_b441c17",         option = "39%", value = "39%", label = structure("39%", html = TRUE, class = c("html",         "character")), correct = TRUE, message = structure("Correct. If you think this answer is counter-intuitive, that there is an almost 40% chance of the interval between 100 year storms being less than 50 years, you can appreciate why it&#39;s important to hand probabilities quantitatively rather than intuitively.", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer")), structure(list(id = "lnr_ans_b8a4b3c",         option = ".25", value = ".25", label = structure(".25", html = TRUE, class = c("html",         "character")), correct = FALSE, message = structure("your bounds for t are between 0 and 50 years", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer"))), button_labels = list(submit = structure("Check answer (ID: DD-08-6)", html = TRUE, class = c("html",     "character")), try_again = structure("Try again (ID: DD-08-6)", html = TRUE, class = c("html",     "character"))), messages = list(correct = structure("Right!", html = TRUE, class = c("html",     "character")), try_again = structure("Sorry.", html = TRUE, class = c("html",     "character")), incorrect = structure("Sorry.", html = TRUE, class = c("html",     "character")), message = NULL, post_message = NULL), ids = list(        answer = "cdfstorm2-answer", question = "cdfstorm2"),     loading = structure("<strong>Loading:<\u002fstrong> \nUsing your answer from the previous question, estimate the probability (by counting gray boxes) of the time between 100 year storms being 50 years or less?\n<br/><br/><br/>", html = TRUE, class = c("html",     "character")), random_answer_order = FALSE, allow_retry = TRUE,     seed = 202783777.405571, options = list(id = "DD-08-6")), class = c("learnr_radio", "tutorial_question")))
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "DD-08-7-exp1",     question = structure("Imagine that a 100-year storm has just happened at your location. What is the probability that the next 100-year storm will happen within 50 years?", html = TRUE, class = c("html",     "character")), answers = list(structure(list(id = "lnr_ans_2f4a4e2",         option = "11%", value = "11%", label = structure("11%", html = TRUE, class = c("html",         "character")), correct = FALSE, message = structure("What&#39;s the value of \\(P(t=50)\\)", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer")), structure(list(id = "lnr_ans_4b1a33d",         option = "27%", value = "27%", label = structure("27%", html = TRUE, class = c("html",         "character")), correct = FALSE, message = structure("What&#39;s the value of \\(P(t=50)\\)", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer")), structure(list(id = "lnr_ans_4173780",         option = "39%", value = "39%", label = structure("39%", html = TRUE, class = c("html",         "character")), correct = TRUE, message = structure("", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer")), structure(list(id = "lnr_ans_84e10c1",         option = "51%", value = "51%", label = structure("51%", html = TRUE, class = c("html",         "character")), correct = FALSE, message = structure("What&#39;s the value of \\(P(t=50)\\)", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer"))), button_labels = list(submit = structure("Check answer (ID: DD-08-7)", html = TRUE, class = c("html",     "character")), try_again = structure("Try again (ID: DD-08-7)", html = TRUE, class = c("html",     "character"))), messages = list(correct = structure("Right!", html = TRUE, class = c("html",     "character")), try_again = structure("Sorry.", html = TRUE, class = c("html",     "character")), incorrect = structure("Sorry.", html = TRUE, class = c("html",     "character")), message = NULL, post_message = NULL), ids = list(        answer = "exp1-answer", question = "exp1"), loading = structure("<strong>Loading:<\u002fstrong> \nImagine that a 100-year storm has just happened at your location. What is the probability that the next 100-year storm will happen within 50 years?\n<br/><br/><br/>", html = TRUE, class = c("html",     "character")), random_answer_order = FALSE, allow_retry = TRUE,     seed = 1823390151.65092, options = list(id = "DD-08-7")), class = c("learnr_radio", "tutorial_question")))
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "DD-08-8-exp2",     question = structure("The <em>median<\u002fem> time between 100-year storms is the value where there is a 50% probability that consecutive storms will happen closer in time than this value and 50% that consecutive storms will happen further apart than this value. What is the <em>median<\u002fem> time between 100-year storms, according to the standard model? (Hint: You can read this off the graph.)", html = TRUE, class = c("html",     "character")), answers = list(structure(list(id = "lnr_ans_9e4a711",         option = "about 30 years", value = "about 30 years",         label = structure("about 30 years", html = TRUE, class = c("html",         "character")), correct = FALSE, message = structure("", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer")), structure(list(id = "lnr_ans_cb35c08",         option = "50 years", value = "50 years", label = structure("50 years", html = TRUE, class = c("html",         "character")), correct = FALSE, message = structure("", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer")), structure(list(id = "lnr_ans_4878a70",         option = "about 70 years", value = "about 70 years",         label = structure("about 70 years", html = TRUE, class = c("html",         "character")), correct = TRUE, message = structure("", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer")), structure(list(id = "lnr_ans_ec3633b",         option = "100 years", value = "100 years", label = structure("100 years", html = TRUE, class = c("html",         "character")), correct = FALSE, message = structure("", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer")), structure(list(id = "lnr_ans_28f0b99",         option = "about 130 years", value = "about 130 years",         label = structure("about 130 years", html = TRUE, class = c("html",         "character")), correct = FALSE, message = structure("", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer"))), button_labels = list(submit = structure("Check answer (ID: DD-08-8)", html = TRUE, class = c("html",     "character")), try_again = structure("Try again (ID: DD-08-8)", html = TRUE, class = c("html",     "character"))), messages = list(correct = structure("Right!", html = TRUE, class = c("html",     "character")), try_again = structure("Sorry.", html = TRUE, class = c("html",     "character")), incorrect = structure("Sorry.", html = TRUE, class = c("html",     "character")), message = NULL, post_message = NULL), ids = list(        answer = "exp2-answer", question = "exp2"), loading = structure("<strong>Loading:<\u002fstrong> \nThe <em>median<\u002fem> time between 100-year storms is the value where there is a 50% probability that consecutive storms will happen closer in time than this value and 50% that consecutive storms will happen further apart than this value. What is the <em>median<\u002fem> time between 100-year storms, according to the standard model? (Hint: You can read this off the graph.)\n<br/><br/><br/>", html = TRUE, class = c("html",     "character")), random_answer_order = TRUE, allow_retry = TRUE,     seed = 49146567.4771143, options = list(id = "DD-08-8")), class = c("learnr_radio", "tutorial_question")))
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "DD-08-9-expect1",     question = structure("Recall that a <em>uniform<\u002fem> probability density is one that generates outcomes equally likely to be any number between specified lower and upper bounds. For the uniform density between \\(a\\) and \\(b\\), the probability density function \\[\\mbox{uniform} (x) \\equiv \\left\\{\\begin{array}{cl}\\frac{1}{b-a} & \\mbox{when} \\ \\ a \\leq x \\leq b\\\\0&\\mbox{otherwise} \\end{array}\\right.\\] What is the expectation value of uniform(x), that is, what is \\[\\int_{-\\infty}^{\\infty} x\\ \\mbox{uniform}(x) dx \\mbox{?}\\] Hint: you really only need to consider \\[\\int_a^b x\\ \\mbox{uniform}(x) dx\\], since \\[\\int_{-\\infty}^a \\mbox{uniform}(x) dx=\\int_b^{-\\infty} \\mbox{uniform}(x) dx=0\\]", html = TRUE, class = c("html",     "character")), answers = list(structure(list(id = "lnr_ans_cf68f99",         option = "$(b-a)/3$", value = "$(b-a)/3$", label = structure("\\((b-a)/3\\)", html = TRUE, class = c("html",         "character")), correct = FALSE, message = structure("The anti-derivative of \\(x \\cdot\\) uniform\\((x)\\) is \\[\\frac{1}{2}\\frac{1}{b-a} x^2\\].", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer")), structure(list(id = "lnr_ans_6569ce4",         option = "$(a + b)/2$", value = "$(a + b)/2$", label = structure("\\((a + b)/2\\)", html = TRUE, class = c("html",         "character")), correct = TRUE, message = structure("", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer")), structure(list(id = "lnr_ans_9469367",         option = "$\\sqrt{a^2 + b^2}$", value = "$\\sqrt{a^2 + b^2}$",         label = structure("\\(\\sqrt{a^2 + b^2}\\)", html = TRUE, class = c("html",         "character")), correct = FALSE, message = structure("The anti-derivative of \\(x \\cdot\\) uniform\\((x)\\) is \\[\\frac{1}{2}\\frac{1}{b-a} x^2\\].", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer")), structure(list(id = "lnr_ans_56c330a",         option = "$(a-b)/2$", value = "$(a-b)/2$", label = structure("\\((a-b)/2\\)", html = TRUE, class = c("html",         "character")), correct = FALSE, message = structure("Remember that \\(b^2 - a^2 = (b+a)(b-a)\\)", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer")), structure(list(id = "lnr_ans_c7bbfcb",         option = "It involves $\\infty$.", value = "It involves $\\infty$.",         label = structure("It involves \\(\\infty\\).", html = TRUE, class = c("html",         "character")), correct = FALSE, message = structure("I think you&#39;re plugging \\(\\pm \\infty\\) as the bounds of the definite integral. But remember that \\(\\mbox{uniform}(x < a) = \\mbox{uniform}(b < x) = 0.\\)", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer"))), button_labels = list(submit = structure("Check answer (ID: DD-08-9)", html = TRUE, class = c("html",     "character")), try_again = structure("Try again (ID: DD-08-9)", html = TRUE, class = c("html",     "character"))), messages = list(correct = structure("Right!", html = TRUE, class = c("html",     "character")), try_again = structure("Sorry.", html = TRUE, class = c("html",     "character")), incorrect = structure("Sorry.", html = TRUE, class = c("html",     "character")), message = NULL, post_message = NULL), ids = list(        answer = "expect1-answer", question = "expect1"), loading = structure("<strong>Loading:<\u002fstrong> \nRecall that a <em>uniform<\u002fem> probability density is one that generates outcomes equally likely to be any number between specified lower and upper bounds. For the uniform density between \\(a\\) and \\(b\\), the probability density function \\[\\mbox{uniform} (x) \\equiv \\left\\{\\begin{array}{cl}\\frac{1}{b-a} & \\mbox{when} \\ \\ a \\leq x \\leq b\\\\0&\\mbox{otherwise} \\end{array}\\right.\\] What is the expectation value of uniform(x), that is, what is \\[\\int_{-\\infty}^{\\infty} x\\ \\mbox{uniform}(x) dx \\mbox{?}\\] Hint: you really only need to consider \\[\\int_a^b x\\ \\mbox{uniform}(x) dx\\], since \\[\\int_{-\\infty}^a \\mbox{uniform}(x) dx=\\int_b^{-\\infty} \\mbox{uniform}(x) dx=0\\]\n<br/><br/><br/>", html = TRUE, class = c("html",     "character")), random_answer_order = FALSE, allow_retry = TRUE,     seed = 1226360225.42893, options = list(id = "DD-08-9")), class = c("learnr_radio", "tutorial_question")))
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+`tutorial-exercise-expect2-result` <- learnr:::setup_exercise_handler(reactive(req(input$`tutorial-exercise-expect2-code-editor`)), session)
+output$`tutorial-exercise-expect2-output` <- renderUI({
+  `tutorial-exercise-expect2-result`()
+})
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server-start">
+library(learnr)
+library(gradethis)
+library(mosaic)
+knitr::opts_chunk$set(echo = FALSE)
+learnr::tutorial_options(exercise.timelimit = 60, 
+                 exercise.checker = gradethis::grade_learnr)
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server-start">
+## SET UP THE PROBLEM HERE. 
+# Note use of double \\ for latex in quotation marks
+problemLatex <- "\\int  A \\sin(Bx + C) + D\\ dt?"
+answer_fun <- function(t,x,A,B,C,D) t*(A*sin(B*x + C) + D)
+evaluate_at <- 1:10
+correct_arguments <- c("x","t", "A", "B", "C", "D")
+## Remember to set the CHUNK NAMES to match the file name
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+`tutorial-exercise-IOD-H-result` <- learnr:::setup_exercise_handler(reactive(req(input$`tutorial-exercise-IOD-H-code-editor`)), session)
+output$`tutorial-exercise-IOD-H-output` <- renderUI({
+  `tutorial-exercise-IOD-H-result`()
+})
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+id <- "latex-H"
+answers <- c("t(A \\sin(Bx + C) + D)",
+             "(A \\sin(Bx + C) + D)t",
+             "t(A sin(Bx + C) + D)",
+             "(A sin(Bx + C) + D)t",
+             "A sin(Bx + C)t + Dt",
+             "A \\sin(Bx + C)t + Dt") 
+squash_str <- "\\{|\\}| |\t|\n"
+
+# To return the state of the app
+if (!exists("apps_state")) apps_state <- reactiveValues() 
+
+output[[NS(id, "rendered")]] <- renderUI({
+  withMathJax(paste0("$$", input[[NS(id, "latex")]], "$$"))
+})
+output[[NS(id, "feedback")]] <- renderUI({
+  compare <- gsub(squash_str, "", answers)
+  the_answer <- input[[NS(id, "latex")]]
+  if (is.null(the_answer)) the_answer <- "missing"
+  correct <- gsub(squash_str, "", 
+           input[[NS(id, "latex")]]) %in% compare
+  if (exists("apps_state")) {
+    registration_name <- NS(id, "result")
+    apps_state[[registration_name]] <- 
+      tibble::tibble(id = registration_name, 
+                     question = "latex input",
+                     answer = the_answer,
+                     time = as.character(Sys.time()),
+                     correct = correct,
+                     attempts = 1,
+                     history = "")
+    
+  }
+  ifelse(correct, "✓", "☞")
+})
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+etude2::submissions_logic()
+</script>
+ <!--html_preserve-->
+<script type="application/shiny-prerendered" data-context="dependencies">
+{"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["jquery"]},{"type":"character","attributes":{},"value":["1.11.3"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["rmd/h/jquery"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["jquery.min.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["rmarkdown"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["2.4"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["bootstrap"]},{"type":"character","attributes":{},"value":["3.3.5"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["rmd/h/bootstrap"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["viewport"]}},"value":[{"type":"character","attributes":{},"value":["width=device-width, initial-scale=1"]}]},{"type":"character","attributes":{},"value":["js/bootstrap.min.js","shim/html5shiv.min.js","shim/respond.min.js"]},{"type":"character","attributes":{},"value":["css/cerulean.min.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["rmarkdown"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["2.4"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["pagedtable"]},{"type":"character","attributes":{},"value":["1.1"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["rmd/h/pagedtable-1.1"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["js/pagedtable.js"]},{"type":"character","attributes":{},"value":["css/pagedtable.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["rmarkdown"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["2.4"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["highlightjs"]},{"type":"character","attributes":{},"value":["9.12.0"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["rmd/h/highlightjs"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["highlight.js"]},{"type":"character","attributes":{},"value":["textmate.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["rmarkdown"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["2.4"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["tutorial"]},{"type":"character","attributes":{},"value":["0.10.1.9004"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/tutorial"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["tutorial.js"]},{"type":"character","attributes":{},"value":["tutorial.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.10.1.9004"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["tutorial-autocompletion"]},{"type":"character","attributes":{},"value":["0.10.1.9004"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/tutorial"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["tutorial-autocompletion.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.10.1.9004"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["tutorial-diagnostics"]},{"type":"character","attributes":{},"value":["0.10.1.9004"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/tutorial"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["tutorial-diagnostics.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.10.1.9004"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["tutorial-format"]},{"type":"character","attributes":{},"value":["0.10.1.9004"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["rmarkdown/templates/tutorial/resources"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["tutorial-format.js"]},{"type":"character","attributes":{},"value":["tutorial-format.css","rstudio-theme.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.10.1.9004"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["jquery"]},{"type":"character","attributes":{},"value":["1.11.3"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["rmd/h/jquery"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["jquery.min.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["rmarkdown"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["2.4"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["navigation"]},{"type":"character","attributes":{},"value":["1.1"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["rmd/h/navigation-1.1"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["tabsets.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["rmarkdown"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["2.4"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["highlightjs"]},{"type":"character","attributes":{},"value":["9.12.0"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["rmd/h/highlightjs"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["highlight.js"]},{"type":"character","attributes":{},"value":["default.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["rmarkdown"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["2.4"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["jquery"]},{"type":"character","attributes":{},"value":["1.11.3"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["rmd/h/jquery"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["jquery.min.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["rmarkdown"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["2.4"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["font-awesome"]},{"type":"character","attributes":{},"value":["5.1.0"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["rmd/h/fontawesome"]}]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["css/all.css","css/v4-shims.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["rmarkdown"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["2.4"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["bootbox"]},{"type":"character","attributes":{},"value":["4.4.0"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/bootbox"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["bootbox.min.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.10.1.9004"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["idb-keyvalue"]},{"type":"character","attributes":{},"value":["3.2.0"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/idb-keyval"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["idb-keyval-iife-compat.min.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[false]},{"type":"character","attributes":{},"value":["0.10.1.9004"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["tutorial"]},{"type":"character","attributes":{},"value":["0.10.1.9004"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/tutorial"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["tutorial.js"]},{"type":"character","attributes":{},"value":["tutorial.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.10.1.9004"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["tutorial-autocompletion"]},{"type":"character","attributes":{},"value":["0.10.1.9004"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/tutorial"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["tutorial-autocompletion.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.10.1.9004"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["tutorial-diagnostics"]},{"type":"character","attributes":{},"value":["0.10.1.9004"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/tutorial"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["tutorial-diagnostics.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.10.1.9004"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["ace"]},{"type":"character","attributes":{},"value":["1.2.6"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/ace"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["ace.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.10.1.9004"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["clipboardjs"]},{"type":"character","attributes":{},"value":["1.5.15"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/clipboardjs"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["clipboard.min.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.10.1.9004"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["ace"]},{"type":"character","attributes":{},"value":["1.2.6"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/ace"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["ace.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.10.1.9004"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["clipboardjs"]},{"type":"character","attributes":{},"value":["1.5.15"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/clipboardjs"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["clipboard.min.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.10.1.9004"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["ace"]},{"type":"character","attributes":{},"value":["1.2.6"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/ace"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["ace.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.10.1.9004"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["clipboardjs"]},{"type":"character","attributes":{},"value":["1.5.15"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/clipboardjs"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["clipboard.min.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.10.1.9004"]}]}]}
+</script>
+<!--/html_preserve-->
+<!--html_preserve-->
+<script type="application/shiny-prerendered" data-context="execution_dependencies">
+{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["packages"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["packages","version"]},"class":{"type":"character","attributes":{},"value":["data.frame"]},"row.names":{"type":"integer","attributes":{},"value":[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,91,92,93,94]}},"value":[{"type":"character","attributes":{},"value":["backports","base","broom","checkmate","colorspace","compiler","crayon","crosstalk","curl","data.table","datasets","digest","dplyr","DT","ellipsis","etude2","evaluate","farver","fastmap","generics","ggdendro","ggforce","ggformula","ggplot2","ggrepel","ggridges","ggstance","glue","gradethis","graphics","grDevices","grid","gridExtra","gtable","hms","htmltools","htmlwidgets","httpuv","httr","jsonlite","knitr","labeling","later","lattice","lazyeval","leaflet","learnr","learnrhash","lifecycle","lubridate","magrittr","markdown","MASS","math141Z","Matrix","methods","metR","mime","mosaic","mosaicCalc","mosaicCore","mosaicData","munsell","pillar","pkgconfig","plotly","plyr","polyclip","promises","purrr","R6","Rcpp","readr","rlang","rmarkdown","rprojroot","scales","shiny","splines","stats","stringi","stringr","tibble","tidyr","tidyselect","tools","tweenr","utils","vctrs","viridisLite","withr","xfun","xtable","yaml"]},{"type":"character","attributes":{},"value":["1.1.10","3.6.3","0.7.1","2.0.0","1.4-1","3.6.3","1.3.4.9000","1.1.0.1","4.3","1.12.8","3.6.3","0.6.25","1.0.2","0.12","0.3.1","0.1.0","0.14","2.0.3","1.0.1","0.0.2","0.1.22","0.3.2","0.9.4","3.3.2","0.8.2","0.5.2","0.3.4","1.4.2","0.2.0.9000","3.6.3","3.6.3","3.6.3","2.3","0.3.0","0.5.3","0.5.0","1.5.2","1.5.4","1.4.2","1.7.1","1.30","0.3","1.1.0.1","0.20-38","0.2.2","2.0.3","0.10.1.9004","0.1.0.9000","0.2.0","1.7.9","1.5","1.1","7.3-51.5","0.2.0","1.2-18","3.6.3","0.7.0","0.9","1.8.2","0.5.2.9000","0.8.0","0.20.1","0.5.0","1.4.6","2.0.3","4.9.2.1","1.8.6","1.10-0","1.1.1","0.3.4","2.4.1","1.0.5","1.4.0","0.4.8","2.4","1.3-2","1.1.1","1.5.0","3.6.3","3.6.3","1.5.3","1.4.0","3.0.3","1.1.2","1.1.0","3.6.3","1.0.1","3.6.3","0.3.4","0.3.0","2.3.0","0.18","1.8-4","2.2.1"]}]}]}
+</script>
+<!--/html_preserve-->
+</div>
+
+</div> <!-- topics -->
+
+<div class="topicsContainer">
+<div class="topicsPositioner">
+<div class="band">
+<div class="bandContent topicsListContainer">
+
+<!-- begin doc-metadata -->
+<div id="doc-metadata">
+<h2 class="title toc-ignore" style="display:none;">Daily Digital 08</h2>
+<h3 class="subtitle"><em>Math 142Z</em></h3>
+</div>
+<!-- end doc-metadata -->
+
+</div> <!-- bandContent.topicsListContainer -->
+</div> <!-- band -->
+</div> <!-- topicsPositioner -->
+</div> <!-- topicsContainer -->
+
+
+</div> <!-- bandContent page -->
+</div> <!-- pageContent band -->
+
+
+
+
+<script>
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+</script>
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+
+</body>
+
+</html>

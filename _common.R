@@ -1,6 +1,15 @@
 library(mosaic)
 library(mosaicCalc)
+library(glue)
 library(math141Z) # REPLACE THIS WHEN PACKAGES ARE RE-ALIGNED
+library(here) # for file locations
+
+
+
+exercise_file <- function(day,  file_name, course="141Z") {
+    path=glue::glue("Exercises/DD-{course}-{day}/{file_name}")
+    here(path)
+}
 
 if (!exists("objective_list"))
   objective_list <- list()

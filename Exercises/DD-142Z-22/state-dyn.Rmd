@@ -1,0 +1,159 @@
+---
+title: "Dynamical Systems: State and Dynamics"
+author: "Daniel Kaplan"
+runtime: shiny_prerendered
+output: learnr::tutorial
+---
+
+```{r include=FALSE}
+etude2::load_learnr_safely()
+library(etude2)
+```
+
+Differential equations provide an important type of model for **systems** that change in time.
+
+A **system** is something made up of two or more interacting components. A dynamical system has a **state** and a **dynamical rule**. Typically the state is a set of numbers. In CalcZ, we consider states consisting of one number, and states consisting of two numbers. We call these *one-dimension* and *two-dimensional* systems respectively.
+
+A **change of state** is a set of numbers, one for each component of the state, which tells how fast the state is changing. In other words, the change of state is the derivative with respect to time of the state.
+
+A **dynamical rule** consists of one function for each dimension of state. The function takes the state as input, and returns the **change-of-state with respect to time**.
+
+A **differential equation** is a kind of sentence saying, "This is the state and dynamical rule for a dynamical system." The differential equation **defines** the system. Perhaps it's best to read "$\dot{x} =\ ...$  or $\partial_t x = \ ...$ as 
+
+> "the dynamics of the changing quantity $x$ is defined to be ..." followed by a function of $x$ to the right of the $=$ sign. 
+
+It doesn't matter if you use $\partial_t x$ or $\dot{x}$ or even $dx/dt$ on the left hand side of the equation: they all mean the same thing. Think of them as dialects of mathematical language spoken in different fields.
+
+
+Here are six examples of differential equations, labeled (A) through (F). 
+
+A)       $\partial_t\, x = b\, \sin(x)$
+
+---
+
+B)       $\dot{x} = r\, x$
+
+---
+
+C)       $\dot{x} = r\, x\, (1 - x/K)$
+
+---
+
+D)       $\left\{\begin{array}{ll}\dot{x} = 2\, x -3\, y\\\dot{y} = 1\, x + 2\, y \end{array}\right.$
+
+---
+
+E)       $\dot{\mathbf X} = {\mathbf A} {\mathbf X}$, for instance 
+${\dot{\mathbf X}} = \left[\begin{array}{cc}a & b\\c & d\end{array}\right] {\mathbf X}$
+
+---
+
+F)       $\left\{\begin{array}{ll}\dot{S} = -\beta\, S\, I\\ \dot{I} = \beta\, S\, I - \alpha\, I\\\dot{R} = \alpha\, R\end{array}\right.$
+
+---
+
+It's helpful to have a systematic process for reading a differential equation.
+
+**Step 1**) Identify the symbol(s) representing the *state* and what is the dimension of the state.
+
+- Equations (A-C): The state is $x$ and has one dimension.
+
+- Equation (D): There are two derivatives on the left-hand side of the equation, $\dot{x}$ and $\dot{y}$. This indicates that the state is the pair $(x, y)$, a two-dimensional state. 
+
+- Equation (E): The very compact form $\dot{\mathbf X} = {\mathbf A} {\mathbf X}$ is using vector/matrix notation (the **symbols in bold face**). We cannot tell yet what the dimension of vector $\mathbf X$ is. The example ${\dot{\mathbf X}} = \left[\begin{array}{cc}a & b\\c & d\end{array}\right] {\mathbf X}$ shows the shape of the matrix $\mathbf A$. Here we can see that the state must be two-dimensional. 
+Is the state one-dimensional or two-dimensional?
+
+```{r dst-1, echo=FALSE, results="markup"}
+etude2::etudeQ(
+  "What symbol(s) represent the state in Equation (F)?",
+  "$x$ and $y$" = "Do you see an $x$ or $y$ anywhere in equation (F)?",
+  "Just $y$",
+  "$S$ and $I$" = "But there are three equations.",
+  "+$S$, $I$, and $R$+"
+)
+```
+
+
+```{r dst-2, echo=FALSE, results="markup"}
+etude2::etudeQ(
+  "What is the dimension of the state in Equation (F)?",
+  1, 2, 3, 4, "Not enough information",
+  right_one = 3, random_answer_order = FALSE
+)
+```
+
+**Step 2**) Identify the dynamical rule(s). These will always be functions of the state and may include *parameters*, which are simply symbols standing in for numerical quantities.
+
+Equation A) The state is $x$ and the dynamical function is $a \sin(x)$. Since $a$ is not part of the state, it must be a parameter.
+
+Equation B) The state is $x$ and the dynamical function is $a x$. That's a very simple function, but it's also very common in models.
+
+Equation C) The state is $x$. The dynamical function $r x (1 - x/K)$ has two parameters: $r$ and $K$.
+
+```{r dst-3, echo=FALSE, results="markup"}
+etude2::etudeQ(
+  "How many dynamical functions are there in Equation (D)? (Hint: What is the dimension of the state in Equation (D)?)",
+  1, 2, 3, 4, "Not enough information",
+  right_one = 2,
+  random_answer_order = FALSE
+)
+```
+
+In vector/matrix notation such as $\dot{\mathbf X} = {\mathbf A} {\mathbf X}$ , it can seem that there is only one one function. Here, that's ${\mathbf A} {\mathbf X}$. But remember, such multiplication of a matrix times a vector amounts to a *vector of functions*, as in Equation (D).
+
+
+```{r dst-4, echo=FALSE, results="markup"}
+etude2::etudeQ(
+  "In Equation (F) there are three dynamical rules, one of each of the components of the state. Which of these is **not** one of those functions?",
+  "$-\\beta S I$",
+  "$\\beta S I - \\alpha I$",
+  "$\\alpha I$", 
+  "+$-\\beta S I + \\alpha I$+"
+)
+```
+
+-----
+
+### QUIZ-TYPE QUESTIONS
+
+```{r q5-4b, echo=FALSE, results="markup"}
+etude2::etudeQ(
+  "Which of the following differential equations represents the statement: *\"The rate at which the radioactive substance decays is directly proportional to the amount of substance remaining.\"*",
+"$\\dot {x} = Ce^{-kt}$",
+"$x(t)=Ce^{-kt}$",
+"+$\\dot x=-kx$+",
+"$\\dot x=-k(x-x_0)$",
+"$\\dot x = \\int x dx$",
+random_answer_order = FALSE
+)
+```
+
+Four of the five choices given are differential equations. But $x(t) = C e^{kt}$ is not. Recall that the grammar of a differential equation is 
+
+> [Derivative of state with respect to time] = [Dynamical function(s) that take state as the input] 
+
+$x(t)$ is not a "derivative of state with respect to time." 
+
+The other four choices are all differential equations: they have $\dot{x}$ on the left of the $=$ sign. 
+
+To answer the question, we have to figure out which of the four choices for dynamical function is *direct proportionality* to the state. The "direct proportionality function" is a constant times the input to the function, e.g. $a\, x$ or $-k\, x$ or $r\, x$ or even, for a vector state, ${\mathbf A} {\mathbf X}$
+
+-----
+
+```{r q5-8, echo=FALSE, results="markup"}
+etude2::etudeQ(
+  "Given $$\\dot x = 0.2x(1-\\frac{x}{50})$$ with initial condition $x(0)=70$, is $x(t)$ increasing, decreasing, constant, or cannot be determined?",
+"Increasing",
+"+Decreasing+",
+"Constant",
+"Cannot be determined",
+random_answer_order = FALSE
+)
+```
+
+You have been given a differential equation $$\dot x = 0.2\, x\left(1-\frac{x}{50}\right)$$
+You can see that the state is one-dimensional, represented by the symbol $x$. 
+
+On the right side of the $=$ sign is the dynamical function. Since the state at time $t=0$ is $x(t=0) = 70$, you can use the function to calculate the **change-in-state** at time $t=0$. This will be `0.2*70 * (1-70/50)` giving $-5.6$. A negative change in state means that at time $t=0$ the state is **decreasing**. 
+
+Notice that the question asks whether $x(t)$ is increasing or decreasing. The is a question about the **solution** to the differential equation, not just the instantaneous rate of change of $x$ at $t=0$. To be able to answer that, it helps to be able to recognize that $r x (1-x/K)$ is one of the specific dynamical functions we've studied in detail. (See the section on "Common Models.")

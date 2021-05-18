@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+
+
+<meta name="progressive" content="false" />
+<meta name="allow-skip" content="false" />
+
+<title>Daily Digital 05</title>
+
+
+<!-- highlightjs -->
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+<!-- taken from https://github.com/rstudio/rmarkdown/blob/67b7f5fc779e4cfdfd0f021d3d7745b6b6e17149/inst/rmd/h/default.html#L296-L362 -->
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("section-TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+<!-- end tabsets -->
+
+
+
+</head>
+
+<body>
+
+
+
+<div class="pageContent band">
+<div class="bandContent page">
+
+<div class="topics">
+
+<div id="section-objectives" class="section level2">
+<h2>Objectives</h2>
+<ol style="list-style-type: lower-alpha">
+<li>Understand the Fundamental Theorem of Calculus Part 2 as how to evaluate definite integrals</li>
+<li>Comprehend how the Fundamental Theorem of Calculus Part 2 graphically can calculate the area between curves (MMAC pgs. 644-645)</li>
+<li>Understand the Fundamental Theorem of Calculus Part 1 as the net accumulation function</li>
+<li>Understand how a definite integral with a variable limit of integration outputs a function</li>
+</ol>
+</div>
+<div id="section-three-perspectives-on-a-definite-integral" class="section level2">
+<h2>Three perspectives on a definite integral</h2>
+<p>The equation below shows three items, all of which are equivalent even though they look different. You can see this from the equal signs separating the three items.</p>
+<p><img src="www/three-perspectives.png" width="363" /></p>
+<p>When you reach the point where you can say, “That’s obvious,” and can write down the three items from memory, you will have achieved an important facility with calculus.</p>
+<div class="panel panel-default">
+<div data-label="3persp1" class="tutorial-question panel-body">
+<div id="3persp1-answer_container" class="shiny-html-output"></div>
+<div id="3persp1-message_container" class="shiny-html-output"></div>
+<div id="3persp1-action_button_container" class="shiny-html-output"></div>
+<script>if (Tutorial.triggerMathJax) Tutorial.triggerMathJax()</script>
+</div>
+</div>
+<p>The equation has been <a href="https://betterexplained.com/articles/colorized-math-equations/">written in color</a> to help you identify elements that are the same in each of the three items.</p>
+<div class="panel panel-default">
+<div data-label="3persp2" class="tutorial-question panel-body">
+<div id="3persp2-answer_container" class="shiny-html-output"></div>
+<div id="3persp2-message_container" class="shiny-html-output"></div>
+<div id="3persp2-action_button_container" class="shiny-html-output"></div>
+<script>if (Tutorial.triggerMathJax) Tutorial.triggerMathJax()</script>
+</div>
+</div>
+<div class="panel panel-default">
+<div data-label="3persp3" class="tutorial-question panel-body">
+<div id="3persp3-answer_container" class="shiny-html-output"></div>
+<div id="3persp3-message_container" class="shiny-html-output"></div>
+<div id="3persp3-action_button_container" class="shiny-html-output"></div>
+<script>if (Tutorial.triggerMathJax) Tutorial.triggerMathJax()</script>
+</div>
+</div>
+<div class="panel panel-default">
+<div data-label="3persp4" class="tutorial-question panel-body">
+<div id="3persp4-answer_container" class="shiny-html-output"></div>
+<div id="3persp4-message_container" class="shiny-html-output"></div>
+<div id="3persp4-action_button_container" class="shiny-html-output"></div>
+<script>if (Tutorial.triggerMathJax) Tutorial.triggerMathJax()</script>
+</div>
+</div>
+</div>
+<div id="section-three-perspectives-redux" class="section level2">
+<h2>Three perspectives … redux</h2>
+<!-- WARNING WARNING
+
+The NS() logic in the server isn't working. The resolved name needs to be
+used directly as input$`latex-5-latex`
+
+-->
+<p>Typeset in LaTeX the equation showing three perspectives on a definite integral. (you can ignore the color that was used in a previous exercise.)</p>
+<ul>
+<li>Superscript: Example: <code>\beta^4</code> produces <span class="math inline">\(\beta^4\)</span>.</li>
+<li>Subscript: Like superscript but use <code>_</code> (underscore) instead of <code>^</code> (caret).</li>
+<li>Integral sign: <code>\int</code> produces <span class="math inline">\(\int\)</span>. Give it a subscript then superscript to set the limits of integration.</li>
+<li>Vertical bar: The vertical bar is one common notation for "evaluate the function at the top bound and subtract the value of the function at the bottom bound. You can typeset the vertical bar by sandwiching the quantity just before the bar with <code>\left.</code> and <code>\right|</code> For instance <code>\left. g(x) \right|</code> gives <span class="math inline">\(\left. g(x) \right|\)</span>. Use a subscript and a superscript on the <code>|</code> to set the values at which the function is to be evaluated</li>
+</ul>
+<div style="font-size: 25px;">
+<span id="latex-2-feedback" class="shiny-html-output" style="color: green; font-size:30px;"></span
+  <span class="form-group shiny-input-container">
+    <label class="control-label" for="latex">Type latex math here.</label>
+    <textarea id="latex-2-latex" class="form-control" rows="5" cols="50" style="font-size: 25px"></textarea>
+  </span>
+</div>
+<div id="latex-2-rendered" class="shiny-html-output" style="font-size:25px;"></div>
+</div>
+<div id="section-accumulate-the-accumulation" class="section level2">
+<h2>Accumulate the accumulation</h2>
+<p>Famously, the acceleration due to gravity at the Earth’s surface is a constant: roughly -9.8 meters / sec<span class="math inline">\(^2\)</span>. But let’s write it as a function of time: <span class="math display">\[\mbox{accel}(t) \equiv -9.8\]</span> Galileo climbs up to the top of the Tower of Pisa, 56.7 meters above the ground. He is holding a small lead ball between thumb and forefinger. He spreads his fingers and the ball starts to fall from a standstill. How fast will the ball be going as it falls.</p>
+<p>In this problem, we’re given information in the form of acceleration, and want to turn it into a statement about velocity. Remembering that acceleration is the derivative of velocity with respect to time, we see this as an anti-derivative problem: <span class="math display">\[\mbox{vel}(t) \equiv \int \mbox{accel}(t) dt = \int -9.8 dt = -\int 9.8 dt\\\mbox{vel}(t) = -9.8 t + C\ .\]</span></p>
+<div class="panel panel-default">
+<div data-label="galileo-1" class="tutorial-question panel-body">
+<div id="galileo-1-answer_container" class="shiny-html-output"></div>
+<div id="galileo-1-message_container" class="shiny-html-output"></div>
+<div id="galileo-1-action_button_container" class="shiny-html-output"></div>
+<script>if (Tutorial.triggerMathJax) Tutorial.triggerMathJax()</script>
+</div>
+</div>
+<p>Where will the ball be in 2 seconds after release (that is, at 5 seconds)? “Where” is a position question, so we need to convert the original information that we had in terms of acceleration into information in terms of position.</p>
+<p>We’ve already used the relationship between acceleration and velocity (acceleration is <span class="math inline">\(\partial_t\)</span> accel(t)) to compute the velocity vel(t) at any time: vel(t) <span class="math inline">\(= -9.8 t + 29.4\)</span> and we know the units of <span class="math inline">\(t\)</span>, <span class="math inline">\(-9.8\)</span> and <span class="math inline">\(29.4\)</span>.</p>
+<p>Since velocity is the derivative of position with respect to time, we can compute position as the anti-derivative of velocity: <span class="math display">\[\mbox{pos}(t) = \int \mbox{vel}(t) = \int (29.4-9.8 t) dt\\\mbox{pos}(t) = 29.4 t - 9.8 \frac{t^2}{2} + C_{pos}\]</span> Another <span class="math inline">\(C\)</span>! We’re writing it as <span class="math inline">\(C_{pos}\)</span> to remind us that this <span class="math inline">\(C\)</span> is different than the <span class="math inline">\(C\)</span> that appeared in the vel(t) function. That <span class="math inline">\(C\)</span> was from the accumulation of acceleration to get velocity. This <span class="math inline">\(C_{pos}\)</span>, even though it’s the same letter, is something different. Remember that <span class="math inline">\(C_{pos}\)</span> is a reminder that pos(t) is the accumulation of velocity up until time <span class="math inline">\(t\)</span>, but we haven’t (yet) specified when the accumulation started. To calculate the <span class="math inline">\(C_{pos}\)</span> for the pos(t) function, we need to consider the problem situation (Galileo in Pisa) and figure out some <span class="math inline">\(t_0\)</span> for which we know <span class="math inline">\(pos(t_0)\)</span>.</p>
+<p>What we know here is that at the release time (<span class="math inline">\(t=3\)</span> seconds) the ball was at the top of the Tower of Pisa. So dist(3) = 56.7 meters.</p>
+<div class="panel panel-default">
+<div data-label="galileo-2" class="tutorial-question panel-body">
+<div id="galileo-2-answer_container" class="shiny-html-output"></div>
+<div id="galileo-2-message_container" class="shiny-html-output"></div>
+<div id="galileo-2-action_button_container" class="shiny-html-output"></div>
+<script>if (Tutorial.triggerMathJax) Tutorial.triggerMathJax()</script>
+</div>
+</div>
+<div class="panel panel-default">
+<div data-label="galileo-3" class="tutorial-question panel-body">
+<div id="galileo-3-answer_container" class="shiny-html-output"></div>
+<div id="galileo-3-message_container" class="shiny-html-output"></div>
+<div id="galileo-3-action_button_container" class="shiny-html-output"></div>
+<script>if (Tutorial.triggerMathJax) Tutorial.triggerMathJax()</script>
+</div>
+</div>
+</div>
+<div id="section-first-fundamental-theorem" class="section level2">
+<h2>“First Fundamental Theorem”</h2>
+<p>Remember our conventions for notation:</p>
+<ul>
+<li>Numerical constants (perhaps with units)
+<ul>
+<li>Symbols: e.g. <span class="math inline">\(a\)</span>, <span class="math inline">\(b\)</span>, <span class="math inline">\(c\)</span>, <span class="math inline">\(x_0\)</span>, <span class="math inline">\(t^{\star}\)</span></li>
+<li>Examples: 3.2, 4.8 meters, 17 feet/sec<span class="math inline">\(^2\)</span></li>
+</ul></li>
+<li>Quantities that can vary (perhaps with units)
+<ul>
+<li>Symbols: e.g. <span class="math inline">\(x\)</span>, <span class="math inline">\(t\)</span>, <span class="math inline">\(y\)</span>, <span class="math inline">\(u\)</span>, <span class="math inline">\(v\)</span></li>
+<li>Examples: position, time, velocity</li>
+</ul></li>
+<li>Functions of a variable
+<ul>
+<li>Symbols: e.g. <span class="math inline">\(f(x)\)</span>, <span class="math inline">\(g(t)\)</span>, <span class="math inline">\(h(x, t)\)</span></li>
+<li>Examples: position as a function of time, density as a function of position</li>
+</ul></li>
+<li>Functions evaluated at a specific numerical input
+<ul>
+<li>Symbols: e.g. <span class="math inline">\(f(a)\)</span>, <span class="math inline">\(g(t_0)\)</span>, <span class="math inline">\(h(x^{\star}, t^{\star})\)</span></li>
+<li>Examples: velocity at the finish line, starting position</li>
+</ul></li>
+</ul>
+<p>In particular, take care to distinguish between these two kinds of symbolic items:</p>
+<ol style="list-style-type: decimal">
+<li><span class="math inline">\(f(x)\)</span>, <span class="math inline">\(f()\)</span> as a function of <span class="math inline">\(x\)</span></li>
+<li><span class="math inline">\(f(x_0)\)</span>, the function <span class="math inline">\(f()\)</span> evaluated at the specific input <span class="math inline">\(x_0\)</span>, producing (typically) a quantity like 3.5 meters/sec.</li>
+</ol>
+<p>A major source of confusion for students is that <span class="math inline">\(a\)</span> is a constant, even though we are not yet saying specifically which numerical value that constant has. Think of <span class="math inline">\(a\)</span> as meaning “insert constant here.” In terms of derivatives …</p>
+<ol style="list-style-type: lower-roman">
+<li><span class="math inline">\(\partial_x f(a) = 0\)</span></li>
+<li><span class="math inline">\(\partial_x f(x)\)</span> is a function</li>
+<li><span class="math inline">\(\partial_u f(x) = 0\)</span>, since <span class="math inline">\(u\)</span> and <span class="math inline">\(x\)</span> are different variables.</li>
+<li><span class="math inline">\(\partial_u f(u)\)</span> is a function, the exact same function as in (ii).</li>
+</ol>
+<p>With this in mind, turn to our three perspectives on a definite integral <span class="math display">\[\int_a^b f(x) dx \ \ =\ \  \left. F(x) \right|_a^b\ \  =\ \  F(b) - F(a)\]</span></p>
+<ul>
+<li><span class="math inline">\(a\)</span> and <span class="math inline">\(b\)</span> are numerical constants -<span class="math inline">\(f(x)\)</span> and <span class="math inline">\(F(x)\)</span> are functions of <span class="math inline">\(x\)</span> -<span class="math inline">\(F(a)\)</span> is the function <span class="math inline">\(F()\)</span> evaluated at the specific input <span class="math inline">\(a\)</span>, producing a quantity. Likewise <span class="math inline">\(F(b)\)</span>.</li>
+</ul>
+<div class="panel panel-default">
+<div data-label="fft1" class="tutorial-question panel-body">
+<div id="fft1-answer_container" class="shiny-html-output"></div>
+<div id="fft1-message_container" class="shiny-html-output"></div>
+<div id="fft1-action_button_container" class="shiny-html-output"></div>
+<script>if (Tutorial.triggerMathJax) Tutorial.triggerMathJax()</script>
+</div>
+</div>
+<div class="panel panel-default">
+<div data-label="fft2" class="tutorial-question panel-body">
+<div id="fft2-answer_container" class="shiny-html-output"></div>
+<div id="fft2-message_container" class="shiny-html-output"></div>
+<div id="fft2-action_button_container" class="shiny-html-output"></div>
+<script>if (Tutorial.triggerMathJax) Tutorial.triggerMathJax()</script>
+</div>
+</div>
+<div class="panel panel-default">
+<div data-label="fft3" class="tutorial-question panel-body">
+<div id="fft3-answer_container" class="shiny-html-output"></div>
+<div id="fft3-message_container" class="shiny-html-output"></div>
+<div id="fft3-action_button_container" class="shiny-html-output"></div>
+<script>if (Tutorial.triggerMathJax) Tutorial.triggerMathJax()</script>
+</div>
+</div>
+<div class="panel panel-default">
+<div data-label="fft4" class="tutorial-question panel-body">
+<div id="fft4-answer_container" class="shiny-html-output"></div>
+<div id="fft4-message_container" class="shiny-html-output"></div>
+<div id="fft4-action_button_container" class="shiny-html-output"></div>
+<script>if (Tutorial.triggerMathJax) Tutorial.triggerMathJax()</script>
+</div>
+</div>
+<div class="panel panel-default">
+<div data-label="fft5" class="tutorial-question panel-body">
+<div id="fft5-answer_container" class="shiny-html-output"></div>
+<div id="fft5-message_container" class="shiny-html-output"></div>
+<div id="fft5-action_button_container" class="shiny-html-output"></div>
+<script>if (Tutorial.triggerMathJax) Tutorial.triggerMathJax()</script>
+</div>
+</div>
+<div class="panel panel-default">
+<div data-label="fft6" class="tutorial-question panel-body">
+<div id="fft6-answer_container" class="shiny-html-output"></div>
+<div id="fft6-message_container" class="shiny-html-output"></div>
+<div id="fft6-action_button_container" class="shiny-html-output"></div>
+<script>if (Tutorial.triggerMathJax) Tutorial.triggerMathJax()</script>
+</div>
+</div>
+<p>Now turn to the entities involved in the so-called “First Fundamental Theorem of Calculus.” (“Fundamental theorem” is a highfalutin way of saying something like, “This isn’t obvious at first glance, and so you should be especially careful to memorize it so that you identify it when you see it.” Another way to state it is, “Every function is the derivative of some anti-derivative.” But you knew that already, since “every function has an anti-derivative.”)</p>
+<p>Here are the entities involved, which you’ll recognize as a slight modification of an earlier statement:</p>
+<p><span class="math display">\[\partial_u \int_a^u f(x)dx \ \ =\ \ \partial_u \left. F(x) \right|_a^u \ \ = \ \ \partial_u \left(F(u) - F(a)\right) .\]</span> Let’s look at the right-most expression <span class="math inline">\(\partial_u \left(F(u) + F(a)\right)\)</span> and exploit the the derivative of a sum is the sum of the derivatives. So … <span class="math display">\[\partial_u \left(F(u) + F(a)\right) = \partial_u F(u) - \partial_u F(a) = \partial_u F(u)\]</span></p>
+<div class="panel panel-default">
+<div data-label="fft7" class="tutorial-question panel-body">
+<div id="fft7-answer_container" class="shiny-html-output"></div>
+<div id="fft7-message_container" class="shiny-html-output"></div>
+<div id="fft7-action_button_container" class="shiny-html-output"></div>
+<script>if (Tutorial.triggerMathJax) Tutorial.triggerMathJax()</script>
+</div>
+</div>
+<p>Taking the left-most and right-most expressions in the above equation, we have <span class="math display">\[\partial_u \int_a^u f(x) dx = \partial_u F(u)\]</span></p>
+<div class="panel panel-default">
+<div data-label="fft8" class="tutorial-question panel-body">
+<div id="fft8-answer_container" class="shiny-html-output"></div>
+<div id="fft8-message_container" class="shiny-html-output"></div>
+<div id="fft8-action_button_container" class="shiny-html-output"></div>
+<script>if (Tutorial.triggerMathJax) Tutorial.triggerMathJax()</script>
+</div>
+</div>
+<p>The equation <span class="math display">\[\partial_u \int_a^u f(x) dx \ \ = \ \  f(u)\]</span> means that “differentiation undoes integration” or, as we’ve been putting it, “differentiation undoes anti-differentiation.”</p>
+</div>
+<div id="section-integral-of-the-day" class="section level2">
+<h2>Integral of the Day</h2>
+<p>Work out this anti-derivative on paper.</p>
+<div style="font-size: 40px; text-align:center;">
+<span class="math inline">\(\int at + v_0 dt\)</span>
+</div>
+<p>Once you have your result, translate it into a correct R <em>function</em>. Use the computer name <code>v0</code> for the mathematical symbol <span class="math inline">\(v_0\)</span>.</p>
+<div class="tutorial-exercise" data-label="IOD-A" data-caption="Integral of the day" data-completion="1" data-diagnostics="1" data-startover="1" data-lines="5">
+<pre class="text"><code>F &lt;- makeFun()</code></pre>
+<script type="application/json" data-opts-chunk="1">{"fig.width":6.5,"fig.height":4,"fig.retina":2,"fig.align":"default","fig.keep":"high","fig.show":"asis","out.width":624,"warning":true,"error":false,"message":true,"exercise.df_print":"paged","exercise.timelimit":60,"exercise.checker":["function (label = NULL, solution_code = NULL, user_code = NULL, ","    check_code = NULL, envir_result = NULL, evaluate_result = NULL, ","    envir_prep = NULL, last_value = NULL, ...) ","{","    (utils::getFromNamespace(\"grade_learnr_\", \"gradethis\"))(label = label, ","        solution_code = solution_code, user_code = user_code, ","        check_code = check_code, envir_result = envir_result, ","        evaluate_result = evaluate_result, envir_prep = envir_prep, ","        last_value = last_value, ...)","}"]}</script>
+</div>
+<div class="tutorial-exercise-support" data-label="IOD-A-check" data-caption="Code" data-completion="1" data-diagnostics="1" data-startover="1" data-lines="0">
+<pre class="text"><code>library(magrittr)
+gradethis::grade_result(
+  fail_if( ~ !is.function(.result), message = &quot;Your result should be in the form of a function.&quot;),
+  fail_if( ~ !all(correct_arguments %in% names(formals(.result))),
+           message = &quot;You don&#39;t seem to have all the right argument names.&quot;),
+  pass_if( ~ all(.result(evaluate_at, 3, 12) ==
+                          answer_fun(evaluate_at, 3, 12))),
+  fail_if( ~ TRUE, message=&quot;Correct arguments, but not the right function.&quot;)
+)  </code></pre>
+</div>
+<p>Now that you have the correct answer, use Latex to typeset the formula in the function here. Some Latex tips: <code>v_0</code> will produce <span class="math inline">\(v_0\)</span>, while <code>\frac{1}{2}</code> will produce <span class="math inline">\(\frac{1}{2}\)</span>.</p>
+<table><tr>
+<td id=latex-E-feedback class="shiny-html-output" style="color: green; font-size:20px;"></td>
+<td>   </td>
+<td><input id=latex-E-latex type="text" class="form-control" placeholder="Type Latex here." style="font-size: 15px"></input></td>
+<td>   </td>
+<td><span id=latex-E-rendered class="shiny-html-output" style="font-size:20px;"></span></td>
+</tr></table>
+</div>
+<div id="section-hand-in-your-work" class="section level2">
+<h2>Hand in your work</h2>
+<p>REMEMBER: Press the REFRESH button before copying the hash code and submitting it at the <a href="https://forms.microsoft.com/Pages/ResponsePage.aspx?id=Bgq4einwwEWE0X2tGc48YcCKijCKVrhDla481YPh1UJUMVdERUtVT0VOSEpMMEdPQU1aWlpYTTA0RS4u" target = "_blank">USAFA Math 142Z site</a></p>
+<div>
+<button id="get_state" type="button" class="btn btn-default action-button">Refresh summary of responses</button>
+<pre id="hash_output" class="shiny-text-output" style="white-space: pre-wrap;"></pre>
+<div id="current_answers" class="shiny-html-output"></div>
+<br/>
+<br/>
+<br/>
+</div>
+<hr />
+<p>Location: CalcZ/_DailyDigitals/DailyDocuments/inst/DD-142Z-05/142Z-DD-05.Rmd DD-142Z-05</p>
+
+<script type="application/shiny-prerendered" data-context="server-start">
+### Boilerplate: Packages relating to `{learnr}` and 
+### submission functionality.
+library(learnr)
+library(gradethis)
+library(etude2)
+library(learnrhash)
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+learnr:::register_http_handlers(session, metadata = NULL)
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+learnr:::clear_exercise_setup_chunks()
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+session$onSessionEnded(function() {
+        learnr:::session_stop_event(session)
+      })
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server-start">
+# Good practice to include these in any document bringing
+# with the answer submission system
+etude2::set_master_id("DD-05") # Add the DD number
+etude2::etude_document_name("DD-142Z-05") # Add the DD number
+# Fill this data frame in when document is completed. See etude2 documentation
+document_roster <- tibble::tribble(
+  ~ id,
+)
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "DD-05-1-3persp1",     question = structure("Since the three items are equivalent, they are all the same kind of &quot;thing.&quot; What kind of thing are they?", html = TRUE, class = c("html",     "character")), answers = list(structure(list(id = "lnr_ans_7cf3cda",         option = "a number", value = "a number", label = structure("a number", html = TRUE, class = c("html",         "character")), correct = TRUE, message = structure("Another term for this is <em>definite integral<\u002fem>. Evaluating an anti-derivative at two values of \\(x\\) and subtracting one from the other gives a number. (Remember, in our notation, \\(a\\) and \\(b\\) stand for numerical constants, unless we specifically say otherwise.)", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer")), structure(list(id = "lnr_ans_6af01ee",         option = "a function of $x$", value = "a function of $x$",         label = structure("a function of \\(x\\)", html = TRUE, class = c("html",         "character")), correct = FALSE, message = structure("Each of the items include something that is a function of \\(x\\), but the entire item is not itself a function of \\(x\\).", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer")), structure(list(id = "lnr_ans_969591b",         option = "an interval", value = "an interval", label = structure("an interval", html = TRUE, class = c("html",         "character")), correct = FALSE, message = structure("Each of the items includes an interval, but the entire item is not one.", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer")), structure(list(id = "lnr_ans_59c7290",         option = "a limit of integration", value = "a limit of integration",         label = structure("a limit of integration", html = TRUE, class = c("html",         "character")), correct = FALSE, message = structure("Each of the items includes a limit of integration, but the entire item is not one.", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer")), structure(list(id = "lnr_ans_b4b9344",         option = "an anti-derivative", value = "an anti-derivative",         label = structure("an anti-derivative", html = TRUE, class = c("html",         "character")), correct = FALSE, message = structure("There is an anti-derivative involved in each item, but the entire item is not one.", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer")), structure(list(id = "lnr_ans_94dc4ad",         option = "a constant of integration", value = "a constant of integration",         label = structure("a constant of integration", html = TRUE, class = c("html",         "character")), correct = FALSE, message = structure("No constant of integration is needed to express any of the items", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer"))), button_labels = list(submit = structure("Check answer (ID: DD-05-1)", html = TRUE, class = c("html",     "character")), try_again = structure("Try again (ID: DD-05-1)", html = TRUE, class = c("html",     "character"))), messages = list(correct = structure("Right!", html = TRUE, class = c("html",     "character")), try_again = structure("Sorry.", html = TRUE, class = c("html",     "character")), incorrect = structure("Sorry.", html = TRUE, class = c("html",     "character")), message = NULL, post_message = NULL), ids = list(        answer = "3persp1-answer", question = "3persp1"), loading = structure("<strong>Loading:<\u002fstrong> \nSince the three items are equivalent, they are all the same kind of &quot;thing.&quot; What kind of thing are they?\n<br/><br/><br/>", html = TRUE, class = c("html",     "character")), random_answer_order = FALSE, allow_retry = TRUE,     seed = 714002828.167516, options = list(id = "DD-05-1")), class = c("learnr_radio", "tutorial_question")))
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "DD-05-2-3persp2",     question = structure("Which of the colors stands for <em>a limit of integration<\u002fem>?", html = TRUE, class = c("html",     "character")), answers = list(structure(list(id = "lnr_ans_90e144a",         option = "black", value = "black", label = structure("black", html = TRUE, class = c("html",         "character")), correct = FALSE, message = structure("", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer")), structure(list(id = "lnr_ans_1d86c94",         option = "blue", value = "blue", label = structure("blue", html = TRUE, class = c("html",         "character")), correct = FALSE, message = structure("", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer")), structure(list(id = "lnr_ans_366eeb1",         option = "tan", value = "tan", label = structure("tan", html = TRUE, class = c("html",         "character")), correct = TRUE, message = structure("", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer")), structure(list(id = "lnr_ans_d9a0b14",         option = "red", value = "red", label = structure("red", html = TRUE, class = c("html",         "character")), correct = FALSE, message = structure("", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer"))), button_labels = list(submit = structure("Check answer (ID: DD-05-2)", html = TRUE, class = c("html",     "character")), try_again = structure("Try again (ID: DD-05-2)", html = TRUE, class = c("html",     "character"))), messages = list(correct = structure("Right!", html = TRUE, class = c("html",     "character")), try_again = structure("Sorry.", html = TRUE, class = c("html",     "character")), incorrect = structure("Sorry.", html = TRUE, class = c("html",     "character")), message = NULL, post_message = NULL), ids = list(        answer = "3persp2-answer", question = "3persp2"), loading = structure("<strong>Loading:<\u002fstrong> \nWhich of the colors stands for <em>a limit of integration<\u002fem>?\n<br/><br/><br/>", html = TRUE, class = c("html",     "character")), random_answer_order = FALSE, allow_retry = TRUE,     seed = 752411033.149631, options = list(id = "DD-05-2")), class = c("learnr_radio", "tutorial_question")))
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "DD-05-3-3persp3",     question = structure("Which of the colors stands for <em>the derivative of a function that appears elsewhere in the equation<\u002fem>?", html = TRUE, class = c("html",     "character")), answers = list(structure(list(id = "lnr_ans_581951e",         option = "black", value = "black", label = structure("black", html = TRUE, class = c("html",         "character")), correct = FALSE, message = structure("", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer")), structure(list(id = "lnr_ans_53ee86c",         option = "blue", value = "blue", label = structure("blue", html = TRUE, class = c("html",         "character")), correct = FALSE, message = structure("", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer")), structure(list(id = "lnr_ans_2deee93",         option = "tan", value = "tan", label = structure("tan", html = TRUE, class = c("html",         "character")), correct = FALSE, message = structure("", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer")), structure(list(id = "lnr_ans_d27eefe",         option = "red", value = "red", label = structure("red", html = TRUE, class = c("html",         "character")), correct = TRUE, message = structure("", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer"))), button_labels = list(submit = structure("Check answer (ID: DD-05-3)", html = TRUE, class = c("html",     "character")), try_again = structure("Try again (ID: DD-05-3)", html = TRUE, class = c("html",     "character"))), messages = list(correct = structure("Right!", html = TRUE, class = c("html",     "character")), try_again = structure("Sorry.", html = TRUE, class = c("html",     "character")), incorrect = structure("Sorry.", html = TRUE, class = c("html",     "character")), message = NULL, post_message = NULL), ids = list(        answer = "3persp3-answer", question = "3persp3"), loading = structure("<strong>Loading:<\u002fstrong> \nWhich of the colors stands for <em>the derivative of a function that appears elsewhere in the equation<\u002fem>?\n<br/><br/><br/>", html = TRUE, class = c("html",     "character")), random_answer_order = FALSE, allow_retry = TRUE,     seed = 1949961801.09198, options = list(id = "DD-05-3")), class = c("learnr_radio", "tutorial_question")))
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "DD-05-4-3persp4",     question = structure("Which of the colors stands for <em>an anti-derivative of a function that appears elsewhere in the equation<\u002fem>?", html = TRUE, class = c("html",     "character")), answers = list(structure(list(id = "lnr_ans_82ad64a",         option = "black", value = "black", label = structure("black", html = TRUE, class = c("html",         "character")), correct = FALSE, message = structure("", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer")), structure(list(id = "lnr_ans_14febe7",         option = "blue", value = "blue", label = structure("blue", html = TRUE, class = c("html",         "character")), correct = TRUE, message = structure("", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer")), structure(list(id = "lnr_ans_58c10ea",         option = "tan", value = "tan", label = structure("tan", html = TRUE, class = c("html",         "character")), correct = FALSE, message = structure("", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer")), structure(list(id = "lnr_ans_538187f",         option = "red", value = "red", label = structure("red", html = TRUE, class = c("html",         "character")), correct = FALSE, message = structure("", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer"))), button_labels = list(submit = structure("Check answer (ID: DD-05-4)", html = TRUE, class = c("html",     "character")), try_again = structure("Try again (ID: DD-05-4)", html = TRUE, class = c("html",     "character"))), messages = list(correct = structure("Right!", html = TRUE, class = c("html",     "character")), try_again = structure("Sorry.", html = TRUE, class = c("html",     "character")), incorrect = structure("Sorry.", html = TRUE, class = c("html",     "character")), message = NULL, post_message = NULL), ids = list(        answer = "3persp4-answer", question = "3persp4"), loading = structure("<strong>Loading:<\u002fstrong> \nWhich of the colors stands for <em>an anti-derivative of a function that appears elsewhere in the equation<\u002fem>?\n<br/><br/><br/>", html = TRUE, class = c("html",     "character")), random_answer_order = FALSE, allow_retry = TRUE,     seed = 420296765.804284, options = list(id = "DD-05-4")), class = c("learnr_radio", "tutorial_question")))
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+id <- "latex-2"
+latex_2_answers <- c(
+  "\\int_a^b f(x) dx = \\left.F(x)\\right|_a^b = F(b) - F(a)",
+  "\\int_a^b f(x) dx = \\left.F(x)\\right|^b_a = F(b) - F(a)",
+  "\\int_a^b f(x) dx = F(x)\\left.\\right|^a_b = F(b) - F(a)",
+  "\\int^b_a f(x) dx = F(x)\\left.\\right|^b_a = F(b) - F(a)",
+  "\\int^b_a f(x) dx = \\left.F(x)\\right|^b_a = F(b) - F(a)",
+  "\\int^b_a f(x) dx = \\left.F(x)\\right|_a^b = F(b) - F(a)") 
+squash_str <- "\\{|\\}| |\t|\n"
+
+# To return the state of the app
+if (!exists("apps_state")) apps_state <- reactiveValues() 
+
+output$`latex-2-rendered` <- renderUI({
+  input$`latex-2-latex`
+  withMathJax(paste0("$$", input$`latex-2-latex`, "$$"))
+})
+output$`latex-2-feedback` <- renderUI({
+  
+  compare <- gsub(squash_str, "", latex_2_answers)
+  the_answer <- input$`latex-2-latex`
+  if (is.null(the_answer)) the_answer <- "missing"
+  
+  correct <- gsub(squash_str, "", 
+           the_answer) %in% compare
+  
+  if (exists("apps_state")) {
+    
+    registration_name <- NS(id, "result")
+    apps_state[[registration_name]] <- 
+      tibble::tibble(id = registration_name, 
+                     question = "latex input",
+                     answer = the_answer,
+                     time = as.character(Sys.time()),
+                     correct = correct,
+                     attempts = 1,
+                     history = "")
+    
+  }
+  
+  ifelse(correct, "✓", "☞")
+})
+
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "DD-05-5-galileo-1",     question = structure("Imagine that the time of release was \\(t=3\\) seconds. Remembering that 9.8 is in meters/sec\\(^2\\), what is the value of \\(C\\) in the velocity function?", html = TRUE, class = c("html",     "character")), answers = list(structure(list(id = "lnr_ans_29508e7",         option = "29.4 meters per sec$^2$", value = "29.4 meters per sec$^2$",         label = structure("29.4 meters per sec\\(^2\\)", html = TRUE, class = c("html",         "character")), correct = FALSE, message = structure("Sorry, but \\(C\\) has dimension of velocity.", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer")), structure(list(id = "lnr_ans_ad6fe13",         option = "29.4 meters per sec", value = "29.4 meters per sec",         label = structure("29.4 meters per sec", html = TRUE, class = c("html",         "character")), correct = TRUE, message = structure("Right. At time \\(t=3\\) the ball was at a standstill, meaning velocity zero. So \\(-9.8 \\times 3 + C = 0\\) ", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer")), structure(list(id = "lnr_ans_4a57c39",         option = "29.4 meters", value = "29.4 meters", label = structure("29.4 meters", html = TRUE, class = c("html",         "character")), correct = FALSE, message = structure("", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer")), structure(list(id = "lnr_ans_f7f05a",         option = "29.4 dimensionless/unitless", value = "29.4 dimensionless/unitless",         label = structure("29.4 dimensionless/unitless", html = TRUE, class = c("html",         "character")), correct = FALSE, message = structure("", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer"))), button_labels = list(submit = structure("Check answer (ID: DD-05-5)", html = TRUE, class = c("html",     "character")), try_again = structure("Try again (ID: DD-05-5)", html = TRUE, class = c("html",     "character"))), messages = list(correct = structure("Right!", html = TRUE, class = c("html",     "character")), try_again = structure("Sorry.", html = TRUE, class = c("html",     "character")), incorrect = structure("Sorry.", html = TRUE, class = c("html",     "character")), message = NULL, post_message = NULL), ids = list(        answer = "galileo-1-answer", question = "galileo-1"),     loading = structure("<strong>Loading:<\u002fstrong> \nImagine that the time of release was \\(t=3\\) seconds. Remembering that 9.8 is in meters/sec\\(^2\\), what is the value of \\(C\\) in the velocity function?\n<br/><br/><br/>", html = TRUE, class = c("html",     "character")), random_answer_order = FALSE, allow_retry = TRUE,     seed = 1439094320.32987, options = list(id = "DD-05-5")), class = c("learnr_radio", "tutorial_question")))
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "DD-05-6-galileo-2",     question = structure("What&#39;s the value of \\(C_{pos}\\) in the distance function given that dist(3) = 56.7 meters?", html = TRUE, class = c("html",     "character")), answers = list(structure(list(id = "lnr_ans_518dbea",         option = "$C = 56.7 - 29.4 \\times 3 + 9.8 \\times 3^2 / 2 = 12.6$ meters",         value = "$C = 56.7 - 29.4 \\times 3 + 9.8 \\times 3^2 / 2 = 12.6$ meters",         label = structure("\\(C = 56.7 - 29.4 \\times 3 + 9.8 \\times 3^2 / 2 = 12.6\\) meters", html = TRUE, class = c("html",         "character")), correct = TRUE, message = structure("", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer")), structure(list(id = "lnr_ans_9bdc0c6",         option = "$C = -29.4 \\times 3 + 9.8 \\times 3^2 / 2 = 44.1$ meters",         value = "$C = -29.4 \\times 3 + 9.8 \\times 3^2 / 2 = 44.1$ meters",         label = structure("\\(C = -29.4 \\times 3 + 9.8 \\times 3^2 / 2 = 44.1\\) meters", html = TRUE, class = c("html",         "character")), correct = FALSE, message = structure("to solve for C you always need the equation AND a single point", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer")), structure(list(id = "lnr_ans_952e5d1",         option = "$C = 56.7$ meters", value = "$C = 56.7$ meters",         label = structure("\\(C = 56.7\\) meters", html = TRUE, class = c("html",         "character")), correct = FALSE, message = structure("C is not always equal to the intital value, rember the release is at t=3", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer")), structure(list(id = "lnr_ans_b2295f6",         option = "$C = 0$ meters", value = "$C = 0$ meters",         label = structure("\\(C = 0\\) meters", html = TRUE, class = c("html",         "character")), correct = FALSE, message = structure("", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer")), structure(list(id = "lnr_ans_eda67b5",         option = "A quantity not in meters.", value = "A quantity not in meters.",         label = structure("A quantity not in meters.", html = TRUE, class = c("html",         "character")), correct = FALSE, message = structure("Since pos(t) is in meters, the \\(C\\) must also be in meters. Look at the formula for pos(t)!", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer"))), button_labels = list(submit = structure("Check answer (ID: DD-05-6)", html = TRUE, class = c("html",     "character")), try_again = structure("Try again (ID: DD-05-6)", html = TRUE, class = c("html",     "character"))), messages = list(correct = structure("Right!", html = TRUE, class = c("html",     "character")), try_again = structure("Sorry.", html = TRUE, class = c("html",     "character")), incorrect = structure("Sorry.", html = TRUE, class = c("html",     "character")), message = NULL, post_message = NULL), ids = list(        answer = "galileo-2-answer", question = "galileo-2"),     loading = structure("<strong>Loading:<\u002fstrong> \nWhat&#39;s the value of \\(C_{pos}\\) in the distance function given that dist(3) = 56.7 meters?\n<br/><br/><br/>", html = TRUE, class = c("html",     "character")), random_answer_order = FALSE, allow_retry = TRUE,     seed = 837434455.110039, options = list(id = "DD-05-6")), class = c("learnr_radio", "tutorial_question")))
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "DD-05-7-galileo-3",     question = structure("What is the position of the ball two seconds after release? (The units for each of these is &quot;meters&quot; above the ground.)", html = TRUE, class = c("html",     "character")), answers = list(structure(list(id = "lnr_ans_4eb2eba",         option = "$29.4 \\times 2 - 9.8 \\times 4/2 + 12.6$",         value = "$29.4 \\times 2 - 9.8 \\times 4/2 + 12.6$",         label = structure("\\(29.4 \\times 2 - 9.8 \\times 4/2 + 12.6\\)", html = TRUE, class = c("html",         "character")), correct = FALSE, message = structure("Two seconds after release (which occurs at \\(t=3\\)) is what value of \\(t\\)?", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer")), structure(list(id = "lnr_ans_29ee05e",         option = "$29.4 \\times 5 - 9.8 \\times 5^2/2 + 12.6$",         value = "$29.4 \\times 5 - 9.8 \\times 5^2/2 + 12.6$",         label = structure("\\(29.4 \\times 5 - 9.8 \\times 5^2/2 + 12.6\\)", html = TRUE, class = c("html",         "character")), correct = TRUE, message = structure("", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer")), structure(list(id = "lnr_ans_bd56f3c",         option = "$29.4 - 9.8 \\times 5 / 2 + 12.6$", value = "$29.4 - 9.8 \\times 5 / 2 + 12.6$",         label = structure("\\(29.4 - 9.8 \\times 5 / 2 + 12.6\\)", html = TRUE, class = c("html",         "character")), correct = FALSE, message = structure("Check the formula for pos(t) to make sure where the t appears.", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer"))), button_labels = list(submit = structure("Check answer (ID: DD-05-7)", html = TRUE, class = c("html",     "character")), try_again = structure("Try again (ID: DD-05-7)", html = TRUE, class = c("html",     "character"))), messages = list(correct = structure("Right!", html = TRUE, class = c("html",     "character")), try_again = structure("Sorry.", html = TRUE, class = c("html",     "character")), incorrect = structure("Sorry.", html = TRUE, class = c("html",     "character")), message = NULL, post_message = NULL), ids = list(        answer = "galileo-3-answer", question = "galileo-3"),     loading = structure("<strong>Loading:<\u002fstrong> \nWhat is the position of the ball two seconds after release? (The units for each of these is &quot;meters&quot; above the ground.)\n<br/><br/><br/>", html = TRUE, class = c("html",     "character")), random_answer_order = FALSE, allow_retry = TRUE,     seed = 1217153137.43322, options = list(id = "DD-05-7")), class = c("learnr_radio", "tutorial_question")))
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "DD-05-8-fft1",     question = structure("What kind of a thing is \\(F(u)\\), according to our notation convention?", html = TRUE, class = c("html",     "character")), answers = list(structure(list(id = "lnr_ans_c5f3971",         option = "a number", value = "a number", label = structure("a number", html = TRUE, class = c("html",         "character")), correct = FALSE, message = structure("Is \\(u\\) a number in our notation?", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer")), structure(list(id = "lnr_ans_e7a5cff",         option = "a function of $x$", value = "a function of $x$",         label = structure("a function of \\(x\\)", html = TRUE, class = c("html",         "character")), correct = FALSE, message = structure("Close, but not \\(x\\).", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer")), structure(list(id = "lnr_ans_b79291a",         option = "a function of $u$", value = "a function of $u$",         label = structure("a function of \\(u\\)", html = TRUE, class = c("html",         "character")), correct = TRUE, message = structure("", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer")), structure(list(id = "lnr_ans_bd40f8",         option = "a definite integral", value = "a definite integral",         label = structure("a definite integral", html = TRUE, class = c("html",         "character")), correct = FALSE, message = structure("A definite integral would be something like \\(\\int_a^b f(x) dx\\) or \\(\\left. F(x) \\right|_a^b\\) or \\(F(b) - F(a)\\).", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer"))), button_labels = list(submit = structure("Check answer (ID: DD-05-8)", html = TRUE, class = c("html",     "character")), try_again = structure("Try again (ID: DD-05-8)", html = TRUE, class = c("html",     "character"))), messages = list(correct = structure("Right!", html = TRUE, class = c("html",     "character")), try_again = structure("Sorry.", html = TRUE, class = c("html",     "character")), incorrect = structure("Sorry.", html = TRUE, class = c("html",     "character")), message = NULL, post_message = NULL), ids = list(        answer = "fft1-answer", question = "fft1"), loading = structure("<strong>Loading:<\u002fstrong> \nWhat kind of a thing is \\(F(u)\\), according to our notation convention?\n<br/><br/><br/>", html = TRUE, class = c("html",     "character")), random_answer_order = FALSE, allow_retry = TRUE,     seed = 992488880.537836, options = list(id = "DD-05-8")), class = c("learnr_radio", "tutorial_question")))
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "DD-05-9-fft2",     question = structure("What kind of a thing is \\(F(a)\\), according to our notation convention?", html = TRUE, class = c("html",     "character")), answers = list(structure(list(id = "lnr_ans_f1b20a9",         option = "a number", value = "a number", label = structure("a number", html = TRUE, class = c("html",         "character")), correct = TRUE, message = structure("We&#39;re evaluating \\(F()\\) at a specific numerical value of the input, namely \\(a\\).", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer")), structure(list(id = "lnr_ans_22c3eb2",         option = "a function of $x$", value = "a function of $x$",         label = structure("a function of \\(x\\)", html = TRUE, class = c("html",         "character")), correct = FALSE, message = structure("A function always has one or more variables as input. \\(a\\) is not a variable but a numerical constant.", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer")), structure(list(id = "lnr_ans_130923c",         option = "a function of $u$", value = "a function of $u$",         label = structure("a function of \\(u\\)", html = TRUE, class = c("html",         "character")), correct = FALSE, message = structure("A function always has one or more variables as input. \\(a\\) is not a variable but a numerical constant.", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer")), structure(list(id = "lnr_ans_29084e1",         option = "a definite integral", value = "a definite integral",         label = structure("a definite integral", html = TRUE, class = c("html",         "character")), correct = FALSE, message = structure("A definite integral would be something like \\(\\int_a^b f(x) dx\\) or \\(\\left. F(x) \\right|_a^b\\) or \\(F(b) - F(a)\\).", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer"))), button_labels = list(submit = structure("Check answer (ID: DD-05-9)", html = TRUE, class = c("html",     "character")), try_again = structure("Try again (ID: DD-05-9)", html = TRUE, class = c("html",     "character"))), messages = list(correct = structure("Right!", html = TRUE, class = c("html",     "character")), try_again = structure("Sorry.", html = TRUE, class = c("html",     "character")), incorrect = structure("Sorry.", html = TRUE, class = c("html",     "character")), message = NULL, post_message = NULL), ids = list(        answer = "fft2-answer", question = "fft2"), loading = structure("<strong>Loading:<\u002fstrong> \nWhat kind of a thing is \\(F(a)\\), according to our notation convention?\n<br/><br/><br/>", html = TRUE, class = c("html",     "character")), random_answer_order = FALSE, allow_retry = TRUE,     seed = 1304009684.89277, options = list(id = "DD-05-9")), class = c("learnr_radio", "tutorial_question")))
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "DD-05-10-fft3",     question = structure("What kind of a thing is \\(F(u) - F(a)\\), according to our notation convention?", html = TRUE, class = c("html",     "character")), answers = list(structure(list(id = "lnr_ans_c4bbd",         option = "a number", value = "a number", label = structure("a number", html = TRUE, class = c("html",         "character")), correct = FALSE, message = structure("Is \\(u\\) a number in our notation?", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer")), structure(list(id = "lnr_ans_f8447e8",         option = "a function of $x$", value = "a function of $x$",         label = structure("a function of \\(x\\)", html = TRUE, class = c("html",         "character")), correct = FALSE, message = structure("Close, but not \\(x\\).", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer")), structure(list(id = "lnr_ans_42e1b27",         option = "a function of $u$", value = "a function of $u$",         label = structure("a function of \\(u\\)", html = TRUE, class = c("html",         "character")), correct = TRUE, message = structure("Since \\(F(u)\\) is a function of \\(u\\), and \\(F(a)\\) is a constant, \\(F(u) - F(a)\\) is a function of \\(u\\) minus a constant, or, in other words, a function of \\(u\\).", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer")), structure(list(id = "lnr_ans_fa3d305",         option = "a definite integral", value = "a definite integral",         label = structure("a definite integral", html = TRUE, class = c("html",         "character")), correct = FALSE, message = structure("A definite integral would be something like \\(\\int_a^b f(x) dx\\) or \\(\\left. F(x) \\right|_a^b\\) or \\(F(b) - F(a)\\).", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer"))), button_labels = list(submit = structure("Check answer (ID: DD-05-10)", html = TRUE, class = c("html",     "character")), try_again = structure("Try again (ID: DD-05-10)", html = TRUE, class = c("html",     "character"))), messages = list(correct = structure("Right!", html = TRUE, class = c("html",     "character")), try_again = structure("Sorry.", html = TRUE, class = c("html",     "character")), incorrect = structure("Sorry.", html = TRUE, class = c("html",     "character")), message = NULL, post_message = NULL), ids = list(        answer = "fft3-answer", question = "fft3"), loading = structure("<strong>Loading:<\u002fstrong> \nWhat kind of a thing is \\(F(u) - F(a)\\), according to our notation convention?\n<br/><br/><br/>", html = TRUE, class = c("html",     "character")), random_answer_order = FALSE, allow_retry = TRUE,     seed = 1530666082.28723, options = list(id = "DD-05-10")), class = c("learnr_radio", "tutorial_question")))
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "DD-05-11-fft4",     question = structure("According to our notation convention, what kind of a thing is \\[\\int_a^u f(x) dx \\mbox{?}\\], ", html = TRUE, class = c("html",     "character")), answers = list(structure(list(id = "lnr_ans_da44c57",         option = "a number", value = "a number", label = structure("a number", html = TRUE, class = c("html",         "character")), correct = FALSE, message = structure("", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer")), structure(list(id = "lnr_ans_a67641a",         option = "a function of both x and u", value = "a function of both x and u",         label = structure("a function of both x and u", html = TRUE, class = c("html",         "character")), correct = FALSE, message = structure("", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer")), structure(list(id = "lnr_ans_1471cec",         option = "a function of $x$", value = "a function of $x$",         label = structure("a function of \\(x\\)", html = TRUE, class = c("html",         "character")), correct = FALSE, message = structure("Close, but not \\(x\\).", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer")), structure(list(id = "lnr_ans_aa2a107",         option = "a function of $u$", value = "a function of $u$",         label = structure("a function of \\(u\\)", html = TRUE, class = c("html",         "character")), correct = TRUE, message = structure("You can see this by referring to the three perspectives equation. \\[\\int_a^u f(x)dx = F(u) - F(a)\\] which is a function of \\(u\\).", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer")), structure(list(id = "lnr_ans_a48ce36",         option = "a definite integral", value = "a definite integral",         label = structure("a definite integral", html = TRUE, class = c("html",         "character")), correct = FALSE, message = structure("Certainly it looks a lot like a definite integral. But \\(u\\) is a variable, not a constant.", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer"))), button_labels = list(submit = structure("Check answer (ID: DD-05-11)", html = TRUE, class = c("html",     "character")), try_again = structure("Try again (ID: DD-05-11)", html = TRUE, class = c("html",     "character"))), messages = list(correct = structure("Right!", html = TRUE, class = c("html",     "character")), try_again = structure("Sorry.", html = TRUE, class = c("html",     "character")), incorrect = structure("Sorry.", html = TRUE, class = c("html",     "character")), message = NULL, post_message = NULL), ids = list(        answer = "fft4-answer", question = "fft4"), loading = structure("<strong>Loading:<\u002fstrong> \nAccording to our notation convention, what kind of a thing is \\[\\int_a^u f(x) dx \\mbox{?}\\], \n<br/><br/><br/>", html = TRUE, class = c("html",     "character")), random_answer_order = FALSE, allow_retry = TRUE,     seed = 1164025162.45796, options = list(id = "DD-05-11")), class = c("learnr_radio", "tutorial_question")))
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "DD-05-12-fft5",     question = structure("According to our notation convention, what kind of a thing is \\[\\int_u^b f(x) dx \\mbox{?}\\], ", html = TRUE, class = c("html",     "character")), answers = list(structure(list(id = "lnr_ans_9fc209a",         option = "a number", value = "a number", label = structure("a number", html = TRUE, class = c("html",         "character")), correct = FALSE, message = structure("", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer")), structure(list(id = "lnr_ans_f0d9002",         option = "a function of both x and u", value = "a function of both x and u",         label = structure("a function of both x and u", html = TRUE, class = c("html",         "character")), correct = FALSE, message = structure("", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer")), structure(list(id = "lnr_ans_b3a46d9",         option = "a function of $x$", value = "a function of $x$",         label = structure("a function of \\(x\\)", html = TRUE, class = c("html",         "character")), correct = FALSE, message = structure("Close, but not \\(x\\).", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer")), structure(list(id = "lnr_ans_5b95d79",         option = "a function of $u$", value = "a function of $u$",         label = structure("a function of \\(u\\)", html = TRUE, class = c("html",         "character")), correct = TRUE, message = structure("You can see this by referring to the three perspectives equation. \\[\\int_u^b f(x)dx = F(b) - F(u)\\] which is a function of \\(u\\).", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer")), structure(list(id = "lnr_ans_98336cd",         option = "a definite integral", value = "a definite integral",         label = structure("a definite integral", html = TRUE, class = c("html",         "character")), correct = FALSE, message = structure("Certainly it looks a lot like a definite integral. But \\(u\\) is a variable, not a constant.", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer"))), button_labels = list(submit = structure("Check answer (ID: DD-05-12)", html = TRUE, class = c("html",     "character")), try_again = structure("Try again (ID: DD-05-12)", html = TRUE, class = c("html",     "character"))), messages = list(correct = structure("Right!", html = TRUE, class = c("html",     "character")), try_again = structure("Sorry.", html = TRUE, class = c("html",     "character")), incorrect = structure("Sorry.", html = TRUE, class = c("html",     "character")), message = NULL, post_message = NULL), ids = list(        answer = "fft5-answer", question = "fft5"), loading = structure("<strong>Loading:<\u002fstrong> \nAccording to our notation convention, what kind of a thing is \\[\\int_u^b f(x) dx \\mbox{?}\\], \n<br/><br/><br/>", html = TRUE, class = c("html",     "character")), random_answer_order = FALSE, allow_retry = TRUE,     seed = 528315140.753984, options = list(id = "DD-05-12")), class = c("learnr_radio", "tutorial_question")))
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "DD-05-13-fft6",     question = structure("According to our notation convention, what kind of a thing is \\[\\int_u^x f(x) dx \\mbox{?}\\], ", html = TRUE, class = c("html",     "character")), answers = list(structure(list(id = "lnr_ans_e267d56",         option = "a number", value = "a number", label = structure("a number", html = TRUE, class = c("html",         "character")), correct = FALSE, message = structure("", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer")), structure(list(id = "lnr_ans_67e0de2",         option = "a function of both x and u", value = "a function of both x and u",         label = structure("a function of both x and u", html = TRUE, class = c("html",         "character")), correct = TRUE, message = structure("You can see this by referring to the three perspectives equation. \\[\\int_u^x f(x)dx = F(x) - F(u)\\] which is a function of both \\(x\\) and \\(u\\).", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer")), structure(list(id = "lnr_ans_8ee00ac",         option = "a function of $x$", value = "a function of $x$",         label = structure("a function of \\(x\\)", html = TRUE, class = c("html",         "character")), correct = FALSE, message = structure("", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer")), structure(list(id = "lnr_ans_35c7eb7",         option = "a function of $u$", value = "a function of $u$",         label = structure("a function of \\(u\\)", html = TRUE, class = c("html",         "character")), correct = FALSE, message = structure("", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer")), structure(list(id = "lnr_ans_3f7cc9a",         option = "a definite integral", value = "a definite integral",         label = structure("a definite integral", html = TRUE, class = c("html",         "character")), correct = FALSE, message = structure("Certainly it looks a lot like a definite integral. But \\(x\\) and  \\(u\\) are variables, not constants.", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer"))), button_labels = list(submit = structure("Check answer (ID: DD-05-13)", html = TRUE, class = c("html",     "character")), try_again = structure("Try again (ID: DD-05-13)", html = TRUE, class = c("html",     "character"))), messages = list(correct = structure("Right!", html = TRUE, class = c("html",     "character")), try_again = structure("Sorry.", html = TRUE, class = c("html",     "character")), incorrect = structure("Sorry.", html = TRUE, class = c("html",     "character")), message = NULL, post_message = NULL), ids = list(        answer = "fft6-answer", question = "fft6"), loading = structure("<strong>Loading:<\u002fstrong> \nAccording to our notation convention, what kind of a thing is \\[\\int_u^x f(x) dx \\mbox{?}\\], \n<br/><br/><br/>", html = TRUE, class = c("html",     "character")), random_answer_order = FALSE, allow_retry = TRUE,     seed = 1145825611.46643, options = list(id = "DD-05-13")), class = c("learnr_radio", "tutorial_question")))
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "DD-05-14-fft7",     question = structure("Which of the following correctly justifies the step \\[\\partial_u F(u) - \\partial_u F(a) = \\partial_u F(u)\\ \\mbox{?}\\]", html = TRUE, class = c("html",     "character")), answers = list(structure(list(id = "lnr_ans_6db00fd",         option = "$F(a)$ is a constant", value = "$F(a)$ is a constant",         label = structure("\\(F(a)\\) is a constant", html = TRUE, class = c("html",         "character")), correct = TRUE, message = structure("And the derivative of a constant is always 0.", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer")), structure(list(id = "lnr_ans_2a07cf8",         option = "$F()$ is an anti-derivative.", value = "$F()$ is an anti-derivative.",         label = structure("\\(F()\\) is an anti-derivative.", html = TRUE, class = c("html",         "character")), correct = FALSE, message = structure("", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer")), structure(list(id = "lnr_ans_51a5bb2",         option = "$F(b)$ does not appear.", value = "$F(b)$ does not appear.",         label = structure("\\(F(b)\\) does not appear.", html = TRUE, class = c("html",         "character")), correct = FALSE, message = structure("", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer")), structure(list(id = "lnr_ans_1555776",         option = "$F(u) = \\int f(x) dx$", value = "$F(u) = \\int f(x) dx$",         label = structure("\\(F(u) = \\int f(x) dx\\)", html = TRUE, class = c("html",         "character")), correct = FALSE, message = structure("", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer"))), button_labels = list(submit = structure("Check answer (ID: DD-05-14)", html = TRUE, class = c("html",     "character")), try_again = structure("Try again (ID: DD-05-14)", html = TRUE, class = c("html",     "character"))), messages = list(correct = structure("Right!", html = TRUE, class = c("html",     "character")), try_again = structure("Sorry.", html = TRUE, class = c("html",     "character")), incorrect = structure("Sorry.", html = TRUE, class = c("html",     "character")), message = NULL, post_message = NULL), ids = list(        answer = "fft7-answer", question = "fft7"), loading = structure("<strong>Loading:<\u002fstrong> \nWhich of the following correctly justifies the step \\[\\partial_u F(u) - \\partial_u F(a) = \\partial_u F(u)\\ \\mbox{?}\\]\n<br/><br/><br/>", html = TRUE, class = c("html",     "character")), random_answer_order = FALSE, allow_retry = TRUE,     seed = 11884519.4944658, options = list(id = "DD-05-14")), class = c("learnr_radio", "tutorial_question")))
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "DD-05-15-fft8",     question = structure("Is there an algebraic simplification of \\(\\partial_u F(u)\\)?", html = TRUE, class = c("html",     "character")), answers = list(structure(list(id = "lnr_ans_5aa320e",         option = "No, because it depends on what $F(u)$ is.",         value = "No, because it depends on what $F(u)$ is.",         label = structure("No, because it depends on what \\(F(u)\\) is.", html = TRUE, class = c("html",         "character")), correct = FALSE, message = structure("But we know what \\(F(u)\\) is: the anti-derivative of \\(f(u)\\).", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer")), structure(list(id = "lnr_ans_b3f8edc",         option = "Yes, because $\\partial_u F(u)$ is simply $f(u)$.",         value = "Yes, because $\\partial_u F(u)$ is simply $f(u)$.",         label = structure("Yes, because \\(\\partial_u F(u)\\) is simply \\(f(u)\\).", html = TRUE, class = c("html",         "character")), correct = TRUE, message = structure("", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer")), structure(list(id = "lnr_ans_df93f9d",         option = "No, because we could just as easily have written $\\partial_x F(x)$",         value = "No, because we could just as easily have written $\\partial_x F(x)$",         label = structure("No, because we could just as easily have written \\(\\partial_x F(x)\\)", html = TRUE, class = c("html",         "character")), correct = FALSE, message = structure("", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer")), structure(list(id = "lnr_ans_ec11af1",         option = "Yes, because it is the same thing as $\\partial_x F(x)$",         value = "Yes, because it is the same thing as $\\partial_x F(x)$",         label = structure("Yes, because it is the same thing as \\(\\partial_x F(x)\\)", html = TRUE, class = c("html",         "character")), correct = FALSE, message = structure("", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer"))), button_labels = list(submit = structure("Check answer (ID: DD-05-15)", html = TRUE, class = c("html",     "character")), try_again = structure("Try again (ID: DD-05-15)", html = TRUE, class = c("html",     "character"))), messages = list(correct = structure("Right!", html = TRUE, class = c("html",     "character")), try_again = structure("Sorry.", html = TRUE, class = c("html",     "character")), incorrect = structure("Sorry.", html = TRUE, class = c("html",     "character")), message = NULL, post_message = NULL), ids = list(        answer = "fft8-answer", question = "fft8"), loading = structure("<strong>Loading:<\u002fstrong> \nIs there an algebraic simplification of \\(\\partial_u F(u)\\)?\n<br/><br/><br/>", html = TRUE, class = c("html",     "character")), random_answer_order = FALSE, allow_retry = TRUE,     seed = 1952141855.59096, options = list(id = "DD-05-15")), class = c("learnr_radio", "tutorial_question")))
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server-start">
+library(gradethis)
+library(mosaic)
+knitr::opts_chunk$set(echo = FALSE)
+learnr::tutorial_options(exercise.timelimit = 60, 
+                 exercise.checker = gradethis::grade_learnr)
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server-start">
+## SET UP THE PROBLEM HERE. 
+# Note use of double \\ for latex in quotation marks
+problemLatex <- "\\int at + v_0 dt"
+answer_fun <- makeFun(a*t^2/2 + v0 *t ~ t)
+evaluate_at <- 1:10
+correct_arguments <- c("t")
+## Remember to set the CHUNK NAMES to match the file name
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+`tutorial-exercise-IOD-A-result` <- learnr:::setup_exercise_handler(reactive(req(input$`tutorial-exercise-IOD-A-code-editor`)), session)
+output$`tutorial-exercise-IOD-A-output` <- renderUI({
+  `tutorial-exercise-IOD-A-result`()
+})
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+id <- "latex-E"
+answers <- c("a t^2 / 2 + v_0 t", "a t^2 / 2 + v_0 t + C",
+             "\\frac{1}{2} a t^2 + v_0 t", "\\frac{1}{2} a t^2 + v_0 t + C",
+             "\\frac{a}{2} t^2 + v_0 t", "\\frac{a}{2} t^2 + v_0 t + C",
+             "\\frac{a t^2}{2} + v_0 t", "\\frac{a t^2}{2} + v_0 t + C"
+             ) 
+squash_str <- "\\{|\\}| |\t|\n"
+
+# To return the state of the app
+if (!exists("apps_state")) apps_state <- reactiveValues() 
+
+output[[NS(id, "rendered")]] <- renderUI({
+  withMathJax(paste0("$$", input[[NS(id, "latex")]], "$$"))
+})
+output[[NS(id, "feedback")]] <- renderUI({
+  compare <- gsub(squash_str, "", answers)
+  the_answer <- input[[NS(id, "latex")]]
+  if (is.null(the_answer)) the_answer <- "missing"
+  correct <- gsub(squash_str, "", 
+           input[[NS(id, "latex")]]) %in% compare
+  if (exists("apps_state")) {
+    registration_name <- NS(id, "result")
+    apps_state[[registration_name]] <- 
+      tibble::tibble(id = registration_name, 
+                     question = "latex input",
+                     answer = the_answer,
+                     time = as.character(Sys.time()),
+                     correct = correct,
+                     attempts = 1,
+                     history = "")
+    
+  }
+  ifelse(correct, "✓", "☞")
+})
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+etude2::submissions_logic()
+</script>
+ <!--html_preserve-->
+<script type="application/shiny-prerendered" data-context="dependencies">
+{"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["jquery"]},{"type":"character","attributes":{},"value":["1.11.3"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["rmd/h/jquery"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["jquery.min.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["rmarkdown"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["2.4"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["bootstrap"]},{"type":"character","attributes":{},"value":["3.3.5"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["rmd/h/bootstrap"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["viewport"]}},"value":[{"type":"character","attributes":{},"value":["width=device-width, initial-scale=1"]}]},{"type":"character","attributes":{},"value":["js/bootstrap.min.js","shim/html5shiv.min.js","shim/respond.min.js"]},{"type":"character","attributes":{},"value":["css/cerulean.min.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["rmarkdown"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["2.4"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["pagedtable"]},{"type":"character","attributes":{},"value":["1.1"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["rmd/h/pagedtable-1.1"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["js/pagedtable.js"]},{"type":"character","attributes":{},"value":["css/pagedtable.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["rmarkdown"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["2.4"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["highlightjs"]},{"type":"character","attributes":{},"value":["9.12.0"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["rmd/h/highlightjs"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["highlight.js"]},{"type":"character","attributes":{},"value":["textmate.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["rmarkdown"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["2.4"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["tutorial"]},{"type":"character","attributes":{},"value":["0.10.1.9004"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/tutorial"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["tutorial.js"]},{"type":"character","attributes":{},"value":["tutorial.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.10.1.9004"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["tutorial-autocompletion"]},{"type":"character","attributes":{},"value":["0.10.1.9004"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/tutorial"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["tutorial-autocompletion.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.10.1.9004"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["tutorial-diagnostics"]},{"type":"character","attributes":{},"value":["0.10.1.9004"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/tutorial"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["tutorial-diagnostics.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.10.1.9004"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["tutorial-format"]},{"type":"character","attributes":{},"value":["0.10.1.9004"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["rmarkdown/templates/tutorial/resources"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["tutorial-format.js"]},{"type":"character","attributes":{},"value":["tutorial-format.css","rstudio-theme.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.10.1.9004"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["jquery"]},{"type":"character","attributes":{},"value":["1.11.3"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["rmd/h/jquery"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["jquery.min.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["rmarkdown"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["2.4"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["navigation"]},{"type":"character","attributes":{},"value":["1.1"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["rmd/h/navigation-1.1"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["tabsets.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["rmarkdown"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["2.4"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["highlightjs"]},{"type":"character","attributes":{},"value":["9.12.0"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["rmd/h/highlightjs"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["highlight.js"]},{"type":"character","attributes":{},"value":["default.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["rmarkdown"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["2.4"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["jquery"]},{"type":"character","attributes":{},"value":["1.11.3"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["rmd/h/jquery"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["jquery.min.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["rmarkdown"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["2.4"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["font-awesome"]},{"type":"character","attributes":{},"value":["5.1.0"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["rmd/h/fontawesome"]}]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["css/all.css","css/v4-shims.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["rmarkdown"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["2.4"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["bootbox"]},{"type":"character","attributes":{},"value":["4.4.0"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/bootbox"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["bootbox.min.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.10.1.9004"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["idb-keyvalue"]},{"type":"character","attributes":{},"value":["3.2.0"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/idb-keyval"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["idb-keyval-iife-compat.min.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[false]},{"type":"character","attributes":{},"value":["0.10.1.9004"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["tutorial"]},{"type":"character","attributes":{},"value":["0.10.1.9004"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/tutorial"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["tutorial.js"]},{"type":"character","attributes":{},"value":["tutorial.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.10.1.9004"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["tutorial-autocompletion"]},{"type":"character","attributes":{},"value":["0.10.1.9004"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/tutorial"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["tutorial-autocompletion.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.10.1.9004"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["tutorial-diagnostics"]},{"type":"character","attributes":{},"value":["0.10.1.9004"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/tutorial"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["tutorial-diagnostics.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.10.1.9004"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["ace"]},{"type":"character","attributes":{},"value":["1.2.6"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/ace"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["ace.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.10.1.9004"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["clipboardjs"]},{"type":"character","attributes":{},"value":["1.5.15"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/clipboardjs"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["clipboard.min.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.10.1.9004"]}]}]}
+</script>
+<!--/html_preserve-->
+<!--html_preserve-->
+<script type="application/shiny-prerendered" data-context="execution_dependencies">
+{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["packages"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["packages","version"]},"class":{"type":"character","attributes":{},"value":["data.frame"]},"row.names":{"type":"integer","attributes":{},"value":[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,91,92,93,94,95,96,97]}},"value":[{"type":"character","attributes":{},"value":["backports","base","broom","checkmate","colorspace","compiler","crayon","crosstalk","curl","data.table","datasets","DBI","digest","dplyr","ellipsis","etude2","evaluate","farver","fastmap","forcats","generics","ggdendro","ggforce","ggformula","ggplot2","ggrepel","ggridges","ggstance","glue","gradethis","graphics","grDevices","grid","gridExtra","gtable","haven","hms","htmltools","htmlwidgets","httpuv","httr","jsonlite","knitr","labelled","later","lattice","lazyeval","leaflet","learnr","learnrhash","lifecycle","lubridate","magrittr","markdown","MASS","math141Z","Matrix","methods","metR","mime","mosaic","mosaicCalc","mosaicCore","mosaicData","munsell","pillar","pkgconfig","plotly","plyr","png","polyclip","promises","purrr","R6","Rcpp","readr","rlang","rmarkdown","rprojroot","scales","shiny","splines","stats","stringi","stringr","tibble","tidyr","tidyselect","tools","tweenr","utils","vctrs","viridisLite","withr","xfun","xtable","yaml"]},{"type":"character","attributes":{},"value":["1.2.1","3.6.3","0.7.4","2.0.0","2.0-0","3.6.3","1.4.0.9000","1.1.1","4.3","1.13.6","3.6.3","1.1.0","0.6.27","1.0.4","0.3.1","0.1.0","0.14","2.0.3","1.1.0","0.5.1","0.1.0","0.1.22","0.3.2","0.10.1","3.3.3","0.9.1","0.5.3","0.3.5","1.4.2","0.2.0.9000","3.6.3","3.6.3","3.6.3","2.3","0.3.0","2.3.1","1.0.0","0.5.1.1","1.5.3","1.5.4","1.4.2","1.7.2","1.30","2.7.0","1.1.0.1","0.20-38","0.2.2","2.0.4.1","0.10.1.9004","0.1.0.9000","0.2.0","1.7.9.2","2.0.1","1.1","7.3-51.5","0.2.0","1.2-18","3.6.3","0.9.0","0.9","1.8.3","0.5.2.9000","0.9.0","0.20.2","0.5.0","1.4.7","2.0.3","4.9.3","1.8.6","0.1-7","1.10-0","1.1.1","0.3.4","2.5.0","1.0.6","1.4.0","0.4.10","2.4","2.0.2","1.1.1","1.5.0","3.6.3","3.6.3","1.5.3","1.4.0","3.0.6","1.1.2","1.1.0","3.6.3","1.0.1","3.6.3","0.3.6","0.3.0","2.4.1","0.20","1.8-4","2.2.1"]}]}]}
+</script>
+<!--/html_preserve-->
+</div>
+
+</div> <!-- topics -->
+
+<div class="topicsContainer">
+<div class="topicsPositioner">
+<div class="band">
+<div class="bandContent topicsListContainer">
+
+<!-- begin doc-metadata -->
+<div id="doc-metadata">
+<h2 class="title toc-ignore" style="display:none;">Daily Digital 05</h2>
+<h3 class="subtitle"><em>Math 142Z</em></h3>
+</div>
+<!-- end doc-metadata -->
+
+</div> <!-- bandContent.topicsListContainer -->
+</div> <!-- band -->
+</div> <!-- topicsPositioner -->
+</div> <!-- topicsContainer -->
+
+
+</div> <!-- bandContent page -->
+</div> <!-- pageContent band -->
+
+
+
+
+<script>
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+</script>
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+
+</body>
+
+</html>

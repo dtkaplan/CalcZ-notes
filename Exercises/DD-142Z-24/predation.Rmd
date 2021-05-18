@@ -1,0 +1,81 @@
+---
+title: "Predation"
+author: "Daniel Kaplan"
+---
+
+```{r include=FALSE}
+library(etude2)
+library(mosaic)
+library(mosaicCalc)
+library(math141Z)
+```
+
+Lanchester's Law are so simple that it's tempting to think that the thought behind them is simple, too. Let's look more carefully by comparing Lanchester's Law of combat to the conflict between predator and prey in nature. We'll imagine a stylized system involving rabbits living unconstrained by food supply and foxes who prey only on rabbits.
+
+Recall from earlier in CalcZ our consideration of low-order polynomials as a kind of modeling clay. A full second-order polynomial function in two variables $R$ and $F$ has this form:
+<div style="font-size: 24px; text-align:center;">
+$$g(R, F) = a_0 + a_R R + a_F F + a_{RF} RF + a_{RR} R^2 + a_{FF} F^2$$
+</div>
+
+Since we have two dynamical variables $R$ and $F$, we'll need two dynamical functions:
+<div style="font-size: 24px; text-align:center;">
+$$\dot{R} = a_0 + a_R R + a_F F + a_{RF} RF + a_{RR} R^2 + a_{FF} F^2\\
+\dot{F} = b_0 + b_R R + b_F F + b_{RF} RF + b_{RR} R^2 + b_{FF} F^2$$
+</div>
+
+This is a linear combination of six simple functions: 
+
+i. **constant**
+ii. **linear** in R, that is proportional to $R$
+iii. **linear* in F, proportional to $F$
+iv. **bilinear**, that proportional to $R$ and, at the same time, proportional to $F$.
+v. **quadratic** in $R$
+vi. **quadratic** in $F$
+
+Think of these six basic functions as the items on a pantry shelf. To compose a dish, you mix ingredients together in different proportions, leaving out any ingredients not needed. The coefficients $a_0$, $a_R$ and so on are analogous to a recipe, saying how much of each ingredient is called for. Multiplying a coefficient times a function is like measuring out an ingredient. "$a_{RR}$ tablespoons of quadratic $R$, please." Other than measuring, the only cooking skill called for is $+$: mixing together. But unlike cooking, you can have *negative* amounts of one ingredient or another.
+
+Our task here is to put together a polynomial recipe relevant to the dynamics of armed combat or of predator vs. prey.
+
+In the combat situation, there is a symmetry between $R$ and $B$. Whatever dynamics apply to $R$ will also apply to $B$ but with the roles of the variables reversed. In the predator-prey situation, there is no such symmetry: rabbits don't fight back.
+
+First, combat.
+
+i. **constant** Is there a loss or gain in the size of $R$ that is independent of $R$ itself. One can imagine factors such as recruitment or training that go on at a constant rate, providing a steady influx. But since the model is about the dynamics of a battle, there's not time for such factors to play a role. So, $a_0 = 0$.
+ii. **linear in R** Recall from simple differential equations that a model like $\dot{R} = a_R R$ corresponds to exponential growth or decay. In population models, births and natural deaths are modeled this way. But these two processes are irrelevant to the course of a battle.
+iii. **linear in B** The subsystem $\dot{R} = a_B B$ is directly relevant to battle: Red's rate of loss ($\dot{R}$) will be larger when your opponent's force $B$ is larger. 
+iv. **bilinear**. The subsystem $\dot{R} = a_{RB} R B$ also shows the pattern that Red's  rate of loss is proportional to $F$, which is relevant to battle. But the bilinear term also says that the effectiveness of force Blue is proportional to the size of Red. A small Red force takes casualties at a low rate, no matter how large is Blue. There are circumstances where this might apply, as in "mopping up" operations where the winning force hunts down the few hidden, surviving members of the losing force. Lanchester, when developing his model, explicitly states it is meant to apply to "aimed, directed fire." You know where your opponent is and can concentrate fire on them.
+v. and vi. **quadratic* Quadratic terms are relevant when there is an finite optimal level of the variables, that produces stronger results than either smaller or larger levels. When you can point to a scenario of ongoing engagement where a general honestly wants his or her own force to be *smaller*, or wishes that the opposing force was much *larger*, then you have a situation where a quadratic in $R$ or in $B$ would be relevant. 
+
+There are three additional modeling tactics that can help in selecting the ingredients for a model.
+
+a. Examine **inputs at zero**. Look at the behavior of the system when one or the other of $R$ or $F$ are zero. Example: If $B$ is zero, then $R$ will incur no losses, and *vice versa*. This is enough to tell us that $a_0$ and $b_0$ should be zero.
+b. Enforce **[parsimony](https://en.wikipedia.org/wiki/Occam%27s_razor)**. Don't include a modeling term unless it's clearly *directly* relevant. Example: Recall from Lanchester's Law that the strength of Red is proportional to $R^2$. Doesn't this suggest that Blue's losses will increase with $R^2$? That's not an unreasonable thought. But Lanchester's Law (without any quadratic term) already leads to the conclusion that the loss of Blue *strength* will be identical to the loss of Red's *strength*.
+c. Choose a relevant **time scale**. Lanchester's Law is about battles, which have time scales of hours to weeks. During this time there is no opportunity for other dynamics to come into play, for instance training and equipping new forces.
+
+Let's transfer this sort of reasoning to the fight for survival of rabbits and foxes. The name $R$ is well suited to rabbits. We'll change from $B$ to $F$ to stand for the foxes.
+
+In words, the dynamics are these. 
+
+*In the absence of foxes, the rabbit population grows. There's ample sustenance for them, especially because foxes eat rabbits, forcing the rabbit population down.*
+
+*In the absence of rabbits, the fox population decreases because, in our stylized model, rabbits are all that foxes have for nutrition and without them foxes will starve. Sustenance and even growth of the fox population depends on how many rabbits can be hunted down.*
+
+Notice that this description of dynamics already include the tactics of *zero inputs* and *parsimony*. "In the absence of foxes ..." means $B=0$.
+
+Why not include a quadratic term for rabbit growth. After all, the *logistic* model of growth to a carrying capacity is one of the CalcZ basic differential equations. For rabbits, it would look like $\dot{R} = rR - rR^2/\kappa$. Parsimony suggests that we ought to leave out this elaboration. If the resulting model doesn't work, we can try adding it in. (Or, we can try the model both with and without a rabbit carrying capacity and see if the resulting dynamics are strongly shaped by its presence.)
+
+A quick survey of polynomial ingredients from our modeling pantry for the rabbit/fox model:
+
+i. Constant. Neither rabbits nor foxes come from nowhere. If both $R$ and $B$ are zero, only an outside influence can make them otherwise.
+ii. Linear in $R$. This is what rabbits famously do: $\dot{R} = a_0 R$. Should there be a $\dot{R} = b_R B$ component to the model. If rabbits are few and far between, foxes will have a hard time finding them, so $\dot{R}$ will be small. $b_R B$ is independent of $R$, so it doesn't provide this behavior.
+iii. Linear in $B$. Foxes will starve when the rabbit population is low, so $\dot{B} = - b_B B$. We're using a minus sign to remind us that $b_B B$ describes fox death, not fox birth. Should there be a $\dot{B} = b_R R$ linear term? Just having lots of rabbits will not bring the foxes back from extinction.
+iv. Bilinear. With (i), (ii), and (iii), there isn't yet any dependence of rabbit growth/decay on the number of foxes, and vice versa. Yet clearly there needs to be one. If it's not in the linear term, it must be here. So the fox-kills-rabbit component will be $\dot{R} = - a_{RB} RB$, lowering the rabbit population. But foxes benefit from eating rabbits: $\dot{B} = b_{RB} RB$.
+v. Quadratic. We've already discussed the issue of the environment's carrying capacity for rabbits. In the name of parsimony, we'll leave it out initially. 
+
+Consequently, we'll model the population of predator and prey (in a constant environment) as
+<div style="font-size: 30px; text-align:center;">
+$$\dot{R} = r R - \beta RB\\\dot{B} = - \mu B + \gamma RB$$ 
+</div> where all the parameters are larger than zero.
+
+
+

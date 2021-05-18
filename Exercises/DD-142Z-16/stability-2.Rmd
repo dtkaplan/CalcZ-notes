@@ -1,0 +1,45 @@
+---
+title: "Stability 2"
+author: "Daniel Kaplan"
+---
+
+```{r include=FALSE}
+library(shiny)
+library(mosaic)
+library(mosaicCalc)
+```
+
+Previously, we examined the stability of fixed points by using iteration: start at an initial condition arbitrarily close (but not exactly on!) a fixed point and see if the trajectory tends toward or away from the fixed point.
+
+Now we'll look at stability another way, by considering the shape of of the dynamical function near a fixed point. At this point in CalcZ, you're aware that "near" suggests local, and that we routinely model (continuous) functions in terms of the value at a point, the value of the derivative at the point, and the value of the 2nd derivative at the point.
+
+The stability of a fixed point is determined in all but very special situations by the slope of the function at the fixed point. Here's the rule: 
+
+> In the dynamical system $x_{n+1} = g(x_n)$ with a fixed point at $x^\star$, the stability of that fixed point depends only on the magnitude of $\left| \partial_x g(x^\star) \right|$. The rule is: 
+
+> If $\left| \partial_x g(x^\star) \right| > 1$, the fixed point at $x^\star$ is **unstable**.
+
+> If $\left| \partial_x g(x^\star) \right| < 1$, the fixed point at $x^\star$ is **stable**.
+
+Notice that it doesn't matter what is the **sign** of $\partial_x g(x^\star)$; the fixed point will be stable or not depending just on the magnitude of the derivative.
+
+```{r stb2-1, exercise=TRUE, exercise.cap="Stability sandbox", exercise.nlines = 6, eval=FALSE}
+g <- makeFun(sin(x)^2 + 1 ~ x)
+fixed_points <- findZeros(g(x) - x ~ x)
+dg <- D(g(x) ~ x)
+
+## Now, apply dg() to the fixed point(s)
+dg(fixed_points)
+```
+
+```{r stb2-2, echo=FALSE, results="markup"}
+etude2::etudeQ(
+  "Calculate the derivative with respect to $x$ of $g(x) \\equiv  \\sin(x)^2 + 1$ at the fixed point at $x^\\star = 1.8972$. Is that fixed point stable?",
+  "+Yes+",
+  "No",
+  random_answer_order = FALSE
+)
+```
+
+
+

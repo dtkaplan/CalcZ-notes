@@ -1,0 +1,93 @@
+---
+output: learnr::tutorial
+runtime: shiny_prerendered
+---
+
+```{r setup, include=FALSE}
+etude2::load_learnr_safely()
+library(gradethis)
+library(mosaic)
+knitr::opts_chunk$set(echo = FALSE)
+learnr::tutorial_options(exercise.timelimit = 60, 
+                 exercise.checker = gradethis::grade_learnr)
+```
+
+```{r context="setup"}
+## SET UP THE PROBLEM HERE. 
+# Note use of double \\ for latex in quotation marks
+problemLatex <- "\\int  A \\sin(Bx + C) + D\\ dt?"
+answer_fun <- function(t,x,A,B,C,D) t*(A*sin(B*x + C) + D)
+evaluate_at <- 1:10
+correct_arguments <- c("x","t", "A", "B", "C", "D")
+## Remember to set the CHUNK NAMES to match the file name
+```
+
+Work out this anti-derivative on paper.
+
+<div style="font-size: 40px; text-align:center;">$`r problemLatex`$ </div>
+
+Once you have your result, translate it into a correct R *function*. 
+
+```{r IOD-H, exercise=TRUE, exercise.lines=5, exercise.cap="Integral of the day"}
+F <- makeFun(  ~ x)
+```
+
+```{r IOD-H-check}
+library(magrittr)
+gradethis::grade_result(
+  fail_if( ~ !is.function(.result), message = "Your result should be in the form of a function."),
+  fail_if( ~ !"t" %in% names(formals(.result)), 
+           message = "Shouldn't t be involved in this?"),
+  fail_if( ~ !all(correct_arguments %in% names(formals(.result))),
+           message = "You don't seem to have the right argument name."),
+  pass_if( ~ all(.result(t=1:10, x=5, A=1,B=2,C=3, D=4) ==
+                          answer_fun(t=1:10,x=5, A=1,B=2, C=3, D=4))),
+  fail_if( ~ TRUE, message="Correct arguments, but not the right function.")
+)  
+```
+
+
+Now that you have the correct answer, use Latex to typeset the formula in the function here. Some Latex tips: `\sin()` will produce $\sin()$. Note that the backslash at the start of `\sin()` does something. Without the backslash, that is `sin()`, you get $sin()$. If you don't see the difference, don't worry about it. But fastidious typesetters (like the author) are obsessive about such things.
+
+```{r results="asis"}
+etude2::latex_entry_box("latex-H")
+```
+
+```{r context="server"}
+id <- "latex-H"
+answers <- c("t(A \\sin(Bx + C) + D)",
+             "(A \\sin(Bx + C) + D)t",
+             "t(A sin(Bx + C) + D)",
+             "(A sin(Bx + C) + D)t",
+             "A sin(Bx + C)t + Dt",
+             "A \\sin(Bx + C)t + Dt") 
+squash_str <- "\\{|\\}| |\t|\n"
+
+# To return the state of the app
+if (!exists("apps_state")) apps_state <- reactiveValues() 
+
+output[[NS(id, "rendered")]] <- renderUI({
+  withMathJax(paste0("$$", input[[NS(id, "latex")]], "$$"))
+})
+output[[NS(id, "feedback")]] <- renderUI({
+  compare <- gsub(squash_str, "", answers)
+  the_answer <- input[[NS(id, "latex")]]
+  if (is.null(the_answer)) the_answer <- "missing"
+  correct <- gsub(squash_str, "", 
+           input[[NS(id, "latex")]]) %in% compare
+  if (exists("apps_state")) {
+    registration_name <- NS(id, "result")
+    apps_state[[registration_name]] <- 
+      tibble::tibble(id = registration_name, 
+                     question = "latex input",
+                     answer = the_answer,
+                     time = as.character(Sys.time()),
+                     correct = correct,
+                     attempts = 1,
+                     history = "")
+    
+  }
+  ifelse(correct, "✓", "☞")
+})
+```
+

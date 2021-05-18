@@ -1,0 +1,62 @@
+---
+title: "R Graphics"
+author: "Daniel Kaplan"
+---
+
+<a href="https://maa-statprep.shinyapps.io/141Z-R_command_guide" target="_blank">*R Command Guide*</a>
+
+
+Starting in this *Daily Digital* you will have some exercises that involve your creating R commands. Please refer to the <a href="https://maa-statprep.shinyapps.io/141Z-R_command_guide" target="_blank">*R Command Guide*</a> for an explanation of the specific commands we will use in this course. A good approach is to scan quickly through  the *Guide* to find a command that looks like what you need, and try it out yourself.
+
+
+### Contour plots
+
+A function $\mbox{twins}(x,y)$ is already provided to you as `twins()` in the code box below. Use the code box to create a contour plot of `twins()`.  The domain of the plot should be large enough to show a mountain next to  a deep hole.
+
+
+```{r daily-digital-03-E1-setup,echo=FALSE, message=FALSE}
+# Setup code goes here
+twins <- mosaic::rfun(~ x + y, seed = 302, n=5)
+```
+
+Use `contour_plot()` to create the graphic. You'll see an example in the <a href="https://maa-statprep.shinyapps.io/141Z-R_command_guide" target="_blank">*R Command Guide*</a>.
+
+
+```{r daily-digital-03-E1, exercise=TRUE, exercise.cap="Contour plot of twins(x,y)", exercise.setup="daily-digital-03-E1-setup", exercise.eval=FALSE, exercise.lines=3, exercise.completion=FALSE, exercise.startover=TRUE, exercise.diagnostics=TRUE, eval=FALSE}
+
+```
+
+
+```{r daily-digital-03-E1-check,eval=FALSE}
+gradethis::grade_result(
+  fail_if( ~ ! etude::is_ggplot(.result), "You should be making a plot."),
+  fail_if( ~ ! etude::is_contour(.result), "You should make a contour plot."),
+  fail_if( ~ max(abs(.result$data$x)) < 5, "Your x-domain isn't big enough"),
+  fail_if( ~ max(abs(.result$data$y)) < 5, "Your y-domain isn't big enough"),
+  pass_if( ~ TRUE)
+
+)
+```
+
+### Slice plots
+
+Continuing to examine the function $\mbox{twins}(x,y)$, take a **slice** through the function along the line $y=0$. Plot the function output versus $x$ using `slice_plot()`. Use the same $x$ domain as you did in  the contour plot.
+
+```{r daily-digital-03-E2, exercise=TRUE, exercise.cap="Slice plot  of twins(x, y) along the slice y=0", exercise.setup="daily-digital-03-E1-setup", exercise.eval=FALSE, exercise.lines=2, exercise.completion=FALSE, exercise.startover=TRUE, exercise.diagnostics=TRUE, eval=FALSE}
+
+```
+
+
+```{r daily-digital-03-E2-check,eval=FALSE}
+gradethis::grade_result(
+  fail_if( ~ ! etude::is_ggplot(.result), "You should be making a plot."),
+  fail_if( ~ ! etude::is_slice_plot(.result), "You should be using `slice_plot()`."),
+  pass_if( ~ TRUE)
+)
+```
+
+```{r daily-digital-03-Essay2, echo=FALSE}
+etude2::etudeEssay(
+  prompt = "Explain what you see in the slice plot shape that corresponds to what the contour plot has to say along the slice $y=0$."
+)
+```

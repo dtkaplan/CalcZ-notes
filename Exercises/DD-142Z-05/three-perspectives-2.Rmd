@@ -1,0 +1,92 @@
+---
+title: "Three perspectives in LaTeX"
+date: "MMM DD YYYY"
+output: learnr::tutorial
+runtime: shiny_prerendered
+---
+
+```{r include=FALSE}
+etude2::load_learnr_safely()
+library(gradethis)
+library(etude2)
+library(shiny)
+knitr::opts_chunk$set(echo = FALSE)
+learnr::tutorial_options(exercise.timelimit = 60,
+                 exercise.checker = gradethis::grade_learnr)
+```
+
+<!-- WARNING WARNING
+
+The NS() logic in the server isn't working. The resolved name needs to be
+used directly as input$`latex-5-latex`
+
+-->
+
+
+Typeset in LaTeX the equation showing three perspectives on a definite integral. (you can ignore the color that was used in a previous exercise.)
+
+- Superscript: Example: `\beta^4` produces $\beta^4$. 
+- Subscript: Like superscript but use `_` (underscore) instead of `^` (caret).
+- Integral sign: `\int` produces $\int$. Give it a subscript then superscript to set the limits of integration.
+- Vertical bar: The vertical bar is one common notation for "evaluate the function at the top bound and subtract the value of the function at the bottom bound. You can typeset the vertical bar by sandwiching the quantity just before the bar with `\left.` and  `\right|` For instance `\left. g(x) \right|` gives $\left. g(x) \right|$. Use a subscript and a superscript on the `|` to set the values at which the function is to be evaluated
+
+
+```{r echo=FALSE}
+HTML(glue::glue('<div style="font-size: 25px;">
+<span id="latex-2-feedback" class="shiny-html-output" style="color: green; font-size:30px;"></span
+  <span class="form-group shiny-input-container">
+    <label class="control-label" for="latex">Type latex math here.</label>
+    <textarea id="latex-2-latex" class="form-control" rows="5" cols="50" style="font-size: 25px"></textarea>
+  </span>
+</div>
+<div id="latex-2-rendered" class="shiny-html-output" style="font-size:25px;"></div>'))
+```
+
+
+```{r context="server"}
+id <- "latex-2"
+latex_2_answers <- c(
+  "\\int_a^b f(x) dx = \\left.F(x)\\right|_a^b = F(b) - F(a)",
+  "\\int_a^b f(x) dx = \\left.F(x)\\right|^b_a = F(b) - F(a)",
+  "\\int_a^b f(x) dx = F(x)\\left.\\right|^a_b = F(b) - F(a)",
+  "\\int^b_a f(x) dx = F(x)\\left.\\right|^b_a = F(b) - F(a)",
+  "\\int^b_a f(x) dx = \\left.F(x)\\right|^b_a = F(b) - F(a)",
+  "\\int^b_a f(x) dx = \\left.F(x)\\right|_a^b = F(b) - F(a)") 
+squash_str <- "\\{|\\}| |\t|\n"
+
+# To return the state of the app
+if (!exists("apps_state")) apps_state <- reactiveValues() 
+
+output$`latex-2-rendered` <- renderUI({
+  input$`latex-2-latex`
+  withMathJax(paste0("$$", input$`latex-2-latex`, "$$"))
+})
+output$`latex-2-feedback` <- renderUI({
+  
+  compare <- gsub(squash_str, "", latex_2_answers)
+  the_answer <- input$`latex-2-latex`
+  if (is.null(the_answer)) the_answer <- "missing"
+  
+  correct <- gsub(squash_str, "", 
+           the_answer) %in% compare
+  
+  if (exists("apps_state")) {
+    
+    registration_name <- NS(id, "result")
+    apps_state[[registration_name]] <- 
+      tibble::tibble(id = registration_name, 
+                     question = "latex input",
+                     answer = the_answer,
+                     time = as.character(Sys.time()),
+                     correct = correct,
+                     attempts = 1,
+                     history = "")
+    
+  }
+  
+  ifelse(correct, "✓", "☞")
+})
+
+```
+
+

@@ -1,0 +1,119 @@
+---
+title: "Function volumes"
+author: "Daniel Kaplan"
+---
+
+```{r include=FALSE}
+library(etude2)
+library(mosaic)
+library(mosaicCalc)
+g <- rfun(~ x + y, seed=154)
+```
+
+Consider a function of two variables, like this one $g(x,y)$:
+
+```{r }
+dom <- domain(x = c(-5, 5), y = c(-5, 5))
+contour_plot(g(x,y) ~ x + y, dom)
+interactive_plot(g(x,y) ~ x + y, dom)
+```
+
+
+Suppose you think of the function as describing the surface of a circus tent and you want to know how much volume is enclosed by the tent.
+
+We've already considered the strategy of slices in calculating the volume of objects like pyramids and spheres. Let's apply that to the volume-under-the-tent problem.
+
+First, we'll slice up the volume into slabs that run parallel to the $y-z$ plane. Each of these slabs will be indexed according to its position on the $x$ axis. 
+
+Second, for each slab indexed by $x$, we'll calculate the area of that slab in the $y-z$ axis. This area can be found using the earlier method of integrating. Let's take a look at a few slabs from $x=-3$ to $x=3$.
+
+```{r echo=FALSE, out.width="20%", fig.show="keep"}
+show_slice <- function(g, x=0) {
+Pts <- tibble::tibble(
+  y = seq(-5,5,length=101),
+  z = g(x=x, y),
+  color=ifelse(z<0, "blue", "green")
+)
+gf_segment(0 + z ~ y + y, data = Pts, color= ~ color, size = 2.5, alpha=.4) %>%
+  gf_line(z ~ y, color="black", size=2) %>%
+  gf_labs(y = "z", title=glue::glue("g({x}, y)")) %>%
+    gf_refine(scale_color_identity()) %>%
+    gf_lims(y=c(-8,8)) %>%
+  gf_theme(theme_minimal())
+}
+show_slice(g, x=-3)
+show_slice(g, x=-2)
+show_slice(g, x=-1.75)
+show_slice(g, x=-1.5)
+show_slice(g, x=-1.25)
+show_slice(g, x=-1)
+show_slice(g, x=0)
+show_slice(g, x=1)
+show_slice(g, x=2)
+show_slice(g, x=4)
+```
+
+Finding the area of any of these slabs is easy, just find the anti-derivative with respect to $y$ of $g(x_{slab}, y)$.
+The `helper()` function in the following sandbox finds the area under the slab at location $x$. (You can ignore the rest of the function and the use of `sapply()`. All this has to do with the way the R language will handle things when you ask for more than one slab at a time.)
+
+```{r tent, exercise=TRUE, exercise.cap="Areas and volumes of g(x,y)", exercise.nlines=10, warning=FALSE}
+slab_area <- function(x) {
+  helper <- function(x) {
+    F <- antiD(g(x, y) ~ y, x=x)
+    F(5) - F(-5)
+  }
+  sapply(x, helper)
+}
+slab_area(x=2)
+slab_area(x=4)
+```
+To find the total volume under the tent integrate the slab area over the extent of $x$:
+
+```{r tent2, exercise=TRUE, exercise.cap="Areas and volumes of g(x,y)", exercise.nlines=10, warning=FALSE}
+slab_area <- function(x) {
+  helper <- function(x) {
+    F <- antiD(g(x, y) ~ y, x=x)
+    F(5) - F(-5)
+  }
+  sapply(x, helper)
+}
+slab_antid <- antiD(slab_area(x) ~ x)
+slab_antid(x = 5) - slab_antid(x = -5)
+```
+
+At the heart of the computer notation is the use of `antiD()` on a function that is itself defined in terms of `antiD()`. In other words, a kind of `antiD(antiD(...))`. The math notation is prettier: $$\int_{-5}^5 \int_{-5}^5 g(x, y) dy dx$$ which can be seen as shorthand for $$\int_{-5}^5 \left\{\int_{-5}^5 g(x, y) dy\right\} dx = \int_{-5}^{5} \mbox{slab_area}(x) dx$$
+The *integral within an integral* is called an "iterated integral" or, in the case here, a "double integral."
+
+Working with double integrals (which you will see in more advanced math, science, and engineering courses) requires that you pay close attention to the "what" of the interior integrals. For instance: $$\int_{-5}^{5} g(x, y) dy$$ might appear at first glance to evaluate to a number, since it is a definite integral. But the integration $\int dy$ sums over the $y$ variable and leaves the $x$ variable alone. So $\int_{-5}^{5} g(x, y) dy$ is a function of $x$, not a number. 
+
+```{r fv1, echo=FALSE}
+etude2::etudeQ(
+  "Modify the original double integral to calculate the signed volume under the tent lifted vertically by 2 meters.",
+  "-141" = "Oops! You lowered the tent by 1 meter.",
+  "-41" = "That's the volume before the 2 meter lift.",
+  "59",
+  "+159+",
+  "259",
+  random_answer_order = FALSE,
+  id = knitr::opts_current$get()$label
+)
+```
+
+```{r fv2, echo=FALSE, results="markup"}
+etude2::etudeQ(
+  "\"Areas\" and \"volumes\" of a function $g(x,y)$ calculated by integration are really *signed* areas and volumes. That is, where the function value is negative the local volume will be negative. What happens if you take the absolute value of the function value? Try it, calculating the volume of the of the tent lifted by 2 meters but using the absolute value of the height.",
+  "235",
+  "+346+",
+  "457",
+  "568",
+  random_answer_order = FALSE,
+  id = knitr::opts_current$get()$label
+)
+```
+
+<!-- a possible continuation of the problem -->
+
+```{r child="tent-area.Rmd", eval=FALSE}
+```
+
+

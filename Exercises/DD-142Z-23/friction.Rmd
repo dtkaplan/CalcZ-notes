@@ -1,0 +1,105 @@
+---
+title: "Friction"
+author: "Daniel Kaplan"
+---
+
+<style type="text/css">
+.explanation-note {
+  padding: 1em 1em 1em 4em;
+  margin-bottom: 10px;
+  border: 2px brown;
+  border-radius: 10px;
+  background: #f5f5f5 5px center/3em no-repeat;
+}
+</style>
+
+```{r include=FALSE}
+library(etude2)
+```
+
+Friction is an inevitable feature of real-world spring-mass systems. Without friction the force-balance differential equation is $m\partial_{tt} x =  -k\, x$. How can friction fit in?
+
+For a mass moving at velocity $\dot{x}$, the friction force will be in the direction *opposed* to the velocity and, when velocity is zero, friction goes away. Following our general calculus idea of approximating with a simple straight-line function, we get a force $\mbox{friction} = -r \dot{x}$. Adding in the friction force gives a new force-balance equation which has a famous name in physics: the "damped harmonic oscillator."
+
+$$m \ddot{x} = -r \dot{x} - k x$$
+Since we've gotten in the habit of using $a$ and $b$ on the right side of the equation, we'll re-write the force-balance equation as 
+$$\ddot{x} = a \dot{x} + b x$$ where $a = -r/m$ and $b = -k/m$.
+
+As the name "damped harmonic oscillator" suggests, we expect that the solution to the force-balance equation will be a "damped" oscillation, that is an oscillation that decreases in amplitude over time as friction draws energy out of the system (and dissipates it as heat). But how fast and in what form will the amplitude decrease?
+
+We've had good luck with exponential ansätze, so let's again try $x(t) = e^{\lambda t}$.  Plugging this into the equation we get
+$$\lambda^2 e^{\lambda t} = a \lambda e^{\lambda t} + b e^{\lambda t} \ \ \implies \ \ \lambda^2 - a \lambda - b = 0$$.
+
+Are there values of $\lambda$ that will satisfy this condition?
+
+<div class="explanation-note">
+**The quadratic formula**
+
+The famous quadratic formula refers to a quadratic function $$f(x) \equiv a x^2 + b x + c$$ As you know, the values $x^\star$ that are zeros of $f(x)$ are 
+$$x^\star = \frac{1}{2a} \left[-b \pm \sqrt{\strut b^2 - 4 a c}\right]$$
+
+Use this information about the quadratic formula to answer the below question.
+
+```{r nos1, echo=FALSE, results="markup"}
+etude2::etudeQ(
+  "Find the two zeros $\\lambda_1$ and $\\lambda_2$ where $0=\\lambda^2 - a \\lambda - b$. Which of these is right?",
+  "$\\lambda_{1,2} = \\frac{1}{2a} \\left[a \\pm \\sqrt{a^2 + 4b} \\right]$",
+  "+$\\lambda_{1,2} = \\frac{1}{2} \\left[a \\pm \\sqrt{a^2 + 4b} \\right]$+",
+  "$\\lambda_{1,2} = \\frac{1}{2a} \\left[a \\pm \\sqrt{a^2 - 4b} \\right]$",
+  "$\\lambda_{1,2} = \\frac{1}{2} \\left[a \\pm \\sqrt{a^2 - 4b} \\right]$",
+  random_answer_order=FALSE
+)
+```
+
+</div>
+
+The answer to the previous question is true no matter what are the quantities $a$ and $b$. But to correspond to friction and a spring force, we require $a < 0$ and $b < 0$. 
+
+```{r fr1-1, echo=FALSE, results="markup"}
+etude2::etudeQ(
+"Suppose that friction is strong, that is $|a|$ is big. More specifically, suppose $a^2 > 4 |b|$. What will be true about $\\sqrt{\\strut a^2 - 4b}$?",
+  "It will be purely \"imaginary\".",
+  "+It will be purely \"real\".+",
+  "It will be *complex*, that is with a non-zero real part and a non-zero imaginary part.",
+  "There's no way to tell for sure.",
+  random_answer_order = FALSE
+)
+```
+
+```{r fr1-2, echo=FALSE, results="markup"}
+etude2::etudeQ(
+"When $a^2 > 4b$, can either of the eigenvalues be positive?",
+  "+No+",
+  "Yes, one eigenvalue can be positive.",
+  "Both eigenvalues *must* be positive.",
+  "Depends on the specific values of $a$ and $b$.",
+  random_answer_order = FALSE
+
+)
+```
+
+When *friction* dominates (that is, large $|a|$) the eigenvalues are both real and negative. This means there is no oscillation and the motion decays to $x = 0$.
+
+```{r fr1-3, echo=FALSE, results="markup"}
+etude2::etudeQ(
+"Question: Suppose that friction is weak, that is $a^2 < 4|b|$. What will be true about $\\sqrt{a^2 + 4b}$?",
+  "+It will be purely \"imaginary\".+",
+  "It will be purely \"real\".",
+  "It will be *complex*, that is with a non-zero real part and a non-zero imaginary part.",
+ "There's no way to tell for sure.",
+ random_answer_order = FALSE 
+)
+```
+
+Suppose that we define $\omega \equiv \sqrt{\strut 4b - a^2}/2$ and $k = a/2$. (Recall, that for $a$ to describe friction, we must have $a < 0$.) The eigenvalues will be of the form  ${k + i\omega}$ and a solution to the differential equation will be $e^{(k + i\omega)t} = e^{kt} e^{ i \omega t}$.
+
+
+```{r fric4, echo=FALSE, results="markup"}
+etude2::etudeQ(
+  "What will $e^{-kt} e^{i \\omega t}$ be?",
+  "+An exponentially decaying sinusoid+",
+  "An exponentially growing sinusoid" = "Remember that $a > 0$, so $k = a/2 > 0$ and $e^{-kt}$ is a decaying exponential.",
+  "An ordinary sinusoid."
+)
+```
+

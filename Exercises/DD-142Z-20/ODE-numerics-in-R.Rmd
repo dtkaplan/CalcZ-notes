@@ -1,0 +1,102 @@
+---
+title: "Integrating ODEs in R"
+author: "Daniel Kaplan"
+runtime: shiny_prerendered
+---
+
+<style type="text/css">
+.explanation-note {
+  padding: 1em 1em 1em 4em;
+  margin-bottom: 10px;
+  border: 2px brown;
+  border-radius: 10px;
+  background: #f5f5f5 5px center/3em no-repeat;
+}
+</style>
+
+
+```{r include=FALSE, context="setup"}
+etude2::load_learnr_safely()
+library(etude2)
+library(mosaic)
+library(mosaicCalc)
+library(math141Z)
+piecewise_fun <- function(x, r=1, K=100) {
+  ifelse(x < K/2, 1.4*r*x/2, 1.4*r*K/4 - 1.4*r*(x-K/2)/2)
+}
+```
+
+We have suggested a simple model for limited growth:
+$$\dot{x} = r\,x\,(1-x/K)$$ where $K$ is the "carrying capacity" of the environment in which the growth occurs. Given a graph of the dynamics function (\dynamics$(x) = r x (1-x)$, you should at this point be able to locate the values $x^\star$ of any fixed points and determine at a glance whether they are stable.
+
+But sometimes you need more information about how the shape of the solution, that is $x(t)$ versus $t$. Currently, we have a formula for the solution of only one form of differential equation: $$\dot{x} = a x \ \ \ \implies \ \ \ x(t) = x(0) e^{a t}$$ This is an important solution since it describes all dynamics near fixed points. But what if we are interested in transient behavior far from a fixed point?
+
+A valuable tool is "numerical integration" of differential equations. You've see how this works in the app used in DD-19:
+
+<a href="https://maa-statprep.shinyapps.io/142Z-DE-Euler" target="_blank"><img src="www/Euler-app.png" width="25%"></a>
+
+In this section, we'll work to generate solutions in the form of R **functions** that can be used like any other R function. The central operator is `integrateODE()`, which, given the dynamical function in $\dot{x} = \mbox{dynamics}(x)$ an initial condition $x(0)$, and the numerical values of any parameters, produces the solution. 
+
+For example the code in the sandbox generates a solution to $\dot{x} = a x$. Once we have that solution, we can do the usual things with it: graphing, finding zeros, differentiating, etc.
+
+```{r onum1, exercise=TRUE, exercise.cap = "Meeting integrateODE()", exercise.nlines = 10, eval=FALSE, warning=FALSE}
+soln <- integrateODE(dx ~ a * x, a = -1, x = 10, tdur = 10)
+# The solution function is called 'soln$x()`. See bottom of section for details.
+slice_plot(soln$x(t) ~ t, domain(t = c(0, 10)))
+x_dot <- D(soln$x(t) ~ t)
+slice_plot(x_dot(t) ~ t, domain(t = c(0, 10)))
+
+```
+
+As you recall, the standard model for limited growth is $$\dot{x} = r\, x (1-x/K)$$ Modify the code in the sandbox to find the solution to this model, using $K=100$, $r=1$, and $x(0) = 10$.
+
+```{r num1, echo=FALSE, results="markup"}
+etude2::etudeQ(
+  "At what time does the solution cross $x=50$? Hint: Make sure all parameters match appropriately",
+  "about $t=0.5$",
+  "+about $t=2$+",
+  "about $t=4$",
+  "about $t=7$",
+  "sometime $t > 10$",
+  random_answer_order = FALSE
+)
+```
+
+```{r num2, echo=FALSE, results="markup"}
+etude2::etudeQ(
+  "Repeat the integration of the limited growth model with $r=1$, $K=100$, but now $x(0) = 0.1$ At what time does the solution cross $x=50$?", 
+  "about $t=0.5$",
+  "about $t=2$",
+  "about $t=4$",
+  "+about $t=7$+",
+  "sometime $t > 10$",
+  random_answer_order = FALSE
+)
+```
+
+```{r num3, echo=FALSE, results="markup"}
+etude2::etudeQ(
+  "Once more carry out the integration of the limited growth model with $r=1$, $K=100$, but now $x(0) = 200$ At what time does the solution cross $x=150$?",
+  "+about $t=0.5$+",
+  "about $t=2$",
+  "about $t=4$",
+  "about $t=7$",
+  "sometime $t > 10$",
+  random_answer_order = FALSE
+)
+```
+
+
+<div class="explanation-note">
+
+**What are the arguments to `integrateODE()` and what is the result of the integration?**
+
+
+1. The dynamical function, written as a tilde expression. But this is a slightly different sort of thing than you're used to with `makeFun()`. In `makeFun()` you might write `sin(3 * x) ~ x` for the tilde expression. But in `integrateODE()` the left-hand side of the tilde expression simply names the variable in the differential equation. Since the variable in this example is `x`, the left-hand side is the differential `dx`. The *right-hand* side of the tilde expression is, in `integrateODE()`, the mathematical formula for the dynamics function written in R notation.
+2. Arguments such as `a = -1`, or $r=1$ or $K=100$ set numerical values for the parameters in the dynamical function.
+3. `x = 10` or `x = 200` sets the initial condition.
+4. `tdur = 10` the domain in time for which we want the solution calculated: it will go from $0 \leq t \leq \mbox{tdur}$. Here, it's set to a reasonable value for the dynamics being studied.
+
+By rights, the object returned by `integrateODE()` ought to be the function that solves the differential equation for the given parameters and initial condition.  That's *almost* the case. But we will use `integrateODE()` for 2-D and higher-dimensional equations, just as we used it for 1-D equations in this section. Consequently, `integrateODE()` is arranged to return a **list** of functions. Each element of that list has a name. In the example here, there is only one element to the list (since the dynamics are 1-dimensional). The name of that element is `x`.  The R expression `soln$x` refers to that element; `soln$x` is a *function* but `soln` is a *list*. The `$` is one of the ways of referring to a particular element of a list in R.
+
+</div>

@@ -1,0 +1,167 @@
+---
+title: "Match the gradient"
+author: "Daniel Kaplan"
+---
+
+```{r include=FALSE}
+library(etude2)
+library(mosaic)
+library(mosaicCalc)
+```
+
+Recall that we described a strategy for working with **incommensurate** objectives, that is, objectives such as "minimize money spent" and "maximize lives saved" that have no generally agreed common scale on which they can be compared. ("Mensurate" comes from the Latin for "measure." "Commensurate" means measured on the same scale.) We call that strategy **multi-objective** optimization. This is by no means a magical way of pulling ethical values or human preferences out of the universe. It is instead a mathematical framework for setting up the task to quantify correctly the tradeoffs between objectives. What use one makes of this information is entirely a matter for human decision making.
+
+The setting for multi-objective optimization is this:
+
+i. You have a set of *policy alternatives* from amongst which you want to choose the "best." Sometimes these policy alternatives are discrete, e.g. whether to buy something or not. In this calculus course, we emphasize *continuous* policy alternatives, those that are represented by one or more numbers. Examples: How much money to spend on each of several modes of providing health care; How to set the length and diameter of a cylindrical tank.
+ii. You have a set of *objective functions*, each corresponding to one of the incommensurate objectives. Each objective function takes any of the policy alternatives as input and produces an output on its own scale. Examples: Lived saved; Money spent; Cardboard box volume; Area of cardboard used to create the box.
+
+The process is this:
+
+i. You, the decision maker, select *one* of the objective functions to be *the* objective function. Mathematically, it doesn't matter which one.
+ii. The other objective functions become **constraint functions**. You, the decision maker, select a **level** for each constraint. Examples: The money available for health care (budget constraint); The volume that the cardboard box must contain.
+iii. Find the argmax of the objective function in (i) subject to the constraint in (ii). This is an entirely automatic operation; there are no value judgments involved.
+iv. Find the shadow price (also called the Lagrange multiplier) for each of the constraints in (ii). This is the change in output of the objective function in (i) when the *level* of the constraint is changed slightly. This also is an entirely automatic operation with no value judgments involved.
+v. Now you again step in to make some decisions. Examine each of the shadow prices, one for each constraint. Your job is to decide whether the shadow price is worthwhile, in much the same way that you might decide whether the price of a snack is worthwhile. But, whereas your you make a go/no-go decision with the snack, with the shadow price you make a more graded decision. The possibilities are: 
+    a. the price is not worthwhile. Response: *lower* the *level* of the constraint. 
+    b. the price is just right. Response: leave the *level* of the constraint along. 
+    c. the price is well worthwhile. Response: *raise* the *level* of the constraint.
+vi. Repeat the process by going back to step (iii) until either the price is just right or the level of the constraint is zero.
+
+Understanding (vi) is where your newly gained understanding of calculus comes in. Throughout CalcZ, we have encountered situations where we gradually build a solution by taking a series of **Euler steps**. You've seen this, for instance, in constructing the definite integral of a function or in finding a solution to a differential equation or by locating an argmax by taking small steps in the direction of the gradient vector.
+
+Now, let's examine a small but important part of the procedure for multi-objective optimization:
+
+> i. You, the decision maker, select *one* of the objective functions to be *the* objective function. **Mathematically, it doesn't matter which one.**
+
+Although we may think of objective functions and constraint functions as different kinds of things, the way they are used in constrained optimization gives them symmetrical roles. 
+
+In earlier exercises, we've looked at step (iii) in the multi-objective optimization procedure graphically, as in this diagram depicting as an objective function the *volume* of a cardboard box and depicting as a constraint the surface area of cardboard used in the box.
+
+```{r echo=FALSE, warning=FALSE, message=FALSE}
+V <- makeFun(x*(y - 2*x)^2 ~ x)
+constraint <- makeFun(y^2 ~ x + y)
+contour_plot(V(x, y) ~ x + y, domain(x=c(3,7), y=c(22,28))) %>%
+  gf_labs(title="Volume") %>%
+  contour_plot(constraint(x, y) ~ x + y, 
+               filled=FALSE, contour_color = "red", 
+               contours_at = 600) 
+```  
+
+The constraint path is the contour of the constraint function at which the output of the constraint function is the set level; here that's 600 square-inches of cardboard.    
+The argmax in this problem is the point at which the constraint path is tangent to a contour of the objective function. Here, we need to **interpolate** visually and imagine the contour where the objective function output is about 1100, which will be tangent to the constraint path at about $x=4.2$. 
+
+Let's take the graphic apart into it's constituent components: the objective function and the constraint function. We'll plot both in the same way: a contour plot with the gradient field superimposed.
+
+```{r echo=FALSE, out.width="50%", fig.show="keep", warning=FALSE, message=FALSE}
+dom <- domain(x=c(3,7), y=c(22,28))
+contour_plot(V(x, y) ~ x + y, dom ) %>%
+gf_labs(title="Box volume") %>%
+  gradient_plot(V(x, y) ~ x + y, npts=10) %>%
+  gf_refine(coord_fixed())
+  
+contour_plot(constraint(x, y) ~ x + y, dom, 
+               contours_at = c(400, 500, 600, 700, 800), skip=0) %>%
+  gf_labs(title="Cardboard area") %>%
+  gradient_plot(constraint(x, y)+0.001*x ~ x + y, npts=10) %>%
+  gf_refine(coord_fixed())
+
+```  
+
+As always, at any point the gradient vector is perpendicular to the contour through that point. This means that wherever the contour of one function is tangent to the contour of the other function, their respective gradient vectors are exactly aligned. 
+
+The next plot shows the gradient vectors of each function along with the **angle** (in degrees) between the gradient vectors at each point. Along the **green line**, the gradient vectors are exactly aligned.
+
+```{r echo=FALSE, warning=FALSE, message=FALSE}
+f <- V
+g <- constraint
+angle <- function(v1, v2) {
+  180*acos(colSums(v1*v2)/sqrt(colSums(v1*v1)*colSums(v2*v2)))/pi
+}
+dfdx <- D(f(x, y) ~ x)
+dfdy <- D(f(x, y) ~ y)
+gradf <- Vectorize(function(x, y) {
+  c(dfdx(x=x, y=y), dfdy(x=x, y=y))
+})
+gradg <- Vectorize(function(x, y){
+  c(0, 2*y)
+})
+dom <- domain(x=c(3,5), y=c(23.5, 25))
+contour_plot(angle(gradf(x,y), gradg(x,y)) ~ x + y, dom, 
+             contours_at = c(10, 20, 30, 40, 50), 
+             skip=0, npts=500, filled=FALSE) %>%
+  contour_plot(angle(gradf(x,y), gradg(x,y)) ~ x + y, 
+             contours_at = c(.3), contour_color="green", npts=200, filled=FALSE, label_color=NA, size=2) %>%
+  gf_refine(coord_fixed()) %>%
+  gradient_plot(constraint(x, y)+0.001*x ~ x + y, npts=10, color="blue") %>%
+  gradient_plot(V(x, y)+0.001*x ~ x + y, npts=10, color="black") %>%
+  gf_labs(title="Angle of alignment of objective and constraint function gradients")
+```
+
+Note that nowhere in the construction of the green line have we said anything about which of the two functions is the objective and which is the constraint. The two functions are used in exactly the same way: find the gradient and find the points where the two functions' gradients are aligned. It doesn't matter which function we choose to call the contraint and which the gradient. 
+
+Each point on the green line is an input $(x, y)$ that is optimal at some level of the constraint. Imagine taking points on the green line and, for each point, calculating the box volume and the box surface area. These points are each on the **Pareto frontier** of the multi-objective optimization problem. That is, there are no values of $x$ and $y$ off the green line that dominate a point on the green line in terms of the values of the box volume and the box area. 
+
+```{r echo=FALSE}
+green <- makeFun(5.4*x + 2.4 ~ x)
+frontier <- tibble::tibble(
+  x = seq(3, 5, length=100), 
+  vval = V(x, green(x)),
+  cval = constraint(x, green(x))
+)
+gf_line(vval ~ cval, data = frontier, color="green", size=2) %>%
+  gf_labs(y="Box volume (cubic inches)", x = "Box surface area (sq.inches)",
+          title = "Pareto frontier of cardboard box problem")
+```
+
+```{r mg1-1, echo=FALSE, results="markup"}
+etude2::etudeQ(
+  "The two graphs showing the green line are labeled \"Angle of alignment ...\" and \"Pareto frontier ...\" respectively. The green line in both graphs represents the same set of $x, y$ points. But the graphs are different. Why?",
+  "+The domain in \"Angle ...\" is the inputs $(x,y)$ to the objective functions, whereas the domain in \"Pareto ...\" is the outputs from those objective functions.+",
+  "The domain in \"Pareto ...\" is the inputs $(x,y)$ to the objective functions, whereas the domain in \"Angle ...\" is the outputs from those objective functions.",
+  "The \"Angle ...\" graph shows only the constraint function while the \"Pareto ...\" graph shows only the objective function.",
+  "The \"Angle ...\" graph shows only the constraint function while the \"Pareto ...\" graph shows both the constraint and objective functions."
+)
+```
+
+```{r mg1-2, echo=FALSE, results="markup"}
+etude2::etudeQ(
+  "Recall that the shadow price (a.k.a. Lagrange multiplier) is a ratio: the extent to which the output of the objective function is increased compared to the extent to which the constraint level is increased. Which of these numerical values is approximately the shadow price of volume with respect to area? (Hint: The above graph gives all the information you need!)",
+  "+2.4+",
+  "24",
+  "240",
+  "2400",
+  random_answer_order = FALSE
+)
+```
+
+```{r mg1-3, echo=FALSE, results="markup"}
+etude2::etudeQ(
+  "What's the shadow price of area with respect to volume? (Before we asked about volume with respect to area.)",
+  "0.042",
+  "+0.42+",
+  "4.2",
+  "42",
+  random_answer_order = FALSE
+  
+)
+```
+
+```{r mg1-4, echo=FALSE, results="markup"}
+etude2::etudeQ(
+  "We made a rookie error in posing the two previous questions. The shadow price is a *quantity* and we didn't say what the **units** of that quantity are! So any of the candidate answers to those questions might be right depending on what unit you take the shadow price to be in. (You might have to make up your own unit for this to be exactly right.) We apologize for the mistake and will earnestly try to do better in the future! For now, we'll ask you to figure it out: Given the units shown on the graph, in what units are the shadow price of volume with respect to area?",
+  "+inches+",
+  "square-inches",
+  "cubic-inches",
+  "1/inches",
+  random_answer_order = FALSE
+)
+```
+
+**An application to machine learning**: Large chunks of the field of machine learning consist of relating some outcome to be predicted as a function inputs that can be measured. A discrete example: predict what animal is depicted in a photograph as a function of the million-or-so pixel values.  A continuous example: Find the probability of a person getting a disease as a function of measurements of expression level of each of thousands of genes.
+
+In both cases, a starting point is the collection of a large amount of data, e.g. photographs with various animals in them that have been labeled by some expert; or genetic measurements from people who did and did not come down with the disease. In both cases, the outcome of machine learning is a function that gives an output (which animal? came down with disease?) as a function of the inputs.
+
+One objective in finding the function is to make the results as close as possible to the data: the function should give the right answer as often as possible. But there is another objective: keep the model simple. The optimal model choice involves a trade-off between these two objectives. Techniques for model construction in machine learning therefore involve two objective functions: the probability of a correct output and the complexity of the model (as measured, for instance, by the length of the $\mathbf x$ vector found when solving the linear combination target problem). In statistics, this is called the trade-off between **variance** (how close the model is to the data) and **bias** (how far the $\mathbf x$ vector is from the one we would get by ignoring the objective to keep the model as simple as possible). 
+
+

@@ -1,0 +1,103 @@
+---
+title: "Matrix multiplication"
+author: "Daniel Kaplan"
+---
+
+```{r include=FALSE}
+library(etude2)
+library(mosaic)
+library(mosaicCalc)
+```
+
+It may seem in the distant past, but try to recall some of the concepts we used in exploring *linear combinations*.
+
+- a **vector** is a mathematical object with two properties: magnitude (length) and direction. We wrote vectors as a column of numbers, for instance $${\mathbf v} = \left[\begin{array}{r}3\\-1\\8\end{array}\right]\ \ \ \mbox{or}\ \ \ {\mathbf u} =\left[\begin{array}{r}2\\-3\end{array}\right]$$ The dimension of a vector is the count of numbers used in its representation: 3 for $\mathbf v$ and 2 for $\mathbf u$.
+- a **matrix** is a collection of vectors, all of which have the same dimension. For instance: 
+
+$${\mathbf M} =\left[\begin{array}{rrr}3 & 1 & 0\\-1 & 4 & -2\\8 & 0 & 12\end{array}\right]\ \ \ \mbox{or}\ \ \ {\mathbf P} =\left[\begin{array}{rr}-1 & 2\\7 & 0\end{array}\right]$$
+
+- **multiplying** a matrix times a vector produces a new vector which is a *linear combination* of the vectors in the matrix. For instance:
+
+$${\mathbf P}\cdot{\mathbf u} = \left[\begin{array}{rr}-1 & 2\\7 & 0\end{array}\right] \cdot \left[\begin{array}{r}2\\-3\end{array}\right] =
+2 \left[\begin{array}{r}-1\\7\end{array}\right] + -3 \left[\begin{array}{r}2\\0\end{array}\right] = \left[\begin{array}{r}-7\\14\end{array}\right]$$
+
+There's a simplification of the [abcd]-style matrix that is particularly important in the way dynamics are written in physics and related disciplines. That matrix has the form $$\left[\begin{array}{cc}a & b\\1 & 0\end{array}\right]$$
+We'll call this an [ab10]-format matrix.
+
+It's worth emphasizing the special form of the equations corresponding to an [ab10] matrix:
+
+$$\underbrace{\left[\begin{array}{c}x_{n+1}\\y_{n+1}\end{array}\right]}_\mbox{next state} =  
+\underbrace{\left[\begin{array}{rr}a & b\\1 & 0\end{array}\right]}_\mbox{[ab10] format matrix} \cdot\underbrace{\left[\begin{array}{c}x_n\\y_n\end{array}\right]}_\mbox{current state} = 
+\left[\begin{array}{rcr}a\, x_n & + & b\, y_n \\x_n & & \end{array}\right]$$
+Since both $x_n$ and $y_n$ are numerical quantities, you'll often work with the system like this:
+
+$$\underbrace{\left[\begin{array}{c}x_{n+1}\\y_{n+1}\end{array}\right]}_\mbox{next state} =  
+\underbrace{\left[\begin{array}{rr}a & b\\1 & 0\end{array}\right]}_\mbox{[ab10] format matrix} \cdot\underbrace{\left[\begin{array}{r}3\\-1\end{array}\right]}_\mbox{current state} = 
+\left[\begin{array}{rcr}3 a & + & (-1)b \\3 & & \end{array}\right]$$
+
+
+```{r mm1-1, echo=FALSE, results="markup"}
+etude2::etudeQ(
+  "What's the result of this multiplication:$$\\left[\\begin{array}{rr}-1 & \\frac{3}{4}\\\\1 & 0\\end{array}\\right] \\cdot \\left[\\begin{array}{r}2\\\\1 \\end{array}\\right] ?$$", 
+  "+$\\left[\\begin{array}{r}-\\frac{5}{4}\\\\2 \\end{array}\\right]$+",
+  "$\\left[\\begin{array}{r}\\frac{5}{4}\\\\\\frac{1}{4} \\end{array}\\right]$",
+  "$\\left[\\begin{array}{r}-\\frac{3}{4}\\\\2 \\end{array}\\right]$",
+  "$\\left[\\begin{array}{r}\\frac{3}{4}\\\\-2 \\end{array}\\right]$"
+)
+```
+
+```{r mm1-2, echo=FALSE, results="markup"}
+etude2::etudeQ(
+  "What's the result of this multiplication:$$\\left[\\begin{array}{rr}3 & 4\\\\1 & 0\\end{array}\\right] \\cdot \\left[\\begin{array}{r}-5\\\\6 \\end{array}\\right] ?$$", 
+  "+$\\left[\\begin{array}{r}9\\\\-5 \\end{array}\\right]$+",
+  "$\\left[\\begin{array}{r}9\\\\5 \\end{array}\\right]$",
+  "$\\left[\\begin{array}{r}-7\\\\5 \\end{array}\\right]$",
+  "$\\left[\\begin{array}{r}-7\\\\-5 \\end{array}\\right]$"
+)
+```
+
+```{r mm1-3, echo=FALSE, results="markup"}
+etude2::etudeQ(
+  "What's the result of this multiplication:$$\\left[\\begin{array}{rr}0 & -2\\\\1 & 0\\end{array}\\right] \\cdot \\left[\\begin{array}{r}12.62\\\\-7.14 \\end{array}\\right] ?$$", 
+  "+$\\left[\\begin{array}{r}14.28\\\\12.62 \\end{array}\\right]$+",
+  "$\\left[\\begin{array}{r}-14.28\\\\12.62 \\end{array}\\right]$",
+  "$\\left[\\begin{array}{r}14.28\\\\-12.62 \\end{array}\\right]$",
+  "$\\left[\\begin{array}{r}12.62\\\\-12.62 \\end{array}\\right]$"
+)
+```
+
+
+```{r mm1-4, echo=FALSE, results="markup"}
+etude2::etudeQ(
+  "All of these vectors point in the same (or exactly opposite) direction, except one:$$
+  {\\mathbf v}_1 = \\left[\\begin{array}{r}7.2\\\\-2.4\\end{array}\\right], \\ \\ 
+  {\\mathbf v}_2 = \\left[\\begin{array}{r}3.6\\\\1.2\\end{array}\\right],\\ \\ 
+  {\\mathbf v}_3 = \\left[\\begin{array}{r}3.6\\\\-1.2\\end{array}\\right],\\ \\ 
+  {\\mathbf v}_4 = \\left[\\begin{array}{r}-1.8\\\\0.6\\end{array}\\right]
+  $$ Which is the one exception?", 
+  "${\\mathbf v}_1$",
+  "+${\\mathbf v}_2$+",
+  "${\\mathbf v}_3$",
+  "${\\mathbf v}_4$",
+  random_answer_order = TRUE
+)
+```
+
+```{r mm1-5, echo=FALSE, results="markup"}
+etude2::etudeQ(
+  "All of these vectors point in the same (or exactly opposite) direction, except one:$$
+  {\\mathbf u}_1 = \\left[\\begin{array}{r}\\sqrt{2}/2\\\\\\sqrt{12}\\end{array}\\right], \\ \\ 
+  {\\mathbf u}_2 = \\left[\\begin{array}{r}1/\\sqrt{2}\\\\2\\sqrt{3}\\end{array}\\right],\\ \\ 
+  {\\mathbf u}_3 = \\left[\\begin{array}{r}-1/\\sqrt{2}\\\\-\\sqrt{2}\\sqrt{6}\\end{array}\\right],\\ \\ 
+  {\\mathbf u}_4 = \\left[\\begin{array}{r}\\sqrt{2}/4\\\\\\sqrt{6}\\end{array}\\right],\\ \\ 
+  {\\mathbf u}_5 = \\left[\\begin{array}{r}\\sqrt{2}/4\\\\\\sqrt{3}\\end{array}\\right]
+  $$ Which is the one exception?", 
+  "${\\mathbf u}_1$",
+  "${\\mathbf u}_2$",
+  "${\\mathbf u}_3$",
+  "+${\\mathbf u}_4$+",
+  "${\\mathbf u}_5$",
+  random_answer_order = TRUE
+)
+```
+

@@ -1,0 +1,36 @@
+---
+title: "A new daily digital system"
+author: "Daniel Kaplan"
+output: learnr::tutorial
+runtime: shiny_prerendered
+---
+
+```{r include=FALSE}
+#etude2::load_learnr_safely()
+library(gradethis)
+library(etude2)
+knitr::opts_chunk$set(echo = FALSE)
+learnr::tutorial_options(exercise.timelimit = 60,
+                 exercise.checker = gradethis::grade_learnr)
+```
+
+
+We have changed the Daily Digital submission system for Math 142Z. With the new system, the "hand in your work" controls are in the last page of the Daily Digital.
+
+You press the "Refresh" button on that page to generate the hash code containing *all* the work displayed in the Daily Digital. This includes problems you might have done in another session (perhaps on a previous day). In addition to the hash code, a table will be displayed showing which items from the Daily Digital are and which are not contained in the hash code.
+
+As before, make sure to copy-and-paste your hash code to the link provided *after* you press refresh. If you press the small "Start Over" link in the table of contents, your previous work will not show up in the document but everything contained in previously uploaded hash codes will remain in the course grading system.
+
+Here is an example of a multiple-choice problem under the new system. Note that the "Check answer" button has a problem ID in parentheses. When you go to the "hand in your work" page and refresh the display of your submissions, you will see this question listed by its ID (with a little bit added on that you don't need to worry about). The problem ID will usually begin with the name of the Daily Digital (for instance, `DD-01`) followed by a problem number which will be roughly in the sequence 1, 2, 3, ... in the same order they appear in the Daily Digital document.
+
+Exercises involving submitting from a computer-code sandbox do not have such a problem ID.
+
+```{r example}
+etude2::etudeQ(
+  prompt = "You have a choice between a correct and incorrect answer. Choose one.",
+  "+correct+",
+  "incorrect"
+)
+```
+
+Now go to the "Hand in your work" page, refresh the display, and confirm that your answer appears next to the question ID. As a reminder, your homework is due 24 hours after the next lesson.

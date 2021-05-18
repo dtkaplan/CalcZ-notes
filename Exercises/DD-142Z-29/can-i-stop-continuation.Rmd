@@ -1,0 +1,55 @@
+---
+title: "More on Can I Stop"
+author: "Daniel Kaplan"
+---
+
+THIS IS A CONTINUATION of "Can I stop" taken out of the April 2, 2021 homework but maybe worth reinstating sometime. - DTK
+
+You can calculate the exponent of the power-law from the slope of the function on log-log axes. You do have to be a little careful to use "log units" rather than the numbers shown on the axes. For instance, a change from 0.01 to 0.10 is a change of 1 log unit (in base 10). a change from 0.01 to 1.0 is a change of 2 log units. Likewise, a change from `1e-11` to `1e-6` is a change of 5 log units.
+
+In answering the next three questions, make sure that the last coefficient used in the polynomial computer's approximation to $e^x$ is 1/120.
+
+```{r cis1-3, echo=FALSE, results="markup"}
+etude2::etudeQ(
+  "What is the exponent of the power-law relationship shown in the graph when $p()$ is calculated with the first seven coefficients for $e^x$?",
+  "about 2",
+  "+about 6+",
+  "about 8",
+  "about 12",
+  random_answer_order = FALSE
+)
+```
+
+```{r cis1-4, echo=FALSE, results="markup"}
+etude2::etudeQ(
+  "Which of these is the seventh term in a Taylor polynomial? (Remember, $a_0$ is the *first term*, while $a_1 x$ is the second term.)",
+  "$a_7 x^7$",
+  "$a_6 x^7$",
+  "$a_7 x^6$",
+  "+$a_6 x^6$+"
+)
+```
+
+```{r cis1-5, echo=FALSE, results="markup"}
+etude2::etudeQ(
+  "Comparing the correct answers to the previous two questions, explain what is going on.",
+  "+The last term *included* in the approximation is $a_5 x^5$. The power-law has the same exponent as the first *excluded* term, $a_6 x^6$.+",
+  "The power-law exponent of the plotted error function looks like the last term *included* in the approximation, that is, $a_5 x^5$.",
+  "The terms *included* in the approximation, $x^0$ through $x^5$, average out to about 3. This is what sets the exponent in the power-law function."
+)
+```
+
+```{r cis1-6, echo=FALSE, results="markup"}
+etude2::etudeQ(
+  "Suppose you wanted to use the polynomial approximation to calculate $e^x$ anywhere on the interval $-1 < x < 1$. What is the smallest number of terms would you need to include so that the worst case error is no more than 0.001? (Hint: You may need to zoom in on the plotting domain close to $x=1$.",
+  "include up to $a_4 x^4$",
+  "include up to $a_4 x^5$",
+  "+include up to $a_4 x^6$+",
+  "include up to $a_4 x^7$",
+  "include up to $a_4 x^8$",
+  random_answer_order = FALSE
+)
+```
+
+In practice, there's little point trying to use comparison to the actual function to figure out how accurate a given order polynomial is. Why not? Because if we knew how to calculate the actual function, why would we be using the polynomial approximation. But knowing that the error grows (for small $x$) proportional to $a_{n+1} x^{n+1}$ (where $n+1$ is the first *excluded* term) can be useful in deciding how many coefficients are needed.
+

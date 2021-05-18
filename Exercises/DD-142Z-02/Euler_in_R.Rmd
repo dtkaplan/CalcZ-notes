@@ -1,0 +1,41 @@
+---
+title: "Euler in R"
+date: "MMM DD YYYY"
+output: learnr::tutorial
+runtime: shiny_prerendered
+---
+
+```{r include=FALSE}
+library(mosaic)
+library(mosaicCalc)
+library(etude2)
+etude2::load_learnr_safely()
+```
+
+Methods such as Euler are tedious, ideal for the computer. So let's look at some basic R functions for implementing the Euler Method when we know the function to be anti-differentiated $f(x)$, the step size $h$, and the domain $a \leq x \leq b$. At the heart of the implementation is a function `cumsum()`, the "cumulative sum." This does something very simple. The cumulative sum of 1, 2, 3, 4 is 1, 3, 6, 10.
+
+```{r accum, exercise=TRUE, exercise.cap="Implementing Euler", exercise.nlines = 5}
+f <- makeFun(sin(2*pi*x/0.3) ~ x) # the function to be anti-differentiated.
+a <- 1 # the lower bound.
+b <- 2 # the upper bound.
+h <- 0.01 # the step size
+x_discrete <- seq(a, b, by = h) # all of the discrete x values based on a, b, and h
+f_discrete <- f(x_discrete) # all of the values of f(x) when the discrete x values are used as the input
+F_discrete <- cumsum(h * f_discrete) # the discrete values of the anti-derivative, F(x)
+gf_point(F_discrete ~ x_discrete) %>%
+  slice_plot(f(x) ~ x, color = "gray", domain(x=c(a,b)))
+```
+
+
+Here is a function:
+```{r echo=TRUE}
+g <- makeFun(exp(-0.2*(x^2))~x)
+```
+
+Using the sandbox above, find and plot the anti-derivative of $g(x)$ over the domain $-6 \leq x \leq 6$.
+
+```{r g-anti}
+etude2::etudeEssay(
+  "Describe the shape of $G(x)$. Your description can be one word from 141Z, if you choose it carefully. If your graph looks like a straight line, you did not appropriately change the domain above."
+)
+```

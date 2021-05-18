@@ -1,0 +1,81 @@
+---
+title: "Stability"
+author: "Daniel Kaplan"
+---
+
+```{r include=FALSE}
+library(shiny)
+library(mosaic)
+library(mosaicCalc)
+```
+
+A tree provides a simple example of equilibrium. A living tree grows slowly, with essentially no change from day to day. The tree is usually in equilibrium with its surroundings. But there are disruptions that can place the tree out of equilibrium. The wind is a familiar disruption, changing the dynamics so that the tree no longer stands straight and still; it sways in the wind. A severe storm or a chain saw creates an opportunity for bigger disruption, removing the fixed point of upright posture and replacing it with an entirely different sort of fixed point. The steady, slow process of rot can weaken the equilibrium to the point where it no longer exists or is too weak to withstand the wind. The tree falls.
+
+Mathematics provides several concepts for thinking about equilibrium and the loss of equilibrium. The idea of a **fixed point** is at the center of things. The idea of disruption also has a mathematical equivalent called "forcing." The slow change (as in the rot of a tree) leading to a dramatic, sometimes sudden, collapse is represented by a "bifurcation." We'll explore forcing and bifurcation later, when we've developed better tools and ways of thinking to understand dynamics.
+
+Here we will examine the important topic of "stability." The word has a variety of related meanings in everyday life: a patient is stable when his or her condition is not worsening (or getting better), a chair is stable when it won't fall over, a stable personal relationship is much preferred to an unstable one, a person who is stable does not get upset or disturbed by a trivial incident.
+
+In mathematics, "stability" is a property of dynamics near a fixed point. A fixed point is stable when an initial trajectory close enough to the fixed point leads to a trajectory that continues to get closer to the fixed point. A fixed point is unstable when initial conditions close to the fixed point lead to trajectories that tend away from the fixed point. 
+
+In everyday life, we think about stability as a matter of how hard you can push something before it falls over. A coin standing on edge is not very stable in this sense, any palpable disturbance will cause it to fall over. But mathematically, stability is just about the response to infinitesimal disturbances. The coin standing on edge is mathematically stable. Large disturbances may lead to the state of a system leaving even a stable fixed point. Stability of mathematical fixed points is about *local* dynamics. The response to large disturbances is non-local or *global* dynamics, a much harder topic.
+
+The sandbox provides space to explore stability via iteration.
+
+```{r stb1-1, exercise=TRUE, exercise.cap="Stability sandbox", exercise.nlines = 6, eval=FALSE}
+g <- makeFun(5*sin(x)^2 ~ x)
+findZeros(g(x) - x ~ x)
+Iterate(g, x0 = 0.0001, n=10)
+```
+
+The dynamical system $x_{n+1} = 5 [\sin(x_n)]^2$ has five fixed points. Use iteration to determine whether each fixed point is stable or unstable.
+
+```{r stb1-2, echo=FALSE, results="markup"}
+etude2::etudeQ(
+  "Using iteration, is the fixed point at $x=0$ stable?", 
+  "Yes",
+  "No",
+  random_answer_order = FALSE,
+  right_one = "Yes"
+)
+```
+
+```{r stb1-3, echo=FALSE, results="markup"}
+etude2::etudeQ(
+  "Using iteration, is the fixed point at $x=0.2027$ stable?", 
+  "Yes",
+  "No",
+  random_answer_order = FALSE,
+  right_one = "No"
+)
+```
+
+```{r stb1-4, echo=FALSE, results="markup"}
+etude2::etudeQ(
+  "Using iteration, is the fixed point at $x=2.3802$ stable?", 
+  "Yes",
+  "No",
+  random_answer_order = FALSE,
+  right_one = "No"
+)
+```
+
+```{r stb1-5, echo=FALSE, results="markup"}
+etude2::etudeQ(
+  "Using iteration, is the fixed point at $x=4.3408$ stable?", 
+  "Yes",
+  "No",
+  random_answer_order = FALSE,
+  right_one = "No"
+)
+```
+
+```{r stb1-6, echo=FALSE, results="markup"}
+etude2::etudeQ(
+  "Using iteration, is the fixed point at $x=4.8726$ stable?", 
+  "Yes",
+  "No",
+  random_answer_order = FALSE,
+  right_one = "No"
+)
+```
+

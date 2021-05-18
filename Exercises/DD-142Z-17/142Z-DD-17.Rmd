@@ -1,0 +1,118 @@
+---
+title: "Daily Digital 17"
+subtitle: "Math 142Z"
+output: learnr::tutorial
+runtime: shiny_prerendered
+---
+
+
+```{r mother1-setup, include=FALSE}
+# Calculus/graphics/data packages
+library(mosaic)
+library(mosaicCalc)
+library(ggformula)
+library(DT)
+knitr::opts_chunk$set(echo = FALSE)
+learnr::tutorial_options(exercise.timelimit = 60, 
+                 exercise.checker = gradethis::grade_learnr)
+```
+
+
+```{r context="setup", include=FALSE}
+### Boilerplate: Packages relating to `{learnr}` and 
+### submission functionality.
+etude2::load_learnr_safely()
+library(gradethis)
+library(etude2)
+library(learnrhash)
+```
+
+
+
+```{r context="setup", include=FALSE}
+# Good practice to include these in any document bringing
+# with the answer submission system
+etude2::set_master_id("DD-17") # Add the DD number
+etude2::etude_document_name("DD-142Z-17") # Add the DD number
+# Fill this data frame in when document is completed. See etude2 documentation
+document_roster <- tibble::tribble(
+  ~ id,
+)
+```
+
+```{r eval=FALSE}
+# Leave this safety check here
+if (etude2::etude_document_name() == "DD-") 
+  stop("You must set the master_id() and the document name specifically and uniquely for this document")
+```
+
+## Objectives
+
+- Learn how to construct future states of a dynamical system in two dimensions given the dynamical rule and the two-dimensional initial condition.
+- Appreciate that *global* dynamics can be complicated, potentially with many fixed points, learn how to identify the locations of the fixed points. 
+- Understand how *local* dynamics near a fixed point are comparatively simple and can be meaningfully approximated by a  matrix.
+- Review the mechanics of matrix arithmetic and iterate a dynamical system written in terms of a matrix.
+
+## Dynamics in two dimensions
+
+```{r child="two-dimensional.Rmd"}
+```
+
+## Rabbits + Rabbits = 
+
+```{r child="Fibonacci.Rmd"}
+```
+
+## Dynamics around a fixed point
+
+```{r child="zooming-in.Rmd"}
+```
+
+## Locally linear dynamics with matrices
+
+```{r child="matrix-dynamics.Rmd"}
+```
+
+## Matrix multiplication
+
+```{r child="matrix-multiplication.Rmd"}
+```
+
+## A rabbit matrix
+
+```{r child="rabbit-matrix.Rmd"}
+```
+
+
+<!--
+## Focus on the fixed point
+
+```{fr child="recentering.Rmd"}
+```
+
+-->
+
+
+
+## Hand in your work
+
+<div style="color: red;">USAFA CalcZ students should hand in their work via GradeScope</div>
+
+<!--
+REMEMBER: Press the REFRESH button before copying the hash code and submitting it at the <a href="https://forms.microsoft.com/Pages/ResponsePage.aspx?id=Bgq4einwwEWE0X2tGc48YcCKijCKVrhDla481YPh1UJUMVdERUtVT0VOSEpMMEdPQU1aWlpYTTA0RS4u" target = "_blank">USAFA Math 142Z site</a>
+
+
+```{r echo=FALSE, messages=FALSE}
+etude2::submissions_ui()
+```
+
+```{r context="server", echo=FALSE, messages=FALSE}
+etude2::submissions_logic()
+```
+
+-->
+
+-----
+
+Location: `r gsub("^.*USAFA/", "", knitr::current_input(dir = TRUE))` `r  etude2::etude_document_name()`
+

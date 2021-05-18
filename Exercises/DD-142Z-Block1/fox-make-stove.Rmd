@@ -1,0 +1,144 @@
+---
+title: "Evaluating approximations"
+author: "Daniel Kaplan"
+---
+
+```{r include = FALSE}
+library(etude)
+
+library(mosaic)
+library(mosaicCalc)
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+
+The figure below shows a function $f(x)$, drawn as a thick, gray curve.  In addition, there is a second function overlaid in blue.
+
+Your task is to decide how good a match the blue function is to the gray one, according to several different criteria. Keep in mind, a function that is a good match according to one criterion may be a bad match in terms of another criterion.
+
+Your answers will be chosen from among:
+
+* Good.  Overall, the approximation matches to better than, say, 10%.
+* OK.  The approximation matches to about 20-30%.
+* Horrible.  It would make no sense to use such an approximation.
+
+Note that we haven't said what the 10%  or 20-30% refer to. So answers here will be "soft." Don't worry if you get it wrong so long as you understand the reasons we give in the feedback.
+
+```{r echo = FALSE}
+xpts = c(10,21,33,45,68,82,93)
+ypts = c(4,6,7,2,3.5,5.5,6.5) + 5
+f = splinefun(xpts,ypts)
+g1 = function(x){f(x) + .3*sin(2*pi*x/9)}
+newx = seq(10,93,by=10)
+set.seed(65)
+g2 = approxfun(newx,f(newx))
+g3 = splinefun( newx, f(newx)+rnorm(length(newx),mean=0,sd=.3) )
+g4 = splinefun( newx, f(newx)+rnorm(length(newx),mean=2.3,sd=.3) )
+```
+ 
+### Problem 1
+
+
+```{r echo=FALSE}
+slice_plot(f(x) ~ x, domain(x=c(0,100)), color="gray", lwd=3) %>%
+  slice_plot(g3(x) ~ x, color = "blue" ) 
+```
+
+```{r fox1-1, echo=FALSE}
+explain <- "You might be looking at the large difference between the functions for $x < 5$. That's reasonable. But focussing on the rest of the domain, the approximation is pretty good. "
+etude2::etudeQ(
+  "The function value",
+  "+Good+", "OK" = explain, "Horrible" = explain,
+  random_answer_order = FALSE
+)
+```
+
+```{r fox1-2, echo=FALSE}
+etude2::etudeQ(
+  "The function's derivative",
+  "Good" = "A reasonable answer, so long as you disregard the function over $x<20$.", "+OK+", "Horrible" = "If you focus on the region $x < 20$ this is a good answer. And no instructions were given over how much of the domain the approximation needs to be good, ok, or horrible. The answer is a judgment call and your judgment is reasonable.",
+  random_answer_order = FALSE
+)
+```
+
+```{r fox1-3, echo=FALSE}
+explain <- "Look at the region $70 < x < 100$. The sign of the 2nd-derivative of the approximation differs from that of the original function."
+etude2::etudeQ(
+  "The function's second derivative",
+  "Good"=explain, "OK"=explain, "+Horrible+",
+  random_answer_order = FALSE
+)
+```
+
+
+```{r fox1-5, echo=FALSE}
+message <- "Perhaps this is surprising. The difference between the gray function and the blue function is sometimes positive and sometimes negative. In the integral, those positive differences cancel out the negative differences."
+
+etude2::etudeQ(
+  prompt = "The function integral",
+  list("+Good+" = message, 
+       "OK" = "", 
+       "Horrible" = ""),
+  random_answer_order = FALSE
+)
+```
+
+
+
+
+
+### Problem 2
+
+
+```{r echo=FALSE}
+slice_plot(f(x) ~ x, domain(x=c(0,100)), color="gray", size=3) %>%
+  slice_plot(g1(x) ~ x, color = "blue" ) 
+```
+
+
+
+```{r fox2-1, echo=FALSE}
+etude2::etudeQ(
+  "The function value",
+  "+Good+" = "", 
+       "OK" = "", 
+       "Horrible" = "",
+  random_answer_order = FALSE
+)
+```
+
+```{r fox2-2, echo=FALSE}
+explain <- "Note that the derivative of the blue function often has a different sign than the derivative of the gray function."
+etude2::etudeQ(
+  "The function's derivative",
+  "Good" = explain, 
+       "OK" = explain,
+       "+Horrible+" = "",
+  random_answer_order = FALSE
+)
+```
+
+```{r fox2-3, echo=FALSE}
+message <- "If the derivative is a horrible approximation, the second derivative won't generally be better."
+etude2::etudeQ(
+  "The function's second derivative",
+  "Good" = message, 
+       "OK" = message, 
+       "+Horrible+" = "If the first derivative is a horrible approximation, there's no reason to think the 2nd derivative will be better.",
+  random_answer_order = FALSE
+)
+```
+
+```{r fox2-4, echo=FALSE}
+message <- "Perhaps this is surprising. The difference between the gray function and the blue function is sometimes positive and sometimes negative. In the integral, those positive differences cancel out the negative differences."
+etude2::etudeQ(
+  "The function's integral from 10 to 90",
+  "+Good+" = message, 
+       "OK" = "", 
+       "Horrible" = "",
+  random_answer_order = FALSE
+)
+```
+
+
+

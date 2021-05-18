@@ -1,0 +1,35 @@
+---
+title: "Math notation to R"
+date: "MMM DD YYYY"
+output: learnr::tutorial
+runtime: shiny_prerendered
+---
+
+```{r include=FALSE}
+etude2::load_learnr_safely()
+library(gradethis)
+library(mosaic)
+knitr::opts_chunk$set(echo = FALSE)
+learnr::tutorial_options(exercise.timelimit = 60,
+                 exercise.checker = gradethis::grade_learnr)
+```
+
+
+Consider this expression in math notation:
+
+<div style="font-size: 20px; text-align:center;">
+$$\frac{e^{k t}}{k}$$
+</div>
+
+```{r M2R-01}
+etude2::etudeQ(
+  prompt = "Which of the following R expressions implements the math-notation expression?",
+  "`k exp(kt)`" = "You must always express multiplication explicitly, using `*` between the quantities to be multiplied.",
+  "`e^k*t / k`" =  "Use `exp(x)` for $e^x$.",
+  "`exp(k t) / k`" = "`k t` should be written `k*t`",
+  "`exp(k*t) / k`",
+  "`1/k e^kt`" = "1) Use `*` for multiplication. 2) Use `exp(x)` for $e^x$.",
+  right_one = "`exp(k*t) / k`"
+)
+```
+

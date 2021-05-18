@@ -1,0 +1,46 @@
+---
+title: "Random walks"
+author: "Daniel Kaplan"
+runtime: shiny_prerendered
+---
+
+```{r include=FALSE, context="setup"}
+library(etude2)
+library(mosaic)
+library(mosaicCalc)
+library(viridis)
+```
+
+The solution to diffusion differential equation gives the concentration of the diffusing particles $C(x, t)$ at any $x$ and $t$. At any given value of $t= t_1$, the shape of $C(x,t=t_1)$ tends to a smooth bell-shaped curve: the gaussian function. The width of the gaussian is a function of $t$. Conventionally, the width corresponds to the variance parameter $\sigma^2$. This changes with $t$ in a very simple way: $$\sigma(t)^2 = D t$$
+
+Everything is smooth and nicely behaved. But this is an abstraction which summarizes the concentation of a theoretically infinite population of particles. Looking at the position of a single particle as a function of time gives a very different impression. The figure shows individually the trajectories of 50 (randomly selected) particles.
+
+```{r echo=FALSE}
+set.seed(102)
+ntrajs <- 50
+dt <- 0.05
+step_size <- 9/sqrt(40/dt) # to match time t=40 in the other graphs
+tpts <- seq(0,40, by=dt)
+colors <- hcl.colors(ntrajs)
+Trajs <- list()
+
+for (k in 1:ntrajs) {
+  Trajs[[k]] <- tibble::tibble(
+    t = tpts,
+    dx = rnorm(length(t), 0, step_size),
+    x = cumsum(dx),
+    color = colors[k]
+  )
+}
+
+gf_line(x ~ t, data = bind_rows(Trajs), 
+                     color = ~ color, alpha=0.25) %>%
+  gf_line(x ~ t, data = bind_rows(Trajs[c(1, round(ntrajs/4), round(ntrajs/2))]), color=~color) %>%
+  gf_refine(scale_color_identity())
+  
+```
+
+Do take note that the position of each particle in the pipe at time $t$ is shown on the *vertical axis*.
+
+Each of the trajectories is called a **random walk**, as if a walker were randomly taking steps forward or backward.
+

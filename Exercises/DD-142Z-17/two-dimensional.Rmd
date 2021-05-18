@@ -1,0 +1,117 @@
+---
+title: "Two-dimensional state"
+author: "Daniel Kaplan"
+runtime: shiny_prerendered
+---
+
+
+```{r include=FALSE, context="setup"}
+library(mosaic)
+library(mosaicCalc)
+library(math141Z)
+library(etude2)
+```
+
+```{r echo=FALSE}
+source("draw_flow.R", local=TRUE)
+
+```
+
+We will be using finite-difference equations mainly for modeling physical processes. It turns out that the way forward is **not** to make the function $g(x)$ more complicated in $x_{n+1} = g(x_n)$ but instead to add more state variables. In this course, we'll deal with states with two quantities, $(x, y)$, which can be called a *two-dimensional* state. The systems we will study will involve two dynamical functions, each of which takes both $x$ and $y$ as arguments. That is:
+$$x_{n+1} = f(x_n, y_n)\\
+y_{n+1} = g(x_n, y_n)$$
+
+For instance, here is one such system:
+```{r echo=FALSE, out.width="100%", message=FALSE}
+draw_flow()
+```
+The functions $f(x,y)$ and $g(x,y)$ are represented by short line segments with a tiny dot at one end. Each line segment connects $(x_n, y_n)$ to $(x_{n+1}, y_{n+1})$, with the dot at the $n+1$ end. 
+
+Consider the line segment that starts at $(0,0)$. The end of the line segment is at about $(-0.101, -0.163)$. (You can't see such precision from the graph, but the author can!) This is just to say that for the particular $f()$ and $g()$ being displayed, $$f(0, 0) = -0.101\ \ \ \mbox{and}\ \ \ g(0,0) = -0.163$$ The result of the dynamics is to take a state of $(0,0)$ a bit to the "southwest," to $(-0.101, -0.163)$. From there you can take the next step, then the one after that, and so on to approximate the trajectory. It's very much like the state was being blown around in the wind, with the line segments indicating the direction and speed of the wind at any point.
+
+```{r 2d1-1, echo=FALSE, results="markup"}
+etude2::etudeQ(
+  "Consider the line segments near $(2.5, 2.5)$. Which of these best describes the functions at that point?",
+  "$f(2.5, 2.5) \\approx 0$ and $g(2.5.,2.5) < 0$",
+  "+$f(2.5, 2.5) < 0$ and $g(2.5.,2.5) \\approx 0$+",
+  "$f(2.5, 2.5) > 0$ and $g(2.5.,2.5) < 0$",
+  "$f(2.5, 2.5) \\approx 0$ and $g(2.5.,2.5) > 0$"
+)
+```
+
+The blue and red contour lines are added to the picture to help the viewer spot fixed points. The blue contour line is the zero contour of $f(x,y) - x$. Similarly, the red contour line is the zero contour of $g(x,y) - y$.
+
+The left panel below shows the dynamics of $x$: that is $x_{n+1} = f(x_n,y_n)$. The right panel shows the $y$ dynamics: $y_{n+1} = g(x_n,y_n)$.
+
+```{r echo=FALSE, out.width="50%", fig.show="hold", message=FALSE}
+draw_flow(dy=0, center = c(-2,3), width=3, 
+          ngrid=11, dx=0.2, arrow=2) %>%
+  gf_labs(title = expression(x[n+1] == f(x[n],y[n])))  
+draw_flow(dx=0, center = c(-2,3), width=3, 
+          ngrid=11, dy=0.2, arrow=3) %>%
+  gf_labs(title = expression(y[n+1] == g(x[n],y[n]))) %>%
+  gf_refine(coord_fixed(xlim=c(-5, 1), ylim=c(-0.5, 5.5), clip="on"))
+```
+
+Note that in the x-dynamics plot, we're only seeing the change in $x$. That's why the line segments are all horizontal: they connect $x_n$ to $x_{n+1}$. The blue contour shows the points where $x_{n+1} = x_n$: The line segment is just a dot. For this particular $f(x,y)$ the segments starting at places to the right of the contour point to the left; the segments starting to the left of the contour point to the right. At the contour, the segments point neither left nor right: they are fixed points with respect to $x$. 
+
+The right panel is similar, but shows the dynamics of $y$. Since the plot shows only the change in $y$, the segments are all oriented in the $y$ direction. For this particular $g(x,y)$, segments above the contour point upward, segments below the contour point downward, and segments on the contour show no change in $y$.
+
+The original graph shows both the $x$ and $y$ dynamics simultaneously. Where the blue and red contours cross, there is a fixed point in both $x$ and $y$. You can see 3 such fixed points (with a fourth suggested near the top of the graph). 
+
+
+
+```{r echo=FALSE, out.width="75%", message=FALSE}
+draw_flow(6725) %>% gf_labs(title="(A)")
+```
+```{r 2d1-2, echo=FALSE, results="markup"}
+etude2::etudeQ(
+  "In plot (A), how many fixed points are visible?",
+  0, 1, 2, 3, 4, 5, 
+  right_one = 0,
+  random_answer_order=FALSE
+)
+```
+
+```{r echo=FALSE, out.width="75%", message=FALSE}
+draw_flow(6726) %>% gf_labs(title="(B)")
+```
+
+```{r 2d1-3, echo=FALSE, results="markup"}
+etude2::etudeQ(
+  "In plot (B), how many fixed points are visible?",
+  0, 1, 2, 3, 4, 5, 
+  right_one = 4,
+  random_answer_order=FALSE
+)
+```
+
+```{r echo=FALSE, out.width="75%", message=FALSE}
+draw_flow(6727) %>% gf_labs(title="(C)")
+```
+
+```{r 2d1-4, echo=FALSE, results="markup"}
+etude2::etudeQ(
+  "In plot (C), how many fixed points are visible?",
+  0, 1, 2, 3, 4, 5, 
+  right_one = 3,
+  random_answer_order=FALSE
+)
+```
+
+```{r echo=FALSE, out.width="75%", message=FALSE}
+draw_flow(6729) %>% gf_labs(title="(D)")
+```
+
+```{r 2d1-5, echo=FALSE, results="markup"}
+etude2::etudeQ(
+  "In plot (D), how many fixed points are visible?",
+  0, 1, 2, 3, 4, 5,
+  right_one = 3,
+  random_answer_order=FALSE
+)
+```
+
+
+
+

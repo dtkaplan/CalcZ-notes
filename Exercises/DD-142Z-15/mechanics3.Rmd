@@ -1,0 +1,87 @@
+---
+title: "Mechanics of Iteration: Trajectories 2"
+author: "Daniel Kaplan"
+---
+
+```{r include=FALSE}
+library(mosaic)
+library(mosaicCalc)
+library(math141Z)
+library(etude2)
+```
+
+```{r include=FALSE, context="setup"}
+library(mosaic)
+library(mosaicCalc)
+library(math141Z)
+```
+
+The ingredients for calculating a trajectory are:
+
+a. A function $g(S)$
+b. An initial condition ${\mathbf S}_0$.
+c. A choice of how many steps to take.
+
+<!--
+
+There are two basic styles to computing trajectories on the computer. The first is a **calculator style* series of commands. For instance, the code in the sandbox computes a trajectory of length 6 from the given $g()$ and initial condition.
+
+```{r fdec1, exercise=TRUE, exercise.cap="Calculator style", exercise.nline=10, eval=FALSE}
+g <- makeFun(5 + x/2 ~ x)
+x0 <- 7
+x1 <- g(x0)
+x2 <- g(x1)
+x3 <- g(x2)
+x4 <- g(x3)
+x5 <- g(x4)
+x6 <- g(x5)
+
+```
+
+Computer programmers learn that his is a bad style for several reasons.
+
+i. The information about all these closely related things `x0`, `x1`, `x2` and so on is spread out over a bunch of different names. Most programming language provide no easy way to handle these as a group. An example of "handling as a group" is to plot out the trajectory versus $n$.  
+ii. The statements are highly repetitive. Some people like this, because it gives them a sense of order. But programmers learn (through hard experience) that it is difficult for a human reader to confirm that every line is repeating exactly the same pattern. For instance, `x5 <- g(x3)` is a perfectly valid computer statement, but inconsistent with the dynamics that are supposed to be calculated.
+
+A more effective style of programming is illustrated in the next sandbox which uses an "iteration operator":
+
+-->
+
+To facilitate calculating a trajectory, use the `Iterate()` operator. 
+
+```{r fdec3-2, exercise=TRUE, exercise.cap="An iteration operator", exercise.nlines=8, eval=FALSE}
+g <- makeFun(5 + x/2 ~ x)
+Traj <- Iterate(g, x0 = 7, n = 6)
+Traj
+```
+
+```{r fdec3-2-solution, echo=FALSE}
+g <- makeFun(-0.8*x + 2 ~ x)
+Traj <- Iterate(g, x0=10, 50) 
+gf_point(x ~ n, data = Traj) %>%
+  gf_line(alpha=0.2)
+```
+
+The `Iterate()` operator takes as a first argument the dynamics in the form of the name of a function or a tilde-expression of the sort accepted by `makeFun()`. The next argument is the initial condition. (This argument is named `x0` regardless of the name used in the dynamics).  The third argument is the number of steps to iterate.
+
+`Iterate()` returns a data frame with two (or more) columns. The first, named `n`, is the step number. The second is given the same name as the variable used in the dynamical function. Because the output of `Iterate()` is in the form of a data frame, you can employ any function set up to accept a data frame. `gf_point()` is particularly useful for plotting the trajectory as a function of $n$.  
+
+`Iterate()` is for finite-difference equations in discrete time, so $n$ will always be an integer and the trajectory is appropriately plotted as a series of isolated points. Even so, it can be helpful to the human viewer to connect the points faintly with straight lines. This makes it a bit easier to see the sequence. For instance:
+
+```{r eval=FALSE}
+# Make the Traj then ...
+gf_point(x ~ n, data = Traj) %>%
+  gf_line(alpha=0.2)
+```
+
+```{r fdec3-3, echo=FALSE, results="markup"}
+etude2::etudeQ(
+  "Use the sandbox above to construct 50 steps of the dynamics of $g(x) \\equiv -0.8 x + 2$ starting at $x_0 = 10$. Which of these best describes the graph $x_n$ versus $n$? (Hint: It's always best to try to figure out the command on your own. If you get stuck, press the 'Solution' button in the sandbox.)",
+  "A steady exponential decay to about $x=3$.",
+  "An oscillating exponential growth.",
+  "+An oscillating exponential decay to about $x=1.1$.+",
+  "A sine wave with period $P=\\pi$."
+)
+```
+
+

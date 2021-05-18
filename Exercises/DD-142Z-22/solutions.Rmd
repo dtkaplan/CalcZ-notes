@@ -1,0 +1,104 @@
+---
+title: "Dynamical Systems: Solutions"
+author: "Daniel Kaplan"
+runtime: shiny_prerendered
+output: learnr::tutorial
+---
+
+```{r include=FALSE}
+etude2::load_learnr_safely()
+library(etude2)
+```
+
+A differential equation is a *description of how a system works*. The format for that description involves an instantaneous state, for instance $x$ or $(x,y)$, and a dynamical rule, for instance $-rx(1-x/K)$. The differential equation says "the instantaneous rate of change of the state" (e.g. $\dot{x}$) is set by this dynamical rule (e.g. $-rx(1-x/K)$).
+
+When using a differential equation for some modeling purpose, one of the most common tasks is to **find a family of solutions**. Often, all you will need is a qualitative description of the family of solutions, for instance, "oscillatory exponential decay to a fixed point," or "a saddle", etc.
+
+But it happens that sometimes you need to be very specific, for instance by giving a quantitative definition for a function $x(t)$ that satisfies the differential equation. 
+
+
+
+Given some function of time $x(t)$, how can we confirm that it is a solution? Plug it into the differential equation and see if the equality continues to hold. For instance, suppose the differential equation is $$\dot{x} = a x$$ (which is a very common form in modeling). 
+
+Your friend **Abby** offers a possible solution, the function $x(t) = t^2$.
+
+Your study group leader **Leslie** says, no, the solution is $x(t) = B\, e^{at}$
+
+Your lab partner **Skyler** says that the solution is $x(t) = A e^{\lambda t}$.
+
+And, Yael, an acquantance, offers the possible solution $x(t) = A \sin(\omega t)$
+
+How can we determine who, if anyone, is right.
+
+For each friend, use the proposed solution to calculate the left side of the differential equation $\partial_t x(t)$ and separately calculate the right side of the differential equation. In our example, $\dot{x} = a x$, the right side is $a x(t)$. Then check if the left side is actually equal to the right side. Let's try this for each of our four proposals.
+
+**Abby**: $2 t \overset{?}{=} 2 a t^2$. The equal sign has a question mark because we seek to find out if the two sides are indeed equal. Here that's not the case. So Abby is just plain wrong. What's more, Abby's $t^2$ is not a *family* of solutions: there is only one function $t^2$. If she had given $t^n$ or $a t^2$ or $a t^n$, we would at least have had a family of functions. But none of them would have been solutions to the differential equation.
+
+**Leslie**:  $a B\, e^{at} \overset{?}{=} a B\, e^{at}$. Yes, obviously. So Leslie is right! But notice that the equation will be true for *any $B$. Leslie has given us a family of solutions, not just a single solution. For instance, $2 e^{at}$ is a solution, as is $2.351 e^{a t}$, as is ....
+
+**Skyler**: $A \lambda e^{\lambda t} \overset{?}{=} a A e^{\lambda t}$. It's harder to say whether this is right. So simplify by dividing both sides by their common term $A e^{\lambda t}$ getting $\lambda \overset{?}{=} a$. This will be right or wrong depending on the value of $\lambda$. Skyler didn't say what $\lambda$ is, so we can answer, "Right, Skyler, so long as $\lambda$ in your solution is set to be the $a$ from  the differential equation." 
+
+Skyler's solution is in the form of an *ansatz*: a function involving one or more parameters that are not assigned a specific value.  But working with the ansatz might lead us to discover what those parameters must be in order to achieve a genuine solution.
+
+Yael's solution is also in the form of an *ansatz*, because we don't know what $\omega$ should be. So try it out:
+
+**Yael**: $A \omega \cos(\omega t) \overset{?}{=} A \sin(\omega t)$. Regrettably for Yael, there is no possible value for $\omega$ that can make the proposal true.
+
+The functions offered by Leslie and Skyler are both **families* of functions. Each one has a "free" parameter---$B$ for Leslie, $A$ for Skyler---that can be anything at all.
+
+Another common task when using a differential equation is to find a **particular value** for the free parameter that will cause the solution to match a specific fact. Often, such facts are given as "initial conditions." For example, $x(0) = 7$ is an initial condition.  Needing to satisfy this specific initial condition would tell Leslie that $B = 7$, and similarly for Skyler that $A = 7$. 
+
+Initial conditions can come in various forms, for example: $x(10) = 23$ or $\left.\partial_t x(t) \right|_{t=0} = 9$.
+
+### Quiz Questions
+
+```{r q5-6, echo=FALSE, results="markup"}
+etude2::etudeQ(
+"Let $\\dot{x} = g(x)$ be some differential equation. Suppose that the general solution to it is $x(t)=\\frac{1}{t+C}$. If $x(0)=2$, then what is the value of $C$ ?", 
+"2",
+"0",
+"1",
+"+$\\frac{1}{2}$+",
+"Cannot be determined",
+random_answer_order = FALSE
+)
+```
+
+The question prompt provides the solution as a family of functions $x(t) = \frac{1}{t+C}$, where $C$ is the free parameter. How did the question-writer find this? No way to know, because the writer didn't tell us what is $g(x)$, which is an essential fact to know before trying to find a solution.
+
+You can recognize from the last sentence of the prompt that the question is about an initial condition and might have been rephrased as "What needs to be the specific numerical value of the free parameter $C$ to make that particular solution match up with the initial condition $x(0) = 2$. 
+
+We know from the given family of solution functions $x(t) = \frac{1}{t+C}$ that $x(0) = 1/C$. For the given initial condition $x(0) = 2$ this will happen when $C = 1/2$.
+
+
+```{r q5-7, echo=FALSE, results="markup"}
+etude2::etudeQ(
+"Given the equation $\\dot{x} = -\\frac{1}{3}x$, which of the following functions are solutions:
+
+a. $x(t)=4e^{-t/3}$    
+b. $x(t)=e^{-t/3}+C$    
+c. $x(t)=e^{-t/3}$    
+d. $x(t)=e^{-x/3}$    
+e. None of these are solutions    
+
+",
+"a & b",
+"+a & c+",
+"b & d",
+"a & d",
+"e",
+random_answer_order = FALSE
+)
+```
+
+The short description of how to answer this is: $\dot{x} = a x$ is such a fundamental differential equation that you should memorize the solution: $x(t) = A e^{a t}$ where $A$ is a free parameter that can be anything and still satisfy the differential equation. Both (a) and (c) are of this form. (And so is (b), to be honest, but only if $C=0$.) 
+
+
+All four of (a)-(d) are equations with $x(t)$ on the left side. That's good, because a solution to a differential equation $\dot{x} = g(x)$ should always have the form $x(t)$. (You might notice that (d) does not in fact have a $t$ in the formula on the right side. Not a good sign!)
+
+Let's examine proposals (a)-(d) using the plug-in process: calculate $\dot{x}$ on the left side and $g(x)$ on the right side.
+
+a. $-\frac{1}{3} 4 e^{-t/3} \overset{?}{=} - \frac{1}{3} x(t) = -\frac{1}{3} 4 e^{-t/3}$. The two sides are obviously equal, so $4e^{-t/3}$ is a solution!
+b. $-\frac{1}{3} e^{-t/3} \overset{?}{=} - \frac{1}{3} x(t) = -\frac{1}{3} (e^{-t/3} + C)$. There are two reasonable answers: the two sides are not equal if $C$ is to be a free parameter. But if $C$ is made to be zero (as in an ansatz) the sides are equal.
+c. $-\frac{1}{3} e^{-t/3} \overset{?}{=} -\frac{1}{3} x(t) = -\frac{1}{3} e^{-t/3}$. Check.
+d. The proposal $x(t) = e^{-x/3}$ isn't really a function of $t$. This makes no sense as a solution to a differential equation.

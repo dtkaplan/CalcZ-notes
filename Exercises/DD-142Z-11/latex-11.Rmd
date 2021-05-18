@@ -1,0 +1,63 @@
+---
+title: "Latex DD 10"
+runtime: shiny_prerendered
+---
+
+```{r include=FALSE}
+library(etude2)
+```
+
+Typeset this expression in LaTeX. (Note, you don't have to calculate the integral, just typeset what's given.)
+
+To help you along, you will see the green check mark at several different times as you construct the target expression. That's just to tell you that you are on track. The check mark will disappear and reappear as you add more. It's on you to construct the entire expression. 
+
+Remember that `\cos(x y)` produces $\cos(x y)$
+
+Target expression: <div style="font-size: 25px; text-align:center;">
+$\int_0^\pi \int_1^5 y\, \cos(x y)\, dx\, dy$</div>
+
+```{r results="asis", echo=FALSE}
+etude2::latex_entry_box("latex-EYE")
+```
+
+```{r context="server"}
+id <- "latex-EYE"
+answers <- c("\\int_0^\\pi \\int_1^5 y\\, \\cos(x y)\\, dx\\, dy",
+             "\\int_0^\\pi",
+             "\\int_0^\\pi \\int_1^5",
+             "\\int_0^\\pi \\int_1^5 \\cos(x y)",
+             "\\int^\\pi_0 \\int^5_1 y\\, \\cos(x y)\\, dx\\, dy",
+             "\\int^\\pi_0",
+             "\\int^\\pi_0 \\int^5_1",
+             "\\int^\\pi_0 \\int^5_1 \\cos(x y)"
+             )
+squash_str <- "\\{|\\}| |\t|\n"
+
+# To return the state of the app
+if (!exists("apps_state")) apps_state <- reactiveValues()
+
+output[[NS(id, "rendered")]] <- renderUI({
+  withMathJax(paste0("$$", input[[NS(id, "latex")]], "$$"))
+})
+output[[NS(id, "feedback")]] <- renderUI({
+  compare <- gsub(squash_str, "", answers)
+  the_answer <- input[[NS(id, "latex")]]
+  if (is.null(the_answer)) the_answer <- "missing"
+  correct <- gsub(squash_str, "",
+           input[[NS(id, "latex")]]) %in% compare
+  if (exists("apps_state")) {
+    registration_name <- NS(id, "result")
+    apps_state[[registration_name]] <-
+      tibble::tibble(id = registration_name,
+                     question = "latex input",
+                     answer = the_answer,
+                     time = as.character(Sys.time()),
+                     correct = correct,
+                     attempts = 1,
+                     history = "")
+
+  }
+  ifelse(correct, "✓", "☞")
+})
+```
+

@@ -1,0 +1,45 @@
+```{r include=FALSE}
+library(mosaic)
+library(gganimate)
+```
+
+```{r echo=FALSE, eval=FALSE}
+x <- seq(-4, 8, length=200)
+times <- seq(0, 20, by=0.1)
+together <- list()
+for (k in 1:length(times)) {
+  tmp <- tibble::tibble(
+    x = x,
+    y = dnorm(x, 2, sqrt(times[k])),
+    t = times[k],
+    time = as.character(t)
+  )
+  together[[k]] <- tmp
+}
+together <- bind_rows(together)
+bars <- tibble::tibble(t = times, sigma=sqrt(t), time = as.character(t))
+sigma_line <- tibble::tibble(t = times,
+                             h = exp(-.5)*dnorm(0,0,sqrt(t)),
+                             time=as.character(t))
+```
+
+```{r echo=FALSE, eval=FALSE}
+Pmovie <- ggplot(together,
+                 aes(x=x, y=y, group=t, ymax=y, ymin=0)) +
+  geom_ribbon(alpha = 0.1) +
+  coord_cartesian(xlim=c(-4, 8), ylim=c(0, .2), clip="off") +
+  geom_vline(data = bars, aes(xintercept = -2*sigma + 2), color="blue", alpha = 0.3, size=2) +
+  geom_vline(data = bars, aes(xintercept = -1*sigma + 2), color="blue", alpha = 0.3, size=2) +
+  geom_vline(data = bars, aes(xintercept = 1*sigma + 2), color="blue", alpha = 0.3, size=2) +
+  geom_vline(data = bars, aes(xintercept = 2*sigma + 2), color="blue", alpha = 0.3, size=2) #+
+  #geom_hline(data = sigma_line, aes(yintercept = h), color="red",
+  #           alpha = 0.3, size=2)
+```
+
+```{r echo=FALSE, eval=FALSE}
+library(gganimate)
+Movie <- Pmovie + transition_states(time, transition_length = 3, state_length = 1)
+M <- anim_save("gaussian.gif", Movie,
+               duration=30, nframes=length(times))
+
+```

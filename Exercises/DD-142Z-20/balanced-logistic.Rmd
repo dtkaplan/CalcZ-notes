@@ -1,0 +1,100 @@
+---
+title: "Balanced sides"
+author: "Daniel Kaplan"
+runtime: shiny_prerendered
+output: learnr::tutorial
+---
+
+<style type="text/css">
+.explanation-note {
+  padding: 1em 1em 1em 4em;
+  margin-bottom: 10px;
+  border: 2px brown;
+  border-radius: 10px;
+  background: #f5f5f5 5px center/3em no-repeat;
+}
+</style>
+
+```{r include=FALSE, context="setup"}
+etude2::load_learnr_safely()
+library(etude2)
+library(mosaic)
+library(mosaicCalc)
+library(math141Z)
+```
+In this section we'll return to exploring finding a solution to a differential equation by searching for a viable ansatz. Previously, we looked at the differential equation $\dot{x} = a x$. Now we'll change the dynamical function to
+
+<span style='font-size: 36px;'><span style='color: red'>$\dot{x}$</span> $=$ <span style='color: green'>$r\, x(1-x)$</span>
+
+This is the logistic system, but we've simplified the searching a bit by making the carrying capacity $K=1$. 
+
+You're going to use a slightly different app than the one you had for $\dot{x} = a x$. Here, use
+
+<a href="https://maa-statprep.shinyapps.io/142Z-balance-logistic/" target="_blank"><img src='www/balance-logistic.png' width="50%"></a>
+
+As usual, click on the picture of the app to open it in another browser tab, then arrange this tab and that to be side by side on your screen.
+
+Since you already have experience searching for matches between the red and green functions, we'll handle this quickly.
+
+```{r blog1, echo=FALSE, results="markup"}
+etude2::etudeQ(
+  "Of the several candidates for an ansatz, only one will work. Go through them one at a time quickly. What you're looking for is a candidate for which the green function is proportional to the red function, even if they don't yet match. Which is the candidate that makes the red function proportional to the blue function?",
+  "sinusoid", "exponential", "exponentially decaying sinusoid", "+sigmoid+",
+  random_answer_order = FALSE
+)
+```
+
+
+```{r blog2, echo=FALSE, results="markup"}
+etude2::etudeQ(
+  "Even once you've found the correct answer to the previous question, it still may be the case that no settings for the parameters (center and width) will produce red and green functions that both are concave down. But there is a range of the growth-rate $r$ that will work. What is that range?",
+  "+$0 < r$+",
+  "$r < 0$",
+  "$1 < |r|$",
+  "$|r| < 1$"
+)
+```
+
+We're going to work with $r$ only in the correct range from the previous question. So pick one such $r$ and then find values for the parameters that lead to a balance between the red and green functions. (For reasons we'll explain later, success will be signalled by the message "Close enough.")
+
+```{r blog3, echo=FALSE, results="markup"}
+etude2::etudeQ(
+  "What values for `center` can provide a solution?",
+  "+any `center` will do+",
+  "`center` < 4",
+  "`center` > 4",
+  "3 < `center` < 7$"
+)
+```
+
+```{r blog4, echo=FALSE, results="markup"}
+etude2::etudeQ(
+  "Using some $r = 0.25$, find a value of `width` that gives a match between the red and green functions that is \"close enough\".  When you have done this, increase $r$ and do it again. And once more.   What is the relationship between $r$ and `width` that leads to valid solutions?",
+  "No relationship. A successful value of `width` doesn't depend on $r$.",
+  "+As $r$ gets bigger, `width` needs to get smaller.+",
+  "As $r$ gets bigger, `width` also needs to get bigger.",
+  "For the largest values of $r$ available in the app, there is no `width` that is successful."
+)
+```
+
+```{r blog5, echo=FALSE, results="markup"}
+etude2::etudeQ(
+  "Recall that in the equation $\\dot{x} = r x (1-x/K)$, the $r$ represents the growth rate when $x > 0$ but much less than the carrying capacity $K$. Which of these statements does **not** contribute to explaining the relationship between $r$ and successful `width` in the previous question?",
+  "When $r$ is bigger, growth proceeds more quickly.",
+  "A steeper sigmoid corresponds to smaller `width`.",
+  "+When $r$ is smaller, growth proceeds more quickly.+"
+)
+```
+
+<div class="explanation.note">
+**Why isn't there an *exact* line-up between the red and green functions?**
+
+There's universal agreement about what a sine or cosine or exponential or log or power-law function is. In contrast, the sigmoidal/hump functions do not have unique, agreed-upon forms that are used in all situations. Although all sigmoids are S-shaped and all humps are U-shaped, different fields prefer different exact shapes of hump functions and, consequently, the corresponding sigmoid. (Remember, the hump is the derivative of the sigmoid.)
+
+The shape we have been using in CalcZ reflects the choice made in statistics and generally in physics and engineering. It also has two parameters, `center` and `width` whose meaning is easy to understand.
+
+The differential equation $\dot{x} = r\, x (1-x/K)$ has a solution that is sigmoidal, but it is not precisely the form of sigmoid most used in statistics, physics, and engineering. That's why the red and green functions can't be made to match exactly. We could make the match exact if we provided the other form of sigmoid or if we tweaked the differential equation a bit. You wouldn't notice either of these changes, except that the red and blue curves would match precisely.
+
+Keep in mind that the differential equation $\dot{x} = r\, x (1-x/K)$ is meant to be a **model** of some situation. Using it is aligned with the calculus strategy of building models from low-order polynomial approximations. (This one is a quadratic.) Similarly, our choice of standard sigmoid is an approximation to the general idea of a sigmoid. The use of an approximation to the idea of sigmoid and an approximation to model real-world dynamics of limited growth, leads in this case to a slight mis-match between our solution and the differential equation. Think of it as round-off error. But for any precise form of the differential equation (which in the spirit of modeling would be arbitrary) there is a correspondingly precise form for the solution.
+
+</div>

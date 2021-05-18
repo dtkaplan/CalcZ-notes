@@ -1,0 +1,88 @@
+---
+title: "Chasing squirrels"
+author: "Daniel Kaplan"
+---
+
+```{r include=FALSE}
+library(etude2)
+library(mosaic)
+library(mosaicCalc)
+```
+
+A global polynomial has a nice feature: all orders of derivatives are continuous. But there is a huge disadvantage. Polynomials, like dogs chasing squirrels, always run off to infinity in the end. This off-to-infinity behavior always occurs outside the domain of the knots. Even so, it is highly relevant to what goes on inside the knots' domain, because the polynomial function "wiggles" as if to gain momentum for its infinite run. To use a metaphor, a polynomial is like a player rounding the bases in baseball. To go fast and yet to touch each base requires that the runner curve considerably outside the direct path from base to base.
+
+For this exercise, let's define a wiggle this (highly informal) way:
+
+> *A wiggle is a change in sign of the slope of the function in the interval between two adjacent knot points.* 
+
+
+Again, we'll use the "exploring interpolation" app, [here](https://maa-statprep.shinyapps.io/142Z-Interpolation/?_ga=2.39812192.233017403.1617632170-1036744100.1568230437).
+
+Turn on both the cubic-spline and the global cubic displays; you're going to be contrasting their behavior. (You don't need the linear interpolant to be displayed.)
+
+We're going to ask a series of questions about the behavior of the interpolants. Since knot points are generated at random, it might be that one particular set of knot points does not demonstrate clearly the feature that we'll as about. Therefore, in answering each question press "Start again" several times to find out whether the presence or absence of the feature is generic or due simply to the play of chance.
+
+```{r cs1-1, echo=FALSE, results="markup"}
+etude2::etudeQ(
+  "True or False: the interpolating function has at most one wiggle between adjacent knots.",
+  "polynomial: true; cubic-spline: false",
+  "+polynomial: true; cubic-spline: true+",
+  "polynomial: false; cubic-spline: true",
+  "polynomial: false; cubic-spline: false",
+  random_answer_order = FALSE
+)
+```
+
+```{r cs1-2, echo=FALSE, results="markup"}
+etude2::etudeQ(
+  "True or false: the wiggles tend to get bigger toward the edges of the set of knots. ",
+  "+polynomial: true; cubic-spline: false+",
+  "polynomial: true; cubic-spline: true",
+  "polynomial: false; cubic-spline: true",
+  "polynomial: false; cubic-spline: false",
+  random_answer_order = FALSE
+)
+```
+
+```{r cs1-3, echo=FALSE, results="markup"}
+etude2::etudeQ(
+  "Turn down the number of knots to $n=3$. True or false: the cubic spline and global polynomial functions are practically the same. ",
+  "+True+",
+  "False",
+  random_answer_order = FALSE
+)
+```
+
+```{r cs1-4, echo=FALSE, results="markup"}
+etude2::etudeQ(
+  "Turn up the number of knots to $n=10$ or higher. True or false: the cubic spline and global polynomial functions are practically the same. ",
+  "True",
+  "+False+",
+  random_answer_order = FALSE
+)
+```
+
+```{r cs1-5, echo=FALSE, results="markup"}
+etude2::etudeQ(
+  "Keeping the number of knots at $n=10$ or higher ... True or false: the wiggles of the global polynomial are smaller than the wiggles of the cubic spline. ",
+  "True",
+  "+False+",
+  random_answer_order = FALSE
+)
+```
+
+The app has a control to change the $x$-scale of the display, excluding the first or last few knots. (The interpolating function, however, uses all the knots.)
+
+```{r cs1-6, echo=FALSE, results="markup"}
+etude2::etudeQ(
+  "Keeping the number of knots at $n=10$ or higher, but excluding the first and last knot points ... True or false: the wiggles of the global polynomial are similar to or smaller than the wiggles of the cubic spline when looking at the function over the restricted domain.",
+  "True",
+  "+False+",
+  random_answer_order = FALSE
+)
+```
+
+**In case you're wondering ...** The app has a "jitter" button. This adds a small random vertical displacement to the knot points. This simulates the situation when the knot points are drawn from noisy data. A method (such as interpolation with polynomials) is called **ill-conditioned** when it tends to magnify the effect of noise. You can get an idea for this by pressing "jitter" many times and looking at the spread of the resulting interpolating functions. The higher the order of polynomial, that is, the greater the number of knot points, the worse the magnification. You can judge for yourself whether the cubic spline suffers from a similar problem.
+
+
+

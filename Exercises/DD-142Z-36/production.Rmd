@@ -1,0 +1,52 @@
+---
+title: "Factory production"
+author: "Daniel Kaplan"
+---
+
+```{r include=FALSE, contect="setup"}
+library(mosaic)
+library(mosaicCalc)
+library(etude2)
+```
+
+The graph shows a contour plot of a function $Y = f(K,L)$.  The dependent variable $Y$ is the output of a factory, and the independent variables are the amount of capital $K$ (machinery, etc.) and the amount of labor $L$ that goes into production.
+
+
+```{r cd1,echo=FALSE}
+cd <- function(K,L){
+  a = .6
+  14*(K^a)*(L^(1-a))
+}
+contour_plot(cd(K, L) ~ K + L,
+         domain(K=c(0,5),L=c(0,10)), filled=FALSE) %>%
+  gf_labs(x="Capital", 
+          y="Labor",
+          title="Production as function of Capital and Labor")
+```
+ 
+
+1. What's the value $Y$ of this function when Capital $=2$ and Labor $=6$?
+
+\item Give two different values of Capital and Labor for which the output $Y$ is 70 units.
+
+2. This isn't a linear function.  But if you focus on a small region of the Capital-Labor plane, it is approximately linear. Draw on the graph two regions where the function is approximately linear. Choose one of the regions where the function is roughly independent of Capital (and label it, clearly, "capital independent") , and the other where the function is roughly independent of Labor (to be labeled, clearly, "labor independent.").
+  
+The two independent variables, $L$ and $K$, are often determined via a *budget*.  The idea is that there is a certain amount of money to spend, and the mixture of $L$ and $K$ is selected to maximize the output $Y$.
+
+Suppose that one unit of capital costs $100, and one unit of labor costs $45, and you have been given a total budget of $500.  This ``budget constraint" imposes a relationship between labor and capital: $$500 = 100*K + 45*L$$
+
+
+3. Two lines are shown on the figure.  Only one of them matches the  relationship given in the equation.  Mark clearly (using the label "correct") which line is correct.
+
+#. Keeping in mind that the only allowed combinations of capital and labor that fit your budget lie on the line of the budget constraint, choose the best possible combination of capital and labor to maximize the production $Y$.  Mark this best-possible point with a $\star$ on the graph.  Next to the $\star$, write the (approximate) value of the output at this point.
+
+
+```{r cd2,echo=FALSE}
+contour_plot(cd(K, L) ~ K + L, domain(K=c(0,5),L=c(0,10)),
+             filled=FALSE) %>%
+  gf_labs(x="Capital", y="Labor",
+          title="Production as function of Capital and Labor") %>%
+  gf_abline(intercept=500/45, slope = -100/45, lwd=4, alpha=0.5) %>%
+  gf_abline(intercept=700/35, slope = -100/35, lwd=4, alpha=0.5) 
+```
+

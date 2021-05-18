@@ -1,0 +1,91 @@
+---
+title: "Dot accumulation"
+author: "Danny Kaplan"
+date: "Dec 27, 2020"
+---
+
+Another way to think about accumulation ...
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/ROJZ2U1u2Ug?start=18" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+```{r include=FALSE}
+library(mosaic)
+library(mosaicCalc)
+library(dplyr)
+```
+
+NOTE IN DRAFT: I'm exploring an idea for displaying the process of accumulation and its connection to integration.
+
+```{r}
+# inputs
+f <- rfun( ~ x, seed=526)
+dom <- domain(x = c(-5, 5))
+total_events <- 300
+left <- -5
+right <- 2
+fname <- "Sales per day"
+Fname <- "Stock of items"
+xname <- "Day"
+
+xmin = dom[[1]][1]
+xmax = dom[[1]][2]
+Fabs <- antiD(abs(f(x)) ~ x)
+# number of actual events, according to f(x)
+n_events <- diff(Fabs(dom[[1]]))
+
+Points <- tibble::tibble(
+  x = seq(xmin, xmax, length = 200),
+  y = f(x),
+  absy = abs(y))
+top <- max(Points$absy)
+rate_fun <- makeFun(total_events*f(x)/n_events ~ x)
+rect_area <- top * diff(dom[[1]])
+# How many random numbers to generate to get
+# a total of <total_events> (roughly)
+npts <- ceiling(total_events*rect_area/n_events)
+Points <- tibble::tibble(
+  x = seq(xmin, xmax, length = npts),
+  y = f(x),
+  absy = abs(y),
+  yval = top * runif(npts)
+) %>% 
+  filter(yval <= absy) %>%
+  mutate(val = sign(y),
+         color = ifelse(val < 0, "red", "black"),
+         shape = ifelse(val < 0, "-", "+"))
+
+F <- antiD(rate_fun(x) ~ x)
+
+xmin <- dom[[1]][1]
+xmax <- dom[[1]][2]
+
+```
+
+```{r}
+
+P1 <- slice_plot(rate_fun(x) ~ x, dom) %>%
+  gf_hline(yintercept = 0, color="blue") %>%
+  gf_labs(y = fname) %>%
+  gf_theme( axis.title.x = element_blank(), 
+            axis.text.x = element_blank()) 
+
+P2 <- gf_vline(xintercept = ~ x, data = Points, 
+                color = ~ color,
+                alpha = 0.3) %>%
+  gf_refine(scale_color_identity(),
+            scale_shape_identity(),
+            scale_y_continuous(limits = c(-1,1), 
+                               breaks=0, labels="000")) %>%
+  gf_theme( axis.title.x = element_blank(), 
+            axis.text.x = element_blank(),
+            panel.grid = element_blank()
+            ) %>%
+  gf_labs(y="Events") 
+
+
+F2 <- makeFun(F(x) - F(left) ~ x)
+P3 <- slice_plot(F2(x) ~ x, dom) %>% 
+  gf_hline(yintercept=0, color = "blue") %>%
+  gf_labs(y = Fname)
+gridExtra::grid.arrange(P3, P2, P1, nrow=3, heights=c(3, 1, 3))
+```

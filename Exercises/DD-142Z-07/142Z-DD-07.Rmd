@@ -1,0 +1,104 @@
+---
+title: "Daily Digital 07"
+subtitle: "Math 142Z"
+output: learnr::tutorial
+runtime: shiny_prerendered
+---
+
+
+```{r mother1-setup, include=FALSE}
+# Calculus/graphics/data packages
+library(mosaic)
+library(mosaicCalc)
+library(ggformula)
+library(math141Z)
+library(DT)
+knitr::opts_chunk$set(echo = FALSE)
+learnr::tutorial_options(exercise.timelimit = 60, 
+                 exercise.checker = gradethis::grade_learnr)
+```
+
+
+```{r context="setup", include=FALSE}
+### Boilerplate: Packages relating to `{learnr}` and 
+### submission functionality.
+etude2::load_learnr_safely()
+library(gradethis)
+library(etude2)
+library(learnrhash)
+```
+
+```{r context="setup", include=FALSE}
+# Good practice to include these in any document bringing
+# with the answer submission system
+etude2::set_master_id("DD-07") # Add the DD number
+etude2::etude_document_name("DD-142Z-07") # Add the DD number
+# Fill this data frame in when document is completed. See etude2 documentation
+document_roster <- tibble::tribble(
+  ~ id,
+)
+```
+
+```{r eval=FALSE}
+# Leave this safety check here
+if (etude2::etude_document_name() == "DD-") 
+  stop("You must set the master_id() and the document name specifically and uniquely for this document")
+```
+
+
+
+
+## Objectives
+
+a. Determine dimensions and units utilizing a graph 
+b. Graph the antiderivative of a function given the graph of the base function and a single point on the anti-derivative 
+c. Know common scientific application relationships between base functions and anti-derivatives 
+    i. Acceleration, Velocity, Position 
+    ii. Force, Work 
+    iii. Area, Volume 
+    iv. Probability Density, Cumulative Probability 
+
+
+
+## Wind power
+
+```{r child="wind-power.Rmd"}
+```
+
+## Heat engines
+
+```{r child="heat-engine.Rmd"}
+```
+
+## Graphing anti-derivatives
+
+```{r child="Graph-anti.Rmd"}
+```
+
+## Integral of the Day
+
+```{r child="IOD-G.Rmd"}
+```
+
+## Computing and anti-differentiation
+
+```{r child="computing-and-antiD.Rmd"}
+```
+
+## Hand in your work
+
+REMEMBER: Press the REFRESH button before copying the hash code and submitting it at the <a href="https://forms.microsoft.com/Pages/ResponsePage.aspx?id=Bgq4einwwEWE0X2tGc48YcCKijCKVrhDla481YPh1UJUMVdERUtVT0VOSEpMMEdPQU1aWlpYTTA0RS4u" target = "_blank">USAFA Math 142Z site</a>
+
+```{r echo=FALSE, messages=FALSE}
+etude2::submissions_ui()
+```
+
+```{r context="server", echo=FALSE, messages=FALSE}
+etude2::submissions_logic()
+```
+
+
+-----
+
+Location: `r gsub("^.*USAFA/", "", knitr::current_input(dir = TRUE))` `r  etude2::etude_document_name()`
+

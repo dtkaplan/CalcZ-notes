@@ -1,0 +1,178 @@
+---
+title: "Predation Numerics"
+author: "Daniel Kaplan"
+runtime: shiny_prerendered
+---
+
+```{r include=FALSE, context="setup"}
+etude2::load_learnr_safely()
+library(etude2)
+library(mosaic)
+library(mosaicCalc)
+library(math141Z)
+```
+
+We've looked at this seemingly simple model, almost a cartoon of the interaction of predators and prey, which we're calling "rabbits" ($R$) and "foxes" ($F$). 
+
+<div style="font-size: 30px; text-align:center;">
+$$\dot{R} = r R - \beta RF\\\dot{F} = - \mu F + \gamma RF$$
+</div>
+
+Your task in this section is to find *solutions* to these differential equations. Sometimes it possible to do this algebraically, as with the linear systems $\dot{x} = a x$ or $\dot{\mathbf X} = {\mathbf A} {\mathbf X}$. Here that's not so easy.
+
+But even if we can't use algebra to find the solutions, it helps to undertake as much *analysis* of the system as we can in algebraic form. For instance, by setting $\dot{R} = \dot{F} = 0$, we can find that there is a fixed point at $(R^\star=\mu/\gamma,\ F^\star = r/\beta)$.
+
+In the previous section, we linearized the dynamics around this fixed point and found algebraically that the eigenvalues are $\lambda_{1,2} = i\omega$, that is, with no real part. So we know to expect an oscillation in the population of rabbits and foxes. Since the real part of the eigenvalues is zero, the stability is "neutral," heading neither inward toward the fixed point or outward from it.
+
+To explore solutions to the predator-prey dynamics, we can use numerical methods such as Euler steps. Doing this requires starting with numerical values for 
+
+i. the initial conditions, that is $R(0)$ and $F(0)$
+ii. the parameters $r$, $\beta$, $\gamma$, $\mu$
+
+Suppose we are intending to model a situation where the equilibrium population for rabbits is $R^\star = 1000$ and for foxes is $F^\star = 100$. Using our algebraic form for the location of the fixed point, this tells allows us how some parameters are related to others.
+
+```{r pn1-1, echo=FALSE, results="markup"}
+etude2::etudeQ(
+  "Knowing that $R^\\star = \\mu/\\gamma$, what does this say about the relationship between $\\mu$ and $\\gamma$ when $R^\\star \\equiv 1000$?",
+  "+$\\mu = 1000\\, \\gamma$+",
+  "$\\gamma = 1000\\, \\mu$",
+  "$\\mu = \\gamma/1000$"
+)
+```
+
+```{r pn1-2, echo=FALSE, results="markup"}
+etude2::etudeQ(
+  "Knowing that $F^\\star = r/\\beta$, what does this say about the relationship between $r$ and $\\beta$ when $F^\\star \\equiv 10$?",
+  "+$r = 10\\, \\beta$+",
+  "$\\beta = 10\\, r$",
+  "$r = \\beta/10$"
+)
+```
+
+These two relationships tells us that if we know $\beta$ and $\gamma$, simple arithmetic tells us $r$ and $\mu$, and *vice versa*.
+
+Part of the art of modeling is selecting parameters in a way that we can make at least rough estimates of their numerical values from information that's available or can be readily collected. The two simplest parameters in this regard are $r$ and $\mu$, which govern the reproductive rate of rabbits (in the absence of foxes) and the death rate of foxes (in the absence of rabbits).
+
+This being an exercise, we do a quick search on the internet. This reveals that [rabbits have 3-4 litters per year](https://www.reconnectwithnature.org/news-events/the-buzz/cottontail-rabbits-breeding) and that the [life-span of a red fox](https://en.wikipedia.org/wiki/Red_fox) (presumably with prey available) is 2-5 years. Intuition suggests that a dramatic shortage of food would reduce lifespan to a small fraction of this. For the purpose of simplicity, we'll continue under the assumption that the doubling time of a rabbit population (absent predation) is 3 months, and the half-life of a starving fox is also 3 months. 
+
+```{r pn1-3, echo=FALSE, results="markup"}
+etude2::etudeQ(
+  "In a world without foxes and unlimited resources, the dynamics of rabbit population is $\\dot{R} = r R$. What is $r$ to produce a 3-month doubling time, assuming that $t$ is measured in months? (Hint: $R(t) = R(0) e^{rt}$.)",
+  "about 0.1 month$^{-1}$",
+  "+about 0.3 month$^{-1}$+",
+  "about 0.5 month$^{-1}$",
+  "about 0.7 month$^{-1}$",
+  random_answer_order = FALSE
+)
+```
+
+A similar method tells us the fox starvation half-life $\mu$. Knowing $r$ and $\mu$ gives us numerical values for $\gamma$ and $\beta$. For instance, $\gamma = \mu / 1000 = 0.0003$ and $\beta = r / 10 = 0.03$
+
+With tentative values for these parameters, we can find solutions to the differential equations. The following code box finds solutions and graphs them. The graphs are made with `traj_plot()`, which utilizes the output of `integrateODE()`. In `traj_plot()`, the tilde expression determines what's plotted against what. The initial conditions are set by the last two arguments. (Note: the $R$ and $F$ axes are logarithmic. So the distance between consecutive marks is a factor of $\sqrt{10}$.)
+
+```{r pn1-4, exercise=TRUE, exercise.cap="Solving the DEs", exercise.nlines=12, eval=FALSE, warning=FALSE}
+Rdot <- dR ~  0.3*R - 0.03  *R*F # rabbit dynamics
+Fdot <- dF ~ -0.3*F + 0.0003*R*F # fox dynamics
+# Integrate these numerically over a period of, say, 36 months.
+Soln <- integrateODE(Rdot, Fdot, tdur=36, R=1200, F=8)
+traj_plot(R(t) ~ F(t), Soln, nt=10) %>%
+  gf_refine(scale_y_log10(), scale_x_log10())
+traj_plot(R(t) ~ t, Soln, color="red") %>%
+  traj_plot(F(t) ~ t, Soln, color="blue") %>%
+  gf_refine(scale_y_log10()) %>%
+  gf_labs(y="R (red) and F (blue)")
+```
+
+```{r pn1-5, echo=FALSE, results="markup"}
+etude2::etudeQ(
+  "Starting at $R(0) = 1000$ and $F(0) = 10$, look at the resulting dynamics over the 36-month period. Which of these describes the solutions best? Make sure your code matches the parameters in this question.",
+  "Rabbit population oscillates, but fox population stays constant.",
+  "Foth rabbit and fox populations oscillate.",
+  "+Both rabbit and fox population stay constant.+",
+  "Fox population rises and falls, but rabbits are steady."
+)
+```
+
+```{r pn1-6, echo=FALSE, results="markup"}
+etude2::etudeQ(
+  "Change the initial conditions to $R(0) = 1000$ and $F(0) = 15$. Which of these best describes the solutions?",
+  "+The rabbit population oscillates around 1000, with a period of about 20 months.+",
+  "The rabbit population oscillates around 1000, with a period of about 10 months.",
+  "The rabbit population stays at its equilibrium value. That's where it started.",
+  "The fox population oscillates from about around 30, with a period of 20 months." 
+)
+```
+
+```{r pn1-7, echo=FALSE, results="markup"}
+etude2::etudeQ(
+  "Still sticking with $R(0) = 1000$, find an initial population for foxes that will eventually drive the *peak* rabbit population to around 3000. What is that value of $F(0)$?",
+  20, 30, 40, 50, right_one = 30,
+  random_answer_order = FALSE
+)
+```
+
+```{r pn1-8, echo=FALSE, results="markup"}
+etude2::etudeQ(
+  "Due to the use of semi-log axes in the time-series plots, you can easily look for segments of time, if any, when the rabbit population grows exponentially and falls exponentially. The same for foxes. Which of these best describes the relationship?",
+  "When foxes grow exponentially, rabbits decay exponentially.",
+  "+When foxes grow exponentially, the rabbit population does *not* show an approximately exponential pattern. It's peaking.+",
+  "There are no periods where the population of either foxes or rabbits show an approximately linear growth or decay."
+)
+```
+
+```{r pn1-9, echo=FALSE, results="markup"}
+etude2::etudeQ(
+  "True or False: The peak fox population *follows* the peak rabbit population by just a few months.",
+  "+True+",
+  "False",
+  random_answer_order = FALSE
+)
+```
+
+```{r pn1-10, echo=FALSE, results="markup"}
+etude2::etudeQ(
+  "True or False: The low point in the fox population proceeds, or *lags*, the low point in the rabbit population by a little over a year.",
+  "+True+",
+  "False",
+  random_answer_order = FALSE
+)
+```
+
+In Teletubby land, the rabbits breed all year long (and there are no foxes, at least on-camera). But much of the real world is seasonal. Just to play around with a system that reflects seasonality, the following sandbox changes the system so that the rabbits reproduce in May through August (months 5 through 8). The details of how we do this aren't important for us here, but involve the use of "remainder" division, `t %% 12`. Orange vertical lines mark successive Junes.
+
+```{r pn1-11, exercise=TRUE, exercise.cap="Solving the DEs", exercise.nlines=15, eval=FALSE, warning=FALSE}
+april_to_august <- function(t) {
+  month = t %% 12
+  month > 3 & month < 9
+}
+Rdot <- dR ~  (t%%12 > 4 & t%%12 < 9)*0.3*R - 0.03  *R*F # rabbit dynamics
+Fdot <- dF ~ -0.3*F + 0.0003*R*F # fox dynamics
+# Longer period of integration: 200 months
+Soln <- integrateODE(Rdot, Fdot, tdur=200, R=1000, F=5)
+traj_plot(R(t) ~ F(t), Soln, nt=0) 
+traj_plot(R(t) ~ t, Soln, color="red") %>%
+  gf_vline(xintercept=6 + (0:15) * 12, color="orange")
+traj_plot(F(t) ~ t, Soln, color="blue") %>%
+  gf_vline(xintercept=6 + (0:15) * 12, color="orange")
+```
+
+```{r pn1-12, echo=FALSE, results="markup"}
+etude2::etudeQ(
+  "With the seasonal rabbit breeding, which of these best describes the dynamics?",
+  "A steady yearly pattern.",
+  "+A mostly yearly pattern with some small fluctuations from one year to the next.+",
+  "Complete chaos",
+  "Exponential run-away of the rabbit population",
+  random_answer_order = FALSE
+)
+```
+
+Dynamics such as these can be extremely hard to understand. You'll see this better of you change the `0.3` in the `0.3*R` rabbit reproduction term to `0.35` or higher. 
+
+Lessons to take home from this example:
+
+- Even simple nonlinear dynamics can generate non-decaying oscillations.
+- Add just a little more complexity, and things can get really complicated.
+- It's almost impossible to make ecological models that could give good predictions. (One real-world manifestation of this is the collapse of global fisheries as the various parties argue about what "sustainable" might mean.)
+
+Linear dynamics around a fixed point is a big part of what we can understand mathematically about real-world systems.

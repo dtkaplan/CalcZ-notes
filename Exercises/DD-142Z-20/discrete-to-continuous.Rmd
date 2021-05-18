@@ -1,0 +1,39 @@
+---
+title: "Discrete-to-continuous"
+author: "Daniel Kaplan"
+---
+
+
+Up to now, our study of dynamics has involve *discrete-time* systems represented mathematically by *finite-difference equations*. Such discrete-time systems are not a part of traditional calculus. That's because the physical sciences were generally engaged with continuous motion and change. But starting about 50 years ago, as new fields and techniques emerged, an understanding of discrete-time systems became an essential component of any student's mathematical abilities. Time-series data are generally taken at discrete times  as in economics or other social sciences where monthly, quarterly or annual events are the norm. The need to work with such data becomes particularly important in modern data science, where a discrete-time sequence of events (e.g. product purchases) need to be monitored. Telecommunications, whether by telephone or radio, are now thoroughly digital and the techniques for dealing with signal are therefore discrete time.
+
+But now we're going to move into the sorts of problems of physics and engineering that originally motivated the development of calculus, and these involve movement or change continuously in time. It turns out that continuous-time dynamics are somewhat easier mathematically than discrete-time dynamics and many of the concepts you encountered---fixed points, stability, linearity near a fixed point, eigenvalues and eigenvectors---carry over with just slight changes to the continuous time environment. This will be more understandable if you think back to the definition of the derivative.
+
+Recall that we introduced the **difference operator** that takes a function as input and produces another function as output:
+
+$$\mbox{Difference}(f) \equiv \frac{x(t+h) - x(t)}{h}$$
+Then we considered a limit as $h \rightarrow 0$ to get the definition of the derivative:
+
+$$\partial_t f(t) \equiv \lim_{h\rightarrow 0} \frac{x(t+h) - x(t)}{h}$$
+Let's apply this same intellectual process to dynamics. Start with a very simple, linear, finite-difference equation with a fixed point at $x^\star =0$:
+
+$$x_{n+1} = \alpha\, x_{n}$$
+We've used $n$ as the index which we understand takes on values 0, 1, 2, ... But now let's use $t$ as the index and replace the $_{+1}$ with a number $h$ that we can make as small as we want. This is still a discrete time system, the "next event" taking place $h$ time units after the previous event. This change in notation rewrites the discrete-time dynamics as
+
+$$x_{t+h} = h\, \alpha\, x_{t}\ \ \mbox{or, better}\ \ \ x(t+h) = h\, \alpha\, x(t)$$
+Where did the $h$ in front of the $\alpha$ come from? We're looking at the motion over only a fraction $h$ of a time unit, so we had better scale down the growth factor, $\alpha$, by the same amount.
+
+
+From both sides of this equation, we'll subtract $x_(t-h)$:
+
+$$x(t) - x(t-h) = h\, \alpha\, x(t-h) - x(t-h) = h\, (\alpha - 1)\, x(t)$$
+And dividing through by $h$ we get
+
+<div style="font-size: 30px; text-align:center;">$$\underbrace{\frac{x(t+h) - x(t)}{h}}_{\approx\  \partial_t x(t)}  = (\alpha - 1)\, x(t) $$</div>
+
+The $(\alpha - 1)$ is ugly, so we'll replace it with another letter: $\lambda$. This gives the differential equation:
+
+<div style="font-size: 30px; text-align:center;">$\partial_t\, x(t) = \lambda\, x(t) \ \ \implies\ \ \ x(t) = A\, e^{\lambda t}$</div>
+
+How did we find the solution to the dynamics? We found it long ago when we looked at the derivative of the exponential function $\partial_t e^{k t}$ and found it to be $k e^{kt}$, that is, the derivative is proportional to itself.
+
+This derivative-is-proportional-to-itself function, $x(t) = A\, e^{kt}$ will become our go-to answer when we encounter a linear differential equation. The word for this sort of jack-of-all-trades answer is *ansatz*, and we'll be using *ansätze* extensively in the next few lessons.

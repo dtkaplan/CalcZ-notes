@@ -1,0 +1,112 @@
+---
+title: "Following along (part 2)"
+author: "Daniel Kaplan"
+---
+
+```{r include=FALSE}
+library(etude2)
+library(mosaic)
+library(mosaicCalc)
+```
+
+Recall an earlier exercise involving you and your cousin driving a rental car with "car following." The system we imagined as implementing the technology was $$\partial_t\, x = - b\, x$$ with $b > 0$. This is a negative feedback system, creating a stable fixed point at $x = 0$. (We defined $x$ as the difference between the cars actual distance $\xi$ from the car in front and the desired distance $D$. That is $x \equiv \xi - D$.)
+
+Ingenious as this may seem, it won't actually work. The problem is that we haven't modeled the system completely. We don't just get to set the velocity to some value, we set the force (engine torque), the force determines the acceleration, and the acceleration changes the velocity. That is, the state of the system is not just $x$, it is $x$ and velocity $v$. Taking this into account, we have to rethink the control system. It might look like this:
+
+$$\left(\begin{array}{c}\dot{v}\\\dot{x}\end{array}\right) = 
+\left[\begin{array}{cr}0 & b\\1 & 0\end{array}\right]
+\left(\begin{array}{c}v\\x\end{array}\right)$$
+
+```{r following2-0, echo=FALSE, results="markup"}
+etude2::etudeQ(
+  "What's another word for $\\dot{v}$?",
+  "+acceleration+",
+  "velocity",
+  "distance"
+)
+```
+  
+  
+```{r following2-1, echo=FALSE, results="markup"}
+etude2::etudeQ(
+  "According to the $(v, x)^T$ system, and keeping in mind that $b > 0$, which of these best describes the top component of the system, that is, $\\dot{v} = b\\, x$?",
+  "+When $x$ is negative (that is, we're too close to the car ahead), the system sets a negative acceleration which decreases the velocity.+",
+  "When $x$ is negative, the system sets a negative velocity.",
+  "When $x$ is negative, the system sets a positive velocity."
+)
+```
+
+```{r following2-2, echo=FALSE, results="markup"}
+etude2::etudeQ(
+  "According to the $(v, x)^T$ system, which of these best decribes the bottom component of the system, that is $\\dot{x} = v$?",
+  "+Velocity is the derivative with respect to time of distance.+",
+  "Acceleration is proportional to distance.",
+  "Acceleration is proportional to velocity" = "Acceleration would be $\\ddot{x}$. This equation has $\\dot{x}$."
+)
+```
+
+Note: Recall that the eigenvalues of the matrix $\left[\begin{array}{cr}a & b\\1 & 0\end{array}\right]$ are $$\lambda_{1,2} = \frac{a}{2} \pm \frac{\sqrt{a^2 + 4b\strut}}{2}$$
+
+
+```{r following2-3, echo=FALSE, results = "markup"}
+etude2::etudeQ(
+  "What are the eigenvalues of the matrix $\\left[\\begin{array}{cr}0 & b\\\\1 & 0\\end{array}\\right] \\mbox{?}$", 
+  "+$\\pm \\sqrt{b\\strut}$+",
+  "$\\pm b$",
+  "$(1, b)$",
+  "$(1, \\sqrt{b\\strut})$"
+)
+```
+
+```{r following2-4, echo=FALSE, results="markup"}
+etude2::etudeQ(
+  "Interpreting the eigenvalues in the context of the dynamical system, which of these best describes the system?",
+  "+The fixed point is unstable.+" = "Right. If even one eigenvalue is positive, the system is unstable.",
+  "The fixed point is stable." = "But one of the eigenvalues is positive.",
+  "The system goes round and round." = "This requires complex eigenvalues. But $\\sqrt{b}$ is real, since $b > 0$."
+)
+```
+
+```{r following2-5, echo=FALSE, results="markup"}
+etude2::etudeQ(
+  "One of your colleagues suggests that the system can be made stable by letting $b$ be negative. Will this work?", 
+  "Yes, because positive $b$ didn't work, so turn things around.",
+  "+No, because negative $b$ will make the system go round and round.+",
+  "No, nothing will work!" = "Well ... something will work, it's just not going to be about $b$.",
+  random_answer_order = FALSE
+)
+```
+
+Since we want to produce a stable system, let's rethink the dynamics and replace the upper-left 0 in the matrix with a non-zero number $a$, giving $\left[\begin{array}{cr}a & b\\1 & 0\end{array}\right]$
+
+
+```{r following2-6, echo=FALSE, results="markup"}
+etude2::etudeQ(
+  "Keeping $b$ positive, which if any of these conditions on $a$ will stabilize the system.",
+  "$a < 0$" = "Look at the $\\sqrt{a^2 + 4b}$ part of the eigenvalues.",
+  "$a >  4b$" = "Sorry, there will still be at least one positive eigenvalue.",
+  "+None of them.+" = "Right, for $b > 0$ one of the eigenvalues will always be positive.",
+  random_answer_order = FALSE
+)
+```
+
+```{r following2-7, echo=FALSE, results="markup"}
+etude2::etudeQ(
+  "Will letting $b = 0$ stabilize the system for some choice of $a$?",
+  "Yes, for $a > 0$" = "One of the eigenvalues will be positive. That's hardly stable!",
+  "No, unless $a <0$" = "Even so, one of the eigenvalues will be zero.",
+  "+Sort of.+" = "When the larger eigenvalue is zero, the system can at best be called \"neutrally stable\", that is, a disturbance knocking the system off the fixed point will not lead to the system returning to the fixed point.",
+  random_answer_order = FALSE
+)
+```
+
+```{r following2-8, echo=FALSE, results="markup"}
+etude2::etudeQ(
+  "We'll need both $a$ and $b$ less than zero to get a stable system. But we'd like to arrange things so the system doesn't oscillate around the fixed point. How to do that?",
+  "+Set $a$ such that $a^2 + 4b$ is positive.+",
+  "Set $a$ such that $a^2 + 4b$ is negative.",
+  "Can't be done!",
+  random_answer_order = FALSE
+)
+```
+

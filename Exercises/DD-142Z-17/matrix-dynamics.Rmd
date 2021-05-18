@@ -1,0 +1,58 @@
+---
+title: "Linear dynamics near a fixed point"
+author: "Daniel Kaplan"
+---
+
+```{r include=FALSE}
+library(etude2)
+library(mosaic)
+library(mosaicCalc)
+library(math141Z)
+```
+
+Consider a tuning fork as an example of a dynamical system. Ordinarily it's in equilibrium: silent. But after you tap it, it rings, the ringing dying out over time. The design and use of a turning fork is all about the transient vibrations as the fork returns to equilibrium, its fixed point. 
+
+We are going to focus on a small but important part of dynamics: the behavior **near** a fixed point. Up until now, we've considered only stability or instability. But now we want to know a bit more, about the behavior of the transient approaching **near** a stable fixed point or the escape from **near** an unstable one.
+
+We're going to use an approach that's familiar in calculus: zoom in on the region very close to fixed points.
+
+"Very close" can mean different things to different people. In calculus, *very close* is often taken to mean, "so close that the system is well approximated as a linear system." That is, instead of looking at general, nonlinear functions of the dynamics, we're going to look only at dynamics involving linear functions. The system we are going to study will be this one:
+$$\xi_{n+1} = \mu + \alpha\, \xi_n + \beta\, \eta_n\\
+\eta_{n+1} = \nu + \gamma\, \xi_n + \delta\, \eta_n$$
+
+Where $\alpha, \beta, \gamma, \delta, \nu, \mu$ are all constant scalars, and $\xi$ ("ex-eee", Greek for x) and $\eta$ ("ay-tah", Greek for $y$). 
+
+There is a lot of Greek in the above equation, but don't let it worry you. That's because we're going to simplify things even more.
+
+Since we're interested in behavior **near** a fixed point $(\xi^\star, \eta^\star)$, we'll define new state variables that are centered on the fixed point:
+$$x = \xi - \xi^\star\\
+y = \eta - \eta^\star$$
+In terms of $x$ and $y$, the fixed point is at $(0,0)$.
+
+The dynamics **near** this stable fixed point now become:
+$$x_{n+1} = a x_n + b y_n\\
+y_{n+1} = c x_n + d y_n$$
+
+We don't need terms like $\mu$ and $\nu$ in the $(\xi, \eta)$ system, because when $(x_n = 0, y_n=0)$ both $x_{n+1}$ and $y_{n+1}$ will be zero: a fixed point at $(0,0)$! 
+
+
+It's just the four parameters $a, b, c$, and $d$ that shape the dynamics. It can be handy to adopt a vector/matrix notation to highlight the role of the four parameters without distracting from all the $x_n$ and $y_n$ notation. Do do this, we'll put $x_n$ and $y_n$ into a single vector, which we'll call ${\mathbf X}_n$. (Note the boldface **x** to signify that it is a vector, rather than a scalar wich is written unbolded, $x$.)
+$$
+\left[ \begin{array}{c}x_{n+1}\\y_{n+1}\end{array} \right] \equiv\ \ \ \ {\mathbf X}_{n+1} = 
+\left[ \begin{array}{cc}a & b\\c & d\end{array} \right] 
+{\mathbf X}_n \ \ \ \ \equiv 
+\left[ \begin{array}{c}a x_{n} + by_n\\c x_n + d y_{n}\end{array} \right]
+$$
+It's important to remember that writing the dynamics as 
+$${\mathbf X}_{n+1} = 
+\left[ \begin{array}{cc}a & b\\c & d\end{array} \right] 
+{\mathbf X}_n$$ 
+doesn't change anything about the dynamics, it's just a more compact notation. 
+
+We could simplify even more by giving a name to the [abcd] matrix, like this:
+$${\mathbf X}_{n+1} = {\mathbf A}\cdot {\mathbf X}_n$$
+But we'll be wanting to look at the role played by each of the four parameters $a, b, c$, and $d$, so we'll continue to write out the matrix components. 
+
+
+The price we pay for limiting ourselves to linear dynamics is that we can't necessarily describe the global behavior of dynamics, just the behavior in a small locale. It turns out in science and engineering that this is often all that we need. (We'll look at some dynamical models that rely on nonlinearity in future days.)
+

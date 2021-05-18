@@ -1,0 +1,98 @@
+---
+title: "Daily Digital 03"
+subtitle: "Math 142Z"
+date: "Due 15 Jan 2021"
+output: learnr::tutorial
+runtime: shiny_prerendered
+tutorial:
+  version: 0.1
+tags:
+- vectors
+---
+
+
+```{r mother1-setup, include=FALSE}
+# Calculus/graphics/data packages
+library(mosaic)
+library(mosaicCalc)
+library(ggformula)
+library(math141Z)
+library(DT)
+knitr::opts_chunk$set(echo = FALSE)
+learnr::tutorial_options(exercise.timelimit = 60, 
+                 exercise.checker = gradethis::grade_learnr)
+```
+
+
+```{r context="setup", include=FALSE}
+### Boilerplate: Packages relating to `{learnr}` and 
+### submission functionality.
+etude2::load_learnr_safely()
+library(gradethis)
+library(etude2)
+library(learnrhash)
+```
+
+
+
+```{r context="setup", include=FALSE}
+# Good practice to include these in any document bringing
+# with the answer submission system
+etude2::set_master_id("DD03") # Add the DD number
+etude2::etude_document_name("DD-142Z-03") # Add the DD number
+# Fill this data frame in when document is completed. See etude2 documentation
+document_roster <- tibble::tribble(
+  ~ id,
+)
+# Leave this safety check here
+if (etude2::etude_document_name() == "DD-") 
+  stop("You must set the master_id() and the document name specifically and uniquely for this document")
+library(mosaic)
+library(mosaicCalc)
+```
+
+
+## Objectives
+
+a. Understand the notation of limits of integration within a definite integral 
+b. Determine units of a definite integral (MMAC pg. 614) 
+c. Use the algebraic properties of definite integrals (MMAC pg. 615-616) to calculate definite integrals 
+d. Calculate definite integrals graphically 
+
+## Accumulating change
+
+```{r child="sailing-over-time.Rmd"}
+```
+
+
+## Power and energy
+
+```{r child="solar-example.Rmd"}
+```
+
+
+
+## Algebraic Integral of the Day
+
+```{r child="IOD-C.Rmd"}
+
+```
+
+## Careful with units!
+
+```{r child="falcon-tell-mug.Rmd"}
+```
+
+## Hand in your work
+
+REMEMBER: Press the REFRESH button before copying the hash code and submitting it at the <a href="https://forms.microsoft.com/Pages/ResponsePage.aspx?id=Bgq4einwwEWE0X2tGc48YcCKijCKVrhDla481YPh1UJUMVdERUtVT0VOSEpMMEdPQU1aWlpYTTA0RS4u" target = "_blank">USAFA Math 142Z site</a>
+
+```{r child=system.file("submission-handler.Rmd", package="etude2")}
+
+```
+
+
+-----
+
+Location: `r gsub("^.*USAFA/", "", knitr::current_input(dir = TRUE))` `r  etude2::etude_document_name("142Z-DD-03.Rmd")`
+

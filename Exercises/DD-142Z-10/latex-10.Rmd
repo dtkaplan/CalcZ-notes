@@ -1,0 +1,55 @@
+---
+title: "Latex DD 10"
+runtime: shiny_prerendered
+---
+
+```{r include=FALSE}
+library(etude2)
+```
+
+We're changing the LaTeX composition problem, starting with this Daily Digital, so that we tell you the output of your markup should look like. That way, you can see exactly what your LaTeX markup should produce.
+
+Our objective in having you use LaTeX is two-fold. First, we want to provide you the means to communicate mathematics effectively. Second, and more important, we want to train your eye to look for nuance and detail. The ability to distinguish seemingly small differences (say, between `[` and `(`, and `{`) is critical to being able to master the syntax of computing languages.
+
+Take care to read the target expression carefully.  Your output should aim to be identical. This includes the order of terms and parameters. If something is shown as a fraction (e.g. $\frac{x}{y}$, make sure to use the appropriate LaTeX structure `\frac{x}{y}` and not just something similar like x/y.) And recall that something like $\cos(\theta)$ would be typeset as `\cos(\theta)`. The backslash `\` in `\cos` causes $\cos$ to be typeset *without* italics, which is the convention in mathematics. Omitting the backslash and using just `cos` will produce $cos$, which is typographically undesired.
+
+Target expression: <div style="font-size: 40px; text-align:center;">
+$- \frac{A}{B} \cos(B x + C) + D t$</div>
+
+```{r results="asis", echo=FALSE}
+etude2::latex_entry_box("latex-EYE")
+```
+
+```{r context="server"}
+id <- "latex-EYE"
+answers <- c("- \\frac{A}{B} \\cos(B x + C) + D t")
+squash_str <- "\\{|\\}| |\t|\n"
+
+# To return the state of the app
+if (!exists("apps_state")) apps_state <- reactiveValues()
+
+output[[NS(id, "rendered")]] <- renderUI({
+  withMathJax(paste0("$$", input[[NS(id, "latex")]], "$$"))
+})
+output[[NS(id, "feedback")]] <- renderUI({
+  compare <- gsub(squash_str, "", answers)
+  the_answer <- input[[NS(id, "latex")]]
+  if (is.null(the_answer)) the_answer <- "missing"
+  correct <- gsub(squash_str, "",
+           input[[NS(id, "latex")]]) %in% compare
+  if (exists("apps_state")) {
+    registration_name <- NS(id, "result")
+    apps_state[[registration_name]] <-
+      tibble::tibble(id = registration_name,
+                     question = "latex input",
+                     answer = the_answer,
+                     time = as.character(Sys.time()),
+                     correct = correct,
+                     attempts = 1,
+                     history = "")
+
+  }
+  ifelse(correct, "✓", "☞")
+})
+```
+

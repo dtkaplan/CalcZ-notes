@@ -1,0 +1,131 @@
+---
+title: "Multiple constraints"
+author: "Daniel Kaplan"
+---
+
+```{r include=FALSE, context="setup"}
+library(etude2)
+library(mosaic)
+library(mosaicCalc)
+```
+
+Economists are familiar with the concept of a [production function](https://en.wikipedia.org/wiki/Production_function). This relates the amount of various inputs used in production to the amount of the product. There are all sorts of inputs: materials of different sorts, labor, specialized machinery, and so on. We'll look at just two types of inputs: labor and capital. As an example, consider clothing manufacture. A factory could get by with simple needles and a lot of labor, or (as is more typical) with sewing machines and less labor. Which mix is best depends on the relative costs of labor and equipment.
+
+There's a standard model production function that's based on a simple but meaningful observation: if both labor and capital are, say, doubled, the output should double as well. Just this principle leads to a formulation of the production function $P(L, K)$ as a power-law function: $$P(L, K) \equiv b L^{a} K^{1-a}$$ This is called the [Cobb-Douglas production function](https://en.wikipedia.org/wiki/Cobb%E2%80%93Douglas_production_function) and, whether realistic or not, will illustrate the principles at work.
+
+```{r mc2-1, exercise=TRUE, exercise.cap="Cobb-Douglas Production Function", exercise.nlines=8}
+P <- makeFun(b*L^a*K^(1-a) ~ K + L, a = 0.33, b=100)
+budget_constraint <- makeFun(K + L ~ K + L)
+g_union <- makeFun(L ~ K + L)
+g_invest <- makeFun(K/L ~ K + L)
+contour_plot(P(K, L) ~ K + L, domain(K=c(0.01,1), L=c(0.01,1))) %>%
+  contour_plot(budget_constraint(K, L) ~ K + L, 
+               filled=FALSE, contour_color = "red", 
+               contours_at = c(1, 1.01)) %>%
+  # TAKE OUT THE FOLLOWING LINES BEFORE DEPLOYING
+  ## TAKE OUT
+  ### TAKE OUT
+  contour_plot(g_union(K, L) >= 0.5 ~ K + L, contour_at = 0.5,
+              contour_color = "blue", n_fill=3, 
+               fill_alpha = 0.25)  %>%
+  contour_plot(K/L > 2 ~ K + L, contour_at = 0.5,
+               contour_color = "green", n_fill=3,
+               fill_alpha = 0.25)
+```
+
+In the graph we've scaled L and K to have units of $1M and $1M is "all the money that's available." You can see that production output increases with both L and K, reaching 100 widgets in the upper right corner of the graph.
+
+What's the optimal mix of labor and capital? As stated so far, we're in a "more is better" situation. What creates the possibility for a finite argmax is a constraint: you can only spend the money that's available. For instance, we could spend the budget only on labor or, alternatively, only on capital. The production output will be zero however. Better to spend on a mix of labor and capital.
+
+The constraint here is of a very common sort: a budget constraint. We have one unit of money to spend; we could spend 30% on labor and 70% on capital, or any other mixture. The budget function has a very simple form: $g_{budget}(K, L) \equiv K + L$, the sum of the two expenditures. Our budget of one unit of money implies the constraint $g_{budget}(K, L) = 1$. You can draw this on the graph by adding a contour plot of $g_{budget}$, drawing the contour at level 1 (we'll .
+
+Add the constraint contour to the graph made by the sandbox by uncommenting the appropriate lines in the sandbox.
+
+```{r mc1-1, echo=FALSE, results="markup"}
+etude2::etudeQ(
+  "Given the budget constraint, what's the largest level of production that's possible? (Choose the closest answer.)",
+  "About 48 widgets",
+  "+About 53 widgets+",
+  "About 61 widgets",
+  "About 67 widgets",
+  random_answer_order = TRUE
+)
+```
+
+```{r mc1-2, echo=FALSE, results="markup"}
+etude2::etudeQ(
+  "Reading from the graph, where's the argmax of the production function subject to the constraint?",
+  "+About $K=0.66, L=0.34$+",
+  "About $K=0.34, L=0.66$",
+  "About $K=0.5, L=0.4$",
+  "About $K=0.4, L=0.6$",
+  random_answer_order = FALSE
+)
+```
+
+The problem as stated involves just one constraint: $g_{budget}(K, L) = 1\$$M. 
+
+Now we'll imagine a situation where more constraints might come into play.
+
+    * **Scenario 1)** In negotiating with the worker's union, the company has promised to spend at least $500,000 on labor next year.
+
+    The constraint function here is $g_{union}(K, L) = L$ and you need to operate such that $g_{union}(K, L) >= $ $500,000.
+
+    * **Scenario 2)** The US Department of Commerce has an "Re-invest in American Manufacturing" program. This provides an incentive of $50,000 so long as you use capital intensively, say at a level of at least 2 parts capital to one part labor.
+
+    The constraint function here is $g_{invest}(K, L) = K/L$ and, to qualify for the $50,000 incentive, you need to operate such that $g_{invest} \geq 3$.
+    
+Both of these are **inequality** constraints.  In contrast, the budget constraint is an **equality** contraint: It's only satisfied when you are in a lower-dimensional part (the red budget line) of the K-L space. Inequality constraints can be satisfied at a continuum of points.
+
+Plotting the inequality constraints uses some special features of `contour_plot()`, so we'll show you how to do it. For $g_{union}()$, use the following in the sandbox
+
+```r
+# Pipe the previous graphics into
+contour_plot(g_union(K, L) >= 0.5 ~ K + L, contour_at = 0.5,
+               contour_color = "blue", n_fill=3, 
+               fill_alpha = 0.25) 
+```
+
+When you plot $g_{union}(K, L) > 0.4$ you will see a blue line at the frontier where the constraint is just barely satisfied. The **dark** region is where the constraint is **not** satisfied.
+
+The **feasible set** is the points in $(K, L)$-space which is simultaneously in a region that satisfies $g_{union}(K, L) > 0.5$ as well as the budget constraint. So, along the red budget constraint but only that part in the **light** region that satisfied $g_{union}(K,L) > 0.5$.
+
+The **constrained argmax** is the point in the feasible set that maximizes the production output. The **constrained max** the the value of the production function at the constrained argmax.
+
+```{r mc1-3, echo=FALSE, results="markup"}
+etude2::etudeQ(
+  "What is the constrainted max that satisfies the budget constraint as well as $g_{union}(K, L) > 0.5?",
+  "46",
+  "+50+" = "Right. At the intersection of the red and blue contours.",
+  "53",
+  "56" = "Constraints *never* point to a higher output than without the constraint.",
+  random_answer_order = FALSE
+)
+```
+
+Notice that the $g_{union}(K, L) > 0.5$ constraint prevents being able to operate at the point we reached with just the budget constraint. The cost of the union constraint to the company is 3 widgets.
+
+Now comment out the union constraint and let's look at the investment incentive constraint. For $g_{invest}()$, use
+
+```r
+# Pipe the previous graphics into
+contour_plot(K/L > 2 ~ K + L, contour_at = 0.5,
+             contour_color = "green", n_fill=3, 
+             fill_alpha = 0.25)
+```
+
+You'll see that the feasible set is below the green contour, in the lower right part of the (K, L)-space. The cost of satisfying the investment constraint is practically zero: If the factory operates at the intersection of the red and green the output will still be 53 widgets.  This is an example of a constraint that doesn't change behavior. So far as this company is concerned, the Treasury Department is just giving away the incentive with no actual benefit.
+
+```{r mc1-4, echo=FALSE, results="markup"}
+etude2::etudeQ(
+  "Is there any place where all three constraints---budget, union, investment---are all satisfied?", 
+  "Yes",
+  "+No+",
+  random_answer_order = FALSE
+)
+```
+
+
+
+
+

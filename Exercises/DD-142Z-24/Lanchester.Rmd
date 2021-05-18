@@ -1,0 +1,116 @@
+---
+title: "Lanchester's Laws"
+author: "Daniel Kaplan"
+---
+
+```{r include=FALSE}
+library(etude2)
+library(mosaic)
+library(mosaicCalc)
+library(math141Z)
+```
+
+Differential equations provide a medium for expressing engineering and physics ideas, as well as ideas in many other fields. Frederick William Lanchester (1868-1946) was a British engineer, considered one of the greats of British automotive engineering. But that hardly does justice to him.
+
+While voyaging across the Atlantic to America, he became captivated by the gliding flight of herring gulls. This led to his development of his circulation theory of flight, a foundation of aerofoil theory. In 1906 he published *Aerial Flight* containing the first full theory of lift and drag. In *Aerodonetics* (1908) he developed his phugoid theory of aircraft stability, describing oscillations and stalls.
+
+In 1914, Lanchester wrote a book-length series of journal articles that were published in 1916 as *Aircraft in Warfare: the Dawn of the Fourth Arm*. Imagine trying to theorize about a form of conflict that had never been seen!
+The difficulty ... is that in order to get the future into true perspective, it is necessary to be able to look forward along two parallel lines of development---i.e. to visualize the improvement of aircraft possible in the near future as a matter of engineering development, and simultaneously to form a live conception of what this improvement and evolution will open up in the potentialities of the machine as an instrument of war. (p.3)
+
+As a small part of his theorizing, Lanchester introduced a simple mathematical theory of combat now known as Lanchester's Laws. He imagined two opposing forces, Red and Blue, of size $R$ and $B$ and fighting effectiveness $r$ and $b$ respectively. (Both $r$ and $b$ are positive numbers. Indeed, neither $R$ nor $B$ can ever become negative.) The rules of attrition are that losses to Blue are proportional to the size of Red, and vice versa.
+
+<div style="font-size: 30px; text-align:center;">
+$$\dot{B} = - r R\\
+\dot{R} = - b B$$
+</div>
+
+This dynamical system has a fixed point at (0, 0): no forces, no fighting.
+
+The eigenvalues of the system are $\lambda_{1,2} = \pm \sqrt{rb}$
+
+```{r lanch-1, echo=FALSE, results="markup"}
+etude2::etudeQ(
+  "Which of the three flows below corresponds to Lanchester's Law?",
+  "+A+", "B", "C",
+  random_answer_order = FALSE
+)
+```
+
+```{r echo=FALSE, out.width="50%", fig.show="keep"}
+math141Z::streamlines(list(~ 0.001*R -2*B, ~ .001*B-R), 
+                      domain(R=c(-1,5), B=c(-1, 5)), nsteps=15, stepsize=0.01) %>%
+  gf_refine(coord_fixed(x=c(-1,5), y=c(-1,5), clip="on")) %>%
+  gf_labs(title="(A)")
+
+math141Z::streamlines(list(~ 0.001*R +B/2, ~ .001*B-R), 
+                      domain(R=c(-1,5), B=c(-1, 5)), nsteps=15, stepsize=0.01) %>%
+  gf_refine(coord_fixed(x=c(-1,5), y=c(-1,5), clip="on")) %>%
+  gf_labs(title="(B)")
+
+math141Z::streamlines(list(~ 0.001*R +B/2, ~ .001*B+R), 
+                      domain(R=c(-1,5), B=c(-1, 5)), nsteps=15, stepsize=0.01) %>%
+  gf_refine(coord_fixed(x=c(-1,5), y=c(-1,5), clip="on")) %>%
+  gf_labs(title="(C)")
+
+```
+
+```{r lanch-2, echo=FALSE, results="markup"}
+etude2::etudeQ(
+  "Which of these sentences best describes the dynamics of Lanchester's Law?",
+  "Both forces battle to complete annihilation.",
+  "+The stronger force wipes out the weaker force.+",
+  "The weaker force holds off the stronger force."
+)
+```
+
+Lanchester's Law has a surprising consequence for measuring the overall strength of a force in a way that combines size ($R$ and $B$) and effectiveness ($r$ and $b$) and the implications that has for tactics.
+
+The motivating idea is to find some quantity based on $R$, $B$, $r$, and $b$ that **does not change in time**, even as $R$ and $B$ change. This is called a *conserved quantity*. Here's one candidate
+
+$$rR^2 - b B^2 \overset{?}{=} \mbox{constant}$$
+How can you see that this is conserved? Differentiate it with respect to time. If that derivative is zero, then the quantity doesn't change in time. We'll do this in two parts:
+
+```{r lanch3, echo=FALSE, results="markup"}
+etude2::etudeQ(
+  "Calculate $\\partial_t r R^2$. Which of these is right? (Hint: Use the chain rule of differentiation and Lanchester's equations to simplify more.)",
+  "+$-2 rb RB$+",
+  "$2rR$",
+  "$-2r\\dot{R}$",
+  "$2r\\dot{R} B$ "
+)
+```
+
+```{r lanch4, echo=FALSE, results="markup"}
+etude2::etudeQ(
+  "Perform the similar calculation  $\\partial_t b B^2$. Is it the case that $\\partial_t r R^2 = \\partial_t b B^2$?",
+  "+Yes+",
+  "No",
+  "Depends on $b$ and $r$.",
+  "Depends on $B$ and $R$.",
+  random_answer_order=FALSE
+)
+```
+
+Here are two more candidates for conserved quantities:
+
+a. $rR - bB$
+b. $rB - bR$
+
+Take the derivative with respect to time of each of them to determine if they are conserved.
+
+```{r lanch5, echo=FALSE, results="markup"}
+etude2::etudeQ(
+  "Which of (a) and (b) are conserved?",
+  "Just (a).",
+  "Just (b).",
+  "Both (a) and (b).",
+  "+Neither (a) nor (b).+",
+  random_answer_order = FALSE
+)
+```
+
+The conservation of $rR^2 - b B^2$ suggests that we measure a force's strength as effectiveness $\times$ size$^2$. As battle proceeds, the strength of each force goes down at the same rate until the battle is over. 
+
+One implication of this is that a single force of size 2 is twice as strong as two separate forces each of size 1.  Don't split your own forces. Stay in formation! Seek to split your opponent's forces.
+
+

@@ -1,0 +1,50 @@
+---
+title: "Guerilla fighting"
+author: "Daniel Kaplan"
+runtime: shiny_prerendered
+---
+
+A mathematical model of guerilla warfare involves the number of combatants on each side: $x$ and $y$.  The number is reduced over time by self-attrition: sickness, accidents, and desertion.  It's also reduced when combatants from the two sides meet and fight.
+$$\begin{eqnarray*}
+\frac{dx}{dt} & = & a x + b x y\\
+\frac{dy}{dt} & = & c y + d x y\\
+\end{eqnarray*}$$
+
+The coefficients $a$, $b$, $c$, and $d$ take on numerical values that reflect the rate of self-attrition and the combat effectiveness of the two sides. The units of $x$ and $y$ are "people."  The unit of $t$ is   "months."
+
+1. Circle the terms in the model that reflect the interaction
+  between combatants on the two sides.
+
+#. What are the units of coefficient $a$?
+
+#. What are the units of coefficient $b$?
+
+#. What should be the sign of coefficients $a$ and $c$? {negative}{positive,negative,zero}
+
+#. What should be the sign of coefficients $b$ and $d$? {negative}{positive,negative,zero}
+
+#. The two graphs show different situations. Mark them with the appropriate letter.
+    a. The two sides are evenly matched in terms of ability rates and self-attrition rates.
+    b. The two sides are not evenly matched in terms of rates.
+
+
+```{r scen1,echo = FALSE,out.width="50%", fig.show="hold"}
+DOM <- domain(x=c(5,110), y=c(5,110))
+math141Z::streamlines( 
+  list(~ -0.15*x - 0.1*x*y,
+      ~ -0.1*y - 0.3*x*y),
+  DOM,
+  stepsize=0.001)
+
+math141Z::streamlines(
+  list( ~ -0.1*x - 0.1*x*y,
+        ~ -0.1*y - 0.1*x*y),
+  DOM,
+  stepsize=0.001)
+
+```
+
+
+
+#. For the unevenly matched scenario that's graphed, which side is superior?
+

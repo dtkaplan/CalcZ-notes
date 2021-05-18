@@ -1,0 +1,42 @@
+---
+title: "Mechanics of Iteration: Trajectories"
+author: "Daniel Kaplan"
+---
+
+```{r include=FALSE}
+library(mosaic)
+library(mosaicCalc)
+library(math141Z)
+library(etude2)
+```
+
+A **trajectory** is a sequence of successive states. For example, here is a trajectory of six successive states: $$\{ {\mathbf S_0}, {\mathbf S_1},  {\mathbf S_2}, {\mathbf S_3}, {\mathbf S_4}, {\mathbf S_5}\}$$
+
+It's conventional to call ${\mathbf S}_0$ the "initial state" or, more often, the **initial condition**.
+
+Usually, we calculate a trajectory one step at a time:
+$$\left\{ {\mathbf S_0},\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \\ {\mathbf S_1}=g({\mathbf S_0}),\\ {\mathbf S_2} = g({\mathbf S_1}),\\ {\mathbf S_3} = g({\mathbf S_2}),\\ {\mathbf S_4} = g({\mathbf S_3}),\\ \ \ \ \ \ {\mathbf S_5} = g({\mathbf S_4}))\ \ \ \right\}$$
+NOTE: We've written the above on several lines just to make it more readable. It could just as well have been written on one line.
+
+
+```{r fdem2-1, echo=FALSE, results="markup"}
+etude2::etudeQ(
+  "Given the system ${\\mathbf S}_{n+1} = g( {\\mathbf S}_n)$ with $g(S) \\equiv 5 + S/2$, which of these is a trajectory of the system?",
+  "+{16, 13, 11.5, 10.75, 10.375, 10.1875, 10.09375}+",
+  "{16, 8, 4, 2, 1}",
+  "{5, 7.5, 10, 12.5, 15}",
+  "{0, 5, 10, 15, 20, 25}"
+)
+``` 
+
+```{r fdem2-2, echo=FALSE, results="markup"}
+etude2::etudeQ(
+  "Given the system ${\\mathbf S}_{n+1} = g( {\\mathbf S}_n)$ with $g(S) \\equiv 5 + S/2$, which of these is **NOT** a trajectory of the system?",
+  paste0("{",paste(Iterate(makeFun(5 + s/2 ~ s), x=0, 5)$s, collapse=", "),"}"),
+  paste0("{",paste(Iterate(makeFun(5 + s/2 ~ s), x=1, 3)$s, collapse=", "),"}"),
+  paste0("{",paste(Iterate(makeFun(5 + s/2 ~ s), x=-4, 4)$s, collapse=", "),"}"),
+  paste0("{",paste(Iterate(makeFun(5 + s/2 ~ s), x=10, 5)$s, collapse=", "),"}"),
+  "+{4, 7, 10, 13}+"
+)
+```  
+

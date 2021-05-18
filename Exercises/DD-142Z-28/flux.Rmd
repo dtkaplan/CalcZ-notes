@@ -1,0 +1,122 @@
+---
+title: "Flux"
+author: "Daniel Kaplan"
+runtime: shiny_prerendered
+---
+
+```{r include=FALSE, context="setup"}
+library(etude2)
+library(mosaic)
+library(mosaicCalc)
+library(viridis)
+```
+
+Recall Newton's Law of Cooling, $\dot{T} = - k (T - T_a)$ Although temperature was hardly understood as a physical phenomenon in Newton's era, with today's sensibility you can understand that energy is flowing into or out of the object from the ambient environment. The word *flux* is often used in mathematics to refer to such flows.
+
+We've studied cooling in a spatially discrete context, the cooling of a single point (e.g. "a cup of coffee") in an environment that has only one property, the "ambient" temperature. 
+
+Let's switch to a spatially *continuous* context, a bar of iron with one end lying in a bed of hot coals and the other end in the open air, as in the picture:
+
+```{r echo=FALSE, out.width="50%", fig.align="center"}
+knitr::include_graphics("www/hot-iron.png")
+```
+
+[*Source*](https://www.brilliantdiy.com/tabletop-charcoal-forge/)
+
+The iron rod is incandescent at the right end and cooler toward the left. If the picture were a movie, you likely would be able to predict what the action will be:  Heat will flow down the rod from right to left. The free end of the rod will eventually get burning hot. 
+
+The temperature $T$ at each point $x$ in the rod is a function of position. But at any given position, the temperature is a function of time $t$. That is, the temperature of the rod is a function of two variables: $T(x,t)$.
+
+If we were thinking about the movie frame-by-frame, we might prefer to treat $t$ as a discrete variable and could write $T(x,t)$ as $T_t(x)$. It doesn't really matter which, but it helps to think about $T()$ as a function of $x$ whose shape evolving in time.
+
+Now back to Newton's Law of Cooling. The flux of heat is the difference between the object's temperature and the ambient temperature. But in the continuous spatial system, the *difference* in temperature between two infinitely close neighboring points is zero. That suggests no flux. Of course, a major theme in Calculus is to provide means to discuss the *rate of difference* of a value at two infinitely close points: the derivative $\partial_x T(x, t)$. This derivative gives the flux of heat from right to left. 
+
+```{r echo=FALSE, message=FALSE}
+n <- 100
+Pts <- tibble::tibble(
+  x = seq(0, 50, length=n),
+  x2 = x+50/n,
+  y = 200,
+  hot = viridis::magma(n, dir=1)
+)
+gf_segment(100 + 1250 ~ 0 + 50) %>%
+  gf_text(250 ~ c(35, 40, 45), label=c("C", "B", "A")) %>%
+  gf_labs(x="Position in rod x (cm)",
+         y="Temperature of rod (deg C)",
+         title="T(x, t=100s)") %>%
+  gf_segment(y +y ~ x + x2, color = ~ hot, data = Pts, size=5, inherit=FALSE) %>%
+  gf_refine(scale_color_identity())
+```
+
+
+
+It might be tempting to translate this directly into the terms of Newton's Law of Cooling and claim, **wrongly** that $\partial_t T(x, t) = -k \partial_x T(x, t)$. Why is this wrong? In the spatially discrete setting---cup of coffee, ambient environment---there are only two spatial points of interest. But along the continuous iron rod, there are at least **three** points to be considered. Let's call them $x_A$, $x_B$, and $x_C$ as in the diagram. We're interested in $\partial_t T(x_B, t)$. This change in temperature at point B is driven by the flux from point C to point B and is proportional to $\partial_x T(x_B, t)$. But the change in temperature at point B is equally influenced by the flux from B to A. That is, the change in temperature at point B is set by the *difference in flux*, the flux coming from A to B and the flux going from B to C. 
+
+In the spatially continuous context, the *net flux* or *difference in differences* (A to B, B to C) is represented by the **second derivative** with respect to $x$. That is, along the rod, Newton's Law of Cooling amounts to $$\partial_t T(x, t) = k\, \partial_{xx} T(x, t)$$ This is called the **heat equation** and was introduced in 1807 by Jean-Baptiste Joseph Fourier (1786-1830). The same equation is now also called the **diffusion equation**.
+
+Some people might be more comfortable thinking about the discrete-time dynamics of the movie, which could be written
+$$T_{t+h}(x) \approx T_t(x) + h\,k\, \partial_{xx} T_t(x)$$
+
+Exercise: Turn away from the iron rod of the picture and imagine being presented with four new rods each of which has been heated in some way to produce a temperature profile at time 0, that is $T_0(x)$ as shown in the four graphs below.
+
+```{r echo=FALSE, out.width="50%", fig.show="keep"}
+slice_plot(70 + 100* cos(x) ~ x, domain(x=c(-1,1))) %>%
+  gf_labs(x="Position x", y = "Temperature", title = "(A)") %>%
+  gf_point(170 ~ 0, size=3)
+slice_plot(70 + 100* (2-cos(x)) ~ x, domain(x=c(-1,1))) %>%
+  gf_labs(x="Position x", y = "Temperature", title = "(B)") %>%
+  gf_point(170 ~ 0, size=3)
+
+slice_plot(70 + 50*(x+1) ~ x, domain(x=c(-1,1))) %>%
+  gf_labs(x="Position x", y = "Temperature", title = "(C)") %>%
+  gf_point(120 ~ 0, size=3)
+slice_plot(100 ~ x, domain(x=c(-1,1))) %>%
+  gf_labs(x="Position x", y = "Temperature", title = "(D)") %>%
+  gf_lims(y=c(50,125))%>%
+  gf_point(100 ~ 0, size=3)
+```
+
+```{r flux1-1, echo=FALSE, results="markup"}
+etude2::etudeQ(
+  "For the function $T(x, t=0)$ shown in Graph (A), how will the temperature at $x=0$ change instantaneously? (That is, what is $\\partial_t T(x, t=0)$?)",
+  "+Temperature decreases+",
+  "No change in temperature",
+  "Temperature increases",
+  "Temperature oscillates" = "The temperature can't oscillate *instantaneously*. The value of a derivative function at a point is a real number, not an oscillation." ,
+  random_answer_order = FALSE
+)
+```
+
+```{r flux1-2, echo=FALSE, results="markup"}
+etude2::etudeQ(
+  "For the function $T(x, t=0)$ shown in Graph (B), how will the temperature at $x=0$ change instantaneously? (That is, what is $\\partial_t T(x, t=0)$?)",
+  "Temperature decreases",
+  "No change in temperature",
+  "+Temperature increases+",
+  "Temperature oscillates" = "The temperature can't oscillate *instantaneously*. The value of a derivative function at a point is a real number, not an oscillation." ,
+  random_answer_order = FALSE
+)
+```
+
+```{r flux1-3, echo=FALSE, results="markup"}
+etude2::etudeQ(
+  "For the function $T(x, t=0)$ shown in Graph (C), how will the temperature at $x=0$ change instantaneously? (That is, what is $\\partial_t T(x, t=0)$?)",
+  "Temperature decreases",
+  "+No change in temperature+",
+  "Temperature increases",
+  "Temperature oscillates" = "The temperature can't oscillate *instantaneously*. The value of a derivative function at a point is a real number, not an oscillation." ,
+  random_answer_order = FALSE
+)
+```
+
+```{r flux1-4, echo=FALSE, results="markup"}
+etude2::etudeQ(
+  "For the function $T(x, t=0)$ shown in Graph (D), how will the temperature at $x=0$ change instantaneously? (That is, what is $\\partial_t T(x, t=0)$?)",
+  "Temperature decreases",
+  "+No change in temperature+",
+  "Temperature increases",
+  "Temperature oscillates" = "The temperature can't oscillate *instantaneously*. The value of a derivative function at a point is a real number, not an oscillation." ,
+  random_answer_order = FALSE
+)
+```
+

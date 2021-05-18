@@ -1,0 +1,127 @@
+# Notation for functions
+
+## Mathematical formulas
+
+::: {.objectives data-latex=""}
+```{r echo=FALSE, results="asis"}
+state_objective("F-30", "Identify the structure of function notation when the function is defined by a formula.")
+```
+:::
+
+
+Consider the function $$g(x) \equiv m x + b$$ You already know:
+
+i. $g()$ is the **function name** assigned by the modeler who created this function. 
+ii. $(x)$ indicates that there is one input to $g()$ and that we are going to call this input "$x$". That is, the ***input name*** is $x$.
+    a. The parentheses are simply punctuation.
+    b. If we wanted a function with two inputs, we would need two different names inside the parentheses and would separate them with a comma: e.g. $h(x, y) = a_0 + a_x x + a_y y$.
+iii. $m x + b$ is a ***formula*** in traditional mathematical notation. So is $a_0 + a_x x + a_y y$. 
+    a. Note that there is no equal sign in a formula; a formula is **not** an equation!
+    b. The formulas we've seen so far can be evaluated with arithmetic. But often a formula will involve the invocation of another function. For example: $\sqrt{\strut m x + b}$ or $\sin(m x) + \ln(b)$.
+    
+    
+It's helpful to generalize the idea of a formula a bit. An ***algorithm*** is a set of instructions for performing a computation. High-school math typically involves presenting algorithms as formula. You learned, maybe in middle school, how to follow the arithmetic steps involved in algorithms described as formulas. You also have likely used a calculator to perform some of the arithmetic or to evaluate functions such as $\sin()$ and $\ln()$ and $\sqrt{\strut}$ for which you don't know how to evaluate using simple arithmetic. The calculator is implementing an algorithm with which its been programmed to enable the calculation of $\sin()$ and $\ln()$ and such.
+
+Many functions are described by algorithms that use concepts common in computer programming but unknown to traditional mathematical notation. Some of these have names like ***iteration*** or ***branching*** and many refer to stored lists of fixed numbers (like the office workers in the street, building, floor, corridor, door image of a function). We'll deal with some of these things later, but for now ...
+
+> We are going to use the word ***algorithm*** to name the kind of expression to the right of $\equiv$ in a function definition. A ***formula*** is a specific kind of algorithm generally written in traditional math notation.
+
+Algorithms, including the ones that are formulas, are written in terms of a set of ***symbols*** that stand for inputs. This is a high-fallutin' way of saying something simple: in $mx + b$, the $x$, $m$, and $b$ are the names we give to the quantities being used in the calculation.
+
+The notation we are using for function definition lists some of these names in two places, and others in only one place. Again, look at $$g(x) \equiv m x + b$$
+The $x$ appears both in the algorithm and the list of input name $(x)$ to the left of $\equiv$.
+
+The $m$ and $b$ are different; they appear **only** in the algorithm. The word for such quantities in mathematics is ***parameter***. Eventually, when the algorithm is followed, we're going to have to put in specific numerical values in place of each parameter. 
+
+**Where will these parameter values come from?** This is a subject on which mathematical notation is silent. You have to figure it out from context and experience. This is potentially very confusing, especially when a human is not around to sort things out.
+
+## Computer notation
+
+The notation used in computer programming lets us be explicit about which symbols refer to function inputs and which to parameters of the function. 
+Depending on the computer language things can be handled in one way or another. For experienced computer programmers: This is the issue of ***scope*** and can be complex in its own right. 
+
+In the software used in CalcZ (R, with the `mosaic` package of extensions), we will take a simple-to-use approach. It works like this: 
+
+> All modeling functions we construct with R/`mosaic` will list parameters formally as ***arguments*** to the function.
+
+It is as if we wrote in traditional notation $$g(x, m, b) \equiv m x + b$$
+
+There is also a way to give default numerical values to parameters so that you can write $g(3.5)$ and the computer will know where to find the parameter values. In writing about formulas using math notation, we'll extend the traditional notation to write, for instance, $g(x, m=2, b=3) \equiv m x + b$.
+
+In R/`mosaic`, we would construct a mathematical function like $g()$ using the `makeFun()` function:
+
+```r
+g <- makeFun(m*x + b ~ x, m=2, b=3)
+```
+
+You could also write 
+
+```r
+g <- makeFun(m*x + b ~ x)
+```
+but this notation means that you will have to give specific numerical values for the `m` and `b` inputs whenever you evaluate `g()`. There won't be any default values for the "parameters-as-inputs" `m` and `b`.
+
+<!-- Relevant Blog post: CalculusBlog/post-formal-arguments.Rmd -->
+
+
+::: {.objectives data-latex=""}
+```{r echo=FALSE, results="asis"}
+state_objective("F-31-R", "Identify and create R versions of mathematical functions using `makeFun()` and tilde expressions.")
+
+
+```
+:::
+
+::: {.objectives data-latex=""}
+```{r echo=FALSE, results="asis"}
+state_objective("F-33", "Master the conventions used in CalcZ for giving names to functions and for referring to functions with \"pronouns.\"")
+```
+:::
+
+We're going to be using a lot of functions in CalcZ. Some of these functions have ***proper names***, usually written using short sequences of letters: for instance $\sin()$, $\ln()$, $\exp()$. 
+
+Other functions will needed just for a sentence or a paragraph or a section, perhaps being used in an example or to lay out the steps of an algorithm. In ***natural languages*** such as English, we often use ***pronouns*** for such purposes: she, he, it, they, we, I, .... We also will use pronouns for identifying functions. Our policy is this:
+
+> A pronoun for a function will be named $f()$ or $g()$ or $h()$ or the corresponding upper-case letters $F()$, $G()$, or $H()$. **The particular choice of letter f, g, or h has no significance whatsoever.** It is just a way to give an unambiguous handle for a function that we are going to be using for a little while. 
+
+On occasion, we will use subscripts or superscripts on these pronoun letters, for instance $f_1()$ or $g^\star()$. This is a way to give us many more possible pronouns when we need them. Perhaps this is analogous to words like "sister," "parent," "husband," "cousin," etc. that allow us to refer, without a proper name, to a specific person.
+
+On other occasions, where a function relates to a specific quantity such as position or velocity, we will use the names $x()$, $y()$, $z()$, $u()$, $v()$, $w()$, and such. These letters are, of course, the same ones we frequently use to name the inputs to functions. How do you know whether the letter is meant to refer to an input rather than a function? That's the point of the parentheses: $x()$ is a function name, $x$ is an input name. 
+
+It can become tedious to give a name to every function, even if it's not being used again. Consider this sentence as an example: 
+
+> "The functions $g(x) \equiv \sqrt{\strut x}$ and $h(x) \equiv x^3$ are examples of power-law functions." 
+
+Long and awkward. So we'll feel free to write instead, 
+
+> "$\sqrt{\strut x}$ and $x^3$ are examples of power-law functions."
+
+Without the formality provided by "$g(x) \equiv$" it can be hard to know whether $\sqrt{\strut x}$ means "the square-root function" or "take the square root of a specific number $x$. The convention we will use is based on the name used in the expression. When standard argument names from the end of the alphabet are being used without any subscript (e.g. $x_0$) or with a special symbol as a subscript (e.g. $t^\star$), we intend the expression to be a function. However, when we want to apply a function to specific values for inputs we will write in any of the following styles:
+
+$$f(x^\star) \ \ \mbox{or}\ \ \sqrt{\strut x^\star}\ \ \mbox{or}\ \ \sqrt{\strut x=3}\ \ \mbox{or}\ \ \left.\sqrt{\strut x}\right|_{x=3}\ \ \mbox{or}\ \ \left.g(x)\strut \right|_{x=3}$$
+
+One of the important techniques of calculus is to take something we often think of as a number and turn it in to a function whose output is a number. It will take you time to get used to the calculus notation and to be able to tell at a glance whether something is a function or a number.
+
+Here's an illustration that will only make sense to those who have already studied some calculus:
+
+$$\int\! f(x) dx \ \ \text{is a function, but}\ \ \int_0^3\! f(x) dx\ \ \text{is a number.}$$
+
+Give yourself a break as you're learning the notation conventions. When you read a mathematical expression, a good first question to ask is, "What kind of thing is this? A function? A number?"
+
+
+We need such care about notation because, in addition to writing math in traditional mathematics notation (e.g. $e^x$ (which, as the above indicates, is a function) or $\ln(y^\star)$ (which is a number)), we need to be able to convey mathematical ideas to computers. Traditional mathematics notation was developed in the pre-keyboard era (that is, pre-typewriter era) and before the development of computer languages brought to the fore the effectiveness of structuring computing instructions as functions. For reference, here are some R expressions:
+
+1. `f <- makeFun(x^2 ~ x)` defines a function `f()` that the computer can use. It means the same thing to the computer as $f(x) \equiv x^2$ means to the human reader. A ***tilde expression*** such as `x^2 ~ x` is a way of making clear that a symbol (`x` here) stands for the input to a function.
+2. `x_pts^2` means to square the particular values stored under the name `x_pts`. To be sure, it's also perfectly valid computer syntax to write `x^2`, since `x` is just as good a name for a computer object as `x_pts`. But we will avoid such use of names like `x`. 
+3. For people who are already familiar with R, note that the style `f <- function(x) { x^2 }` is the universally accepted way to write R functions. `{ x^2 }` is the ***body of the function***. (In CalcZ we use `makeFun()` as a kind of shorthand. `makeFun()` is provided by the `{mosaic}` package. 
+
+
+
+
+
+
+A graphic such as a contour plot or a mathematical graph can be an excellent way of presenting a function to a human viewer. There are other ways of presenting functions that have other advantages, such as speed of evaluation, computer readability, and the ability to perform computations that ***derive a new function from the original***. If you have studied calculus before, you know the word "derivative," which is all about a particular kind of new function created from an original. We'll get to this in good time along with other ways of "deriving" new functions from old.
+
+```{exercise, fnotation}
+```
+`r knitr::knit_child(exercise_file("02", "function-notation.Rmd"))`

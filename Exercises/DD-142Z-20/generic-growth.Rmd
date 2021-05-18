@@ -1,0 +1,183 @@
+---
+title: "Generic behavior"
+author: "Daniel Kaplan"
+runtime: shiny_prerendered
+---
+
+<style type="text/css">
+.explanation-note {
+  padding: 1em 1em 1em 4em;
+  margin-bottom: 10px;
+  border: 2px brown;
+  border-radius: 10px;
+  background: #f5f5f5 5px center/3em no-repeat;
+}
+</style>
+
+```{r include=FALSE, context="setup"}
+etude2::load_learnr_safely()
+library(etude2)
+library(mosaic)
+library(mosaicCalc)
+library(math141Z)
+piecewise_fun <- function(x, r=1, K=100) {
+  ifelse(x < K/2, 1.4*r*x/2, 1.4*r*K/4 - 1.4*r*(x-K/2)/2)
+}
+piecewise_fun <- function(x, r=1, K=100, center=K/2) {
+  peak <- 1.4*r*center/2
+  ifelse(x < center, 1.4*r*x/2, peak - peak*(x-center)/(K-center))
+}
+```
+
+From the early days of CalcZ, we've emphasized the use of approximations. There's a temptation to contrast "approximation" with "true." That can be strongly misleading. For example, almost always a beautiful analytic form for a model is selected because it makes working with the model more tractable using the techniques at hand. For almost all the 350 years since calculus was introduced, the most powerful techniques involved algebra, so models were built using functions for which algebra could be used to calculate integrals, find zeros, etc. But the reality behind the model, the reality that the model attempts to capture in some way, often is not expected to match the functions for which algebra is a viable technique.
+
+To illustrate, consider the logistic model of limited growth. This is almost always presented as a quadratic dynamical function:
+$$\underbrace{\dot{x}}_\mbox{rate of change} = \underbrace{r x (1-x/K)}_\mbox{dynamical function} \equiv \underbrace{g(x)}_\mbox{giving the function a name}$$
+where $r$ is a growth rate and $K$, the carrying capacity, is the largest sustainable level of the quantity $x$. (We've assigned the name $g()$ to the dynamical function)
+
+You should be able easily to see that the dynamical function has fixed points at $x=0$ and at $x=K$. We assess the stability of each of those fixed points by looking at the derivative with respect to $x$ of the dynamical function at the fixed point.
+
+$$\partial_x g(x) = r\,(1 - 2 x /K)$$
+When $x=0$, $\partial_x\,g(x) = r$, so for small $x$ the model produces exponential growth $e^{rt}$.
+
+When $x=K$, $\partial_x\,g(x) = -r$, giving exponential decay $e^{-rt}$.
+
+Let's put that in context to see if it really makes sense. For example, exponential growth is often an appropriate model for bacterial or fungal growth, e.g. *E. coli* growing in a bio-reactor that has just been innoculated. Presumably, the exponential growth rate depends on the uptake of nutrients through the cell membrane, the time taken for molecular processes such as DNA replication, the time needed to organize a cell division, and the growth of the daughter cells until they can build up enough internal substance to divide again. 
+
+Near the carrying capacity, things are different. A build-up of waste products might interfere with nutrient uptake or transport of waste to the outside of the cell membrane. There might arise some predator or phage that kills or injures cells. 
+
+There's no particular reason to suppose that the rate of population growth and population decay should be the same at small $x$ as at the carrying capacity $K$. Yet the quadratic dynamical function used in logistic growth mandates that those two rates be exactly the same. 
+
+We use the dynamic function $r\, x (1-x/K)$ because we like to use low-order polynomials as modeling functions. But we could use something else. For example, the `piecewise_fun()` is a roughly similar shape:
+
+```{r}
+slice_plot(2 * x * (1 - x/100) ~ x, domain(x=c(-10,110))) %>%
+  slice_plot(piecewise_fun(x, r=2, K=100) ~ x, color="red")
+```
+
+<div class="explanation-note">
+**Code-reading questions**
+
+You're at the point in CalcZ where you should be able to make sense of most of the code we're using. So, some basic questions (which have little to do with dynamics).
+
+```{r gg-code1, echo=FALSE, results="markup"}
+etude2::etudeQ(
+"What is the `%>%` doing at the end of the first line in the graphics-making command?",
+  "It's punctuation to help the human reader distinguish between the two lines.",
+  "+It connects the graphics produced by the first `slice_plot()` application and two the second, so that the new (red) curve will be added on top of the old.+",
+  "It signals the computer to display the graphic.", 
+  "It identifies the command as one of the functions we use in CalcZ, something like 'branding.'"
+)
+```
+
+```{r gg-code1b, echo=FALSE, results="markup"}
+etude2::etudeQ(
+"Why is the `%>%` at the end of the first line rather than at the beginning of the second?",
+  "No good reason. You could do it either way.",
+  "+Without the `%>%, the computer wouldn't know to look to the next line of code to include in the overall chain of commands.+",
+  "That's a mistake. `%>%` should always be at the start of a command." = "Actually, `%>%` should **never** be at the start of a command."
+)
+```
+
+```{r gg-code1c, echo=FALSE, results="markup"}
+etude2::etudeQ(
+  "What is the `%>%` operator called?",
+  "+a pipe+" = "Although any of these names might do, it's important to use the right name so that you can communicate effectively with other people.",
+  "forwards",
+  "advances",
+  "a connection"
+)
+```
+
+```{r gg-code2, echo=FALSE, results="markup"}
+etude2::etudeQ(
+"What is an expression like `2*x*(1-x/100)` called?",
+  "+A tilde expression+",
+  "A wiggle expression",
+  "An argument",
+  "Applying a function to an argument"
+)
+```
+
+
+
+```{r gg-code3, echo=FALSE, results="markup"}
+etude2::etudeQ(
+"Which of the two function graphs is drawn in red?",
+  "The quadratic growth function",
+  "+The piecewise growth function+",
+  "Not enough information is given in the code to be sure." = "Successful code always has enough information to specify exactly what is to be done."
+)
+```
+
+```{r gg-code3b, echo=FALSE, results="markup"}
+etude2::etudeQ(
+  'How come `"red"` is in quotes?',
+  "+Without quotes, the interpreter would look for an R object named `red`+",
+  "Because the color isn't pure red.",
+  "The computer will use red if it is available in the graphics subsystem. If not, it will use dashes."
+)
+```
+
+```{r gg-code4, echo=FALSE, results="markup"}
+etude2::etudeQ(
+  "What would happen if the `%>%` were removed from the code? (Hint: Try it!)",
+  "An error message would be thrown.",
+  "Only the black curve would be drawn.",
+  "+The black and red curve would be drawn in separate graphics frames.+"
+)
+```
+
+```{r gg-code5, echo=FALSE, results="markup"}
+etude2::etudeQ(
+"Why is there a `domain()` argument given in the first line but not the second?",
+  "+Because of the pipe, the domain is inherited by the second part of the pipeline.+",
+  "The author was careless.",
+  "The piecewise function doesn't require a domain, because its derivative is not continuous." = "The derivative is not continuous, but that has nothing to do with the domain. To make a graph of a function, you always need to specify a domain or inherit it from a previous step in the pipeline."
+)
+```
+
+*Now back to questions that are about dynamics.
+</div>
+
+The sandbox below gives the commands for solving the two dynamics problems---the one where the quadratic is the dynamical function and the one where the piecewise linear function gives the dynamics, and plotting  one on top of the other.
+
+
+```{r gg1, exercise=TRUE, exercise.cap="Quadratic vs piecewise linear dynamics", exercise.nlines=8, eval=FALSE}
+
+soln  <- integrateODE(dx ~ r * x*(1-x/K),
+                      r = 2, K=100, x = 10, tdur = 10)
+soln2 <- integrateODE(dx ~ piecewise_fun(x, r, K),
+                      r = 2, K = 100, x = 10, tdur = 10)
+slice_plot(soln$x(t) ~ t, domain(t=c(0, 10)) ) %>%
+slice_plot(soln2$x(t) ~ t, color='red')
+```
+
+```{r gg2, echo=FALSE, results="markup"}
+etude2::etudeQ(
+  "Compare those two solutions (in the graph) and draw a correct conclusion about the extent to which the \"details\" in the shape of the dynamics function makes a difference in the solution.",
+  "+So long as the fixed points and rough magnitude of the dynamics function are the same, the solutions will also be much the same.+",
+  "Any tweak in the shape of the dynamics function has a major impact on the shape of the solution.",
+  "The details of the dynamics function far from the fixed points can produce oscillations in the solution."
+)
+```
+
+```{r gg3, echo=FALSE, results="markup"}
+etude2::etudeQ(
+  "The piecewise formulation makes it easier to choose different growth/decay rates at the fixed points $x=0$ and $x=K$$. To do this, use the `center` argument to specify the $x$ at which the peak of the triangle occurs. Set `center` so that the slope near $x=0$ is about 3 times greater than the slope at $x=K$. What value should you give to `center` to accomplish this when $K=100$?",
+  "`center = 10`",
+  "+`center = 25`+",
+  "`center = 33.3`",
+  "`center = 66.7`",
+  random_answer_order = FALSE
+)
+```
+
+```{r gg4, echo=FALSE, results="markup"}
+etude2::etudeQ(
+  "Modify the code in the sandbox to add `center = ` as a fourth argument to `piecewise_fun()`. Give `center` the value of the correct answer to the previous problem. Comparing the solution of the (new) piecewise function to that of the original quadratic function, what differences are there?",
+  "The location of the stable fixed point is different.",
+  "There is no big difference between the two.",
+  "+The growth curve takes much longer to level out near the fixed point.+"
+)
+```

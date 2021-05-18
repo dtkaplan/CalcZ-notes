@@ -1,0 +1,38 @@
+---
+output: learnr::tutorial
+runtime: shiny_prerendered
+---
+
+```{r include=FALSE}
+etude2::load_learnr_safely()
+library(gradethis)
+library(mosaic)
+knitr::opts_chunk$set(echo = FALSE)
+learnr::tutorial_options(exercise.timelimit = 60, 
+                 exercise.checker = gradethis::grade_learnr)
+```
+
+
+Consider this integral:
+```{r context="setup"}
+# Note use of double \\ for latex in quotation marks
+problemLatex <- "\\int_0^\\pi \\int_1^5 y\\, \\cos(x y)\\, dx\\, dy"
+```
+
+<div style="font-size: 25px; text-align:center;">$`r problemLatex`$ </div>
+
+
+```{r iod-k, echo=FALSE, results="markup"}
+etude2::etudeQ(
+  "What is the value of the integral?", 
+  "A function of x." = "But we have a definite integral with respect to x, so it's not a function of x.",
+  "A function of y." = "But we have a definite integral with respect to x, so it's not a function of y.",
+  "+-8/5+",
+  "-$\\pi/5$",
+  "0",
+  "$\\pi / 5$",
+  "8/5",
+  random_answer_order = FALSE,
+  id = knitr::opts_current$get()$label
+)
+```

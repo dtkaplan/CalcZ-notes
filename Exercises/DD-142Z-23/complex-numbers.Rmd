@@ -1,0 +1,134 @@
+---
+title: "Complex numbers"
+author: "Daniel Kaplan"
+---
+
+<style type="text/css">
+.explanation-note {
+  padding: 1em 1em 1em 4em;
+  margin-bottom: 10px;
+  border: 2px brown;
+  border-radius: 10px;
+  background: #f5f5f5 5px center/3em no-repeat;
+}
+</style>
+
+```{r include=FALSE}
+library(etude2)
+```
+
+The previous section deduced an unexpected link between exponentials and sinusoids:
+
+> $e^{i \omega t}$ is a sinusoid with angular frequency $\omega$.
+
+The symbol $i$ is part of a system for working with coordinate pairs of numbers, called *complex numbers* e.g. (3, 2). For historical reasons, the first number in the pair is called the "real part," while the second part in the pair is called the "imaginary part."  Unfortunately, the name "imaginary" suggests to students starting out that the second part of the pair does not exist. That's silly, because in (3, 2) the imaginary part is simply 2---an ordinary number. 
+
+In interpreting the word "imaginary," you should keep in mind a long history in mathematics of assigning insulting names to mathematical objects that, at the time they were first introduced. That's why some numbers are vilified as "negative," and some as "irrational." 
+
+In R as in many other computer languages, complex numbers are written in a special syntax. The pair (3, 2) would be written `3 + 2i`.  For instance:
+```{r echo=TRUE}
+a <- 3 + 2i
+a + a
+a - a
+a * a
+a / a
+```
+
+Perhaps it's surprising that `a * a` gives `5 + 12i`. Let's see why:
+$$ (3 + 2i) (3 + 2i) = 9 + 6i + 6i + 4i^2 = 9 + 12i -4 = 5 + 12i$$ where we have used the convention that $i^2 = -1$.
+
+There are some R functions that are specifically for working with complex numbers. For us, the most important will be `Re()` and `Im()` which, respectively extract the "real" and "imaginary" parts of the number.
+
+```{r echo=TRUE}
+Re(a)
+Im(a)
+Re(3)
+Im(3)
+```
+
+The exponential function takes complex numbers as an input and returns a complex number as an output.
+```{r echo=TRUE}
+exp(a)
+```
+
+Let's plot $e^{i\omega t}$ over the domain $0 < t < 10$ using $\omega = 2$. We need to be a little careful, since our plotting functions are not arranged to display complex numbers. But there is an easy workaround: plot the "real" and "imaginary" parts separately.
+
+```{r cn1, exercise=TRUE, exercise.cap="Complex arithmetic", exercise.nline=8, eval=FALSE}
+f <- makeFun(exp(1i * omega * t) ~ t, omega = 2)
+slice_plot(Re(f(t)) ~ t, 
+           domain(t=c(0, 10)), color = "red") %>%
+  slice_plot(Im(f(t)) ~ t, color="blue")
+```
+
+```{r cn2, echo=FALSE, results="markup"}
+etude2::etudeQ(
+  "Which part of $e^{i \\omega t}$ is the cosine function?",
+  "+The \"real\" part+",
+  "The \"imaginary\" part",
+  "The negative of the \"imaginary\" part",
+  "The negative of the \"real\" part"
+)
+```
+
+The next sandbox defines a new function, $e^{(k + i\omega) t}$ and plots its real and imaginary parts. 
+```{r cn3, exercise=TRUE, exercise.cap="Complex exponential functions", exercise.nline=8, eval=FALSE}
+g <- makeFun(exp((k + 1i * omega) * t) ~ t, omega = 2, k=-1)
+slice_plot(Re(g(t)) ~ t, 
+           domain(t=c(0, 10)), color = "red", npts=500) %>%
+  slice_plot(Im(g(t)) ~ t, color="blue", npts=500)
+```
+```{r cn4, echo=FALSE, results="markup"}
+etude2::etudeQ(
+  "At what time $t$ does the sine-like function complete one full oscillation?",
+  "At about $t=1.6$",
+  "+At about $t=3.14$+",
+  "At about $t=4.7$",
+  "At about $t=6.28$",
+  random_answer_order = FALSE
+)
+```
+
+```{r cn5, echo=FALSE, results="markup"}
+etude2::etudeQ(
+  "Find a value for $\\omega$ that will produce one full oscillation every two time units. Graph it out to make sure that you have five full oscillations over the $0 < t < 10$ domain. What is that $\\omega$?",
+  "$\\omega = 1$",
+  "$\\omega = \\pi/2$",
+  "+$\\omega = \\pi$+",
+  "$\\omega = 2 \\pi$",
+  random_answer_order = FALSE
+)
+```
+
+```{r cn6, echo=FALSE, results="markup"}
+etude2::etudeQ(
+  "Keeping $\\omega$ at the value that produce five complete cycles over $0 < t < 10$, find a value for $k$ such that the amplitude of the oscillation at $t=10$ will be half that of the amplitude at $t=0$. What is $k$?",
+  "$k \\approx -0.70$",
+  "+$k \\approx -0.07$+",
+  "$k \\approx 0.07$",
+  "$k \\approx 0.70$",
+  random_answer_order = FALSE
+)
+```
+
+```{r cn7, echo=FALSE, results="markup"}
+etude2::etudeQ(
+  "Set $\\omega$ at the value that produces 20 complete cycles over $0 < t < 10$ and $k$ at the value such that the amplitude of the oscillation at $t=10$ will be *twice* that of the amplitude at $t=0$. What are $\\omega$ and $k$?",
+  "$\\omega = \\pi,\\ k \\approx 0.35$",
+  "$\\omega = 2 \\pi,\\ k \\approx 0.35$",
+  "+$\\omega = 4 \\pi,\\ k \\approx 0.070$+",
+  "$\\omega = 6 \\pi,\\ k \\approx 0.7$",
+  random_answer_order = FALSE
+)
+```
+
+<div class="explanation-note">
+**Code-reading questions**
+
+In the 2nd sandbox, the `slice_plot()` function is called with an argument $npts=500$. Use the following sandbox with the command `help(slice_plot)` to see the documentation for `slice_plot()` and read the explanation of the `npts` argument.
+
+```{r cn-code1, echo=FALSE, results="markup"}
+etude2::etudeEssay(
+  "In your own words, explain briefly why `npts=500` was used in the 2nd sandbox and why it wasn't needed in the first sandbox. To understand this, you may want to play around with small values for `npts` to understand what it does."
+)
+```
+</div>

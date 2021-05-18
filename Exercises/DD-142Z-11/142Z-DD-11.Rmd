@@ -1,0 +1,127 @@
+---
+title: "Daily Digital 11"
+subtitle: "Math 142Z"
+output: learnr::tutorial
+runtime: shiny_prerendered
+---
+
+
+```{r include=FALSE}
+#gradescope <- TRUE
+# Calculus/graphics/data packages
+library(mosaic)
+library(mosaicCalc)
+library(ggformula)
+library(math141Z)
+library(DT)
+knitr::opts_chunk$set(echo = FALSE)
+learnr::tutorial_options(exercise.timelimit = 60, 
+                 exercise.checker = gradethis::grade_learnr)
+```
+
+
+```{r context="setup", include=FALSE}
+### Boilerplate: Packages relating to `{learnr}` and 
+### submission functionality.
+etude2::load_learnr_safely()
+library(gradethis)
+library(etude2)
+library(learnrhash)
+#gradescope <- TRUE # format multiple-choice output for Gradescope
+```
+
+
+```{r context="setup", include=FALSE}
+# Good practice to include these in any document bringing
+# with the answer submission system
+etude2::set_master_id("DD-11") # Add the DD number
+etude2::etude_document_name("DD-142Z-11") # Add the DD number
+# Fill this data frame in when document is completed. See etude2 documentation
+document_roster <- tibble::tribble(
+  ~ id,
+)
+```
+
+## Objectives
+
+a. Construct differentials to compute accumulations of length, area, and accumulation.
+b. Recognize how integration (and differentiation) with respect to L, T, or M links quantities with different dimension. 
+c. Construct differentials that are constructed by integrating with respect to another variable, as with the differential of volume being an area which is in turn an integral of a function over L.
+
+## A Strategy for solving
+
+```{r child="strategy.Rmd"}
+```
+
+
+## `antiD()`
+
+```{r child="antiD.Rmd"}
+```
+
+## Length of a curve 
+
+```{r child="length-differential.Rmd"}
+```
+
+## Volumes under functions
+
+```{r child="function-volume.Rmd"}
+```
+
+## Integral of the day
+
+```{r child="IOD-K.Rmd"}
+```
+
+## LaTeX of the day
+
+```{r child="latex-11.Rmd"}
+```
+
+
+
+<!--
+
+```{r child="curve-length.Rmd", eval=FALSE}
+```
+
+## Differential orbit
+
+```{r child="differential-orbit.Rmd", eval=FALSE}
+```
+
+## Areas and Volumes
+
+```{r child="geometry.Rmd", eval=FALSE}
+```
+
+-->
+
+<!--
+
+## Example
+
+Distribution of times between one hundred-year storm and the *second* one that follows. Integral over the probability function $\frac{1}{k^2}\\exp(-(x+y)/k) dx$. Then do the expectation value by inserting $(x+y)$ as the outcome quantity and integrating over both $dx$ and $dy$.
+
+-->
+
+## Hand in your work
+
+REMEMBER: Press the REFRESH button before copying the hash code and submitting it at the <a href="https://forms.microsoft.com/Pages/ResponsePage.aspx?id=Bgq4einwwEWE0X2tGc48YcCKijCKVrhDla481YPh1UJUMVdERUtVT0VOSEpMMEdPQU1aWlpYTTA0RS4u" target = "_blank">USAFA Math 142Z site</a>
+
+
+```{r echo=FALSE, messages=FALSE}
+etude2::submissions_ui()
+```
+
+```{r context="server", echo=FALSE, messages=FALSE}
+etude2::submissions_logic()
+```
+
+
+
+-----
+
+Location: `r gsub("^.*USAFA/", "", knitr::current_input(dir = TRUE))` `r  etude2::etude_document_name()`
+

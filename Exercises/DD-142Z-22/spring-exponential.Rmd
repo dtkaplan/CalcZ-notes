@@ -1,0 +1,194 @@
+---
+title: "Exponential solutions"
+author: "Daniel Kaplan"
+runtime: shiny_prerendered
+---
+
+```{r include=FALSE, context="setup"}
+etude2::load_learnr_safely()
+library(etude2)
+library(mosaic)
+library(mosaicCalc)
+library(math141Z)
+# Bombelli multiplication
+`%B%` <- function(u, v) {
+  c(u[1]*v[1] - u[2]*v[2], u[1]*v[2] + u[2]*v[1])
+}
+conj <- function(u) {
+  c(u[1], -u[2])
+}
+`%Bdiv%` <- function(u, v) {
+  (u %B% conj(v))/(v[1]^2 + v[2]^2)
+}
+```
+
+In the previous section, we looked at the force-balance equation for the spring-mass system:
+$$\partial_{tt} x + b x = 0$$
+Our physical motivation for this equation 
+We tried the *ansatz* $x(t) = \sin(\lambda\, t)$ and, plugging it in to the differential equation concluded that this works, so long as $\lambda = \pm \sqrt{\strut b}$. 
+
+Remarkably, there is another way to write a sinusoid: $e^{i \lambda\, t}$. Plugging this into the force-balance equation gives $$\lambda^2 e^{i \lambda\, t} = - b\, e^{i \lambda\, t} \ \ \implies\ \ i^2 \lambda^2 = - b \ \ \implies \ \ \lambda = \pm \sqrt{\strut b}$$
+The exponential-form ansatz gives the same values for $\lambda$ as did the sinusoidal ansatz. 
+
+There is a certain cultural barrier around accepting a number like $i = \sqrt{-1}$. This is reinforced by the name given to $i$: the *imaginary unit*. 
+
+Perhaps best to think of the coordinate $(x,y)$-plane. Nobody thinks this is imaginary. You can draw it and see it. We've already see some rules for arithmetic of vector quantities. For instance $(3, 2) + (1, -2) = (2, 0)$. Or $6\times (3, 2) = (18,12)$. We've used the work "scalar" to name quantities such as 6. But how about if we think about 6 as the coordinate pair $(6,0)$. With such a notation we have a multiplication like $(6,0) \times (3,2) = (18,12)$. The rules for such multiplication can't be like the rules for vector addition, applying to each component separately. (If so, then $(6,0) \times (3,2)$ would be $(18, 0)$.) So if we're going to play the game of general arithmetic with vectors, we would need to define multiplication in some other way. In 1572 Rafael Bombelli (1527-1572) proposed such definitions. They work like this:
+
+- Addition: $(a, b) + (c, d) \equiv (a+c, b + d)$
+- Multiplication $(a, b) \times (c, d) \equiv (ac - bd, ad + bc)$
+
+Let's try the multiplication rule on $(6, 0)\times(3,2)$ giving $(6\cdot 3 - 0\cdot 2, 6\cdot 2 + 0\cdot 3 ) = (18, 12)$. Worked.
+
+Now let's try one times one, that is $(1,0) \times (1, 0)$. Applying the multiplication rule gives $(1\cdot 1  - 0 \cdot 0, 1\cdot 0 + 0 \cdot 1) = (1,0)$. 
+
+How about $a \times x_0$ where $a = (0.9, 0.1)$ and $x_0 = (1,0)$. The rule gives $(0.9, 0.1)$ as expected. Keep on going:
+
+- $a^0 \times x_0 = x_0 = (1,0)$
+- $a \times x_0 = (0.9, 0.1)$
+- $a^2 \times x_0 = a \times a \times x_0 = (0.8, 0.18)$
+- $a^3 \times x_0 = a \times a^2 \times x_0) = (0.702, 0.242)$
+- $a^4 \times x_0 = a \times a^3 \times x_0) = (0.6076, 0.288)$
+- ... and so on.
+
+This is a sequence of points $a^n x_0$ in the same spirit as the solution to the one-dimensional linear finite difference equation $x_{t+1} = a x_t$. But here the "numbers" have two dimensions.
+
+Conveniently, R (and just about any technical programming environment) has a notation for representing coordinate points. You've seen this with the `c()` or `rbind()` or `cbind()` functions:
+```{r context="setup", echo=TRUE}
+a <- c(0.95, 0.25) # or cbind() or rbind()
+x0 <- c(1, 0)    # ditto
+a * x0
+```
+The `*` operation for multiplication doesn't carry out Bombelli's rules. Neither does the other kind of multiplication we have studied: matrix multiplication `%*%`. One can easily imagine a special purpose function, perhaps called `Bombelli()` or `%B%`. Let's implement it. We will need one more notion from computer programming: *indexing*. To get the first component of a vector, use the `[1]` operator, and `[2]` for the second.
+```{r}
+a[1]
+a[2]
+```
+
+With this in mind, here's `%B$`:
+```{r echo=TRUE}
+`%B%` <- function(u, v) {
+  c(u[1]*v[1] - u[2]*v[2], u[1]*v[2] + u[2]*v[1])
+}
+a %B% x0
+a %B% a %B% x0
+a %B% a %B% a %B% x0
+```
+
+There's nothing to be shocked at in Bombelli multiplication. The question does arise, what use is it? And why do we feel comfortable calling it "multiplication?"
+
+Here are features of Bombelli "multiplication":
+
+- $a \times b = b \times a$
+- $a \times \mbox{one} = a$
+- $a \times \mbox{zero} = \mbox{zero}$
+- $a \times \mbox{inverse}(a) = \mbox{one}$
+
+In the sandbox, we've defined a suitable `one` and `zero` for coordinate pairs. Use them to confirm that Bombelli multiplication satisfies the first three.
+
+```{r nos1, exercise=TRUE, exercise.cap = "Bombelli multiplication", exercise.nlines=10, eval=FALSE}
+one <- c(1, 0)
+zero <- c(0, 0)
+a <- c(.95, .25)  # change a & b as you will
+b <- c(4, -2) # to experiment
+a %B% b 
+b %B% a
+one %B% a
+a %B% one
+a %B% zero
+one %Bdiv% a
+```
+All that's needed to define complete the justification for calling `%B%` "multiplication" is an inverse function. Typically, `inverse()` is defined using "division" into 1. The `%Bdiv%` function provides a division operator that complements Bombelli multiplication. 
+
+Except ... Bombelli arithmetic is too important to science and engineering to relegate it to functions with funny names like `%Bdiv%`. Instead, modern scientific computing languages include direct support using the familiar `*` and `/` operator names. And instead of the obscure "Bombelli arithmetic," we call it **complex arithmetic**. 
+
+- Instead of writing `a <- c(3, 2)` we write `a <- (3 + 2i)`. Think of the `+` as analogous to the comma and the `i` as a way to distinguish Bombelli addition from regular scalar addition.
+- Instead of `%B%` just use `*`.
+- Instead of `%Bdiv%`, use `/`.
+
+Here's a sandbox:
+
+```{r nos2, exercise=TRUE, exercise.cap="The i notation.", exercise.nline = 8, eval=FALSE}
+a <- (3 + 2i)
+x0 <- (1 + 0i)
+one <- (1 + 0i)
+zero <- (0 + 0i)
+a * x0
+1 / a
+a * (one/a)
+```
+Recall that we used `[1]` to extract the first component of a coordinate pair and `[2]` to extract the second component. It would be perfectly reasonable to use exactly this notation. But, it turns out, that much of mathematics applied to science involves vectors of coordinate pairs and matrices of coordinate pairs. So instead of `[1]` and `[2]`,  the extraction elements are `Re()` and `Im()`
+
+```{r}
+Re(a)
+Im(a)
+```
+
+Now that we know how to do Bombelli arithmetic in R, let's compute the solution to $x_{n+1} = a x_{n}$. Re'll use `Iterate()`:
+
+```{r out.height = "150pt"}
+Traj <- Iterate( function(s) {(0.95 + 0.2i) * s}, x0=1 + 0i, n=100)
+Traj
+# pull out first and second coordinate
+Traj$first <- Re(Traj$s)
+Traj$second <- Im(Traj$s)
+gf_point(first ~ n, data = Traj) %>% 
+  gf_line(first ~ n) %>%
+gf_point(second ~ n, data = Traj, color="red") %>%
+  gf_line(second ~ n, color = "red")
+```
+In the state space the trajectory is
+
+```{r}
+gf_point(second ~ first, data = Traj) %>%
+  gf_path(second ~ first) %>%
+  gf_text(second ~ first, label = ~ n, vjust= 1, hjust = 1) %>%
+  gf_refine(coord_fixed())
+```
+
+Remind you of anything?
+
+Multiplication, addition, division, square roots and other powers are defined using coordinate pairs. So are exponentiation, sine and cosine, log, etc. Let's look at the exponential function $f(t) \equiv e^{(k + i\omega) t}$. We can define $f()$ in the usual way, but note that $f()$ returns a coordinate pair.
+
+```{r nos4, exercise=TRUE, exercise.cap="Exponentials of coordinate pairs", exercise.nlines=6, eval=FALSE}
+f <- makeFun(exp((k + 1i*omega)*t) ~ t, k = 0.1, omega=1)
+f(0)
+# Plot the first-coordinate
+slice_plot(Re(f(t)) ~ t, domain(t=c(0,20)), npts=500) %>%
+  slice_plot(Im(f(t)) ~ t, color="red")
+```
+
+```{r nos6, echo=FALSE, results="markup"}
+etude2::etudeQ(
+  "The default settings for `k` and `omega` in the above sandbox produce a coordinate pair whose first component is an exponentially growing cosine, and whose second is an exponentially growing sine. What value for `k` will produce a simple sine and cosine, without any change in amplitude?",
+  "$k = -\\infty$ (that is, `-Inf`)",
+  "+$k = 0$+",
+  "$k=1$",
+  "Can't be done.",
+  random_answer_order = FALSE
+)
+```
+
+```{r nos7, echo=FALSE, results="markup"}
+etude2::etudeQ(
+  "The parameter $\\omega$ is called the \"angular frequency\" of the sinusoids produced as the first and second components of $e^{(k + i\\omega)t}$. Does higher $\\omega$, that is, higher angular frequency correspond to a shorter or longer period for the sinusoids?",
+  "+shorter+",
+  "longer",
+  "no change",
+  "$\\omega$ sets the *shape*, not the period of the sinusoid.",
+  random_answer_order = FALSE
+)
+```
+
+
+
+
+There is one feature of complex arithmetic  that has given the whole very useful apparatus a bad name. Consider the square-root function.
+
+```{r}
+sqrt(1 + 0i)
+sqrt(-1 + 0i)
+```
+
+In a conspiracy to bad-mouth this perfectly reasonable form of arithmetic, $\sqrt{\strut - 1}$ is identified with $i$ in the coordinate pair notation with $i$ being slandered as "imaginary." This calumny has prestigious historical roots, starting with René Descartes (1596-1650). Rather than shunning as "imaginary" the 2nd component of complex numbers, they are a perfectly legitimate way to see the essential unity of the exponential, sine, and cosine functions.
+
+

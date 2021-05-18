@@ -1,0 +1,76 @@
+---
+title: "Mechanics of Iteration"
+author: "Daniel Kaplan"
+---
+
+```{r include=FALSE}
+library(mosaic)
+library(mosaicCalc)
+library(etude2)
+```
+
+One common mathematical task in using finite-difference equations is **iteration**. In iterating a finite-difference equation, you are running a machine to construct the "future state" from the "present state." In iteration, you repeatedly do this. By plugging in the "future state" into the machine, you generate a state further in the future. 
+
+It can be helpful to think of "future" and "present" state in terms of a series of days. The system's state **today** is the present state. The system's state **tomorrow** is the next future state.  The system's state on the **day after tomorrow** is the future state after tomorrows's state. 
+
+A finite-difference equation is a statement about how tomorrow's state is a function of today's state. We could write this in the form
+$$\mbox{state}_{\small\mbox{tomorrow}} = g( \mbox{state}_{\small\mbox{ today}})$$
+This notation is wordy and hard to read. So we simplify it. 
+
+- Today is day $n$
+- Tomorrow is day $n+1$
+- The state on day $n$ is written $\mathbf S_n$. 
+- The state on day $n+1$ is written $\mathbf S_{n+1}$
+- The dynamics are represented by a function, say, $g({\mathbf S})$.
+- To remind us of the role played by $g()$, we write $${\mathbf S}_{n+1} = g({\mathbf S}_n)$$
+
+```{r fdem1, echo=FALSE, results="markup"}
+etude2::etudeQ(
+  "If today is $n$, what is the day after tomorrow?",
+  "$n-1$" = "$n-1$ is yesterday.",
+  "$n$" = "$n$ is today.",
+  "$n+1$" = "$n+1$ is tomorrow.",
+  "+$n+2$+",
+  "$n=3$",
+  random_answer_order = FALSE
+)
+```
+
+```{r fdem2, echo=FALSE, results="markup"}
+etude2::etudeQ(
+  "If today is $n$, what is the day one week from now?",
+  "$7n$",
+  "$n + 1 week$" = "Although $n$ stands for \"today\", $n$ is a pure number.",
+  "+$n+7$+"
+)
+```
+
+```{r fdem3, echo=FALSE, results="markup"}
+etude2::etudeQ(
+  "If today is $n$, what is the day one week ago?",
+  "$-7 n$",
+  "$n - 1$ week" = "Although $n$ stands for \"today\", $n$ is a pure number.",
+  "+$n-7$+"
+)
+```
+
+```{r fdem4, echo=FALSE, results="markup"}
+etude2::etudeQ(
+"Given ${\\mathbf S}_{n+1} = g({\\mathbf S}_n)$, what is ${\\mathbf S}_{n+3}$ ?",
+  "+$g(g(g({\\mathbf S}_n)))$+",
+  "$3 g({\\mathbf S}_n)$" = "$3 g({\\mathbf S}_n)$ is \"three times ${\\mathbf S}_{n+1}$\", not ${\\mathbf S}_{n+3}$.",
+  "$g({\\mathbf S}_n)^3$",
+  "$g({\\mathbf S}_n) + 2 {\\mathbf S}_{n}$"
+)
+```
+
+```{r fdem5, echo=FALSE, results="markup"}
+etude2::etudeQ(
+"Given ${\\mathbf S}_{n+1} = g({\\mathbf S}_n)$, which of these is **not** ${\\mathbf S}_{n+1}$ ?",
+  "$g(g(g({\\mathbf S}_{n-2})))$",
+  "+$g({\\mathbf S}_{n-1})$+" = "This is ${\\mathbf S}_{n}$.",
+  "$g(g({\\mathbf S}_{n-1}))$",
+  "$g(g(g(g(g(g(g(g({\\mathbf S}_{n-7}))))))))$" = "These 8 applications of $g()$ will take ${\\mathbf S}_{n-7}$ up to ${\\mathbf S}_{n+1}$"
+)
+```
+

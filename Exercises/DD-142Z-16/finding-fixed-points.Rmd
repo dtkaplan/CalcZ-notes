@@ -1,0 +1,102 @@
+---
+title: "Finding fixed points"
+author: "Daniel Kaplan"
+---
+
+```{r include=FALSE}
+library(shiny)
+library(mosaic)
+library(mosaicCalc)
+```
+
+An important strategy in creating and understanding models of dynamics involves **fixed points**.  A fixed point is a value of the state which the dynamics leave untouched. For finite-difference equation dynamics, $${\mathbf X}_{n+1} = g({\mathbf X}_n)$$
+
+At a fixed point, "tomorrow's" value is the same as "today": ${\mathbf X}_{n+1} = {\mathbf X}_n$; the state doesn't change with $n$. 
+
+A fixed point ${\mathbf X}^\star$ satisfies 
+$${\mathbf X}^\star = g({\mathbf X}^\star)\ \ \ \mbox{or, said another way,}\ \ \ g({\mathbf X}^\star) - {\mathbf x^\star} = 0$$
+"Fixed point" is a mathematical term. In the sciences, you will hear the term "equilibrium state," "steady state," "resting point," or "balance point." For example, chemistry has a concept of [chemical equilibrium](https://en.wikipedia.org/wiki/Chemical_equilibrium), a state where the concentration of reactants and products doesn't change. Finding such equilibria is an important task in many areas of science and engineering.
+
+Some dynamical systems don't display any fixed points, e.g. the orbit of the Earth around the Sun. Others have one or more. We're going to treat them mathematically by analysis of the function $g()$ that governs the dynamics.
+
+There are several ways to find fixed points. 
+
+1. If you have a simple algebraic form for $g()$ you can solve $g(x) = x$ for $x$. For instance, suppose $g(x) \equiv 4 x (1-x)$. Then the fixed points satisfy $$x^\star = 4x^\star (1-x^\star)$$  This has two solutions: one at $x^\star = 0$ and the other at $x^\star = 3/4$.
+
+```{r ffp-a, echo=FALSE, results="markup"}
+etude2::etudeQ(
+  "Consider the dynamical system $$x_{n+1} = 2 x_n + 3$$ To find the fixed point, re-write the equation as $x^\\star = 2 x^\\star + 3$ and solve for $x^\\star$. What is the fixed point $x^\\star$?",
+  "+-3+" = "Right. Plug in $-3$ for $x^\\star$ in $2 x^\\star + 3$ and you get ... -3. ",
+  "-1.5",
+  "0", 
+  "1.5",
+  "3",
+  random_answer_order = FALSE
+)
+```
+
+```{r ffp-b, echo=FALSE, results="markup"}
+etude2::etudeQ(
+  "Consider the dynamical system $$y_{n+1} =  1/y_n + 9$$ To find the fixed point, re-write the equation as $y^\\star = 1/y^\\star + 9$ and solve for $y^\\star$. How many fixed points are there",
+  0, 1, "+2+" = "Right, because the equation becomes $(y^\\star)^2 = 9$ which has two solutions, $y^\\star = \\pm 3$.", 3, 4, "an infinite number",
+  random_answer_order = FALSE
+)
+```
+
+```{r ffp-c, echo=FALSE, results="markup"}
+etude2::etudeQ(
+  "How come the first question used $x_n$ for the state while the second on used $y_n$?",
+  "Because you can't write $1/x_n$",
+  "Using $y_n$ is a mistake. Dear problem writer, Please be more careful in the future!",
+  "+Because you can use any name you like for a variable, so long as you use it consistently. And using $x$ all the time gets tiring, to say nothing about how hard it makes to work with more than one variable at a time.+" = "It would have been fun to use names like $\\mbox{dog_hunger}_n$ or $\\mbox{snowfall}_n$. We used $y_n$ so that we don't freak you out. But $y$ is just a name like any other."
+)
+```
+
+
+
+2. Numerical solving. If solving $g(x)=x$ is not so easy, then we can instead create a new function $h(x)\equiv g(x)-x$ and then solve for the zeros of $h()$.  The point of setting up the helper function $h()$ is that computer algorithms for finding zeros generally take a *function* as their input rather than an *equation*. 
+
+```{r ffp-1, echo=FALSE, results="markup"}
+etude2::etudeQ(
+  "Consider the system $$x_{n+1} = 5 [\\cos(x_n)]^2$$ Where are the fixed points? (You can use the sandbox to solve the system numerically.)",
+  "+$x^\\star \\in \\{1.086, 2.320, 3.681\\}$+",
+  paste("$x^\\star \\in \\{", paste(round(sort(runif(4, 0.5, 4)), 4), collapse=", "), "\\}$"),
+  paste0("$x^\\star \\in \\{", paste(round(sort(runif(4, 0.5, 4)), 3), collapse=", "), "\\}$"),
+  paste("$x^\\star \\in \\{", paste(round(sort(runif(4, 0.5, 4)), 2), collapse=", "), "\\}$"),
+  paste0("$x^\\star \\in \\{", paste(round(sort(runif(4, 0.5, 4)), 3), collapse=", "), "\\}$")
+)
+```
+
+```{r ffp-2, exercise=TRUE, exercise.cap="Solving for zeros", exercise.nlines = 6, eval=FALSE}
+g <- makeFun(4*x*(1-x) ~ x) #change this formula to answer the multiple choice question
+findZeros(g(x) - x ~ x)
+```
+
+
+3. Graphically. Plot out the function $g(x) - x$ versus $x$. Find values of $x$ where the graph crosses zero. Each of these valuesis a fixed point $x^\star$.
+
+For instance:
+```{r ffp-3, exercise=TRUE, exercise.cap="Finding fixed points graphically", exercise.nlines=8, eval=FALSE}
+dom <- domain(x = c(0,10))
+g <- makeFun(x + sin(x) ~ x) 
+slice_plot(g(x) - x ~ x, dom) 
+```
+
+
+4. By iteration. Sometimes you can identify a fixed point by iterating the dynamics starting from different initial conditions. The following sandbox iterates a system for 100 steps. The `tail(5)` function returns just the last 5 rows of the data table, making it easier to see where the state ended up after many iterations.
+
+```{r ffp-4, exercise=TRUE, exercise.cap="Finding fixed points by iteration", exercise.nlines=8, eval=FALSE}
+g <- makeFun(x + sin(x) ~ x)
+Iterate(g, x0=.872, 100) %>% tail(5)
+```
+You can look for different fixed points by trying different values for $x0$. 
+
+```{r fpp-4, echo=FALSE, results="markup"}
+etude2::etudeQ(
+  "Find the fixed points of $$g(x) \\equiv x + \\sin(x)$$ by picking several random initial conditions in the range $0 \\leq x \\leq 10$. Compare your results to the fixed points seen using the graphical method. Which of these fixed points does iteration **NOT** reveal? Hint: the initial condition is $x_0$, so this is the value you need to change.",
+  "$x^\\star = \\pi$",
+  "+$x^\\star = 2\\pi$+",
+  "$x^\\star = 3\\pi$",
+  random_answer_order = FALSE
+)
+```

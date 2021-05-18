@@ -1,0 +1,93 @@
+---
+title: "QALY with data"
+author: "Daniel Kaplan"
+---
+
+```{r include=FALSE, context="setup"}
+library(mosaic)
+library(mosaicCalc)
+library(etude2)
+```
+
+
+## Toward a More Realistic Setting
+
+The optimization techniques described above are completely realistic, but it's not so realistic to have specific formulas for the relationship between expenditures and outcomes.  Somewhat more realistically, you might have the opinions of experts about the outcomes, in the form of a table like this.
+
+Expenditure | 0 | 10 | 20 | 30 | 40 | 50
+:----|----:|----:|----:|----:|----:|----:
+A | 0 | 4 | 10 | 15 | 18 | 24
+B | 0 | 3 | 8 | 19 | 25 | 30
+C | 0 | 6 | 12 | 18 | 26 | 31
+
+Such estimates from experts should be taken with a grain of salt, but they are often the best information you have to inform a model.
+
+You can turn the expert's opinions into functions by using splines. In this case, there is good reason to think that output will increase monotonically with expenditure, so a monotonic spline is a good choice.  You can construct the functions like this:
+
+```{r }
+expend=c(0,10,20,30,40,50)
+A = c(0,4,10,15,18,24)
+B = c(0,3,8,19,25,30)
+C = c(0,6,12,18,26,31)
+dat = data.frame(expend=expend,A=A,B=B,C=C)
+fA = spliner( A ~ expend, data=dat, monotonic=TRUE)
+fB = spliner( B ~ expend, data=dat, monotonic=TRUE)
+fC = spliner( C ~ expend, data=dat, monotonic=TRUE)
+```
+ 
+
+#. Find the best values of inputs $x_A$, $x_B$, and $x_C$ given the constraint that total expenditure is $x_A + x_B + x_C = 50$.
+    Choose the closest answer:
+        a. Input to A: $x_A$ {0}{0,5,10,15,21,24,30,34,39,43,50}
+        #. Input to B: $x_B$ {34}{6,11,16,19,25,29,34,41,43,50}
+        #. Input to C: $x_C$ {16}{7,11,16,19,21,25,29,34,39,41,44}
+
+
+<!--begin-answer-->
+```{r splineans,include = TRUE,fig = TRUE}
+overall <- makeFun(fA(A) + fB(B) + fC(50-A-B)  ~ A &  B)
+contour_plot( 
+  overall(A,  B) ~ A  + B,
+  domain(A=range(0,50), B=range(0,50))) %>%
+  gf_labs(x = "A (amount)", y  = "B (amount)")
+```
+ 
+The optimum is near $x_A=0$, $x_B=34$ and therefore $x_C = 50 - 34 - 0 = 16$.  This gives an output of about 31.4 units.
+```{r }
+overall( A=0, B=34 )
+```
+ 
+<!--end-answer-->
+
+The American Association of Allergy Activists (AAAA) has lobbied Congress to mandate that, of the 50 units of available funds,  funding for A must be at least $x_A \geq 30$ with only the remaining 20 units of expenditure available to be allocated to B and C.  
+
+#. How much would this constraint reduce the overall output for the three interventions combined? (Remember, if you're spending 30 on A, you can't spend more than 20 on B.)
+    #. Not at all.
+    #. About zero to 1 output unit
+    #. *About 4 to 5 output units*
+    #. About 10 to 12 output units
+    #. About 14 to 16 output units
+    #. It would actually **increase** the output.
+
+
+<!--begin-answer-->
+     Looking at the contour plot along the path $x_A = 30$ indicates that the best possible outcome will be about 28 units.  This is a reduction of about 3 units from the optimum when $x_A$ is not subject to the proposed Congressional constraint.
+<!--end-answer-->
+
+Good news and bad news.  You've defeated the AAAA initiative to force expenditure on A.  But, regretably, general budget cuts have just been announced!  Now there are only 20 units to spend on the three interventions.  
+
+#. What's the best mixture?
+    a. Input to A: $x_A$ {0}{0,5,10,15,20}
+    #. Input to B: $x_B$ {0}{0,5,10,15,20}
+    #. Input to C: $x_C$ 
+
+#. What's the output that corresponds to the best mixture? {12}{0,3,6,8,12,14,21,29,34,38}
+<!--begin-answer-->
+    The contour plot shows that the maximum occurs when $x_A=0$ and $x_B   = 0$. 
+    ```{r new20}
+overall <- makeFun(fA(xA) + fB(xB) + fC(20-(xA+xB))~xA&xB) 
+contour_plot(overall(xA,  xB) ~ xA + xB,  
+domain(xA=range(0,20), xB=range(0,20)))
+overall( xA=0, xB=0 )
+```
+<!--end-answer-->

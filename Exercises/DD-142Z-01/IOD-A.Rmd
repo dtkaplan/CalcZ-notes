@@ -1,0 +1,102 @@
+---
+title: "Integral of the day: TEMPLATE"
+date: "MMM DD YYYY"
+output: learnr::tutorial
+runtime: shiny_prerendered
+---
+
+```{r setup, include=FALSE}
+etude2::load_learnr_safely()
+library(gradethis)
+library(mosaic)
+knitr::opts_chunk$set(echo = FALSE)
+learnr::tutorial_options(exercise.timelimit = 60, 
+                 exercise.checker = gradethis::grade_learnr)
+```
+
+```{r context="setup"}
+## SET UP THE PROBLEM HERE. 
+# Note use of double \\ for latex in quotation marks
+problemLatex <- "\\int x^2 dx"
+answer_fun <- function(x) x^3 / 3
+evaluate_at <- 1:10
+correct_arguments <- c("x")
+## Remember to set the CHUNK NAMES to match the file name
+```
+
+Work out this anti-derivative on paper.
+
+<div style="font-size: 40px; text-align:center;">$`r problemLatex`$ </div>
+
+Write your result in traditional mathematical notation on a piece of scratch paper, you will not turn this piece of paper in. 
+
+Once you have figured out the anti-derivative in traditional notation, you are to translate it into two other important notation systems. 
+
+1. Implement your result as an R *function*. Recall from last semester that you can create a function with an expression like this: `fun_name <- makeFun(x^2/4 ~ x)`
+
+
+```{r IOD-A, exercise=TRUE, exercise.lines=5, exercise.cap="Integral of the day"}
+F <- makeFun(R_expression_here ~ x)
+```
+
+```{r IOD-A-check}
+library(magrittr)
+gradethis::grade_result(
+  fail_if( ~ !is.function(.result), message = "Your result should be in the form of a function."),
+  fail_if( ~ !all(correct_arguments %in% names(formals(.result))),
+           message = "You don't seem to have all the right argument names."),
+  pass_if( ~ all(.result(evaluate_at) ==
+                          answer_fun(evaluate_at))),
+  fail_if( ~ TRUE, message="Correct arguments, but not the right function.")
+)  
+```
+
+2. Give the LaTeX expression that will nicely typeset your result for the formula of the anti-derivative function here. LaTex is different than the R programming language and is commonly used (or a close variant is commonly used) in programs like Microsoft Word and WebAssign, the homework system for Math 141/142. There is more about LaTeX below. Some LaTeX tips: `a^b` will produce $a^b$, while `\frac{a}{b}` will produce $\frac{a}{b}$.
+
+```{r results="asis"}
+etude2::latex_entry_box("latex-A")
+```
+
+We're going to give you exercises of this sort in many of the Daily Digitals this semester. There are several good reasons for this:
+
+a. Your instructors and textbooks will use traditional notation frequently. In many courses, they will use anti-differentiation (which they will call "integration"). You will find it much easier to follow their explanations and derivations if you can recognize when they are using integration and anticipate what the answer will look like.
+
+b. You need to be able to express mathematical ideas in computer notation so that you can carry out calculations and create visualizations. 
+
+c. For communication in writing. College students of your grandparents' generation used typewriters and [white-out fluid](https://en.wikipedia.org/wiki/Correction_fluid).  Your parents' generation used word processors (allowing them to avoid white-out fluid and revise text easily). As digital natives, your generation learned to use your parents' word processors with hardly any training. But modern digital formats (e.g. blogs, web pages) emphasize the *logical* layout of documents. In composing such documents, you use *markup* to indicate the structure of the document and let the computer translate that structure to whatever output format is needed. (An example: "page break" is a concept that only applies to printed documents. Web pages and ebooks don't have page breaks, so you need another logical construct to accomplish what used to be done with page breaks.) LaTeX is a markup language used for mathematical typesetting. Using it will teach you about markup generally and will illuminate the *logical* structure of mathematical notation, helping you both to read and write it.
+
+
+```{r context="server"}
+id <- "latex-A"
+answers <- c("\\frac{x^3}{3}", "x^3 / 3", "1/3 x^3") 
+squash_str <- "\\{|\\}| |\t|\n"
+
+# To return the state of the app
+app_result <- reactiveVal(FALSE) 
+
+output[[NS(id, "rendered")]] <- renderUI({
+  withMathJax(paste0("$$", input[[NS(id, "latex")]], "$$"))
+})
+output[[NS(id, "feedback")]] <- renderUI({
+  compare <- gsub(squash_str, "", answers)
+  the_answer <- input[[NS(id, "latex")]]
+  if (is.null(the_answer)) the_answer <- "missing"
+  correct <- gsub(squash_str, "", 
+           input[[NS(id, "latex")]]) %in% compare
+  
+  if (exists("apps_state")) {
+    registration_name <- NS(id, "result")
+    apps_state[[registration_name]] <-
+      tibble::tibble(id = registration_name, 
+                     question = "latex input",
+                     answer = the_answer,
+                     time = as.character(Sys.time()),
+                     correct = correct,
+                     attempts = 1,
+                     history = "")
+    
+  }
+  ifelse(correct, "✓", "☞")
+})
+```
+

@@ -1,0 +1,101 @@
+---
+title: "Dynamics from observation"
+author: "Daniel Kaplan"
+runtime: shiny_prerendered
+---
+```{r include=FALSE}
+library(etude2)
+library(mosaicCalc)
+```
+
+You are designing the suspension for a new aircraft's landing gear. A prototype has been built and, during a test resulted in some undesired oscillations, as shown in the graph:
+
+```{r echo=FALSE}
+f <- makeFun(13*exp(-t/2)*cos(2*pi*t/1.5) ~ t)
+g <- function(t) ifelse(t < 2.3, 0, f(t-2.2))
+slice_plot(g(t) ~ t, domain(t=c(0, 10)), npts=200) %>%
+  gf_labs(x = "Time (s)", y="Extension (cm)", title="Prototype LG-B3-2 impact dynamics")
+```
+
+The dynamics of the system starting half a second after the initial contact are described by this second-order linear differential equation:
+$$\partial_{tt} x + a \partial_t x + b x = 0$$ where $a$ reflects the "damping" and mass of the system and $b$ reflects the "stiffness" and mass.  
+
+```{r signal1, echo=FALSE}
+etude2::etudeQ(
+  "What's the period of the oscillation?",
+  "0.3 sec",
+  "0.6 sec",
+  "+1.5 sec+",
+  "2.5 sec", 
+  random_answer_order = FALSE
+)
+```
+
+```{r signal2, echo=FALSE}
+etude2::etudeQ(
+  "How long does it take for the amplitude of the oscillation to decrease by 50%?",
+  "0.5 second", 
+  "+1 second+",
+  "2 seconds",
+  "3 seconds",
+  random_answer_order = FALSE
+)
+```
+
+For convenience, here is a sandbox for any calculations you need to do to answer the following questions.
+
+```{r signal-sandbox, exercise=TRUE, exercise.nlines=6, exercise.cap="Sandbox"}
+```
+
+
+```{r signal3, echo=FALSE}
+etude2::etudeQ(
+  "Using the standard model of the motion, $$x(t) = A e^{-kt} \\sin(\\omega t + \\phi)$$ what numerical values of $k$ and $\\omega$ correspond to the observations in the first two questions?",
+  "+$k=0.69$ and $\\omega =  6.3$+",
+  "$k=0.75$ and $\\omega = 4.2$",
+  "$k=0.75$ and $\\omega = 0.17$",
+  "$k=0.95$ and $\\omega = 5.4$"
+)
+```
+
+The eigenvalues of the dynamical system are $k \pm i \omega$. Translate these eigenvalues into numerical values for $a$ and $b$ in the dynamics. The relationship is $$\lambda = \frac{-a \pm \sqrt{a^2 - 4b}}{2}.$$
+
+```{r signal4, echo=FALSE}
+etude2::etudeQ(
+  "What is the numerical value of $a$ (with units)?",
+  "0.69 per second",
+  "0.69 per cm",
+  "0.69 cm/second",
+  "+1.38 per second+" = "The $a$ parameter multiplies $\\partial_t x$ and the product has to have the same units as $\\partial_{tt} x$.",
+  "1.38 per cm",
+  "1.38 cm/second"
+)
+```
+
+```{r signal5, echo=FALSE}
+etude2::etudeQ(
+  "What is the numerical value of $b$ (with units)?",
+  "39.5 / second",
+  "+39.5 / second^2 +",
+  "39.5 cm/second",
+  "39.5 cm/second^2",
+  "59.4 / second",
+  "59.4 / second^2",
+  "59.4 cm/second",
+  "59.4 cm/second^2",
+  random_answer_order = FALSE
+)
+```
+
+The engineering team is directed to change the damping and stiffness of the landing gear suspension in order to just barely eliminate the oscillations. (Think of this as having $\omega = 0$.) Such as system is called "critically damped." Knowing that you are a student in CalcZ, they have asked you how to change $a$ and $b$. They are relying on you, so you have to get it right the first time. (No do-overs!)
+
+```{r signal6, echo=FALSE}
+etude2::etudeQ(
+  "What changes in the damping parameter $a$ and the stiffness $b$ will cause the suspension to be critically damped?",
+  "double both a and b",
+  "+triple a and halve b+",
+  "quadruple a and quarter b",
+  "halve  a and halve b",
+  allow_retry = FALSE
+)
+```

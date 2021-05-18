@@ -1,0 +1,105 @@
+---
+title: "Force-balance introduction"
+author: "Daniel Kaplan"
+---
+
+```{r include=FALSE}
+library(etude2)
+```
+
+Newton's Second Law of motion is famous. In his *Philosophiæ naturalis principia mathematica* ("Mathematical principles of natural philosophy", 1687), he wrote:
+
+> *Lex II: Mutationem motus proportionalem esse vi motrici impressae, et fieri secundum lineam rectam qua vis illa imprimitur.*
+
+or, as translated into English in 1729
+
+> *LAW II: The alteration of motion is ever proportional to the motive force impressed; and is made in the direction of the right line in which that force is impressed.*
+
+Almost every student learns this in admirably compact form:
+
+> ${\mathbf F} = m {\mathbf a}$
+
+In CalcZ, you've already learned the mathematics behind the compression from 16 Latin words into 4 symbols.
+
+* "Motion": We call this *momentum* and it is the product of mass ($m$) times velocity ${\mathbf v}$. A "moment" was an early word for a differential, perhaps related to the word "instantaneous."
+* "The alteration of motion": we call this *acceleration*. ${\mathbf a} = \partial_t {\mathbf v}$
+* "Ever proportional": equal to
+* "Motive force": ${\mathbf F}$
+* "In the direction of the right line in which that force is impressed." Both ${\mathbf F}$ and ${\mathbf a}$ are vectors. Mass $m$ is a scalar. A scalar times a vector---e.g. $m {\mathbf a}$ is a vector pointing in the same direction. So ${\mathbf F}$ and ${\mathbf a}$ are in the same direction.
+
+Newton was interested in the force of gravity on an object of mass $m$. On the Earth's surface, this is a vector pointing toward the center of the earth. The magnitude of the vector is roughly $g \equiv 9.8$ m/s^2 times the mass of the object. So Newton's 2nd law amounts to $m\ \partial_t v = m\, g$ or, more simply $\partial_t v = g$.
+
+This is a differential equation, although a simple one. You learned to find a solution earlier by integration:
+$$\partial_t v = g\ \ \ \implies\ \ \ v = gt + v_0$$
+Robert Hooke, a contemporary of Newton, published a law for a different sort of force in 1675: *ceiiinosssttuv*, describing the force from compressing or extending a spring. This alphabetical sequence of letters is an anagram, which Hooke revealed in 1677: *ut tensio, sic vis*. In English, "as the extension, so the force." As taught to students: $F = -k\, x$.
+
+Here, $x$ is the length of the spring with respect to it's unstretched length. So, when $x=0$ the spring exerts zero force. When you extend a spring, the spring force pulls back. The force vector points in the opposite direction of the position vector. If we fix one end of the spring in place and allow the other end to move freely, the result is a bobbing sort of motion.
+
+```{r echo=FALSE}
+knitr::include_graphics("www/Animated-mass-spring.gif")
+```
+
+[Source: Svjo](https://commons.wikimedia.org/wiki/File:Animated-mass-spring.gif) [CC BY-SA](https://creativecommons.org/licenses/by-sa/3.0) via Wikimedia Commons
+
+
+Putting together Newton's Second Law with Hooke's law gives the differential equation $$m\ \partial_t v = -k\, x .$$
+Remembering that $v = \partial_t x$ we have $$\partial_{tt} x = - b\, x\ \ \ \mbox{(Spring motion)}$$ where $b = k/m$$
+
+The spring-motion equation is an example of a *force-balance*: The force made by the spring is balanced, by the mass times the acceleration of the freely moving end of the spring.
+
+You might be able to find the solution to this simple force-balance equation just by staring at it. We want a function $x(t)$ whose second derivative with respect to time is proportional to itself.
+
+Using $A \sin(\lambda\, t)$ as an *ansatz* we plug into the differential equation to find
+$$- A\, \lambda^2 \sin(\lambda t) = - A\, b \sin(\lambda t) \ \ \ \implies \ \ \ \lambda = \pm \sqrt{\strut b}$$
+So $b$ dictates the frequency of oscillation.
+
+[Note: Recall that in the first part of CalcZ we parameterized the sinusoid using the *period* $P$ as $\sin(2 \pi t/P)$. Now we're switching over to a parameter in terms of *angular frequency* with units of radians-per-second. A more common unit is cycles-per-second. This unit has the SI name "hertz" and abbreviated Hz. To convert $\lambda$ from *angular frequency* to Hz, divide by $2 \pi$.
+
+```{r lex1-1, echo=FALSE, results="markup"}
+etude2::etudeQ(
+  "In the force-balance equation $\\partial_{tt} x = -b x$, all the quantities have a physical dimension. Since $x$ is the extension of the spring, we have $[x] = $L. What is the dimension of $\\partial_{tt} x$?",
+  "L",
+  "LT",
+  "L/T",
+  "+L/T^2+",
+  "dimensionless",
+  random_answer_order = FALSE
+)
+```
+
+```{r lex1-2, echo=FALSE, results="markup"}
+etude2::etudeQ(
+  "What is the dimension of $b$ in the spring equations?",
+  "T",
+  "T^2",
+  "1/T",
+  "+1/T^2+",
+  "dimensionless",
+  random_answer_order = FALSE
+)
+```
+
+```{r lex1-3, echo=FALSE, results="markup"}
+etude2::etudeQ(
+  "What is the dimension of $\\lambda$ in the spring equation solution?",
+  "T",
+  "T^2",
+  "+1/T+",
+  "1/T^2",
+  "dimensionless",
+  random_answer_order = FALSE
+)
+```
+
+```{r lex1-4, echo=FALSE, results="markup"}
+etude2::etudeQ(
+  "What is the dimension of $\\lambda t$ in the spring equation solution?",
+  "T",
+  "T^2",
+  "1/T",
+  "1/T^2",
+  "+dimensionless+" = "The solution is $\\sin(\\lambda t)$$. The argument to a \"transcendental\" function like $\\sin()$ must always be dimensionless.",
+  random_answer_order = FALSE
+)
+```
+

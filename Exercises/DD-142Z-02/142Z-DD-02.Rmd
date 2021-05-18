@@ -1,0 +1,138 @@
+---
+output: learnr::tutorial
+runtime: shiny_prerendered
+params:
+  prefix: DD-02
+  docname: "DD-142Z-02"
+  title: "Daily Digital 02"
+  subtitle: "Math 142Z"
+  due_date: "Due 13 Jan 2021"
+  
+title: "`r params$title`"
+subtitle: "Math 142Z"
+date: "`r params$due_date`"
+---
+
+<!-- SET THE ABOVE prefix AND docname to be unique in the series of DDs -->
+
+```{r mother1-setup, include=FALSE, messages=FALSE}
+# Calculus/graphics/data packages
+library(mosaic, quietly=TRUE)
+library(mosaicCalc, quietly=TRUE)
+library(ggformula, quietly=TRUE)
+library(math141Z, quietly=TRUE)
+library(DT, quietly=TRUE)
+
+.prefix <- params$prefix
+.docname <- params$docname
+knitr::opts_chunk$set(echo = FALSE)
+learnr::tutorial_options(exercise.timelimit = 60, 
+                 exercise.checker = gradethis::grade_learnr)
+```
+
+
+
+```{r context="setup", include=FALSE, messages=FALSE}
+etude2::set_master_id("DD-02") # Add the DD number
+etude2::etude_document_name("142Z-DD-02") # Add the DD number
+# Fill this data frame in when document is completed. See etude2 documentation
+document_roster <- tibble::tribble(
+  ~ id,
+)
+```
+
+<!-- END OF BOILERPLATE -->
+
+## Objectives
+
+a. Use Euler's Method to approximate anti-derivatives when the value of $h$ is small.
+b. Use your knowledge of derivative rules to solve backwards for anti-derivatives.
+c. Understand the notation of an indefinite integral to include the integral symbol $\left(\int\right)$, differential of the variable ($dx$), the constant of integration ($+C$) and the child and parent function $(F(x))$.
+d. Determine the units of an anti-derivative given the base function and the variable of integration.
+Understand that the output of anti-differentiation is a function known as a general solution and more information is necessary to find the particular solution.
+
+## Starting numerically
+
+In the last Daily Digital, you were tasked with using your understanding of the algebra rules of *differentiation* to carry out *anti-differentiation*. Fortunately, it's not too hard to do this when the function involved is one of our basic modeling functions with a linear interior function, e.g. $\int e^{kx}dx = \frac{1}{k} e^{kx}$. Happy cases when this sort of algebraic integration can be done are found in textbooks. But outside of textbook situations, it's common that there is no algebraic method of finding an anti-derivative. The clip below from the movie *Hidden Figures* shows one historically important example that had to be solved before the first manned space flight could be launched.
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/v-pbGAts_Fg" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+The method mentioned in the clip, the Euler Method, is super simple. So much so that we will use it to introduce, with only trivial algebra, the properties of anti-derivatives. (The Euler Method was published in 1768, but it is not a preferred method for modern uses of calculus. A much better method, Runge-Kutta, was published in 1901. The NASA engineers of the late 1950s and early 1960s undoubtedly knew of and used methods like Runge-Kutta, despite what the movie clip suggests.)
+
+As you know, the result of applying the anti-differentiation operator to a function $f(t)$ will be another function, which we often write $F(t)$ simply to remind us where it came from. (So anti-differentiating $g(t)$ would produce $G(t)$, and anti-differentiating $h(x)$ will produce $H(x)$.)
+
+### Discrete inputs to functions
+
+```{r child="discrete-inputs.Rmd"}
+
+```
+
+## Using the Euler Method
+
+```{r child="accumulate.Rmd"}
+
+```
+
+
+## Dimensions of anti-derivatives
+
+```{r child="Units_of_antiD.Rmd"}
+
+```
+
+## Euler on the computer
+
+```{r child="Euler_in_R.Rmd"}
+
+```
+
+## Lessons from Euler
+
+```{r child="lessons-from-euler.Rmd"}
+```
+
+## Math notation and R
+
+```{r child="Math-to-R-01.Rmd"}
+
+```
+
+## A family chain
+
+```{r child="Glorias-family.Rmd"}
+
+```
+<!--
+## Integral of the Day
+
+This whole problem set has been about numerical ways to compute anti-derivatives. These are often needed in professional work. But textbooks are usually written using examples that can be done "analytically," that is, by symbolic manipulation. We want to give you regular practice with these. So, here is your "Integral of the Day."
+
+Latex Hint: In Latex, you write `\cos` to typeset $\cos$. This use the backslash applies also to sines, square roots, logs, exp, and so on. It's not fatal to forget the leading `\`, but it makes the typeset math less beautiful. For instance `cos` will typeset to $cos$.
+
+```{r eval = FALSE, child="IOD-B.Rmd"}
+```
+-->
+
+## Drill
+
+```{r child="Drill-2.Rmd"}
+```
+
+## Hand in your work
+
+REMEMBER: Press the REFRESH button before copying the hash code and submitting it at the <a href="https://forms.microsoft.com/Pages/ResponsePage.aspx?id=Bgq4einwwEWE0X2tGc48YcCKijCKVrhDla481YPh1UJUMVdERUtVT0VOSEpMMEdPQU1aWlpYTTA0RS4u" target = "_blank">USAFA Math 142Z site</a>
+
+
+```{r echo=FALSE, messages=FALSE}
+etude2::submissions_ui()
+```
+
+```{r context="server", echo=FALSE, messages=FALSE}
+etude2::submissions_logic()
+```
+
+
+-----
+
+Location: `r gsub("^.*USAFA/", "", knitr::current_input(dir = TRUE))` `r  etude2::etude_document_name("142Z-DD-02.Rmd")`
+

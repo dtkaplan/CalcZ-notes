@@ -1,0 +1,53 @@
+---
+title: "Diffusion"
+author: "Daniel Kaplan"
+---
+
+Recall that the heat equation describes how the temperature along a approximately 1-dimensional object---an iron bar, for example---changes with time due to spatial differences in temperature from point to point. The heat equation is
+
+$$\underbrace{\partial_t T(x, t)}_\mbox{change in time} = \ \ \ k\, \underbrace{\partial_{xx} T(x, t)}_\mbox{pattern in space}$$
+
+```{r diffusion1-1, echo=FALSE, results="markup"}
+etude2::etudeQ(
+  "Suppose the inputs to the temperature function have units centimeters (for $x$) and seconds (for $t$) and that the output is in degrees Kelvin (which we'll write \"K\"). What are the units of the coefficient $k$?",
+  "$K cm^{1}$",
+  "$K cm^{2} s^{-1}$",
+  "+$cm^{2} s^{-1}$+",
+  "$s cm^{2}$"
+)
+```
+
+At the time Fourier was working, there was no molecular theory of matter and very little understanding of what the "heat substance" might consist of. Now we know that heat is the energy of molecular vibrations. This energy diffuses through the material.
+
+Similarly, "diffusion" is one mode of physical motion of material, for example movement of sugar molecules within a cell. Other things can diffuse as well, for example the action of viscosity in fluids can be seen as the diffusion of momentum.
+
+Starting in the 20th century and in support of the developing molecular theory of gasses, mathematicians and physicists undertook to follow the trajectories of individual diffusing particles and to develop a means to describe them mathematically. This included the concept of a "random walk," movement of a particle shifting direction and speed randomly as it collides with other moving molecules and particles in its environment. 
+
+The movie shows a simulation of a few particle (in yellow) undergoing a random walk. The path followed by each diffusing particle is shown in blue; the velocity of one particle is indicated with a red vector.
+
+![](www/Brownianmotion5particles150frameSLOW.gif)
+
+<a href="https://creativecommons.org/licenses/by-sa/3.0" title="Creative Commons Attribution-Share Alike 3.0">CC BY-SA 3.0</a>, <a href="https://commons.wikimedia.org/w/index.php?curid=19140415">Link</a>
+
+The idea of random walks has become especially important in economics and finance. The walking "particle" might be the price of a stock or other derivative asset. The "collisions" happen as individual trades are made in the market, each trade being influenced by some news or situation or the passing whims, fancies, or fears of investors. The work on this point of view started about 1900 by a mathematics graduate student, Louis Bachelier, who undertook to study the movements of the *Bourse*, the Parisian stock exchange. The 1997 Nobel Prize in economics was awarded for a "new method to determine the value of [market] derivatives." 
+
+For these reasons, we're going to focus and the mathematics of diffusion instead of the equivalent but historically prior mathematics of heat. We'll work with a function $C(x, t)$ which stands for the *concentration* of particles in some medium such as a gas as a function of space and time. In economics, $x$ will stand for the value of some asset such as an investment, and $C()$ gives a probability density for each possible value of $x$.
+
+For the sake of visualization, suppose some odor molecules are released in at the midpoint of a pipe with absolutely still air. Over time, the molecules will diffuse throughout the along the extent of the pipe.
+
+If $C(x, t)$ is the *concentration* of odor molecules at each point $x$ and time $t$, then the change in concentration with time is:
+
+$$\partial_t C(x, t) = D\, \partial_{xx} C(x, t)$$
+This is called the "Diffusion equation." $D$ is called the "diffusion coefficient" and depends on the size of the molecule and the temperature in the pipe. The "diffusion equation" is exactly the same as the "heat equation," with different names used for the quantities involved.
+
+```{r diffusion1-2, echo=FALSE, results="markup"}
+etude2::etudeQ(
+  "Suppose the inputs to the concentration function have units centimeters (for $x$) and seconds (for $t$) and that the output is in nanograms per cubic centimeter ($ng\\ cm^{-3}$) . What are the units of the coefficient $k$?",
+  "$ng cm^{-1}$",
+  "$ng cm^{1} s^{-1}$",
+  "+$cm^{2} s^{-1}$+" = "$D$ in the diffusion equation has the same units as $k$ in the heat equation!",
+  "$s cm^{1}$"
+)
+```
+
+Many people have difficulty imagining the sorts of frequent collisions that are behind diffusion. They think, for instance, that in still air the molecules are pretty much still. This is wrong. A typical velocity of a water molecule in air at room temperature and pressure is 650 m/sec. (The speed of sound is about 350 m/sec.) But the time between molecular collisions is on the order of $10^{-10}s$, so the typical distance travelled between collisions is about $10^{-7}m$. For a root mean square distance of 1m, we need roughly $10^{14}$ collisions, which would occur in $10^{4}$ seconds (a couple of hours). 

@@ -1,0 +1,50 @@
+---
+title: "Flows in 2-D"
+author: "Daniel Kaplan"
+---
+
+```{r include=FALSE}
+library(etude2)
+library(mosaic)
+library(mosaicCalc)
+```
+
+This unit is about linear differential equations with a two-dimensional state, the sort that describe motion near fixed points. These have an outsize importance in applied work and, happily, they are relatively easy to deal with. This is especially true because you've already been introduced to eigenvectors and eigenvalues in the context of discrete-time systems. Treat this as an opportunity to review and reinforce your understanding of eigen-stuff.
+
+This is a good time to lay out the sequence of topics that will follow, as we complete our tour of dynamics.
+
+* The next unit will be about force-balance equations, the specific form of differential equations used to describe physical processes. 
+* Then we will move away from fixed points to global patterns of flow. You'll see how using simple nonlinear dynamical functions enables the construction of models that are surprisingly informative. 
+* Finally, we will return to dynamics around fixed points but with a twist: rather than systems that evolve in time autonomously on their own, we'll "force" the systems with inputs that "drive them" away from equivibrium.
+
+Returning to today ... The form of equation we will be working with is 
+<div style="font-size: 30px; text-align:center;">$$\partial_t x = a x + b y\\
+\partial_t y = c x + d y$$</div>
+
+We're going to simplify this in two ways. First, we'll use Newton's "dot notation" for derivatives (that is very much in use today in physics), where $\partial_t x$ is replaced with $\dot{x}$. Let's make that bigger so you can see the dot and put it beside other notations that signify **exactly the same thing**:
+<div style="font-size: 36px; text-align:center;">$$\dot{x} \ \ \ \ \ \ \ \partial_t\, x\ \ \ \ \ \ \ \ \frac{dx}{dt}$$</div>
+
+Second, we'll reduce the four parameters of the [abcd] matrix to just two and use a form [ab10] that can still produce all the generic forms of behavior. The result will be a **vector** equation that's admirably compact:
+
+<div style="font-size: 30px; text-align:center;">$$\dot{\mathbf X} = \left[\begin{array}{cc}a & b\\1 & 0\end{array}\right] {\mathbf X}$$</div>
+In this form, the formula for eigenvalues is particularly simple. It also aligns with the force-balance style of equation we'll see in the next unit.
+
+The most important single fact you can learn about differential equations is the solution to the one-dimensional linear equation:
+
+<div style="font-size: 30px; text-align:center;">$$\underbrace{\dot{x} = k x\strut}_\mbox{dynamics}\ \ \ \ \implies\ \ \ \ \underbrace{x(t) = x(0) e^{kt}}_\mbox{solution}$$</div> where, of course, $x(0)$ is the value of $x$ at time 0.
+
+Happily, the solution to the two-dimensional linear equation is almost as simple:
+
+<div style="font-size: 30px; text-align:center;">
+$$\dot{\mathbf X} = \left[\begin{array}{cc}a & b\\1 & 0\end{array}\right] {\mathbf X}\ \ \ \implies\ \ \ \ x(t) = C e^{\lambda_1 t} + D e^{\lambda_2 t}$$</div>
+
+$C$ and $D$ are constants which are related to the initial conditions. For instance, you should be able to look at the solution equation and deduce $x(0) = C + D$.
+
+$\lambda_1$ and $\lambda_2$ are, of course, the eigenvalues of the [ab10] matrix. For easy reference, here is the formula for those eigenvalues in terms of $a$ and $b$:
+
+$$\lambda_{1,2} = \frac{1}{2} \left[a^2 \pm \sqrt{\strut a^2 + 4 b} \right]$$
+<!--
+
+**Optional mystery section**: We're often asked why we don't give the solution $y(t)$ alongside $x(t)$. It's a reasonable question. We don't, because you can deduce the solution $y(t)$ simply by $\int_0^t x(t) dt$. That will be clearer when we get to the force-balance format for differential equations.
+
+-->

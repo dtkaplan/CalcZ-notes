@@ -1,0 +1,114 @@
+---
+title: "Finding periodic orbits"
+author: "UND-1-14"
+---
+
+```{r include=FALSE}
+library(etude2)
+library(mosaic)
+library(mosaicCalc)
+library(math141Z)
+```
+
+We've examined fixed points of discrete-time dynamical systems $$x_{n+1} = f(n_t)$$
+
+The sign of a fixed point is, of course, a value of $x$ that satisfies $$x^\star = f(x^\star) \ \ \mbox{or, written another way} \ \ f(x^\star) - x^\star = 0$$
+
+You can locate the fixed points either by graphing $f(x)$ versus $x$ and looking for intersections between the "line of identity." Sometimes it's tedious to zoom in on a graphic to find precise values for fixed points. You may prefer to find the fixed points *numerically* with the `findZeros()` function. The command would look like `findZeros(f(x) - x ~ x)`. (`findZeros()` also takes arguments to specify the region you want to search for zeros, but the default values for them are often good enough.)
+
+The sandbox below provides an example for the function $$f(x) = \mu x (1-x)$$ for $\mu=3.3$ It graphs the function, draws in the line of identity, and puts the horizontal and vertical axes on the same scale. The sandbox also contains the command to find the fixed points of $f(x)$, as well as commands to investigate the stability of those fixed points.
+
+```{r und-1-14, exercise=TRUE, exercise.cap="Finding fixed points", exercise.nlines = 10, eval=FALSE, warning=FALSE}
+# CHANGE TO SINGLE F
+f <- makeFun(mu*x*(1-x) ~ x, mu=3.3)
+slice_plot(f(x) ~ x, domain(x=c(0,1)), color="black") %>%
+  gf_abline(yintercept=0, slope=1, color="blue") %>%
+  gf_refine(coord_fixed())
+fixed_points <- findZeros(f(x) - x ~ x)
+fixed_points
+df_dx <- D(f(x) ~ x)
+df_dx(fixed_points$x)
+```
+
+From the results of the sandbox, you should be able to see that there are two different fixed points of period 1, each of which is unstable.
+
+```{r und-1-14-a, echo=FALSE, results="markup"}
+etude2::etudeQ(
+  "How do you know the fixed points of period 1 are unstable?",
+  "Because there are two of them.",
+  "Because the slope of the function at the fixed point is not zero.",
+  "Because the slope of the function at the fixed point is greater than 1.",
+  "+Because the slope of the function at the fixed point is either less than -1 or greater than 1.+"
+)
+```
+
+This exercise is about finding orbits of period 2, 3, 4, and so on. The strategy is simple. When looking for an orbit of period 2, look for fixed points of the dynamical function $f(f(x))$. For period 3, look for fixed points of $f(f(f(x)))$.
+
+
+
+But there is some untangling to do, since a fixed point of period 1 is also a solution to $f(f(f(x^\star))) = x^\star$.
+
+```{r und-1-14-b, echo=FALSE, results="markup"}
+etude2::etudeQ(
+  "How many fixed points are there of period two that are not also fixed points of period one?",
+  "0", "1", "+2+", "3", "4", "5", "6", 
+  random_answer_order = FALSE
+)
+```
+
+```{r und-1-14-c, echo=FALSE, results="markup"}
+etude2::etudeQ(
+  "How many period-two orbits are there? This is not quite the same as the number of period-two fixed points, since each such orbit must visit *two* distinct fixed points of period two.",
+  "0", "+1+", "2", "3", "4", "5", "6", 
+  random_answer_order = FALSE
+)
+```
+
+```{r und-1-14-d, echo=FALSE, results="markup"}
+etude2::etudeQ(
+  "How many distinct period-three orbits are there that are not orbits of period 1? (Remember, the number of distinct orbits is different from the number of fixed points that lie on those orbits.)",
+  "+0+", "1", "2", "3", "4", "5", "6", 
+  random_answer_order = FALSE
+)
+```
+
+```{r und-1-14-e, echo=FALSE, results="markup"}
+etude2::etudeQ(
+  "How many distinct period-four orbits are there that are not orbits of period 1 or 2? ",
+  "+0+", "1", "2", "3", "4", "5", "6", 
+  random_answer_order = FALSE
+)
+```
+
+In all the questions that follow, when we ask for the number of distinct stable orbits of period p, we mean to exclude orbits of a period less than p.
+
+
+```{r und-1-14-f, echo=FALSE, results="markup"}
+etude2::etudeQ(
+  "With $\\mu = 3.43$ ... How many distinct stable period-two orbits?"  ,
+  "0", "+1+" , "2", "3", "4", "5", "6", 
+  random_answer_order = FALSE
+)
+```
+
+```{r und-1-14-g, echo=FALSE, results="markup"}
+etude2::etudeQ(
+  "With $\\mu = 3.45$ ... How many distinct stable period-two orbits?"  ,
+  "+0+", "1" , "2", "3", "4", "5", "6", 
+  random_answer_order = FALSE
+)
+```
+
+```{r und-1-14-h, echo=FALSE, results="markup"}
+etude2::etudeQ(
+  "With $\\mu = 3.45$ ... How many distinct stable period-four orbits?"  ,
+  "0", "+1+" , "2", "3", "4", "5", "6", 
+  random_answer_order = FALSE
+)
+```
+
+
+
+
+
+

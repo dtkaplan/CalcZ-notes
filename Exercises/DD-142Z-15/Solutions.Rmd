@@ -1,0 +1,67 @@
+---
+title: "Solutions"
+author: "Daniel Kaplan"
+---
+
+```{r include=FALSE}
+library(mosaic)
+library(mosaicCalc)
+library(math141Z)
+library(etude2)
+```
+
+You can use the `Iterate()` function to compute the trajectory of any finite-difference system from any initial condition. Each trajectory is a sequence of numbers $\{x_n\}$ for $n=0, 1, 2, \ldots$.
+
+Sometimes it's possible to find an algebraic formula for a trajectory. Such a formula is unfortunately called a "solution," an over-used word in mathematics. In the days before computers were readily available, students of dynamics tended to study only those systems for which an algebraic solution could be found. A more modern style is to put the modeling setting first and foremost and not hesitate to use numerical methods like `Iterate()` instead of relying on algebra.
+
+Because the word "solution" appears so often in textbooks it's helpful to know what they look like and how they are different from dynamics.
+
+i. Arithmetic sequences    
+    - Dynamics: $x_{n+1} = x_n + b$
+    - Solution: $x_n = x_0 + n b$
+ii. Geometric sequences    
+    - Dynamics: $x_{n+1} = \alpha\, x_n$
+    - Solution: $x_n = x_0\, \alpha^n$
+iii. Combined sequences   
+    - Dynamics: $x_{n+1} = \alpha\, x_n + b$   <br> 
+    - Solution: $x_n = \left(x_0 - b/\alpha\right) \alpha^n + b/\alpha$
+    
+The dynamics of a discrete-time system write tomorrow's state as a function of today's state. In contrast, the *solution* gives a formula for $x_n$ directly in terms of $n$, the initial condition $x_0$, and any parameters of the system (such as $\alpha$ and $b$ in the above examples).
+
+As you can see, even for dynamics as simple as for the combined sequences, the solution is fairly complicated. Because solutions can be so complicated, they can be extremely hard to find and hard to use. The only ones we will use extensively will be composed of relatively simple terms like $(-1)^n$ and $\alpha^n$. The analogs of these for continuous time systems are $\sin(\omega t)$ and $e^{-kt}$. 
+    
+```{r soln1-1, echo=FALSE, results="markup"}
+etudeQ(
+  "For the arithmetic sequence with $x_0 = 2$ and $b=3$, what is the numerical value $x_{100}$?",
+  203,
+  230,
+  "+302+",
+  320,
+  "Not enough information given.",
+  random_answer_order = FALSE
+)
+```
+
+```{r soln1-2, echo=FALSE, results="markup"}
+etudeQ(
+  "For the geometric sequence with $x_0 = 2$ and $\\alpha = \\frac{1}{2}$, what is the numerical value $x_{10}$?",
+  "1/1028",
+  "+1/512+" = "$2 \\times \\frac{1}{2}^{10} = 2 / 1024 = 1/512$",
+  "512",
+  "1028",
+  "Not enough information given.",
+  random_answer_order = FALSE
+)
+```
+
+```{r soln1-3, echo=FALSE, results="markup"}
+etudeQ(
+  "For the affine sequence with $x_0 = 2$ and $\\alpha = \\frac{1}{2}$ and $b=10$, what is the numerical value of $x_{100}$? (These answers are shown to only one decimal point.)  Hint: What is $\\alpha^{100}$?",
+  "+20.0+",
+  "-20.0",
+  "$(1/2)^{100}$",
+  "0.0", 
+  random_answer_order = FALSE
+)
+```    
+

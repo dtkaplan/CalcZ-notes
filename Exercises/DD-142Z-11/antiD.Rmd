@@ -1,0 +1,91 @@
+---
+title: "Using antiD"
+author: "Daniel Kaplan"
+runtime: shiny_prerendered
+output: learnr::tutorial
+---
+
+```{r include=FALSE}
+library(mosaic)
+library(mosaicCalc)
+library(etude2)
+```
+
+We've devoted about a third of this block on accumulation to algebraic techniques for calculating anti-derivatives. You will see these techniques in use in some of your future classes and work in science and engineering. 
+
+It's the nature of things that some people master the algebraic techniques and many do not. But it's easy to make mistakes. Even more fundamentally, there are many accumulation problems where the functions to be integrated do not have an algebraic form for the anti-derivative. In such cases, professionals use numerical techniques such as the Euler method.
+
+In order to give you a simple way to construct the anti-derivative of (just about) any function, while minimizing the amount of computer programming, we have packaged up anti-differentiation techniques into one, easy to use R function. This is `antiD()`.
+
+The `antiD()` function has the same interface as `D()` or `makeFun()`: the argument is a tilde expression of the sort `sqrt(x*sin(3*x)) ~ x`. The result returned from `antiD()` is a new R function that takes as its argument the "with respect to" variable. The sandbox provides a space to play with `antiD()` so that you feel comfortable using it.
+
+```{r antiD1, exercise=TRUE, exercise.cap="Using antiD()", exercise.nlines=6, eval=FALSE}
+antiD(x^-2 ~ x)
+
+f <- makeFun(sqrt(x*sin(3*x)) ~ x)
+antiD(f(x) ~ x)
+```
+
+As you can see from the output of the sandbox, `antiD()` returns an R `function()`. The variable on the right of the tilde expression in the argument becomes the first of the arguments to that function. There is also a `C` argument: the constant of integration.
+
+`antiD()` knows a few of the algebraic integration techniques, roughly at the level of the basic modeling functions part of the course. When `antiD()` identifies the tilde expression as something it can handle, it returns a function whose body is the algebraic formula for the anti-derivative (although sometimes written in a cumbersome way).
+
+When `antiD()` does not recognize its argument as a basic modeling function, the result is still an R function with the "with respect to" variable and `C` as arguments. But the body of the function is  unintelligible to a human reader (except perhaps for the `numerical_integration()`). The method of numerical integration is more sophisticated than Euler, and is highly precise and reliable.
+
+We're going to use `antiD()` in this daily digital simply because we want to focus on the process of differential modeling. The integrals you encounter will sometimes be ones you know how to handle algebraically. It's a good idea to do such integrals by hand and then compare to the results of `antiD()` to check your work.
+
+**Example**: Find the numerical value of this definite integral.
+
+$$\int^{7}_{3} e^{x^{2}} dx$$
+**Example Solution in R**: 
+`F<-antiD(exp(x^2)~x)`
+`F(7)-F(3)`
+
+**Problem 1**: Find the numerical value of this definite integral.
+
+$$\int^{5}_{2} x^{1.5} dx$$
+
+Recall that for a definite integral of function $f()$, you find the anti-derivative $F(x) \equiv \int f(x) dx$ and evaluate it at the limits of integration. Here that will be $F(5) - F(2)$.
+
+
+```{r tbf1, exercise=TRUE, exercise.cap="Sandbox for Problems", eval=FALSE}
+
+```
+
+```{r tbf1-solution}
+f <- antiD( x^1.5 ~ x )
+f(5) - f(2)
+```
+
+
+```{r tbf-a, echo=FALSE, results="markup"}
+etude2::etudeQ(
+  "**Problem 1**: What's the numerical value of $$\\int_2^5 x^{1.5} dx  ?$$",
+  0.58,6.32,"+20.10+",27.29,53.60,107.9,1486.8,
+  random_answer_order = FALSE,
+  id = knitr::opts_current$get()$label
+)
+```
+
+
+```{r tbf-b, echo=FALSE, results="markup"}
+etude2::etudeQ(
+  "**Problem 2**: What's the numerical value of $$\\int^{10}_{0} \\sin( x^2 ) dx ?$$",
+  "+0.58+",6.32,20.10,27.29,53.60,107.9,1486.8,
+  random_answer_order = FALSE,
+  id = knitr::opts_current$get()$label
+)
+```
+
+
+
+
+
+```{r tbf-c, echo=FALSE, results="markup"}
+etude2::etudeQ(
+  "**Problem 3**: What's the numerical value of $$\\int^{4}_{1} e^{2x} dx ?$$",
+  0.58,6.32,20.10,27.29,53.60,107.9,"+1486.8+",
+  random_answer_order = FALSE,
+  id = knitr::opts_current$get()$label
+)
+```

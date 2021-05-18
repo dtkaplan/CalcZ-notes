@@ -1,0 +1,112 @@
+---
+title: "Integral of the day: TEMPLATE"
+date: "MMM DD YYYY"
+output: learnr::tutorial
+runtime: shiny_prerendered
+---
+
+```{r context="setup", include=FALSE}
+etude2::load_learnr_safely()
+library(gradethis)
+library(mosaic)
+library(mosaicCalc)
+knitr::opts_chunk$set(echo = FALSE)
+learnr::tutorial_options(exercise.timelimit = 60, 
+                 exercise.checker = gradethis::grade_learnr)
+```
+
+```{r context="setup"}
+## SET UP THE PROBLEM HERE. 
+# Note use of double \\ for latex in quotation marks
+problemLatex <- "\\int \\frac{1}{x^2} dx"
+answer_fun <- makeFun(-1/x ~ x)
+evaluate_at <- 1:10
+correct_arguments <- c("x")
+## Remember to set the CHUNK NAMES to match the file name
+```
+
+Work out this anti-derivative on paper, translate it to R, and enter it in the sandbox
+
+<div style="font-size: 40px; text-align:center;">$`r problemLatex`$ </div>
+
+
+```{r IOD-F, exercise=TRUE, exercise.lines=5, exercise.cap="Integral of the day"}
+F <- makeFun()
+```
+
+```{r IOD-F-check}
+library(magrittr)
+gradethis::grade_result(
+  fail_if( ~ !is.function(.result), message = "Your result should be in the form of a function."),
+  fail_if( ~ !all(correct_arguments %in% names(formals(.result))),
+           message = "You don't seem to have all the right argument names."),
+  pass_if( ~ all(.result(evaluate_at) ==
+                          answer_fun(evaluate_at))),
+  fail_if( ~ TRUE, message="Correct arguments, but not the right function.")
+)  
+```
+
+
+Now that you have the correct answer, use Latex to typeset the formula in the function here. Some Latex tips:  `x^{-2}` will produce $x^{-2}$.
+
+```{r results="asis"}
+etude2::latex_entry_box("latex-F")
+```
+
+
+
+```{r context="server"}
+id <- "latex-F"
+answers <- c("-1/x", "- \frac{1}{x}", "- x^{-1}") 
+squash_str <- "\\{|\\}| |\t|\n"
+
+# To return the state of the app
+if (!exists("apps_state")) apps_state <- reactiveValues() 
+
+output[[NS(id, "rendered")]] <- renderUI({
+  withMathJax(paste0("$$", input$`latex-F-latex`, "$$"))
+})
+output[[NS(id, "feedback")]] <- renderUI({
+  compare <- gsub(squash_str, "", answers)
+  the_answer <- input$`latex-F-latex`
+  if (is.null(the_answer)) the_answer <- "missing"
+  correct <- gsub(squash_str, "", 
+           the_answer) %in% compare
+  if (exists("apps_state")) {
+    registration_name <- NS(id, "result")
+    apps_state[[registration_name]] <- 
+      tibble::tibble(id = registration_name, 
+                     question = "latex input",
+                     answer = the_answer,
+                     time = as.character(Sys.time()),
+                     correct = correct,
+                     attempts = 1,
+                     history = "")
+    
+  }
+  ifelse(correct, "✓", "☞")
+})
+```
+
+ 
+
+ 
+
+
+
+The Second Fundamental Theorem of Calculus says that if $f(x)$ is a smooth function, you can calculate $\int_a^b f(x) dx$ by finding an anti-derivative $F(x)$ and evaluating it at the bounds of integration as $F(b) - F(a)$. 
+
+Using the Second Fundamental Theorem, compute the value of the definite integral $$\int_{-2}^4 \frac{1}{x^2} dx$$
+This looks perfectly ordinary, but it is wrong. The `antiD()`-constructed anti-derivative gets it right:
+
+```{r antiD, exercise=TRUE, exercise.cap="Using antiD().", exercise.nlines=4}
+F <- antiD(1/x^2 ~ x)
+F(4) - F(-2)
+```
+```{r iodwordbox, echo=FALSE, results="markup"}
+etude2::etudeEssay("Why would you need to be careful about integrating this function? Hint: What's special about $f(x)$ somewhere on the interval [-2, 4] that tells you the fundamental theorem may not apply?")
+```
+
+
+
+

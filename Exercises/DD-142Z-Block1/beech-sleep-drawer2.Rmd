@@ -1,0 +1,48 @@
+---
+title: "Counting squares 2"
+author: "Daniel Kaplan"
+---
+
+```{r include = FALSE}
+library(etude2)
+library(mosaic)
+library(mosaicCalc)
+
+knitr::opts_chunk$set(echo = FALSE)
+learnr::tutorial_options(exercise.timelimit = 60, 
+                 exercise.checker = gradethis::grade_learnr)
+```
+
+
+At a glance, give a rough numerical value for the integral of the function shown in the plot.
+
+```{r echo = FALSE}
+xpts = c(10,21,33,45,68,82,93)
+ypts = c(4,6,7,2,3.5,5.5,6.5) - 3
+f = splinefun(xpts,ypts)
+g1 = function(x){f(x) + .3*sin(2*pi*x/9)}
+newx = seq(10,93,by=10)
+set.seed(65)
+g2 = approxfun(newx,f(newx))
+g3 = splinefun( newx, f(newx)+rnorm(length(newx),mean=0,sd=.3) )
+g4 = splinefun( newx, f(newx)+rnorm(length(newx),mean=2.3,sd=.3) )
+slice_plot(g1(x) ~ x, domain(x=c(0,100)), color = "gray", size=3 ) 
+G1 <- antiD(g1(x) ~ x)
+G1(100) - G1(0)
+```
+
+```{r bsd2, echo=FALSE}
+etude2::etudeQ(
+  "The integral of the function from x=0 to x = 100 is roughly ...",
+  -150, -70, -20, -10, -2, -1,  0, 1, 2, 10, 20, "70", "+150+",
+  random_answer_order = FALSE
+)
+```
+
+Comments:
+
+1. This function has both high-frequency ups and downs on the scale of about 10 x-units, as well as low frequency components on a scale of about 50 x-units. The "area" doesn't depend very much on the high-frequency components because the quick ups and downs cancel each other out.
+
+2. OK, a little bit of algebra ... This function is a linear combination of high-frequency stuff which we might think about as $\cos(\omega_{big} t)$ and low-frequency stuff like $\cos(\omega_{small} t)$. Each of these is one of our basic modeling functions, so you should feel good about the following statement:
+$$\int \cos(\omega t) dt = \frac{1}{\omega}\sin(\omega t)$$
+Notice that when $\omega$ is large, the quantity $1 / \omega$ is small. Which is pretty much the same thing as saying "high-frequency oscillations have an integral that is small compared to low-frequency oscillations."

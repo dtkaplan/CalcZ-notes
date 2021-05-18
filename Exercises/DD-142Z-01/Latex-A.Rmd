@@ -1,0 +1,71 @@
+---
+title: "Compose Latex Math"
+date: "MMM DD YYYY"
+output: learnr::tutorial
+runtime: shiny_prerendered
+---
+
+```{r include=FALSE}
+etude2::load_learnr_safely()
+library(gradethis)
+library(etude2)
+library(shiny)
+knitr::opts_chunk$set(echo = FALSE)
+learnr::tutorial_options(exercise.timelimit = 60,
+                 exercise.checker = gradethis::grade_learnr)
+```
+
+One of the challenges of calculus is making sense of mathematical notation. This requires careful reading, which is a skill you can develop. To that end, Daily Digitals will include typesetting challenges. These require you to read the traditional notation, take it apart, and re-assemble it using a famous and widely used notation called "Latex."
+
+Latex uses ordinary typewriter characters to describe the mathematical expression. There are  Latex commands for special symbols. For instance, `\beta` produces the letter $\beta$ and `\sum` produces the $\sum$ symbol. Today's challenge introduces subscripts, superscripts, and fractions.
+
+- Superscript: Example: `\beta^4` produces $\beta^4$. 
+- Subscript: Like superscript but use `_` (underscore) instead of `^` (caret).
+- Fractions: Example: `\frac{a + b}{c + d}` produces $\frac{a+b}{c+d}$
+
+
+```{r echo=FALSE}
+render_latex_ui <- function(id){
+HTML(glue::glue('<div style="font-size: 25px;">
+  <div id={NS(id, "prompt")} class="shiny-html-output"></div>
+</div>
+<hr/>
+<div style="font-size: 25px;">
+  <div class="form-group shiny-input-container">
+    <label class="control-label" for="latex">Type latex math here.</label>
+    <textarea id={NS(id, "latex")} class="form-control" rows="5" cols="50" style="font-size: 25px"></textarea>
+  </div>
+</div>
+<div id={NS(id, "rendered")} class="shiny-html-output" style="font-size:25px;"></div>
+<div id={NS(id, "feedback")} class="shiny-html-output" style="color: green; font-size:30px;"></div>'))
+}
+
+
+```
+
+```{r}
+render_latex_ui("latex-A")
+```
+
+```{r context="server"}
+id <- "latex-A"
+answers <- c("b_0 \\frac{x^3}{3}") 
+squash_str <- "\\{|\\}| |\t|\n"
+
+output[[NS(id, "rendered")]] <- renderUI({
+  withMathJax(paste0("$$", input[[NS(id, "latex")]], "$$"))
+})
+output[[NS(id, "prompt")]] <- renderUI({
+  withMathJax(paste0("Typeset this: $$",answers[1],"$$"))
+})
+output[[NS(id, "feedback")]] <- renderUI({
+  compare <- gsub(squash_str, "", answers)
+  if (gsub(squash_str, "", 
+           input[[NS(id, "latex")]]) %in% compare) "Success!"
+  else ""
+})
+
+
+```
+
+

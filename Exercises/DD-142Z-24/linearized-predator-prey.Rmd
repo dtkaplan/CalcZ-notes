@@ -1,0 +1,149 @@
+---
+title: "Linearized Predator-Prey"
+author: "Daniel Kaplan"
+---
+
+```{r include=FALSE}
+library(etude2)
+library(mosaic)
+library(mosaicCalc)
+library(math141Z)
+```
+
+
+The predator-prey model is 
+<div style="font-size: 30px; text-align:center;">
+$$\dot{R} = r R - \beta RF\\\dot{F} = - \mu F + \gamma RF$$ 
+</div> where all the parameters are larger than zero.
+
+These dynamics are nonlinear, due to the $R F$ term in the dynamics functions. Close to a fixed point, those nonlinear functions can be closely approximated by a simpler, linear function. Let's see how to construct that linear approximation and investigate what we can find out by looking at the approximately linear dynamics near a fixed point.
+
+
+
+```{r pred1-1, echo=FALSE, results="markup"}
+etude2::etudeQ(
+  "There is a fixed point of the dynamics at $R = F = 0$. There is also another fixed point. Where is it?",
+  "+$F = r/\\beta, R = \\mu/\\gamma$+",
+  "$F = \\beta/r, R = \\gamma/\\mu$",
+  "$R = \\beta/r, F = \\gamma/\\mu$",
+  "$R = r/\\beta, F = \\mu/\\gamma$"
+)
+```
+
+Now to examine the behavior of the rabbit-fox system near the non-zero fixed point $(R^\star, F^\star)$. For this, it will be handy to give names to the dynamical functions; we'll call them $g(R, F)$ and $h(R, F)$ respectively.
+
+$$\dot{R} = g(R,F) \equiv r R - \beta RF\\\dot{F} = h(R, F) \equiv - \mu F + \gamma RF$$
+
+To study the dynamics near the fixed point, we are going to linearize $g()$ and $h()$ around the fixed point. That is, define $x \equiv R - R^\star$ and $y \equiv F - F^\star$.
+
+The linearized dynamics will be ...
+
+$$\dot{x} = \left.\partial_R g(R, F)\right|_\mbox{fp} x + \left.\partial_F g(R, F)\right|_\mbox{fp} y\\
+\dot{y} = \left.\partial_R h(R, F)\right|_\mbox{fp} x + \left.\partial_F h(R, F)\right|_\mbox{fp} y\\$$ where $\cdot\left.\strut\right|_\mbox{fp}$ means to evaluate the derivative at the fixed point (fp) you found in the previous exercise.
+
+Note: Put aside for a moment any anxiety you might have about doing algebra with paper and pencil. If you have an inkling for what it means to say "evaluate the derivative at the fixed point," it means you already have a good grasp on the essentials of calculus. If not, make sure seek an explanation of the meaning of the phrase from an instructor or other friend or colleague. Understanding the meaning of the phrase is more important to your future work than being able to do the algebra flawlessly.
+
+```{r pred1-2, echo=FALSE, results="markup"}
+etude2::etudeQ(
+  "What is $\\left. \\partial_R g(R, F) \\right|_\\mbox{fp}$?",
+  "+$r - \\beta F^\\star$+",
+  "$\\mu - \\gamma R^\\star$",
+  "$-\\beta F^\\star$",
+  "$\\gamma R^\\star$"
+)
+```
+
+```{r pred1-3, echo=FALSE, results="markup"}
+etude2::etudeQ(
+  "What is $\\left. \\partial_F g(R, F) \\right|_\\mbox{fp}$?",
+  "$r - \\beta R^\\star$",
+  "$\\mu + \\gamma R^\\star$",
+  "+$-\\beta R^\\star$+",
+  "$\\gamma F^\\star$"
+)
+```
+
+```{r pred1-4, echo=FALSE, results="markup"}
+etude2::etudeQ(
+  "What is $\\left. \\partial_R h(R, F) \\right|_\\mbox{fp}$?",
+  "$r - \\beta R^\\star$",
+  "$\\mu - \\gamma F^\\star$",
+  "$-\\beta F^\\star$",
+  "+$\\gamma F^\\star$+"
+)
+```
+
+```{r pred1-5, echo=FALSE, results="markup"}
+etude2::etudeQ(
+  "What is $\\left. \\partial_R h(R, F) \\right|_\\mbox{fp}$?",
+  "$-\\beta F^\\star$",
+  "+$\\mu + \\gamma R^\\star$+",
+  "$-\\beta R^\\star$",
+  "$\\gamma F^\\star$"
+)
+```
+
+Plugging in the location of the fixed point $R^\star$ and $F^\star$ into the correct answer from each of the four previous questions will give you the four components of the matrix $\mathbf A$ in the general, linear, two-dimensional differential equation $\dot{\mathbf x} = {\mathbf A} {\mathbf X}$. Which of the following is the correct matrix for the linearized predator-prey model?
+
+$$\left[\begin{array}{cc}0 & -\beta/\gamma \\ -\gamma r/\beta & 0\end{array}\right]_\mbox{i}\ \ \ \ \ \ \left[\begin{array}{cc}0 & \beta\mu/\gamma \\ -\gamma r/\beta & 0\end{array}\right]_\mbox{ii}\ \ \ \ \ \ \left[\begin{array}{cc}0 & -\beta\mu/\gamma \\ \gamma r/\beta & 0\end{array}\right]_\mbox{iii}\ \ \ \ \ \ \left[\begin{array}{cc}r & -\beta\mu/\gamma \\ \gamma r/\beta & 0\end{array}\right]_\mbox{iv}$$
+
+```{r pred1-6, echo=FALSE, results="markup"}
+etude2::etudeQ(
+  "Which of the matrices labeled i through iv is correct?",
+  "i", "ii", "+iii+", "iv", random_answer_order = FALSE
+)
+```
+
+We haven't yet said anything about the relative sizes of the parameter $r$, $\beta$, $\gamma$, and $\mu$. But we do know they are all positive. That gives you enough information to sketch out roughly the flow field of the linearized equations. Here are some possibilities.
+
+```{r, echo=FALSE, warning=FALSE, message=FALSE, out.width="25%", fig.show="hold"}
+Pts <- tibble::tribble(
+  ~ x, ~ y, ~ label,
+  .7, .7, "I",
+  -.7, .7, "II",
+  -.7, -.7, "III",
+  .7, -.7, "IV"
+)
+
+quadrants <- function(P) {
+  P %>%
+    gf_text(y ~ x, data = Pts, label=~label, color="red", group=NA,  alpha=0.4, size=20) %>%
+    gf_hline(yintercept=0, color="red", size=3, alpha=0.4) %>%
+    gf_vline(xintercept=0, color="red", size=3, alpha=0.4)
+}
+
+math141Z::streamlines(list(~ 0.001*x + y, ~ x + 0.001*y),
+                      domain(x = c(-1,1), y = c(-1,1))) %>%
+  gf_refine(coord_fixed(x=c(-1,1), y=c(-1,1), clip="on")) %>%
+  gf_labs(title="(A)") %>% quadrants()
+
+
+math141Z::streamlines(list(~ 0.001*x - y, ~ x + 0.001*y),
+                      domain(x = c(-1,1), y = c(-1,1))) %>%
+  gf_refine(coord_fixed(x=c(-1,1), y=c(-1,1), clip="on")) %>%
+  gf_labs(title="(F)")%>% quadrants() ### Right one
+
+math141Z::streamlines(list(~ -x - 0.01*y, ~ x + y),
+                      domain(x = c(-1,1), y = c(-1,1))) %>%
+  gf_refine(coord_fixed(x=c(-1,1), y=c(-1,1), clip="on")) %>%
+  gf_labs(title="(C)") %>% quadrants()
+
+math141Z::streamlines(list(~ x - 0.01*y, ~ x - 0.01*y),
+                      domain(x = c(-1,1), y = c(-1,1))) %>%
+  gf_refine(coord_fixed(x=c(-1,1), y=c(-1,1), clip="on")) %>%
+  gf_labs(title="(D)") %>% quadrants()
+
+```
+
+Each flow field has a fixed point at (0,0). We've marked off the quadrants to help you figure out which field corresponds to the predator-prey model.
+
+At the boundary between Quadrants I and II, rabbits are at their equilibrium level but foxes are *above* theirs. Which way will the flow need to go? That will the rabbit population grow? Will the fox population grow?
+
+Similarly, at the boundary between Quadrants IV and I, rabbits are above equilibrium but foxes are at equilibrium. Will the rabbit population grow? Will the fox population?
+
+```{r pred1-7, echo=FALSE, results="markup"}
+etude2::etudeQ(
+  "Answering the motion on Quadrant boundaries questions will give you enough information to deduce which flow pattern is correct. Which is it?",
+  "A", "+B+", "C", "D", random_answer_order = FALSE
+)
+```

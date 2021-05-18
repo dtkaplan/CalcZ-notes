@@ -1,0 +1,112 @@
+---
+title: "Daily Digital 01"
+subtitle: "Math 142Z"
+date: "Due 11 Jan 2021"
+output: learnr::tutorial
+runtime: shiny_prerendered
+tutorial:
+  version: 0.1
+tags:
+- vectors
+---
+
+
+```{r mother1-setup, include=FALSE}
+# Calculus/graphics/data packages
+library(mosaic)
+library(mosaicCalc)
+library(ggformula)
+library(math141Z)
+library(DT)
+knitr::opts_chunk$set(echo = FALSE)
+learnr::tutorial_options(exercise.timelimit = 60, 
+                 exercise.checker = gradethis::grade_learnr)
+```
+
+
+```{r context="setup", include=FALSE}
+### Boilerplate: Packages relating to `{learnr}` and 
+### submission functionality.
+etude2::load_learnr_safely()
+library(gradethis)
+library(etude2)
+library(learnrhash)
+```
+
+```{r context="server"}
+apps_state <- reactiveValues()
+```
+
+
+```{r context="setup", include=FALSE}
+# Good practice to include these in any document bringing
+# with the answer submission system
+etude2::set_master_id("DD-01") # Add the DD number
+etude2::etude_document_name("DD-142Z-01") # Add the DD number
+# Fill this data frame in when document is completed. See etude2 documentation
+document_roster <- tibble::tribble(
+  ~ id,
+)
+# Leave this safety check here
+if (etude2::etude_document_name() == "DD-") 
+  stop("You must set the master_id() and the document name specifically and uniquely for this document")
+```
+
+## A new Daily Digital system
+
+```{r child="new-DD-system.Rmd"}
+```
+
+## Basic modeling functions
+
+```{r child="basic-modeling-functions.Rmd"}
+```
+
+## Drill
+
+You can reset the drill counter to start over at any time. When you can get 8 out of 10 correct, you can consider the drill complete. You'll have to hand in your work during *this session* to get credit. If you come back to the Daily Digital document at another time, the drill will have reset to 0/0, but your earlier submitted scores will still be in our records.
+
+```{r child="Drill-1.Rmd"}
+```
+
+
+
+## Integral of the day
+
+```{r child="IOD-A.Rmd"}
+```
+
+## Interior Functions
+
+Very often, functions used in modeling have a basic form, e.g. $\exp()$ or $\sin()$ composed with an *interior function*. For example, in $\exp(kx)$ the interior function is $k x$, while in $\sin(\omega x + \phi)$ the interior function is $\omega x + \phi$. Our basic modeling functions often have an interior function of the form $ax + b$, which is to say, a straight-line function. Functions with a straight-line interior function (e.g. $e^{2x+3}$ and $e^{-x}$ are much easier to anti-differentiate than functions with a nonlinear interior function (example: $\sin(x^2)$). 
+
+```{r child="interior_funs-1.Rmd"}
+
+```
+
+## Energy-Maneuverability Theory
+
+```{r child="Boyd-1.Rmd"}
+
+```
+
+## Parent, child, grandchild
+
+```{r child="chain-of-differentiation.Rmd"}
+
+```
+
+
+## Hand in your work
+
+REMEMBER: Press the REFRESH button before copying the hash code and submitting it at the <a href="https://forms.microsoft.com/Pages/ResponsePage.aspx?id=Bgq4einwwEWE0X2tGc48YcCKijCKVrhDla481YPh1UJUMVdERUtVT0VOSEpMMEdPQU1aWlpYTTA0RS4u" target = "_blank">USAFA Math 142Z site</a>
+
+```{r child=system.file("submission-handler.Rmd", package="etude2")}
+
+```
+
+
+-----
+
+Location: `r knitr::current_input(dir = TRUE)` `r etude2::etude_document_name("142Z-DD-01.Rmd")`
+

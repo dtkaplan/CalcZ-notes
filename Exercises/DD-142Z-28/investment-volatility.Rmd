@@ -1,0 +1,79 @@
+---
+title: "Volatility and returns"
+author: "Daniel Kaplan"
+runtime: shiny_prerendered
+---
+
+```{r include=FALSE, context="setup"}
+library(etude2)
+library(mosaic)
+library(mosaicCalc)
+library(viridis)
+```
+
+When people invest money, they expect a return. Generally, the return is measured as a percentage per year. An $r=10\%$ annual return---that's pretty high these days---means that at the end of the year your investment of, say, $500 will be worth $550. And remember, saying $r=10\%$ is exactly the same thing as saying $r=0.10$. 
+
+Banks and such do things in discrete time, e.g. crediting your savings account with interest once a month. But this is calculus, so we focus on continuous time. (And, of course, Nature does things in continuous time!)
+
+If $S$ is the amount of money you have invested at a return of $r$, the evolution of $S$ over time is given by a familiar, linear differential equation: $$\dot{S} =  r S\ \ \ \implies \ \ \  S(t) = S_0 e^{r t}$$
+
+**Quick review questions**:
+
+1. Which of those two equations is the differential equation and which is the solution?
+2. What symbol is being used to stand for the "state" of the system?
+3. What is the form of the dynamical function of state?
+4. Is there a fixed point? If so, is it stable?
+
+Investments in the stock market provide two types of return. We'll focus on the return that comes from the changing price of the stock, which can go up or down from day to day. The other kind of return is dividends, the typically quarterly payment made by the company to stock holders. In investments, dividends should not be ignored, but we aren't interested in them here.
+
+Now imagine that you expect, for whatever reason, the stock price to go up by 2% per year ($r=0.02$) on average. Of course, the price is volatile so the 2% is by no means guaranteed. We'll imagine the volatility is 25% per year.  
+
+This situation, which includes volatility, is modeled by a modification of differential equations called "stochastic differential equations." ("Stochastic" comes from the Greek word for "aiming", as in aiming an arrow at a target. You won't necessarily hit exactly.) The math is more advanced and we will not go into details. Our point here is to warn you: Now that you are expert about (ordinary) differential equations, you need to be aware that things are somewhat different in a stochastic situation. 
+
+To that end, we're going to show you trajectories that follow the mathematics of stochastic exponential growth (with $r=0.2$ per year and volatility $\sigma = 0.25$ per year). On top of that, we'll show in red the trajectory from (ordinary, non-stochastic) exponential dynamics $\dot{S} = r S$. In blue, we'll show the theoretical average stochastic dynamics. In all cases, we'll set the initial condition to be $S_0 = 100$. We'll follow the trajectories for three years.
+
+```{r echo=FALSE, cache=TRUE}
+#set.seed(111)
+dt <- 0.001
+r <- 0.02
+S_0 <- 100
+tpts <- seq(0, 3, by=dt)
+N <- length(tpts)
+ntrajs <- 100
+colors <- hcl.colors(ntrajs)
+sigma <- 0.25
+Trajs <- list()
+x_sum <- 0
+for (k in 1:ntrajs) {
+  increments <- exp((r - sigma^2/2)*dt + sigma*sqrt(dt)*rnorm(N,0,1))
+  Trajs[[k]] <- tibble::tibble(
+    t = tpts,
+    x = S_0 * cumprod(increments),
+    color = colors[k]
+  )
+  x_sum <- x_sum + S_0*cumprod(increments) # for the average return
+}
+
+deterministic <- tibble::tibble(
+  t = tpts,
+  x = S_0*exp(0.02*t),
+  color = "red",
+  x_ave = x_sum/ntrajs,
+  xrand = S_0 * exp((r - sigma^2/2)*t)
+)
+
+gf_line(x ~ t, data = bind_rows(Trajs),  color= ~ color, alpha=0.1) %>%
+  gf_line(x ~ t, data = bind_rows(Trajs[c(1, round(ntrajs/2), ntrajs)]),
+          color= ~ color) %>%
+  gf_line(x ~ t, data = deterministic, color=~ color) %>%
+  gf_line(xrand ~ t, data = deterministic, color="blue") %>%
+  gf_refine(scale_color_identity()) %>% #, scale_y_log10()) %>%
+  gf_labs(x="Time (years)", y="Value of investment")
+```
+
+
+The eye is drawn to the trajectories leading to large returns. That's misleading. Although there are a few trajectories that show a 3-year return above 50% (that is, to $150 or higher) in fact the majority of trajectories fall *below* that of a purely deterministic $r=2\%$ annual return exponential process. The volatility causes a *decrease* in the median return.
+
+It's easy to understand why the stochastic shocks cause a loss in return. Consider a stock with an initial price of $100 that in two successive days goes up by 50% and down by 50%. These ups and downs should cancel out, right? That's not what happens:
+
+$\$100 \times 1.5 \times 0.5 = \$75$

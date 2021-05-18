@@ -1,0 +1,172 @@
+---
+title: "Dynamics of variance"
+author: "Daniel Kaplan"
+runtime: shiny_prerendered
+---
+
+```{r include=FALSE, context="setup"}
+library(etude2)
+etude2::load_learnr_safely()
+library(mosaic)
+library(mosaicCalc)
+```
+
+In this section, we'll explore the connection between diffusion and the gaussian function. Recall that we modeled the *temperature* along a one-dimensional spatial domain (a "bar of iron") as it evolves in time as a function of both position and time: $C(x, t)$. The same sort of function---of position and time---can be used to describe the *concentation* of particles freely diffusing along a medium such as air in a pipe. 
+
+We constructed a differential equation to describe the dynamics of $C(x, t)$ called the "heat" equation or the "diffusion" equation, depending on context. Before using that differential equation, let's explore a little bit what we might mean about the "dynamics of a function."
+
+In studing dynamics we worked first with time taken discretely, e.g. a sequence of states ${\mathbf x}_0$, ${\mathbf x}_1$, ${\mathbf x}_2$, $\ldots$, ${\mathbf x}_n$, $\ldots$. The vector ${\mathbf x}_n$ is the "state" of the system at time step $n$. In our work, we looked at 1-dimensional and 2-dimensional states, tracing out a trajectory from one time step to the next and the next and so on. Exactly the same ideas would apply to 3- and higher-dimensional states, say an ecosystem involving growing grass, and populations of mice, rabbits, foxes, birds, and so on.
+
+In our present contexts, heat or diffusion, we are working with *functions*. Let's return to the earlier metaphor of a movie of $C(x, t)$ with the frames taken every $h$ seconds. The movie is the sequence of frames $C_0(x)$, $C_h(x)$, $C_{2h}(x)$, $\ldots$, $C_t(x)$, $\ldots$.
+
+To describe the dynamics---that is, the change from frame to frame in the movie---we write a finite-difference equation, generically: $$C_{n+1}(x) = f(C_n(x))$$  In the movie of diffusion, that equation will be this:
+
+$$C_{t+h}(x) = C_n(x) + h\, \alpha\,  \partial_{xx} C_n(x)$$
+The term $\partial_{xx} C(x)$ tells us the net flux of heat/particles/probability into the point $x$. 
+
+In English, this says, "The concentration at $x$ in one frame of the movie is the amount that was there in the previous frame plus the net flux of heat/particles from the neighboring points." 
+
+Now imagine making the movie using an ultra-high-speed camera that takes a new frame every $h$ microseconds. We'll label the time of one frame as $t$ and the time of the next frame as $t+h$. The frame-to-frame change is therefore $$C_{t+h}(x) = C_t(x) + h\, \alpha \partial_{xx} C_t(x)$$
+We can equally well write $C_t(x)$ as $C(x, t)$, our notation for functions on a continuous domain. Doing this, and re-arranging the formula, gives:
+$$\frac{C(x,t+h) - C(x,t)}{h} = \alpha \partial_{xx} C(x, t)$$
+The left side of this equation is the differencing operator applied to $C(x, t)$ (with respect to $t$). In the limit as $h\rightarrow 0$ (that is, as you turn the video frame rate faster and faster) we can replace the left side of the equation with the partial derivative $\partial_t C(x,t)$. That's the heat/diffusion equation.
+
+We're going to find the solution $C(x,t)$ to the differential equation using Euler's method. In other words, we'll make movies of the function**s** $C_t(x)$ one frame at a time. We know the dynamics; to start we need is an initial condition, the function $C_0(x)$.
+
+```{r echo=FALSE}
+C_funs <- list()
+flux_funs <- list()
+tmp <- list()
+xpts <- seq(-50, 50, length=1000)
+C_funs[[1]] <- tibble::tibble(
+  x = xpts,
+  y = dnorm(x, 0, 1)
+)
+
+for (k in 1:500) {
+  tmp <- spliner(y ~ x, data = C_funs[[k]])
+  foo <- flux_funs[[k]] <- D(tmp(x) ~ x + x, .hstep=1)
+  C_funs[[k+1]] <- tibble::tibble(
+    x = xpts,
+    y = tmp(x) + 0.1*foo(x)
+  )
+}
+
+```
+
+Imagine that we have a long, thin pipe filled with still air and we inject at position $x=0$ a concentration of particles, say 1600 per cm^3. Equivalent, you could picture a freezing-cold iron bar and, at time $t=0$, we place a white-hot coal on the center point, heating it to 1600 (deg C) and then removing the coal. The initial condition looks like this:
+
+```{r echo=FALSE, warning=FALSE}
+top <- max(C_funs[[1]]$y)
+gf_line(y ~ x, data = C_funs[[1]] %>% filter(abs(x) < 25)) %>%
+  gf_labs(y="Temperature (deg C)", x="Position along bar", title="Initial condition C(x,t=0)") %>%
+  gf_hline(yintercept = exp(-.5)*top, color="red")
+```
+
+The red horizontal line is positioned to enable you to read off the standard deviation of the bell-shaped function.
+
+The next frame of the movie will show $C_h(x)$. To construct that, we'll compute the net flux into each point on the bar.
+
+```{r echo=FALSE}
+tmp <- spliner(y ~ x, data = C_funs[[1]])
+foo <- D(tmp(x) ~ x + x, .hstep=1)
+slice_plot(foo(x) ~ x, domain(x=c(-25, 25)), npts=500) %>%
+  gf_labs(y="Net flux (deg C/cm^2)", x="Position along bar", title="Net flux at time t=0")
+```
+
+You can see that there is a strong net flux *out* of the center point and a net flux in to neighboring regions: the heat will be spreading out. Far from the center point, the net flux is zero. In the next graphs, we'll zoom in on the center of the domain, $-2.5 \leq x \leq 2.5$. 
+
+To find the next Euler step, that is, the function $C_h(x)$, we add the net flux (scaled by $h \alpha$) to $C_0(x)$. As usual, we take one Euler step after the other to reach whatever time $t$ we want. 
+
+
+Here is the solution $C(x, t=0.5)$ shown with $C(x, t=0)$ superimposed in blue. (We set $\alpha=2$ and used 5 Euler steps with $h=0.1$.)
+
+```{r echo=FALSE, warning=FALSE}
+draw_C <- function(n, compare_n=1, show_sd=TRUE, domain=5) {
+  Dat <- C_funs[[n]] %>% filter(abs(x) < domain)
+  ylab <- glue::glue("C(x, t={(n-1)*0.1}) in deg C.")
+  title <- glue::glue("C(x, t={(n-1)*0.1})")
+  redline <- exp(-0.5) * max(Dat$y)
+  P <- gf_line(y ~ x, data = C_funs[[n]] %>% filter(abs(x) < domain)) %>%
+    gf_labs(y=ylab, 
+                  x="Position along bar", title=title) 
+  
+  if (compare_n > 0) {
+    P <- P %>% 
+      gf_line(y ~ x, alpha=0.5, color="blue", 
+            data = C_funs[[compare_n]] %>% filter(abs(x) < domain)) 
+  }
+  
+  if (show_sd) {
+    P %>% gf_hline(yintercept=redline, color="red")
+  } else {
+    P
+  }
+}
+draw_C(6, domain=25, show_sd=FALSE)
+```
+
+At time $t=0.5$ , the temperature at the center has gone down. Less obviously, $C(x, h)$ is a tiny bit wider than $C(x,t=0)$. That is, heat has spread out a bit from the center.
+
+Here is the function $C(x,t)$ at $t=1, 2, 3, 4$. You can see the function spreading out as $t$ increases. We've zoomed in on the x-axis to where the action is.
+
+```{r echo=FALSE, out.width="50%", fig.show="hold", warning=FALSE}
+axis5 <- function(P, xlim=5, dxlim=xlim/50) {
+  P %>% gf_refine(scale_x_continuous(breaks=(-xlim):xlim, 
+                               minor_breaks = seq(-xlim,xlim,by=dxlim)))
+}
+draw_C(11, domain=5, show_sd=TRUE) %>% axis5()
+draw_C(21, domain=5, show_sd=TRUE) %>% axis5()
+draw_C(31, domain=5, show_sd=TRUE) %>% axis5()
+draw_C(41, domain=5, show_sd=TRUE) %>% axis5()
+```
+
+
+
+```{r vd1-1, echo=FALSE, results="markup"}
+etude2::etudeQ(
+  "Use the intersection between the red horizontal line and the black curve to find the width of the black curve, that is, the standard deviation. Which of these sequences correspond to the standard deviation at times 1, 2, 3, and 4?",
+  "$\\sigma_1 = 1.7, \\sigma_2 = 2.1, \\sigma_3 = 2.5, \\sigma_4 = 2.9$",
+  "+$\\sigma_1 = 1.7, \\sigma_2 = 2.2, \\sigma_3 = 2.6, \\sigma_4 = 2.9$+",
+  "$\\sigma_1 = 1.7, \\sigma_2 = 2.2, \\sigma_3 = 2.7, \\sigma_4 = 3.2$",
+  "$\\sigma_1 = 1.7, \\sigma_2 = 2.2, \\sigma_3 = 2.8, \\sigma_4 = 3.5$",
+  random_answer_order = FALSE
+)
+```
+
+Here is a similar set of graphs for $t=10, 20, 30, 40$:
+
+```{r echo=FALSE, fig.height=2, fig.width=6, warning=FALSE}
+draw_C(101,0, domain=15, show_sd=TRUE) %>% axis5(xlim=15, dxlim=0.5)
+draw_C(201,0, domain=15, show_sd=TRUE) %>% axis5(xlim=15, dxlim=0.5)
+draw_C(301,0, domain=15, show_sd=TRUE) %>% axis5(xlim=15, dxlim=0.5)
+draw_C(401,0, domain=15, show_sd=TRUE) %>% axis5(xlim=15, dxlim=0.5)
+```
+
+```{r vd1-2, echo=FALSE, results="markup"}
+etude2::etudeQ(
+  "Which of these sequences correspond to the standard deviation at times 10, 20, 30, and 40?",
+  "+$\\sigma_{10} = 4.5, \\sigma_{20} = 6.4, \\sigma_{30} = 7.7, \\sigma_{40} = 9.0$+",
+  "$\\sigma_{10}=  4.5, \\sigma_{20} = 6.0, \\sigma_{30} = 7.5, \\sigma_{40} = 9.0$",
+  "$\\sigma_{10} = 4.5, \\sigma_{20} = 5.8, \\sigma_{30} = 7.1, \\sigma_{40} = 8.4$",
+  "$\\sigma_{10} = 4.9, \\sigma_{20} = 6.0, \\sigma_{30} = 7.9, \\sigma_{40} = 9.3$",
+  random_answer_order = FALSE
+)
+```
+
+```{r vd1-3, echo=FALSE, results="markup"}
+etude2::etudeQ(
+  "The standard deviation increases with time. Which one of these power-law relationships best corresponds to the standard deviations you measured off the graphs?",
+  "$\\sigma_t = k t$",
+  "$\\sigma_t = k t^2$",
+  "+$\\sigma_t = k \\sqrt{t}$+",
+  "$\\sigma_t = k t^{1.5}$"
+)
+```
+
+
+```{r vd1-4, echo=FALSE, results="markup"}
+etude2::etudeEssay(
+  "A more fundamental way to measure the increase in width of $C(x, t)$ with time is to use the **variance** rather than the standard deviation. Describe briefly the very simple pattern that the variance of $C(x, t)$ follows over time. (You don't have to give a formula, just say what function it is.)"
+)
+```

@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+
+
+<meta name="progressive" content="false" />
+<meta name="allow-skip" content="false" />
+
+<title>Daily Digital 02</title>
+
+
+<!-- highlightjs -->
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+<!-- taken from https://github.com/rstudio/rmarkdown/blob/67b7f5fc779e4cfdfd0f021d3d7745b6b6e17149/inst/rmd/h/default.html#L296-L362 -->
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("section-TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+<!-- end tabsets -->
+
+
+
+</head>
+
+<body>
+
+
+
+<div class="pageContent band">
+<div class="bandContent page">
+
+<div class="topics">
+
+<!-- SET THE ABOVE prefix AND docname to be unique in the series of DDs -->
+<!-- END OF BOILERPLATE -->
+<div id="section-objectives" class="section level2">
+<h2>Objectives</h2>
+<ol style="list-style-type: lower-alpha">
+<li>Use Euler’s Method to approximate anti-derivatives when the value of <span class="math inline">\(h\)</span> is small.</li>
+<li>Use your knowledge of derivative rules to solve backwards for anti-derivatives.</li>
+<li>Understand the notation of an indefinite integral to include the integral symbol <span class="math inline">\(\left(\int\right)\)</span>, differential of the variable (<span class="math inline">\(dx\)</span>), the constant of integration (<span class="math inline">\(+C\)</span>) and the child and parent function <span class="math inline">\((F(x))\)</span>.</li>
+<li>Determine the units of an anti-derivative given the base function and the variable of integration. Understand that the output of anti-differentiation is a function known as a general solution and more information is necessary to find the particular solution.</li>
+</ol>
+</div>
+<div id="section-starting-numerically" class="section level2">
+<h2>Starting numerically</h2>
+<p>In the last Daily Digital, you were tasked with using your understanding of the algebra rules of <em>differentiation</em> to carry out <em>anti-differentiation</em>. Fortunately, it’s not too hard to do this when the function involved is one of our basic modeling functions with a linear interior function, e.g. <span class="math inline">\(\int e^{kx}dx = \frac{1}{k} e^{kx}\)</span>. Happy cases when this sort of algebraic integration can be done are found in textbooks. But outside of textbook situations, it’s common that there is no algebraic method of finding an anti-derivative. The clip below from the movie <em>Hidden Figures</em> shows one historically important example that had to be solved before the first manned space flight could be launched.</p>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/v-pbGAts_Fg" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
+</iframe>
+<p>The method mentioned in the clip, the Euler Method, is super simple. So much so that we will use it to introduce, with only trivial algebra, the properties of anti-derivatives. (The Euler Method was published in 1768, but it is not a preferred method for modern uses of calculus. A much better method, Runge-Kutta, was published in 1901. The NASA engineers of the late 1950s and early 1960s undoubtedly knew of and used methods like Runge-Kutta, despite what the movie clip suggests.)</p>
+<p>As you know, the result of applying the anti-differentiation operator to a function <span class="math inline">\(f(t)\)</span> will be another function, which we often write <span class="math inline">\(F(t)\)</span> simply to remind us where it came from. (So anti-differentiating <span class="math inline">\(g(t)\)</span> would produce <span class="math inline">\(G(t)\)</span>, and anti-differentiating <span class="math inline">\(h(x)\)</span> will produce <span class="math inline">\(H(x)\)</span>.)</p>
+<div id="section-discrete-inputs-to-functions" class="section level3">
+<h3>Discrete inputs to functions</h3>
+<p>The result of applying the Euler method to a function is also another function, but it comes in the form of a vector of numbers all ready to be displayed graphically. So keep in mind the the function produced by Euler will be known only over a specified domain, just as the graph of a function covers only the specified domain. For instance, here is the graph of the natural logarithm function over the domain <span class="math inline">\(1 \leq x \leq 21\)</span>.</p>
+<p><img src="142Z-DD-02_files/figure-html/dots0-1.png" width="624" /></p>
+<p>The command in the sandbox is a little different than the usual <code>slice_plot()</code>. We’ve added on two things:</p>
+<ol style="list-style-type: decimal">
+<li><p>An argument <code>npts=11</code> which says to use 11 discrete values of the input in plotting the graph.</p></li>
+<li><p>A second graphics layer that shows a dot at each input point where <code>slice_plot()</code> evaluated the function. Behind the seemingly smooth curves that <code>slice_plot()</code> produces is really a discrete set of points each of which is the output of the function at some numerical input.</p></li>
+</ol>
+<p>In our typical use of <code>slice_plot()</code> we leave out the dots and show only the straight line segments that connect the positions where the dots would be plotted. If the positions are spaced closely enough, your eye will not see the joints between successive straight lines and you will perceive the graph as a smooth curve.</p>
+<div class="panel panel-default">
+<div data-label="slicedots1" class="tutorial-question panel-body">
+<div id="slicedots1-answer_container" class="shiny-html-output"></div>
+<div id="slicedots1-message_container" class="shiny-html-output"></div>
+<div id="slicedots1-action_button_container" class="shiny-html-output"></div>
+<script>if (Tutorial.triggerMathJax) Tutorial.triggerMathJax()</script>
+</div>
+</div>
+<p>Now take away the <code>npts=</code> argument. This will implicitly set <code>npts</code> to a default value, which is what we have been using for most plots in this course.</p>
+<div class="panel panel-default">
+<div data-label="slicedots2" class="tutorial-question panel-body">
+<div id="slicedots2-answer_container" class="shiny-html-output"></div>
+<div id="slicedots2-message_container" class="shiny-html-output"></div>
+<div id="slicedots2-action_button_container" class="shiny-html-output"></div>
+<script>if (Tutorial.triggerMathJax) Tutorial.triggerMathJax()</script>
+</div>
+</div>
+<p>We could use a much larger value for <code>npts</code>, but there is no reason so long as a smaller value produces a graph faithful to the function being graphed.</p>
+<p>Keeping the domain the same, <span class="math inline">\(1 \leq x \leq 21\)</span>, plot out a sinusoid with a period of 0.3 using the default <code>npts</code>: <span class="math inline">\(g(x) \equiv \sin(2\pi x/0.3)\)</span>. The graph, which shows about 67 cycles of the sinusoid, will not look much like a sinusoid. In particular, although the sine function should reach from -1 to 1 over each cycle, the graph does not.</p>
+<div class="panel panel-default">
+<div data-label="slicedots3" class="tutorial-question panel-body">
+<div id="slicedots3-answer_container" class="shiny-html-output"></div>
+<div id="slicedots3-message_container" class="shiny-html-output"></div>
+<div id="slicedots3-action_button_container" class="shiny-html-output"></div>
+<script>if (Tutorial.triggerMathJax) Tutorial.triggerMathJax()</script>
+</div>
+</div>
+</div>
+</div>
+<div id="section-using-the-euler-method" class="section level2">
+<h2>Using the Euler Method</h2>
+<p>The tilde expression that you type in the box defines a function <span class="math inline">\(f(x)\)</span> which is displayed in the BOTTOM graph.</p>
+<div class="form-group shiny-input-container" style="width: 30%;">
+<label class="control-label" for="tilde">Tilde expression for f(x)</label>
+<input id="tilde" type="text" class="form-control" value="exp(1.5*x) ~ x"/>
+</div>
+<p>The top graph shows <span class="math inline">\(F(x) \equiv \int f(x) dx\)</span>. The <span class="math inline">\(F(x)\)</span> function is drawnn as a light gray line because we want you mostly to ignore it. <span class="math inline">\(F(x)\)</span> will be what we try to construct using the Euler method with just the information provided by <span class="math inline">\(f(x)\)</span>.</p>
+<p>The Euler method applies over a defined domain <span class="math inline">\(a \leq x \leq b\)</span> which you can set with the slider. Euler also uses a step-size <span class="math inline">\(h\)</span> which you can choose with the drop-down menu. Keep <span class="math inline">\(h\)</span> large until you understand how <span class="math inline">\(f(x)\)</span> is used to draw the colorful segments drawn in the top graph.</p>
+<p><div class="form-group shiny-input-container" style="width: 200px;">
+<label class="control-label" for="domain">Domain for plot</label>
+<input class="js-range-slider" id="domain" data-type="double" data-min="-10" data-max="10" data-from="0" data-to="3" data-step="0.5" data-grid="true" data-grid-num="10" data-grid-snap="false" data-prettify-separator="," data-prettify-enabled="true" data-keyboard="true" data-drag-interval="true" data-data-type="number"/>
+</div> <div class="form-group shiny-input-container" style="width: 20%;">
+<label class="control-label" for="h">h</label>
+<div>
+<select id="h"><option value="0.01">0.01</option>
+<option value="0.05">0.05</option>
+<option value="0.1">0.1</option>
+<option value="0.25" selected>0.25</option>
+<option value="0.5">0.5</option></select>
+<script type="application/json" data-for="h" data-nonempty="">{}</script>
+</div>
+</div></p>
+<p>From <span class="math inline">\(a\)</span> and <span class="math inline">\(h\)</span>, a series of discrete values <span class="math inline">\(x_i = a + i h\)</span> is constructed and <span class="math inline">\(f(x)\)</span> is evaluated at each of those discrete values. This is shown graphically in the BOTTOM plot, with each dot positioned at the coordinates <span class="math inline">\((x_i, f(x_i))\)</span>. In the plot, color is also used to show <span class="math inline">\(f(x_i)\)</span> so that you’ll be able to associate each <span class="math inline">\(f(x_i)\)</span> value with the corresponding segment in the TOP plot.</p>
+<p>Recall that <span class="math inline">\(f(x)\)</span> is the slope of the anti-derivative function <span class="math inline">\(F(x)\)</span> that we’re going to find using Euler’s method. In the top graph, those slopes—the information that we have from the dots in the bottom graph—are drawn as little segments. But the little segments are disconnected.</p>
+<p>To assemble the segments into a continuous function, we move each sloped segment vertically (without changing the slope) to start at the end-point of the previous segment. You could do this one segment after the other, like stacking toy blocks into a tower. We’ve given you a slider that lets you gradually move the segments toward the connected whole.</p>
+<div id="segments" class="shiny-plot-output" style="width: 100% ; height: 400px"></div>
+<div id="fx" class="shiny-plot-output" style="width: 100% ; height: 400px"></div>
+<p><div class="form-group shiny-input-container" style="width: 200px;">
+<label class="control-label" for="alpha">Move toward 1 to connect the segments together:</label>
+<input class="js-range-slider" id="alpha" data-min="0" data-max="1" data-from="0" data-step="0.01" data-grid="true" data-grid-num="10" data-grid-snap="false" data-prettify-separator="," data-prettify-enabled="true" data-keyboard="true" data-data-type="number"/>
+</div> <div class="form-group shiny-input-container" style="width: 200px;">
+<label class="control-label" for="C">Constant of integration, C</label>
+<input class="js-range-slider" id="C" data-min="-10" data-max="10" data-from="0" data-step="1" data-grid="true" data-grid-num="10" data-grid-snap="false" data-prettify-separator="," data-prettify-enabled="true" data-keyboard="true" data-data-type="number"/>
+</div></p>
+<p>The Euler approximation to <span class="math inline">\(F(x)\)</span> gets better as the step size <span class="math inline">\(h\)</span> gets smaller.</p>
+</div>
+<div id="section-dimensions-of-anti-derivatives" class="section level2">
+<h2>Dimensions of anti-derivatives</h2>
+<p>The output of a function, being a quantity, has dimension and units. Suppose the dimension of the output of a function <span class="math inline">\(v(t)\)</span> is <span class="math inline">\(L/T\)</span>, for instance, meters-per-second.</p>
+<p>The anti-derivative function <span class="math inline">\(V(t) \equiv \int v(t) dt\)</span> will also have dimension and units.</p>
+<p>Recall that in constructing the anti-derivative using the Euler method, we multiply the values of <span class="math inline">\(v(t)\)</span> times some small increment in the input, <span class="math inline">\(h\)</span>. Therefore the dimension of the output of <span class="math inline">\(V(t)\)</span> will be <span class="math inline">\([v(t)] [t]\)</span>. So if <span class="math inline">\([v(t)] = L/T\)</span>, the dimension <span class="math inline">\([V(t)] [t] = L T/T = L\)</span>. Units for such a dimension would be, for instance, meters. This makes sense, since if you accumulate velocity (meters-per-sec) over an interval of time (sec) you end up with the distance travelled (meters).</p>
+<p>Suppose you know the acceleration <span class="math inline">\(a(t)\)</span> of an object as a function of time. The dimension of acceleration is <span class="math inline">\(L/T^2\)</span>.</p>
+<div class="panel panel-default">
+<div data-label="accel" class="tutorial-question panel-body">
+<div id="accel-answer_container" class="shiny-html-output"></div>
+<div id="accel-message_container" class="shiny-html-output"></div>
+<div id="accel-action_button_container" class="shiny-html-output"></div>
+<script>if (Tutorial.triggerMathJax) Tutorial.triggerMathJax()</script>
+</div>
+</div>
+<p>Suppose you know the power consumed by an appliance <span class="math inline">\(p(t)\)</span> as a function of time. Typically appliances have a cycle and use different amounts of power during different parts of the cycle. (Think of a clothes washer.)</p>
+<div class="panel panel-default">
+<div data-label="power" class="tutorial-question panel-body">
+<div id="power-answer_container" class="shiny-html-output"></div>
+<div id="power-message_container" class="shiny-html-output"></div>
+<div id="power-action_button_container" class="shiny-html-output"></div>
+<script>if (Tutorial.triggerMathJax) Tutorial.triggerMathJax()</script>
+</div>
+</div>
+</div>
+<div id="section-euler-on-the-computer" class="section level2">
+<h2>Euler on the computer</h2>
+<p>Methods such as Euler are tedious, ideal for the computer. So let’s look at some basic R functions for implementing the Euler Method when we know the function to be anti-differentiated <span class="math inline">\(f(x)\)</span>, the step size <span class="math inline">\(h\)</span>, and the domain <span class="math inline">\(a \leq x \leq b\)</span>. At the heart of the implementation is a function <code>cumsum()</code>, the “cumulative sum.” This does something very simple. The cumulative sum of 1, 2, 3, 4 is 1, 3, 6, 10.</p>
+<div class="tutorial-exercise" data-label="accum" data-caption="Implementing Euler" data-completion="1" data-diagnostics="1" data-startover="1" data-lines="0">
+<pre class="text"><code>f &lt;- makeFun(sin(2*pi*x/0.3) ~ x) # the function to be anti-differentiated.
+a &lt;- 1 # the lower bound.
+b &lt;- 2 # the upper bound.
+h &lt;- 0.01 # the step size
+x_discrete &lt;- seq(a, b, by = h) # all of the discrete x values based on a, b, and h
+f_discrete &lt;- f(x_discrete) # all of the values of f(x) when the discrete x values are used as the input
+F_discrete &lt;- cumsum(h * f_discrete) # the discrete values of the anti-derivative, F(x)
+gf_point(F_discrete ~ x_discrete) %&gt;%
+  slice_plot(f(x) ~ x, color = &quot;gray&quot;, domain(x=c(a,b)))</code></pre>
+<script type="application/json" data-opts-chunk="1">{"fig.width":6.5,"fig.height":4,"fig.retina":2,"fig.align":"default","fig.keep":"high","fig.show":"asis","out.width":624,"warning":true,"error":false,"message":true,"exercise.df_print":"paged","exercise.timelimit":60,"exercise.checker":["function (label = NULL, solution_code = NULL, user_code = NULL, ","    check_code = NULL, envir_result = NULL, evaluate_result = NULL, ","    envir_prep = NULL, last_value = NULL, ...) ","{","    (utils::getFromNamespace(\"grade_learnr_\", \"gradethis\"))(label = label, ","        solution_code = solution_code, user_code = user_code, ","        check_code = check_code, envir_result = envir_result, ","        evaluate_result = evaluate_result, envir_prep = envir_prep, ","        last_value = last_value, ...)","}"]}</script>
+</div>
+<p>Here is a function:</p>
+<pre class="r"><code>g &lt;- makeFun(exp(-0.2*(x^2))~x)</code></pre>
+<p>Using the sandbox above, find and plot the anti-derivative of <span class="math inline">\(g(x)\)</span> over the domain <span class="math inline">\(-6 \leq x \leq 6\)</span>.</p>
+<div class="panel panel-default">
+<div data-label="g-anti" class="tutorial-question panel-body">
+<div id="g-anti-answer_container" class="shiny-html-output"></div>
+<div id="g-anti-message_container" class="shiny-html-output"></div>
+<div id="g-anti-action_button_container" class="shiny-html-output"></div>
+<script>if (Tutorial.triggerMathJax) Tutorial.triggerMathJax()</script>
+</div>
+</div>
+</div>
+<div id="section-lessons-from-euler" class="section level2">
+<h2>Lessons from Euler</h2>
+<p>Some things to learn from the Euler Method:</p>
+<ol style="list-style-type: decimal">
+<li><p>Anti-differentiation is no more than <em>accumulating</em> the <span class="math inline">\(f(x)\)</span>, after multiplying it by an appropriate step size <span class="math inline">\(h\)</span>.</p></li>
+<li><p>Since <span class="math inline">\(h\)</span> has the same dimension as the input <span class="math inline">\(x\)</span>, the dimension of the anti-derivative will be [<span class="math inline">\(f(x)\)</span>][<span class="math inline">\(h\)</span>].</p></li>
+</ol>
+<p>In our description of the Euler method, we made the assumption that when integrating <span class="math inline">\(f(x)\)</span> over the domain <span class="math inline">\(a \leq x \leq b\)</span>, we can set <span class="math inline">\(F(a) = 0\)</span>. There’s nothing fatal about this assumption, but we should admit that we could have used any value we like for <span class="math inline">\(F(a)\)</span>. Using a non-zero value of <span class="math inline">\(F(a)\)</span> would simply add the same number to every point in the output of the Euler Method.</p>
+<ol start="3" style="list-style-type: decimal">
+<li>Any chosen number for <span class="math inline">\(F(a)\)</span> generates an authentic, genuine anti-derivative of <span class="math inline">\(f(x)\)</span>. Since <span class="math inline">\(F(a)\)</span> can be any number at all, there are infinitely many anti-derivatives of any function <span class="math inline">\(f(x)\)</span>. They all have the same shape, but differ from one another by a constant.</li>
+</ol>
+<p>This constant, which amounts to the choice of <span class="math inline">\(F(a)\)</span>, is called the “constant of integration.” In many modeling tasks involving anti-differentiation, we need to find a choice for the “constant of integration” (that is, <span class="math inline">\(F(a)\)</span>) that fits with what else we know about the system being modeled.</p>
+<div class="panel panel-default">
+<div data-label="euler-lessons" class="tutorial-question panel-body">
+<div id="euler-lessons-answer_container" class="shiny-html-output"></div>
+<div id="euler-lessons-message_container" class="shiny-html-output"></div>
+<div id="euler-lessons-action_button_container" class="shiny-html-output"></div>
+<script>if (Tutorial.triggerMathJax) Tutorial.triggerMathJax()</script>
+</div>
+</div>
+<div class="panel panel-default">
+<div data-label="C1" class="tutorial-question panel-body">
+<div id="C1-answer_container" class="shiny-html-output"></div>
+<div id="C1-message_container" class="shiny-html-output"></div>
+<div id="C1-action_button_container" class="shiny-html-output"></div>
+<script>if (Tutorial.triggerMathJax) Tutorial.triggerMathJax()</script>
+</div>
+</div>
+</div>
+<div id="section-math-notation-and-r" class="section level2">
+<h2>Math notation and R</h2>
+<p>Consider this expression in math notation:</p>
+<div style="font-size: 20px; text-align:center;">
+<p><span class="math display">\[\frac{e^{k t}}{k}\]</span></p>
+</div>
+<div class="panel panel-default">
+<div data-label="M2R-01" class="tutorial-question panel-body">
+<div id="M2R-01-answer_container" class="shiny-html-output"></div>
+<div id="M2R-01-message_container" class="shiny-html-output"></div>
+<div id="M2R-01-action_button_container" class="shiny-html-output"></div>
+<script>if (Tutorial.triggerMathJax) Tutorial.triggerMathJax()</script>
+</div>
+</div>
+</div>
+<div id="section-a-family-chain" class="section level2">
+<h2>A family chain</h2>
+<p>We have developed a notation that relates a function <span class="math inline">\(f(x)\)</span> to two other functions:</p>
+<ol style="list-style-type: decimal">
+<li>The <em>derivative</em> of <span class="math inline">\(f(x)\)</span> with respect to <span class="math inline">\(x\)</span>, denoted <span class="math inline">\(\partial_x f(x)\)</span>.</li>
+<li>The *anti-derivative of <span class="math inline">\(f(x)\)</span> with respect to <span class="math inline">\(x\)</span>, denoted <span class="math inline">\(\int f(x) dx\)</span>.</li>
+</ol>
+<p>There is a longer chain of derivatives and anti-derivatives of <span class="math inline">\(g(x)\)</span>:</p>
+<p><span class="math display">\[\ldots,\  \partial_{xxx} g(x), \ \ \partial_{xx} g(x), \ \ \partial_x g(x),\ \ g(x), \ \ \int g(x)dx, \ \ \int\! \int g(x) dxdx, \ \ \ldots\]</span> Pick one of these functions as a reference point and imagine that it is a person. The operation of differentiation is analogous to giving birth, that is, it produces another person, the child. Giving birth moves you to the left on the chain. Anti-differentiation moves you to the right. If <span class="math inline">\(g(x)\)</span> is Gloria, then <span class="math inline">\(\partial_x g(x)\)</span> is Gloria’s child and <span class="math inline">\(\partial_{xx}\! g(x)\)</span> is Gloria’s child’s child, in other words, Gloria’s grandchild.</p>
+<p>To illustrate: suppose “Gloria” is <span class="math inline">\(g(x)\equiv x^2\)</span>. Here are the successive generations of Gloria’s family:</p>
+<table>
+<thead>
+<tr class="header">
+<th>Function</th>
+<th>Using <span class="math inline">\(\int\)</span> and <span class="math inline">\(\partial_x\)</span></th>
+<th>Family connection</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><span class="math inline">\(x^4 / 12\)</span></td>
+<td><span class="math inline">\(\int\! \int g(x) dx dx\)</span></td>
+<td>Gloria’s grandparent</td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(x^3 / 3\)</span></td>
+<td><span class="math inline">\(\int g(x) dx\)</span></td>
+<td>Gloria’s parent</td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(x^2\)</span></td>
+<td><span class="math inline">\(g(x)\)</span></td>
+<td>Gloria</td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(2 x\)</span></td>
+<td><span class="math inline">\(\partial_x g(x)\)</span></td>
+<td>Gloria’s child</td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(2\)</span></td>
+<td><span class="math inline">\(\partial_{xx} g(x)\)</span></td>
+<td>Gloria’s grandchild</td>
+</tr>
+</tbody>
+</table>
+<p><span class="math inline">\(G(x) = \int g(x)dx\)</span> is Gloria’s mother. If we apply the give-birth-to operator to Gloria’s mother, who is produced? Gloria! In other words, <span class="math display">\[\partial_x\! \int g(x) dx = g(x)\]</span> Gloria’s mother giving birth produces Gloria. (Mothers can give birth to multiple children and that breaks the analogy to differentiation. Differentiation is like giving birth if a mother can have only one child.)</p>
+<div class="panel panel-default">
+<div data-label="gloria-exp" class="tutorial-question panel-body">
+<div id="gloria-exp-answer_container" class="shiny-html-output"></div>
+<div id="gloria-exp-message_container" class="shiny-html-output"></div>
+<div id="gloria-exp-action_button_container" class="shiny-html-output"></div>
+<script>if (Tutorial.triggerMathJax) Tutorial.triggerMathJax()</script>
+</div>
+</div>
+<p><div class="panel panel-default">
+<div data-label="gloria-sine" class="tutorial-question panel-body">
+<div id="gloria-sine-answer_container" class="shiny-html-output"></div>
+<div id="gloria-sine-message_container" class="shiny-html-output"></div>
+<div id="gloria-sine-action_button_container" class="shiny-html-output"></div>
+<script>if (Tutorial.triggerMathJax) Tutorial.triggerMathJax()</script>
+</div>
+</div> <!--
+## Integral of the Day
+
+This whole problem set has been about numerical ways to compute anti-derivatives. These are often needed in professional work. But textbooks are usually written using examples that can be done "analytically," that is, by symbolic manipulation. We want to give you regular practice with these. So, here is your "Integral of the Day."
+
+Latex Hint: In Latex, you write `\cos` to typeset $\cos$. This use the backslash applies also to sines, square roots, logs, exp, and so on. It's not fatal to forget the leading `\`, but it makes the typeset math less beautiful. For instance `cos` will typeset to $cos$.
+
+
+--></p>
+</div>
+<div id="section-drill" class="section level2">
+<h2>Drill</h2>
+<!--SHINY.SINGLETON[c43e97d24bbfe816ff586588b948aad02137388d]-->
+<!--/SHINY.SINGLETON[c43e97d24bbfe816ff586588b948aad02137388d]-->
+<script>if (window.MathJax) MathJax.Hub.Queue(["Typeset", MathJax.Hub]);</script>
+<span style="font-size: 12pt;">
+<div id="prompt_lead" class="shiny-html-output"></div>
+</span>
+<span style="font-size: 15pt;">
+<div id="prompt" class="shiny-html-output"></div>
+</span>
+<div style="font-size: 12pt;">
+<div id="choice_buttons" class="shiny-html-output"></div>
+</div>
+<div>
+<button id="next_question" type="button" class="btn btn-default action-button">Next drill question ...</button>
+</div>
+<hr/>
+<div style="font-size:12pt;">
+<div id="feedback" class="shiny-html-output"></div>
+</div>
+<div style="font-size:15pt;">
+<div id="right_answer" class="shiny-html-output"></div>
+</div>
+<div>
+<span id="score" class="shiny-text-output"></span>
+<button id="start_over" type="button" class="btn btn-default action-button">Reset score to 0/0</button>
+</div>
+<p><br></p>
+<p><br></p>
+<p><br></p>
+<hr>
+</div>
+<div id="section-hand-in-your-work" class="section level2">
+<h2>Hand in your work</h2>
+<p>REMEMBER: Press the REFRESH button before copying the hash code and submitting it at the <a href="https://forms.microsoft.com/Pages/ResponsePage.aspx?id=Bgq4einwwEWE0X2tGc48YcCKijCKVrhDla481YPh1UJUMVdERUtVT0VOSEpMMEdPQU1aWlpYTTA0RS4u" target = "_blank">USAFA Math 142Z site</a></p>
+<div>
+<button id="get_state" type="button" class="btn btn-default action-button">Refresh summary of responses</button>
+<pre id="hash_output" class="shiny-text-output" style="white-space: pre-wrap;"></pre>
+<div id="current_answers" class="shiny-html-output"></div>
+<br/>
+<br/>
+<br/>
+</div>
+<hr />
+<p>Location: CalcZ/_DailyDigitals/DailyDocuments/inst/DD-142Z-02/142Z-DD-02.Rmd</p>
+
+<script type="application/shiny-prerendered" data-context="server-start">
+etude2::set_master_id("DD02") # Add the DD number
+etude2::etude_document_name("142Z-DD-02") # Add the DD number
+# Fill this data frame in when document is completed. See etude2 documentation
+document_roster <- tibble::tribble(
+  ~ id,
+)
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+learnr:::register_http_handlers(session, metadata = NULL)
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+learnr:::clear_exercise_setup_chunks()
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+session$onSessionEnded(function() {
+        learnr:::session_stop_event(session)
+      })
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "DD02-1-slicedots1",     question = structure("For the graph of the log function over the domain \\(1 \\leq x \\leq 21\\) with <code>npts=11<\u002fcode> (that is, the initial command shown in the sandbox), what is the horizontal spacing between the discrete \\(x\\) values?", html = TRUE, class = c("html",     "character")), answers = list(structure(list(id = "lnr_ans_44e7ece",         option = "0.5", value = "0.5", label = structure("0.5", html = TRUE, class = c("html",         "character")), correct = FALSE, message = structure("", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer")), structure(list(id = "lnr_ans_1de6be",         option = "1", value = "1", label = structure("1", html = TRUE, class = c("html",         "character")), correct = FALSE, message = structure("", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer")), structure(list(id = "lnr_ans_7970e35",         option = "2", value = "2", label = structure("2", html = TRUE, class = c("html",         "character")), correct = TRUE, message = structure("", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer")), structure(list(id = "lnr_ans_61392c4",         option = "4", value = "4", label = structure("4", html = TRUE, class = c("html",         "character")), correct = FALSE, message = structure("", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer")), structure(list(id = "lnr_ans_504074c",         option = "5", value = "5", label = structure("5", html = TRUE, class = c("html",         "character")), correct = FALSE, message = structure("", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer"))), button_labels = list(submit = structure("Check answer (ID: DD02-1)", html = TRUE, class = c("html",     "character")), try_again = structure("Try again (ID: DD02-1)", html = TRUE, class = c("html",     "character"))), messages = list(correct = structure("Right!", html = TRUE, class = c("html",     "character")), try_again = structure("Sorry.", html = TRUE, class = c("html",     "character")), incorrect = structure("Sorry.", html = TRUE, class = c("html",     "character")), message = NULL, post_message = NULL), ids = list(        answer = "slicedots1-answer", question = "slicedots1"),     loading = structure("<strong>Loading:<\u002fstrong> \nFor the graph of the log function over the domain \\(1 \\leq x \\leq 21\\) with <code>npts=11<\u002fcode> (that is, the initial command shown in the sandbox), what is the horizontal spacing between the discrete \\(x\\) values?\n<br/><br/><br/>", html = TRUE, class = c("html",     "character")), random_answer_order = FALSE, allow_retry = TRUE,     seed = 1757689187.68151, options = list(id = "DD02-1")), class = c("learnr_radio", "tutorial_question")))
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "DD02-2-slicedots2",     question = structure("What is the default value of <code>npts<\u002fcode> in <code>slice_plot()<\u002fcode>?", html = TRUE, class = c("html",     "character")), answers = list(structure(list(id = "lnr_ans_902c924",         option = "25", value = "25", label = structure("25", html = TRUE, class = c("html",         "character")), correct = FALSE, message = structure("", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer")), structure(list(id = "lnr_ans_c77e438",         option = "50", value = "50", label = structure("50", html = TRUE, class = c("html",         "character")), correct = FALSE, message = structure("", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer")), structure(list(id = "lnr_ans_b58cdaf",         option = "100", value = "100", label = structure("100", html = TRUE, class = c("html",         "character")), correct = TRUE, message = structure("", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer")), structure(list(id = "lnr_ans_dbe05ca",         option = "200", value = "200", label = structure("200", html = TRUE, class = c("html",         "character")), correct = FALSE, message = structure("", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer")), structure(list(id = "lnr_ans_bd1f92",         option = "500", value = "500", label = structure("500", html = TRUE, class = c("html",         "character")), correct = FALSE, message = structure("", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer")), structure(list(id = "lnr_ans_6f0824a",         option = "1000", value = "1000", label = structure("1000", html = TRUE, class = c("html",         "character")), correct = FALSE, message = structure("", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer"))), button_labels = list(submit = structure("Check answer (ID: DD02-2)", html = TRUE, class = c("html",     "character")), try_again = structure("Try again (ID: DD02-2)", html = TRUE, class = c("html",     "character"))), messages = list(correct = structure("Right!", html = TRUE, class = c("html",     "character")), try_again = structure("Sorry.", html = TRUE, class = c("html",     "character")), incorrect = structure("Sorry.", html = TRUE, class = c("html",     "character")), message = NULL, post_message = NULL), ids = list(        answer = "slicedots2-answer", question = "slicedots2"),     loading = structure("<strong>Loading:<\u002fstrong> \nWhat is the default value of <code>npts<\u002fcode> in <code>slice_plot()<\u002fcode>?\n<br/><br/><br/>", html = TRUE, class = c("html",     "character")), random_answer_order = FALSE, allow_retry = TRUE,     seed = 1176675866.95207, options = list(id = "DD02-2")), class = c("learnr_radio", "tutorial_question")))
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "DD02-3-slicedots3",     question = structure("How large should <code>npts<\u002fcode> be in order for each of the 67 cycles in the graph to come close enough to -1 and 1 that you cannot easily see the discrepancy?", html = TRUE, class = c("html",     "character")), answers = list(structure(list(id = "lnr_ans_b1af6a",         option = "125", value = "125", label = structure("125", html = TRUE, class = c("html",         "character")), correct = FALSE, message = structure("", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer")), structure(list(id = "lnr_ans_5ebe0f",         option = "150", value = "150", label = structure("150", html = TRUE, class = c("html",         "character")), correct = FALSE, message = structure("", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer")), structure(list(id = "lnr_ans_adc03f0",         option = "200", value = "200", label = structure("200", html = TRUE, class = c("html",         "character")), correct = FALSE, message = structure("", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer")), structure(list(id = "lnr_ans_57937a2",         option = "400", value = "400", label = structure("400", html = TRUE, class = c("html",         "character")), correct = FALSE, message = structure("", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer")), structure(list(id = "lnr_ans_29373d7",         option = "800", value = "800", label = structure("800", html = TRUE, class = c("html",         "character")), correct = TRUE, message = structure("", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer")), structure(list(id = "lnr_ans_58bc39f",         option = "1600", value = "1600", label = structure("1600", html = TRUE, class = c("html",         "character")), correct = FALSE, message = structure("", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer")), structure(list(id = "lnr_ans_32601d6",         option = "3200", value = "3200", label = structure("3200", html = TRUE, class = c("html",         "character")), correct = FALSE, message = structure("", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer"))), button_labels = list(submit = structure("Check answer (ID: DD02-3)", html = TRUE, class = c("html",     "character")), try_again = structure("Try again (ID: DD02-3)", html = TRUE, class = c("html",     "character"))), messages = list(correct = structure("Right!", html = TRUE, class = c("html",     "character")), try_again = structure("Sorry.", html = TRUE, class = c("html",     "character")), incorrect = structure("Sorry.", html = TRUE, class = c("html",     "character")), message = NULL, post_message = NULL), ids = list(        answer = "slicedots3-answer", question = "slicedots3"),     loading = structure("<strong>Loading:<\u002fstrong> \nHow large should <code>npts<\u002fcode> be in order for each of the 67 cycles in the graph to come close enough to -1 and 1 that you cannot easily see the discrepancy?\n<br/><br/><br/>", html = TRUE, class = c("html",     "character")), random_answer_order = FALSE, allow_retry = TRUE,     seed = 1849526389.13875, options = list(id = "DD02-3")), class = c("learnr_radio", "tutorial_question")))
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server-start">
+library(mosaic)
+library(mosaicCalc)
+draw_accum <- function(fun, domain=list(x=c(-3,3)), h=0.1,
+                       n=11, alpha = 1, hshift=0, 
+                       accumgraph = TRUE, Fgraph=TRUE, C=0) {
+  
+  if (inherits(fun, "formula")) fun <- makeFun(fun)
+  Fun <- mosaicCalc::antiD(fun(x) ~ x)
+  xrange <- domain[[1]]
+  xwidth <- h
+  f_data <- tibble::tibble(
+    xpts = seq(xrange[1], xrange[2], by=h) + 
+      hshift * xwidth,
+    xstart = xpts,
+    xend = xpts + h,
+    slope = fun(xpts),
+    scaled_slope = (slope - min(slope)) / diff(range(slope)), # on [0,1] scale
+    ystart = 0, 
+    yend = slope*xwidth,
+    move_vertical = c(0,cumsum(yend[-length(yend)])),
+    hue = hsv(.1 + 4*scaled_slope/5, 1, 1),
+    ystart2 = alpha*move_vertical + C,
+    yend2 = alpha*move_vertical + xwidth*slope + C,
+    midpoint = ystart2
+  )
+
+  dom <- domain(x=xrange)
+  
+  if (accumgraph) {
+    P <- NULL
+    P <- slice_plot(Fun(x) ~ x, dom, 
+                    color=ifelse(Fgraph, "gray", NA),
+                    alpha=Fgraph)  
+    P %>%  
+      gf_point(data = f_data, midpoint ~ xpts, color = ~ hue) %>%
+      gf_segment(data = f_data, ystart2 + yend2 ~ xstart + xend,
+                      color = ~ hue, size=2) %>%
+      gf_refine(scale_colour_identity()) %>%
+      gf_labs(y = "F(x) and accumulated slopes", x="x")
+  } else {
+    slice_plot(fun(x) ~ x, dom) %>%
+      gf_point(data = f_data, slope ~ xpts, color = ~ hue, size=2) %>%
+      gf_refine(scale_colour_identity()) %>%
+      gf_labs(y="f(x) -- the slope of F(x)")
+  } 
+
+}
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+fun <- reactive({
+  ff <- as.formula(input$tilde)
+  makeFun(ff)
+})
+output$fx <- renderPlot({
+  draw_accum(fun(), h = as.numeric(input$h), 
+             domain = list(x=input$domain),
+             accumgraph=FALSE, Fgraph = TRUE, alpha = 0)
+})
+output$segments <- renderPlot({
+  draw_accum(fun(), h = as.numeric(input$h), 
+             domain = list(x=input$domain),
+             accumgraph=TRUE, Fgraph = TRUE, 
+             alpha = input$alpha, 
+             C = input$C) 
+})
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "DD02-4-accel",     question = structure("What is the dimension of \\[\\int a(t) dt\\ \\mbox{?}\\]", html = TRUE, class = c("html",     "character")), answers = list(structure(list(id = "lnr_ans_e4b699e",         option = "$L/T^3$", value = "$L/T^3$", label = structure("\\(L/T^3\\)", html = TRUE, class = c("html",         "character")), correct = FALSE, message = structure("", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer")), structure(list(id = "lnr_ans_38e5692",         option = "$L$", value = "$L$", label = structure("\\(L\\)", html = TRUE, class = c("html",         "character")), correct = FALSE, message = structure("", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer")), structure(list(id = "lnr_ans_8575580",         option = "$LT$", value = "$LT$", label = structure("\\(LT\\)", html = TRUE, class = c("html",         "character")), correct = FALSE, message = structure("", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer")), structure(list(id = "lnr_ans_1f51ad7",         option = "$L/T$", value = "$L/T$", label = structure("\\(L/T\\)", html = TRUE, class = c("html",         "character")), correct = TRUE, message = structure("", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer")), structure(list(id = "lnr_ans_7c453aa",         option = "$LT^2$", value = "$LT^2$", label = structure("\\(LT^2\\)", html = TRUE, class = c("html",         "character")), correct = FALSE, message = structure("", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer"))), button_labels = list(submit = structure("Check answer (ID: DD02-4)", html = TRUE, class = c("html",     "character")), try_again = structure("Try again (ID: DD02-4)", html = TRUE, class = c("html",     "character"))), messages = list(correct = structure("Right!", html = TRUE, class = c("html",     "character")), try_again = structure("Sorry.", html = TRUE, class = c("html",     "character")), incorrect = structure("Sorry.", html = TRUE, class = c("html",     "character")), message = NULL, post_message = NULL), ids = list(        answer = "accel-answer", question = "accel"), loading = structure("<strong>Loading:<\u002fstrong> \nWhat is the dimension of \\[\\int a(t) dt\\ \\mbox{?}\\]\n<br/><br/><br/>", html = TRUE, class = c("html",     "character")), random_answer_order = FALSE, allow_retry = TRUE,     seed = 1362733871.36543, options = list(id = "DD02-4")), class = c("learnr_radio", "tutorial_question")))
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "DD02-5-power",     question = structure("What will be the dimension of \\(\\int p(t) dt\\ \\mbox{?}\\)", html = TRUE, class = c("html",     "character")), answers = list(structure(list(id = "lnr_ans_94dfdb2",         option = "energy", value = "energy", label = structure("energy", html = TRUE, class = c("html",         "character")), correct = TRUE, message = structure("", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer")), structure(list(id = "lnr_ans_9c728b9",         option = "force", value = "force", label = structure("force", html = TRUE, class = c("html",         "character")), correct = FALSE, message = structure("", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer")), structure(list(id = "lnr_ans_de8b779",         option = "acceleration", value = "acceleration", label = structure("acceleration", html = TRUE, class = c("html",         "character")), correct = FALSE, message = structure("", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer")), structure(list(id = "lnr_ans_8f253b3",         option = "length", value = "length", label = structure("length", html = TRUE, class = c("html",         "character")), correct = FALSE, message = structure("", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer"))), button_labels = list(submit = structure("Check answer (ID: DD02-5)", html = TRUE, class = c("html",     "character")), try_again = structure("Try again (ID: DD02-5)", html = TRUE, class = c("html",     "character"))), messages = list(correct = structure("Right!", html = TRUE, class = c("html",     "character")), try_again = structure("Sorry.", html = TRUE, class = c("html",     "character")), incorrect = structure("Sorry.", html = TRUE, class = c("html",     "character")), message = NULL, post_message = NULL), ids = list(        answer = "power-answer", question = "power"), loading = structure("<strong>Loading:<\u002fstrong> \nWhat will be the dimension of \\(\\int p(t) dt\\ \\mbox{?}\\)\n<br/><br/><br/>", html = TRUE, class = c("html",     "character")), random_answer_order = FALSE, allow_retry = TRUE,     seed = 871695621.594085, options = list(id = "DD02-5")), class = c("learnr_radio", "tutorial_question")))
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+`tutorial-exercise-accum-result` <- learnr:::setup_exercise_handler(reactive(req(input$`tutorial-exercise-accum-code-editor`)), session)
+output$`tutorial-exercise-accum-output` <- renderUI({
+  `tutorial-exercise-accum-result`()
+})
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+learnr:::question_prerendered_chunk(structure(list(type = "learnr_text", label = "DD02-6-g-anti",     question = structure("Describe the shape of \\(G(x)\\). Your description can be one word from 141Z, if you choose it carefully. If your graph looks like a straight line, you did not appropriately change the domain above.", html = TRUE, class = c("html",     "character")), answers = list(structure(list(id = "lnr_ans_2dbf475",         option = "nice", value = "nice", label = structure("nice", html = TRUE, class = c("html",         "character")), correct = TRUE, message = NULL), class = c("tutorial_question_answer",     "tutorial_quiz_answer"))), button_labels = list(submit = structure("Store your response (ID:DD02-6)", html = TRUE, class = c("html",     "character")), try_again = structure("Edit response (ID:DD02-6)", html = TRUE, class = c("html",     "character"))), messages = list(correct = structure("Correct!", html = TRUE, class = c("html",     "character")), try_again = NULL, incorrect = NULL, message = NULL,         post_message = NULL), ids = list(answer = "g-anti-answer",         question = "g-anti"), loading = structure("<strong>Loading:<\u002fstrong> \nDescribe the shape of \\(G(x)\\). Your description can be one word from 141Z, if you choose it carefully. If your graph looks like a straight line, you did not appropriately change the domain above.\n<br/><br/><br/>", html = TRUE, class = c("html",     "character")), random_answer_order = FALSE, allow_retry = TRUE,     seed = 1437051003.33082, options = list(id = "DD02-6", nrows = 5,         essay = TRUE, placeholder = "Your essay here ...", trim = TRUE)), class = c("learnr_text", "tutorial_question")))
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+learnr:::question_prerendered_chunk(structure(list(type = "learnr_text", label = "DD02-7-euler-lessons",     question = structure("Briefly restate these &quot;Lessons from Euler&quot; in your own words.", html = TRUE, class = c("html",     "character")), answers = list(structure(list(id = "lnr_ans_bd4362f",         option = "nice", value = "nice", label = structure("nice", html = TRUE, class = c("html",         "character")), correct = TRUE, message = NULL), class = c("tutorial_question_answer",     "tutorial_quiz_answer"))), button_labels = list(submit = structure("Store your response (ID:DD02-7)", html = TRUE, class = c("html",     "character")), try_again = structure("Edit response (ID:DD02-7)", html = TRUE, class = c("html",     "character"))), messages = list(correct = structure("Correct!", html = TRUE, class = c("html",     "character")), try_again = NULL, incorrect = NULL, message = NULL,         post_message = NULL), ids = list(answer = "euler-lessons-answer",         question = "euler-lessons"), loading = structure("<strong>Loading:<\u002fstrong> \nBriefly restate these &quot;Lessons from Euler&quot; in your own words.\n<br/><br/><br/>", html = TRUE, class = c("html",     "character")), random_answer_order = FALSE, allow_retry = TRUE,     seed = 1755996389.6823, options = list(id = "DD02-7", nrows = 5,         essay = TRUE, placeholder = "Your essay here ...", trim = TRUE)), class = c("learnr_text", "tutorial_question")))
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "DD02-8-C1", question = structure("Suppose we want to give a formula for a function \\(F(x)\\) which is to be the anti-derivative of the function \\(f(x) \\equiv x^2\\). We don&#39;t need the Euler method for this simple problem, the answer is \\(F(x) \\equiv \\frac{1}{3} x^3 + C\\). We want to give the correct numeric value for \\(C\\) so that \\(F(3) = 12\\). What should \\(C\\) be?", html = TRUE, class = c("html", "character")), answers = list(structure(list(id = "lnr_ans_1732d23",     option = "$C$ should be -3.", value = "$C$ should be -3.",     label = structure("\\(C\\) should be -3.", html = TRUE, class = c("html",     "character")), correct = FALSE, message = structure("This would give us \\(F(3) = \\frac{1}{3} 3^3 - 3\\), which is 6, not the \\(F(3) = 12\\) asked for.", html = TRUE, class = c("html",     "character"))), class = c("tutorial_question_answer", "tutorial_quiz_answer")), structure(list(id = "lnr_ans_469449b", option = "$C$ should be 3.",     value = "$C$ should be 3.", label = structure("\\(C\\) should be 3.", html = TRUE, class = c("html",     "character")), correct = TRUE, message = structure("", html = TRUE, class = c("html",     "character"))), class = c("tutorial_question_answer", "tutorial_quiz_answer")), structure(list(id = "lnr_ans_51a38cc", option = "$C$ should be 12.",     value = "$C$ should be 12.", label = structure("\\(C\\) should be 12.", html = TRUE, class = c("html",     "character")), correct = FALSE, message = structure("This would give us \\(F(3) = \\frac{1}{3} 3^3 + 12\\), which is 21, not the \\(F(3) = 12\\) asked for.", html = TRUE, class = c("html",     "character"))), class = c("tutorial_question_answer", "tutorial_quiz_answer"))), button_labels = list(submit = structure("Check answer (ID: DD02-8)", html = TRUE, class = c("html", "character")), try_again = structure("Try again (ID: DD02-8)", html = TRUE, class = c("html", "character"))), messages = list(correct = structure("Right!", html = TRUE, class = c("html", "character")), try_again = structure("Sorry.", html = TRUE, class = c("html", "character")), incorrect = structure("Sorry.", html = TRUE, class = c("html", "character")), message = NULL, post_message = NULL), ids = list(    answer = "C1-answer", question = "C1"), loading = structure("<strong>Loading:<\u002fstrong> \nSuppose we want to give a formula for a function \\(F(x)\\) which is to be the anti-derivative of the function \\(f(x) \\equiv x^2\\). We don&#39;t need the Euler method for this simple problem, the answer is \\(F(x) \\equiv \\frac{1}{3} x^3 + C\\). We want to give the correct numeric value for \\(C\\) so that \\(F(3) = 12\\). What should \\(C\\) be?\n<br/><br/><br/>", html = TRUE, class = c("html", "character")), random_answer_order = FALSE, allow_retry = TRUE,     seed = 1514638870.79469, options = list(id = "DD02-8")), class = c("learnr_radio", "tutorial_question")))
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "DD02-9-M2R-01",     question = structure("Which of the following R expressions implements the math-notation expression?", html = TRUE, class = c("html",     "character")), answers = list(structure(list(id = "lnr_ans_fe85878",         option = "`k exp(kt)`", value = "`k exp(kt)`", label = structure("<code>k exp(kt)<\u002fcode>", html = TRUE, class = c("html",         "character")), correct = FALSE, message = structure("You must always express multiplication explicitly, using <code>*<\u002fcode> between the quantities to be multiplied.", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer")), structure(list(id = "lnr_ans_e70eae6",         option = "`e^k*t / k`", value = "`e^k*t / k`", label = structure("<code>e^k*t / k<\u002fcode>", html = TRUE, class = c("html",         "character")), correct = FALSE, message = structure("Use <code>exp(x)<\u002fcode> for \\(e^x\\).", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer")), structure(list(id = "lnr_ans_d5516d9",         option = "`exp(k t) / k`", value = "`exp(k t) / k`",         label = structure("<code>exp(k t) / k<\u002fcode>", html = TRUE, class = c("html",         "character")), correct = FALSE, message = structure("<code>k t<\u002fcode> should be written <code>k*t<\u002fcode>", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer")), structure(list(id = "lnr_ans_d6d0c12",         option = "`exp(k*t) / k`", value = "`exp(k*t) / k`",         label = structure("<code>exp(k*t) / k<\u002fcode>", html = TRUE, class = c("html",         "character")), correct = TRUE, message = structure("", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer")), structure(list(id = "lnr_ans_2f4229d",         option = "`1/k e^kt`", value = "`1/k e^kt`", label = structure("<code>1/k e^kt<\u002fcode>", html = TRUE, class = c("html",         "character")), correct = FALSE, message = structure("1) Use <code>*<\u002fcode> for multiplication. 2) Use <code>exp(x)<\u002fcode> for \\(e^x\\).", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer"))), button_labels = list(submit = structure("Check answer (ID: DD02-9)", html = TRUE, class = c("html",     "character")), try_again = structure("Try again (ID: DD02-9)", html = TRUE, class = c("html",     "character"))), messages = list(correct = structure("Right!", html = TRUE, class = c("html",     "character")), try_again = structure("Sorry.", html = TRUE, class = c("html",     "character")), incorrect = structure("Sorry.", html = TRUE, class = c("html",     "character")), message = NULL, post_message = NULL), ids = list(        answer = "M2R-01-answer", question = "M2R-01"), loading = structure("<strong>Loading:<\u002fstrong> \nWhich of the following R expressions implements the math-notation expression?\n<br/><br/><br/>", html = TRUE, class = c("html",     "character")), random_answer_order = FALSE, allow_retry = TRUE,     seed = 1104429471.48571, options = list(id = "DD02-9")), class = c("learnr_radio", "tutorial_question")))
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "DD02-10-gloria-exp",     question = structure("Suppose that Gloria is \\(g(x) \\equiv e^{(-2x + 3)}\\). Which one of these is Gloria&#39;s parent?", html = TRUE, class = c("html",     "character")), answers = list(structure(list(id = "lnr_ans_1649d80",         option = "$-2 e^{(-2x + 3)}$", value = "$-2 e^{(-2x + 3)}$",         label = structure("\\(-2 e^{(-2x + 3)}\\)", html = TRUE, class = c("html",         "character")), correct = FALSE, message = structure("This is Gloria&#39;s child.", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer")), structure(list(id = "lnr_ans_44d978c",         option = "$4 e^{(-2x + 3)}$", value = "$4 e^{(-2x + 3)}$",         label = structure("\\(4 e^{(-2x + 3)}\\)", html = TRUE, class = c("html",         "character")), correct = FALSE, message = structure("This is Gloria&#39;s grandchild.", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer")), structure(list(id = "lnr_ans_9c069f9",         option = "$-\\frac{1}{2} e^{(-2x + 3)}$", value = "$-\\frac{1}{2} e^{(-2x + 3)}$",         label = structure("\\(-\\frac{1}{2} e^{(-2x + 3)}\\)", html = TRUE, class = c("html",         "character")), correct = TRUE, message = structure("", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer")), structure(list(id = "lnr_ans_fef9cd9",         option = "$\\frac{1}{4} e^{(-2x + 3)}$", value = "$\\frac{1}{4} e^{(-2x + 3)}$",         label = structure("\\(\\frac{1}{4} e^{(-2x + 3)}\\)", html = TRUE, class = c("html",         "character")), correct = FALSE, message = structure("This is Gloria&#39;s grandmother.", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer")), structure(list(id = "lnr_ans_532535a",         option = "$\\frac{1}{4} e^{(3 x - 2)}$", value = "$\\frac{1}{4} e^{(3 x - 2)}$",         label = structure("\\(\\frac{1}{4} e^{(3 x - 2)}\\)", html = TRUE, class = c("html",         "character")), correct = FALSE, message = structure("The characteristic trait of Gloria, her ancestors and her descendents is \\(e^{(-2x +3)}\\). We can&#39;t place this person anywhere in Gloria&#39;s family line.", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer")), structure(list(id = "lnr_ans_845ce7",         option = "$4 x^3$", value = "$4 x^3$", label = structure("\\(4 x^3\\)", html = TRUE, class = c("html",         "character")), correct = FALSE, message = structure("This person is from an entirely different tribe than Gloria.", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer"))), button_labels = list(submit = structure("Check answer (ID: DD02-10)", html = TRUE, class = c("html",     "character")), try_again = structure("Try again (ID: DD02-10)", html = TRUE, class = c("html",     "character"))), messages = list(correct = structure("Right!", html = TRUE, class = c("html",     "character")), try_again = structure("Sorry.", html = TRUE, class = c("html",     "character")), incorrect = structure("Sorry.", html = TRUE, class = c("html",     "character")), message = NULL, post_message = NULL), ids = list(        answer = "gloria-exp-answer", question = "gloria-exp"),     loading = structure("<strong>Loading:<\u002fstrong> \nSuppose that Gloria is \\(g(x) \\equiv e^{(-2x + 3)}\\). Which one of these is Gloria&#39;s parent?\n<br/><br/><br/>", html = TRUE, class = c("html",     "character")), random_answer_order = FALSE, allow_retry = TRUE,     seed = 830968549.61305, options = list(id = "DD02-10")), class = c("learnr_radio", "tutorial_question")))
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "DD02-11-gloria-sine",     question = structure("Suppose Susan is \\(s(t) = 4 \\sin(4 t - 7)\\). Which of these is Susan&#39;s grandparent?", html = TRUE, class = c("html",     "character")), answers = list(structure(list(id = "lnr_ans_a2beae4",         option = "$-\\frac{1}{4} \\sin(4 t - 7)$", value = "$-\\frac{1}{4} \\sin(4 t - 7)$",         label = structure("\\(-\\frac{1}{4} \\sin(4 t - 7)\\)", html = TRUE, class = c("html",         "character")), correct = TRUE, message = structure("", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer")), structure(list(id = "lnr_ans_63478de",         option = "$-\\frac{1}{16} \\cos(4 t - 7)$", value = "$-\\frac{1}{16} \\cos(4 t - 7)$",         label = structure("\\(-\\frac{1}{16} \\cos(4 t - 7)\\)", html = TRUE, class = c("html",         "character")), correct = FALSE, message = structure("Don&#39;t forget that the 4 in \\(4\\sin()\\) is part of who Susan is.", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer")), structure(list(id = "lnr_ans_3b34231",         option = "$16 \\cos(4 t + 7)$", value = "$16 \\cos(4 t + 7)$",         label = structure("\\(16 \\cos(4 t + 7)\\)", html = TRUE, class = c("html",         "character")), correct = FALSE, message = structure("Susan&#39;s child", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer")), structure(list(id = "lnr_ans_c29a173",         option = "$-64 \\sin(4 t - 7)$", value = "$-64 \\sin(4 t - 7)$",         label = structure("\\(-64 \\sin(4 t - 7)\\)", html = TRUE, class = c("html",         "character")), correct = FALSE, message = structure("Susan&#39;s grandchild.", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer")), structure(list(id = "lnr_ans_fc573bc",         option = "$\\sin(4 t - 7)$", value = "$\\sin(4 t - 7)$",         label = structure("\\(\\sin(4 t - 7)\\)", html = TRUE, class = c("html",         "character")), correct = FALSE, message = structure("Not in Susan&#39;s line, even though a family similarity is evident.", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer"))), button_labels = list(submit = structure("Check answer (ID: DD02-11)", html = TRUE, class = c("html",     "character")), try_again = structure("Try again (ID: DD02-11)", html = TRUE, class = c("html",     "character"))), messages = list(correct = structure("Right!", html = TRUE, class = c("html",     "character")), try_again = structure("Sorry.", html = TRUE, class = c("html",     "character")), incorrect = structure("Sorry.", html = TRUE, class = c("html",     "character")), message = NULL, post_message = NULL), ids = list(        answer = "gloria-sine-answer", question = "gloria-sine"),     loading = structure("<strong>Loading:<\u002fstrong> \nSuppose Susan is \\(s(t) = 4 \\sin(4 t - 7)\\). Which of these is Susan&#39;s grandparent?\n<br/><br/><br/>", html = TRUE, class = c("html",     "character")), random_answer_order = FALSE, allow_retry = TRUE,     seed = 42505083.980207, options = list(id = "DD02-11")), class = c("learnr_radio", "tutorial_question")))
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+if (!exists("apps_state"))
+  apps_state <- reactiveValues()
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+antiD_basic <- function() {
+  direction <- "both"
+  tibble::tribble(
+    ~ question,  ~ answer,  ~ group,
+    "$$\\exp(x)$$", "$$\\exp(x)$$", "basic",
+    "$$x^n, (n \\neq -1)$$", "$$\\frac{1}{n+1} x^{n+1}$$", "basic",
+    "$$1/x$$", "$$\\ln(x)$$", "basic",
+    "$$\\sin(x)$$", "$$-\\cos(x)$$", "basic-s",
+    "$$\\cos(x)$$", "$$\\sin(x)$$", "basic-s",
+    "$$\\mbox{hump}(x)$$", "$$\\mbox{sigmoid}(x)$$", "basic",
+    "$$1$$", "$$x$$", "basic",
+    "$$a$$", "$$ax$$", "basic",
+    "$$- 2\\exp(x)$$", "$$- 2\\exp(x)$$", "basic",
+    "$$3\\exp(x)$$", "$$3\\exp(x)$$", "basic",
+    "$$a \\exp(x)$$", "$$a \\exp(x)$$", "basic",
+    "$$7/x$$", "$$7\\ln(x)$$", "basic",
+    "$$a/x$$", "$$a\\ln(x)$$", "basic",
+    "$$- 4 \\sin(x)$$", "$$4\\cos(x)$$", "basic-s",
+    "$$\\sin(x)/2$$", "$$-\\cos(x)/2$$", "basic-s",
+    "$$\\cos(x)/5$$", "$$\\sin(x)/5$$", "basic-s",
+    "$$\\sin(x)/3$$", "$$-\\cos(x)/3$$", "basic",
+    "$$8\\cos(x)$$", "$$8\\sin(x)$$", "basic",
+    "$$x^2$$", "$$x^3 / 3$$", "basic",
+    "$$x^4$$", "$$x^5 / 5$$", "basic",
+    "$$7 x^3$$", "$$\\frac{7}{4} x^4$$", "basic"
+    
+ 
+  ) %>%
+    mutate(id = "antiD_simple",
+           direction = direction,
+           forward = "What is the ANTI-derivative w.r.t. x?",
+           backward = "What is the derivative w.r.t. x?")
+}
+
+
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+library(shinyjs, quietly=TRUE)
+
+etude2:::QuizServer(input, output, session,
+                            antiD_basic(), # the questions
+                            "DD1-drill", # label for scoring
+                            apps_state)
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+etude2::submissions_logic()
+</script>
+ <!--html_preserve-->
+<script type="application/shiny-prerendered" data-context="dependencies">
+{"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["jquery"]},{"type":"character","attributes":{},"value":["1.11.3"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["rmd/h/jquery"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["jquery.min.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["rmarkdown"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["2.4"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["bootstrap"]},{"type":"character","attributes":{},"value":["3.3.5"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["rmd/h/bootstrap"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["viewport"]}},"value":[{"type":"character","attributes":{},"value":["width=device-width, initial-scale=1"]}]},{"type":"character","attributes":{},"value":["js/bootstrap.min.js","shim/html5shiv.min.js","shim/respond.min.js"]},{"type":"character","attributes":{},"value":["css/cerulean.min.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["rmarkdown"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["2.4"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["pagedtable"]},{"type":"character","attributes":{},"value":["1.1"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["rmd/h/pagedtable-1.1"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["js/pagedtable.js"]},{"type":"character","attributes":{},"value":["css/pagedtable.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["rmarkdown"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["2.4"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["highlightjs"]},{"type":"character","attributes":{},"value":["9.12.0"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["rmd/h/highlightjs"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["highlight.js"]},{"type":"character","attributes":{},"value":["textmate.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["rmarkdown"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["2.4"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["tutorial"]},{"type":"character","attributes":{},"value":["0.10.1.9004"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/tutorial"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["tutorial.js"]},{"type":"character","attributes":{},"value":["tutorial.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.10.1.9004"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["tutorial-autocompletion"]},{"type":"character","attributes":{},"value":["0.10.1.9004"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/tutorial"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["tutorial-autocompletion.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.10.1.9004"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["tutorial-diagnostics"]},{"type":"character","attributes":{},"value":["0.10.1.9004"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/tutorial"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["tutorial-diagnostics.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.10.1.9004"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["tutorial-format"]},{"type":"character","attributes":{},"value":["0.10.1.9004"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["rmarkdown/templates/tutorial/resources"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["tutorial-format.js"]},{"type":"character","attributes":{},"value":["tutorial-format.css","rstudio-theme.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.10.1.9004"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["jquery"]},{"type":"character","attributes":{},"value":["1.11.3"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["rmd/h/jquery"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["jquery.min.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["rmarkdown"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["2.4"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["navigation"]},{"type":"character","attributes":{},"value":["1.1"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["rmd/h/navigation-1.1"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["tabsets.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["rmarkdown"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["2.4"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["highlightjs"]},{"type":"character","attributes":{},"value":["9.12.0"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["rmd/h/highlightjs"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["highlight.js"]},{"type":"character","attributes":{},"value":["default.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["rmarkdown"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["2.4"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["jquery"]},{"type":"character","attributes":{},"value":["1.11.3"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["rmd/h/jquery"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["jquery.min.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["rmarkdown"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["2.4"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["font-awesome"]},{"type":"character","attributes":{},"value":["5.1.0"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["rmd/h/fontawesome"]}]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["css/all.css","css/v4-shims.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["rmarkdown"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["2.4"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["bootbox"]},{"type":"character","attributes":{},"value":["4.4.0"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/bootbox"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["bootbox.min.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.10.1.9004"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["idb-keyvalue"]},{"type":"character","attributes":{},"value":["3.2.0"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/idb-keyval"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["idb-keyval-iife-compat.min.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[false]},{"type":"character","attributes":{},"value":["0.10.1.9004"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["tutorial"]},{"type":"character","attributes":{},"value":["0.10.1.9004"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/tutorial"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["tutorial.js"]},{"type":"character","attributes":{},"value":["tutorial.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.10.1.9004"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["tutorial-autocompletion"]},{"type":"character","attributes":{},"value":["0.10.1.9004"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/tutorial"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["tutorial-autocompletion.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.10.1.9004"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["tutorial-diagnostics"]},{"type":"character","attributes":{},"value":["0.10.1.9004"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/tutorial"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["tutorial-diagnostics.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.10.1.9004"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["ionrangeslider"]},{"type":"character","attributes":{},"value":["2.1.6"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["href"]}},"value":[{"type":"character","attributes":{},"value":["shared/ionrangeslider"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["js/ion.rangeSlider.min.js"]},{"type":"character","attributes":{},"value":["css/ion.rangeSlider.css","css/ion.rangeSlider.skinShiny.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"logical","attributes":{},"value":[true]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["strftime"]},{"type":"character","attributes":{},"value":["0.9.2"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["href"]}},"value":[{"type":"character","attributes":{},"value":["shared/strftime"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["strftime-min.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"logical","attributes":{},"value":[true]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["selectize"]},{"type":"character","attributes":{},"value":["0.11.2"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["href"]}},"value":[{"type":"character","attributes":{},"value":["shared/selectize"]}]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["css/selectize.bootstrap3.css"]},{"type":"character","attributes":{},"value":["<!--[if lt IE 9]>\n<script src=\"shared/selectize/js/es5-shim.min.js\"><\/script>\n<![endif]-->\n<script src=\"shared/selectize/js/selectize.min.js\"><\/script>"]},{"type":"NULL"},{"type":"NULL"},{"type":"logical","attributes":{},"value":[true]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["ionrangeslider"]},{"type":"character","attributes":{},"value":["2.1.6"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["href"]}},"value":[{"type":"character","attributes":{},"value":["shared/ionrangeslider"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["js/ion.rangeSlider.min.js"]},{"type":"character","attributes":{},"value":["css/ion.rangeSlider.css","css/ion.rangeSlider.skinShiny.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"logical","attributes":{},"value":[true]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["strftime"]},{"type":"character","attributes":{},"value":["0.9.2"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["href"]}},"value":[{"type":"character","attributes":{},"value":["shared/strftime"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["strftime-min.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"logical","attributes":{},"value":[true]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["ionrangeslider"]},{"type":"character","attributes":{},"value":["2.1.6"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["href"]}},"value":[{"type":"character","attributes":{},"value":["shared/ionrangeslider"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["js/ion.rangeSlider.min.js"]},{"type":"character","attributes":{},"value":["css/ion.rangeSlider.css","css/ion.rangeSlider.skinShiny.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"logical","attributes":{},"value":[true]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["strftime"]},{"type":"character","attributes":{},"value":["0.9.2"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["href"]}},"value":[{"type":"character","attributes":{},"value":["shared/strftime"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["strftime-min.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"logical","attributes":{},"value":[true]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["ace"]},{"type":"character","attributes":{},"value":["1.2.6"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/ace"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["ace.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.10.1.9004"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["clipboardjs"]},{"type":"character","attributes":{},"value":["1.5.15"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/clipboardjs"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["clipboard.min.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.10.1.9004"]}]}]}
+</script>
+<!--/html_preserve-->
+<!--html_preserve-->
+<script type="application/shiny-prerendered" data-context="execution_dependencies">
+{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["packages"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["packages","version"]},"class":{"type":"character","attributes":{},"value":["data.frame"]},"row.names":{"type":"integer","attributes":{},"value":[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,91,92,93,94,95]}},"value":[{"type":"character","attributes":{},"value":["backports","base","broom","checkmate","colorspace","compiler","crayon","crosstalk","curl","data.table","datasets","digest","dplyr","DT","ellipsis","etude2","evaluate","farver","fastmap","generics","ggdendro","ggforce","ggformula","ggplot2","ggrepel","ggridges","ggstance","glue","gradethis","graphics","grDevices","grid","gridExtra","gtable","hms","htmltools","htmlwidgets","httpuv","httr","jsonlite","knitr","labeling","later","lattice","lazyeval","leaflet","learnr","learnrhash","lifecycle","lubridate","magrittr","markdown","MASS","math141Z","Matrix","methods","metR","mime","mosaic","mosaicCalc","mosaicCore","mosaicData","munsell","pillar","pkgconfig","plotly","plyr","polyclip","promises","purrr","R6","Rcpp","readr","rlang","rmarkdown","rprojroot","scales","shiny","shinyjs","splines","stats","stringi","stringr","tibble","tidyr","tidyselect","tools","tweenr","utils","vctrs","viridisLite","withr","xfun","xtable","yaml"]},{"type":"character","attributes":{},"value":["1.1.10","3.6.3","0.7.1","2.0.0","1.4-1","3.6.3","1.3.4.9000","1.1.0.1","4.3","1.12.8","3.6.3","0.6.25","1.0.2","0.12","0.3.1","0.1.0","0.14","2.0.3","1.0.1","0.0.2","0.1.22","0.3.2","0.9.4","3.3.2","0.8.2","0.5.2","0.3.4","1.4.2","0.2.0.9000","3.6.3","3.6.3","3.6.3","2.3","0.3.0","0.5.3","0.5.0","1.5.2","1.5.4","1.4.2","1.7.1","1.30","0.3","1.1.0.1","0.20-38","0.2.2","2.0.3","0.10.1.9004","0.1.0.9000","0.2.0","1.7.9","1.5","1.1","7.3-51.5","0.2.0","1.2-18","3.6.3","0.7.0","0.9","1.8.2","0.5.2.9000","0.8.0","0.20.1","0.5.0","1.4.6","2.0.3","4.9.2.1","1.8.6","1.10-0","1.1.1","0.3.4","2.4.1","1.0.5","1.4.0","0.4.8","2.4","1.3-2","1.1.1","1.5.0","2.0.0","3.6.3","3.6.3","1.5.3","1.4.0","3.0.3","1.1.2","1.1.0","3.6.3","1.0.1","3.6.3","0.3.4","0.3.0","2.3.0","0.18","1.8-4","2.2.1"]}]}]}
+</script>
+<!--/html_preserve-->
+</div>
+
+</div> <!-- topics -->
+
+<div class="topicsContainer">
+<div class="topicsPositioner">
+<div class="band">
+<div class="bandContent topicsListContainer">
+
+<!-- begin doc-metadata -->
+<div id="doc-metadata">
+<h2 class="title toc-ignore" style="display:none;">Daily Digital 02</h2>
+<h3 class="subtitle"><em>Math 142Z</em></h3>
+<h4 class="date"><em>Due 13 Jan 2021</em></h4>
+</div>
+<!-- end doc-metadata -->
+
+</div> <!-- bandContent.topicsListContainer -->
+</div> <!-- band -->
+</div> <!-- topicsPositioner -->
+</div> <!-- topicsContainer -->
+
+
+</div> <!-- bandContent page -->
+</div> <!-- pageContent band -->
+
+
+
+
+<script>
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+</script>
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+
+</body>
+
+</html>

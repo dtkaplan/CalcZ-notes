@@ -1,0 +1,40 @@
+---
+title: "Piston power"
+author: "Transcribed by Daniel Kaplan"
+runtime: shiny_prerendered
+---
+
+```{r include=FALSE}
+library(etude2)
+```
+
+An important setting in thermodynamics is the compression and expansion of gasses in a closed container such as a piston/cylinder arrangement. If the piston is moved slowly, the temperature of the system will stay at its initial value. 
+
+Mechanical work needs to be done to push the piston into the cylinder. The work done, for instance, to compress from an initial volume of 50cc to a final volume of 10cc is:
+$$\int_{50}^{10} b \frac{T_c}{V}dV$$ where $b$ is a constant and $T_c$ is the initial temperature of the gas begin compressed.
+
+On the other hand, in expanding back to its original volume, the system pushes back as it moves. The work done is
+$$\int_{10}^{50} b \frac{T_e}{V}dV$$. 
+
+When $T_e = T_c$, no net work is done during a compression/expansion cycle at a steady temperature. The work put into the system when compressing is the same as the work taken out of the system when expansion. The trick in getting the cylinder/piston to do net work is to compress at a relatively cool temperature (say 500K), then heat the gas (to, say 1000K) before starting the expansion. The total work done by the system will be $$\int_{10}^{50} b \left[\frac{T_e}{V} + \frac{T_c}{V}\right] dV$$
+
+```{r piston1, echo=FALSE}
+etude2::etudeQ(
+  "Which of these expressions gives the net work done by the cylinder/piston system in one cycle?",
+  "0" = "This would be true if $T_e = T_c$, but remember that we heat the gas before expansion.",
+  "$b (T_e - T_c) \\left(\\frac{1}{50} + \\frac{1}{10}\\right)$" = "You forgot to take the anti-derivative before evaluating at the limits of integration.",
+  "+$b (T_e - T_c) \\ln(5)$+",
+  "$b \\ln(T_e - T_c) 40$" = "The integral is being taken with respect to $V$, not $T$.",
+  "$b (T_e/T_c) \\ln(40)$",
+  random_answer_order=FALSE
+)
+```
+
+```{r piston2, echo=FALSE}
+etude2::etudeQ(
+  "Suppose the engine runs at 2000 rpm, that is, revolutions per minute. At this speed, the engine generates 1 kW of power. What are the dimensions of $b$?",
+  "kW",
+  "K/kW",
+  "K",
+  "+kW/K+")
+```

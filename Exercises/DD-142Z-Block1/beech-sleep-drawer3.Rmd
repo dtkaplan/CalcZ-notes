@@ -1,0 +1,53 @@
+---
+chapter: "none yet"
+title: "Title for beech-sleep-drawer3"
+author: "Danny Kaplan"
+output: learnr::tutorial
+tutorial:
+  id: "beech-sleep-drawer3"
+  version: 0.1
+runtime: shiny_prerendered
+date: 2020-06-05 
+tags: [first, second, third]
+id: beech-sleep-drawer3
+---
+
+```{r beech-sleep-drawer3-setup, include = FALSE}
+library(etude)
+etude2::load_learnr_safely()
+library(gradethis)
+library(ggformula)
+library(mosaic)
+library(mosaicCalc)
+library(math141Z)
+
+knitr::opts_chunk$set(echo = FALSE)
+learnr::tutorial_options(exercise.timelimit = 60, 
+                 exercise.checker = gradethis::grade_learnr)
+```
+
+
+`r etude::exercise_title()` At a glance, give a rough numerical value for the integral of the function shown in the plot.
+
+```{r echo = FALSE}
+xpts = c(10,21,33,45,68,82,93)
+ypts = c(4,6,7,2,3.5,5.5,6.5) - 4.5
+f = splinefun(xpts,ypts)
+g1 = function(x){f(x) + .3*sin(2*pi*x/9)}
+newx = seq(10,93,by=10)
+set.seed(65)
+g2 = approxfun(newx,f(newx))
+g3 = splinefun( newx, f(newx)+rnorm(length(newx),mean=0,sd=.3) )
+g4 = splinefun( newx, f(newx)+rnorm(length(newx),mean=2.3,sd=.3) )
+slice_plot(g3(x) ~ x, domain(x=c(0,100)), color = "gray", size=3 ) 
+```
+
+```{r beech-sleep-drawer3-Qinline1, echo=FALSE}
+etude::choose_one(
+  prompt = "The integral of the function from x=0 to x = 100 is roughly ...",
+  c(-200, -100, -10,  "+0+", 10, "100", "200"),
+  random_answer_order = FALSE
+)
+```
+
+

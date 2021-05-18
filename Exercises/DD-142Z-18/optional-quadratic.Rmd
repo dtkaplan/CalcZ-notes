@@ -1,0 +1,51 @@
+---
+title: "The formula for eigenvalues and eigenvectors"
+author: "Daniel Kaplan"
+---
+
+```{r include=FALSE}
+library(etude2)
+library(mosaic)
+library(mosaicCalc)
+```
+
+This is some **optional background** for those who are interested in where the formula for eigenvalues comes from and how to calculate the eigenvector corresponding to each eigenvalue.
+
+We've been writing our [ab10] dynamics as a matrix equation:
+
+$$\left[\begin{array}{c}x_{n+1}\\y_{n+1} \end{array}\right] = 
+\left[\begin{array}{cc}a & b \\ 1 & 0\end{array}\right] \cdot
+\left[\begin{array}{c}x_n\\y_n \end{array}\right]$$
+
+Note that an [ab10] form implies $y_{n+1} = x_n$, which in turn implies $y_1 = x_0$ and $y_2 = x_1$ and $y_3 = x_2$ and so on for all $n$, that is $y_n = x_{n-1}$. 
+
+The $x$-component of the dynamics might as well be written $$x_{n+1} = a x_n + b y_n$$Substituting in $y_n = x_{n-1}$ we get for the overall system:
+$$x_{n+1} - a x_n - b x_{n-1} = 0$$
+This form can be confusing, since there is only one variable involved, $x$, whereas the matrix equation had **two** variables, $x$ and $y$. But the two systems are exactly equivalent: one is in the so-called **auto-regressive form** and the other in the **state space form**. You can use either form you like. For our purposes here, the auto-refressive form makes the algebra more straightforward.
+
+We "imagine" or "propose" or "guess"---mathematicians say "posit"---a solution to the auto-regressive equation. Such an imagined or proposed or guessed (or posited) solution is called an **ansatz** from the German word for "answer." Our ansatz, which is really based on knowing what the eventual answer will be, is
+
+$$ x_n = x_0\, \lambda^n \ \ \ \mbox{our ansatz}$$
+
+When you have an ansatz, the sensible thing to do is to plug it into the equation for which it's imagined or proposed or guessed or posited to be the answer. In our case, that gives:
+
+$$x_0 \lambda^{n+1} - a\, x_0 \lambda^n - b\, x_0 \lambda^{n-1} = 0$$
+Divide through both sides of the equation by $x_0\, \lambda^{n-1}$ (which all the terms have in common) to get $$\lambda^2 - a \lambda - b = 0$$ a quadratic form in $\lambda$. 
+
+If our ansatz is to be true, that quadratic form must also be true. Yet you can plug in any numerical values for $\lambda, a$ and $b$ that you like and, very likely, the equation will not be satisfied.
+
+Example: Plug $\lambda=1, a=3$ and $b=2$ into the formula on the left-hand side of the equation and verify that the result is not equal to zero.
+
+But the correct ansatz question to ask is not, "Is this true?" The correct question is, "Given $a$ and $b$ is there **some** $\lambda$ that makes the equation true?" 
+
+You'll remember that the quadratic form above can be solved for $\lambda$ using the "quadratic formula." Apply the quadratic formula and you will get a formula for $\lambda$. (Be careful with your algebra, since the quadratic formula is written in terms of $a \lambda^2 + b \lambda + c = 0$ whereas we've got $\lambda^2 - a \lambda - b = 0$, which uses $a$ and $b$ in different places.)
+
+You can use the eigenvalue formula to find the $\lambda_1$ and $\lambda_2$ that satisfy the quadratic form. Once you have these, how do you find the **eigenvector** that corresponds to each eigenvalue. There's an extremely simple formula:
+
+$${\mathbf \Lambda}_1 = \left[\begin{array}{c} \lambda_1\\1 \end{array}\right]\ \ \ \mbox{and}\ \ \ {\mathbf \Lambda}_2 = \left[\begin{array}{c} \lambda_2\\1 \end{array}\right]$$
+
+It happens that there is another formula that gives equivalent results so long as $b \neq 0$:
+
+$${\mathbf \Lambda}_1 = \left[\begin{array}{c} b \\\lambda_1 - a \end{array}\right]\ \ \ \mbox{and}\ \ \ {\mathbf \Lambda}_2 = \left[\begin{array}{c} b\\\lambda_2-a\end{array}\right]$$
+But the first formula does nicely for our purposes.
+

@@ -1,0 +1,90 @@
+---
+title: "Eigenvectors"
+author: "Daniel Kaplan"
+---
+
+```{r include=FALSE}
+library(mosaic)
+library(mosaicCalc)
+library(etude2)
+```
+
+It would be hard to overstate the importance of the ideas of eigenvectors and their associated eigenvalues. They are used in engineering, for instance, to determine the modes of vibration of structures (such as an airplane fuselage). In chemistry, electron orbits are studied using eigenvectors. They are used throughout physics. In quantum physics, **any quantity that is observable** (e.g. energy, position) is an eigenvector of a quantum wave function. In data science, they underlie one of the principle means of contructing machine learning models of complex, multivariate data. They are the foundation of the original Google algorithm for ranking web pages and the "latent semantic indexing" that enables you to give a search term and find closely related articles even if they don't happen to include that specific term.
+
+Eigenvectors are important in dynamics. Indeed, the importance of eigenvectors and eigenvalues to science generally is related to the use of differential equations as a fundamental way of describing the universe from the very fine scale (electrons) to the most massive scales (relativistic bending of space-time).
+
+In a traditional university calculus curriculum, eigenvectors and eigenvalues are introduced in a *4th-semester* calculus course called "linear algebra." Especially in recent decades, eigenvectors and eigenvalues are used by people who never came close to a linear algebra course. For instance, [data science blogs](https://www.analyticsvidhya.com/blog/2019/07/10-applications-linear-algebra-data-science/) are full of discussion about how to learn linear algebra if you've never had it in college.
+
+In this course, the context in which we introduce eigenvectors is as part of powerful calculus strategy: break seemingly complex wholes into simple parts (differentials! linear approximations!), operate on the parts in simple ways, then put together the parts into a whole (integration! iteration!). 
+
+So what are the "simple parts" involved in eigenvectors? In dynamics, the "complex whole" is the state-space and the dynamical functions that govern motion in the state-space. (We're restricting ourselves to state spaces with two components so that you can see what's going on graphically. But two dimensions is enough to shows most of the sorts of phenomena that can be produced by dynamical systems.)
+
+What are the parts of a two-dimensional state space? Recall from the first semester of CalcZ our studies of linear geometry, matrices, etc. There we defined a **vector sub-space** as all the places that can be reached by taking linear combinations of a set of vectors. A plane is a vector sub-space defined by any two vectors that aren't aligned. 
+
+Eigenvectors are specific vectors that can compose through linear combinations the whole of a state space in linear dynamics. The dynamics are **radically simpler** along an eigenvector than elsewhere in a state space. How simpler?
+
+Consider the dynamics induced by the matrix 
+$${\mathbf A} = \left[\begin{array}{cr}6 & -\frac{11}{4}\\1 & 0\ \end{array}\right]$$
+The eigenvalues of ${\mathbf A}$ are 
+$$\lambda_1 = \frac{11}{2}\ \ \mbox{and}\ \ \lambda_2 = \frac{1}{2}$$ 
+To get nice fractions like this is the reason we're using this particular matrix. We'll deal with the way to calculate the eigenvalues of any matrix on a later day, when we will do it with a simpler formula than the following one. (Don't incur anxiety trying to understand the formula.) For an [abcd] matrix the eigenvalues are
+$$\lambda_{1, 2} = \frac{1}{2} \left[(a - d)^2 \pm \sqrt{(a+d)^2 - 4bc}\strut\right]$$
+For larger matrices, for instance the billion-by-billion sized ones used in web indexing, there are no formulas but there are ways to calculate the eigenvalues numerically.
+
+The eigenvectors corresponding to matrix ${\mathbf A}$ are very closely related to the eigenvalues. (Again, you don't need to memorize this, even if it is a whole lot simpler than the formula above.)
+$${\mathbf \Lambda}_1 = \left[\begin{array}{c}\lambda_1\\1\end{array}\right] = 
+\left[\begin{array}{c}\frac{11}{2}\\1\end{array}\right]\ \ \ \mbox{and}\ \ \ {\mathbf \Lambda}_2 = \left[\begin{array}{c}\lambda_2\\1\end{array}\right] = 
+\left[\begin{array}{c}\frac{1}{2}\\1\end{array}\right]$$
+Let's see what happens when we multiply an eigenvector (or any scalar multiple of an eigenvector) by the matrix ${\mathbf A}$ from which it was derived:
+$${\mathbf A} \cdot {\mathbf \Lambda_2} = \left[\begin{array}{cr}6 & -\frac{11}{4}\\1 & 0\ \end{array}\right] \cdot \left[\begin{array}{r} \frac{1}{2}\\1\ \end{array}\right] = 
+\frac{1}{2} \left[\begin{array}{c}6\strut\\1\strut\end{array}\right] + 
+1 \left[\begin{array}{r}-\frac{11}{4}\\0\ \end{array}\right] = \left[\begin{array}{r}?\strut\\?\strut\end{array}\right]$$
+
+```{r ev1-1, echo=FALSE, results="markup"}
+etude2::etudeQ(
+  "Do the arithmetic in the above equation to find the numerical value of ${\\mathbf A}\\cdot{\\mathbf \\Lambda}_2$. What is it?",
+  "+$\\left[\\begin{array}{r}\\frac{1}{4}\\\\\\frac{1}{2}\\end{array}\\right]$+",
+  "$\\left[\\begin{array}{r}\\frac{1}{2}\\\\\\frac{1}{2}\\end{array}\\right]$",
+  "$\\left[\\begin{array}{r}1\\\\\\frac{1}{2}\\end{array}\\right]$",
+  "$\\left[\\begin{array}{r}2\\\\\\frac{3}{2}\\end{array}\\right]$"
+)
+```
+
+If you found the arithmetic tedious, here's a shortcut:
+
+<div style="font-size: 36px; text-align:center;">
+${\mathbf A}\cdot{\mathbf \Lambda}_2 = \lambda_2\ {\mathbf \Lambda}_2$
+</div>
+
+In English, "Multiplying an eigenvector of a matrix ${\mathbf A}$ by ${\mathbf A}$ produces a multiple of the eigenvector. The multiple is the eigenvalue." 
+
+```{r ev1-2, echo=FALSE, results="markup"}
+etude2::etudeQ(
+  "What is the numerical value of ${\\mathbf A}\\cdot{\\mathbf \\Lambda}_1$?",
+  "+$\\left[\\begin{array}{r}\\frac{121}{4}\\\\\\frac{11}{2}\\end{array}\\right]$+",
+  "$\\left[\\begin{array}{r}\\frac{11}{4}\\\\\\frac{11}{2}\\end{array}\\right]$",
+  "$\\left[\\begin{array}{r}\\frac{11}{4}\\\\\\frac{1}{2}\\end{array}\\right]$",
+  "$\\left[\\begin{array}{r}\\frac{121}{4}\\\\\\frac{3}{2}\\end{array}\\right]$"
+)
+```
+
+The dynamics along an eigenvector are particularly simple:
+
+- If you start (exactly) on the 1-dimensional line defined by the eigenvector, the future state will stay on that eigenvector. 
+- Suppose the initial condition ${\mathbf X}_0 = m {\mathbf \Lambda}$. Then the solution will be 
+
+<div style="font-size: 36px; text-align:center;">${\mathbf X}_n = \lambda_i^{n\strut}\, {\mathbf X}_0 \ \ \mbox{when}\ \  {\mathbf X}_0 = m {\mathbf \Lambda}_i$  
+</div>
+
+```{r ev1-3, echo=FALSE, results="markup"}
+etude2::etudeQ(
+  "Suppose ${\\mathbf X}_0 = 3 {\\mathbf \\Lambda}_2$ in the dynamical system defined by ${\\mathbf A}$. What will be ${\\mathbf X}_5$?",
+  "+$\\left[\\begin{array}{r}\\frac{3}{16}\\\\\\frac{3}{32}\\end{array}\\right]$+",
+  "$\\left[\\begin{array}{r}\\frac{3}{32}\\\\\\frac{3}{16}\\end{array}\\right]$",
+  "$\\left[\\begin{array}{r}\\frac{3}{64}\\\\\\frac{3}{64}\\end{array}\\right]$",
+  "$\\left[\\begin{array}{r}\\frac{3}{4}\\\\\\frac{3}{16}\\end{array}\\right]$"
+)
+```
+
+
+
