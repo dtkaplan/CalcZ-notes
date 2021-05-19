@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-  <title>Chapter 19 (PART) Interlude: Iteration | CalcZ Student Notes</title>
+  <title>Chapter 21 (PART) Interlude: Iteration | CalcZ Student Notes</title>
 
     <meta name="author" content="Daniel Kaplan" />
   
@@ -91,7 +91,52 @@
 
   <main class="col-sm-12 col-md-9 col-lg-7" id="content">
 <div id="part-interlude-iteration" class="section level1 nonumber">
-<h1><span class="header-section-number">Chapter 19</span> (PART) Interlude: Iteration</h1>
+<h1><span class="header-section-number">Chapter 21</span> (PART) Interlude: Iteration</h1>
+<p>Back in the days when mathematical notation was developed, calculations were done by people (who were called “computers”). Since people were involved, it was reasonable to rely on common sense guiding them to do the right thing. For instance, suppose the computers task was to calculate <span class="math inline">\(3.7^5\)</span>. A reasonable instruction to a human is “multiply 3.7 by itself five times.”</p>
+<p>As it happens, that isn’t a very clear instruction. Does it mean “solve the same multiplication problem, <span class="math inline">\(3.7 \times 3.7\)</span>, five times in succession?” That’s easy, because once you’ve done it, getting 13.69 as the answer, you just repeat that answer four more times: five times in total. As you know, that’s not the way to get the right answer (which is 693.4396).</p>
+<p>Writing unambiguous instructions suitable for a machine to carry out is challenging, especially when first starting out. Fortunately there is a more-or-less straightforward framework for carrying out <strong><em>iteration</em></strong>. Once you know this framework, you’ll be able to present information to the computer in the right way.</p>
+<div id="initialize-state-update-state-terminate" class="section level2">
+<h2><span class="header-section-number">21.1</span> Initialize state, update state, terminate</h2>
+<p>A nice way to think about iteration is a process for establishing a <strong><em>state</em></strong> and updating that state over and over until you are done.</p>
+<p>Consider the calculation of <span class="math inline">\(3.7^{\,5}\)</span>. Here’s a nice approach:</p>
+<ol style="list-style-type: decimal">
+<li>We’ll call the state <code>x</code> and initialize it to 1.</li>
+<li>Define the update process to be "multiply <code>x</code> by 3.7 and make this the new state.</li>
+<li>Carry out the update process 5 times.</li>
+</ol>
+<p>There are two, distinct styles for describing iteration to the computer: <strong><em>function composition</em></strong> versus <strong><em>looping</em></strong>. Almost everyone find looping easier to understand, but function composition makes it more obvious what the update process is.</p>
+<p>Here’s the looping style in R for the <span class="math inline">\(3.7^{\,5}\)</span> problem.</p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="part-interlude-iteration.html#cb24-1"></a>x &lt;-<span class="st"> </span><span class="dv">1</span> <span class="co"># Initialize state</span></span>
+<span id="cb24-2"><a href="part-interlude-iteration.html#cb24-2"></a><span class="cf">for</span> (n <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="dv">5</span>) {</span>
+<span id="cb24-3"><a href="part-interlude-iteration.html#cb24-3"></a>  x &lt;-<span class="st"> </span><span class="fl">3.7</span> <span class="op">*</span><span class="st"> </span>x  <span class="co"># Update state</span></span>
+<span id="cb24-4"><a href="part-interlude-iteration.html#cb24-4"></a>}</span>
+<span id="cb24-5"><a href="part-interlude-iteration.html#cb24-5"></a>x </span></code></pre></div>
+<pre><code>## [1] 693.4396</code></pre>
+<p>The composition style is different.</p>
+<ol style="list-style-type: lower-roman">
+<li>You write a function that takes the present state and returns the updated state.</li>
+<li>Compose that function <span class="math inline">\(n\)</span> times</li>
+<li>Apply the composed function to the initial state</li>
+</ol>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="part-interlude-iteration.html#cb26-1"></a>update &lt;-<span class="st"> </span><span class="cf">function</span>(x) <span class="fl">3.7</span><span class="op">*</span>x</span>
+<span id="cb26-2"><a href="part-interlude-iteration.html#cb26-2"></a>cfun &lt;-<span class="st"> </span><span class="kw">compose_n</span>(update, <span class="dt">n=</span><span class="dv">5</span>)</span>
+<span id="cb26-3"><a href="part-interlude-iteration.html#cb26-3"></a><span class="kw">cfun</span>(<span class="dv">1</span>)</span></code></pre></div>
+<pre><code>## # A tibble: 1 x 1
+##       x
+##   &lt;dbl&gt;
+## 1  693.</code></pre>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="part-interlude-iteration.html#cb28-1"></a>fib &lt;-<span class="st"> </span><span class="cf">function</span>(x, y) <span class="kw">c</span>(x<span class="op">+</span>y, x)</span>
+<span id="cb28-2"><a href="part-interlude-iteration.html#cb28-2"></a>eight &lt;-<span class="st"> </span><span class="kw">compose_n</span>(fib, <span class="dt">n=</span><span class="dv">5</span>)(<span class="dv">1</span>, <span class="dv">0</span>)</span>
+<span id="cb28-3"><a href="part-interlude-iteration.html#cb28-3"></a>goo &lt;-<span class="st"> </span><span class="kw">compose_n</span>(fib, <span class="dt">n=</span><span class="dv">3</span>, <span class="dt">accumulate=</span><span class="ot">TRUE</span>)</span>
+<span id="cb28-4"><a href="part-interlude-iteration.html#cb28-4"></a><span class="kw">goo</span>(eight)</span></code></pre></div>
+<pre><code>## # A tibble: 4 x 2
+##       x     y
+##   &lt;dbl&gt; &lt;dbl&gt;
+## 1     8     5
+## 2    13     8
+## 3    21    13
+## 4    34    21</code></pre>
+</div>
 </div>
   </main>
 
@@ -116,7 +161,7 @@
   <div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>CalcZ Student Notes</strong>" was written by Daniel Kaplan. It was last built on 2021-05-17.</p>
+    <p>"<strong>CalcZ Student Notes</strong>" was written by Daniel Kaplan. It was last built on 2021-05-19.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

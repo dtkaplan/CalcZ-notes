@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>Chapter 8 Combining and composing functions | CalcZ Student Notes</title>
+<meta name="author" content="Daniel Kaplan">
+<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.2"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="libs/bootstrap-4.5.3/bootstrap.min.css" rel="stylesheet">
+<script src="libs/bootstrap-4.5.3/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.2.4/tabs.js"></script><script src="libs/bs3compat-0.2.4/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script><script src="libs/htmlwidgets-1.5.3/htmlwidgets.js"></script><link href="libs/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet">
+<script src="libs/datatables-binding-0.12/datatables.js"></script><link href="libs/dt-core-1.10.20/css/jquery.dataTables.min.css" rel="stylesheet">
+<link href="libs/dt-core-1.10.20/css/jquery.dataTables.extra.css" rel="stylesheet">
+<script src="libs/dt-core-1.10.20/js/jquery.dataTables.min.js"></script><link href="libs/crosstalk-1.1.1/css/crosstalk.css" rel="stylesheet">
+<script src="libs/crosstalk-1.1.1/js/crosstalk.min.js"></script><script src="libs/plotly-binding-4.9.3/plotly.js"></script><script src="libs/typedarray-0.1/typedarray.min.js"></script><link href="libs/plotly-htmlwidgets-css-1.57.1/plotly-htmlwidgets.css" rel="stylesheet">
+<script src="libs/plotly-main-1.57.1/plotly-latest.min.js"></script><script type="text/x-mathjax-config">
+  const popovers = document.querySelectorAll('a.footnote-ref[data-toggle="popover"]');
+  for (let popover of popovers){
+    const div = document.createElement('div');
+    div.setAttribute('style', 'position: absolute; top: 0, left:0; width:0, height:0, overflow: hidden; visibility: hidden;');
+    div.innerHTML = popover.getAttribute('data-content');
+    
+    // Will this work with TeX on its own line?
+    var has_math = div.querySelector("span.math");
+    if (has_math) {
+      document.body.appendChild(div);
+    	MathJax.Hub.Queue(["Typeset", MathJax.Hub, div]);
+    	MathJax.Hub.Queue(function(){
+        popover.setAttribute('data-content', div.innerHTML);
+    	})
+    }
+  }
+  </script><script src="https://cdn.jsdelivr.net/autocomplete.js/0/autocomplete.jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/mark.js@8.11.1/dist/mark.min.js"></script><!-- CSS --><link rel="stylesheet" href="css/CalcZ-style.css">
+</head>
+<body data-spy="scroll" data-target="#toc">
+
+<div class="container-fluid">
+<div class="row">
+  <header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
+
+    <div class="d-flex align-items-start justify-content-between">
+      <h1>
+        <a href="index.html" title="">CalcZ Student Notes</a>
+      </h1>
+      <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
+    </div>
+
+    <div id="main-nav" class="collapse-lg">
+      <form role="search">
+        <input id="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
+</form>
+
+      <nav aria-label="Table of contents"><h2>Table of contents</h2>
+        <ul class="book-toc list-unstyled">
+<li><a class="" href="index.html">Status</a></li>
+<li class="book-part">Orientation</li>
+<li><a class="" href="themes.html"><span class="header-section-number">1</span> Themes</a></li>
+<li><a class="" href="short-response-exercises.html">Short response Exercises</a></li>
+<li><a class="" href="computing.html">Computing</a></li>
+<li class="book-part">Block 1: Functions and quantity</li>
+<li><a class="" href="what-is-a-function.html"><span class="header-section-number">2</span> What is a function?</a></li>
+<li><a class="" href="notation-for-functions.html"><span class="header-section-number">3</span> Notation for functions</a></li>
+<li><a class="" href="graphs-graphics.html"><span class="header-section-number">4</span> Graphs &amp; Graphics</a></li>
+<li><a class="" href="modeling-with-functions.html"><span class="header-section-number">5</span> Modeling with functions</a></li>
+<li><a class="" href="function-inverses-and-solving.html"><span class="header-section-number">6</span> Function inverses and “solving”</a></li>
+<li><a class="" href="constructing-models.html"><span class="header-section-number">7</span> Constructing models</a></li>
+<li><a class="active" href="combining-and-composing-functions.html"><span class="header-section-number">8</span> Combining and composing functions</a></li>
+<li><a class="" href="dimensions-and-units.html"><span class="header-section-number">9</span> Dimensions and units</a></li>
+<li class="book-part">Block 2: Differences and differentiation</li>
+<li><a class="" href="functions-and-patterns.html"><span class="header-section-number">10</span> Functions and patterns</a></li>
+<li><a class="" href="instantaneous-rate-of-change-1.html"><span class="header-section-number">11</span> Instantaneous rate of change</a></li>
+<li><a class="" href="rate-of-change-relationships.html"><span class="header-section-number">12</span> Rate-of-change relationships</a></li>
+<li><a class="" href="continuity-and-smoothness.html"><span class="header-section-number">13</span> Continuity and smoothness</a></li>
+<li><a class="" href="derivatives-of-the-basic-modeling-functions.html"><span class="header-section-number">14</span> Derivatives of the basic modeling functions</a></li>
+<li><a class="" href="approximating-functions.html"><span class="header-section-number">15</span> Approximating functions</a></li>
+<li><a class="" href="a-framework-for-modeling.html"><span class="header-section-number">16</span> A framework for modeling</a></li>
+<li><a class="" href="partial-change.html"><span class="header-section-number">17</span> Partial change</a></li>
+<li><a class="" href="limits-evanescent-h.html"><span class="header-section-number">18</span> Limits: evanescent \(h\)</a></li>
+<li><a class="" href="practice-with-the-rules.html"><span class="header-section-number">19</span> Practice with the “Rules”</a></li>
+<li><a class="" href="optimization.html"><span class="header-section-number">20</span> Optimization</a></li>
+<li class="book-part">Interlude: Iteration</li>
+<li><a class="" href="guess-check-improve-repeat.html"><span class="header-section-number">22</span> Guess &amp; (check, improve, repeat)</a></li>
+<li class="book-part">Block 3: Accumulation and anti-differentiation</li>
+<li><a class="" href="modeling-with-accumulation.html"><span class="header-section-number">23</span> Modeling with Accumulation</a></li>
+<li><a class="" href="anti-differentiation.html"><span class="header-section-number">24</span> Anti-differentiation</a></li>
+<li><a class="" href="the-derivative-of-accumulation.html"><span class="header-section-number">25</span> The derivative of accumulation</a></li>
+<li><a class="" href="the-definite-integral.html"><span class="header-section-number">26</span> The definite integral</a></li>
+<li><a class="" href="fundamental-theorem-of-calculus.html"><span class="header-section-number">27</span> Fundamental theorem of calculus</a></li>
+<li><a class="" href="applications.html"><span class="header-section-number">28</span> Applications</a></li>
+<li><a class="" href="algebraic-methods.html"><span class="header-section-number">29</span> Algebraic methods</a></li>
+<li><a class="" href="multi-variable-integration.html"><span class="header-section-number">30</span> Multi-variable integration</a></li>
+<li class="book-part">Block 4: Linear combinations</li>
+<li><a class="" href="vectors-and-vector-operations.html"><span class="header-section-number">31</span> Vectors and Vector Operations</a></li>
+<li><a class="" href="linear-combinations-of-vectors.html"><span class="header-section-number">32</span> Linear Combinations of Vectors</a></li>
+<li><a class="" href="orthogonal-vectors-and-projection.html"><span class="header-section-number">33</span> Orthogonal Vectors and Projection</a></li>
+<li><a class="" href="solutions-of-linear-combination-day-1.html"><span class="header-section-number">34</span> Solutions of Linear Combination (Day 1)</a></li>
+<li><a class="" href="solutions-of-linear-combination-day-2.html"><span class="header-section-number">35</span> Solutions of Linear Combination (Day 2)</a></li>
+<li><a class="" href="method-of-least-squares-day-1.html"><span class="header-section-number">36</span> Method of Least Squares (Day 1)</a></li>
+<li><a class="" href="method-of-least-squares-day-2.html"><span class="header-section-number">37</span> Method of Least Squares (Day 2)</a></li>
+<li class="book-part">Block 5: Dynamical systems</li>
+<li><a class="" href="states-dynamics-trajectory.html"><span class="header-section-number">38</span> States, Dynamics, Trajectory</a></li>
+<li><a class="" href="difference-equations-in-1-dimension.html"><span class="header-section-number">39</span> Difference equations in 1 dimension</a></li>
+<li><a class="" href="difference-equations-in-2-dimensions.html"><span class="header-section-number">40</span> Difference equations in 2 dimensions</a></li>
+<li><a class="" href="wrap-up-discrete-time-difference-equations.html"><span class="header-section-number">41</span> Wrap-up Discrete Time difference equations</a></li>
+<li><a class="" href="continuous-time-differential-equation-in-1-dimension.html"><span class="header-section-number">42</span> Continuous-Time differential equation in 1 dimension</a></li>
+<li><a class="" href="continuous-time-differential-equation-in-2-dimensions.html"><span class="header-section-number">43</span> Continuous-Time differential equation in 2 dimensions</a></li>
+<li><a class="" href="catch-up-review-day.html"><span class="header-section-number">44</span> Catch-up: Review Day</a></li>
+<li class="book-part">Interlude: Local and global, smooth and random</li>
+<li><a class="" href="walks-and-brownian-motion.html"><span class="header-section-number">45</span> Walks and Brownian Motion</a></li>
+<li><a class="" href="infinity-day.html"><span class="header-section-number">46</span> Infinity Day</a></li>
+<li><a class="" href="smoothness-continuity-and-splines.html"><span class="header-section-number">47</span> Smoothness, Continuity, and Splines</a></li>
+<li class="book-part">Block 6: Decisions with calculus</li>
+<li><a class="" href="simple-comparisons-and-reductions-npv-and-expected-value.html"><span class="header-section-number">48</span> Simple Comparisons and reductions (NPV and expected value)</a></li>
+<li><a class="" href="project-3-life-expectancy.html"><span class="header-section-number">49</span> Project 3: Life expectancy</a></li>
+<li><a class="" href="optimization-problems.html"><span class="header-section-number">50</span> Optimization problems</a></li>
+<li><a class="" href="multiobjective-optimization.html"><span class="header-section-number">51</span> Multiobjective optimization</a></li>
+<li><a class="" href="constraints-and-constrained-functions-part-1.html"><span class="header-section-number">52</span> Constraints and Constrained functions (Part 1)</a></li>
+<li><a class="" href="constraints-and-constrained-functions-part-2.html"><span class="header-section-number">53</span> Constraints and Constrained functions (Part 2)</a></li>
+<li class="book-part">Appendices</li>
+<li><a class="" href="objectives.html"><span class="header-section-number">A</span> Objectives</a></li>
+</ul>
+
+        <div class="book-extra">
+          <p><a id="book-repo" href="https://github.com/dtkaplan/CalcZ-notes">View book source <i class="fab fa-github"></i></a></p>
+        </div>
+      </nav>
+</div>
+  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="combining-and-composing-functions" class="section level1">
+<h1>
+<span class="header-section-number">8</span> Combining and composing functions<a class="anchor" aria-label="anchor" href="#combining-and-composing-functions"><i class="fas fa-link"></i></a>
+</h1>
+<div class="objectives">
+<ol>
+<li>
+<strong>[Fun-4-c-1]</strong> <em>Use linear combination and direct multiplication of functions of one variable to produce functions of multiple variables</em>
+</li>
+<li>
+<strong>[Fun-4-c-2]</strong> <em>Recognize that composition of functions does not itself create a function of multiple variables.</em>
+</li>
+</ol>
+</div>
+<p>Linear combination and composition of functions are often used hand-in-hand to construct models. For instance, our model of the data from cooling water was a linear combination of a constant function and a sinusoidal function <span class="math display">\[\mbox{temperature}(t) \equiv 25.9 + 60.7\, e^{-0.019 t}\]</span>
+Similarly, our model from the Providence tide data was
+<span class="math display">\[\mbox{tide}(t) \equiv 1.02 + 0.50 \sin(2\pi (t - 15.4)/12.56)\]</span>
+In both cases, the sine part of the combination is a mathematical (<span class="math inline">\(\exp(x)\)</span> or <span class="math inline">\(\sin(x)\)</span>) function composed with a linear interior function: <span class="math inline">\(-0.019 t\)</span> for the cooling water, and <span class="math inline">\(2\pi (t - 15.4)/12.56\)</span> for the tides.</p>
+<p>Each of these models was a function of one input. (Coincidentally, the input in both cases was “time”, measured in minutes in the cooling-water example and hours in the tide example.)</p>
+<p>But linear combinations are a powerful way to construct functions of multiple inputs. This can be as simple as <span class="math display">\[h(x, t) \equiv A + B f(x) + C g(t)\]</span></p>
+<div class="workedexample">
+<p>Earlier we introduced a model of natural gas consumption (ccf) in the author’s home during a month as a function of the average temperature during that month. Using <span class="math inline">\(T\)</span> for temperature, the model, constructed from the record of utility bills, was: <span class="math display">\[ccf(T) \equiv 293.1 - 4.62 T\]</span> the blue line in Figure <a href="combining-and-composing-functions.html#fig:Fun-1-c-1">8.1</a>.</p>
+<div class="figure">
+<span id="fig:Fun-1-c-1"></span>
+<img src="CalcZ-notes_files/figure-html/Fun-1-c-1-1.png" alt="Natural gas used (ccf) versus average outdoor temperature for the author's home in Saint Paul, Minnesota." width="672"><p class="caption">
+Figure 8.1: Natural gas used (ccf) versus average outdoor temperature for the author’s home in Saint Paul, Minnesota.
+</p>
+</div>
+<p>The amount of natural gas needed to heat the home presumably depends on many other factors as well: how windy was the weather, the thermostat setting, how often the back door was left open, ….</p>
+<p>For the sake of demonstration, here is model matched to the data of the natural gas ccf as a function of both temperature <em>and</em> the amount of electricity (E) used each month.</p>
+<p><span class="math display">\[\mbox{ccf}(T, E) \equiv 295.8 - 4.66\, T - 0.0010\, E\]</span></p>
+<p>The coefficients suggest that more electricity use corresponds to less natural gas use, perhaps because light bulbs are partially heating the home. But the effect, if any is very small: a doubling of monthly electricity use (from, say 400 kWh to 800 kWh) has about the same effect of 1/8 degree increase in outdoor temperature. That would be useful to know if you were having, say, an argument with your brother-in-law about whether it’s OK to leave the lights on in an empty room, because it saves natural gas.</p>
+</div>
+<p>Although linear combinations of functions of different variables are a very common way of constructing functions of multiple variables, function <strong><em>composition</em></strong> is useless when it comes to this.</p>
+<p>For instance, consider the two functions <span class="math inline">\(f(x)\)</span> and <span class="math inline">\(g(t)\)</span>. The composition <span class="math inline">\(f(g(t))\)</span> has only <strong>one</strong> input: <span class="math inline">\(t\)</span>. Similarly, <span class="math inline">\(g(f(x))\)</span> has only one input: <span class="math inline">\(x\)</span>.</p>
+<p>In contrast to composition, multiplication of two functions is very effective for constructing functions of multiple variables: <span class="math inline">\(h(x,y) \equiv f(x) g(y)\)</span>.</p>
+<div class="workedexample">
+<p><strong>A wave packet</strong></p>
+<p>An important idea in physics and communication is the “wave packet.” This is a function that is local, like a hump, but periodic within the hump.</p>
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">wave_packet</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span>, <span class="va">A</span><span class="op">=</span><span class="fl">1</span>, <span class="va">center</span> <span class="op">=</span> <span class="fl">0</span>, <span class="va">width</span> <span class="op">=</span> <span class="fl">5</span>, <span class="va">P</span><span class="op">=</span><span class="fl">1</span>, <span class="va">phase</span> <span class="op">=</span> <span class="fl">0</span><span class="op">)</span> <span class="op">{</span>
+  <span class="va">A</span><span class="op">*</span><span class="fu"><a href="https://rdrr.io/r/base/Trig.html">sin</a></span><span class="op">(</span><span class="fl">2</span><span class="op">*</span><span class="va">pi</span><span class="op">*</span><span class="va">x</span><span class="op">/</span><span class="va">P</span><span class="op">)</span><span class="op">*</span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">dnorm</a></span><span class="op">(</span><span class="op">(</span><span class="va">x</span> <span class="op">-</span> <span class="va">center</span><span class="op">)</span><span class="op">/</span><span class="va">width</span><span class="op">)</span>
+<span class="op">}</span>
+<span class="fu">slice_plot</span><span class="op">(</span><span class="fu">wave_packet</span><span class="op">(</span><span class="va">x</span>, A<span class="op">=</span><span class="fl">2</span>, center<span class="op">=</span><span class="fl">3</span>, width  <span class="op">=</span> <span class="fl">4</span>, P  <span class="op">=</span> <span class="fl">2</span> <span class="op">)</span> <span class="op">~</span> <span class="va">x</span>, 
+           <span class="fu">domain</span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">15</span>, <span class="fl">15</span><span class="op">)</span><span class="op">)</span>, npts <span class="op">=</span> <span class="fl">500</span><span class="op">)</span></code></pre></div>
+<div class="figure">
+<span id="fig:unnamed-chunk-49"></span>
+<img src="CalcZ-notes_files/figure-html/unnamed-chunk-49-1.png" alt="A *wave packet* constructed by multiplying a sinusoid by a hump function." width="672"><p class="caption">
+Figure 8.2: A <em>wave packet</em> constructed by multiplying a sinusoid by a hump function.
+</p>
+</div>
+</div>
+<div class="workedexample">
+<p>A simple but powerful and general framework for constructing functions of two variables to match data or to assemble into one function facts about a relationship among three variables is the linear combination of four simple functions: <span class="math display">\[a_0 + a_x\, x + a_y\, y + a_{xy}\, xy\]</span>
+The coefficients in the linear combination are <span class="math inline">\(a_0\)</span>, <span class="math inline">\(a_x\)</span>, <span class="math inline">\(a_y\)</span>, and <span class="math inline">\(a_{xy}\)</span>. Those names were selected to make it easier to keep track of which coefficient scales which function, but ultimately they are just scalars and could have been called <span class="math inline">\(a, b, c\)</span>, and <span class="math inline">\(d\)</span>.</p>
+<p>The basis function <span class="math inline">\(g_4(x, y) \equiv x y\)</span> is called an <strong><em>interaction term</em></strong> and arises very often in models of phenemona such as the spread of epidemics, the population dynamics of predator and prey animals, and the rates of chemical reactions
+.</p>
+</div>
+<p>EXERCISE:</p>
+<p>Recall the Pythagorean theorem: <span class="math inline">\(C^2 = A^2 + B^2\)</span>. Let’s write this as a function that takes as inputs the lengths of the two legs and produces as output the length of the hypotenuse.</p>
+<p><span class="math display">\[\mbox{hypotenuse}(x, y) \equiv \sqrt{\strut x^2 + y^2}\]</span></p>
+<p>This can be seen as a composition of a function <span class="math inline">\(f()\)</span> together with a linear combination of two power-law functions <span class="math inline">\(g()\)</span> and <span class="math inline">\(h()\)</span> of different inputs. What is the function <span class="math inline">\(f()\)</span>? What are <span class="math inline">\(g()\)</span> and <span class="math inline">\(h()\)</span>? What are the coefficients in the linear combination?</p>
+<div id="piecewise-models" class="section level2">
+<h2>
+<span class="header-section-number">8.1</span> Piecewise models<a class="anchor" aria-label="anchor" href="#piecewise-models"><i class="fas fa-link"></i></a>
+</h2>
+<div class="objectives">
+<ol>
+<li>
+<strong>[Fun-4-b-4a]</strong> <em>Identify graphs of a piecewise linear function.</em>
+</li>
+<li>
+<strong>[Fun-1C-d]</strong> <em>Construct a hock-stick function by piecewise combination of a constant function and a straight-line function with non-zero slope.</em>
+</li>
+<li>
+<strong>[Fun-4-b-4b]</strong> <em>Recognize traditional curly-brace notation for piecewise functions.</em>
+</li>
+<li>
+<strong>[Fun-4-b-4c]</strong> <em>Be able to create a piecewise function in R.</em>
+</li>
+<li>
+<strong>[Fun-4-b-4d]</strong> <em>Distinguish between continuous and discontinuous functions</em>
+</li>
+</ol>
+</div>
+<p><strong>Example: Piecewise functions in machine learning</strong></p>
+
+</div>
+</div>
+  <div class="chapter-nav">
+<div class="prev"><a href="constructing-models.html"><span class="header-section-number">7</span> Constructing models</a></div>
+<div class="next"><a href="dimensions-and-units.html"><span class="header-section-number">9</span> Dimensions and units</a></div>
+</div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
+    <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
+      <ul class="nav navbar-nav">
+<li><a class="nav-link" href="#combining-and-composing-functions"><span class="header-section-number">8</span> Combining and composing functions</a></li>
+<li><a class="nav-link" href="#piecewise-models"><span class="header-section-number">8.1</span> Piecewise models</a></li>
+</ul>
+
+      <div class="book-extra">
+        <ul class="list-unstyled">
+<li><a id="book-source" href="https://github.com/dtkaplan/CalcZ-notes/blob/master/Fun-modeling.Rmd">View source <i class="fab fa-github"></i></a></li>
+          <li><a id="book-edit" href="https://github.com/dtkaplan/CalcZ-notes/edit/master/Fun-modeling.Rmd">Edit this page <i class="fab fa-github"></i></a></li>
+        </ul>
+</div>
+    </nav>
+</div>
+
+</div>
+</div> <!-- .container -->
+
+<footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>"<strong>CalcZ Student Notes</strong>" was written by Daniel Kaplan. It was last built on 2021-05-19.</p>
+  </div>
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
+  </div>
+
+</div></div>
+</footer><!-- dynamically load mathjax for compatibility with self-contained --><script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+</html>
