@@ -1,0 +1,59 @@
+---
+title: "Combining hump functions"
+author: "Daniel Kaplan"
+---
+
+```{r include=FALSE}
+library(etude2)
+library(mosaic)
+library(mosaicCalc)
+```
+
+The graph shows two hump functions, hump1(t) and hump2(t)
+
+```{r echo=FALSE}
+h1 <- makeFun(20*dnorm(t, 50, 20) ~ t)
+h2 <- makeFun(20*dnorm(t, 125, 10) ~ t)
+slice_plot(h1(t) ~ t, domain(t=c(0,200)), color = "blue",
+           label_text = "hump1(t)",  label_x =.3) %>%
+  gf_labs(y = "Activity",  x = "Minute") %>%
+  slice_plot(h2(t) ~ t, color="red", label_text  = "hump2(t)", label_x=.7)
+```
+
+A linear combination  of the hump functions is shown in Graph (A).
+
+```{r echo=FALSE}
+slice_plot(0.5 *  h1(t) + h2(t) ~ t, domain(t=c(0,200)) ) %>%
+  gf_labs(y = "Activity",  x = "Minute", title = "Graph A")
+```
+
+
+```{r daily-digital-09-QA17, echo=FALSE}
+etude2::etudeQ(
+  prompt = "What is the linear combination of  hump1(t) and hump2(t)  shown in Graph (A)?",
+    "+0.5*hump1(t) + hump2(t)+" = "",
+    "hump1(t) + 0.25*hump2(t)" = "If this were the case, the right bump would be only one-quarter as big as the left bump.",
+    "hump1(t) + 2*hump2(t)" = "Since hump2(t) has a maximum value  of 20, 2*hump2(t) would reach a value of 40.  That isn't what's shown in  the graph.",
+  inline = FALSE
+)
+```
+
+Another linear combination  of the hump functions is shown in Graph (B).
+
+```{r echo=FALSE}
+slice_plot(h1(t) - 2*h2(t) ~ t, domain(t=c(0,200)) ) %>%
+  gf_labs(y = "Activity",  x = "Minute", title="Graph (B)")
+```
+
+
+```{r daily-digital-09-QA18, echo=FALSE}
+etude2::etudeQ(
+  prompt = "Which  linear combination of hump1(t) and hump2(t) is shown in Graph (B)?",
+    "+hump1(t) - 2*hump2(t)+" = "",
+    "hump1(t) - hump2(t)" = "The second (downward) hump is bigger than  the first  (upward) hump.",
+    "0.5\\*hump1(t) - 0.5\\*hump2(t)" = "If this were so, the first hump would reach a value of 10 rather than the 20 seen in Graph (B).",
+    "-hump1(t) - hump2(t)" = "The  first hump is  positive.",
+  inline = FALSE
+)
+```
+

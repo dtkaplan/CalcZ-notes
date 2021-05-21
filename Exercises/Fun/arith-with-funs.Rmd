@@ -16,7 +16,8 @@ Many stories require more than one character. For instance, the initial rise in 
 Being able to add or multiply functions can enable us to  tell a more complicated story. For example, the  graph shows a simple model of the hourly  temperature in from June through September
 
 ```{r}
-temp <- makeFun(20*cos(2*pi*(t-120)/365) + 10*sin(2*pi*t/1) + 50 ~ t)
+temp <- makeFun(20*cos(2*pi*(t-120)/365) + 
+                  10*sin(2*pi*t/1) + 50 ~ t)
 slice_plot(temp(day) ~ day, domain(day=c(90, 180)),  npt=1000) %>%
   gf_labs(y = "Temperature  (F)", x = "Day of year")
 
@@ -29,8 +30,8 @@ We are going to use this strategy of modeling complex phenomena as a  sum of two
 **Problem 1** Epidemics are often modeled as a series of "waves." Each wave involves different  people. Let's imagine two epidemic waves, one passing through the "blue" population  and a smaller one through  the "red" population, like this:
 
 ```{r echo=FALSE}
-f1 <- makeFun(sigmoid(t, 1000,  50, 20) ~ t)
-f2 <- makeFun(sigmoid(t, 500,  125, 10) ~ t)
+f1 <- makeFun(1000 * pnorm(t, 50, 20) ~ t)
+f2 <- makeFun(500 * pnorm(t, 125, 10) ~ t)
 slice_plot(f1(t) ~ t, domain(t=c(0,200)), 
            color = "blue",  
            label_text = "wave1(t)") %>%
@@ -38,18 +39,15 @@ slice_plot(f1(t) ~ t, domain(t=c(0,200)),
   slice_plot(f2(t) ~ t, color="red", label_text  = "wave2(t)")
 ```
 
-etudeQA()
+
 
 ```{r daily-digital-09-QA15, echo=FALSE}
-# indicate correct choices with +_+ in the name of the list item.
-etude::choose_one(
+etude2::etudeQ(
   prompt = "Assuming that there were no way to distinguish between red and blue cases, the epidemic would look like just one curve. Which of the following curves would the overall epidemic look like? (The colors are just  to  help you  distinguish the different functions)",
-  choices = list(
     "A" = "The cumulative number of cases can't possibly go down!",
     "B" = "The cumulative number of cases can't possibly go down!",
     "C" = "You can't see the separate waves in (C) even though the rise in the blue wave is clearly distinct in  time from the rise in  the red wave. ",
     "+D+" = "Yes. Each wave adds another layer to the cumulative number of cases"
-  )
 )
 ```
 
@@ -63,17 +61,14 @@ slice_plot(f1(t) + f2(t) ~ t, domain(t=c(0,200)), label_text="(D)") %>%
 
 ```
 
-Each of the functions shown in the above graph is a "linear combination" of the red function and the blue function. The real total cumulative cases is "wave1(t)"  plus "wave2(t)". The other functions are made up and are irrelevant  to  the real epidemic. Still, we can ask what arithmetic combination  of "wave1(t)" and "wave2(t)"  was used to create the made-up function.
+Each of the functions shown in the above graph is a "linear combination" of the red function and the blue function. The real total cumulative cases is "wave1(t)"  plus "wave2(t)". The other functions are made up and are irrelevant to the real epidemic. Still, we can ask what arithmetic combination of "wave1(t)" and "wave2(t)"  was used to create the made-up function.
 
 
 ```{r daily-digital-09-QA16, echo=FALSE}
-etude::choose_one(
+etude2::etudeQ(
   prompt = "For made-up function (A) in  the graph, what was the linear combination?",
-  choices = list(
-    "+1000 - wave1(t) + wave2(t)+" = "",
+    "+1000 - wave1(t) + wave2(t)+",
     "2*wave1(t) - 3*wave2(t)" = "When t=0,  both wave1(t) and wave2(t) are zero, so the sum would also be zero. That's not  true in function (A)",
     "1000 + wave1(t) - wave2(t)" = "This  linear combination would rise from 1000 to 2000 (at time t=100) and  then  fall off to 1500 as the negative  wave2(t)  comes into play."
-  ),
-  inline = FALSE
 )
 ```
