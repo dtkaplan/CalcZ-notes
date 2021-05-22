@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>Chapter 1 What is a function? | CalcZ Student Notes</title>
+<title>Chapter 2 What is a function? | CalcZ Student Notes</title>
 <meta name="author" content="Daniel Kaplan">
 <!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.2"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="libs/bootstrap-4.5.3/bootstrap.min.css" rel="stylesheet">
@@ -52,17 +52,19 @@
 
       <nav aria-label="Table of contents"><h2>Table of contents</h2>
         <ul class="book-toc list-unstyled">
-<li><a class="" href="index.html">Status</a></li>
+<li><a class="" href="index.html">Welcome to calculus</a></li>
 <li class="book-part">Orientation</li>
 <li><a class="" href="themes.html">Themes</a></li>
 <li><a class="" href="short-response-exercises.html">Short response Exercises</a></li>
 <li><a class="" href="computing.html">Computing</a></li>
 <li class="book-part">Block 1: Functions and quantity</li>
-<li><a class="active" href="what-is-a-function.html"><span class="header-section-number">1</span> What is a function?</a></li>
-<li><a class="" href="calculus-functions-and-change.html"><span class="header-section-number">2</span> Calculus: Functions and change</a></li>
-<li><a class="" href="notation-for-functions.html"><span class="header-section-number">3</span> Notation for functions</a></li>
-<li><a class="" href="unassigned-exercises.html"><span class="header-section-number">4</span> Unassigned exercises</a></li>
-<li><a class="" href="unassigned-functions-about-derivatives.html"><span class="header-section-number">5</span> Unassigned functions about derivatives</a></li>
+<li><a class="" href="change.html"><span class="header-section-number">1</span> Change</a></li>
+<li><a class="active" href="what-is-a-function.html"><span class="header-section-number">2</span> What is a function?</a></li>
+<li><a class="" href="calculus-functions-and-change.html"><span class="header-section-number">3</span> Calculus: Functions and change</a></li>
+<li><a class="" href="notation-for-functions.html"><span class="header-section-number">4</span> Notation for functions</a></li>
+<li><a class="" href="unassigned-exercises.html"><span class="header-section-number">5</span> Unassigned exercises</a></li>
+<li><a class="" href="unassigned-exercises-on-dimension-and-magnitude.html"><span class="header-section-number">6</span> Unassigned exercises on dimension and magnitude</a></li>
+<li><a class="" href="unassigned-functions-about-derivatives.html"><span class="header-section-number">7</span> Unassigned functions about derivatives</a></li>
 </ul>
 
         <div class="book-extra">
@@ -72,7 +74,7 @@
 </div>
   </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="what-is-a-function" class="section level1">
 <h1>
-<span class="header-section-number">1</span> What is a function?<a class="anchor" aria-label="anchor" href="#what-is-a-function"><i class="fas fa-link"></i></a>
+<span class="header-section-number">2</span> What is a function?<a class="anchor" aria-label="anchor" href="#what-is-a-function"><i class="fas fa-link"></i></a>
 </h1>
 <div class="objectives">
 <ol>
@@ -82,11 +84,14 @@
 </li>
 </ol>
 </div>
+<p>You’re used to mathematical functions being stated as <strong><em>formulas</em></strong>, expressions composed of addition, multiplication, square roots, and so on. The expression <span class="math inline">\(m x + b\)</span> uses a multiplication and an addition. <span class="math inline">\(\sqrt{\strut 1 - x^2}\)</span> uses exponentiation (<span class="math inline">\(x^2\)</span>), subtraction and square root.</p>
+<p>But there’s nothing in the mathematical concept of “function” that requires a formula. And computer functions in general are not based on a formula. (The word used to describe the internals of a computer function is <strong><em>algorithm</em></strong>, which is a generalization of “formula” that includes many non-arithmetic operations such as looping and branching).</p>
+<p>We will be using formulas extensively, but best if you can visualize functions generally as something that’s not necessarily a formula. This section gives another perspective on how to describe and think about a function. But remember, functions <strong><em>take inputs</em></strong> and <strong><em>return the corresponding output</em></strong>. Any arrangement that accomplishes this is a function, even if arithmetic is nowhere in sight.</p>
 <p>People have many ways of organizing what they know. Often we rely on our intuitive abilities of memory, but we also have constructed frameworks to make the storage more accessible and reliable. One of these frameworks is the <strong><em>table</em></strong>, generally set up as an array of rows and columns. For instance, here is a table about a range of internal combustion engines of various sizes:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">DT</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/DT/man/datatable.html">datatable</a></span><span class="op">(</span><span class="va">Engines</span><span class="op">)</span></code></pre></div>
-<div id="htmlwidget-253c1621039e216dfa29" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-253c1621039e216dfa29">{"x":{"filter":"none","data":[["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31","32","33","34","35","36","37","38","39"],["Webra Speedy","Motori Cipolla","Webra Speed 20","Webra 40","Webra 61 Blackhead","Webra 6WR","Enya 60-4C","Webra 91RC","Technopower radial","Webra T4","Kavan FK50","McCulloch M2-10","Honda 450","KFM 104","Lycoming 0-145A","Continental A65","Franklin 4AC-176","Franklin 6AC-296","Continental C115","Continental C140","Lycoming GO-290A","Ranger 6-440C","Lycoming GO-435B","Jacobs R-775","Chrysler 340","Ranger SGV-770C","Allison V-1710","Wright GR-2600","Allison V-3420","Daimler-Benz 609","GMC Electromatic 645","Daimler-Benz 613","Sultzer 16-LVA","Nordberg","Ingersoll-Rand PKVT","Fairbanks-Morse","Cooper-Bessemer V-250","Sultzer RD-90","Burmeister and Wain"],[0.135,0.15,0.25,0.27,0.43,0.49,0.61,0.67,0.913,0.93,2.45,3.5,34,68,75,79,82,118,119,135,150,171,182,229,245,331,735,885,1180,1400,1775,1960,2000,5260,10850,12860,13500,97200,102300],[1,1,1,1,1,1,1,1,7,1,2,1,2,4,4,4,4,6,6,6,4,6,6,7,8,12,12,14,24,16,16,24,16,16,16,12,16,12,12],[2,2,2,2,2,2,4,2,4,4,4,2,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4],[1.8,2.5,3.4,6.5,10,10,10,14.3,20,14.7,50,55,450,916,2370,2800,2800,4700,3000,3000,4750,7200,7100,12400,5569,12600,28000,42700,56000,61800,183000,89000,220000,488000,1165000,1327000,1334000,11850000,11900000],[13.5,15,16.5,21,24,24,24,27,15.9,27,34,44,70,90,92,98,100,106,102,102,124,105,124,133,101,102,194,155,140,165,239,162,250,356,406,508,457,900,840],[12.5,14,16,19,22,22,22,25,14,25,28,35,58,72,89,92,87,87,92,92,98,129,98,127,84,120,152,160,152,180,254,180,280,407,559,546,508,1550,1800],[0.45,1,0.78,0.96,1.55,2.76,0.84,2.85,0.82,1.43,4.1,6.5,43,79,65,65,75,130,115,140,145,200,220,225,275,450,1000,1350,2100,2450,3300,3120,4000,3000,4400,12000,7250,27600,27800],[22000,26000,22000,15500,14000,19000,11800,13000,8700,9300,8000,11000,8500,3900,2550,2300,2500,2600,2350,3000,3000,2450,3000,2000,5000,3000,2600,2300,2600,2800,900,2700,1100,400,360,400,330,119,110]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>Engine<\/th>\n      <th>mass<\/th>\n      <th>ncylinder<\/th>\n      <th>strokes<\/th>\n      <th>displacement<\/th>\n      <th>bore<\/th>\n      <th>stroke<\/th>\n      <th>BHP<\/th>\n      <th>RPM<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"className":"dt-right","targets":[2,3,4,5,6,7,8,9]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script><p>Each row of the table reports on one, specific engine. Each column is one attribute of the of an engine. Using such tables can be easy. For example, if asked to report how fast the engine named “Enya 60-4C” spins, you would go down to the Enya 60-4C row and over to the “RPM” column and read off the answer: 11,800 revolutions per minute (RPM).</p>
+<div id="htmlwidget-8d09c73cd4bf0676bf82" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-8d09c73cd4bf0676bf82">{"x":{"filter":"none","data":[["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31","32","33","34","35","36","37","38","39"],["Webra Speedy","Motori Cipolla","Webra Speed 20","Webra 40","Webra 61 Blackhead","Webra 6WR","Enya 60-4C","Webra 91RC","Technopower radial","Webra T4","Kavan FK50","McCulloch M2-10","Honda 450","KFM 104","Lycoming 0-145A","Continental A65","Franklin 4AC-176","Franklin 6AC-296","Continental C115","Continental C140","Lycoming GO-290A","Ranger 6-440C","Lycoming GO-435B","Jacobs R-775","Chrysler 340","Ranger SGV-770C","Allison V-1710","Wright GR-2600","Allison V-3420","Daimler-Benz 609","GMC Electromatic 645","Daimler-Benz 613","Sultzer 16-LVA","Nordberg","Ingersoll-Rand PKVT","Fairbanks-Morse","Cooper-Bessemer V-250","Sultzer RD-90","Burmeister and Wain"],[0.135,0.15,0.25,0.27,0.43,0.49,0.61,0.67,0.913,0.93,2.45,3.5,34,68,75,79,82,118,119,135,150,171,182,229,245,331,735,885,1180,1400,1775,1960,2000,5260,10850,12860,13500,97200,102300],[1,1,1,1,1,1,1,1,7,1,2,1,2,4,4,4,4,6,6,6,4,6,6,7,8,12,12,14,24,16,16,24,16,16,16,12,16,12,12],[2,2,2,2,2,2,4,2,4,4,4,2,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4],[1.8,2.5,3.4,6.5,10,10,10,14.3,20,14.7,50,55,450,916,2370,2800,2800,4700,3000,3000,4750,7200,7100,12400,5569,12600,28000,42700,56000,61800,183000,89000,220000,488000,1165000,1327000,1334000,11850000,11900000],[13.5,15,16.5,21,24,24,24,27,15.9,27,34,44,70,90,92,98,100,106,102,102,124,105,124,133,101,102,194,155,140,165,239,162,250,356,406,508,457,900,840],[12.5,14,16,19,22,22,22,25,14,25,28,35,58,72,89,92,87,87,92,92,98,129,98,127,84,120,152,160,152,180,254,180,280,407,559,546,508,1550,1800],[0.45,1,0.78,0.96,1.55,2.76,0.84,2.85,0.82,1.43,4.1,6.5,43,79,65,65,75,130,115,140,145,200,220,225,275,450,1000,1350,2100,2450,3300,3120,4000,3000,4400,12000,7250,27600,27800],[22000,26000,22000,15500,14000,19000,11800,13000,8700,9300,8000,11000,8500,3900,2550,2300,2500,2600,2350,3000,3000,2450,3000,2000,5000,3000,2600,2300,2600,2800,900,2700,1100,400,360,400,330,119,110]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>Engine<\/th>\n      <th>mass<\/th>\n      <th>ncylinder<\/th>\n      <th>strokes<\/th>\n      <th>displacement<\/th>\n      <th>bore<\/th>\n      <th>stroke<\/th>\n      <th>BHP<\/th>\n      <th>RPM<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"className":"dt-right","targets":[2,3,4,5,6,7,8,9]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script><p>Each row of the table reports on one, specific engine. Each column is one attribute of the of an engine. Using such tables can be easy. For example, if asked to report how fast the engine named “Enya 60-4C” spins, you would go down to the Enya 60-4C row and over to the “RPM” column and read off the answer: 11,800 revolutions per minute (RPM).</p>
 <p>A table like this can be said to describe as raw numbers the general relationships between various engine attributes. For instance, we might want to understand the relationship (if any) between RPM and engine mass, or relate the number and diameter (that is, “bore”) and depth (that is, “stroke”) of the cylinders to the power generated by the engine. Any single entry in the table doesn’t tell us about such general relationships; we need to consider the rows and columns as a whole.</p>
 <p>If you examined the relationship between engine power and cylinder number, diameter, and depth, you will find that (as a rule) the larger the number, diameter, and depth, the more powerful the engine. That’s a <strong><em>qualitative</em></strong> description of the relationship. Most educated people are able to understand such a quantitative description. Even if they don’t know exactly what “power” means, they have some rough conception of it. And almost everyone knows what diameter, depth, and number mean.</p>
 <p>Often, we’re interested in having a <strong><em>quantitative</em></strong> description of a relationship such as the one (number, diameter, depth) <span class="math inline">\(\rightarrow\)</span> power. Remarkably, the many of educated people are uncomfortable with the idea of using quantitative descriptions of a relationship: what sort of language the description should be written with; how to perform the calculations to use the description; how to translate between data (such as in the table) and a quantitative description; how to translate the quantitative description to address a particular question or make a decision.</p>
@@ -117,7 +122,7 @@
 <div class="figure" style="text-align: center">
 <span id="fig:unnamed-chunk-10"></span>
 <img src="www/Richardson-globe.jpg" alt="An artist's depiction of the organization of calculations for weather forecasting by Richardson's system. [Source](https://www.cabinetmagazine.org/issues/27/foer.php)" width="70%"><p class="caption">
-Figure 1.1: An artist’s depiction of the organization of calculations for weather forecasting by Richardson’s system. <a href="https://www.cabinetmagazine.org/issues/27/foer.php">Source</a>
+Figure 2.1: An artist’s depiction of the organization of calculations for weather forecasting by Richardson’s system. <a href="https://www.cabinetmagazine.org/issues/27/foer.php">Source</a>
 </p>
 </div>
 <p>Each business might work this way: In each business there is a person who will report the current air pressure at that point on the globe, another person who reports the temperature, another reporting humidity, and so on. To compute the predicted weather for the next day, the business has a staff assigned to visit the neighboring businesses to find out the pressure, temperature, humidity, etc. Still other staffers take the collected output from the neighbors and carry out the arithmetic to translate those outputs into the forecast for tomorrow. For instance, knowing the pressure at neighboring points enables the direction of wind to be calculated, thus the humidity and temperature of air coming in to and out of the region the business handles. In today’s numerical weather prediction models, the globe is divided very finely by latitude, longitude, and altitude, and software handles both the storage of present conditions and the calculation from that of the future a few minutes later. Repeating the process using the forecast enables a prediction to be made for a few minutes after that, and so on.</p>
@@ -137,19 +142,32 @@ Figure 1.1: An artist’s depiction of the organization of calculations for weat
 </ul>
 <p>Calculus provides both the notation for describing the physics of climate and the means to translate this physics into arithmetic calculation.</p>
 </div>
+<div class="todo">
+<p>In the section on linear combinations, have a sidebar that explains that the so-called “straight-line” function is really just a linear combination of the more fundamental functions <span class="math inline">\(\text{identity}(x) \equiv x\)</span> (which is exactly the same thing as the power-law function <span class="math inline">\(x^p\)</span> with <span class="math inline">\(p=1\)</span>) and and <span class="math inline">\(\text{constant}(x) \equiv 1\)</span> which is pretty much the same as the power-law function <span class="math inline">\(x^0\)</span>.</p>
+</div>
+<div class="todo">
+<p>In the limits section or an exercise, ask about <span class="math inline">\(x^0\)</span>? Is that the same as 1? What about when <span class="math inline">\(x=0\)</span>. Zero raised to any positive power is 0. But any positive number raised to 0 is 1. So two ways of thinking about it give different answers.</p>
+<p>The computer handles the question with ease:</p>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fl">0</span><span class="op">^</span><span class="fl">0</span></code></pre></div>
+<pre><code>## [1] 1</code></pre>
+<p>But computer results don’t always agree with mathematical results.</p>
+<p>In this case, mathematicians looking at the question through the lens of limits, agree with the computer when looking at the function <span class="math inline">\(g(x) \equiv x^0\)</span>. But they disagree if the function is <span class="math inline">\(h(x) \equiv 0^x\)</span> or <span class="math inline">\(f(x) \equiv x^x\)</span>. These three functions are not the same when it comes to limits.</p>
+<p>Remember that <span class="math inline">\(\lim_{x\rightarrow 0}\)</span> is not about replacing <span class="math inline">\(x\)</span> with zero, it is about a process of examining the result for non-zero <span class="math inline">\(x\)</span> as <span class="math inline">\(x\)</span> approaches zero. In “zero raised to any positive power” we’re talking about <span class="math inline">\(0^{\lim_{x\rightarrow 0}}\)</span>, which is not the same as <span class="math inline">\(\lim_{x\rightarrow 0} \left[x^x\right]\)</span>. Similarly, <span class="math inline">\(\left[\lim_{x\rightarrow 0}\right]^0\)</span> is different from</p>
+</div>
 
 </div>
   <div class="chapter-nav">
-<div class="prev"><a href="computing.html">Computing</a></div>
-<div class="next"><a href="calculus-functions-and-change.html"><span class="header-section-number">2</span> Calculus: Functions and change</a></div>
+<div class="prev"><a href="change.html"><span class="header-section-number">1</span> Change</a></div>
+<div class="next"><a href="calculus-functions-and-change.html"><span class="header-section-number">3</span> Calculus: Functions and change</a></div>
 </div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
     <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
-      <ul class="nav navbar-nav"><li><a class="nav-link" href="#what-is-a-function"><span class="header-section-number">1</span> What is a function?</a></li></ul>
+      <ul class="nav navbar-nav"><li><a class="nav-link" href="#what-is-a-function"><span class="header-section-number">2</span> What is a function?</a></li></ul>
 
       <div class="book-extra">
         <ul class="list-unstyled">
-<li><a id="book-source" href="https://github.com/dtkaplan/CalcZ-notes/blob/master/Fun-what-is-a-function.Rmd">View source <i class="fab fa-github"></i></a></li>
-          <li><a id="book-edit" href="https://github.com/dtkaplan/CalcZ-notes/edit/master/Fun-what-is-a-function.Rmd">Edit this page <i class="fab fa-github"></i></a></li>
+<li><a id="book-source" href="https://github.com/dtkaplan/CalcZ-notes/blob/master/Fun-functions-and-quantities.Rmd">View source <i class="fab fa-github"></i></a></li>
+          <li><a id="book-edit" href="https://github.com/dtkaplan/CalcZ-notes/edit/master/Fun-functions-and-quantities.Rmd">Edit this page <i class="fab fa-github"></i></a></li>
         </ul>
 </div>
     </nav>
@@ -161,7 +179,7 @@ Figure 1.1: An artist’s depiction of the organization of calculations for weat
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>CalcZ Student Notes</strong>" was written by Daniel Kaplan. It was last built on 2021-05-20.</p>
+    <p>"<strong>CalcZ Student Notes</strong>" was written by Daniel Kaplan. It was last built on 2021-05-22.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">
