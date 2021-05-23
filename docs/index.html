@@ -13,7 +13,8 @@
 <script src="libs/datatables-binding-0.12/datatables.js"></script><link href="libs/dt-core-1.10.20/css/jquery.dataTables.min.css" rel="stylesheet">
 <link href="libs/dt-core-1.10.20/css/jquery.dataTables.extra.css" rel="stylesheet">
 <script src="libs/dt-core-1.10.20/js/jquery.dataTables.min.js"></script><link href="libs/crosstalk-1.1.1/css/crosstalk.css" rel="stylesheet">
-<script src="libs/crosstalk-1.1.1/js/crosstalk.min.js"></script><script type="text/x-mathjax-config">
+<script src="libs/crosstalk-1.1.1/js/crosstalk.min.js"></script><script src="libs/kePrint-0.0.1/kePrint.js"></script><link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet">
+<script type="text/x-mathjax-config">
   const popovers = document.querySelectorAll('a.footnote-ref[data-toggle="popover"]');
   for (let popover of popovers){
     const div = document.createElement('div');
@@ -53,18 +54,15 @@
       <nav aria-label="Table of contents"><h2>Table of contents</h2>
         <ul class="book-toc list-unstyled">
 <li><a class="active" href="index.html">Welcome to calculus</a></li>
-<li class="book-part">Orientation</li>
-<li><a class="" href="themes.html">Themes</a></li>
-<li><a class="" href="short-response-exercises.html">Short response Exercises</a></li>
-<li><a class="" href="computing.html">Computing</a></li>
 <li class="book-part">Block 1: Functions and quantity</li>
 <li><a class="" href="change.html"><span class="header-section-number">1</span> Change</a></li>
 <li><a class="" href="what-is-a-function.html"><span class="header-section-number">2</span> What is a function?</a></li>
-<li><a class="" href="calculus-functions-and-change.html"><span class="header-section-number">3</span> Calculus: Functions and change</a></li>
-<li><a class="" href="notation-for-functions.html"><span class="header-section-number">4</span> Notation for functions</a></li>
-<li><a class="" href="unassigned-exercises.html"><span class="header-section-number">5</span> Unassigned exercises</a></li>
-<li><a class="" href="unassigned-exercises-on-dimension-and-magnitude.html"><span class="header-section-number">6</span> Unassigned exercises on dimension and magnitude</a></li>
-<li><a class="" href="unassigned-functions-about-derivatives.html"><span class="header-section-number">7</span> Unassigned functions about derivatives</a></li>
+<li><a class="" href="describing-functions.html"><span class="header-section-number">3</span> Describing functions</a></li>
+<li><a class="" href="calculus-functions-and-change.html"><span class="header-section-number">4</span> Calculus: Functions and change</a></li>
+<li><a class="" href="notation-for-functions.html"><span class="header-section-number">5</span> Notation for functions</a></li>
+<li><a class="" href="unassigned-exercises.html"><span class="header-section-number">6</span> Unassigned exercises</a></li>
+<li><a class="" href="unassigned-exercises-on-dimension-and-magnitude.html"><span class="header-section-number">7</span> Unassigned exercises on dimension and magnitude</a></li>
+<li><a class="" href="unassigned-functions-about-derivatives.html"><span class="header-section-number">8</span> Unassigned functions about derivatives</a></li>
 </ul>
 
         <div class="book-extra">
@@ -83,26 +81,62 @@ In the last 20 years, calculus has become even more important. There’s a very 
 <p>Think about what it means to become “computerized.” To take an everyday example, consider video. Over the span of a human life we moved from a system which involved people going to theaters to watch the shadows recorded on cellulose film to the distribution by low-resolution television, to the introduction of high-def broadcast video, to on demand streaming from huge libraries of movies. Just about anyone can record, edit, and distribute their own video. The range of topics (including calculus) on which you can access a video tutorial or demonstration is incredibly vast. All of this recent progress is owed to computers.</p>
 <p>The “stuff” that computers operate on, transform and transmit is always mathematical representations stored as bits. The creation of mathematical representations of objects and events in the real world is essential to every task of any sort that any computer performs. Calculus is a key component of inventing and using such representations.</p>
 <p>You may be scratching your head. If calculus is so important, why is it that many of your friends who took calculus came away wondering what it is for? What’s so important about “slopes” and “areas” and how come your high-school teacher couldn’t tell you what calculus is for?</p>
-<p>The disconnect between the enthusiasm expressed in the preceding paragraphs and the lived experience of students is very real. There are two major reasons for that disconnect, both of which we handle head on in this book.</p>
+<p>The disconnect between the enthusiasm expressed in the preceding paragraphs and the lived experience of students is very real. There are two major reasons for that disconnect, both of which we tackle head-on in this book.</p>
 <p>First, teachers of mathematics have a deep respect for tradition. Such respect has its merits but the result is that almost all calculus is taught using methods that were appropriate for the era of paper and pencil, but not for the computer era. As you will see, in this book we express the concepts of calculus in a way that carries directly over to the uses of calculus on computers and in genuine work.</p>
 <p>Second, the uses of calculus are enabled not by the topics of Calc I and Calc II, but the courses for which I/II are a preliminary: linear algebra and dynamics. Only a small fraction of students who start in Calc I ever reach the parts of calculus that are the most useful.</p>
-<p>Fortunately, there is a huge amount of bloat in the topics of Calc I/II which can be removed to make room for the genuinely important topics. What’s more, fully embracing modern computing in teaching and using calculus means that we can discard the gratuitous use of algebra</p>
+<p>Fortunately, there is a large amount of bloat in the standard textbook topics of Calc I/II which can be removed to make room for the genuinely important topics.</p>
+<div id="computing-and-apps" class="section level2 unnumbered">
+<h2>Computing and apps<a class="anchor" aria-label="anchor" href="#computing-and-apps"><i class="fas fa-link"></i></a>
+</h2>
+<p>The text provides two complementary ways to access computing. The most intuitive is designed purely to exercise and visualize mathematical concepts through mouse-driven, graphical <strong><em>apps</em></strong>. To illustrate, here is an app that we’ll use in Block 6. You can click on the snapshot to open the app in your browser.</p>
+<p><a href="https://maa-statprep.shinyapps.io/142Z-Matrix-iteration/" target="_blank"><img src="www/app-matrix-iteration.png" width="70%"></a></p>
+<p>More fundamentally, you will be carrying out computing by composing computer commands and text and having a computer carry out the commands. One good way to do this is in a <strong><em>sandbox</em></strong>, a kind of app which provides a safe place to enter the commands. You’ll open the sandbox (click on the image below) in your browser.</p>
+<p><a href="https://maa-statprep.shinyapps.io/141Z-Student-sandbox" target="_blank"><img src="www/app-sandbox-draft.png" width="50%"></a></p>
+<div class="todo">
+<p>Update the image and link to the new version of the sandbox app.</p>
+</div>
+<p>Once you’ve entered the computer commands, you press a button to have the commands carried out.</p>
+<div class="tip">
+<p>You may prefer to install the R and RStudio software on your own laptop. This usually provides a faster response to you and lowers the load on the sandbox cloud servers being used by other students.</p>
+<p>Experienced R users may even prefer to skip the sandbox entirely and use the standard resources of RStudio to edit and evaluate their computer commands. You’d use exactly the same R commands regardless of whether you use a cloud server or your own laptop.</p>
+</div>
+<p>An important technique for teaching and learning computing is to present <strong><em>scaffolding</em></strong> for computer commands. At first, the scaffolding may be complete, correct commands that can be cut-and-paste into a <strong><em>sandbox</em></strong> where the calculation will be carried out. Other times it will be left to the student to fill in some part that’s been left out of the scaffolding. For example, when we introduce drawing graphs of functions and the choice of a domain, you might see a scaffold that has blanks to be filled in:</p>
+<div class="scaffold">
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="index.html#cb1-1"></a><span class="kw">slice_plot</span>( <span class="kw">exp</span>(<span class="op">-</span><span class="dv">3</span><span class="op">*</span>t) <span class="op">~</span><span class="st"> </span>t, <span class="kw">domain</span>( <span class="op">--</span>fill <span class="cf">in</span> domain<span class="op">--</span><span class="st"> </span>))</span></code></pre></div>
+</div>
+<p>You can hardly be expected at this point to make sense of any part of the above command, but soon you will.</p>
+</div>
+<div id="exercises-and-feedback" class="section level2 unnumbered">
+<h2>Exercises and feedback<a class="anchor" aria-label="anchor" href="#exercises-and-feedback"><i class="fas fa-link"></i></a>
+</h2>
+<p>Learning is facilitated by rapid, formative feedback. Many of the exercises in this book are arranged to give this.</p>
+<p>Short answer exercises are often arranged to give immediate feedback that goes beyond right-or-wrong. In other words, when an answer is incorrect, we try to tell you <em>why</em> it is incorrect to provide a hint to guide you to the correct answer. As a frivolous example:</p>
+<div class="etude-question">
+<p><strong>Q-1</strong>: What does the word <em>calculus</em> mean literally?</p>
+<ol>
+<li><p>A small stone (+) [Such stones were part of an apparatus for doing numerical calculations, back in the days before the pencil was invented.]</p></li>
+<li><p>A source of trouble to students. [Calculus sometimes has that reputation, but as they say, “No pain, no gain.”. Find a better answer.]</p></li>
+<li><p>The element calcium. [No, but when you get the right answer you’ll realize the two are related in some cases.]</p></li>
+</ol>
+</div>
+<p>Some exercises are meant as drill, and provide only right-or-wrong feedback. Still other exercises provide no feedback at all. Typically, these are intended to raise the stakes for graded work, encouraging you to think carefully before choosing an answer.</p>
 
+</div>
 </div>
 
 
 
-<ol style="list-style-type: decimal">
-<li>Exercises often have feedback for the right or wrong answer.</li>
-<li>But not always. These are marked with an icon.</li>
-<li>Sandboxes – to be opened in another window. We often give “scaffolding” to get you started. Just copy and paste this into the sandbox.</li>
-</ol>
-<div class="chapter-nav">
+
+  <div class="chapter-nav">
 <div class="empty"></div>
-<div class="next"><a href="themes.html">Themes</a></div>
+<div class="next"><a href="change.html"><span class="header-section-number">1</span> Change</a></div>
 </div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
     <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
-      <ul class="nav navbar-nav"><li><a class="nav-link" href="#welcome-to-calculus">Welcome to calculus</a></li></ul>
+      <ul class="nav navbar-nav">
+<li><a class="nav-link" href="#welcome-to-calculus">Welcome to calculus</a></li>
+<li><a class="nav-link" href="#computing-and-apps">Computing and apps</a></li>
+<li><a class="nav-link" href="#exercises-and-feedback">Exercises and feedback</a></li>
+</ul>
 
       <div class="book-extra">
         <ul class="list-unstyled">
@@ -112,19 +146,14 @@ In the last 20 years, calculus has become even more important. There’s a very 
 </div>
     </nav>
 </div>
-</div>
-
-  
-
-  
 
 </div>
- <!-- .container -->
+</div> <!-- .container -->
 
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>CalcZ Student Notes</strong>" was written by Daniel Kaplan. It was last built on 2021-05-22.</p>
+    <p>"<strong>CalcZ Student Notes</strong>" was written by Daniel Kaplan. It was last built on 2021-05-23.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

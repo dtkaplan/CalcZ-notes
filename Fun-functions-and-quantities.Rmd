@@ -112,12 +112,15 @@ If you examined the relationship between engine power and cylinder number, diame
 
 Often, we're interested in having a ***quantitative*** description of a relationship such as the one (number, diameter, depth) $\rightarrow$ power. Remarkably, the many of educated people are uncomfortable with the idea of using quantitative descriptions of a relationship: what sort of language the description should be written with; how to perform the calculations to use the description; how to translate between data (such as in the table) and a quantitative description; how to translate the quantitative description to address a particular question or make a decision.
 
-This course is about constructing and using such quantitative descriptions, which we'll call ***mathematical models***. Skills for doing this are essential for work in engineering and science, and highly valued in many other fields in commerce, management, and government. Often, the work of applying such quantitative skills is called ***calculation***. The name ***calculus*** is used to describe the methods that are widely used for undertaking calculations.
+This course is about constructing and using such quantitative descriptions: that is, ***mathematical modeling***. Skills for modeling are essential for work in engineering and science, and highly valued in many other fields in commerce, management, and government. Often, the work of applying such quantitative skills is called ***calculation***. The name ***calculus*** is used to describe the methods that are widely used for undertaking calculations.
 
 ***Functions*** are a fundamental way of organizing mathematical models and calculations. You have undoubtedly seen them in your previous mathematics education, but it's worth reviewing them from the basics so that we can share a vocabulary for communicating about them. 
 
 - A function is a transformation from one or more ***inputs*** to an ***output***. 
 - To keep things simple for now we'll focus on inputs and outputs that are ***numeric***, but later we'll need a more nuanced view of "numeric" that takes into account the different kinds of things that are represented by numbers, e.g. length, power, RPM.
+
+::: {.workedexample}
+***Functions as bureaucracy***
 
 To see how functions work, imagine a long corridor with a sequence of offices, each identified by a room number. The input to the function is the room number. To ***evaluate*** the function for that input, you knock on the appropriate door and, in response, you'll receive a piece of paper with a number to take away with you. That number is the output of the function.
 
@@ -140,6 +143,19 @@ Applying inputs to a function in order to receive an output is only a small part
 How does the calculation work? Think of it as a business. People come to your business with one or more inputs. You take the inputs and, following a carefully designed protocol, hand them out to your staff, perhaps duplicating some or doing some simple arithmetic with them to create a new number. Thus equipped with the relevant numbers, each member of staff goes off to evaluate a particular function with those numbers. (That is, the staff member goes to the appropriate street, building, floor, corridor, and door, returning with the number provided at that office.) The staff re-assembles at your roadside stand, you do some sorting out of the numbers they have returned with, again following a strict protocol. Perhaps you combine the new numbers with the ones you were originally given as inputs. In any event, you send your staff out with their new instructions---each person's instructions consist simply of a set of inputs which they head out to evaluate and return to you. At some point, perhaps after many such cycles, perhaps after just one, you are able to combine the numbers that you've assembled into a single result: a number that you return to the person who came to your business in the first place. 
 
 A calculation might involve just one function evaluation, or involve a chain of them that sends workers buzzing around the city and visiting other businesses that in turn activate their own staff who add to the urban tumult.
+:::
+
+::: {.caution}
+The reader familiar with floors and corridors and office doors may note that the addresses are ***discrete***. That is, office 321 has offices 320 and 322 as neighbors. Calculus is about continuous functions, so we need a way to accept, say, 321.487... as an input. There is no such office. 
+
+A slight modification to the procedure will produce a continuous function. It works like this: for an input of 321.487... the messenger goes to both office 321 and 322 and collects their respective outputs. Let's imagine that they are -14.3 and 12.5 respectively. All that's needed is a small calculation, which in this case will look like $$-14.3 \times (1 - 0.487...)   + 12.5 \times 0.487...$$ This is called ***linear interpolation*** and lets us construct continuous functions out of discrete data. 
+
+In Blocks 2 and 5 we'll discuss other widely used ways to do this that produce not just continuous functions but ***smooth*** functions. Understanding the difference between continuous and smooth will have to wait until we introduce a couple more calculus concepts: derivatives and limits.
+:::
+
+## Domain: input space
+
+
 
 As you know, there is a powerful way of thinking about numbers in terms of ***space*** and ***geometry***. For instance, a single number corresponds to a point on a line: the so-called ***number line***. A pair of inputs, say, (x, y) corresponds to a point in a plane, often called the ***Cartesian coordinate plane***. Three numbers corresponds to a point in space, perhaps organized into (x, y, z) of a Cartesian space. There are higher-dimensional spaces, but usually special training is needed to become comfortable with them. If you are having this discomfort, you might prefer to work with the office metaphor. Just for fun, here's how you can think of a 10-dimensional space: 10 numbers, one telling you which planet, the next specifying the continent on that planet, and so on for country, state, city, street, building, floor, corridor, door.
 
