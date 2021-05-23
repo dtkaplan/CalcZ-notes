@@ -1,5 +1,79 @@
 # Notation for functions
 
+Part of the difficulty of mathematics for many people is making sense of the nomenclature and notation. What you were taught in high school is a highly idiomatic system that can be mastered only with experience. Mathematicians are undoubtedly skilled in logic, but mathematics itself has an ancient history which has littered the language with synonyms, near synonyms, inconsistencies, diacritical marks, letters in unfamiliar alphabets. An Oxford mathematician wrote a poem that has become famous as nonsense:
+
+*’Twas brillig, and the slithy toves  
+       Did gyre and gimble in the wabe:  
+All mimsy were the borogoves,  
+       And the mome raths outgrabe.*  
+    
+Here are some words commonly encountered in traditional mathematics notation. 
+
+**equation**, **formula**, **function**, **variable**, **unknown**, **root** 
+
+And here are a few mathematical sentences.
+
+i. $y = x$
+ii. $y = \sqrt{x}$
+iii. $y^2 = x$
+iv. $x^2 = x$
+v. $x = \sqrt{x}$
+
+All five sentences are *equations*. That's easy, because they each have an equal sign between the two sides. Which are *formulas*? Which are *functions*? You're used to calling $x$ and $y$ *variables*. When do they become *unknowns*? Sentence (iv) might be interpreted as describing *roots*. But sentence (v) says the same thing as (iv) but would not be related to roots.
+
+## A notation for computing
+
+The traditional notation is practically useless for computing. A programmer has to have a deep understanding of what the notation is intended to mean in any given circumstance before she can construct a computer expression that will carry that same meaning in the computer's work.
+
+
+::: {.scaffolding}
+To illustrate, here are some similar-looking sentences. In math notation, each of them can mean something. In R, one of them is valid and the others invalid. Read each one and try to guess which one is valid and why the others are not.
+```{r eval=FALSE}
+y = x
+y = sqrt(x)
+y^2 = 3
+y = sqrt(3)
+y - x = 0
+0 = (x+3)(x-2)
+```
+Once you've made your guesses, open a sandbox to see if you got it right.
+:::
+
+::: {.todo}
+Produce an MC exercise that addresses the why's of the above.
+:::
+
+The student who knows how to make sense of math notation will find this not of much help in writing computer notation. It's like a well educated foreigner trying to make sense of how some of these sentences are meaningful and others not.
+
+"Chair a meeting," but not "seat a meeting." 
+"Seat a guest," but not "chair a guest."
+"Bush yourself out," but not "tree yourself out."  
+"Tree a cat," but not "bush a cat."  
+"Table a motion," but not "desk a motion."  
+"Bench a player," but not "couch a player."   
+"Couch a meaning" but not "bench a meaning."  
+
+
+In this book, we're going to use a mathematical notation that corresponds to a usable computer notation. The first step is to stop using $=$ to mean so many different things. 
+
+## Objects and actions
+
+We're going to give names to mathematical "objects" and actions. In this introduction, we'll use **boldface for objects** and *italics for actions.*
+
+* A **function** is a mathematical object that gives instructions about how to transform one or more **inputs** into an **output**. Typically, but not always, we will give names to functions so that we can refer to them. You can think of a function like a recipe: it tells you what to do with the inputs to create the output. You're used to functions where the recipe is written as a **formula** using arithmetic and other operators. A more general term for the recipe in a function is **algorithm**.
+* An **argument** is a symbol that stands for an **input** in an **algorithm**.
+* *Applying a function to inputs* means to carry out the steps of the function's algorithm, inserting the appropriate quantity in place of the symbol. Recipes will use symbols like "rice" to describe the algorithm. In cooking, you apply a recipe to the incredients. Where the recipe says, "Add rice to the boiling water" you use the physical rice and the physical boiling water, instead of the symbols. Applying a function to inputs is so fundamental to computing, that you'll often hear other words for it than "apply": *run the function* or *evaluate the function* or *execute the function*.
+    
+To *define a function* in mathematical notation we will write something like this: $$g(x) \equiv 4 x^2 - 7$$ $g()$ is the name of the function. The function takes just one argument, which is being written with the symbol $x$ in the definition. To make double sure that the human reader sees the symbol being used for the argument, we are putting the list of symbols in the parentheses following the function name. The algorithm of this function is described as a formula. The formula in the example, $4 x^2 - 7$ say, "Take the input quantity. Multiply 4 by the input and then multiply by the input again. Subtract $7$ from that to produce the output of the function. 
+
+We use $\equiv$ as the punctuation to distinguish the function name (and argument list) from the algorithm. The algorithm is always on the right of $\equiv$, the name of the function and argument list are to the left.
+
+When we write `g(3)`, we are applying the function named $g()$. Do this by replacing the $x$ in the algorithm by the $3$ and carry out the calculations in the algorithm. For $g(3)$, the output will be 29. 
+
+In R, a function is defined using a very similar expression. For the $g()$ we defined above, the R definition would be
+`g <- makeFun(4*x^2 - 7 ~ x)`
+
+
 ## Mathematical formulas
 
 ::: {.objectives data-latex=""}
