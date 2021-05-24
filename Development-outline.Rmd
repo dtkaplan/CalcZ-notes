@@ -1,0 +1,115 @@
+# CalcZ Project Development Plan {.unnumbered}
+
+```{r include=FALSE}
+dd1 <- function(days, course=c("141Z", "142Z")) {
+  course <- match.arg(course)
+  raw_days <- days <- as.character(days)
+  days <- ifelse(nchar(days) < 2, 
+                 paste0("0", days),
+                 days)
+  path <- if (course == "142Z") {
+    "https://maa-statprep.shinyapps.io/142Z-DD-"
+  } else {
+     "https://maa-statprep.shinyapps.io/141Z-daily-digital-"
+  }
+    
+  path <- paste0(path, days)
+  
+  links <- glue::glue("[DD-{days}]({path})")
+  paste0(links, collapse=", ")
+}
+dd2 <- function(days) {
+  dd1(days, course="142Z")
+}
+```
+
+
+This document reflects the developing text for Math141Z/142Z in AY 2021-2022 at the US Air Force Academy. This section describes to prospective instructors and project collaborators the planned schedule for the book and links to the materials developed in AY 2020-2021.
+
+Note that nothing in this book necessarily reflects any official policy of the US Air Force Academy or the US government more generally.
+
+## Development schedule {.unnumbered}
+
+- 1 June 2021: Complete usable draft of Block 1 (Functions)
+- 7 June 2021: Deployment of CalcZ R sandbox
+- 15 June 2021: Complete usable draft of Block 2 (Differencing)
+- 30 June 2021: Complete usable draft of Block 3 (Accumulation)
+- 15 July 2021: Re-organization of relevant `{mosaicCalc}` and `{CalcZ}` R packages.
+- 1 August 2021: Deployment of Shiny apps for Blocks 1-3.
+- 10 August 2021: Revisions to Blocks 1, 2, and 3 and deployment in a student-facing form
+- 31 September 2021: Complete usable draft of Block 4 (Applications of calculus)
+- 30 October 2021: Complete usable draft of Block 5 (Linear combinations)
+- 31 November 2021: Complete usable draft of Block 6 (Dynamics)
+- 1 December 2021: Student-facing form of entire book deployed.
+## Resources from AY 2020-2021 {.unnumbered}
+
+## Software {.unnumbered}
+
+Note that the book itself and the multiple-choice questions with feedback included in the book, require only a browser. No software needs to be installed.
+
+Computational exercises can be handled with a "sandbox" app that, similarly, requires only a browser. 
+
+The [R Command Guide](https://maa-statprep.shinyapps.io/141Z-R_command_guide/) from AY 2020-2021 will be integrated into the book.
+
+The Daily Digitals from AY 2020-2021 have integrated R consoles that are sufficient for all computations in the course. 
+
+You can also use RStudio directly. You will need to install the following packages:
+```r
+install.packages(c("mosaic", "ggplot2", "ggformula", "MMAC"))
+remotes::install.github("ProjectMosaic/mosaicCalc", ref="beta")
+remotes::install.github("dtkaplan/math141Z", ref="master")
+```
+
+Collaborators who wish to compile the book will need to use the RStudio interface and install several additional packages. Be a volunteer to identify these packages! Start with a fresh installation of R and RStudio and work with Danny to get a comprehensive list. (It's hard for me to do this since I have the packages installed on the computers I use and don't want to start over with a brand-new installation to make sure I've got them all.)
+
+## Exercises from AY 2020-2021 {.unnumbered}
+
+**Daily digitals** containing student exercises. Some contain narrative that will be folded in to this book.
+
+[NOTE: This is a quick pass through the links. Some will be broken or lead to a different topic]
+
+1. Functions `r dd1(1:12)`
+2. Linear Combinations `r dd1(13:25)`
+3. Differencing `r dd1(26:38)`
+4. Accumulation `r dd2(1:12)`
+5. Dynamics `r dd2(13:25)`
+6. Decision-making `r dd2(26:38)`
+
+**Projects**
+
+1. [Spread of ebola]https://dtkaplan.github.io/CalcZ/project-lessons-from-ebola.html) (sigmoidal functions)
+#. [Engines big and small](https://dtkaplan.github.io/CalcZ/project-engines-big-and-small.html) (dimensions, linear combinations)
+#. [Walking the gradient](https://dtkaplan.github.io/CalcZ/project-gradient-ascent.html) (derivatives, optimization, modeling)
+#. [Gears and grades](https://dtkaplan.github.io/CalcZ/project-gears-and-grades.html)
+#. [Driving with integrals](https://maa-statprep.shinyapps.io/142Z-driving-with-integrals/) (accumulation, function composition)
+#. Intervening in an epidemic (dynamics)
+#. [Security and life](https://maa-statprep.shinyapps.io/142Z-Project3/) (decision making)
+
+**Apps**
+
+Some of these were used as part of Daily Digital assignments, some were not used. There are also some apps integrated with the Daily Digitals. These will be provided as stand-alone apps.
+
+
+#. [Numerics of search](https://maa-statprep.shinyapps.io/141Z-numerics-of-search/) optimization, zero finding not yet included.
+#. [Average vs marginal](https://maa-statprep.shinyapps.io/141Z-average_marginal/)
+#. [Interpolation explorer](https://maa-statprep.shinyapps.io/142Z-Interpolation/)
+#. [Euler for DE](https://maa-statprep.shinyapps.io/142Z-DE-Euler/)
+#. [Balancing functions to solve a DE](https://maa-statprep.shinyapps.io/142Z-balance-logistic/)
+#. [Eigenflows](https://maa-statprep.shinyapps.io/142Z-Eigenflows/)
+#. [Matrix iteration](https://maa-statprep.shinyapps.io/142Z-Matrix-iteration/)
+#. [Using the SIR model](https://maa-statprep.shinyapps.io/using-the-SIR-model)
+
+Some apps that aren't graphic:
+
+#. [Instructor sandbox](https://maa-statprep.shinyapps.io/141Z-Instructor-sandbox/) containing blank sandboxes for use outside of the Daily Digitals. (This will be revised for AY 2021-2022.)
+#. [Student sandbox]() is like the instructor sandbox. It will also be revised for AY 2021. The revised version, as it will be deployed is the main computational resource for students not using RStudio. It will be beefed up to handle hundreds of students simultaneously. In AY 2021-2022 we will be using an MAA-StatPREP server, which is open to everyone. Thereafter, we will switch servers. We're not sure how this will be set up, but there are several arrangement which can already be used by schools or students.
+
+    a. Schools can deploy their own Shiny/RStudio servers or use a service like `shinyapps.io`.
+    b. Small groups of students can be handled with the "free tier" account on `shinyapps.io`.
+    c. Students can install RStudio on their laptops and run the sandbox there. Note: There is no tablet version of RStudio.
+    d. Students can set up an RStudio.cloud account (which is free) and run the sandbox from there. 
+    e. Students or instructors can use the RStudio console or (better) an Rmd document to run the commands needed for the exercises and projects. This will work either on RStudio desktop, an institution's RStudio server, or `rstudio.cloud`
+    
+The same applies for the apps, but the apps consume relatively little in the way of computer resources, so we will try to have them available on the web with no setup. *Performance* won't be optimal, but at least *access* will be easy.
+#. [Basic R syntax](https://maa-statprep.shinyapps.io/141Z-Syntax/). This is just a homework assignment that fell outside the Daily Digital organization.
+#. [Swimming records](https://maa-statprep.shinyapps.io/144Z-Swimming-Day-04). This is just a single exercise that wasn't integrated with the Daily Digitals.

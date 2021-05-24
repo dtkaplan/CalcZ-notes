@@ -58,6 +58,13 @@ In this book, we're going to use a mathematical notation that corresponds to a u
 
 ## Objects and actions
 
+::: {.objectives data-latex=""}
+```{r echo=FALSE, results="asis"}
+state_objective("F-30", "Identify the structure of function notation when the function is defined by a formula.")
+```
+:::
+
+
 We're going to give names to mathematical "objects" and actions. In this introduction, we'll use **boldface for objects** and *italics for actions.*
 
 * A **function** is a mathematical object that gives instructions about how to transform one or more **inputs** into an **output**. Typically, but not always, we will give names to functions so that we can refer to them. You can think of a function like a recipe: it tells you what to do with the inputs to create the output. You're used to functions where the recipe is written as a **formula** using arithmetic and other operators. A more general term for the recipe in a function is **algorithm**.
@@ -71,16 +78,24 @@ We use $\equiv$ as the punctuation to distinguish the function name (and argumen
 When we write `g(3)`, we are applying the function named $g()$. Do this by replacing the $x$ in the algorithm by the $3$ and carry out the calculations in the algorithm. For $g(3)$, the output will be 29. 
 
 In R, a function is defined using a very similar expression. For the $g()$ we defined above, the R definition would be
-`g <- makeFun(4*x^2 - 7 ~ x)`
+```{r}
+g <- makeFun(4*x^2 - 7 ~ x)
+```
+
+i. The name of the function, without parentheses, is on the left side of the ***assignment operator*** `<-`. 
+ii. We could use the name `g` to refer to anything, function or not. Here, you can see that `g` is the name of a function by looking at the object on the right side of `<-`. The R/mosaic operator `makeFun()` is what constructs functions. 
+iii. The text in the parentheses of `makeFun` is also an R expression. We call this sort of expression a ***tilde expression***. (The symbol `~` is called "tilde.") The tilde character is simply punctuation to separate the expression on the left side, `4*x^2 - 7`, from the expression on the right side. The right side of the tilde expression identifies which symbols are the arguments. (In this case, `x` is the only argument.) The left side of the tilde expression describes the algorithm for the function, using the argument names specified on the right side.
+
+To *apply the function* $g()$ to an argument, we write an R expression with the value for the argument given in the parentheses. For instance, to apply $g()$ to the value 3, we write:
+```{r}
+g(3)
+```
+
+
 
 
 ## Mathematical formulas
 
-::: {.objectives data-latex=""}
-```{r echo=FALSE, results="asis"}
-state_objective("F-30", "Identify the structure of function notation when the function is defined by a formula.")
-```
-:::
 
 
 Consider the function $$g(x) \equiv m x + b$$ You already know:

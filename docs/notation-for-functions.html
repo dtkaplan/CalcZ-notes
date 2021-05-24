@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>Chapter 5 Notation for functions | CalcZ Student Notes</title>
+<title>Chapter 4 Notation for functions | CalcZ Student Notes</title>
 <meta name="author" content="Daniel Kaplan">
 <!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.2"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="libs/bootstrap-4.5.3/bootstrap.min.css" rel="stylesheet">
@@ -54,12 +54,13 @@
       <nav aria-label="Table of contents"><h2>Table of contents</h2>
         <ul class="book-toc list-unstyled">
 <li><a class="" href="index.html">Welcome to calculus</a></li>
+<li><a class="" href="calcz-project-development-plan.html">CalcZ Project Development Plan</a></li>
 <li class="book-part">Block 1: Functions and quantity</li>
 <li><a class="" href="change.html"><span class="header-section-number">1</span> Change</a></li>
 <li><a class="" href="what-is-a-function.html"><span class="header-section-number">2</span> What is a function?</a></li>
 <li><a class="" href="describing-functions.html"><span class="header-section-number">3</span> Describing functions</a></li>
-<li><a class="" href="calculus-functions-and-change.html"><span class="header-section-number">4</span> Calculus: Functions and change</a></li>
-<li><a class="active" href="notation-for-functions.html"><span class="header-section-number">5</span> Notation for functions</a></li>
+<li><a class="active" href="notation-for-functions.html"><span class="header-section-number">4</span> Notation for functions</a></li>
+<li><a class="" href="calculus-functions-and-change.html"><span class="header-section-number">5</span> Calculus: Functions and change</a></li>
 <li><a class="" href="unassigned-exercises.html"><span class="header-section-number">6</span> Unassigned exercises</a></li>
 <li><a class="" href="unassigned-exercises-on-dimension-and-magnitude.html"><span class="header-section-number">7</span> Unassigned exercises on dimension and magnitude</a></li>
 <li><a class="" href="unassigned-functions-about-derivatives.html"><span class="header-section-number">8</span> Unassigned functions about derivatives</a></li>
@@ -72,11 +73,56 @@
 </div>
   </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="notation-for-functions" class="section level1">
 <h1>
-<span class="header-section-number">5</span> Notation for functions<a class="anchor" aria-label="anchor" href="#notation-for-functions"><i class="fas fa-link"></i></a>
+<span class="header-section-number">4</span> Notation for functions<a class="anchor" aria-label="anchor" href="#notation-for-functions"><i class="fas fa-link"></i></a>
 </h1>
-<div id="mathematical-formulas" class="section level2">
+<p>Part of the difficulty of mathematics for many people is making sense of the nomenclature and notation. What you were taught in high school is a highly idiomatic system that can be mastered only with experience. Mathematicians are undoubtedly skilled in logic, but mathematics itself has an ancient history which has littered the language with synonyms, near synonyms, inconsistencies, diacritical marks, letters in unfamiliar alphabets. An Oxford mathematician wrote a poem that has become famous as nonsense:</p>
+<p><em>’Twas brillig, and the slithy toves<br>
+       Did gyre and gimble in the wabe:<br>
+All mimsy were the borogoves,<br>
+       And the mome raths outgrabe.</em></p>
+<p>Here are some words commonly encountered in traditional mathematics notation.</p>
+<p><strong>equation</strong>, <strong>formula</strong>, <strong>function</strong>, <strong>variable</strong>, <strong>unknown</strong>, <strong>root</strong></p>
+<p>And here are a few mathematical sentences.</p>
+<ol style="list-style-type: lower-roman">
+<li><span class="math inline">\(y = x\)</span></li>
+<li><span class="math inline">\(y = \sqrt{x}\)</span></li>
+<li><span class="math inline">\(y^2 = x\)</span></li>
+<li><span class="math inline">\(x^2 = x\)</span></li>
+<li><span class="math inline">\(x = \sqrt{x}\)</span></li>
+</ol>
+<p>All five sentences are <em>equations</em>. That’s easy, because they each have an equal sign between the two sides. Which are <em>formulas</em>? Which are <em>functions</em>? You’re used to calling <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span> <em>variables</em>. When do they become <em>unknowns</em>? Sentence (iv) might be interpreted as describing <em>roots</em>. But sentence (v) says the same thing as (iv) but would not be related to roots.</p>
+<div id="a-notation-for-computing" class="section level2">
 <h2>
-<span class="header-section-number">5.1</span> Mathematical formulas<a class="anchor" aria-label="anchor" href="#mathematical-formulas"><i class="fas fa-link"></i></a>
+<span class="header-section-number">4.1</span> A notation for computing<a class="anchor" aria-label="anchor" href="#a-notation-for-computing"><i class="fas fa-link"></i></a>
+</h2>
+<p>The traditional notation is practically useless for computing. A programmer has to have a deep understanding of what the notation is intended to mean in any given circumstance before she can construct a computer expression that will carry that same meaning in the computer’s work.</p>
+<div class="scaffolding">
+<p>To illustrate, here are some similar-looking sentences. In math notation, each of them can mean something. In R, one of them is valid and the others invalid. Read each one and try to guess which one is valid and why the others are not.</p>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">y</span> <span class="op">=</span> <span class="va">x</span>
+<span class="va">y</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">sqrt</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>
+<span class="va">y</span><span class="op">^</span><span class="fl">2</span> <span class="op">=</span> <span class="fl">3</span>
+<span class="va">y</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">sqrt</a></span><span class="op">(</span><span class="fl">3</span><span class="op">)</span>
+<span class="va">y</span> <span class="op">-</span> <span class="va">x</span> <span class="op">=</span> <span class="fl">0</span>
+<span class="fl">0</span> <span class="op">=</span> <span class="op">(</span><span class="va">x</span><span class="op">+</span><span class="fl">3</span><span class="op">)</span><span class="op">(</span><span class="va">x</span><span class="op">-</span><span class="fl">2</span><span class="op">)</span></code></pre></div>
+<p>Once you’ve made your guesses, open a sandbox to see if you got it right.</p>
+</div>
+<div class="todo">
+<p>Produce an MC exercise that addresses the why’s of the above.</p>
+</div>
+<p>The student who knows how to make sense of math notation will find this not of much help in writing computer notation. It’s like a well educated foreigner trying to make sense of how some of these sentences are meaningful and others not.</p>
+<p>“Chair a meeting,” but not “seat a meeting.”
+“Seat a guest,” but not “chair a guest.”
+“Bush yourself out,” but not “tree yourself out.”<br>
+“Tree a cat,” but not “bush a cat.”<br>
+“Table a motion,” but not “desk a motion.”<br>
+“Bench a player,” but not “couch a player.”<br>
+“Couch a meaning” but not “bench a meaning.”</p>
+<p>In this book, we’re going to use a mathematical notation that corresponds to a usable computer notation. The first step is to stop using <span class="math inline">\(=\)</span> to mean so many different things.</p>
+</div>
+<div id="objects-and-actions" class="section level2">
+<h2>
+<span class="header-section-number">4.2</span> Objects and actions<a class="anchor" aria-label="anchor" href="#objects-and-actions"><i class="fas fa-link"></i></a>
 </h2>
 <div class="objectives">
 <ol>
@@ -85,6 +131,33 @@
 </li>
 </ol>
 </div>
+<p>We’re going to give names to mathematical “objects” and actions. In this introduction, we’ll use <strong>boldface for objects</strong> and <em>italics for actions.</em></p>
+<ul>
+<li>A <strong>function</strong> is a mathematical object that gives instructions about how to transform one or more <strong>inputs</strong> into an <strong>output</strong>. Typically, but not always, we will give names to functions so that we can refer to them. You can think of a function like a recipe: it tells you what to do with the inputs to create the output. You’re used to functions where the recipe is written as a <strong>formula</strong> using arithmetic and other operators. A more general term for the recipe in a function is <strong>algorithm</strong>.</li>
+<li>An <strong>argument</strong> is a symbol that stands for an <strong>input</strong> in an <strong>algorithm</strong>.</li>
+<li>
+<em>Applying a function to inputs</em> means to carry out the steps of the function’s algorithm, inserting the appropriate quantity in place of the symbol. Recipes will use symbols like “rice” to describe the algorithm. In cooking, you apply a recipe to the incredients. Where the recipe says, “Add rice to the boiling water” you use the physical rice and the physical boiling water, instead of the symbols. Applying a function to inputs is so fundamental to computing, that you’ll often hear other words for it than “apply”: <em>run the function</em> or <em>evaluate the function</em> or <em>execute the function</em>.</li>
+</ul>
+<p>To <em>define a function</em> in mathematical notation we will write something like this: <span class="math display">\[g(x) \equiv 4 x^2 - 7\]</span> <span class="math inline">\(g()\)</span> is the name of the function. The function takes just one argument, which is being written with the symbol <span class="math inline">\(x\)</span> in the definition. To make double sure that the human reader sees the symbol being used for the argument, we are putting the list of symbols in the parentheses following the function name. The algorithm of this function is described as a formula. The formula in the example, <span class="math inline">\(4 x^2 - 7\)</span> say, "Take the input quantity. Multiply 4 by the input and then multiply by the input again. Subtract <span class="math inline">\(7\)</span> from that to produce the output of the function.</p>
+<p>We use <span class="math inline">\(\equiv\)</span> as the punctuation to distinguish the function name (and argument list) from the algorithm. The algorithm is always on the right of <span class="math inline">\(\equiv\)</span>, the name of the function and argument list are to the left.</p>
+<p>When we write <code>g(3)</code>, we are applying the function named <span class="math inline">\(g()\)</span>. Do this by replacing the <span class="math inline">\(x\)</span> in the algorithm by the <span class="math inline">\(3\)</span> and carry out the calculations in the algorithm. For <span class="math inline">\(g(3)\)</span>, the output will be 29.</p>
+<p>In R, a function is defined using a very similar expression. For the <span class="math inline">\(g()\)</span> we defined above, the R definition would be</p>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">g</span> <span class="op">&lt;-</span> <span class="fu">makeFun</span><span class="op">(</span><span class="fl">4</span><span class="op">*</span><span class="va">x</span><span class="op">^</span><span class="fl">2</span> <span class="op">-</span> <span class="fl">7</span> <span class="op">~</span> <span class="va">x</span><span class="op">)</span></code></pre></div>
+<ol style="list-style-type: lower-roman">
+<li>The name of the function, without parentheses, is on the left side of the <strong><em>assignment operator</em></strong> <code><a href="https://rdrr.io/r/base/assignOps.html">&lt;-</a></code>.</li>
+<li>We could use the name <code>g</code> to refer to anything, function or not. Here, you can see that <code>g</code> is the name of a function by looking at the object on the right side of <code><a href="https://rdrr.io/r/base/assignOps.html">&lt;-</a></code>. The R/mosaic operator <code>makeFun()</code> is what constructs functions.</li>
+<li>The text in the parentheses of <code>makeFun</code> is also an R expression. We call this sort of expression a <strong><em>tilde expression</em></strong>. (The symbol <code><a href="https://rdrr.io/r/base/tilde.html">~</a></code> is called “tilde.”) The tilde character is simply punctuation to separate the expression on the left side, <code>4*x^2 - 7</code>, from the expression on the right side. The right side of the tilde expression identifies which symbols are the arguments. (In this case, <code>x</code> is the only argument.) The left side of the tilde expression describes the algorithm for the function, using the argument names specified on the right side.</li>
+</ol>
+<p>To <em>apply the function</em> <span class="math inline">\(g()\)</span> to an argument, we write an R expression with the value for the argument given in the parentheses. For instance, to apply <span class="math inline">\(g()\)</span> to the value 3, we write:</p>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu">g</span><span class="op">(</span><span class="fl">3</span><span class="op">)</span></code></pre></div>
+<pre><code>## [1] 29</code></pre>
+</div>
+<div id="mathematical-formulas" class="section level2">
+<h2>
+<span class="header-section-number">4.3</span> Mathematical formulas<a class="anchor" aria-label="anchor" href="#mathematical-formulas"><i class="fas fa-link"></i></a>
+</h2>
 <p>Consider the function <span class="math display">\[g(x) \equiv m x + b\]</span> You already know:</p>
 <ol style="list-style-type: lower-roman">
 <li>
@@ -114,7 +187,7 @@ The <span class="math inline">\(x\)</span> appears both in the algorithm and the
 </div>
 <div id="computer-notation" class="section level2">
 <h2>
-<span class="header-section-number">5.2</span> Computer notation<a class="anchor" aria-label="anchor" href="#computer-notation"><i class="fas fa-link"></i></a>
+<span class="header-section-number">4.4</span> Computer notation<a class="anchor" aria-label="anchor" href="#computer-notation"><i class="fas fa-link"></i></a>
 </h2>
 <p>The notation used in computer programming lets us be explicit about which symbols refer to function inputs and which to parameters of the function.
 Depending on the computer language things can be handled in one way or another. For experienced computer programmers: This is the issue of <strong><em>scope</em></strong> and can be complex in its own right.</p>
@@ -125,10 +198,10 @@ Depending on the computer language things can be handled in one way or another. 
 <p>It is as if we wrote in traditional notation <span class="math display">\[g(x, m, b) \equiv m x + b\]</span></p>
 <p>There is also a way to give default numerical values to parameters so that you can write <span class="math inline">\(g(3.5)\)</span> and the computer will know where to find the parameter values. In writing about formulas using math notation, we’ll extend the traditional notation to write, for instance, <span class="math inline">\(g(x, m=2, b=3) \equiv m x + b\)</span>.</p>
 <p>In R/<code>mosaic</code>, we would construct a mathematical function like <span class="math inline">\(g()\)</span> using the <code>makeFun()</code> function:</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">g</span> <span class="op">&lt;-</span> <span class="fu">makeFun</span><span class="op">(</span><span class="va">m</span><span class="op">*</span><span class="va">x</span> <span class="op">+</span> <span class="va">b</span> <span class="op">~</span> <span class="va">x</span>, m<span class="op">=</span><span class="fl">2</span>, b<span class="op">=</span><span class="fl">3</span><span class="op">)</span></code></pre></div>
 <p>You could also write</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">g</span> <span class="op">&lt;-</span> <span class="fu">makeFun</span><span class="op">(</span><span class="va">m</span><span class="op">*</span><span class="va">x</span> <span class="op">+</span> <span class="va">b</span> <span class="op">~</span> <span class="va">x</span><span class="op">)</span></code></pre></div>
 <p>but this notation means that you will have to give specific numerical values for the <code>m</code> and <code>b</code> inputs whenever you evaluate <code>g()</code>. There won’t be any default values for the “parameters-as-inputs” <code>m</code> and <code>b</code>.</p>
 <!-- Relevant Blog post: CalculusBlog/post-formal-arguments.Rmd -->
@@ -178,7 +251,7 @@ Depending on the computer language things can be handled in one way or another. 
 <p>A graphic such as a contour plot or a mathematical graph can be an excellent way of presenting a function to a human viewer. There are other ways of presenting functions that have other advantages, such as speed of evaluation, computer readability, and the ability to perform computations that <strong><em>derive a new function from the original</em></strong>. If you have studied calculus before, you know the word “derivative,” which is all about a particular kind of new function created from an original. We’ll get to this in good time along with other ways of “deriving” new functions from old.</p>
 
 <div class="exercise">
-<span id="exr:fnotation" class="exercise"><strong>Exercise 5.1  </strong></span>
+<span id="exr:fnotation" class="exercise"><strong>Exercise 4.1  </strong></span>
 </div>
 
 <p>According to the notation style we use in CalcZ, which of these things is a function? Which a number?</p>
@@ -214,14 +287,16 @@ Depending on the computer language things can be handled in one way or another. 
 </div>
 </div>
   <div class="chapter-nav">
-<div class="prev"><a href="calculus-functions-and-change.html"><span class="header-section-number">4</span> Calculus: Functions and change</a></div>
-<div class="next"><a href="unassigned-exercises.html"><span class="header-section-number">6</span> Unassigned exercises</a></div>
+<div class="prev"><a href="describing-functions.html"><span class="header-section-number">3</span> Describing functions</a></div>
+<div class="next"><a href="calculus-functions-and-change.html"><span class="header-section-number">5</span> Calculus: Functions and change</a></div>
 </div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
     <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
       <ul class="nav navbar-nav">
-<li><a class="nav-link" href="#notation-for-functions"><span class="header-section-number">5</span> Notation for functions</a></li>
-<li><a class="nav-link" href="#mathematical-formulas"><span class="header-section-number">5.1</span> Mathematical formulas</a></li>
-<li><a class="nav-link" href="#computer-notation"><span class="header-section-number">5.2</span> Computer notation</a></li>
+<li><a class="nav-link" href="#notation-for-functions"><span class="header-section-number">4</span> Notation for functions</a></li>
+<li><a class="nav-link" href="#a-notation-for-computing"><span class="header-section-number">4.1</span> A notation for computing</a></li>
+<li><a class="nav-link" href="#objects-and-actions"><span class="header-section-number">4.2</span> Objects and actions</a></li>
+<li><a class="nav-link" href="#mathematical-formulas"><span class="header-section-number">4.3</span> Mathematical formulas</a></li>
+<li><a class="nav-link" href="#computer-notation"><span class="header-section-number">4.4</span> Computer notation</a></li>
 </ul>
 
       <div class="book-extra">
@@ -239,7 +314,7 @@ Depending on the computer language things can be handled in one way or another. 
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>CalcZ Student Notes</strong>" was written by Daniel Kaplan. It was last built on 2021-05-23.</p>
+    <p>"<strong>CalcZ Student Notes</strong>" was written by Daniel Kaplan. It was last built on 2021-05-24.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">
