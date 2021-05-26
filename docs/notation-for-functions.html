@@ -14,7 +14,8 @@
 <link href="libs/dt-core-1.10.20/css/jquery.dataTables.extra.css" rel="stylesheet">
 <script src="libs/dt-core-1.10.20/js/jquery.dataTables.min.js"></script><link href="libs/crosstalk-1.1.1/css/crosstalk.css" rel="stylesheet">
 <script src="libs/crosstalk-1.1.1/js/crosstalk.min.js"></script><script src="libs/kePrint-0.0.1/kePrint.js"></script><link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet">
-<script type="text/x-mathjax-config">
+<script src="libs/plotly-binding-4.9.3/plotly.js"></script><script src="libs/typedarray-0.1/typedarray.min.js"></script><link href="libs/plotly-htmlwidgets-css-1.57.1/plotly-htmlwidgets.css" rel="stylesheet">
+<script src="libs/plotly-main-1.57.1/plotly-latest.min.js"></script><script type="text/x-mathjax-config">
   const popovers = document.querySelectorAll('a.footnote-ref[data-toggle="popover"]');
   for (let popover of popovers){
     const div = document.createElement('div');
@@ -56,13 +57,14 @@
 <li><a class="" href="index.html">Welcome to calculus</a></li>
 <li><a class="" href="calcz-project-development-plan.html">CalcZ Project Development Plan</a></li>
 <li class="book-part">Block 1: Functions and quantity</li>
+<li><a class="" href="outline-of-block-1.html">Outline of Block 1</a></li>
 <li><a class="" href="change.html"><span class="header-section-number">1</span> Change</a></li>
 <li><a class="" href="what-is-a-function.html"><span class="header-section-number">2</span> What is a function?</a></li>
 <li><a class="" href="describing-functions.html"><span class="header-section-number">3</span> Describing functions</a></li>
 <li><a class="active" href="notation-for-functions.html"><span class="header-section-number">4</span> Notation for functions</a></li>
-<li><a class="" href="unassigned-exercises.html"><span class="header-section-number">5</span> Unassigned exercises</a></li>
-<li><a class="" href="unassigned-exercises-on-dimension-and-magnitude.html"><span class="header-section-number">6</span> Unassigned exercises on dimension and magnitude</a></li>
-<li><a class="" href="unassigned-functions-about-derivatives.html"><span class="header-section-number">7</span> Unassigned functions about derivatives</a></li>
+<li><a class="" href="graphics-function-graphs.html"><span class="header-section-number">5</span> Graphics &amp; function graphs</a></li>
+<li><a class="" href="parameters-meeting-reality-face-to-face.html"><span class="header-section-number">6</span> Parameters: Meeting reality face to face</a></li>
+<li><a class="" href="calculus-functions-and-change.html"><span class="header-section-number">7</span> Calculus: Functions and change</a></li>
 </ul>
 
         <div class="book-extra">
@@ -111,7 +113,7 @@ All mimsy were the borogoves,<br>
 </div>
 <p>The student who knows how to make sense of math notation will find this not of much help in writing computer notation. It’s like a well educated foreigner trying to make sense of how some of these sentences are meaningful and others not.</p>
 <p>“Chair a meeting,” but not “seat a meeting.”
-“Seat a guest,” but not “chair a guest.”
+“Seat a guest,” but not “chair a guest.”<br>
 “Bush yourself out,” but not “tree yourself out.”<br>
 “Tree a cat,” but not “bush a cat.”<br>
 “Table a motion,” but not “desk a motion.”<br>
@@ -297,6 +299,26 @@ Depending on the computer language things can be handled in one way or another. 
 <span class="fu">ball_velocity</span><span class="op">(</span><span class="fl">3</span>, t0 <span class="op">=</span> <span class="op">-</span><span class="fl">10</span>, g <span class="op">=</span> <span class="fl">3.711</span><span class="op">)</span></code></pre></div>
 <pre><code>## [1] 1.133</code></pre>
 </div>
+</div>
+<div id="e-unibus-plurum-equiv-rightarrow---foursigns" class="section level2">
+<h2>
+<span class="header-section-number">4.8</span> E unibus plurum: <span class="math inline">\(=\)</span>, <span class="math inline">\(\equiv\)</span>, <span class="math inline">\(\rightarrow\)</span>, <code>&lt;-</code> {#foursigns`}<a class="anchor" aria-label="anchor" href="#e-unibus-plurum-equiv-rightarrow---foursigns"><i class="fas fa-link"></i></a>
+</h2>
+<p>The <span class="math inline">\(=\)</span> sign carries a lot of weight in high-school notation. Too much weight. It is used for several different meanings. That leads to confusion and error.</p>
+<p><strong>Meaning 1</strong>: “Is defined to be …”</p>
+<p>We use <span class="math inline">\(\equiv\)</span> in mathematical notation and <code><a href="https://rdrr.io/r/base/assignOps.html">&lt;-</a></code> in R. The notation in R is a bit simpler than the mathematical notation: it is a way of giving something a name.</p>
+<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">name</span> <span class="op">&lt;-</span> <span class="va">something</span></code></pre></div>
+<p>If the “something” is a function, you will see that on the left side of <code><a href="https://rdrr.io/r/base/assignOps.html">&lt;-</a></code>, for instance by use of the <code>makeFun()</code> operator qw in <code>h &lt;- makeFun(x^2 ~ x)</code>. The left side is simply a name.</p>
+<p>In math notation, the equivalent would be written <span class="math inline">\(h(x) \equiv x^2\)</span>. The left side isn’t exactly a name. It’s a name followed by parentheses in which are the names being used in the algorithm.</p>
+<p>Keep in mind that in writing about functions, we will generally provide a hint that the name refers to the function, writing <span class="math inline">\(h()\)</span> or <code>h()</code>. The parentheses aren’t part of the name; the name here is <span class="math inline">\(h\)</span>. But the parentheses remind us that <span class="math inline">\(h\)</span> is a function.</p>
+<p><strong>Meaning 2</strong>: “Happens to be …”</p>
+<p>The acceleration due to gravity is often given the name <span class="math inline">\(g\)</span>. On Earth’s surface, it happens to be <span class="math inline">\(9.8 \text{m}/\text{s}^2\)</span>. In our math notation, we will use the equal sign for this narrow meaning, as in <span class="math inline">\(g=9.8\text{m}/\text{s}^2\)</span>. In R we will use <code><a href="https://rdrr.io/r/base/assignOps.html">=</a></code>.</p>
+<p><strong>Meaning 3</strong>: “Gets closer and closer to …”</p>
+<p>Calculus is about relationships: the connection between two (or more) things. So you will hear phrases like, “As <span class="math inline">\(x\)</span> increases, <span class="math inline">\(f(x)\)</span> decreases.” Or, in everyday experience, “As it gets more humid, the weather becomes more uncomfortable.” Or, “slower is safer,” or “the spicier the better” or “the heavier the blanket, the warmer I’ll be.” (One of the important uses of <strong><em>derivatives</em></strong> in calculus is to represent such statements quantitatively. But that’s a subject for the next Block.)</p>
+<p>In calculus, sometimes you have to distinguish between “<span class="math inline">\(x\)</span> is zero” and “<span class="math inline">\(x\)</span> gets closer and closer to zero.” We’ll need this when we want to say, “It gets smaller and smaller, but doesn’t disappear entirely.” The symbol for “gets closer and closer to” is <span class="math inline">\(\rightarrow\)</span>, as in <span class="math inline">\(x \rightarrow 0\)</span></p>
+<p>In reading math, take care to notice which of <span class="math inline">\(=\)</span>, <span class="math inline">\(\rightarrow\)</span>, or <span class="math inline">\(\equiv\)</span> is being used. The sign has something important to say and is intended to help you make sense of what you read.
+:::</p>
 
 <div class="exercise">
 <span id="exr:fnotation" class="exercise"><strong>Exercise 4.1  </strong></span>
@@ -336,7 +358,7 @@ Depending on the computer language things can be handled in one way or another. 
 </div>
   <div class="chapter-nav">
 <div class="prev"><a href="describing-functions.html"><span class="header-section-number">3</span> Describing functions</a></div>
-<div class="next"><a href="unassigned-exercises.html"><span class="header-section-number">5</span> Unassigned exercises</a></div>
+<div class="next"><a href="graphics-function-graphs.html"><span class="header-section-number">5</span> Graphics &amp; function graphs</a></div>
 </div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
     <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
       <ul class="nav navbar-nav">
@@ -348,6 +370,7 @@ Depending on the computer language things can be handled in one way or another. 
 <li><a class="nav-link" href="#computer-notation"><span class="header-section-number">4.5</span> Computer notation</a></li>
 <li><a class="nav-link" href="#calcz-naming-conventions"><span class="header-section-number">4.6</span> CalcZ naming conventions</a></li>
 <li><a class="nav-link" href="#functions-in-r"><span class="header-section-number">4.7</span> Functions in R</a></li>
+<li><a class="nav-link" href="#e-unibus-plurum-equiv-rightarrow---foursigns"><span class="header-section-number">4.8</span> E unibus plurum: \(=\), \(\equiv\), \(\rightarrow\), &lt;- {#foursigns`}</a></li>
 </ul>
 
       <div class="book-extra">
@@ -365,7 +388,7 @@ Depending on the computer language things can be handled in one way or another. 
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>CalcZ Student Notes</strong>" was written by Daniel Kaplan. It was last built on 2021-05-24.</p>
+    <p>"<strong>CalcZ Student Notes</strong>" was written by Daniel Kaplan. It was last built on 2021-05-25.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

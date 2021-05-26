@@ -1,0 +1,2279 @@
+--- 
+title: "CalcZ Student Notes"
+author: "Daniel Kaplan"
+date: "`r Sys.Date()`"
+site: bookdown::bookdown_site
+documentclass: book
+bibliography: [book.bib, packages.bib]
+biblio-style: apalike
+link-citations: yes
+description: "Textbook for Math 141Z/142Z for 2021-2022"
+---
+```{r include=FALSE, cache=FALSE}
+library(mosaic)
+library(mosaicCalc)
+library(glue)
+library(math141Z) # REPLACE THIS WHEN PACKAGES ARE RE-ALIGNED
+library(here) # for file locations
+
+
+
+exercise_file <- function(day,  file_name, course="141Z") {
+    path=glue::glue("Exercises/DD-{course}-{day}/{file_name}")
+    here(path)
+}
+
+if (!exists("objective_list"))
+  objective_list <- list()
+
+add_objective <- function(ID, text) {
+  objective_list[[length(objective_list) + 1]] <<-
+                      list(ID = ID, text = text)
+}
+
+state_objective <- function(ID, text) {
+  add_objective(ID, text)
+  format_objective(list(ID=ID, text=text))
+}
+
+format_objective <- function(obj) {
+  knitr::asis_output(glue::glue("#. **[{obj$ID}]** *{obj$text}*\n\n"))
+}
+
+show_objectives <- function() {
+  Tmp <- lapply(objective_list, tibble::as_tibble) %>%
+    bind_rows()
+  readr::write_csv(Tmp, file="objective-list.csv")
+
+  lapply(objective_list, format_objective) %>%
+    unlist() %>%
+    paste(collapse="\n") %>%
+    knitr::asis_output()
+}
+
+# A blank image for spacing
+BlankImage <- gf_blank(hp ~ wt, data=mtcars) %>% gf_theme(theme_void())
+```
+
+# Welcome to calculus {.unnumbered}
+
+Calculus is the set of concepts and techniques that provide the main mathematical basis for dealing with motion, growth, decay, and oscillation.  The phenomena can be as simple as a ball arcing through the air to as complex as the airflow over a wing that generates lift. Calculus is used in biology and business, chemistry, physics and engineering. It is the basis for weather prediction, understanding climate change, the algorithms for heart rate and blood oxygen measurement by wristwatches. It is a major part of the language of science, of logistics. The electron orbitals of chemistry, the stresses of bones and beams, and the business cycle of recession and rebound are all understood primarily through calculus. 
+
+Calculus has been central to science from the very beginnings. It is no coincidence that the scientific method was introduced and the language of calculus was invented by the same small group of people during the historical period known as the enlightenment. Learning calculus has always been a badge of honor and an entry ticket to professions. Millions of students career ambitions have been enhanced by passing a calculus course or thwarted by lack of access to one.
+
+In the 1880s, a hit musical featured a man who was "the very model of a modern major general."  One of his claims for modernity was that "I'm very good at integral and differential calculus."^[[Watch here](https://www.youtube.com/watch?v=Rs3dPaz9nAo)]
+
+Of course, what was modern in 1880 is not modern anymore. Yet, amazingly, calculus today is every bit as central to science and technology as it ever was, and is much more important to logistics, economics and myriad other fields than every before. 
+In the last 20 years, calculus has become even more important. There's a very concrete reason for this. Science, engineering, and society have now fully adopted the computer for almost all aspects of work, study, and life. The amount of data collected and used has exploded. Machine learning has become the way human decision makers interact with such data.
+
+Think about what it means to become "computerized." To take an everyday example, consider video. Over the span of a human life we moved from a system which involved people going to theaters to watch the shadows recorded on cellulose film to the distribution over the airwaves by low-resolution television, to the introduction of high-def broadcast video, to on demand streaming from huge libraries of movies. Just about anyone can record, edit, and distribute their own video. The range of topics (including calculus) on which you can access a video tutorial or demonstration is incredibly vast. All of this recent progress is owed to computers.
+
+The "stuff" that computers operate on, transform and transmit is always mathematical representations stored as bits. The creation of mathematical representations of objects and events in the real world is essential to every task of any sort that any computer performs. Calculus is a key component of inventing and using such representations.
+
+You may be scratching your head. If calculus is so important, why is it that many of your friends who took calculus came away wondering what it is for? What's so important about "slopes" and "areas" and how come your high-school teacher couldn't tell you what calculus is for?
+
+The disconnect between the enthusiasm expressed in the preceding paragraphs and the lived experience of students is very real. There are two major reasons for that disconnect, both of which we tackle head-on in this book.
+
+First, teachers of mathematics have a deep respect for tradition. Such respect has its merits but the result is that almost all calculus is taught using methods that were appropriate for the era of paper and pencil, but not for the computer era. As you will see, in this book we express the concepts of calculus in a way that carries directly over to the uses of calculus on computers and in genuine work.
+
+Second, the uses of calculus are enabled not by the topics of Calc I and Calc II, but the courses for which I/II are a preliminary: linear algebra and dynamics. Only a small fraction of students who start in Calc I ever reach the parts of calculus that are the most useful.
+
+Fortunately, there is a large amount of bloat in the standard textbook topics of Calc I/II which can be removed to make room for the genuinely important topics. 
+
+## Computing and apps {.unnumbered}
+
+The text provides two complementary ways to access computing. The most intuitive is designed purely to exercise and visualize mathematical concepts through mouse-driven, graphical ***apps***. To illustrate, here is an app that we'll use in Block 6. You can click on the snapshot to open the app in your browser.
+
+<a href="https://maa-statprep.shinyapps.io/142Z-Matrix-iteration/" target="_blank"><img src="www/app-matrix-iteration.png" width="70%"></a>
+
+More fundamentally, you will be carrying out computing by composing computer commands and text and having a computer carry out the commands. One good way to do this is in a ***sandbox***, a kind of app which provides a safe place to enter the commands. You'll open the sandbox (click on the image below) in your browser. 
+
+<a href="https://maa-statprep.shinyapps.io/141Z-Student-sandbox" target="_blank"><img src="www/app-sandbox-draft.png" width="50%"></a>
+
+::: {.todo}
+Update the image and link to the new version of the sandbox app.
+:::
+
+
+Once you've entered the computer commands, you press a button to have the commands carried out.
+
+::: {.tip}
+You may prefer to install the R and RStudio software on your own laptop. This usually provides a faster response to you and lowers the load on the sandbox cloud servers being used by other students. 
+
+Experienced R users may even prefer to skip the sandbox entirely and use the standard resources of RStudio to edit and evaluate their computer commands. You'd use exactly the same R commands regardless of whether you use a cloud server or your own laptop.
+:::
+
+An important technique for teaching and learning computing is to present ***scaffolding*** for computer commands. At first, the scaffolding may be complete, correct commands that can be cut-and-paste into a ***sandbox*** where the calculation will be carried out. Other times it will be left to the student to fill in some part that's been left out of the scaffolding. For example, when we introduce drawing graphs of functions and the choice of a domain, you might see a scaffold that has blanks to be filled in:
+
+::: {.scaffold}
+```{r eval=FALSE}
+slice_plot( exp(-3*t) ~ t, domain( --fill in domain-- ))
+```
+:::
+
+You can hardly be expected at this point to make sense of any part of the above command, but soon you will. 
+
+## Exercises and feedback {.unnumbered}
+
+
+Learning is facilitated by rapid, formative feedback. Many of the exercises in this book are arranged to give this. 
+
+```{r child=exercise_file("01", "exercise-intro.Rmd")}
+```
+
+
+
+<!--chapter:end:index.Rmd-->
+
+```{r include=FALSE, cache=FALSE}
+library(mosaic)
+library(mosaicCalc)
+library(glue)
+library(math141Z) # REPLACE THIS WHEN PACKAGES ARE RE-ALIGNED
+library(here) # for file locations
+
+
+
+exercise_file <- function(day,  file_name, course="141Z") {
+    path=glue::glue("Exercises/DD-{course}-{day}/{file_name}")
+    here(path)
+}
+
+if (!exists("objective_list"))
+  objective_list <- list()
+
+add_objective <- function(ID, text) {
+  objective_list[[length(objective_list) + 1]] <<-
+                      list(ID = ID, text = text)
+}
+
+state_objective <- function(ID, text) {
+  add_objective(ID, text)
+  format_objective(list(ID=ID, text=text))
+}
+
+format_objective <- function(obj) {
+  knitr::asis_output(glue::glue("#. **[{obj$ID}]** *{obj$text}*\n\n"))
+}
+
+show_objectives <- function() {
+  Tmp <- lapply(objective_list, tibble::as_tibble) %>%
+    bind_rows()
+  readr::write_csv(Tmp, file="objective-list.csv")
+
+  lapply(objective_list, format_objective) %>%
+    unlist() %>%
+    paste(collapse="\n") %>%
+    knitr::asis_output()
+}
+
+# A blank image for spacing
+BlankImage <- gf_blank(hp ~ wt, data=mtcars) %>% gf_theme(theme_void())
+```
+# CalcZ Project Development Plan {.unnumbered}
+
+```{r include=FALSE}
+dd1 <- function(days, course=c("141Z", "142Z")) {
+  course <- match.arg(course)
+  raw_days <- days <- as.character(days)
+  days <- ifelse(nchar(days) < 2, 
+                 paste0("0", days),
+                 days)
+  path <- if (course == "142Z") {
+    "https://maa-statprep.shinyapps.io/142Z-DD-"
+  } else {
+     "https://maa-statprep.shinyapps.io/141Z-daily-digital-"
+  }
+    
+  path <- paste0(path, days)
+  
+  links <- glue::glue("[DD-{days}]({path})")
+  paste0(links, collapse=", ")
+}
+dd2 <- function(days) {
+  dd1(days, course="142Z")
+}
+```
+
+
+This document reflects the developing text for Math141Z/142Z in AY 2021-2022 at the US Air Force Academy. This section describes to prospective instructors and project collaborators the planned schedule for the book and links to the materials developed in AY 2020-2021.
+
+Note that nothing in this book necessarily reflects any official policy of the US Air Force Academy or the US government more generally.
+
+## Development schedule {.unnumbered}
+
+- 1 June 2021: Complete usable draft of Block 1 (Functions)
+- 7 June 2021: Deployment of CalcZ R sandbox
+- 15 June 2021: Complete usable draft of Block 2 (Differencing)
+- 30 June 2021: Complete usable draft of Block 3 (Accumulation)
+- 15 July 2021: Re-organization of relevant `{mosaicCalc}` and `{CalcZ}` R packages.
+- 1 August 2021: Deployment of Shiny apps for Blocks 1-3.
+- 10 August 2021: Revisions to Blocks 1, 2, and 3 and deployment in a student-facing form
+- 31 September 2021: Complete usable draft of Block 4 (Applications of calculus)
+- 30 October 2021: Complete usable draft of Block 5 (Linear combinations)
+- 31 November 2021: Complete usable draft of Block 6 (Dynamics)
+- 1 December 2021: Student-facing form of entire book deployed.
+
+## Resources from AY 2020-2021 {.unnumbered}
+
+### Software {.unnumbered}
+
+Note that the book itself and the multiple-choice questions with feedback included in the book, require only a browser. No software needs to be installed.
+
+Computational exercises can be handled with a "sandbox" app that, similarly, requires only a browser. 
+
+The [R Command Guide](https://maa-statprep.shinyapps.io/141Z-R_command_guide/) from AY 2020-2021 will be integrated into the book.
+
+The Daily Digitals from AY 2020-2021 have integrated R consoles that are sufficient for all computations in the course. 
+
+You can also use RStudio directly. You will need to install the following packages:
+```r
+install.packages(c("mosaic", "ggplot2", "ggformula", "MMAC"))
+remotes::install.github("ProjectMosaic/mosaicCalc", ref="beta")
+remotes::install.github("dtkaplan/math141Z", ref="master")
+```
+
+Collaborators who wish to compile the book will need to use the RStudio interface and install several additional packages. Be a volunteer to identify these packages! Start with a fresh installation of R and RStudio and work with Danny to get a comprehensive list. (It's hard for me to do this since I have the packages installed on the computers I use and don't want to start over with a brand-new installation to make sure I've got them all.)
+
+### Exercises {.unnumbered}
+
+**Daily digitals** containing student exercises. Some contain narrative that will be folded in to this book.
+
+[NOTE: This is a quick pass through the links. Some will be broken or lead to a different topic]
+
+1. Functions `r dd1(1:12)`
+2. Linear Combinations `r dd1(13:25)`
+3. Differencing `r dd1(26:38)`
+4. Accumulation `r dd2(1:12)`
+5. Dynamics `r dd2(13:25)`
+6. Decision-making `r dd2(26:38)`
+
+### Projects from AY 2020-2021 {.unnumbered}
+
+1. [Spread of ebola](https://dtkaplan.github.io/CalcZ/project-lessons-from-ebola.html) (sigmoidal functions)
+#. [Engines big and small](https://dtkaplan.github.io/CalcZ/project-engines-big-and-small.html) (dimensions, linear combinations)
+#. [Walking the gradient](https://dtkaplan.github.io/CalcZ/project-gradient-ascent.html) (derivatives, optimization, modeling)
+#. [Gears and grades](https://dtkaplan.github.io/CalcZ/project-gears-and-grades.html)
+#. [Driving with integrals](https://maa-statprep.shinyapps.io/142Z-driving-with-integrals/) (accumulation, function composition)
+#. Intervening in an epidemic (dynamics)
+#. [Security and life](https://maa-statprep.shinyapps.io/142Z-Project3/) (decision making)
+
+### Apps {.unnumbered}
+
+Some of these were used as part of Daily Digital assignments, some were not used. There are also some apps integrated with the Daily Digitals. These will be provided as stand-alone apps.
+
+
+#. [Numerics of search](https://maa-statprep.shinyapps.io/141Z-numerics-of-search/) optimization, zero finding not yet included.
+#. [Average vs marginal](https://maa-statprep.shinyapps.io/141Z-average_marginal/)
+#. [Interpolation explorer](https://maa-statprep.shinyapps.io/142Z-Interpolation/)
+#. [Euler for DE](https://maa-statprep.shinyapps.io/142Z-DE-Euler/)
+#. [Balancing functions to solve a DE](https://maa-statprep.shinyapps.io/142Z-balance-logistic/)
+#. [Eigenflows](https://maa-statprep.shinyapps.io/142Z-Eigenflows/)
+#. [Matrix iteration](https://maa-statprep.shinyapps.io/142Z-Matrix-iteration/)
+#. [Using the SIR model](https://maa-statprep.shinyapps.io/using-the-SIR-model)
+
+Some apps that aren't graphic:
+
+#. [Instructor sandbox](https://maa-statprep.shinyapps.io/141Z-Instructor-sandbox/) containing blank sandboxes for use outside of the Daily Digitals. (This will be revised for AY 2021-2022.)
+#. [Student sandbox]() is like the instructor sandbox. It will also be revised for AY 2021. The revised version, as it will be deployed is the main computational resource for students not using RStudio. It will be beefed up to handle hundreds of students simultaneously. In AY 2021-2022 we will be using an MAA-StatPREP server, which is open to everyone. Thereafter, we will switch servers. We're not sure how this will be set up, but there are several arrangement which can already be used by schools or students.
+
+    a. Schools can deploy their own Shiny/RStudio servers or use a service like `shinyapps.io`.
+    b. Small groups of students can be handled with the "free tier" account on `shinyapps.io`.
+    c. Students can install RStudio on their laptops and run the sandbox there. Note: There is no tablet version of RStudio.
+    d. Students can set up an RStudio.cloud account (which is free) and run the sandbox from there. 
+    e. Students or instructors can use the RStudio console or (better) an Rmd document to run the commands needed for the exercises and projects. This will work either on RStudio desktop, an institution's RStudio server, or `rstudio.cloud`
+    
+The same applies for the apps, but the apps consume relatively little in the way of computer resources, so we will try to have them available on the web with no setup. *Performance* won't be optimal, but at least *access* will be easy.
+#. [Basic R syntax](https://maa-statprep.shinyapps.io/141Z-Syntax/). This is just a homework assignment that fell outside the Daily Digital organization.
+#. [Swimming records](https://maa-statprep.shinyapps.io/144Z-Swimming-Day-04). This is just a single exercise that wasn't integrated with the Daily Digitals.
+
+<!--chapter:end:Development-outline.Rmd-->
+
+```{r include=FALSE, cache=FALSE}
+library(mosaic)
+library(mosaicCalc)
+library(glue)
+library(math141Z) # REPLACE THIS WHEN PACKAGES ARE RE-ALIGNED
+library(here) # for file locations
+
+
+
+exercise_file <- function(day,  file_name, course="141Z") {
+    path=glue::glue("Exercises/DD-{course}-{day}/{file_name}")
+    here(path)
+}
+
+if (!exists("objective_list"))
+  objective_list <- list()
+
+add_objective <- function(ID, text) {
+  objective_list[[length(objective_list) + 1]] <<-
+                      list(ID = ID, text = text)
+}
+
+state_objective <- function(ID, text) {
+  add_objective(ID, text)
+  format_objective(list(ID=ID, text=text))
+}
+
+format_objective <- function(obj) {
+  knitr::asis_output(glue::glue("#. **[{obj$ID}]** *{obj$text}*\n\n"))
+}
+
+show_objectives <- function() {
+  Tmp <- lapply(objective_list, tibble::as_tibble) %>%
+    bind_rows()
+  readr::write_csv(Tmp, file="objective-list.csv")
+
+  lapply(objective_list, format_objective) %>%
+    unlist() %>%
+    paste(collapse="\n") %>%
+    knitr::asis_output()
+}
+
+# A blank image for spacing
+BlankImage <- gf_blank(hp ~ wt, data=mtcars) %>% gf_theme(theme_void())
+```
+# (PART) Block 1: Functions and quantity {.unnumbered}
+
+
+<!--chapter:end:Fun-part-marker.Rmd-->
+
+```{r include=FALSE, cache=FALSE}
+library(mosaic)
+library(mosaicCalc)
+library(glue)
+library(math141Z) # REPLACE THIS WHEN PACKAGES ARE RE-ALIGNED
+library(here) # for file locations
+
+
+
+exercise_file <- function(day,  file_name, course="141Z") {
+    path=glue::glue("Exercises/DD-{course}-{day}/{file_name}")
+    here(path)
+}
+
+if (!exists("objective_list"))
+  objective_list <- list()
+
+add_objective <- function(ID, text) {
+  objective_list[[length(objective_list) + 1]] <<-
+                      list(ID = ID, text = text)
+}
+
+state_objective <- function(ID, text) {
+  add_objective(ID, text)
+  format_objective(list(ID=ID, text=text))
+}
+
+format_objective <- function(obj) {
+  knitr::asis_output(glue::glue("#. **[{obj$ID}]** *{obj$text}*\n\n"))
+}
+
+show_objectives <- function() {
+  Tmp <- lapply(objective_list, tibble::as_tibble) %>%
+    bind_rows()
+  readr::write_csv(Tmp, file="objective-list.csv")
+
+  lapply(objective_list, format_objective) %>%
+    unlist() %>%
+    paste(collapse="\n") %>%
+    knitr::asis_output()
+}
+
+# A blank image for spacing
+BlankImage <- gf_blank(hp ~ wt, data=mtcars) %>% gf_theme(theme_void())
+```
+# Outline of Block 1 {.unnumbered}
+
+::: {.todo}
+This section is for development purposes only. It is not to be included in the released text.
+:::
+
+This outline was that established during the May 17-19, 2021 working sessions at USAFA. It's copied directly from the Teams document. I've made some modifications which are noted in [[square brackets]] for deletions and **bold face** for additions..
+
+Block 1 Functions and Mathematical Modeling
+
+1. Intro to the course
+    a. Topics
+        i. Course trajectory
+        ii. Linear Function is the model for “change”
+    b. Reading: Chapter \@ref(change)
+
+2. Basic**s of** modeling functions
+    a. NTI:
+        i. **Modeling functions**
+        i. **Graphics**
+        i. [[Introduce the idea of asymptotic behavior using the terminology of "limits"]] Moved to Section \@ref{sec:asymptotes_of_functions} 
+    b. Readings: Section \@ref(naked-intro) and Chapter \@ref(fun-describing)
+
+3. Functions as I/O and Notational Structure of functions (R<>Math)
+    a. Topics
+        i. **Graphics and graphs** 
+        i. [[Polynomials]] moved to linear combinations
+        #. Introduce Multi-input functions notation
+        #. Distinguish between mathematical symbols: $=$, $\equiv$, \rightarrow$, `<-` See Secton \@ref(foursigns)
+    b. Reading: Chapter \@ref(fun-notation) & \@ref(graphs-and-graphics)
+    c. To do:
+        - Provide glossary of notation across 6-blocks (+alternate forms)
+
+4. Parameterized functions as models (eqn, params, data, applications)
+    a. NTI
+        i. Introduce idea that input has meaning, and output has meaning relative to the input
+        ii. Give students a function. Then change the units of input to a different unit (e.g. feet go to Meters)
+    b. Objectives:
+        i. Linear
+        i. Sine
+        i. Power
+        i. Exponential
+        i. Logarithmic
+    c. Reading: Chapter \@ref(params-intro)
+
+5. Combining 2+ functions
+    a. Examples:
+    b. NTIs:
+    c. Topics:
+        i. Linear Combination (ex: Polynomial)
+        ii. Composition with scaling function ($e^{kt})
+            1. Gallons/$ to Liters/Euros
+        iii. Composition (affine shift)
+            1. Fahrenheit <> Celsius
+
+6. Slope function
+    a. NTI:
+        i. How do broaden the idea of describing the slope of a line to a general function?
+        ii. No $h$ at this point
+        iii. The slope function is a function $s()$  which is built from a function $f()$
+    b. Topics
+        i. $s(x) \equiv \frac{f(x + 0.1) - f(x)}{0.1}$
+        ii. **Every function has a slope function.**
+        iii. **It's helpful to name functions so we know where they come from. We're going to use $f'()$ to stand for the slope function of $f()$**
+    c. Reading: Chapter \@ref(fun-slopes)
+
+7. Composition Generally
+    a. NTI:
+        i. What temperature is it while driving up a mountain?
+        ii. Problem where they are calculating the slope of a sigmoid
+    b. Topics:
+        i. Formula for Hump (exponential with a quadratic)
+        ii. **Driving up a mountain** temperature vs altitude, altitude vs road position, road position vs time
+        iii. Hump is the slope function of Sigmoid 
+    c. Reading: Chapter \@ref(fun-assembling)
+
+8. Multiplication of functions
+    a. NTIs:
+        i. Multiplication about Sines, exponential, hump, sigmoid
+    b. Topics:
+        i. Multiplying functions **of the same inputs** gives a function of those inputs.
+        ii. **Multiplying functions of different inputs** gives a function whose inputs are the union of the inputs to the multiplicands.
+    c. Be able to reverse engineer these products: sin*exp, sin*hump*, sin*sigmoid
+    d. Reading: Chapter \@ref(fun-assembling)
+
+9. Multivariate functions
+    a. NTIs:
+        i. Ask students how they compute the slope of a multi-input function as best they can imagine how (homework?) Build their imagined function (for the slope) and plot the function
+    b. Outcomes:
+        i. Be able to read & construct (in R) Contour Plots
+        ii. Be able to read & construct (in R) Surface Plots
+        iii. Be able to read a table w/ 2 inputs
+    c. Reading: Chapter \@ref(fun-multiple-inputs)
+    
+10. Piecewise functions [jettison if needed in favor of doing this as homework]
+    a. Topics
+        i. Construct and evaluate piecewise functions
+        ii. Demonstrate how to implement in R
+    b. Outcomes:
+        i. Be able to identify break(s) of a piecewise function
+        i. Be able to evaluate a piecewise function at a given input
+        i. Be able to implement a piecewise function in R
+    c. Reading: Chapter \@ref(fun-piecewise)
+
+11. Iterative Modeling
+    a. NTI:
+    b. Examples:
+        i. Tides
+        ii. Cooling Water
+    c. Objectives:
+        i. Describe differences between two models and between a model and data
+        ii. Identify disagreements between the model and data
+    d: Reading: NEED LINK TO CHAPTER
+::: {.workedexample}
+**Review, GR, Project Days**
+:::
+
+12. [[Semi-log Log-log plots]] Magnitude and log
+    a. Topics:
+        i. Introduce the idea that using logarithms converts a number to its order of magnitude
+    b. Outcomes:
+    c. Reading: Chapter \@ref(magnitudes)
+::: {.workedexample}
+**Flexible catchup day**
+:::
+
+13. Dimensional Analysis 
+    a. Reading: Chapter \@ref(dimensions)
+    
+    1.5 class days
+
+::: {.takenote}
+One of our highlighting formats, called `::: {.takenote}` is being used as a clear statement of basic skills that a students should master. It might be good to tie quizzes to these and *vice versa*.
+:::
+
+<!--chapter:end:Fun-outline.Rmd-->
+
+```{r include=FALSE, cache=FALSE}
+library(mosaic)
+library(mosaicCalc)
+library(glue)
+library(math141Z) # REPLACE THIS WHEN PACKAGES ARE RE-ALIGNED
+library(here) # for file locations
+
+
+
+exercise_file <- function(day,  file_name, course="141Z") {
+    path=glue::glue("Exercises/DD-{course}-{day}/{file_name}")
+    here(path)
+}
+
+if (!exists("objective_list"))
+  objective_list <- list()
+
+add_objective <- function(ID, text) {
+  objective_list[[length(objective_list) + 1]] <<-
+                      list(ID = ID, text = text)
+}
+
+state_objective <- function(ID, text) {
+  add_objective(ID, text)
+  format_objective(list(ID=ID, text=text))
+}
+
+format_objective <- function(obj) {
+  knitr::asis_output(glue::glue("#. **[{obj$ID}]** *{obj$text}*\n\n"))
+}
+
+show_objectives <- function() {
+  Tmp <- lapply(objective_list, tibble::as_tibble) %>%
+    bind_rows()
+  readr::write_csv(Tmp, file="objective-list.csv")
+
+  lapply(objective_list, format_objective) %>%
+    unlist() %>%
+    paste(collapse="\n") %>%
+    knitr::asis_output()
+}
+
+# A blank image for spacing
+BlankImage <- gf_blank(hp ~ wt, data=mtcars) %>% gf_theme(theme_void())
+```
+# Change
+
+Calculus is about change, and change is about relationships. A changing climate is about the relationship between, say, global average temperature and time. It's also about changing levels of CO_2_ and methane, both their production and elimination by atmospheric and geological processes. It's about how burning oil (a change in configuration of the atoms in hydrocarbons) contributes to ocean acidification (the process of change in ocean pH). It's about a whole complex and intricate network of relationships and how change in one component provokes change in others.
+
+This book presents calculus in terms of two simple but central concepts: ***functions*** and ***quantities***. Those words have everyday meanings which are, happily, close to the specific mathematical concepts that we will be using over and over again. Close ... but not identical. So pay careful attention to the brief descriptions that follow.
+
+## Quantity vs number
+
+A mathematical ***quantity*** is an amount of "stuff." The real-world stuff might be mass or time or length. It equally well can be velocity or volume or momentum or corn yield per acre. We live in a world of stuff, some of which is tangible (e.g., corn, mass, force) and some of which is harder to get your hands on and your minds around (acceleration, crop yield, fuel economy). An important use of calculus is helping us conceptualize the abstract kinds of stuff as mathematical compositions of simpler stuff. For example, crop yield incorporates mass with length and time. (Later, you'll see us using the more scientific-sounding term ***dimension*** instead of "stuff.")
+
+Most people are inclined to think about "quantity" as the same as "number." This is understandable but misguided. Quantity is about the amount of stuff and the first thing you need to know about any quantity is what the kind of stuff is. A "mile" is a kind of stuff: length. A meter is the same kind of stuff. A liter is a different kind of stuff: volume. A gallon or an acre-foot is the same kind of stuff.
+
+"Stuff," as we mean it here, is what we measure. As you know, we measure with ***units***. Which units are appropriate depends on the kind of stuff. Meters, miles, microns are all appropriate units of length, even though the actual lengths of one unit differ markedly. (A mile is roughly a million microns.) 
+
+Only after you know the dimension and units does the number have meaning. Saying a number is only part of specifying a quantity.
+
+Here's the salient difference between number and quantity when it comes to calculus: All sorts of arithmetic and other mathematical operations can be performed to combine numbers: addition, multiplication, square roots, etc. When performing mathematics on quantities, only multiplication and division are universally allowed. For addition, square roots, and such, the operation makes sense only if the dimensions are suitable.
+
+The mathematics of units and dimension are the equivalent in the technical world of common sense in our everyday world. For instance (and this may not make sense at this point), if someone tells me they are taking the square root of 10 liters, I know immediately that either they are just mistaken or that they haven't told me essential elements of the situation. It's just as if someone said, "I swam across the tennis court." You know that they either used the wrong verb---walk and run would work---or that it wasn't a tennis court, or that something important was unstated, perhaps, "During the flood, I swam across the tennis court."
+
+## Functions
+
+The other central concept in the book is ***functions*** in their mathematical and computing sense. A function is something that takes one or more inputs and returns an output. In calculus, we'll deal mainly with functions that take one or more quantities as inputs and returns another quantity as output. But sometimes we'll work with functions that take functions as input and return a quantity as output. And there will even be functions that take a functions as inputs and return a function as an output.
+
+You've almost certainly seen functions expressed in the general form $f(x)$. The function is $f()$, the input is $x$. Perhaps it's obvious at this point that $x$ is a quantity. $f(x)$ is the operation performed on that quantity. In computing, there is a definite, widely used, notation^[Really, a set of notations.] to identify the output of a function. Strangely, in mathematics there is not. This is a major source of confusion both to students learning calculus and professionals using computers to do the work of calculus.
+
+It's possible to present calculus without functions. For instance, Isaac Newton, the inventor of calculus, spoke of "flowing quantities."^[In Newton's language, a "flowing quantity" was a *fluent* and the change in a flowing quantity was a *fluxion*.]
+
+It's practically impossible (and generally unwise) to do computing without functions. They are a basic building block of every mainstream modern computer language. Since the operations of calculus in actual practice are performed on the computer, common sense suggests that we should describe calculus in terms of functions. That's what we will do in this book.
+
+For you, this may take a bit of getting used to. The reason is that the notation used in high-school algebra and in almost all calculus texts is not the notation of functions. For example, almost all students have seen a mathematical ***expression*** in this form: $$y = m x + b$$
+Using the language of math classes, we can say that the expression "describes a relationship between two variables." And from your experience, you know that the ***variables*** are $x$ and $y$. The other letters, $m$ and $b$, are something else. Many students will reflexively call them the "slope" and "intercept" of the "line." 
+
+You are so used to this that you probably don't see the huge ambiguity involved. For instance, what kind of mathematical thing is being referred to in $y = m x + b$? It's an ***equation***, for sure. It's a straight line. But a straight line is not the same thing as an equation. And vice versa. So we might say, "It is an equation describing a straight line." 
+
+If you've studied calculus before, you may have seen an equation like $y' = m$ or perhaps $dy/dx = m$ which is another way of describing a straight line.
+
+The notation of equations is a poor substitute for the notation of functions. For instance, what is the input and what is the output? It's not explicitly stated and left to the reader to wonder. If we re-arrange $$y = m x + b \ \ \text{into}\ \ \ 0 = m x + b - y$$ using the allowed manipulations of algebra do we still have a function? If so, is it the same function as $m x + b$? Would $x$ be the input or would both $x$ and $y$ be inputs? And if $mx + b - y$ is a function, then is the output always zero?
+
+The engineers and mathematicians who invented computer languages realized over about a decade that they had to be more explicit in identifying the input, the output, and the function itself. Why? Because computers need to be given unambiguous instructions.^[Actually, it's common to give computers ambiguous instructions. The computer will carry out the instruction in the way it does, which may not be anything like what the programmer expected or intended.] Sorting this out was a difficult process even for those mathematically talented and skilled pioneers of notation, so you can be forgiven for the occasional confusion you have when dealing with notation that pre-dates computing. 
+
+In this book we'll be explicit and consistent in the ways we denote functions so that you can always figure out what are the inputs and how they are being translated into the output. A good start in learning to read the function notation is to see the equivalent of $y=m x + b$ in that notation: $$g(x) \equiv m x + b$$ Notice that we're using $\equiv$ (with three parallel bars) rather than $=$. And we don't need any $y$. $x$ appears on both sides of $\equiv$ And there is a place to state the ***name*** of the function, in this case $g()$, so that we can refer to the function unambiguously when we are doing operations on it. 
+
+## The naked modeling functions {#naked-intro}
+
+Experience allows us to make a short list of mathematical functions that provide a large majority of the tools for representing the real world as a mathematical object. Think of this list as the basic pantry from which you'll construct elaborate and sophisticated meals. Diets differ from place to place, but these components are basic to many: oil, grains and flour, vegetables, fruits, meat, fish, salt, water. Experienced cooks have access to a vast array of additional components such as herbs and spices, crustateans and shellfish, and so on, and similarly in mathematics. But we'll stick to the basics.
+
+Our basic pantry of functions will consist of
+
+* Exponential $e^x$
+* Logarithm $\ln(x)$
+* Power-law $x^p$
+* Sinusoid $\sin(x)$
+* Straight-line $m x + b$
+
+We've written these here in a traditional notation so that you can see the connections to the math you've already studied. We've used $x$ to stand for the single input to these functions just because that's traditional. 
+
+It's good to refer to the functions by their word name---exponential, logarithm, power-law, sinusoid, straight-line. This helps to avoid the source of common confusion. For example, the mathematical expressions $e^x$ and $x^e$ are easily confused, but they are notation for ***utterly different patterns***. You won't so easily mistake "exponential" and "power-law." 
+
+Eventually, we will add in two more basic pantry items, the **hump** function and the **sigmoid** function. We'll wait on these because they are not seen so much in most textbooks, even though they are starring players in the uses of mathematics for real-world applications.
+
+::: {.takenote}
+One important point to make here is that this is a very short list. You should memorize the names and be able easily to associate each name with the traditional notation. 
+
+Over the next several chapters, we will introduce several features of functions. Some of our basic modeling functions have these features, some don't.
+
+- monotonicity up or down
+- concavity up or down
+- horizontal asymptotes
+- vertical asymptotes
+- periodicity
+
+Not yet, but at the appropriate point in Block 1 you should be able to list all 7 basic modeling functions and say which of these features are relevant to each.
+
+:::
+
+You will also use and see the computer names for these functions. The names can differ somewhat from one computer language to another, but the names in the language we will use, R, are easily recognized by programmers who use any other language.
+
+For ease of reference, here's a table
+
+Name | Traditional notation | R expression
+-----|----------------------|---------------
+Exponential | $e^x$ | `exp(x)`
+Logarithm | $\ln(x)$ | `log(x)`
+Power law | $x^p$ | `x^p`
+Sinusoid | $\sin(x)$ | `sin(x)`
+Straight-line | $m x + b$ | no such named function
+Hump |   | `dnorm(x)`
+Sigmoid | | `pnorm(x)`
+
+We've left out the traditional notation for the hump and sigmoid because there isn't a standard one. Surprisingly, there is no specific name in R for the straight-line function, but it's easy to implement one when we need it.
+
+You noticed that the section heading is "The naked modeling functions." We mean "naked" in a metaphorical sense, and chose the metaphor to make it easy to remember. Think of this list of seven functions as the celebrities of the world of calculus. Unlike human celebrities who appear and wane over the years, and marry and divorce each other frequently, these celebrities have been with us for generations and maintain intimate connections with one another that reflect the nature of mathematics rather than the fads and fancies of celebrities. (Mastering calculus is largely a matter of becoming familiar with the mathematical connections. You'll see these in due time.)
+
+The celebrity functions appear in many mathematical settings, just as a human celebrity strives to maintain a public image. The human celebrity is a human organism and that organism is naturally naked. In public appearance, however, the celebrity always is clothed in one way or another. (OK ... Rarely some of them appear unclothed and the same is true in mathematics.) In other words, in order to interact with the world at large, the celebrities need attire. 
+
+Similarly, the mathematical functions that appear in real-world applications---as opposed to most math textbooks---always wear clothes, which we call ***parameters***. The clothes help them deal with the units and dimension of quantities. And just as there are standard elements of clothing: shirt, skirt, trousers, ... there are standard ways of clothing the naked modeling function. (This is called the ***parameterization*** of the function, and there are often multiple ways of paremeterizing the same function.)
+
+Once we dress the naked functions---that is, *parameterize* them---they will become the superheroes of calculus. We'll call this league of superheroes the ***basic modeling functions***.
+
+# What is a function?
+
+::: {.objectives data-latex=""}
+```{r echo=FALSE, results="asis"}
+state_objective("F-10", 
+text="Objective Original: Understand the relationship between inputs and outputs for functions of one or two input variables, to include functions defined piecewise.
+**Objective Revised**: Recognize that functions are a way of representing (storing) what we know and be able to use properly the basic nomenclature of functions).")
+```
+:::
+
+
+You're used to mathematical functions being stated as ***formulas***, expressions composed of addition, multiplication, square roots, and so on. The expression $m x + b$ uses a multiplication and an addition. $\sqrt{\strut 1 - x^2}$ uses exponentiation ($x^2$), subtraction and square root.
+
+But there's nothing in the mathematical concept of "function" that requires a formula. And computer functions in general are not based on a formula. (The word used to describe the internals of a computer function is ***algorithm***, which is a generalization of "formula" that includes many non-arithmetic operations such as looping and branching).
+
+We will be using formulas extensively, but best if you can visualize functions generally as something that's not necessarily a formula. This section gives another perspective on how to describe and think about a function. But remember, functions ***take inputs*** and ***return the corresponding output***. Any arrangement that accomplishes this is a function, even if arithmetic is nowhere in sight.
+
+People have many ways of organizing what they know. Often we rely on our intuitive abilities of memory, but we also have constructed frameworks to make the storage more accessible and reliable. One of these frameworks is the ***table***, generally set up as an array of rows and columns. For instance, here is a table about a range of internal combustion engines of various sizes:
+
+```{r}
+DT::datatable(Engines)
+```
+
+Each row of the table reports on one, specific engine. Each column is one attribute of the of an engine. Using such tables can be easy. For example, if asked to report how fast the engine named "Enya 60-4C" spins, you would go down to the Enya 60-4C row and over to the "RPM" column and read off the answer: 11,800 revolutions per minute (RPM).
+
+A table like this can be said to describe as raw numbers the general relationships between various engine attributes. For instance, we might want to understand the relationship (if any) between RPM and engine mass, or relate the number and diameter (that is, "bore") and depth (that is, "stroke") of the cylinders to the power generated by the engine. Any single entry in the table doesn't tell us about such general relationships; we need to consider the rows and columns as a whole.
+
+If you examined the relationship between engine power and cylinder number, diameter, and depth, you will find that (as a rule) the larger the number, diameter, and depth, the more powerful the engine. That's a ***qualitative*** description of the relationship. Most educated people are able to understand such a quantitative description. Even if they don't know exactly what "power" means, they have some rough conception of it. And almost everyone knows what diameter, depth, and number mean.
+
+Often, we're interested in having a ***quantitative*** description of a relationship such as the one (number, diameter, depth) $\rightarrow$ power. Remarkably, the many of educated people are uncomfortable with the idea of using quantitative descriptions of a relationship: what sort of language the description should be written with; how to perform the calculations to use the description; how to translate between data (such as in the table) and a quantitative description; how to translate the quantitative description to address a particular question or make a decision.
+
+This course is about constructing and using such quantitative descriptions: that is, ***mathematical modeling***. Skills for modeling are essential for work in engineering and science, and highly valued in many other fields in commerce, management, and government. Often, the work of applying such quantitative skills is called ***calculation***. The name ***calculus*** is used to describe the methods that are widely used for undertaking calculations.
+
+***Functions*** are a fundamental way of organizing mathematical models and calculations. You have undoubtedly seen them in your previous mathematics education, but it's worth reviewing them from the basics so that we can share a vocabulary for communicating about them. 
+
+- A function is a transformation from one or more ***inputs*** to an ***output***. 
+- To keep things simple for now we'll focus on inputs and outputs that are ***numeric***, but later we'll need a more nuanced view of "numeric" that takes into account the different kinds of things that are represented by numbers, e.g. length, power, RPM.
+
+::: {.workedexample}
+***Functions as bureaucracy***
+
+To see how functions work, imagine a long corridor with a sequence of offices, each identified by a room number. The input to the function is the room number. To ***evaluate*** the function for that input, you knock on the appropriate door and, in response, you'll receive a piece of paper with a number to take away with you. That number is the output of the function.
+
+This will sound at first too simple to be true, but ... In a mathematical function each office gives out exactly the same number every time someone knocks on the door. Obviously, being a worker in such an office is highly tedious and requires no special skill. Every time someone knocks on the worker's door, he or she writes down the *same* number on a piece of paper and hands it to the person knocking. What that person will do with the number is of absolutely no concern to the office worker.
+
+The utility of such functions depends on the artistry and insight of the person who creates them: the ***modeler***. An important point of this course is to teach you some of that artistry. Hopefully you will learn through that artistry to translate your insight to the creation of functions that are useful in your own work. But even if you just use functions created by others, knowing how functions are built will be helpful in using them properly.
+
+In the sort of function just described, all the offices were along a single corridor. Such functions are said to have ***one input***, or, equivalently, to be ***functions of one variable***. To operate the function, you just need one number: the address of the office from which you'll collect the output.
+
+Many functions have more than one input: two, three, four, ... tens, hundreds, thousands, millions, .... In this course, we'll work mainly with functions of two inputs, but the skills you develop will be applicable to functions of more than two inputs.
+
+What does a function of two inputs look like in our office metaphor? Imagine that the office building has many parallel corridors, each with a numeric ID. To evaluate the function, you need two numeric inputs: the number of the corridor and the number of the door along that corridor. With those two numbers in hand, you locate the appropriate door, knock on it and receive the output number in return.
+
+Three inputs? Think of a building with many floors, each floor having many parallel corridors, each corridor having many offices in sequence. Now you need three numbers to identify a particular office: floor, corridor, and door. 
+
+Four inputs? A street with many three-input functions along it. Five inputs? A city with many parallel four-input streets. And on and on.
+
+Applying inputs to a function in order to receive an output is only a small part of most calculations. Calculations are usually organized as ***algorithms***, which is just to say that algorithms are descriptions of a calculation. The calculation itself is ... a function! 
+
+How does the calculation work? Think of it as a business. People come to your business with one or more inputs. You take the inputs and, following a carefully designed protocol, hand them out to your staff, perhaps duplicating some or doing some simple arithmetic with them to create a new number. Thus equipped with the relevant numbers, each member of staff goes off to evaluate a particular function with those numbers. (That is, the staff member goes to the appropriate street, building, floor, corridor, and door, returning with the number provided at that office.) The staff re-assembles at your roadside stand, you do some sorting out of the numbers they have returned with, again following a strict protocol. Perhaps you combine the new numbers with the ones you were originally given as inputs. In any event, you send your staff out with their new instructions---each person's instructions consist simply of a set of inputs which they head out to evaluate and return to you. At some point, perhaps after many such cycles, perhaps after just one, you are able to combine the numbers that you've assembled into a single result: a number that you return to the person who came to your business in the first place. 
+
+A calculation might involve just one function evaluation, or involve a chain of them that sends workers buzzing around the city and visiting other businesses that in turn activate their own staff who add to the urban tumult.
+:::
+
+::: {.caution}
+The reader familiar with floors and corridors and office doors may note that the addresses are ***discrete***. That is, office 321 has offices 320 and 322 as neighbors. Calculus is about continuous functions, so we need a way to accept, say, 321.487... as an input. There is no such office. 
+
+A slight modification to the procedure will produce a continuous function. It works like this: for an input of 321.487... the messenger goes to both office 321 and 322 and collects their respective outputs. Let's imagine that they are -14.3 and 12.5 respectively. All that's needed is a small calculation, which in this case will look like $$-14.3 \times (1 - 0.487...)   + 12.5 \times 0.487...$$ This is called ***linear interpolation*** and lets us construct continuous functions out of discrete data. 
+
+In Blocks 2 and 5 we'll discuss other widely used ways to do this that produce not just continuous functions but ***smooth*** functions. Understanding the difference between continuous and smooth will have to wait until we introduce a couple more calculus concepts: derivatives and limits.
+:::
+
+## Domain: input space
+
+
+
+As you know, there is a powerful way of thinking about numbers in terms of ***space*** and ***geometry***. For instance, a single number corresponds to a point on a line: the so-called ***number line***. A pair of inputs, say, (x, y) corresponds to a point in a plane, often called the ***Cartesian coordinate plane***. Three numbers corresponds to a point in space, perhaps organized into (x, y, z) of a Cartesian space. There are higher-dimensional spaces, but usually special training is needed to become comfortable with them. If you are having this discomfort, you might prefer to work with the office metaphor. Just for fun, here's how you can think of a 10-dimensional space: 10 numbers, one telling you which planet, the next specifying the continent on that planet, and so on for country, state, city, street, building, floor, corridor, door.
+
+The set of inputs with which the function can be evaluated is called the ***domain*** of the function. Sometimes we describe the domain as a space, e.g. the number line, the plane, and so on. Sometimes domains including more restrictions. For instance, a particular input might only meaningfully be positive, with no offices corresponding to negative values for that input. Or, an input might be restricted to be in the interval 0 to 1. Sometimes in calculus, the domain excludes an isolated point. For instance, there may be no office at the door marked 0 but the neighboring doors open into working offices.
+
+The ***range*** of a function is the set of all the *outputs* that can be produced. Since at this stage we're working only with functions that return a single number as output, it's common to describe the range as all or part of the number line. For instance, some functions only have positive outputs. Other functions' outputs are always in the interval 0 to 1. (This is the case, for instance, when the function returns a probability as the output.)
+
+::: {.worked-example data-latex=""}
+**Weather forecasting by numerical process**
+
+*[Weather forecasting by numerical process](https://archive.org/details/weatherpredictio00richrich/page/184/mode/2up?view=theater)* is a highly influential book, from 1922, by [Lewis Fry Richardson](https://en.wikipedia.org/wiki/Lewis_Fry_Richardson). He envisioned a calculation for a weather forecast as a kind of function. The domain for the forecast is the latitude and longitude of a point on the globe, rather than the rectilinear organization of corridor. 
+
+One fantastic illustration of the idea shows a building constructed in the form of an inside-out globe. At each of many points on the globe, there is a business. (You can see this most clearly in the foreground, which shows several boxes of workers.)
+
+```{r echo=FALSE, out.width="70%", fig.align="center", fig.cap="An artist's depiction of the organization of calculations for weather forecasting by Richardson's system. [Source](https://www.cabinetmagazine.org/issues/27/foer.php)"}
+knitr::include_graphics(normalizePath("www/Richardson-globe.jpg"))
+```
+
+Each business might work this way: In each business there is a person who will report the current air pressure at that point on the globe, another person who reports the temperature, another reporting humidity, and so on. To compute the predicted weather for the next day, the business has a staff assigned to visit the neighboring businesses to find out the pressure, temperature, humidity, etc. Still other staffers take the collected output from the neighbors and carry out the arithmetic to translate those outputs into the forecast for tomorrow. For instance, knowing the pressure at neighboring points enables the direction of wind to be calculated, thus the humidity and temperature of air coming in to and out of the region the business handles. In today's numerical weather prediction models, the globe is divided very finely by latitude, longitude, and altitude, and software handles both the storage of present conditions and the calculation from that of the future a few minutes later. Repeating the process using the forecast enables a prediction to be made for a few minutes after that, and so on.
+
+Some of the most important concepts in calculus relate to the process of collecting outputs from neighboring points and combining them: for instance finding the difference or the sum. To illustrate, here is the first set of equations from Richardson's *Weather forecasting ...*, writen in the notation of calculus:
+
+```{r echo=FALSE, out.width="70%", fig.align="center"}
+knitr::include_graphics(normalizePath("www/Richardson-equations.png"))
+```
+
+You can hardly be expected at this point to understand the calculations described by these equations, which involve the physics of air flow, the coriolis force, etc. but it's worth pointing out some of the notation:
+
+- The equations are about the momentum of a column of air at a particular latitude ($\phi$) and longitude.
+- $M_E$ and $M_N$ are east-west and north-south components of that momentum. 
+- $\partial M_E /\partial t$ is the amount the east-west momentum will change in the next small interval of time ($\partial t$).
+- $p_G$ is the air pressure at ground level from that column of air. 
+- $\partial p_G / \partial n$ is about the difference between air pressure in the column of air and the columns to the north and south.
+
+Calculus provides both the notation for describing the physics of climate and the means to translate this physics into arithmetic calculation.
+:::
+
+::: {.todo}
+In the section on linear combinations, have a sidebar that explains that the so-called "straight-line" function is really just a linear combination of the more fundamental functions $\text{identity}(x) \equiv x$ (which is exactly the same thing as the power-law function $x^p$ with $p=1$) and and $\text{constant}(x) \equiv 1$ which is pretty much the same as the power-law function $x^0$. 
+:::
+
+::: {.todo}
+In the limits section or an exercise, ask about $x^0$? Is that the same as 1? What about when $x=0$. Zero raised to any positive power is 0. But any positive number raised to 0 is 1. So two ways of thinking about it give different answers.
+
+The computer handles the question with ease:
+
+```{r}
+0^0
+```
+But computer results don't always agree with mathematical results. 
+
+In this case, mathematicians looking at the question through the lens of limits, agree with the computer when looking at the function $g(x) \equiv x^0$. But they disagree if the function is $h(x) \equiv 0^x$ or $f(x) \equiv x^x$.  These three functions are not the same when it comes to limits. 
+
+Remember that $\lim_{x\rightarrow 0}$ is not about replacing $x$ with zero, it is about a process of examining the result for non-zero $x$ as $x$ approaches zero. In "zero raised to any positive power" we're talking about $0^{\lim_{x\rightarrow 0}}$, which is not the same as $\lim_{x\rightarrow 0} \left[x^x\right]$.  Similarly, $\left[\lim_{x\rightarrow 0}\right]^0$ is different from 
+:::
+
+
+<!--chapter:end:Fun-change.Rmd-->
+
+```{r include=FALSE, cache=FALSE}
+library(mosaic)
+library(mosaicCalc)
+library(glue)
+library(math141Z) # REPLACE THIS WHEN PACKAGES ARE RE-ALIGNED
+library(here) # for file locations
+
+
+
+exercise_file <- function(day,  file_name, course="141Z") {
+    path=glue::glue("Exercises/DD-{course}-{day}/{file_name}")
+    here(path)
+}
+
+if (!exists("objective_list"))
+  objective_list <- list()
+
+add_objective <- function(ID, text) {
+  objective_list[[length(objective_list) + 1]] <<-
+                      list(ID = ID, text = text)
+}
+
+state_objective <- function(ID, text) {
+  add_objective(ID, text)
+  format_objective(list(ID=ID, text=text))
+}
+
+format_objective <- function(obj) {
+  knitr::asis_output(glue::glue("#. **[{obj$ID}]** *{obj$text}*\n\n"))
+}
+
+show_objectives <- function() {
+  Tmp <- lapply(objective_list, tibble::as_tibble) %>%
+    bind_rows()
+  readr::write_csv(Tmp, file="objective-list.csv")
+
+  lapply(objective_list, format_objective) %>%
+    unlist() %>%
+    paste(collapse="\n") %>%
+    knitr::asis_output()
+}
+
+# A blank image for spacing
+BlankImage <- gf_blank(hp ~ wt, data=mtcars) %>% gf_theme(theme_void())
+```
+# Describing functions {#fun-describing}
+
+```{r include=FALSE}
+library(etude2)
+library(mosaic)
+library(mosaicCalc)
+```
+
+We will need to communicate about functions to your fellow humans and to computers. Important modes of communication include:
+
+* Graphs of functions that show their "shape"
+* Tables of inputs and outputs
+* Word descriptions
+* Computer function name
+* Mathematical notation
+
+In this chapter, we'll illustrate these five different modes using the naked modeling functions. It's important to become proficient at all five.
+
+## Computer commands
+
+We'll start with simple computer commands that enable us to draw graphs.
+
+::: {.scaffolding}
+To make a graph of a function with one input, use the `slice_plot()` command, like this:
+```{r results="hide"}
+slice_plot(exp(x) ~ x, domain(x=c(-2,2)))
+```
+:::
+
+You can simply copy-and-paste the command into a sandbox to create the graph. But let's take apart the command into it's components to see how R commands are structured.
+
+1. `slice_plot( ... )` Commands usually start with the name of the operation to perform. The name is *always* followed by a pair of parentheses. Those parentheses will contain the ***arguments*** of the operation, which you can think of as specifying the details of what is to be done. The `slice_plot()` operator draws graphs for functions of a single input.
+2. `exp(x) ~ x` is being given as the first argument to the `slice_plot()` operator. We'll defer a detailed explanation, just pointing out that we are specifying to the computer that we want a plot of the ***exponential*** function and that we are going to use `x` as the name of the input.
+3. `domain(x = c(-3,3))` Functions have mathematical domains: the set of valid inputs to the function. The exponential function has the entire number line as the domain. To draw a function graph you need to specify the ***graphical domain***, that is, which part of the function domain to show in the graph. 
+
+## Tables of inputs and outputs
+
+Another way of describing a function is to give a table of inputs and outputs. Like graphics, a table can only show some of the possible inputs.
+
+```{r echo=FALSE}
+tibble::tibble(
+  input = seq(-2, 2, by = 0.25),
+  output = exp(input)
+) %>%
+  knitr::kable() %>%
+  kableExtra::kable_styling()
+```
+Before modern computing, tables were one of the primary means to describe functions. People working with calculus needed a reference collection of books containing tables for the functions they used. 
+
+With computers, we have better and faster ways to get the output of a function from the input. Still, modelers often use recorded data to construct functions. Tables are perhaps the most widely used method for storing and accessing data, although electronic spreadsheets are used today instead of printed tables.
+
+Even today, a table can be a nice way to describe a function when we are interested in the output from only a handful of the possible inputs. 
+
+Conceptually, it's helpful to keep in mind that every naked modeling function is just a way of organizing information that could have been stored in a table. 
+
+::: {.todo}
+Exercise: give seven tables of the naked modeling functions. Use a sandbox to determine which table is which function.
+
+
+
+:::
+
+## Word descriptions
+
+Knowing and correctly using a handful of phrases goes a long way in being able to communicate with other people about functions with a single input. Often, the words make sense in everyday speech ("steep", "growing", "decaying", "goes up", "goes down", "flat). 
+
+Sometimes the words are used in everyday speech but the casual person isn't sure exactly what they mean. For instance, you will often hear the phrase "growing exponentially." The graph of the exponential function illustrates exactly this sort of growth: flat for small $x$ and growing steadily steeper and steeper as $x$ increases. 
+
+Still other words are best understood by those who learn calculus. "Concave up," "concave down", "approaching 0 asymptotically," "continuous", "discontinuous", "smooth", "having a minimum **at** ...," "having a minimum **of** ...", "approaching $\infty$ asymptotically," "having a vertical asymptote."
+
+::: {.todo}
+Exercise: Show graphs of the naked modeling functions. Ask which of the phrases apply.
+:::
+
+::: {.todo}
+Exercise: Show a graph and ask questions about asymptotes. Use the phrases "as the input gets very small" (meaning $x \rightarrow -\infty$), "as $x$ goes to zero" (meaning $x \rightarrow 0)"
+:::
+
+## Computer function names
+
+As you might expect, computer programmers and language developers have written software implementing several of the ***naked modeling functions***: `exp()`, `log()`, `sin()`, `dnorm()`, and `pnorm()`. For these functions, the name tells everying, so far as the computer is concerned, that is needed to calculate the output from any given input.
+
+Computer notation for the power-law and straight-line functions is different. It will be much easier to understand once you have seen how to create and name your own functions. The reason for this difference is that the power-law and straight-line functions are not quite naked. Both of them have parameters: the exponent in the power-law function and the slope and intercept in the straight-line function.
+
+::: {.why}
+**Why do you include the power-law and straight-line functions in the list of naked modeling functions when they are not naked?**
+
+We're using the "naked modeling function" list to accomplish two things at the same time:
+
+i. To emphasize that in modeling real-world situations you should always expect that your functions will have parameters.
+ii. To point out that a large fraction modeling situations can be handled by just a few function "shapes."  
+
+To make the list of shapes in (ii) comprehensive, we've had to stretch the "naked" metaphor a bit.
+:::
+
+## Mathematical notation
+
+You have grown up with traditional mathematical notation and have are likely familiar with the notation for several of the naked modeling functions: $\ln x$, $\sin x$, $e^x$, $x^p$ (as in $x^2$ where $p=2$ or $\sqrt{x}$ where $p=1/2$).
+
+Traditional notation mixes up several things that computer notation sensibly keeps separate. From the computer programmer's point of view, traditional notation is idiosyncratic rather than systematic. 
+
+If you are interested in these things, three concepts from computing may help you appreciate the the differences:
+
+- ***Functional notation*** In computing, the notation in which a function **name** is followed by parentheses^[Or sometimes square braces or curly braces or another token, depending on the language.] with the inputs **inside** the parentheses is called "functional notation." functional notation is part of traditional mathematical notation, although often the parentheses are left out.
+- ***Infix notation*** For functions with two inputs, computing languages often support a different arrangement of the function name and the inputs where the name comes between the arguments. You've seen this in parts of traditional arithmetic notation, for instance, $3 + 5$ or $8/2$. Infix notation is sometimes used in place of functional notation as in `3^2` or `x^3`. 
+- ***Markup notation*** You are undoubtedly familar with word processing and, particularly, a style of word processing called What-you-see-is-what-you-get (WYSIWYG). In WYSIWYG, you can enter plain text just using the keyboard, but if you want to make something **boldface** or **italics**, you use the mouse to select the text involved and select a style from a menu. Typically, WYSIWYG mathematical content involves a similar mouse-based process. In contrast, in mainstream computer languages, the mouse is not needed at all. The computer commands are constructed from plain, linear sequences of letters and other characters. 
+
+    Computer programmers helpfully observed that the word-processing process can be constructed as simple plain text input to computer program that interprets the input in well-defined ways and carries out ***typesetting***. To illustrate, consider the next couple of lines. The first shows an ordinary looking word-processor formatted sentence. The second shows the way this was encoded so that a typesetter can produce the formatted content.
+    
+    > $e^x$, $\sqrt{x^2}$ and $\int_0^\infty \frac{1}{x^2} dx$ are examples of *traditional* notation.^[A footnote]
+    
+    > `$e^x$, $\sqrt{x^2}$ and $\int_0^\infty \frac{1}{x^2} dx$ are examples of *traditional* notation.^[A footnote]`
+
+Traditional mathematical notation includes features such as superscripts and special symbols that are easily written out with pencil in hand. Often this notation is beautiful and aesthetically cherished by mathematicians. But computer commands in most computer languages are straight sequences of characters using function or infix notation.^[Some computer languages use notation where the name of the function is contained inside the parentheses as in `(+ 2 3)`.]
+
+
+
+
+## Exercises
+
+
+
+
+<!--chapter:end:Fun-describing.Rmd-->
+
+```{r include=FALSE, cache=FALSE}
+library(mosaic)
+library(mosaicCalc)
+library(glue)
+library(math141Z) # REPLACE THIS WHEN PACKAGES ARE RE-ALIGNED
+library(here) # for file locations
+
+
+
+exercise_file <- function(day,  file_name, course="141Z") {
+    path=glue::glue("Exercises/DD-{course}-{day}/{file_name}")
+    here(path)
+}
+
+if (!exists("objective_list"))
+  objective_list <- list()
+
+add_objective <- function(ID, text) {
+  objective_list[[length(objective_list) + 1]] <<-
+                      list(ID = ID, text = text)
+}
+
+state_objective <- function(ID, text) {
+  add_objective(ID, text)
+  format_objective(list(ID=ID, text=text))
+}
+
+format_objective <- function(obj) {
+  knitr::asis_output(glue::glue("#. **[{obj$ID}]** *{obj$text}*\n\n"))
+}
+
+show_objectives <- function() {
+  Tmp <- lapply(objective_list, tibble::as_tibble) %>%
+    bind_rows()
+  readr::write_csv(Tmp, file="objective-list.csv")
+
+  lapply(objective_list, format_objective) %>%
+    unlist() %>%
+    paste(collapse="\n") %>%
+    knitr::asis_output()
+}
+
+# A blank image for spacing
+BlankImage <- gf_blank(hp ~ wt, data=mtcars) %>% gf_theme(theme_void())
+```
+# Notation for functions {#fun-notation}
+
+Part of the difficulty of mathematics for many people is making sense of the nomenclature and notation. What you were taught in high school is a highly idiomatic system that can be mastered only with experience. Mathematicians are undoubtedly skilled in logic, but mathematics itself has an ancient history which has littered the language with synonyms, near synonyms, inconsistencies, diacritical marks, letters in unfamiliar alphabets. An Oxford mathematician wrote a poem that has become famous as nonsense:
+
+*’Twas brillig, and the slithy toves  
+       Did gyre and gimble in the wabe:  
+All mimsy were the borogoves,  
+       And the mome raths outgrabe.*  
+    
+Here are some words commonly encountered in traditional mathematics notation. 
+
+**equation**, **formula**, **function**, **variable**, **unknown**, **root** 
+
+And here are a few mathematical sentences.
+
+i. $y = x$
+ii. $y = \sqrt{x}$
+iii. $y^2 = x$
+iv. $x^2 = x$
+v. $x = \sqrt{x}$
+
+All five sentences are *equations*. That's easy, because they each have an equal sign between the two sides. Which are *formulas*? Which are *functions*? You're used to calling $x$ and $y$ *variables*. When do they become *unknowns*? Sentence (iv) might be interpreted as describing *roots*. But sentence (v) says the same thing as (iv) but would not be related to roots.
+
+## A notation for computing
+
+The traditional notation is practically useless for computing. A programmer has to have a deep understanding of what the notation is intended to mean in any given circumstance before she can construct a computer expression that will carry that same meaning in the computer's work.
+
+
+::: {.scaffolding}
+To illustrate, here are some similar-looking sentences. In math notation, each of them can mean something. In R, one of them is valid and the others invalid. Read each one and try to guess which one is valid and why the others are not.
+```{r eval=FALSE}
+y = x
+y = sqrt(x)
+y^2 = 3
+y = sqrt(3)
+y - x = 0
+0 = (x+3)(x-2)
+```
+Once you've made your guesses, open a sandbox to see if you got it right.
+:::
+
+::: {.todo}
+Produce an MC exercise that addresses the why's of the above.
+:::
+
+The student who knows how to make sense of math notation will find this not of much help in writing computer notation. It's like a well educated foreigner trying to make sense of how some of these sentences are meaningful and others not.
+
+"Chair a meeting," but not "seat a meeting." 
+"Seat a guest," but not "chair a guest."  
+"Bush yourself out," but not "tree yourself out."  
+"Tree a cat," but not "bush a cat."  
+"Table a motion," but not "desk a motion."  
+"Bench a player," but not "couch a player."   
+"Couch a meaning" but not "bench a meaning."  
+
+
+In this book, we're going to use a mathematical notation that corresponds to a usable computer notation. The first step is to stop using $=$ to mean so many different things. 
+
+## Objects and actions
+
+::: {.objectives data-latex=""}
+```{r echo=FALSE, results="asis"}
+state_objective("F-30", "Identify the structure of function notation when the function is defined by a formula.")
+```
+:::
+
+
+We're going to give names to mathematical "objects" and actions. In this introduction, we'll use **boldface for objects** and *italics for actions.*
+
+* A **function** is a mathematical object that gives instructions about how to transform one or more **inputs** into an **output**. Typically, but not always, we will give names to functions so that we can refer to them. You can think of a function like a recipe: it tells you what to do with the inputs to create the output. You're used to functions where the recipe is written as a **formula** using arithmetic and other operators. A more general term for the recipe in a function is **algorithm**. (Sectin \@ref(sec:algorithms) gives a definition of "algorithm" and shows examples that are not formulas.)
+
+
+* An **argument** is a symbol that stands for an **input** in an **algorithm**.
+
+* *Applying a function to inputs* means to carry out the steps of the function's algorithm, inserting the appropriate quantity in place of the symbol. Recipes will use symbols like "rice" to describe the algorithm. In cooking, you apply a recipe to the incredients. Where the recipe says, "Add rice to the boiling water" you use the physical rice and the physical boiling water, instead of the symbols. Applying a function to inputs is so fundamental to computing, that you'll often hear other words for it than "apply": *run the function* or *evaluate the function* or *execute the function*.
+    
+To *define a function* in mathematical notation we will write something like this: $$g(x) \equiv 4 x^2 - 7$$ 
+
+* $g()$ is the name of the function. 
+* The function takes just one argument, which is being written with the symbol $x$ in the definition. To make double sure that the human reader sees the symbol being used for the argument, we are putting the list of symbols in the parentheses following the function name. The definition of a function with two inputs  looks like $h(x, y) \equiv 3y - 5 x^2 + x$ and functions with more than two inputs follow the same pattern.
+* The algorithm of $g()$  is presented as a formula. The formula in the example, $4 x^2 - 7$ says, "Take the input quantity. Multiply 4 by the input and then multiply by the input again. Subtract $7$ from that to produce the output of the function. 
+* We use $\equiv$ as the punctuation to distinguish the function name (and argument list) from the algorithm. The algorithm is always on the right of $\equiv$, the name of the function and argument list are to the left.
+
+The command `g(3)`, applies the function named $g()$ to the value 3. Do this by replacing the $x$ in the algorithm by the $3$ and carry out the calculations in the algorithm. For $g(3)$, the output will be 29. 
+
+In R, a function is defined using a very similar expression. For the $g()$ we defined above, the R definition would be
+```{r}
+g <- makeFun(4*x^2 - 7 ~ x)
+```
+
+i. The name of the function, without parentheses, is on the left side of the ***assignment operator*** `<-`. 
+ii. We could use the name `g` to refer to anything, function or not. Here, you can see that `g` is the name of a function by looking at the object on the right side of `<-`. The R/mosaic operator `makeFun()` is what constructs functions. 
+iii. The text in the parentheses of `makeFun` is also an R expression. We call this sort of expression a ***tilde expression***. (The symbol `~` is called "tilde.") The tilde character is simply punctuation to separate the expression on the left side, `4*x^2 - 7`, from the expression on the right side. The right side of the tilde expression identifies which symbols are the arguments. (In this case, `x` is the only argument.) The left side of the tilde expression describes the algorithm for the function, using the argument names specified on the right side.
+
+To *apply the function* $g()$ to an argument, we write an R expression with the value for the argument given in the parentheses. For instance, to apply $g()$ to the value 3, we write:
+```{r}
+g(3)
+```
+
+
+
+
+## Formulas and algorithms {#algorithms}
+
+The function algorithms in the previous section involves only arithmetic. More generally, a formula will involve the invocation of another function. For example: $\sqrt{\strut m x + b}$ or $\sin(m x) + \ln(b)$.
+    
+The idea of "algorithm" generalizes that of formulas. A starter definition is:
+
+> An ***algorithm*** is a set of instructions for performing a computation. 
+
+High-school math typically involves presenting algorithms as formula. You learned, maybe in middle school, how to follow the arithmetic steps involved in algorithms described as formulas. You also have likely used a calculator to perform some of the arithmetic or to evaluate functions such as $\sin()$ and $\ln()$ and $\sqrt{\strut}$ for which you don't know how to evaluate using simple arithmetic. The calculator is implementing an algorithm with which its been programmed to enable the calculation of $\sin()$ and $\ln()$ and such.
+
+A slightly more detailed definition of "algorithm" highlights that algorithms are written in terms of other, simpler algorithms.
+
+> An ***algorithm*** is a set of instructions for performing a computation written in terms of other algorithms that we already know how to perform.
+
+For our purposes, the "algorithms that we already know how to perform" will be taken to be arithmetic---addition, subtraction, multiplication, division---as well as the evaluation of the naked modeling functions. Admittedly, people cannot compute logarithms as fluently as they can add numbers, but you already have the R implementations of the basic modeling functions: `exp()`, `log()`, `sin()`, power-law, `dnorm()`, and `cnorm()`. 
+The vast majority of functions you will see in this book (and in mathematical modeling in general) can be constructed out of basic arithmetic and the application of the naked modeling functions.
+
+## Algorithms without formulas
+
+Many functions are described by algorithms that use concepts common in computer programming but unknown to traditional mathematical notation. Some of these have names like ***iteration*** or ***branching*** and many refer to stored lists of fixed numbers (like the office workers in the street, building, floor, corridor, door image of a function). We'll deal with some of these things later, but for now ...
+
+> We are going to use the word ***algorithm*** to name the kind of expression to the right of $\equiv$ in a function definition. A ***formula*** is a specific kind of algorithm generally written in traditional math notation.
+
+Algorithms, including the ones that are formulas, are written in terms of a set of ***symbols*** that stand for inputs. This is a high-fallutin' way of saying something simple: in $mx + b$, the $x$, $m$, and $b$ are the names we give to the quantities being used in the calculation.
+
+The notation we are using for function definition lists some of these names in two places, and others in only one place. Again, look at $$g(x) \equiv m x + b$$
+The $x$ appears both in the algorithm and the list of input name $(x)$ to the left of $\equiv$.
+
+The $m$ and $b$ are different; they appear **only** in the algorithm. The word for such quantities in mathematics is ***parameter***. Eventually, when the algorithm is followed, we're going to have to put in specific numerical values in place of each parameter. 
+
+**Where will these parameter values come from?** This is a subject on which mathematical notation is silent. You have to figure it out from context and experience. This is potentially very confusing, especially when a human is not around to sort things out.
+
+## Computer notation
+
+The notation used in computer programming lets us be explicit about which symbols refer to function inputs and which to parameters of the function. 
+Depending on the computer language things can be handled in one way or another. For experienced computer programmers: This is the issue of ***scope*** and can be complex in its own right. 
+
+In the software used in CalcZ (R, with the `mosaic` package of extensions, which we'll refer to as R/mosaic), we will take a simple-to-use approach. It works like this: 
+
+> All modeling functions we construct with R/`mosaic` will list parameters formally as ***arguments*** to the function.
+
+It is as if we wrote in traditional notation $$g(x, m, b) \equiv m x + b$$
+
+There is also a way to give default numerical values to parameters so that you can write $g(3.5)$ and the computer will know where to find the parameter values. In writing about formulas using math notation, we'll extend the traditional notation to write, for instance, $g(x, m=2, b=3) \equiv m x + b$.
+
+In R/`mosaic`, we would construct a mathematical function like $g()$ using the `makeFun()` function:
+
+```r
+g <- makeFun(m*x + b ~ x, m=2, b=3)
+```
+
+You could also write 
+
+```r
+g <- makeFun(m*x + b ~ x)
+```
+but this notation means that you will have to give specific numerical values for the `m` and `b` inputs whenever you evaluate `g()`. There won't be any default values for the "parameters-as-inputs" `m` and `b`.
+
+<!-- Relevant Blog post: CalculusBlog/post-formal-arguments.Rmd -->
+
+
+::: {.objectives data-latex=""}
+```{r echo=FALSE, results="asis"}
+state_objective("F-31-R", "Identify and create R versions of mathematical functions using `makeFun()` and tilde expressions.")
+
+
+```
+:::
+
+::: {.objectives data-latex=""}
+```{r echo=FALSE, results="asis"}
+state_objective("F-33", "Master the conventions used in CalcZ for giving names to functions and for referring to functions with \"pronouns.\"")
+```
+:::
+
+## CalcZ naming conventions
+
+We're going to be using a lot of functions in CalcZ. Some of these functions have ***proper names***, usually written using short sequences of letters: for instance the naked modeling functions $\sin()$, $\ln()$, $\exp()$. 
+
+Other functions will needed just for a sentence or a paragraph or a section, perhaps being used in an example or to lay out the steps of an algorithm. In ***natural languages*** such as English, we often use ***pronouns*** for such purposes: she, he, it, they, we, I, .... We also will use pronouns for identifying functions. Our policy is this:
+
+> A pronoun for a function will be named $f()$ or $g()$ or $h()$ or the corresponding upper-case letters $F()$, $G()$, or $H()$. **The particular choice of letter f, g, or h has no significance whatsoever.** It is just a way to give an unambiguous handle for a function that we are going to be using for a little while. 
+
+On occasion, we will use subscripts or superscripts on these pronoun letters, for instance $f_1()$ or $g^\star()$. This is a way to give us many more possible pronouns when we need them. Perhaps this is analogous to words like "sister," "parent," "husband," "cousin," etc. that allow us to refer, without a proper name, to a specific person.
+
+On other occasions, where a function relates to a specific quantity such as position or velocity, we will use the names $x()$, $y()$, $z()$, $u()$, $v()$, $w()$, and such. These letters are, of course, the same ones we frequently use to name the inputs to functions. How do you know whether the letter is meant to refer to an input rather than a function? The parentheses provide the clue: $x()$ is a function name, $x$ is an input name. 
+
+It can become tedious to give a name to every function, even if it's not being used again. Consider this sentence as an example: 
+
+> "The functions $g(x) \equiv \sqrt{\strut x}$ and $h(x) \equiv x^3$ are examples of power-law functions." 
+
+Long and awkward. So we'll feel free to write instead, 
+
+> "$\sqrt{\strut x}$ and $x^3$ are examples of power-law functions."
+
+Without the formality provided by "$g(x) \equiv$" it can be hard to know whether $\sqrt{\strut x}$ means "the square-root function" or "take the square root of a specific number $x$. The convention we will use is based on the name used in the expression. When standard argument names from the end of the alphabet are being used without any subscript (e.g. $x_0$) or with a special symbol as a subscript (e.g. $t^\star$), we intend the expression to be a function. However, when we want to ***apply a function*** to specific values for inputs we will write in any of the following styles:
+
+$$f(x^\star) \ \ \mbox{or}\ \ \sqrt{\strut x^\star}\ \ \mbox{or}\ \ \sqrt{\strut x=3}\ \ \mbox{or}\ \ \left.\sqrt{\strut x}\right|_{x=3}\ \ \mbox{or}\ \ \left.g(x)\strut \right|_{x=3}$$
+
+One of the important techniques of calculus is to take something we often think of as a number and turn it into a function whose output is a number. It will take you time to get used to the calculus notation and to be able to tell at a glance whether something is a function or a number.
+
+Here's an illustration that will only make sense to those who have already studied some calculus:
+
+$$\int_0^3\!\! f(x) dx\ \ \text{is a number, but }\int_0^x\!\! f(x) dx \ \ \text{is a function.}\ \ $$
+
+In high-school math notation, it can be hard to tell if an expression is intended to be a function or a number. Careful attention to the CalcZ conventions will make it much easier to figure whether an expression resolves to a function or a number. When you first read a mathematical expression, a good first question to ask is, "What kind of thing is this? A function? A number?"
+
+## Functions in R
+
+Any name in the R language can refer to any sort of object. We will use the CalcZ naming conventions in our use of R, so that the ability you develop to read math notation should help reading R **and vice versa**.
+
+R/mosaic provides additional clues to distinguish between numbers and functions.
+
+Almost all the time we will create a function using `makeFun()`. So when you see an R expression starting as `name <- makeFun(`tilde expression`)` you know for sure the name refers to a function.
+
+As we get deeper into calculus, you will meet additional R operators that generate functions. We'll introduce these in good time, but for someone reviewing the course, these include `D()`, `antiD()`, `compose()` and `iterate()`.
+
+::: {.why}
+Some readers may have encountered R previously in a statistics or data science course. Those readers will be wondering what this is with `makeFun()`. Experienced programmers know that the way you make functions in R is by using the `function` keyword. For instance:
+```{r}
+f <- function(x) { 3 + 2*x }
+```
+
+That's a completely correct and legitimate way to define a function in R and in most settings is the universal practice.
+
+We developed `makeFun()` to handle a situation where computers, in their insistence on avoiding ambiguity, will do something that is not what the person familiar with math notation is likely to suspect. The problem comes up in something as simple as
+```{r}
+g <- function(x) { m*x + b }
+```
+In traditional math notation, $g(x) \equiv m x + b$, we are usually silent on where parameters like $m$ and $b$ are coming from. And, to be honest, you don't have to worry about this **until you try to evaluate the function**.
+
+If you evaluate, say, the command $g(3)$, the R system knows how to find the right values for $m$ and $b$. If there are no such objects in the appropriate places in the R system, an error message will be generated. The rules that computer languages follow in tracking down symbols that aren't in the argument list are called ***scoping rules***. Scoping is an advanced programming concept and different languages use different rules. That's a recipe for trouble and confusion for newbies. (And even for experts!)
+
+`makeFun()` is arranged to impose its own scoping system, one that is dead easy and essentially the same in most every computer language. All that `makeFun()` does is to add any parameters in the function algorithm to the argument list. The `makeFun()` command creates a function with 3 arguments.
+```{r}
+makeFun(m*x + b ~ x)
+```
+The point of the `~ x` part of the tilde expression is simply to name which arguments should come first. To evaluate the function, you'll have to provide values for `m` and `b`. But some operations on a function---differentiation and anti-differentiation, in particular---can be done without having to specify parameter values. For those of you who know what differentiation or anti-differentiation are, here is an example:
+```{r}
+D(m*x + b ~ x)
+antiD(m*x + b ~ x)
+```
+
+Sometimes you have particular numerical values in mind for the parameters. For instance, if you are modeling the trajectory of a ball, you will undoubtedly need to make use of gravitational acceleration at the Earth's surface, which is $9.8 \text{m}/\text{s}^2$. You might prefer not to include the specific number 9.8 in your function definitions so that you can use the same functions to model a ball's trajectory on Mars. But since most balls are thrown on Earth, maybe it's not worthwhile to insist that the value 9.8 be specified every time the function is used. You can have it both ways by using `g` as the parameter name and instruct R to set `g` to 9.8 *unless otherwise specified*. The function will look like this:
+
+```{r}
+ball_velocity <- makeFun(g*t + t0 ~ t, g = 9.8, t0 = 0)
+# For Earth: falling 3 seconds from a standstill
+ball_velocity(3)
+# For Earth when the ball has an initial upward velocity of 10 m/s
+ball_velocity(3, t0 = -10)
+# For Mars ...
+ball_velocity(3, t0 = -10, g = 3.711)
+```
+:::
+
+## E unibus plurum: $=$, $\equiv$, $\rightarrow$, `<-` {#foursigns}
+
+The $=$ sign carries a lot of weight in high-school notation. Too much weight. It is used for several different meanings. That leads to confusion and error.
+
+**Meaning 1**: "Is defined to be ..."  
+
+We use $\equiv$ in mathematical notation and `<-` in R. The notation in R is a bit simpler than the mathematical notation: it is a way of giving something a name. 
+```r
+name <- something
+```
+If the "something" is a function, you will see that on the left side of `<-`, for instance by use of the `makeFun()` operator qw in `h <- makeFun(x^2 ~ x)`. The left side is simply a name.
+
+In math notation, the equivalent would be written $h(x) \equiv x^2$. The left side isn't exactly a name. It's a name followed by parentheses in which are the names being used in the algorithm.
+
+Keep in mind that in writing about functions, we will generally provide a hint that the name refers to the function, writing $h()$ or `h()`. The parentheses aren't part of the name; the name here is $h$. But the parentheses remind us that $h$ is a function.
+
+**Meaning 2**: "Happens to be ..."  
+
+The acceleration due to gravity is often given the name $g$. On Earth's surface, it happens to be $9.8 \text{m}/\text{s}^2$. In our math notation, we will use the equal sign for this narrow meaning, as in $g=9.8\text{m}/\text{s}^2$. In R we will use `=`. 
+
+**Meaning 3**: "Gets closer and closer to ..."
+
+Calculus is about relationships: the connection between two (or more) things. So you will hear phrases like, "As $x$ increases, $f(x)$ decreases." Or, in everyday experience, "As it gets more humid, the weather becomes more uncomfortable." Or, "slower is safer," or "the spicier the better" or "the heavier the blanket, the warmer I'll be." (One of the important uses of ***derivatives*** in calculus is to represent such statements quantitatively. But that's a subject for the next Block.)
+
+In calculus, sometimes you have to distinguish between "$x$ is zero" and "$x$ gets closer and closer to zero." We'll need this when we want to say, "It gets smaller and smaller, but doesn't disappear entirely." The symbol for "gets closer and closer to" is $\rightarrow$, as in $x \rightarrow 0$
+
+In reading math, take care to notice which of $=$, $\rightarrow$, or $\equiv$ is being used. The sign has something important to say and is intended to help you make sense of what you read.
+:::
+
+```{exercise, fnotation}
+```
+`r knitr::knit_child(exercise_file("02", "function-notation.Rmd"))`
+
+<!--chapter:end:Fun-notation.Rmd-->
+
+```{r include=FALSE, cache=FALSE}
+library(mosaic)
+library(mosaicCalc)
+library(glue)
+library(math141Z) # REPLACE THIS WHEN PACKAGES ARE RE-ALIGNED
+library(here) # for file locations
+
+
+
+exercise_file <- function(day,  file_name, course="141Z") {
+    path=glue::glue("Exercises/DD-{course}-{day}/{file_name}")
+    here(path)
+}
+
+if (!exists("objective_list"))
+  objective_list <- list()
+
+add_objective <- function(ID, text) {
+  objective_list[[length(objective_list) + 1]] <<-
+                      list(ID = ID, text = text)
+}
+
+state_objective <- function(ID, text) {
+  add_objective(ID, text)
+  format_objective(list(ID=ID, text=text))
+}
+
+format_objective <- function(obj) {
+  knitr::asis_output(glue::glue("#. **[{obj$ID}]** *{obj$text}*\n\n"))
+}
+
+show_objectives <- function() {
+  Tmp <- lapply(objective_list, tibble::as_tibble) %>%
+    bind_rows()
+  readr::write_csv(Tmp, file="objective-list.csv")
+
+  lapply(objective_list, format_objective) %>%
+    unlist() %>%
+    paste(collapse="\n") %>%
+    knitr::asis_output()
+}
+
+# A blank image for spacing
+BlankImage <- gf_blank(hp ~ wt, data=mtcars) %>% gf_theme(theme_void())
+```
+# Graphics & function graphs {#graphs-and-graphics}
+
+::: {.objectives data-latex=""}
+```{r echo=FALSE, results="asis"}
+state_objective("F-20", "Understand that a mathematical graph consists of points in a composite space: the input $\\times$ output.")
+```
+:::
+
+
+***Scientific and statistical graphics*** are visual depictions of information and data. For displaying a function with a single input, mathematicians and other favor a particular style of graphics. This favored style is called a ***function graph***, which has a specific technical meaning in mathematics. Notice that we're writing "function graph" rather than "function graphic." A function graph is a particular sort of graphic: there are many other types of graphics some of which we'll use to display data or features of functions.
+
+## The graphics frame
+
+Technical graphs are usually drawn in a ***graphics frame*** 
+that has several components:
+
+1. The ***frame*** is a region on the piece of paper or computer screen that is marked off by a horizontal and a vertical axis.
+2. The horizontal axis stands for one quantity.
+3. The vertical axis stands for another quantity.
+4. Both the horizontal and vertical axes are drawn with a ***scale*** that enables you to translate between a numerical value and position.
+
+```{r empty-frame, echo=FALSE, fig.cap="An empty graphics frame with scales for both the horizontal and vertical axes."}
+gf_blank(mpg ~ wt, data=mtcars) %>%
+  gf_labs(y = "Vertical", x = "Horizontal") %>%
+  gf_lims(y = c(-20,20), x=c(-5, 5))
+```
+
+## Data graphics: the point plot
+
+One of the most common uses of a graphics frame is to display visually two columns from a table containing data. For instance, here is a small part of a table about the size of penguins in the Palmer Archipelago in Antarctica.
+
+```{r}
+library(palmerpenguins)
+set.seed(101)
+knitr::kable(
+  penguins %>% sample_n(10) %>%
+    select(species, body_mass_g, flipper_length_mm, 
+           bill_length_mm) %>%
+    rename(body_mass = "body_mass_g", 
+           flipper_length = "flipper_length_mm",
+           bill_length = "bill_length_mm") %>%
+    mutate(body_mass = body_mass/1000,
+           flipper_length=flipper_length/10,
+           bill_length = bill_length/10)
+) %>% 
+    kableExtra::kable_styling()
+```
+
+A point plot displays two columns from the table. Each row in the table is represented by one point in the graphic. For instance:
+
+```{r echo=FALSE, warning=FALSE}
+gf_point(flipper_length_mm/10 ~ body_mass_g/1000, 
+         data=penguins) %>%
+  gf_labs(y = "Flipper length (cm)", x = "Body mass (kg)") 
+```
+
+Each penguin has a specific mass and flipper length. To look at the penguins with a mass of around 4 kg, you can see that the different penguins have a variety of flipper lengths. That's typical natural variability.
+
+A function graph can be constructed in the same way. Start with a table reporting the output of the function for a variety of inputs, like this:
+
+```{r echo=FALSE}
+Sigmoid1 <- tibble::tibble(input = seq(-3, 3, length=11), output = pnorm(input)) 
+Sigmoid1 %>%
+  knitr::kable() %>% 
+  kableExtra::kable_styling()
+```
+Then make a point plot of the two columns in the table:
+
+```{r echo=FALSE, fig.cap="A point plot of the table."}
+gf_point(output ~ input, data = Sigmoid1)
+```
+The graph shows the shape of the sigmoid function, one of our naked modeling functions. Except ... the domain of the sigmoid is the entire number line from $-\infty$ to $\infty$. 
+
+### Asymptotes of functions
+
+There's no need to plot out the entire domain. We know that all the "action" is happening near zero and that for inputs further to the left the function value heads toward zero. Similarly, for inputs far to the right, the function value heads toward zero. We have a particular mathematical notation for this sort of "far to the left" idea. In mathematical notation, we write the situation for the sigmoid this way:
+
+$$\lim_{x \rightarrow -\infty} \text{dnorm}(x) = 0\ \ \ \mbox{and}\ \ \ \lim_{x \rightarrow -\infty}\text{dnorm}(x) = 1$$
+This information about the function output is called the ***horizontal asymptotes*** of the function. It's expected of a mathematically literate person that they know by heart the asymptotes of the basic modeling functions, just as a geographically literate person knows Africa is a continent and Ghana is a country in Africa. We'll say more about horizontal asymptotes later. For now, note that such expected knowledge enables us to convey the shape of the function by plotting just a limited, but well chosen, part of the domain. 
+
+The graph drawn from the data table is incomplete. The domain of the sigmoid function is the entire number line---all numbers---but the graphic shows only a handful of input values. 
+
+It's perhaps common sense that you can find the function output for an input that isn't shown on the point plot by ***interpolating*** between the points that are shown. For instance, put a straight-line betwen consecutive points:
+
+```{r echo=FALSE, fig.cap="Interpolating between the data points"}
+gf_point(output ~ input, data = Sigmoid1) %>%
+  gf_line()
+```
+
+With the gaps between points filled in by interpolation, you can use the graphic to read off the output corresponding to every input in the graphic domain. (And *vice versa*: you can find an input that corresponds to any given output in the range of the function.)
+
+Typically a function's graph is drawn using many more points, so closely spaced that you can't see a gap. Since you can't see the gaps, you won't be misled by the sharp angles between consecutive line segments connecting the points. Like this:
+
+```{r sigmoid-graph, echo=FALSE}
+slice_plot(pnorm(x) ~ x, domain(x=c(-3, 3)))
+```
+
+A more traditional, mathematical definition of a function graph is the set of coordinate pairs which are a legitimate input/output pairs of the function. Placing ink at all such legitimate pairs displays the graph.
+
+::: {.takenote}
+In the data point plot of the penguin flipper length vs body mass, there are generally multiple penguins with the same body mass but different flipper lengths. In mathematics, part of the ***definition*** of the term "function" is that a function has ***only one output*** for any given input. Thus, the graph of a function with one input will always consist of a single ***curve***, as opposed to the ***cloud of points*** often seen in data.
+:::
+
+## EXERCISES in draft
+
+Show some graphs, ask which ones are mathematical functions, which ones have a unique inverse, what is the output corresponding to a given input, what is the input for a given output, what is the range of the function, .... 
+
+
+## Inputs to output 
+
+You can easily evaluate a function for a given input from its graph. As you know, just put your finger at the horizontal coordinate for the input. Then move your finger upward to reach the point on the curve directly above that horizontal coordinate. You read off the value of the function at that input by reference to the scale on the vertical axis.
+
+It's not possible to show with a graph the whole of a function whose domain is $-\infty$ to $\infty$. Consequently, when drawing a graph we choose to show only that part of the domain that we expect will be relevant to our needs.
+
+Sometimes, the graphic's domain includes parts that are not in the domain of the function being drawn. In such cases, the function's graph does not extend into the invalid part of the graphic domain, as in this plot of a function whose domain is only the positive numbers.
+
+```{r echo=FALSE, warning=FALSE, message=FALSE}
+slice_plot(log(x) ~ x, domain(x=c(-5, 5)), npts=500) %>%
+  gf_labs(y = "Output", x = "Input") %>%
+  gf_lims(y = c(-3,3), x=c(-5, 5))
+```
+
+This function has a range that runs from $-\infty$ to $\infty$, but the limits of paper and display mean that we can show only part of this range. With experience, you'll learn to read the hints in a graph that the underlying function might have a range larger than the one shown in the graphic.
+
+## Outputs to inputs
+
+Graphs are relatively modern, coming into mainstream use only in the 1700s. Much of mathematics was developed before graphs were invented. One consequence of this is that function tasks that are easy using a graph might be very hard with the previous ways of implementing functions. This is analogous to the way that arithmetic is pretty easy with Arabic numerals, but really hard with Roman numerals.
+
+A function graph makes it easy to evaluate the ***function inverse***. For all the basic modeling functions we have a way to calculate numerically the output for any given input (in the function's domain). 
+
+Often, working with a function goes another way: you know the output and you want to find a corresponding input. It's easy to do this with a graph. Pick the position on the vertical axis that represents the given input. Then trace horizontally to where the ink is. From there, trace vertically to read off the value of an input that would produce the given output.
+
+Mathematicians are careful to distinguish between functions where there is a ***unique*** input that generates each given output, and functions where there can be more than one input that generates the same output. Functions with a one-to-one relationship between output and input are called "invertible."
+
+Invertible or not, it is a common procedure for working with functions to find *an* input corresponding to a specific, given output. In high-school algebra, this was called "solving for $x$." A special case of solving is finding the ***roots of a polynomial***. The name we give to the procedure is ***zero finding***, which correctly points out that we are trying to **find** an input.
+
+## Graphs of functions with two inputs
+
+We can draw graphs of functions with two inputs. Now the points need to be marked in a 3-dimensional space: one axis for each of the two inputs and another axis for the output. Like this:
+
+```{r echo=FALSE, fig.cap="(Figure Fun-1b-1.2)"}
+f2 <- rfun( ~ input_1 + input_2, seed=932)
+interactive_plot(f2(input_1, input_2) ~ input_1 + input_2,
+                 domain(input_1=c(-5, 5), input_2 = c(0, 4)))
+```
+
+It is very hard to read a graph of a function with two inputs. Think of the graph as a kind of tent suspended over a domain of ground. The graph itself is a surface. To show the graph on a display, some tricks of the trade are used: color to give an additional scale for the output; computer graphics to let us rotate the surface to look at it from various perspectives, added grid lines and marks on the surface to help us read out the numerical value.
+
+## Contour plots
+
+::: {.objectives latex-data=""}
+
+```{r echo=FALSE, results="asis"}
+state_objective("F-21", "Interpret a contour plot of a function of two input variables, to include estimating function values and locations of peaks and valleys.")
+```
+:::
+
+A mathematical graph is just one way to draw a picture of a function with two inputs. There are other ways. One helpful mode of picture is called a ***contour plot***, familiar to many non-mathematicians in the form of topgraphical maps showing landscape elevation as a function of latitude and longitude. Here's a contour plot of the same function shown in the previous graph:
+
+```{r echo=FALSE, fig.cap="(Fig-1b-2.1)"}
+f2 <- rfun( ~ input_1 + input_2, seed=932)
+contour_plot(f2(input_1, input_2) ~ input_1 + input_2,
+                 domain(input_1=c(-5, 5), input_2 = c(0, 4)),
+             skip=0)
+```
+
+This contour plot is a topographical map of the mathematical graph in Figure Figure (Fun-1b-1.2)
+
+It may take some practice to learn to read contour plots fluently but it is a skill that's worthwhile to have. Note that the graphics frame is the Cartesian space of the two inputs. The output is presented as ***contour lines***. Each contour line has a label giving the numerical value of the function output. Each of the input value pairs on a given contour line corresponds to an output at the level labeling that contour line. To find the output for an input pair that is *not* on a contour line, you ***interpolate*** between the contours on either side of that point.
+
+For example, the input pair (0, 0)---which is at the bottom of the frame, midway from left to right---falls between the contours labeled "20" and "22." This means that the output corresponding to input (0, 0) is somewhere between 20 and 22. The point is much closer to the contour labeled "20", so it's reasonable to see the output value as 20.5. This is, of course, an approximation, but that's the nature of reading numbers off of graphs.
+
+Often, the specific numerical value at a point is not of primary interest. Instead, we may be interested in how steep the function is at a point, which is indicated by the spacing between contours. When contours are closely spaced, the hillside is steep. Where contours are far apart, the hillside is not steep, perhaps even flat.
+
+Another common task for interpreting contour plots is to locate the input pair that's at a local high point or low point: the top of a hill or the bottom of a hollow. Such points are called ***local argmax*** or ***local argmin*** respectively. The *output* of the function at a local argmax is called the ***local maximum***; similarly for a local argmin, where the output is called a ***local minimum***. (The word "argmax" is a contraction of "argument of the maximum." We will tend to use the word "input" instead of "argument", but it means exactly the same thing to say "the inputs to a function" as to says "the arguments of a function.")
+
+Still other common tasks for reading contour plots are to start at a given input pair and figure out 1) the direction to move which is most steeply uphill, or 2) the direction to move which will keep the function output the same.
+
+It can be helpful to look at a contour map and interpret the contours as representing geographical features: hills, valleys, crests, coves, hollows, and so on.
+
+Then, for (Fun-1c) translate between a contour plot and a graph of a function with one input. (We can think about this as a function of two inputs, where we hold one of the inputs constant, that is, always the same. )
+
+## Slice plots
+
+::: {.objectives data-latex=""}
+```{r echo=FALSE, results="asis"}
+state_objective("F-23", "Know what is meant by a slice of function of two variables.  Be able to determine if a function is increasing, decreasing, or constant when moving horizontally or vertically on the contour plot.")
+```
+:::
+
+As mentioned before, ***mathematical modeling*** is the process of constructing mathematical representations of situations or phenomena of interest. In CalcZ, we are primarily interested in using ***functions*** as such representations.
+
+Almost always, when mathematically modeling a real-world situation or phenomenon, we do not try to capture every nuance of every relationship that might exist in the real world. We leave some things out. Such simplifications make modeling problems tractable and encourage us to identify the most important features of the most important relationships.
+
+On the other hand, it's easy to go wrong and leave out something that's important. To mitigate this risk, many modeling projects involve a ***modeling cycle*** where we propose a candidate model, examine the consequence of that model to see if it corresponds well to the parts of reality that are important to us in our task, and modify the model as needed to produce a new and better candidate.
+
+In this spirit, it's useful always to assume that our models are leaving something out and that a more complete model involves a function with more inputs than the present candidate. The present candidate model should be considered as a ***slice*** of a more complete model. Our slice leaves out one or more of the variables in a more complete model.
+
+To illustrate this, suppose that we have a "more complete model" in the form of a function of two inputs, as shown in the contour plot below.
+
+```{r (Fig-1c.1), echo=FALSE}
+f2 <- rfun( ~ input_1 + input_2, seed=96)
+contour_plot(f2(input_1, input_2) ~ input_1 + input_2,
+                 domain(input_1=c(-5, 5), input_2 = c(0, 4)),
+             skip=0)
+```
+
+As you become practiced reading contour plots, you might prefer to read this one as a hilltop (shaded yellow) side-by-side with a hollow or bowl (shaded purple), with green, almost level flanks at the left and right edges of the frame.
+
+The most common forms of ***slice*** involve constructing a simpler function that has one input but not the other. For example, our simpler function might ignore input #2. There are different ways of collapsing the function of two inputs into a function of one input. An especially useful way in calculus is to take the two-input function and set one of the inputs to a ***constant value***.
+
+For instance, suppose we set input #2 to the constant value 1.5. This means that we can consider any value of input #1, but input #2 has been replaced by 1.5. In Figure Fig-1c.2, we've marked in red the points in the contour plot that give the output of the simplified function.
+
+```{r (Fig-1c.2), echo=FALSE, out.width="50%", fig.show="hold", warning=FALSE}
+f2 <- rfun( ~ input_1 + input_2, seed=96)
+contour_plot(f2(input_1, input_2) ~ input_1 + input_2,
+                 domain(input_1=c(-5, 5), input_2 = c(0, 4)),
+             skip=0) %>%
+  gf_hline(yintercept=1.5, color="red", size=2) %>%
+  gf_labs(title="Contour plot of function of two inputs")
+slice_plot(f2(input_1, input_2=1.5) ~ input_1, domain(input_1=c(-5, 5))) %>%
+  gf_labs(title="Graph of function output versus input #1")
+```
+
+Each point along the red line corresponds to a specific value of input #1. From the contours, we can read the output corresponding to each of those values of input #1. This relationship, output versus input #1 can be drawn as a mathematical graph (to the right of the contour plot). Study that graph until you can see how the rising and falling parts of the graph correspond to the contours being crossed by the red line.
+
+Slices can be taken in any direction or even along a curved path! The blue line below the slice constructed by letting input #2 vary and holding input #1 and the constant value 0.
+
+```{r (Fig-1c.3), echo=FALSE, out.width="50%", fig.show="hold", warning=FALSE}
+contour_plot(f2(input_1, input_2) ~ input_1 + input_2,
+                 domain(input_1=c(-5, 5), input_2 = c(0, 4)),
+             skip=0) %>%
+  gf_vline(xintercept=0, color="blue", size=2) %>%
+  gf_labs(title="Contour plot of function of two inputs")
+slice_plot(f2(input_1 = 0 , input_2) ~ input_2, domain(input_2=c(0, 5))) %>%
+  gf_labs(title="Graph of function output versus input 2")
+```
+
+## Creating graphics
+
+::: {.objectives}
+```{r echo=FALSE, results="markup"}
+state_objective("F-32-R", "Use the `slice_plot()`, `contour_plot()`, and `domain()` functions in R/`mosaic`.")
+```
+:::
+
+
+::: {.todo}
+NO CONTENT YET
+:::
+
+
+```{exercise}
+```
+`r knitr::knit_child(exercise_file("03", "drawing.Rmd"))`
+
+
+<!--chapter:end:Fun-graphics.Rmd-->
+
+```{r include=FALSE, cache=FALSE}
+library(mosaic)
+library(mosaicCalc)
+library(glue)
+library(math141Z) # REPLACE THIS WHEN PACKAGES ARE RE-ALIGNED
+library(here) # for file locations
+
+
+
+exercise_file <- function(day,  file_name, course="141Z") {
+    path=glue::glue("Exercises/DD-{course}-{day}/{file_name}")
+    here(path)
+}
+
+if (!exists("objective_list"))
+  objective_list <- list()
+
+add_objective <- function(ID, text) {
+  objective_list[[length(objective_list) + 1]] <<-
+                      list(ID = ID, text = text)
+}
+
+state_objective <- function(ID, text) {
+  add_objective(ID, text)
+  format_objective(list(ID=ID, text=text))
+}
+
+format_objective <- function(obj) {
+  knitr::asis_output(glue::glue("#. **[{obj$ID}]** *{obj$text}*\n\n"))
+}
+
+show_objectives <- function() {
+  Tmp <- lapply(objective_list, tibble::as_tibble) %>%
+    bind_rows()
+  readr::write_csv(Tmp, file="objective-list.csv")
+
+  lapply(objective_list, format_objective) %>%
+    unlist() %>%
+    paste(collapse="\n") %>%
+    knitr::asis_output()
+}
+
+# A blank image for spacing
+BlankImage <- gf_blank(hp ~ wt, data=mtcars) %>% gf_theme(theme_void())
+```
+# Parameters for functions {#params-intro}
+
+::: {.underconstruction}
+JUST NOTES JUST NOTES
+:::
+
+
+The basic modeling functions such as $e^{kx}$,  $\sin(\frac{2 \pi}{P} x)$, $\text{hump}(x, \text{center}, \text{spread})$, $\text{sigmoid}(x, \text{center}, \text{spread})$ did not come in to the world fully clothed with parameters. The clothes are needed to deal with a modeling necessity: inputs to functions used for modeling are quantities with dimension and units.
+
+Underneath the clothing of basic modeling function, you'll find what we will frivolously call the ***naked modeling functions***. These are without parameters: $e^x$, $\sin(x)$, $\text{hump}(x)$, $\text{sigmoid}(x)$. For each of these functions, $x$ must be a ***pure number***, that is, a quantity without physical dimensions.
+
+DEVELOP THIS: $e^x$ and $\sin(x)$, when used for modeling are composed with a proportionality function. $\text{hump}()$ and $\text{sigmoid}()$ are composed with a straight-line function.
+
+The proportionality and straight-line functions handle the conversion from dimensionful quantities with units into the pure numbers.
+
+HOW THE HUMP AND SIGMOID GOT THEIR PARAMETERS: WE'RE ABSTRACTING FROM A COMPLICATED FORMULA, so it's easier to call them out by name.
+:::
+
+
+
+<!--chapter:end:Fun-parameterization.Rmd-->
+
+```{r include=FALSE, cache=FALSE}
+library(mosaic)
+library(mosaicCalc)
+library(glue)
+library(math141Z) # REPLACE THIS WHEN PACKAGES ARE RE-ALIGNED
+library(here) # for file locations
+
+
+
+exercise_file <- function(day,  file_name, course="141Z") {
+    path=glue::glue("Exercises/DD-{course}-{day}/{file_name}")
+    here(path)
+}
+
+if (!exists("objective_list"))
+  objective_list <- list()
+
+add_objective <- function(ID, text) {
+  objective_list[[length(objective_list) + 1]] <<-
+                      list(ID = ID, text = text)
+}
+
+state_objective <- function(ID, text) {
+  add_objective(ID, text)
+  format_objective(list(ID=ID, text=text))
+}
+
+format_objective <- function(obj) {
+  knitr::asis_output(glue::glue("#. **[{obj$ID}]** *{obj$text}*\n\n"))
+}
+
+show_objectives <- function() {
+  Tmp <- lapply(objective_list, tibble::as_tibble) %>%
+    bind_rows()
+  readr::write_csv(Tmp, file="objective-list.csv")
+
+  lapply(objective_list, format_objective) %>%
+    unlist() %>%
+    paste(collapse="\n") %>%
+    knitr::asis_output()
+}
+
+# A blank image for spacing
+BlankImage <- gf_blank(hp ~ wt, data=mtcars) %>% gf_theme(theme_void())
+```
+# Calculus: Functions and change {#fun-slopes}
+
+For our purposes, the definition of calculus is
+
+> *The use of functions to model and explore continuous change*
+
+We've introduced in a preliminary way the words "function" and "continuous" as they relate to calculus. The agenda of this chapter is to give specific mathematical meanings to the words "model" and "change."
+
+## Naked modeling functions
+
+Here is a list of functions most of which you have probably seen many times in your mathematics studies.
+
+- $x$, $x^2$, $\sqrt{x}$, $1/\sqrt{x}$, and so on. 
+- $e^x$ as well as $2^x$ or $10^x$
+- $\sin(x)$ and $\cos(x)$
+- $\ln(x)$ as well as $\log_{10}(x)$ and $\log_2(x)$
+
+You will see these functions---or something very much like them---throughout this book. As such, it might be appropriate to call them "core" functions. But we will not. Instead, we refer to these as the ***naked modeling functions***.
+
+There's mathematics ... and then there's the real world. The term ***mathematical modeling*** is about constructing representations of situations or phenomena in the real world in terms of mathematical objects. The advantage of being able to construct models is that models are easy to study, explore, take apart, do experiments on, and deduce the implications of.
+
+We use computers to interact with the world, whether that be record-keeping, communications, media displays, and so on. The "things" that computers work with are always mathematical representations of the real world: models. Computers carry out operations on models. For instance, sound is a real-world phenomenon that resides somewhere between the vibrations of air and the psycho-acoustics of the brain. A simple computer representation of sound is constructed using mathematical stuff: a long series of numbers. Suppose we want to *slow down* sound (say, for someone learning a foreign language) or to speed it up (to get through a slow-paced video) or to translate it into text. The technologies for doing these things are almost always implemented by doing arithmetic or more complicated mathematical procedures on the mathematical stuff.
+
+A major theme of this course is how to make such mathematical representations of real-world phenomena and how to work with the representations to extract the results we want. In particular, we will focus on representations in the form of mathematical functions. (There are other mathematical representations, but functions have a special importance and are ubiquitous in scientific work and computing.) 
+
+As you'll see, when we need a new function for some purpose, we practically always build it out of existing functions. For instance, by dressing up the naked modeling functions of the previous chapter with parameters, we generate the "basic modeling functions" that enable us to interact with the world. 
+
+## Change and slope
+
+You have an solid, intuitive sense of what "change" means. In mathematics, and especially the mathematics of functions, change has a very simple meaning that you have already touched on in your previous math education.
+
+The word that encapsulates "change" in high-school math is ***slope***. For instance, you've undoubtedly had to calculate the slope of a straight line in a graph. You learned about "rise" and "run" and how to read them from a graph or from a formula. The slope is the ratio: rise over run. 
+
+Slope is a lovely ***metaphor*** for change, since everyone has a intuitive sense of the slope of a road or of a hillside. You learned to apply this intuition to reading graphs and the slope of a line. We'll exploit the intuitive ability to read a landscape in order to introduce abstract mathematical ideas in a down-to-earth setting. It's a very effective pedagogical strategy.
+
+But not everything that changes has a "slope." For instance, the population of a country can change, as can the number of new cases of an epidemic disease, the temperature of a cup of coffee, or the distance from Earth of a spacecraft. A major part of learning calculus is generalizing and abstracting the mathematical concept of which "slope" is an example and becoming proficient with mathematical procedures for working with change. 
+
+## Continuous change
+
+Most people are comfortable with the ideas of daily changes in temperature or monthly changes in credit-card debt or quarterly changes in the unemployment rate or annual changes in the height of a child. Such things are easy to record in, say, a spreadsheet. For example, as I write, the weather forecast for the next several days (in southeastern Colorado in mid-May) is
+
+Day | High | Low | Description
+----|------|-----|------------
+Thursday | 73 | 43 | sunny
+Friday   | 72 | 48 | windy
+Saturday | 66 | 48 | thunderstorms
+Sunday   | 68 | 43 | windy
+Monday   | 70 | 39 | sunny
+Tuesday  | 70 | 43 | sunny
+Wednesday| 66 | 45 | partly cloudy
+
+Such data is said to be ***discrete***. The day is listed, but not the time of day. The high temperature is forecast, but not the time of that high. The "description" is also discrete, one of the several words that are used to summarize the quality of the weather, as opposed to the quantity of rain. 
+
+Calculus is about ***continuous change***. For instance, if the weather bureau provide a web interface that let me enter the date and time to the nearest fraction of a second, they would be giving a way to track the change ***continuously***. Many physical processes are intrinsically continuous, for instance the motion (change in position) of a spacecraft or the height of the tide or the stress on a tree as a function of wind velocity.
+
+Finding a language to describe continuous change---famously, the position of the moon or planets in their orbit, or the speed of a ball rolling down a ramp---was central to the emergence of what historians call the "Age of Enlightenment" or "modern scientific method." The first complete presentation of that language was published by Isaac Newton based on his work in the 1660s. As you might guess, the name of the language is "calculus."
+
+## Slopes and curves
+
+::: {.todo}
+Review how to compute the slope of a line.
+
+Point out that only the straight-line function has a slope that is the same everywhere. The other naked modeling functions don't have *a slope*, they have a local property that is a function of $x$.
+:::
+
+
+
+So much of what we will do in calculus depends on being able to construct and manipulate functions. Doing this successfully requires a more careful consideration of how we know when something is a function and the anatomy of functions generally. The major way this is accomplished both in mathematical notation and computer languages is via ***notation***, the subject of the next chapter.
+
+
+<!--chapter:end:Fun-slopes.Rmd-->
+
+```{r include=FALSE, cache=FALSE}
+library(mosaic)
+library(mosaicCalc)
+library(glue)
+library(math141Z) # REPLACE THIS WHEN PACKAGES ARE RE-ALIGNED
+library(here) # for file locations
+
+
+
+exercise_file <- function(day,  file_name, course="141Z") {
+    path=glue::glue("Exercises/DD-{course}-{day}/{file_name}")
+    here(path)
+}
+
+if (!exists("objective_list"))
+  objective_list <- list()
+
+add_objective <- function(ID, text) {
+  objective_list[[length(objective_list) + 1]] <<-
+                      list(ID = ID, text = text)
+}
+
+state_objective <- function(ID, text) {
+  add_objective(ID, text)
+  format_objective(list(ID=ID, text=text))
+}
+
+format_objective <- function(obj) {
+  knitr::asis_output(glue::glue("#. **[{obj$ID}]** *{obj$text}*\n\n"))
+}
+
+show_objectives <- function() {
+  Tmp <- lapply(objective_list, tibble::as_tibble) %>%
+    bind_rows()
+  readr::write_csv(Tmp, file="objective-list.csv")
+
+  lapply(objective_list, format_objective) %>%
+    unlist() %>%
+    paste(collapse="\n") %>%
+    knitr::asis_output()
+}
+
+# A blank image for spacing
+BlankImage <- gf_blank(hp ~ wt, data=mtcars) %>% gf_theme(theme_void())
+```
+# Assembling functions {#fun-assembling}
+
+composition, linear combination, multiplication
+
+<!--chapter:end:Fun-assembling.Rmd-->
+
+```{r include=FALSE, cache=FALSE}
+library(mosaic)
+library(mosaicCalc)
+library(glue)
+library(math141Z) # REPLACE THIS WHEN PACKAGES ARE RE-ALIGNED
+library(here) # for file locations
+
+
+
+exercise_file <- function(day,  file_name, course="141Z") {
+    path=glue::glue("Exercises/DD-{course}-{day}/{file_name}")
+    here(path)
+}
+
+if (!exists("objective_list"))
+  objective_list <- list()
+
+add_objective <- function(ID, text) {
+  objective_list[[length(objective_list) + 1]] <<-
+                      list(ID = ID, text = text)
+}
+
+state_objective <- function(ID, text) {
+  add_objective(ID, text)
+  format_objective(list(ID=ID, text=text))
+}
+
+format_objective <- function(obj) {
+  knitr::asis_output(glue::glue("#. **[{obj$ID}]** *{obj$text}*\n\n"))
+}
+
+show_objectives <- function() {
+  Tmp <- lapply(objective_list, tibble::as_tibble) %>%
+    bind_rows()
+  readr::write_csv(Tmp, file="objective-list.csv")
+
+  lapply(objective_list, format_objective) %>%
+    unlist() %>%
+    paste(collapse="\n") %>%
+    knitr::asis_output()
+}
+
+# A blank image for spacing
+BlankImage <- gf_blank(hp ~ wt, data=mtcars) %>% gf_theme(theme_void())
+```
+# Functions with multiple inputs {#fun-multiple-inputs}
+
+
+```{exercise, NOAA, name="Tables are functions"}
+```
+`r knitr::knit_child(exercise_file("01", "NOAA.Rmd"))`
+
+<!--chapter:end:Fun-multiple-inputs.Rmd-->
+
+```{r include=FALSE, cache=FALSE}
+library(mosaic)
+library(mosaicCalc)
+library(glue)
+library(math141Z) # REPLACE THIS WHEN PACKAGES ARE RE-ALIGNED
+library(here) # for file locations
+
+
+
+exercise_file <- function(day,  file_name, course="141Z") {
+    path=glue::glue("Exercises/DD-{course}-{day}/{file_name}")
+    here(path)
+}
+
+if (!exists("objective_list"))
+  objective_list <- list()
+
+add_objective <- function(ID, text) {
+  objective_list[[length(objective_list) + 1]] <<-
+                      list(ID = ID, text = text)
+}
+
+state_objective <- function(ID, text) {
+  add_objective(ID, text)
+  format_objective(list(ID=ID, text=text))
+}
+
+format_objective <- function(obj) {
+  knitr::asis_output(glue::glue("#. **[{obj$ID}]** *{obj$text}*\n\n"))
+}
+
+show_objectives <- function() {
+  Tmp <- lapply(objective_list, tibble::as_tibble) %>%
+    bind_rows()
+  readr::write_csv(Tmp, file="objective-list.csv")
+
+  lapply(objective_list, format_objective) %>%
+    unlist() %>%
+    paste(collapse="\n") %>%
+    knitr::asis_output()
+}
+
+# A blank image for spacing
+BlankImage <- gf_blank(hp ~ wt, data=mtcars) %>% gf_theme(theme_void())
+```
+# Piecewise functions {#fun-piecewise}
+
+
+<!--chapter:end:Fun-piecewise.Rmd-->
+
+```{r include=FALSE, cache=FALSE}
+library(mosaic)
+library(mosaicCalc)
+library(glue)
+library(math141Z) # REPLACE THIS WHEN PACKAGES ARE RE-ALIGNED
+library(here) # for file locations
+
+
+
+exercise_file <- function(day,  file_name, course="141Z") {
+    path=glue::glue("Exercises/DD-{course}-{day}/{file_name}")
+    here(path)
+}
+
+if (!exists("objective_list"))
+  objective_list <- list()
+
+add_objective <- function(ID, text) {
+  objective_list[[length(objective_list) + 1]] <<-
+                      list(ID = ID, text = text)
+}
+
+state_objective <- function(ID, text) {
+  add_objective(ID, text)
+  format_objective(list(ID=ID, text=text))
+}
+
+format_objective <- function(obj) {
+  knitr::asis_output(glue::glue("#. **[{obj$ID}]** *{obj$text}*\n\n"))
+}
+
+show_objectives <- function() {
+  Tmp <- lapply(objective_list, tibble::as_tibble) %>%
+    bind_rows()
+  readr::write_csv(Tmp, file="objective-list.csv")
+
+  lapply(objective_list, format_objective) %>%
+    unlist() %>%
+    paste(collapse="\n") %>%
+    knitr::asis_output()
+}
+
+# A blank image for spacing
+BlankImage <- gf_blank(hp ~ wt, data=mtcars) %>% gf_theme(theme_void())
+```
+# (PART) Interlude {.unnumbered}
+
+
+<!--chapter:end:Interlude.Rmd-->
+
+```{r include=FALSE, cache=FALSE}
+library(mosaic)
+library(mosaicCalc)
+library(glue)
+library(math141Z) # REPLACE THIS WHEN PACKAGES ARE RE-ALIGNED
+library(here) # for file locations
+
+
+
+exercise_file <- function(day,  file_name, course="141Z") {
+    path=glue::glue("Exercises/DD-{course}-{day}/{file_name}")
+    here(path)
+}
+
+if (!exists("objective_list"))
+  objective_list <- list()
+
+add_objective <- function(ID, text) {
+  objective_list[[length(objective_list) + 1]] <<-
+                      list(ID = ID, text = text)
+}
+
+state_objective <- function(ID, text) {
+  add_objective(ID, text)
+  format_objective(list(ID=ID, text=text))
+}
+
+format_objective <- function(obj) {
+  knitr::asis_output(glue::glue("#. **[{obj$ID}]** *{obj$text}*\n\n"))
+}
+
+show_objectives <- function() {
+  Tmp <- lapply(objective_list, tibble::as_tibble) %>%
+    bind_rows()
+  readr::write_csv(Tmp, file="objective-list.csv")
+
+  lapply(objective_list, format_objective) %>%
+    unlist() %>%
+    paste(collapse="\n") %>%
+    knitr::asis_output()
+}
+
+# A blank image for spacing
+BlankImage <- gf_blank(hp ~ wt, data=mtcars) %>% gf_theme(theme_void())
+```
+# Magnitudes {#magnitudes}
+
+Undoubtedly you are comfortable with the standard way of writing numbers, for instance 33 or 512 or 1051. Elementary school students master the comparison of such numbers to one another. Which is greater: 512 or 33? Which is less, 1051 or 512? You can answer such questions at a glance because the comparison here can be accomplished simply by counting the number of digits. 1051 has four digits, so it is larger than the three-digit number 512. There are two digits in 33, so it smaller than 512. When two numerals have the same number of digits---say, 337 and 512---you can't answer the "greater than" question by simple counting. Instead, you proceed from left to write and compare the number in each place. So, for 512 and 337, you compare 5 to 3 and ... since 5 is greater than 3, 512 is greater than 337. If the two leading digits are the same, go on to the next digit and so on for all the digits in turn. 
+
+Things were not always this simple. Our number system that uses *place* and *Arabic* numerals is a human invention. An example of an earlier number system is Roman numerals. Here, comparison is hard. For instance, which of these three numbers is bigger?
+
+$$\mbox{MLI or CXII or XXXIII}$$
+The typographically shorter number is the largest, and vice versa. Even when two Roman numerals have the same length, it's not trivial to compare them on a place-by-place basis. For instance, IC is about fifteen times bigger than VI, even though I is much smaller than V.
+
+## Counting digits
+
+Digit counting provides an easy, fast way to perform many calculations, at least approximately. What is $\sqrt{10000}$? There are five digits, and the square root of a number will have "half the number of digits." So, $\sqrt{10000} = 100$. What is $10 \times 34$? Easy: 340. Just append the one zero from 10 to the end of 34. What is $1000 \times 13$? Just as easy: 13,000. We even punctuate written numbers with commas and a period in order to facilitate counting digits. 
+
+Imagine having a digit counting function called digit(). It takes a number as input and produces a number as output. We don't have a ***formula*** for digit(), but for some inputs the output can be calculated just be counting. For example:
+
+- digit(10) $\equiv$ 1
+- digit(100) $\equiv$ 2
+- digit(1000) $\equiv$ 3
+- ... and so on ...
+- digit(1,000,000) $\equiv$ 6
+- ... and on.
+
+The digit() function easily can be applied to the product of two numbers. For instance:
+
+- digit(1000 $\times$ 100) = digit(1000) + digit(100) = 3 + 2 = 5.
+
+Similarly, applying digit() to a ratio gives the difference of the digits of the numerator and denominator, like this:
+
+- digit(1,000,000 $\div$ 100) = digit(1,000,000) - digit(100) = 6 - 2 = 4
+
+## Using digit() to understand magnitude
+
+We haven't shown you the digit() function for anything but the handful of discrete inputs listed above. It was a heroic task to produce the continuous version of digit(). The method is sketched out in \@ref(fractional-digits). 
+
+In practice, digit() is so useful that it's one of our basic modeling functions, 
+$$\text{digit(x)} = 2.302585 ln(x)$$ or, in R, `log10()`.
+
+::: {.todo}
+Human eye and ear
+:::
+
+## Composing $\ln()$ with exponential and power-law functions
+
+## Fractional digits (optional) {#fractional-digits}
+
+So far, we have the digit() function in a tabular form:
+
+input | output
+----|-----------
+$\vdots$ | $\vdots$
+0.01 | -2
+0.1 | -1
+1   | 0
+10   | 1
+100 | 2
+1000 | 3
+10,000 | 4
+100,000 | 5
+1,000,000 | 6
+$\vdots$ | $\vdots$
+
+Here's the point-plot presentation of the table:
+
+```{r log-1st-try, echo=FALSE, fig.cap = "Connecting the data points for the digit function to make a continuous function."}
+L10 <- tibble::tribble(
+  ~ input, ~ output,
+  0.01, -2,
+  0.1, -1,
+  1, 0,
+  10, 1,
+  100, 2,
+  1000, 3,
+  10000, 4,
+  100000, 5,
+  1000000, 6
+) 
+ticks <- c(1,10,100,10000,50000,
+           100000,200000,500000,750000, 1000000)
+gf_point(output ~ input, data = L10) %>%
+  gf_labs(title = "The digit function") %>%
+  gf_refine(scale_x_sqrt(breaks=ticks, 
+                         labels=format(ticks, scientific=FALSE, big.mark=","))) %>%
+  gf_line()
+```
+We've imagined digits() to be a continuous function so we've connected the gaps with a straight line. Now we have a function that has an output for any input between 0.01 and 1,000,000, for instance, 500,000.
+
+The angles between consecutive line segments give the function plotted in Figure \@ref(fig:log-1st-try) an unnatural look. Still, it is a continuous function with an output for any input even if that input is not listed in the table.
+
+Starting around 1600, two (now famous) mathematicians, [John Napier](https://en.wikipedia.org/wiki/Henry_Briggs_(mathematician)) (1550-1617) and [Henry Briggs](https://en.wikipedia.org/wiki/Henry_Briggs_(mathematician)) (1561-1630) had an idea for filling in gaps in the table. They saw the pattern that for any of the numbers $a$ and $b$ in the input column of the table
+$$ \text{digit}(a \times b) = \text{digit}(a) + \text{digit}(b)$$
+This is true even when $a=b$. For instance, digit(10)=1 and digit(10$\times$ 10) = 2.
+
+Consider the question what is digit(316.2278)? That seems a odd question unless you realize that $316.2278 \times 316.2278 = 100,000$. Since digit(100000) = 5, it must be that digit(316.2278) = 5/2.
+
+Another question: what is digit(17.7828)? This seems crazy, until you notice that $17.7828^2 = 316.2278$. So digit(17.78279) = 5/4.
+
+It happens that for a couple of thousand years mathematicians have known how to compute the square root of any number to a high precision. By taking square roots and dividing by two, it's easy to fill in more rows in the digit()-function table. You get even more rows by noticing other simple patterns like $$\text{digit}(a/10) = \text{digit}(a) -1  \ \ \and \ \ \ \text{digit}(10 a) = \text{digit}(a) + 1$$
+
+Here are some additional rows in the table
+
+input | output | Why?
+------|--------|------
+316.2278 | 2.5 | From $\sqrt{\strut100,000}$
+17.17828 | 1.25 | From $\sqrt{\strut 316.2278}$
+4.21696 | 0.625 | From $\sqrt{\strut 17.17828}$
+31.62278 | 1.5  | From 316.2278/10
+3.162279 | 0.5 | From 31.62278/10
+
+```{r echo=FALSE}
+# devtools::install_github("collectivemedia/tictoc")
+library(tictoc)
+tic()
+start <- tibble::tibble(input = 10^{-5:6}, output = -5:6)
+for (k in 1:6) {
+  root <- start %>% 
+    mutate(input = sqrt(input), output = output/2)
+  root2 <- start %>%
+    mutate(input = sqrt(sqrt(input)), output = output/4)
+  root3 <- start %>%
+    mutate(input = sqrt(sqrt(sqrt(input))), output = output/8)
+  square <- start %>%
+    mutate(input = input^2, output = 2*output)
+  cube <- start %>%
+    mutate(input = input^3, output = 3*output)
+  tenths <- start %>%
+    mutate(input = input/10, output = output - 1)
+  tens <- start %>%
+    mutate(input = input*10, output = output + 1)
+  start <- rbind(start, root, root2, root3, square, cube, tenths, tens) %>% unique() %>% 
+    arrange(input)
+}
+toc()
+```
+
+You can play this game for weeks. We asked the computer to play the game for about half a second and expanded the original digit() table to `r nrow(start %>% filter(output >= -2, output <= 6))` rows.
+
+Figure \@ref(fig:expanded-log) plots the expanded digits() function table.
+
+```{r expanded-log, echo=FALSE}
+ticks <- 1:10
+
+gf_point(output ~ input, 
+         data = start %>% filter(output <= 1, output >= 0)) %>%
+  gf_labs(title = "The digit function with more entries") %>%
+  gf_refine(scale_x_continuous(breaks=ticks)) %>%
+  gf_line()
+```
+Now we have a smooth function that plays by the digit rules of multiplication.
+
+Henry Briggs and his assistants did a similar calculation by hand. Their work was published in 1617 as a table. 
+
+```{r briggs-first-page, echo=FALSE, out.width="100%", fig.cap="Part of the first page of Henry Briggs table of logarithms", fig.align="center"}
+knitr::include_graphics(normalizePath("www/Briggs-starttable.png"))
+```
+
+The table was called the *Chilias prima*, Latin for "First group of one thousand." True to its name, the table gives the output of digits() for the inputs 1, 2, 3, ..., 998, 999, 1000. For instance, as you can see from the top row of the right-most column, digits(67) = 1.82607480270082. 
+
+In everyday speech, 67 has two digits. The authors of *Chilias prima* sensibly didn't use the name "digit()" for the function. They chose something more abstract: "logarithm()". Nowadays, this function is named $\log_{10}()$. In R, the function is called `log10()`.
+
+```{r}
+log10(67)
+```
+
+Our main use for $\log_{10}()$/`log10()` will be to count digits in order to quickly compare the magnitude of numbers. The difference digits($x$) - digits($y$) tells how many factors of 10 separate the magnitude of the $x$ and $y$.
+
+Another important logarithmic/digit-counting function is $\log_2()$, written `log2()` in R. This counts how many ***binary digits** are in a number. For us, $\log_2(x)$ tells how many times we need to double, starting at 1, in order to reach $x$. For instance, $\log_2(67) = 6.06609$, which indicates that $67 = 2\times 2 \times 2 \times 2 \times 2 \times 2 \times 2^{0.06609}$
+
+$\log_2(x)$ and $\log_{10}(x)$ are proportional to one another. One way to think of this is that they both count "digits" but report the results in different units, much as you might report a temperature in either Celsius or Fahrenheit. For $\log_2(x)$ the units of output are in ***bits***. For $\log_{10}(x)$ the output is in ***decades***.
+
+A third version of the logarithm function is called the ***natural logarithm*** and is denoted $\ln()$ in math notation and simply `log()` in R. We'll need additional calculus concepts before we can understand what justifies calling $\ln()$ "natural."
+
+EXERCISE: Compute $10^y$ to convert a "number of digits" into the number whose digits are being counted. For instance, $10^2.5$ is 316.228. 
+
+EXERCISE: How many binary digits in 64? in 127? 
+
+EXERCISE: $\log_{10}(x)$ and $\log_2(x)$ are proportional to one another. What's the constant of proportionality? 
+
+
+
+<!--chapter:end:Magnitudes.Rmd-->
+
+```{r include=FALSE, cache=FALSE}
+library(mosaic)
+library(mosaicCalc)
+library(glue)
+library(math141Z) # REPLACE THIS WHEN PACKAGES ARE RE-ALIGNED
+library(here) # for file locations
+
+
+
+exercise_file <- function(day,  file_name, course="141Z") {
+    path=glue::glue("Exercises/DD-{course}-{day}/{file_name}")
+    here(path)
+}
+
+if (!exists("objective_list"))
+  objective_list <- list()
+
+add_objective <- function(ID, text) {
+  objective_list[[length(objective_list) + 1]] <<-
+                      list(ID = ID, text = text)
+}
+
+state_objective <- function(ID, text) {
+  add_objective(ID, text)
+  format_objective(list(ID=ID, text=text))
+}
+
+format_objective <- function(obj) {
+  knitr::asis_output(glue::glue("#. **[{obj$ID}]** *{obj$text}*\n\n"))
+}
+
+show_objectives <- function() {
+  Tmp <- lapply(objective_list, tibble::as_tibble) %>%
+    bind_rows()
+  readr::write_csv(Tmp, file="objective-list.csv")
+
+  lapply(objective_list, format_objective) %>%
+    unlist() %>%
+    paste(collapse="\n") %>%
+    knitr::asis_output()
+}
+
+# A blank image for spacing
+BlankImage <- gf_blank(hp ~ wt, data=mtcars) %>% gf_theme(theme_void())
+```
+# Dimensions {#dimensions}
+
+
+<!--chapter:end:Dimensions.Rmd-->
+

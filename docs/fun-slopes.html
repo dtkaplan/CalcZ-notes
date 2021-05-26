@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>Chapter 7 Calculus: Functions and change | CalcZ Student Notes</title>
+<meta name="author" content="Daniel Kaplan">
+<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.2"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="libs/bootstrap-4.5.3/bootstrap.min.css" rel="stylesheet">
+<script src="libs/bootstrap-4.5.3/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.2.4/tabs.js"></script><script src="libs/bs3compat-0.2.4/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script><script src="libs/htmlwidgets-1.5.3/htmlwidgets.js"></script><link href="libs/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet">
+<script src="libs/datatables-binding-0.12/datatables.js"></script><link href="libs/dt-core-1.10.20/css/jquery.dataTables.min.css" rel="stylesheet">
+<link href="libs/dt-core-1.10.20/css/jquery.dataTables.extra.css" rel="stylesheet">
+<script src="libs/dt-core-1.10.20/js/jquery.dataTables.min.js"></script><link href="libs/crosstalk-1.1.1/css/crosstalk.css" rel="stylesheet">
+<script src="libs/crosstalk-1.1.1/js/crosstalk.min.js"></script><script src="libs/kePrint-0.0.1/kePrint.js"></script><link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet">
+<script src="libs/plotly-binding-4.9.3/plotly.js"></script><script src="libs/typedarray-0.1/typedarray.min.js"></script><link href="libs/plotly-htmlwidgets-css-1.57.1/plotly-htmlwidgets.css" rel="stylesheet">
+<script src="libs/plotly-main-1.57.1/plotly-latest.min.js"></script><script type="text/x-mathjax-config">
+  const popovers = document.querySelectorAll('a.footnote-ref[data-toggle="popover"]');
+  for (let popover of popovers){
+    const div = document.createElement('div');
+    div.setAttribute('style', 'position: absolute; top: 0, left:0; width:0, height:0, overflow: hidden; visibility: hidden;');
+    div.innerHTML = popover.getAttribute('data-content');
+    
+    // Will this work with TeX on its own line?
+    var has_math = div.querySelector("span.math");
+    if (has_math) {
+      document.body.appendChild(div);
+    	MathJax.Hub.Queue(["Typeset", MathJax.Hub, div]);
+    	MathJax.Hub.Queue(function(){
+        popover.setAttribute('data-content', div.innerHTML);
+    	})
+    }
+  }
+  </script><script src="https://cdn.jsdelivr.net/autocomplete.js/0/autocomplete.jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/mark.js@8.11.1/dist/mark.min.js"></script><!-- CSS --><link rel="stylesheet" href="css/CalcZ-style.css">
+</head>
+<body data-spy="scroll" data-target="#toc">
+
+<div class="container-fluid">
+<div class="row">
+  <header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
+
+    <div class="d-flex align-items-start justify-content-between">
+      <h1>
+        <a href="index.html" title="">CalcZ Student Notes</a>
+      </h1>
+      <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
+    </div>
+
+    <div id="main-nav" class="collapse-lg">
+      <form role="search">
+        <input id="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
+</form>
+
+      <nav aria-label="Table of contents"><h2>Table of contents</h2>
+        <ul class="book-toc list-unstyled">
+<li><a class="" href="index.html">Welcome to calculus</a></li>
+<li><a class="" href="calcz-project-development-plan.html">CalcZ Project Development Plan</a></li>
+<li class="book-part">Block 1: Functions and quantity</li>
+<li><a class="" href="outline-of-block-1.html">Outline of Block 1</a></li>
+<li><a class="" href="change.html"><span class="header-section-number">1</span> Change</a></li>
+<li><a class="" href="what-is-a-function.html"><span class="header-section-number">2</span> What is a function?</a></li>
+<li><a class="" href="fun-describing.html"><span class="header-section-number">3</span> Describing functions</a></li>
+<li><a class="" href="fun-notation.html"><span class="header-section-number">4</span> Notation for functions</a></li>
+<li><a class="" href="graphs-and-graphics.html"><span class="header-section-number">5</span> Graphics &amp; function graphs</a></li>
+<li><a class="" href="params-intro.html"><span class="header-section-number">6</span> Parameters for functions</a></li>
+<li><a class="active" href="fun-slopes.html"><span class="header-section-number">7</span> Calculus: Functions and change</a></li>
+<li><a class="" href="fun-assembling.html"><span class="header-section-number">8</span> Assembling functions</a></li>
+<li><a class="" href="fun-multiple-inputs.html"><span class="header-section-number">9</span> Functions with multiple inputs</a></li>
+<li><a class="" href="fun-piecewise.html"><span class="header-section-number">10</span> Piecewise functions</a></li>
+<li class="book-part">Interlude</li>
+<li><a class="" href="magnitudes.html"><span class="header-section-number">11</span> Magnitudes</a></li>
+<li><a class="" href="dimensions.html"><span class="header-section-number">12</span> Dimensions</a></li>
+</ul>
+
+        <div class="book-extra">
+          <p><a id="book-repo" href="https://github.com/dtkaplan/CalcZ-notes">View book source <i class="fab fa-github"></i></a></p>
+        </div>
+      </nav>
+</div>
+  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="fun-slopes" class="section level1">
+<h1>
+<span class="header-section-number">7</span> Calculus: Functions and change<a class="anchor" aria-label="anchor" href="#fun-slopes"><i class="fas fa-link"></i></a>
+</h1>
+<p>For our purposes, the definition of calculus is</p>
+<blockquote>
+<p><em>The use of functions to model and explore continuous change</em></p>
+</blockquote>
+<p>We’ve introduced in a preliminary way the words “function” and “continuous” as they relate to calculus. The agenda of this chapter is to give specific mathematical meanings to the words “model” and “change.”</p>
+<div id="naked-modeling-functions" class="section level2">
+<h2>
+<span class="header-section-number">7.1</span> Naked modeling functions<a class="anchor" aria-label="anchor" href="#naked-modeling-functions"><i class="fas fa-link"></i></a>
+</h2>
+<p>Here is a list of functions most of which you have probably seen many times in your mathematics studies.</p>
+<ul>
+<li>
+<span class="math inline">\(x\)</span>, <span class="math inline">\(x^2\)</span>, <span class="math inline">\(\sqrt{x}\)</span>, <span class="math inline">\(1/\sqrt{x}\)</span>, and so on.</li>
+<li>
+<span class="math inline">\(e^x\)</span> as well as <span class="math inline">\(2^x\)</span> or <span class="math inline">\(10^x\)</span>
+</li>
+<li>
+<span class="math inline">\(\sin(x)\)</span> and <span class="math inline">\(\cos(x)\)</span>
+</li>
+<li>
+<span class="math inline">\(\ln(x)\)</span> as well as <span class="math inline">\(\log_{10}(x)\)</span> and <span class="math inline">\(\log_2(x)\)</span>
+</li>
+</ul>
+<p>You will see these functions—or something very much like them—throughout this book. As such, it might be appropriate to call them “core” functions. But we will not. Instead, we refer to these as the <strong><em>naked modeling functions</em></strong>.</p>
+<p>There’s mathematics … and then there’s the real world. The term <strong><em>mathematical modeling</em></strong> is about constructing representations of situations or phenomena in the real world in terms of mathematical objects. The advantage of being able to construct models is that models are easy to study, explore, take apart, do experiments on, and deduce the implications of.</p>
+<p>We use computers to interact with the world, whether that be record-keeping, communications, media displays, and so on. The “things” that computers work with are always mathematical representations of the real world: models. Computers carry out operations on models. For instance, sound is a real-world phenomenon that resides somewhere between the vibrations of air and the psycho-acoustics of the brain. A simple computer representation of sound is constructed using mathematical stuff: a long series of numbers. Suppose we want to <em>slow down</em> sound (say, for someone learning a foreign language) or to speed it up (to get through a slow-paced video) or to translate it into text. The technologies for doing these things are almost always implemented by doing arithmetic or more complicated mathematical procedures on the mathematical stuff.</p>
+<p>A major theme of this course is how to make such mathematical representations of real-world phenomena and how to work with the representations to extract the results we want. In particular, we will focus on representations in the form of mathematical functions. (There are other mathematical representations, but functions have a special importance and are ubiquitous in scientific work and computing.)</p>
+<p>As you’ll see, when we need a new function for some purpose, we practically always build it out of existing functions. For instance, by dressing up the naked modeling functions of the previous chapter with parameters, we generate the “basic modeling functions” that enable us to interact with the world.</p>
+</div>
+<div id="change-and-slope" class="section level2">
+<h2>
+<span class="header-section-number">7.2</span> Change and slope<a class="anchor" aria-label="anchor" href="#change-and-slope"><i class="fas fa-link"></i></a>
+</h2>
+<p>You have an solid, intuitive sense of what “change” means. In mathematics, and especially the mathematics of functions, change has a very simple meaning that you have already touched on in your previous math education.</p>
+<p>The word that encapsulates “change” in high-school math is <strong><em>slope</em></strong>. For instance, you’ve undoubtedly had to calculate the slope of a straight line in a graph. You learned about “rise” and “run” and how to read them from a graph or from a formula. The slope is the ratio: rise over run.</p>
+<p>Slope is a lovely <strong><em>metaphor</em></strong> for change, since everyone has a intuitive sense of the slope of a road or of a hillside. You learned to apply this intuition to reading graphs and the slope of a line. We’ll exploit the intuitive ability to read a landscape in order to introduce abstract mathematical ideas in a down-to-earth setting. It’s a very effective pedagogical strategy.</p>
+<p>But not everything that changes has a “slope.” For instance, the population of a country can change, as can the number of new cases of an epidemic disease, the temperature of a cup of coffee, or the distance from Earth of a spacecraft. A major part of learning calculus is generalizing and abstracting the mathematical concept of which “slope” is an example and becoming proficient with mathematical procedures for working with change.</p>
+</div>
+<div id="continuous-change" class="section level2">
+<h2>
+<span class="header-section-number">7.3</span> Continuous change<a class="anchor" aria-label="anchor" href="#continuous-change"><i class="fas fa-link"></i></a>
+</h2>
+<p>Most people are comfortable with the ideas of daily changes in temperature or monthly changes in credit-card debt or quarterly changes in the unemployment rate or annual changes in the height of a child. Such things are easy to record in, say, a spreadsheet. For example, as I write, the weather forecast for the next several days (in southeastern Colorado in mid-May) is</p>
+<div class="inline-table"><table class="table table-sm">
+<thead><tr class="header">
+<th>Day</th>
+<th>High</th>
+<th>Low</th>
+<th>Description</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td>Thursday</td>
+<td>73</td>
+<td>43</td>
+<td>sunny</td>
+</tr>
+<tr class="even">
+<td>Friday</td>
+<td>72</td>
+<td>48</td>
+<td>windy</td>
+</tr>
+<tr class="odd">
+<td>Saturday</td>
+<td>66</td>
+<td>48</td>
+<td>thunderstorms</td>
+</tr>
+<tr class="even">
+<td>Sunday</td>
+<td>68</td>
+<td>43</td>
+<td>windy</td>
+</tr>
+<tr class="odd">
+<td>Monday</td>
+<td>70</td>
+<td>39</td>
+<td>sunny</td>
+</tr>
+<tr class="even">
+<td>Tuesday</td>
+<td>70</td>
+<td>43</td>
+<td>sunny</td>
+</tr>
+<tr class="odd">
+<td>Wednesday</td>
+<td>66</td>
+<td>45</td>
+<td>partly cloudy</td>
+</tr>
+</tbody>
+</table></div>
+<p>Such data is said to be <strong><em>discrete</em></strong>. The day is listed, but not the time of day. The high temperature is forecast, but not the time of that high. The “description” is also discrete, one of the several words that are used to summarize the quality of the weather, as opposed to the quantity of rain.</p>
+<p>Calculus is about <strong><em>continuous change</em></strong>. For instance, if the weather bureau provide a web interface that let me enter the date and time to the nearest fraction of a second, they would be giving a way to track the change <strong><em>continuously</em></strong>. Many physical processes are intrinsically continuous, for instance the motion (change in position) of a spacecraft or the height of the tide or the stress on a tree as a function of wind velocity.</p>
+<p>Finding a language to describe continuous change—famously, the position of the moon or planets in their orbit, or the speed of a ball rolling down a ramp—was central to the emergence of what historians call the “Age of Enlightenment” or “modern scientific method.” The first complete presentation of that language was published by Isaac Newton based on his work in the 1660s. As you might guess, the name of the language is “calculus.”</p>
+</div>
+<div id="slopes-and-curves" class="section level2">
+<h2>
+<span class="header-section-number">7.4</span> Slopes and curves<a class="anchor" aria-label="anchor" href="#slopes-and-curves"><i class="fas fa-link"></i></a>
+</h2>
+<div class="todo">
+<p>Review how to compute the slope of a line.</p>
+<p>Point out that only the straight-line function has a slope that is the same everywhere. The other naked modeling functions don’t have <em>a slope</em>, they have a local property that is a function of <span class="math inline">\(x\)</span>.</p>
+</div>
+<p>So much of what we will do in calculus depends on being able to construct and manipulate functions. Doing this successfully requires a more careful consideration of how we know when something is a function and the anatomy of functions generally. The major way this is accomplished both in mathematical notation and computer languages is via <strong><em>notation</em></strong>, the subject of the next chapter.</p>
+
+</div>
+</div>
+  <div class="chapter-nav">
+<div class="prev"><a href="params-intro.html"><span class="header-section-number">6</span> Parameters for functions</a></div>
+<div class="next"><a href="fun-assembling.html"><span class="header-section-number">8</span> Assembling functions</a></div>
+</div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
+    <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
+      <ul class="nav navbar-nav">
+<li><a class="nav-link" href="#fun-slopes"><span class="header-section-number">7</span> Calculus: Functions and change</a></li>
+<li><a class="nav-link" href="#naked-modeling-functions"><span class="header-section-number">7.1</span> Naked modeling functions</a></li>
+<li><a class="nav-link" href="#change-and-slope"><span class="header-section-number">7.2</span> Change and slope</a></li>
+<li><a class="nav-link" href="#continuous-change"><span class="header-section-number">7.3</span> Continuous change</a></li>
+<li><a class="nav-link" href="#slopes-and-curves"><span class="header-section-number">7.4</span> Slopes and curves</a></li>
+</ul>
+
+      <div class="book-extra">
+        <ul class="list-unstyled">
+<li><a id="book-source" href="https://github.com/dtkaplan/CalcZ-notes/blob/master/Fun-slopes.Rmd">View source <i class="fab fa-github"></i></a></li>
+          <li><a id="book-edit" href="https://github.com/dtkaplan/CalcZ-notes/edit/master/Fun-slopes.Rmd">Edit this page <i class="fab fa-github"></i></a></li>
+        </ul>
+</div>
+    </nav>
+</div>
+
+</div>
+</div> <!-- .container -->
+
+<footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>"<strong>CalcZ Student Notes</strong>" was written by Daniel Kaplan. It was last built on 2021-05-25.</p>
+  </div>
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
+  </div>
+
+</div></div>
+</footer><!-- dynamically load mathjax for compatibility with self-contained --><script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+</html>
