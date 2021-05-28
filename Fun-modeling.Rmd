@@ -1,11 +1,64 @@
-# Constructing models
+# The process of modeling
 
-We turn now to using the basic modeling functions to represent real-world situations. It's important to distinguish between two basic types of model:
+Seen very abstractly, a mathematical model, as we are using the term, is a set of ***functions*** that represent the relationships between inputs and outputs.
+
+At the most simple level, building a model can be a short process:
+
+1. Develop an understanding of the relationship you want to model. Often, part of this "understanding" is the pattern seen in data.
+2. Choose a function type---e.g. exponential, sinusoidal, sigmoid---that you think would be a good match to the relationship.
+3. Find parameters that scales your function to be able to accept real-world inputs and generate real-world outputs.
+
+It's important to distinguish between two basic types of model:
 
 1. ***Empirical models*** which are rooted in ***observation*** and ***data***.
 2. ***Mechanistic models*** such as those created by applying fundamental laws of physics, chemistry, and such.
 
-We are going to put off mechanistic models for a while. There are two reasons why. First, the "fundamental laws of physics, chemistry, and such" are often expressed with the concepts and methods of calculus. We are heading there, but at this point you don't yet know the core concepts and methods of calculus. Second, most students don't make a careful study of the "fundamental laws of physics, chemistry, and such" until *after* they have studied calculus. So examples of mechanistic models will be a bit hollow at this point.
+We are going to put off mechanistic models for a while, for two reasons. First, the "fundamental laws of physics, chemistry, and such" are often expressed with the concepts and methods of calculus. We are heading there, but at this point you don't yet know the core concepts and methods of calculus. Second, most students don't make a careful study of the "fundamental laws of physics, chemistry, and such" until *after* they have studied calculus. So examples of mechanistic models will be a bit hollow at this point.
+
+The process of constructing a model that is a good match for data is called ***curve fitting***, or, more generally, ***fitting a model***.
+
+## Variations from scaling
+
+A good place to start building a model is to pick one of the basic modeling functions. This works surprisingly often. To remind you, here are our seven basic modeling functions: 
+
+- straight-line
+- exponential
+- power-law
+- logarithm
+- sinusoid
+- hump
+- sigmoid
+
+It helps in making the selection to have ready to mind the basic shape of each of these function families. To review, revisit Section \@ref(function-shapes).
+
+Remember also that, in general, we scale the inputs and scale the output. This means that in choose a model family, we don't have to worry at first about the numbers on the axes. (Of course, those numbers will be critically important later on in the process!) The scaling does, however, allow us to consider some variations on the shapes of the modeling functions. In particular, the ***input scaling*** lets us flip the shape right-for-left. And the ***output scaling*** lets us flip the shape top-for-bottom.
+
+- $f(t)$, basic shape
+- $f(-t)$, flipped right-for-left
+- $-f(t)$, flipped top-for-bottom
+- $-f(-t)$, flipped both top-for-bottom and right-for-left
+
+For functions such as the sinusoid, flipping is not much use, since the flipped sinusoid curve is still a sinusoid. Similarly, a right-for-left flipped hump function has the same shape as the original. For the straight-line function, flipping of either sort accomplishes the same thing: changing the sign of the slope. 
+
+For the exponential function, the two possible types of flipping---right-for-left and top-for-bottom---produce four different curves, all of which are exponential, shown in Figure \@ref(fig:four-variations).
+
+```{r four-variations, echo=FALSE, fig.cap="Four variations of the exponential functions."}
+slice_plot(exp(x) ~ x, domain(x=c(-2,2))) %>%
+  gf_refine(theme_void()) %>%
+  gf_labs(title="A. The exponential function, no flipping")
+slice_plot(exp(-x) ~ x, domain(x=c(-2,2))) %>%
+  gf_refine(theme_void()) %>%
+  gf_labs(title="B. Flipped right-for-left")
+slice_plot(-exp(x) ~ x, domain(x=c(-2,2))) %>%
+  gf_refine(theme_void()) %>%
+  gf_labs(title="C. Flipped top-for-bottom")
+slice_plot(-exp(-x) ~ x, domain(x=c(-2,2))) %>%
+  gf_refine(theme_void()) %>%
+  gf_labs(title="D. Flipped both right-for-left and top-for-bottom")
+
+```
+
+## Curve fitting an exponential function
 
 Figure \@ref(fig:Fun-4-intro-1) shows some data collected by Prof. Stan Wagon to support his making a detailed mechanistic model of an everyday phenomenon: [The cooling of a mug of hot beverage to room temperature](https://www.researchgate.net/profile/Gianluca_Argentini/post/Is_analogy_reasoning_between_heat_transfert_and_electriocity_allows_to_apply_the_electricity_laws_about_resistance_to_thermal_resistances/attachment/59d6573379197b80779ada64/AS%3A533325451403264%401504166104259/download/Stan+WAGON+How+quickly+does+water+cool.pdf). The mug started at room temperature, which was measured at 26 degrees C. At time 0 he poured in boiling water from a kettle and measured the temperature of the water over the next few hours.
 
@@ -17,116 +70,15 @@ gf_point(temp ~ time, data=CoolingWater %>% sample_n(20)) %>%
 
 Our task is to translate this data into the form of a function that takes time as input and returns temperature as output. Such a model would be useful for, say, filling in the gaps of the data. For instance, we might want to find the temperature of the water immediately after being poured from the kettle into the mug.
 
-There are several ways to construct such a model but for our purposes here we want to build one using the basic modeling functions: 
-   - straight-line: $m t + b$
-   - exponential: $\exp(kt)$
-   - power-law: $t^n$
-   - log: $\ln(t)$
-   - sinusoid: $\sin(2\pi t/P)$
-   - hump: `dnorm(x, mean, sd)`
-   - sigmoid `pnorm(x, mean, sd)`
-
-The temperature decreases along a curve: cooling fast at first and then more slowly. Which of our basic modeling functions can show this behavior? The curve suggests an exponential or a power-law function, or perhaps the right side of a hump function or even the bottom half of a sigmoid flipped left-for-right. The periodicity of a sinusoid is nowhere to be seen, so rule that out. And $\ln(t)$ has a different curvature: The data are a curve facing up, whereas the graph of the logarithm is a curve facing down. 
-
-Trying to find the single basic modeling function whose graph most resembles the shape of the data is a fool's errand. Several of the basic modeling functions have more or less similar shapes over some limited domain, and data are always on a limited domain. And it's not just the shape of the data that need to be matched: the numerical value of the function needs to match too. For instance, we've seen that the exponential function $e^{kt}$ with $k=-1$ becomes flat for large $t$. The water temperature also flattens out for large $t$. But the exponential *always* flattens out at a level of 0. Not so for the water; the water is cooling to room temperature, not freezing!
-
-Instead of trying to match a single basic modeling function to data, a more productive strategy is to use a ***combination*** of the functions. 
-
-One of the most widely used sorts of combination is called a ***linear combinations***. The mathematics of linear combination is, it happens, at the core of the use of math in applications, whether that be constructing a Google-like search engine or analyzing medical data to see if a treatment has a positive effect.
-
-Suppose we have a set of functions, for instance, $g_1(t), g_2(t), g_3(t), \ldots$.
-To make a linear combination we select one or more of the functions. The selected functions are called the ***basis functions***, perhaps because they provide the basis for constructing the combination. Each selected basis function gets multiplied by a number, called a ***scalar*** since it sets the vertical scale. Then add up all the variously scaled basis functions. 
-
-For instance, here is one linear combination of the $g_i()$ functions:
-$$3 g_1(x) + 6.5 g_2(x) - 2.1 g_3(x)$$ Another linear combination of the $g_i(x)$ is $$\frac{1}{5} g_1(x) + 10 g_3(x)$$ There are all sorts. The scalars used in a linear combination (for instance, (3, 6.5, -2.1) or (0.5, 10) in the previous examples) are called ***coefficients***.
-
-The framework of linear combinations provides a powerful and flexible means of constructing models. Indeed, **any smooth function** can be constructed as a linear combination of basic modeling functions. (We haven't said what "smooth" means, but all of our basic modeling functions are smooth.) 
-
-Even better, there is an automatic, reliable, and fast algorithm for finding the coefficients on any set of basis functions in order to match data as closely as possible. So the modeler just has to select the basis functions, the computer can find the coefficients. That's one reason why we've put the basic modeling functions at the very start of this course. (We'll explore the mathematics and methods of linear combinations, usually called ***linear algebra***, later in CalcZ.)
-
-You have worked with linear combinations of functions for many years, although probably nobody used that term. Consider this linear combination of power-law functions: 
-$$P(x) = 3 x^2 - 16 x + 4$$
-The basis functions $x^0$, $x^1$, $x^2$, $x^3$, and so on have a specific name: they are the ***monomials***. (Monomials all belong to the family of power-law functions.) A linear combination of monomials is called a ***polynomial***, just as a big molecule called a polymer is constructed out of many monomers.
-
-## Working with data
-
-::: {.todo}
-Instructions for accessing data in R here. 
 
 
-i. data frames: `names()`, `head()`, `gf_point()`
-ii. graphical layers and piping: Combining gf_point() and slice_plot() 
+Looking at the data, one sees that the temperature decreases along a curve: cooling fast at first and then more slowly. This is the pattern of the flipped right-for-left exponential. (Figure \@ref(fig:four-variations)(B)) We can imagine then that an exponential, $A e^{kt} + C$ will be a suitable model form for the cooling water.
 
+What remains is to find the parameters $A$, $k$, and $C$.  Here is a general process for curve-fitting an exponential. Later, we'll apply this process specifically to the water-cooling situation. 
 
-:::
+**General process for curve-fitting an exponential**
 
-## The straight-line model
-
-::: {.objectives}
-```{r echo=FALSE, results="asis"}
-state_objective("Fun-4-a-1", "Construct a straight-line model that fits data.")
-```
-:::
-
-Until we learn to use a computer to find the coefficients in a linear combination that best matches data, we will do things by hand and eye.
-
-This also you have been doing for years, making a linear combination of two simple functions:
-
-$$\mbox{one}(x) \equiv 1\ \ \mbox{and}\ \ \mbox{identity}(x) \equiv x$$
-The linear combinations of these two simple functions are all just a matter for finding two coefficients, which we'll call $A$ and $B$ for the moment. The combination is:
-
-$$f(x) \equiv A\, \mbox{one}(x) + B\, \mbox{identity}(x)$$
-You've probably never seen this form before, even though you have been using it. The reason is a tradition in pre-computer era mathematics notation of not using the names of the simple basis function but using their formulas instead. So perhaps this looks more familiar:
-$$f(x) \equiv A\, 1 + B\, x$$
-This still may seem a little strange, since you have been carefully taught not to write "multiplication by 1" explicitly. So you would write instead
-$$f(x) \equiv A + B x$$ which is recognizably the formula for the straight-line function.
-
-You already know a lot about straight-line functions, so they are a good place to warm up in constructing a function that fits data out of the basic modeling functions.
-
-Let's return to the cooling mug of water. Figure \@ref(fig:Fun-4-a) shows the data along with a dozen candidate straight line functions, each one drawn in its own color.
-
-```{r Fun-4-a, echo=FALSE, warning=FALSE, fig.cap="Some candidate straight-line function models plotted on top of the cooling water data. Which one(s) would you pick as good matches to the data?"}
-set.seed(101)
-gf_point(temp ~ time, data=CoolingWater %>% sample_n(20)) %>%
-  gf_labs(x = "Time (minutes)", y="Temperature (deg. C)") %>%
-  gf_lm(temp ~ time, data = CoolingWater %>% sample_n(20), color="blue") %>%
-  gf_lm(temp ~ time, data = CoolingWater %>% sample_n(20), color="aquamarine") %>%
-  gf_lm(temp ~ time, data = CoolingWater %>% sample_n(20), color="cadetblue") %>%
-  gf_lm(temp ~ time, data = CoolingWater %>% sample_n(20), color="green") %>%
-  gf_lm(temp ~ time, data = CoolingWater %>% sample_n(20), color="cadetblue") %>%
-  gf_lm(temp ~ time, data = CoolingWater %>% sample_n(20), color="royalblue") %>%
-  gf_lm(temp ~ time, data = CoolingWater %>% sample_n(20),color="seagreen") %>%
-  gf_abline(intercept = 100, slope=-0.21, color = "plum") %>%
-  gf_abline(intercept = 90, slope=-0.19, color = "plum3") %>%
-  gf_abline(intercept = 63, slope=-0.05, color = "purple") %>%
-  gf_abline(intercept = 120, slope=-0.51, color = "purple3") %>%
-  gf_abline(intercept = 7, slope=.21, color = "orchid")
-```
-
-Some of the straight-line models are a much better match to the data than others. The blue-shaded functions are pretty good fits, the greenish functions are maybe OK but a little sketchy, and the purple-shaded functions are just horrible.
-
-The first step in fitting a straight-line model by hand and eye is to draw a reasonable line that passes through and is closely aligned with the data. There is a range of good choices, but there are also clearly bad choices.
-
-Next step: Find the parameters that correspond to the line you drew. You already know how to find the slope and intercept of a straight line from a graph. For the straight-line model, that's what the coefficients B and A amount to.
-
-## Modeling growth and decay
-
-::: {.objectives}
-```{r echo=FALSE, results="asis"}
-state_objective("Fun-5a", "Given numerical or graphical data, determine if an exponential model is appropriate.")
-state_objective("Fun-5b", "Estimate half-life/doubling time for an exponential function.")
-state_objective("Fun-5c", "Estimate the baseline of an exponential function for exponential growth and decay.")
-```
-:::
-
-Let's now consider an A/B model using the exponential. 
-
-
-
-$$f(t) \equiv A + B\, e^{kt}$$
-The procedure is a little different from using a straight-line model; finding slopes and intercepts won't help.
-
-**Step 0**: Check that the data show an exponential pattern, namely a smooth increase or decrease and leveling out beyond some value of $t$. If this isn't true, reconsider whether you should be using an exponential function in the first place.
+**Step 0**: Check that the data show an exponential pattern in one of its variations, namely a smooth increase or decrease and leveling out beyond some value of $t$. If this isn't true, reconsider whether you should be using an exponential function in the first place.
 
 **Step 1** Do the data show exponential growth or exponential decay? If it's exponential growth, then the flat region in Step 0 will be to the left and $k$ will be positive. If exponential decay, the flat region will be to the right and $k$ will be negative.
 
@@ -146,8 +98,9 @@ iii. The parameter $k$ is $0.693 / (t_1 - t_{1/2})$. Double check the sign of $k
 
 **Step 5** Plot the function $A + B e^{k t}$ using the values for $A$, $B$, and $t$ that you just found. If you are not satisfied, tweak the parameters a bit until you are.
 
+**Exponential curve fitting applied to the water-cooling data**
 
-Let's illustrate this process on the water-cooling data, redrawn in Figure \@ref(fig:Fun-4-a-2-1).
+Let's illustrate the general process on the water-cooling data, redrawn in Figure \@ref(fig:Fun-4-a-2-1).
 
 ```{r Fun-4-a-2-1, echo=FALSE, fig.cap="The cooling-water data, repeated here for convenience."}
 set.seed(101)
@@ -181,46 +134,7 @@ gf_point(temp ~ time, data=CoolingWater %>% sample_n(20)) %>%
   slice_plot(25 + 83.3*exp(-.0277*time) ~ time, color="blue")
 ```
 
-It looks like our estimate of the half-life is a bit too small; the data doesn't seem to decay at the rate implied by $k = -0.0277$. Perhaps we should try $k = -0.2$ and go on from there.
-
-EXERCISE: Have them try $k=0.02$ and iterate until they get something they like.
-
-Later in CalcZ, we'll study ***optimization***. There are optimization techniques for directing the computer to refine the parameters to best match the data. Just to illustrate, here's what we get:
-
-```{r echo=FALSE}
-set.seed(101)
-Stans_data <- CoolingWater %>% sample_n(20)
-```
-
-```{r Fun-4-a-2-3, fig.cap="Polishing the fit using the rough model as a starting point."}
-refined_params <- 
-  fitModel(temp ~ A + B*exp(k*time), data = Stans_data, 
-           start = list(A = 25, B = 83.3, k = -0.0277))
-coef(refined_params)
-new_f <- makeFun(refined_params)
-gf_point(temp ~ time, data = Stans_data) %>%
-  slice_plot(new_f(time) ~ time, color="blue")
-```
-
-The refined parameters give a much better fit to the data than our original rough estimates by eye. 
-
-We had two rounds of the ***modeling cycle***. First, choice of an A/B expontential model and a rough estimate of the parameters A, B, and $k$. Second, refinement of those parameters using the computer.
-
-Looking at the results of the second round, the experienced modeler can see some disturbing discrepancies. First, the estimated baseline appears to be too high. Related, the initial decay of the model function doesn't seem to be fast enough and the decay of the model function for large $t$ appears to be too slow. Prof. Stan Wagon noticed this. He used additional data to fill in the gaps for small $t$ and refined his model further by changing the basis functions in the linear combination. He hypothesized that there are at least two different cooling processes. First, the newly poured water raises the temperature of the mug itself. Since the water and mug are in direct contact, this is a fast process. Then, the complete water/mug unit comes slowly into equilibrium with the room temperature.
-
-The newly refined model was a even better match to the data. But nothing's perfect and Prof. Wagon saw an opportunity for additional refinement based on the idea that there is a third physical mechanism of cooling: evaporation from the surface of the hot water. Prof. Wagon's additional circuits of the modeling cycle were appropriate to his purpose, which was to develop a detailed understanding of the process of cooling. For other purposes, such as demonstrating the appropriateness of an exponential process or interpolating between the data points, earlier cycles might have sufficed.
-
-Here's a graph of the model Prof. Wagon constructed to match the data.
-
-```{r Fun-4-a-2-4, echo=FALSE, out.width="70%", fig.align="center", fig.cap="A model that combines three exponentials provides an excellent fit."}
-knitr::include_graphics(normalizePath("www/Wagon-water-fit.png"))
-```
-
-This is an excellent match to the data. But ... matching the data isn't always the only goal of modeling. Prof. Wagon wanted to make sure the model was physically plausible. And looking at the refined parameters, which include two exponential processes with parameters $k_1$ and $k_2$, he saw something wrong:
-
-> *But what can we make of $k_1$, whose [positive value] violates the laws of thermodynamics by suggesting that the water gets hotter by virtue of its presence in the cool air? The most likely problem is that our simple model (the proportionality assumption) is not adequate near the boiling point. There are many complicated factors that affect heat transportation, such as air movement, boundary layer dissipation, and diffusion, and our use of a single linear relationship appears to be inadequate. In the next section [of our paper] we suggest some further experiments, but we also hope that our experiments might inspire readers to come up with a better mathematical model.*
-
-The modeling cycle can go round and round!
+## Curve fitting a periodic function
 
 ## Modeling periodicity
 
@@ -290,6 +204,57 @@ gf_line(level ~ hour,
   gf_lims(y =c(0, 2))
 ```
 
+
+## The modeling cycle
+
+Need intro explaining cycle
+
+
+### Example: Cooling water
+
+It looks like our estimate of the half-life is a bit too small; the data doesn't seem to decay at the rate implied by $k = -0.0277$. Perhaps we should try $k = -0.2$ and go on from there.
+
+EXERCISE: Have them try $k=0.02$ and iterate until they get something they like.
+
+Later in CalcZ, we'll study ***optimization***. There are optimization techniques for directing the computer to refine the parameters to best match the data. Just to illustrate, here's what we get:
+
+```{r echo=FALSE}
+set.seed(101)
+Stans_data <- CoolingWater %>% sample_n(20)
+```
+
+```{r Fun-4-a-2-3, fig.cap="Polishing the fit using the rough model as a starting point."}
+refined_params <- 
+  fitModel(temp ~ A + B*exp(k*time), data = Stans_data, 
+           start = list(A = 25, B = 83.3, k = -0.0277))
+coef(refined_params)
+new_f <- makeFun(refined_params)
+gf_point(temp ~ time, data = Stans_data) %>%
+  slice_plot(new_f(time) ~ time, color="blue")
+```
+
+The refined parameters give a much better fit to the data than our original rough estimates by eye. 
+
+We had two rounds of the ***modeling cycle***. First, choice of an A/B expontential model and a rough estimate of the parameters A, B, and $k$. Second, refinement of those parameters using the computer.
+
+Looking at the results of the second round, the experienced modeler can see some disturbing discrepancies. First, the estimated baseline appears to be too high. Related, the initial decay of the model function doesn't seem to be fast enough and the decay of the model function for large $t$ appears to be too slow. Prof. Stan Wagon noticed this. He used additional data to fill in the gaps for small $t$ and refined his model further by changing the basis functions in the linear combination. He hypothesized that there are at least two different cooling processes. First, the newly poured water raises the temperature of the mug itself. Since the water and mug are in direct contact, this is a fast process. Then, the complete water/mug unit comes slowly into equilibrium with the room temperature.
+
+The newly refined model was a even better match to the data. But nothing's perfect and Prof. Wagon saw an opportunity for additional refinement based on the idea that there is a third physical mechanism of cooling: evaporation from the surface of the hot water. Prof. Wagon's additional circuits of the modeling cycle were appropriate to his purpose, which was to develop a detailed understanding of the process of cooling. For other purposes, such as demonstrating the appropriateness of an exponential process or interpolating between the data points, earlier cycles might have sufficed.
+
+Here's a graph of the model Prof. Wagon constructed to match the data.
+
+```{r Fun-4-a-2-4, echo=FALSE, out.width="70%", fig.align="center", fig.cap="A model that combines three exponentials provides an excellent fit."}
+knitr::include_graphics(normalizePath("www/Wagon-water-fit.png"))
+```
+
+This is an excellent match to the data. But ... matching the data isn't always the only goal of modeling. Prof. Wagon wanted to make sure the model was physically plausible. And looking at the refined parameters, which include two exponential processes with parameters $k_1$ and $k_2$, he saw something wrong:
+
+> *But what can we make of $k_1$, whose [positive value] violates the laws of thermodynamics by suggesting that the water gets hotter by virtue of its presence in the cool air? The most likely problem is that our simple model (the proportionality assumption) is not adequate near the boiling point. There are many complicated factors that affect heat transportation, such as air movement, boundary layer dissipation, and diffusion, and our use of a single linear relationship appears to be inadequate. In the next section [of our paper] we suggest some further experiments, but we also hope that our experiments might inspire readers to come up with a better mathematical model.*
+
+The modeling cycle can go round and round!
+
+### Example: The tides
+
 **Step 4**: Evaluate and refine. The green model would make poor predictions. The model says "high tide" when the data say otherwise. What's missing is the ***phase*** of the sinusoid. A model that incorporates the phase is 
 
 $${\color{blue}\mbox{tide}(t) \equiv 1.05 + 0.55 \sin(2\pi (t - t_0)/11)}$$
@@ -351,106 +316,3 @@ Discrepancies between a model and data play two roles: they help us decide if th
 
 Historically, careful analysis of tides led to a highly detailed, highly accurate model: a linear combination of sinusoids with diurnal periods 12.42, 12.00, 12.66, and 11.97 hours as well components with period 23.93, 25.82, 24.07, 26.87, and 24.00 hours. A tide-prediction model is constructed by finding the coefficients of the linear combination; these differ from locale to locale.
 
-# Combining and composing functions
-
-
-::: {.objectives}
-```{r echo=FALSE, results="asis"}
-state_objective("Fun-4-c-1", "Use linear combination and direct multiplication of functions of one variable to produce functions of multiple variables")
-state_objective("Fun-4-c-2", "Recognize that composition of functions does not itself create a function of multiple variables.")
-```
-:::
-
-Linear combination and composition of functions are often used hand-in-hand to construct models. For instance, our model of the data from cooling water was a linear combination of a constant function and a sinusoidal function $$\mbox{temperature}(t) \equiv 25.9 + 60.7\, e^{-0.019 t}$$
-Similarly, our model from the Providence tide data was 
-$$\mbox{tide}(t) \equiv 1.02 + 0.50 \sin(2\pi (t - 15.4)/12.56)$$
-In both cases, the sine part of the combination is a mathematical ($\exp(x)$ or $\sin(x)$) function composed with a linear interior function: $-0.019 t$ for the cooling water, and $2\pi (t - 15.4)/12.56$ for the tides.
-
-Each of these models was a function of one input. (Coincidentally, the input in both cases was "time", measured in minutes in the cooling-water example and hours in the tide example.)
-
-But linear combinations are a powerful way to construct functions of multiple inputs. This can be as simple as $$h(x, t) \equiv A + B f(x) + C g(t)$$
-
-::: {.workedexample}
-Earlier we introduced a model of natural gas consumption (ccf) in the author's home during a month as a function of the average temperature during that month. Using $T$ for temperature, the model, constructed from the record of utility bills, was: $$ccf(T) \equiv 293.1 - 4.62 T$$ the blue line in Figure \@ref(fig:Fun-1-c-1).
-
-```{r Fun-1-c-1, echo=FALSE, fig.cap="Natural gas used (ccf) versus average outdoor temperature for the author's home in Saint Paul, Minnesota."}
-gf_point(ccf ~ temp, data = Home_utilities) %>%
-  gf_labs(title="Household natural gas use", x = "Average temperature for the month (deg. F)", y = "Volume of gas used (cubic feet)") %>%
-  gf_lims(x = c(0, 85)) %>% 
-  gf_lm(ccf ~ temp, data = Home_utilities %>% filter(temp < 60))
-```
-
-The amount of natural gas needed to heat the home presumably depends on many other factors as well: how windy was the weather, the thermostat setting, how often the back door was left open, ....
-
-For the sake of demonstration, here is model matched to the data of the natural gas ccf as a function of both temperature *and* the amount of electricity (E) used each month.
-
-$$\mbox{ccf}(T, E) \equiv 295.8 - 4.66\, T - 0.0010\, E$$
-
-The coefficients suggest that more electricity use corresponds to less natural gas use, perhaps because light bulbs are partially heating the home. But the effect, if any is very small: a doubling of monthly electricity use (from, say 400 kWh to 800 kWh) has about the same effect of 1/8 degree increase in outdoor temperature. That would be useful to know if you were having, say, an argument with your brother-in-law about whether it's OK to leave the lights on in an empty room, because it saves natural gas.
-
-
-```{r echo=FALSE}
-mod <- lm(ccf ~ temp + kwh, 
-   data = Home_utilities %>% filter(temp < 59, ccf > 20))
-```   
-:::
-
-Although linear combinations of functions of different variables are a very common way of constructing functions of multiple variables, function ***composition*** is useless when it comes to this. 
-
-For instance, consider the two functions $f(x)$ and $g(t)$. The composition $f(g(t))$ has only **one** input: $t$. Similarly, $g(f(x))$ has only one input: $x$. 
-
-In contrast to composition, multiplication of two functions is very effective for constructing functions of multiple variables: $h(x,y) \equiv f(x) g(y)$. 
-
-::: {.workedexample  data-latex=""}
-
-**A wave packet**
-
-An important idea in physics and communication is the "wave packet." This is a function that is local, like a hump, but periodic within the hump.
-
-```{r fig.cap="A *wave packet* constructed by multiplying a sinusoid by a hump function."}
-wave_packet <- function(x, A=1, center = 0, width = 5, P=1, phase = 0) {
-  A*sin(2*pi*x/P)*dnorm((x - center)/width)
-}
-slice_plot(wave_packet(x, A=2, center=3, width  = 4, P  = 2 ) ~ x, 
-           domain(x = c(-15, 15)), npts = 500)
-```
-:::
-
-::: {.workedexample}
-A simple but powerful and general framework for constructing functions of two variables to match data or to assemble into one function facts about a relationship among three variables is the linear combination of four simple functions: $$a_0 + a_x\, x + a_y\, y + a_{xy}\, xy$$
-The coefficients in the linear combination are $a_0$, $a_x$, $a_y$, and $a_{xy}$. Those names were selected to make it easier to keep track of which coefficient scales which function, but ultimately they are just scalars and could have been called $a, b, c$, and $d$.
-
-The basis function $g_4(x, y) \equiv x y$ is called an ***interaction term*** and arises very often in models of phenemona such as the spread of epidemics, the population dynamics of predator and prey animals, and the rates of chemical reactions
-. 
-
-:::
-
-
-
-
-EXERCISE:
-
-Recall the Pythagorean theorem: $C^2 = A^2 + B^2$. Let's write this as a function that takes as inputs the lengths of the two legs and produces as output the length of the hypotenuse. 
-
-$$\mbox{hypotenuse}(x, y) \equiv \sqrt{\strut x^2 + y^2}$$
-
-This can be seen as a composition of a function $f()$ together with a linear combination of two power-law functions $g()$ and $h()$ of different inputs. What is the function $f()$? What are $g()$ and $h()$? What are the coefficients in the linear combination?
-
-
-
-
-
-## Piecewise models
-
-::: {.objectives}
-```{r echo=FALSE, results="asis"}
-state_objective("Fun-4-b-4a", "Identify graphs of a piecewise linear function.")
-state_objective("Fun-1C-d", "Construct a hock-stick function by piecewise combination of a constant function and a straight-line function with non-zero slope.")
-state_objective("Fun-4-b-4b", "Recognize traditional curly-brace notation for piecewise functions.")
-state_objective("Fun-4-b-4c", "Be able to create a piecewise function in R.")
-state_objective("Fun-4-b-4d", "Distinguish between continuous and discontinuous functions")
-```
-:::
-
-
-**Example: Piecewise functions in machine learning**

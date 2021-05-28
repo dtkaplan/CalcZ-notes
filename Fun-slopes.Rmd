@@ -1,29 +1,10 @@
-# Calculus: Functions and change {#fun-slopes}
+# The slope function {#fun-slopes}
 
-For our purposes, the definition of calculus is
+For our purposes, the ***definition of calculus*** is
 
 > *The use of functions to model and explore continuous change*
 
-We've introduced in a preliminary way the words "function" and "continuous" as they relate to calculus. The agenda of this chapter is to give specific mathematical meanings to the words "model" and "change."
-
-## Naked modeling functions
-
-Here is a list of functions most of which you have probably seen many times in your mathematics studies.
-
-- $x$, $x^2$, $\sqrt{x}$, $1/\sqrt{x}$, and so on. 
-- $e^x$ as well as $2^x$ or $10^x$
-- $\sin(x)$ and $\cos(x)$
-- $\ln(x)$ as well as $\log_{10}(x)$ and $\log_2(x)$
-
-You will see these functions---or something very much like them---throughout this book. As such, it might be appropriate to call them "core" functions. But we will not. Instead, we refer to these as the ***naked modeling functions***.
-
-There's mathematics ... and then there's the real world. The term ***mathematical modeling*** is about constructing representations of situations or phenomena in the real world in terms of mathematical objects. The advantage of being able to construct models is that models are easy to study, explore, take apart, do experiments on, and deduce the implications of.
-
-We use computers to interact with the world, whether that be record-keeping, communications, media displays, and so on. The "things" that computers work with are always mathematical representations of the real world: models. Computers carry out operations on models. For instance, sound is a real-world phenomenon that resides somewhere between the vibrations of air and the psycho-acoustics of the brain. A simple computer representation of sound is constructed using mathematical stuff: a long series of numbers. Suppose we want to *slow down* sound (say, for someone learning a foreign language) or to speed it up (to get through a slow-paced video) or to translate it into text. The technologies for doing these things are almost always implemented by doing arithmetic or more complicated mathematical procedures on the mathematical stuff.
-
-A major theme of this course is how to make such mathematical representations of real-world phenomena and how to work with the representations to extract the results we want. In particular, we will focus on representations in the form of mathematical functions. (There are other mathematical representations, but functions have a special importance and are ubiquitous in scientific work and computing.) 
-
-As you'll see, when we need a new function for some purpose, we practically always build it out of existing functions. For instance, by dressing up the naked modeling functions of the previous chapter with parameters, we generate the "basic modeling functions" that enable us to interact with the world. 
+The agenda of this chapter is to give specific mathematical meaning to the word "change."
 
 ## Change and slope
 
@@ -55,15 +36,217 @@ Calculus is about ***continuous change***. For instance, if the weather bureau p
 
 Finding a language to describe continuous change---famously, the position of the moon or planets in their orbit, or the speed of a ball rolling down a ramp---was central to the emergence of what historians call the "Age of Enlightenment" or "modern scientific method." The first complete presentation of that language was published by Isaac Newton based on his work in the 1660s. As you might guess, the name of the language is "calculus."
 
-## Slopes and curves
+## Slope
 
-::: {.todo}
-Review how to compute the slope of a line.
+You already know pretty much everything there is to know about the straight-line function,
 
-Point out that only the straight-line function has a slope that is the same everywhere. The other naked modeling functions don't have *a slope*, they have a local property that is a function of $x$.
+- **Formula**: $f(x) \equiv a x + b$. The parameters $a$ and $b$ are the "slope" and "intercept" respectively. (More precisely, $b$ is the "y-intercept." But in statistics and modeling, it's just the "intercept.")
+- **Reading parameters from a graph**: You learned several ways to do this which are all equivalent. Maybe the easiest is the read the y-intercept off the graph. That's $b$. Then choose some non-zero $x_1$ and read off from the graph the value of $f(x_1)$. The slope is simply $$\frac{f(x_1) - b}{x_0}$$
+
+    The ***y-intercept method*** is a special case of a more general method, the ***two-point method***, that you can use even if the y-intercept isn't shown on the graph. Pick two specific values of $x$, which we'll call $x_0$ and $x_1$. Evalate the function at these input values and compute the rise over run: $$\mbox{rise over run} \equiv \frac{f(x_1) - f(x_0)}{x_1 - x_0}$$
+The rise over run is the slope of the straight line.
+
+    The y-intercept method is exactly the same as the two-point method with $x_0 = 0$.
+    
+- **Matching a straight-line function to data**: You might not have been taught this formally, but the basic process is easy to imitate. The process is called ***line fitting*** or, in statistics and other fields, ***linear regression***.
+
+## The fitted line
+
+::: {.objectives}
+```{r echo=FALSE, results="asis"}
+state_objective("Fun-4-a-1", "Construct a straight-line model that fits data.")
+```
 :::
 
 
 
-So much of what we will do in calculus depends on being able to construct and manipulate functions. Doing this successfully requires a more careful consideration of how we know when something is a function and the anatomy of functions generally. The major way this is accomplished both in mathematical notation and computer languages is via ***notation***, the subject of the next chapter.
+To illustrate line fitting, let's return to the cooling mug of water. Figure \@ref(fig:Fun-4-a) shows the data along with a dozen candidate straight line functions, each one drawn in its own color.
+
+```{r Fun-4-a, echo=FALSE, warning=FALSE, fig.cap="Some candidate straight-line function models plotted on top of the cooling water data. Which one(s) would you pick as good matches to the data?"}
+set.seed(101)
+gf_point(temp ~ time, data=CoolingWater %>% sample_n(20)) %>%
+  gf_labs(x = "Time (minutes)", y="Temperature (deg. C)") %>%
+  gf_lm(temp ~ time, data = CoolingWater %>% sample_n(20), color="blue") %>%
+  gf_lm(temp ~ time, data = CoolingWater %>% sample_n(20), color="aquamarine") %>%
+  gf_lm(temp ~ time, data = CoolingWater %>% sample_n(20), color="cadetblue") %>%
+  gf_lm(temp ~ time, data = CoolingWater %>% sample_n(20), color="green") %>%
+  gf_lm(temp ~ time, data = CoolingWater %>% sample_n(20), color="cadetblue") %>%
+  gf_lm(temp ~ time, data = CoolingWater %>% sample_n(20), color="royalblue") %>%
+  gf_lm(temp ~ time, data = CoolingWater %>% sample_n(20),color="seagreen") %>%
+  gf_abline(intercept = 100, slope=-0.21, color = "plum") %>%
+  gf_abline(intercept = 90, slope=-0.19, color = "plum3") %>%
+  gf_abline(intercept = 63, slope=-0.05, color = "purple") %>%
+  gf_abline(intercept = 120, slope=-0.51, color = "purple3") %>%
+  gf_abline(intercept = 7, slope=.21, color = "orchid")
+```
+
+Some of the straight-line models are a much better match to the data than others. The blue-shaded functions are pretty good fits, the greenish functions are maybe OK but a little sketchy, and the purple-shaded functions are just horrible.
+
+Now that you know what a reasonable straight-line model looks like, you will find it pretty easy to draw one on data graphics that even remotely show a straight-line pattern. 
+
+Step 1: Draw a reasonable straight-line through the data points. 
+
+Step 2: Find the parameters that correspond to the line you drew. 
+
+## Average rate of change
+
+Since the slope is our standard way of representing a relationship of change, we will often use it as a way of summarizing a function. To illustrate, consider the exponential model we constructed to match the cooling-water data:
+
+```{r}
+water <- makeFun(60.7*exp(-0.019*t) + 25.93 ~ t)
+```
+
+
+
+```{r water-average, echo=FALSE, fig.cap="The exponential function that was previously matched to the cooling-water data. The slope of the straight line connecting two points on the function graph is the average rate of change during the interval."}
+
+Pts <- tibble::tibble(
+  x = c(10,125),
+  y = water(x),
+  baselabel = c("t0", "t1"),
+  flabel = c("f(t0)", "f(t1)")
+)
+slice_plot(water(t) ~ t, domain(t = c(0,200))) %>%
+  gf_point(y ~ x, data = Pts, color="red", alpha=0.25, size=4) %>%
+  gf_line(y ~ x, data = Pts, color="red") %>%
+  gf_point(0 ~ x, data = Pts, color="blue", alpha=0.25, size=4) %>%
+  gf_lims(y=c(0,90)) %>%
+  gf_segment(0 + y ~ x + x, data=Pts, color="blue", linetype=2) %>%
+  gf_text(0 ~ x, data = Pts, label = ~baselabel, color="blue", nudge_x=7) %>%
+  gf_text(y ~ x, data = Pts, label = ~flabel, color="red", nudge_y=7, nudge_x=2)
+```
+
+During the interval $[t_0, t_1]$ the rate at which the water cools is higher at first and lower at the end. The ***average*** rate of change is a single number that summarizes the whole interval.
+
+For all except straight-line models, the average rate of change depends on the interval chosen.
+
+EXERCISE: From the graph, compute the average rate of change over the interval $10 \leq t \leq 200$. How does it compare to the average rate of change over the interval $10 \leq t \leq 125$?
+
+EXERCISE: Same, but for a sinusoid. Give a couple of intervals, including one where there is no net change.
+
+
+
+## Instantaneous rate of change
+
+The water is cooling continuously. Sometimes we'll be interested in the rate of change at a given instant $t_0$. If we choose a very small interval, say $[t_0, t_0 + 0.1]$, we'll get a good approximation to this ***instantaneous rate of change***.
+$$\text{instantaneous rate of change} = \frac{f(t_0 + 0.1) - f(t_0)}{0.1}$$
+
+On a graph, the instantaneous rate of change is the slope of the tangent line to a point, as shown in Figure \@ref(fig:tangent-line-exp).
+
+```{r tangent-line-exp, echo=FALSE, fig.cap="Instantaneous rate of change is the slope of the line tangent to a the curve at a single point."}
+Pt <- tibble::tibble(
+  x = 25,
+  y = water(x),
+  baselabel="x0",
+  flabel = "f(x0)"
+)
+tangent <- makeFun(-0.71722*(t-25) + 63.7 ~ t)
+slice_plot(water(t) ~ t, domain(t=c(0, 200))) %>%
+  gf_point(y ~ x, data=Pt, 
+           color="sienna", alpha = 0.25, size=4) %>%
+  gf_point(25 ~ x, data=Pt, 
+           color="tomato", alpha = 0.25, size=4) %>%
+  slice_plot(tangent(t) ~ t, color = "sienna", 
+             domain(t=c(0,80))) %>%
+  gf_text(y ~ x, data = Pt, label = ~ flabel, 
+          nudge_x = 10, color="sienna") %>%
+  gf_text(25 ~ x, data = Pt, label = ~ baselabel, 
+          nudge_x = 10, color="tomato") %>%
+  gf_segment(25 + y ~ x + x, data=Pt, color="tomato", linetype=2)
+```
+
+In Block 2, we'll see that a good way to define an instantaneous rate of change at $t_0$ is as the average rate of change over the interval $t_0 \leq t \leq t_1$ with the proviso that the interval length $t_1 - t_0$ goes as closely as it can to zero.
+
+Figure \@ref(fig:three-rates) shows the fitted rate of change and average rate of change in the interval $10 \leq t \leq 125$ as well as the instantaneous rate of change at $t_0 = 50$. As you can see, they are different from one another.
+
+```{r three-rates, echo=FALSE, warning=FALSE, fig.cap="Comparing the average rate of change (red) over the interval $10 \\leq t \\leq 125$, the instantaneous rate of change at $x_0 =25$, and the fitted linear model (orange). The exponential model is shown in gray."}
+gf_point(temp ~ time, data = Stans_data, color="orange") %>%
+  gf_lm(color="orange") %>%
+  slice_plot(water(time) ~ time, domain(time=c(0, 200)), color="gray", size=2, alpha = 0.5) %>%
+  slice_plot(tangent(time) ~ time, color = "sienna", 
+             domain(time=c(0,80))) %>%
+  gf_point(y ~ x, data = Pts, color="red", alpha=0.25, size=4) %>%
+  gf_line(y ~ x, data = Pts, color="red") %>%
+  gf_point(25 ~ x, data = Pts, color="blue", alpha=0.25, size=4) %>%
+  gf_point(y ~ x, data=Pt, 
+           color="sienna", alpha = 0.25, size=4) %>%
+  gf_point(25 ~ x, data = Pt, color="tomato", alpha=0.25, size=4) %>%
+  gf_segment(25 + y ~ x + x, data=Pt, color="tomato", linetype=2) %>%
+  gf_segment(25 + y ~ x + x, data=Pts, color="blue", linetype=2) %>%
+  gf_lims(y=c(25, NA))
+```
+
+## The slope function
+
+We have a way to estimate the instantaneous rate of change of a function at a given input $t_0$:
+$$\text{instantaneous_rate_of_change} \equiv \frac{f(t_0 + 0.1) - f(t_0)}{0.1}$$
+Now we'll let notation do some work for us and re-write the above as the instantaneous-rate-of-change function, which we'll call the ***slope*** function.
+$$\text{slope}(t) \equiv \frac{f(t + 0.1) - f(t)}{0.1}$$
+We've merely made it clear that $\text{slope}(t)$ is a function and written the formula in terms of the input $t$ rather than a fixed number $t_0$. Of course, the "instantaneous rate of change at $t_0$" is simply $\text{slope}(t)$.
+
+Let's look at the slope function that corresponds to some of our naked modeling functions: $e^x$, $\sin(x)$, $x^{-1}$ and $\ln(x)$. Recall that the input to the naked functions is always a number. The output is a number as well. Thus we can display the function and the corresponding slope function on the same coordinate frame. (This will not be true when the input is a quantity and the output is another quantity.)
+
+
+```{r compare-naked-slopes, echo=FALSE, out.width="50%", fig.show="hold", fig.cap="Comparing the naked modeling function (blue) to it's slope function (red)"}
+slice_plot(sin(x) ~ x, domain(x=c(-10,10)), color="blue") %>%
+  slice_plot(cos(x) ~ x, color="red", alpha=0.25, size=2) %>%
+  gf_labs(title="Sinusoid")
+slice_plot(exp(x) ~ x, domain(x=c(-2,2)), color="blue") %>%
+  slice_plot(exp(x) ~ x, color="red", alpha=0.25, size=2) %>%
+  gf_labs(title="Exponential function")
+slice_plot(log(x) ~ x, domain(x=c(0.1,5)), color="blue") %>%
+  slice_plot(1/x ~ x, color="red", alpha=0.25, size=2) %>%
+  gf_labs(title="Logarithm function")
+slice_plot(1/x ~ x, domain(x=c(0.1,5)), color="blue") %>%
+  slice_plot(-1/x^2 ~ x, color="red", alpha=0.25, size=2) %>%
+  gf_labs(title="Power law function (with p=-1)")
+```
+
+EXERCISE: There is a web of connections between the naked modeling functions and their slopes. 
+
+```{r slope-sin, echo=FALSE, results="markup"}
+etude2::etudeQ(
+  "1. Which naked modeling function has a slope function that is simply a input-shifted version of itself?",
+  "exponential",
+  "+sinusoid+",
+  "logarithm",
+  "power-law $x^{-1}$",
+  random_answer_order = FALSE
+)
+```
+
+```{r slope-exp, echo=FALSE, results="markup"}
+etude2::etudeQ(
+  "2. Which naked modeling function has a slope function that is identical to itself?",
+  "+exponential+",
+  "sinusoid",
+  "logarithm",
+  "power-law $x^{-1}$",
+  random_answer_order = FALSE
+)
+```
+
+```{r slope-log, echo=FALSE, results="markup"}
+etude2::etudeQ(
+  "3. Which naked modeling function has a slope function that is another naked modeling function? (Hint: The other function is also shown in the set of graphs.)",
+  "exponential",
+  "sinusoid",
+  "+logarithm+",
+  "power-law $x^{-1}$+",
+  random_answer_order = FALSE
+)
+```
+
+
+::: {.why}
+We defined the "slope function" as
+$$\text{slope}(t) \equiv \frac{f(t + 0.1) - f(t)}{0.1}$$
+
+The 0.1 in the definition of the slope function is definitely a kluge.  0.1 minutes may be small when it comes to cooling water, but it might not be small in other contexts. We'll fix that in Block 2 when we define the ***derivative operator*** which replaces 0.1 with something that small in every context.
+:::
+
+
+
+
+
 

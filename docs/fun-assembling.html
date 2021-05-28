@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>Chapter 8 Assembling functions | CalcZ Student Notes</title>
+<title>Chapter 9 Assembling functions | CalcZ Student Notes</title>
 <meta name="author" content="Daniel Kaplan">
 <!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.2"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="libs/bootstrap-4.5.3/bootstrap.min.css" rel="stylesheet">
@@ -64,12 +64,13 @@
 <li><a class="" href="fun-notation.html"><span class="header-section-number">4</span> Notation for functions</a></li>
 <li><a class="" href="graphs-and-graphics.html"><span class="header-section-number">5</span> Graphics &amp; function graphs</a></li>
 <li><a class="" href="params-intro.html"><span class="header-section-number">6</span> Parameters for functions</a></li>
-<li><a class="" href="fun-slopes.html"><span class="header-section-number">7</span> Calculus: Functions and change</a></li>
-<li><a class="active" href="fun-assembling.html"><span class="header-section-number">8</span> Assembling functions</a></li>
-<li><a class="" href="fun-multiple-inputs.html"><span class="header-section-number">9</span> Functions with multiple inputs</a></li>
-<li><a class="" href="fun-piecewise.html"><span class="header-section-number">10</span> Piecewise functions</a></li>
-<li><a class="" href="magnitudes.html"><span class="header-section-number">11</span> Magnitudes</a></li>
-<li><a class="" href="dimensions.html"><span class="header-section-number">12</span> Dimensions</a></li>
+<li><a class="" href="the-process-of-modeling.html"><span class="header-section-number">7</span> The process of modeling</a></li>
+<li><a class="" href="fun-slopes.html"><span class="header-section-number">8</span> The slope function</a></li>
+<li><a class="active" href="fun-assembling.html"><span class="header-section-number">9</span> Assembling functions</a></li>
+<li><a class="" href="fun-multiple-inputs.html"><span class="header-section-number">10</span> Functions with multiple inputs</a></li>
+<li><a class="" href="fun-piecewise.html"><span class="header-section-number">11</span> Piecewise functions</a></li>
+<li><a class="" href="magnitudes.html"><span class="header-section-number">12</span> Magnitudes</a></li>
+<li><a class="" href="dimensions.html"><span class="header-section-number">13</span> Dimensions</a></li>
 <li class="book-part">Block 2: Differentiation</li>
 <li><a class="" href="outline-of-block-2.html">Outline of Block 2</a></li>
 </ul>
@@ -81,17 +82,105 @@
 </div>
   </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="fun-assembling" class="section level1">
 <h1>
-<span class="header-section-number">8</span> Assembling functions<a class="anchor" aria-label="anchor" href="#fun-assembling"><i class="fas fa-link"></i></a>
+<span class="header-section-number">9</span> Assembling functions<a class="anchor" aria-label="anchor" href="#fun-assembling"><i class="fas fa-link"></i></a>
 </h1>
-<p>composition, linear combination, multiplication</p>
+<div class="todo">
+<p>This is text dumped from various chapters of the first draft. It needs to be re-organized and smoothed.</p>
+</div>
+<p>When we need a new function for some purpose, we practically always build it out of existing functions. For instance, a parameterized function like <span class="math display">\[A \sin\left(\frac{2 \pi}{P}x\right) + C\]</span> is built by assempling together a straight-line input scaling, a naked <span class="math inline">\(\sin()\)</span> function, and another straight-line function for scaling the output from <span class="math inline">\(\sin()\)</span>.</p>
+<p>In this chapter, we’ll introduce three general frameworks for combining functions: linear combination, composition, and multiplication.</p>
+<div id="linear-combination" class="section level2">
+<h2>
+<span class="header-section-number">9.1</span> Linear combination<a class="anchor" aria-label="anchor" href="#linear-combination"><i class="fas fa-link"></i></a>
+</h2>
+<p>One of the most widely used sorts of combination is called a <strong><em>linear combination</em></strong>. The mathematics of linear combination is, it happens, at the core of the use of math in applications, whether that be constructing a Google-like search engine or analyzing medical data to see if a treatment has a positive effect.</p>
+<p>Suppose we have a set of functions, for instance, <span class="math inline">\(g_1(t), g_2(t), g_3(t), \ldots\)</span>.
+To make a linear combination we select one or more of the functions. The selected functions are called the <strong><em>basis functions</em></strong>, perhaps because they provide the basis for constructing the combination. Each selected basis function gets multiplied by a number, called a <strong><em>scalar</em></strong> since it sets the vertical scale. Then add up all the variously scaled basis functions.</p>
+<p>For instance, here is one linear combination of the <span class="math inline">\(g_i()\)</span> functions:
+<span class="math display">\[3 g_1(x) + 6.5 g_2(x) - 2.1 g_3(x)\]</span> Another linear combination of the <span class="math inline">\(g_i(x)\)</span> is <span class="math display">\[\frac{1}{5} g_1(x) + 10 g_3(x)\]</span> There are all sorts. The scalars used in a linear combination (for instance, (3, 6.5, -2.1) or (0.5, 10) in the previous examples) are called <strong><em>coefficients</em></strong>.</p>
+<p>The framework of linear combinations provides a powerful and flexible means of constructing models. Indeed, <strong>any smooth function</strong> can be constructed as a linear combination of basic modeling functions. (We haven’t said what “smooth” means, but all of our basic modeling functions are smooth.)</p>
+<p>Even better, there is an automatic, reliable, and fast algorithm for finding the coefficients on any set of basis functions in order to match data as closely as possible. So the modeler just has to select the basis functions, the computer can find the coefficients. That’s one reason why we’ve put the basic modeling functions at the very start of this course. (We’ll explore the mathematics and methods of linear combinations, usually called <strong><em>linear algebra</em></strong>, later in CalcZ.)</p>
+<p>You have worked with linear combinations of functions for many years, although probably nobody used that term. Consider this linear combination of power-law functions:
+<span class="math display">\[P(x) = 3 x^2 - 16 x + 4\]</span>
+The basis functions <span class="math inline">\(x^0\)</span>, <span class="math inline">\(x^1\)</span>, <span class="math inline">\(x^2\)</span>, <span class="math inline">\(x^3\)</span>, and so on have a specific name: they are the <strong><em>monomials</em></strong>. (Monomials all belong to the family of power-law functions.) A linear combination of monomials is called a <strong><em>polynomial</em></strong>, just as a big molecule called a polymer is constructed out of many monomers.</p>
+</div>
+<div id="from-original-draft-combining-and-composing-functions" class="section level2">
+<h2>
+<span class="header-section-number">9.2</span> (from original draft) Combining and composing functions<a class="anchor" aria-label="anchor" href="#from-original-draft-combining-and-composing-functions"><i class="fas fa-link"></i></a>
+</h2>
+<div class="objectives">
+<ol>
+<li>
+<strong>[Fun-4-c-1]</strong> <em>Use linear combination and direct multiplication of functions of one variable to produce functions of multiple variables</em>
+</li>
+<li>
+<strong>[Fun-4-c-2]</strong> <em>Recognize that composition of functions does not itself create a function of multiple variables.</em>
+</li>
+</ol>
+</div>
+<p>Linear combination and composition of functions are often used hand-in-hand to construct models. For instance, our model of the data from cooling water was a linear combination of a constant function and a sinusoidal function <span class="math display">\[\mbox{temperature}(t) \equiv 25.9 + 60.7\, e^{-0.019 t}\]</span>
+Similarly, our model from the Providence tide data was
+<span class="math display">\[\mbox{tide}(t) \equiv 1.02 + 0.50 \sin(2\pi (t - 15.4)/12.56)\]</span>
+In both cases, the sine part of the combination is a mathematical (<span class="math inline">\(\exp(x)\)</span> or <span class="math inline">\(\sin(x)\)</span>) function composed with a linear interior function: <span class="math inline">\(-0.019 t\)</span> for the cooling water, and <span class="math inline">\(2\pi (t - 15.4)/12.56\)</span> for the tides.</p>
+<p>Each of these models was a function of one input. (Coincidentally, the input in both cases was “time”, measured in minutes in the cooling-water example and hours in the tide example.)</p>
+<p>But</p>
+<p>*** RAW TEXT FROM FIRST DRAFT ***</p>
+<p>linear combinations are a powerful way to construct functions of multiple inputs. This can be as simple as <span class="math display">\[h(x, t) \equiv A + B f(x) + C g(t)\]</span></p>
+<div class="workedexample">
+<p>Earlier we introduced a model of natural gas consumption (ccf) in the author’s home during a month as a function of the average temperature during that month. Using <span class="math inline">\(T\)</span> for temperature, the model, constructed from the record of utility bills, was: <span class="math display">\[ccf(T) \equiv 293.1 - 4.62 T\]</span> the blue line in Figure <a href="fun-assembling.html#fig:Fun-1-c-1">9.1</a>.</p>
+<div class="figure">
+<span id="fig:Fun-1-c-1"></span>
+<img src="CalcZ-notes_files/figure-html/Fun-1-c-1-1.png" alt="Natural gas used (ccf) versus average outdoor temperature for the author's home in Saint Paul, Minnesota." width="672"><p class="caption">
+Figure 9.1: Natural gas used (ccf) versus average outdoor temperature for the author’s home in Saint Paul, Minnesota.
+</p>
+</div>
+<p>The amount of natural gas needed to heat the home presumably depends on many other factors as well: how windy was the weather, the thermostat setting, how often the back door was left open, ….</p>
+<p>For the sake of demonstration, here is model matched to the data of the natural gas ccf as a function of both temperature <em>and</em> the amount of electricity (E) used each month.</p>
+<p><span class="math display">\[\mbox{ccf}(T, E) \equiv 295.8 - 4.66\, T - 0.0010\, E\]</span></p>
+<p>The coefficients suggest that more electricity use corresponds to less natural gas use, perhaps because light bulbs are partially heating the home. But the effect, if any is very small: a doubling of monthly electricity use (from, say 400 kWh to 800 kWh) has about the same effect of 1/8 degree increase in outdoor temperature. That would be useful to know if you were having, say, an argument with your brother-in-law about whether it’s OK to leave the lights on in an empty room, because it saves natural gas.</p>
+</div>
+<p>Although linear combinations of functions of different variables are a very common way of constructing functions of multiple variables, function <strong><em>composition</em></strong> is useless when it comes to this.</p>
+<p>For instance, consider the two functions <span class="math inline">\(f(x)\)</span> and <span class="math inline">\(g(t)\)</span>. The composition <span class="math inline">\(f(g(t))\)</span> has only <strong>one</strong> input: <span class="math inline">\(t\)</span>. Similarly, <span class="math inline">\(g(f(x))\)</span> has only one input: <span class="math inline">\(x\)</span>.</p>
+<p>In contrast to composition, multiplication of two functions is very effective for constructing functions of multiple variables: <span class="math inline">\(h(x,y) \equiv f(x) g(y)\)</span>.</p>
+<div class="workedexample">
+<p><strong>A wave packet</strong></p>
+<p>An important idea in physics and communication is the “wave packet.” This is a function that is local, like a hump, but periodic within the hump.</p>
+<div class="sourceCode" id="cb44"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">wave_packet</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span>, <span class="va">A</span><span class="op">=</span><span class="fl">1</span>, <span class="va">center</span> <span class="op">=</span> <span class="fl">0</span>, <span class="va">width</span> <span class="op">=</span> <span class="fl">5</span>, <span class="va">P</span><span class="op">=</span><span class="fl">1</span>, <span class="va">phase</span> <span class="op">=</span> <span class="fl">0</span><span class="op">)</span> <span class="op">{</span>
+  <span class="va">A</span><span class="op">*</span><span class="fu"><a href="https://rdrr.io/r/base/Trig.html">sin</a></span><span class="op">(</span><span class="fl">2</span><span class="op">*</span><span class="va">pi</span><span class="op">*</span><span class="va">x</span><span class="op">/</span><span class="va">P</span><span class="op">)</span><span class="op">*</span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">dnorm</a></span><span class="op">(</span><span class="op">(</span><span class="va">x</span> <span class="op">-</span> <span class="va">center</span><span class="op">)</span><span class="op">/</span><span class="va">width</span><span class="op">)</span>
+<span class="op">}</span>
+<span class="fu">slice_plot</span><span class="op">(</span><span class="fu">wave_packet</span><span class="op">(</span><span class="va">x</span>, A<span class="op">=</span><span class="fl">2</span>, center<span class="op">=</span><span class="fl">3</span>, width  <span class="op">=</span> <span class="fl">4</span>, P  <span class="op">=</span> <span class="fl">2</span> <span class="op">)</span> <span class="op">~</span> <span class="va">x</span>, 
+           <span class="fu">domain</span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">15</span>, <span class="fl">15</span><span class="op">)</span><span class="op">)</span>, npts <span class="op">=</span> <span class="fl">500</span><span class="op">)</span></code></pre></div>
+<div class="figure">
+<span id="fig:unnamed-chunk-62"></span>
+<img src="CalcZ-notes_files/figure-html/unnamed-chunk-62-1.png" alt="A *wave packet* constructed by multiplying a sinusoid by a hump function." width="672"><p class="caption">
+Figure 9.2: A <em>wave packet</em> constructed by multiplying a sinusoid by a hump function.
+</p>
+</div>
+</div>
+<div class="workedexample">
+<p>A simple but powerful and general framework for constructing functions of two variables to match data or to assemble into one function facts about a relationship among three variables is the linear combination of four simple functions: <span class="math display">\[a_0 + a_x\, x + a_y\, y + a_{xy}\, xy\]</span>
+The coefficients in the linear combination are <span class="math inline">\(a_0\)</span>, <span class="math inline">\(a_x\)</span>, <span class="math inline">\(a_y\)</span>, and <span class="math inline">\(a_{xy}\)</span>. Those names were selected to make it easier to keep track of which coefficient scales which function, but ultimately they are just scalars and could have been called <span class="math inline">\(a, b, c\)</span>, and <span class="math inline">\(d\)</span>.</p>
+<p>The basis function <span class="math inline">\(g_4(x, y) \equiv x y\)</span> is called an <strong><em>interaction term</em></strong> and arises very often in models of phenemona such as the spread of epidemics, the population dynamics of predator and prey animals, and the rates of chemical reactions
+.</p>
+</div>
+<p>EXERCISE:</p>
+<p>Recall the Pythagorean theorem: <span class="math inline">\(C^2 = A^2 + B^2\)</span>. Let’s write this as a function that takes as inputs the lengths of the two legs and produces as output the length of the hypotenuse.</p>
+<p><span class="math display">\[\mbox{hypotenuse}(x, y) \equiv \sqrt{\strut x^2 + y^2}\]</span></p>
+<p>This can be seen as a composition of a function <span class="math inline">\(f()\)</span> together with a linear combination of two power-law functions <span class="math inline">\(g()\)</span> and <span class="math inline">\(h()\)</span> of different inputs. What is the function <span class="math inline">\(f()\)</span>? What are <span class="math inline">\(g()\)</span> and <span class="math inline">\(h()\)</span>? What are the coefficients in the linear combination?</p>
 
 </div>
+</div>
   <div class="chapter-nav">
-<div class="prev"><a href="fun-slopes.html"><span class="header-section-number">7</span> Calculus: Functions and change</a></div>
-<div class="next"><a href="fun-multiple-inputs.html"><span class="header-section-number">9</span> Functions with multiple inputs</a></div>
+<div class="prev"><a href="fun-slopes.html"><span class="header-section-number">8</span> The slope function</a></div>
+<div class="next"><a href="fun-multiple-inputs.html"><span class="header-section-number">10</span> Functions with multiple inputs</a></div>
 </div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
     <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
-      <ul class="nav navbar-nav"><li><a class="nav-link" href="#fun-assembling"><span class="header-section-number">8</span> Assembling functions</a></li></ul>
+      <ul class="nav navbar-nav">
+<li><a class="nav-link" href="#fun-assembling"><span class="header-section-number">9</span> Assembling functions</a></li>
+<li><a class="nav-link" href="#linear-combination"><span class="header-section-number">9.1</span> Linear combination</a></li>
+<li><a class="nav-link" href="#from-original-draft-combining-and-composing-functions"><span class="header-section-number">9.2</span> (from original draft) Combining and composing functions</a></li>
+</ul>
 
       <div class="book-extra">
         <ul class="list-unstyled">
@@ -108,7 +197,7 @@
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>CalcZ Student Notes</strong>" was written by Daniel Kaplan. It was last built on 2021-05-27.</p>
+    <p>"<strong>CalcZ Student Notes</strong>" was written by Daniel Kaplan. It was last built on 2021-05-28.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

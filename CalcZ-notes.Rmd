@@ -121,6 +121,13 @@ Learning is facilitated by rapid, formative feedback. Many of the exercises in t
 ```{r child=exercise_file("01", "exercise-intro.Rmd")}
 ```
 
+## [[Taken out. Is there any use for it?]]
+
+There's mathematics ... and then there's the real world. The term ***mathematical modeling*** is about constructing representations of situations or phenomena in the real world in terms of mathematical objects. The advantage of being able to construct models is that models are easy to study, explore, take apart, do experiments on, and deduce the implications of.
+
+We use computers to interact with the world, whether that be record-keeping, communications, media displays, and so on. The "things" that computers work with are always mathematical representations of the real world: models. Computers carry out operations on models. For instance, sound is a real-world phenomenon that resides somewhere between the vibrations of air and the psycho-acoustics of the brain. A simple computer representation of sound is constructed using mathematical stuff: a long series of numbers. Suppose we want to *slow down* sound (say, for someone learning a foreign language) or to speed it up (to get through a slow-paced video) or to translate it into text. The technologies for doing these things are almost always implemented by doing arithmetic or more complicated mathematical procedures on the mathematical stuff.
+
+A major theme of this course is how to make such mathematical representations of real-world phenomena and how to work with the representations to extract the results we want. In particular, we will focus on representations in the form of mathematical functions. (There are other mathematical representations, but functions have a special importance and are ubiquitous in scientific work and computing.) 
 
 
 <!--chapter:end:index.Rmd-->
@@ -429,7 +436,7 @@ Block 1 Functions and Mathematical Modeling
         i. Logarithmic
     c. Reading: Chapter \@ref(params-intro)
 
-5. Combining 2+ functions
+5. [[Combining 2+ functions]] I've integrated this with the "Parameterized function" chapter.
     a. Examples:
     b. NTIs:
     c. Topics:
@@ -438,6 +445,8 @@ Block 1 Functions and Mathematical Modeling
             1. Gallons/$ to Liters/Euros
         iii. Composition (affine shift)
             1. Fahrenheit <> Celsius
+
+6. **The modeling process**
 
 6. Slope function
     a. NTI:
@@ -1430,6 +1439,21 @@ gf_point(output ~ input, data = Sigmoid1)
 ```
 The graph shows the shape of the sigmoid function, one of our naked modeling functions. Except ... the domain of the sigmoid is the entire number line from $-\infty$ to $\infty$. 
 
+
+
+
+::: {.todo}
+** Working with data**
+
+Instructions for accessing data in R here. 
+
+
+i. data frames: `names()`, `head()`, `gf_point()`
+ii. graphical layers and piping: Combining gf_point() and slice_plot() 
+
+
+:::
+
 ### Asymptotes of functions
 
 There's no need to plot out the entire domain. We know that all the "action" is happening near zero and that for inputs further to the left the function value heads toward zero. Similarly, for inputs far to the right, the function value heads toward zero. We have a particular mathematical notation for this sort of "far to the left" idea. In mathematical notation, we write the situation for the sigmoid this way:
@@ -1460,7 +1484,7 @@ A more traditional, mathematical definition of a function graph is the set of co
 In the data point plot of the penguin flipper length vs body mass, there are generally multiple penguins with the same body mass but different flipper lengths. In mathematics, part of the ***definition*** of the term "function" is that a function has ***only one output*** for any given input. Thus, the graph of a function with one input will always consist of a single ***curve***, as opposed to the ***cloud of points*** often seen in data.
 :::
 
-## Graphs of the basic functions
+## Graphs of the basic functions {#function-shapes}
 
 One helpful way to get to know the naked modeling functions individually is to graph them. People have a natural talent to remember shapes and distinguish one from another; your job is to associate each shape with it's name.
 
@@ -1515,6 +1539,10 @@ slice_plot(x^-1 ~ x, domain(x=c(0.1,3))) %>%
 With some practice, you should be able to sketch roughly any of the naked modeling functions from memory. When you can do this, you'll have an easier time envisioning which function might best suit a situation.
 
 In addition to the shape, here are some facts about the naked modeling functions that will let you sketch accurately.
+
+::: {.todo}
+[OR, think of each function as being ***anchored*** at one input. ]
+:::
 
 - Exponential
     - $x=0 \implies e^x=1$
@@ -1874,11 +1902,62 @@ Sigmoid  | pnorm(x, mn, sd) | mn "mean" | sd "standard deviation"
 Straight-line | $mx + b$ | $m$ "slope" | $b$ "y-intercept"
 Straight-line | $m (x-x_0)$ | $m$ "slope" | $x_0$ "center"
 
-::: {.workedexample}
-There is a parameterization of the straight-line function that is handy for finding parameters of a function from a graph.
+## Scale the output
 
-Recall from Section 
+Just as the natural input usually needs to be scaled before it reaches the naked modeling function, so the output from the naked function may need to be scaled before it presents a result suited for interpreting in the real world. 
+
+```{r scaling-nature, echo=FALSE, out.width="100%", fig.cap="Natural **quantities** must be scaled to pure numbers before being suited to the naked modeling functions. The output is a pure number which is scaled to the natural **quantity** of interest."}
+knitr::include_graphics("www/scaling-nature.png")
+```
+
+The overall result of input and output scaling is a smartly dressed modeling function ready to engage the real world.
+
+
+Name        |  Naked form | Dressed for action
+------------|-------------|------------------
+exponential |  $e^x$      | $A e^{kx} + C$
+sinusoid    | $\sin(x)$   | $A \sin(\frac{2 \pi}{P} x) + C$
+straight-line | $a x + b$ | $a x + b$
+
+::: {.takenote}
+The parameter $C$ is often called the ***baseline*** or the ***offset***. Statisticians call it the "intercept," because it plays the same role as $b$ in the straight-line function.
+
+When working with sinusoids, parameter $A$ is called the ***amplitude***.
+
+Of course, you're already familiar with $a$ and $b$: the slope and intercept of a straight line.
+
+```{r show-sin-params, echo=FALSE, warning=FALSE, fig.cap="Baseline (blue), amplitude (red), and period (green) for the sinusoid."}
+# making waveforms for the figure
+slice_plot(sin(x) ~ x, domain(x=c(-1, 12))) %>%
+  gf_hline(yintercept=0, color="blue") %>%
+  gf_refine(theme_void()) %>%
+  gf_errorbar(0 + 1 ~ pi/2, color="red") %>%
+  gf_errorbar(-1 + 0 ~ 3*pi/2, color="red") +
+  geom_errorbarh(aes(y=1/2, xmin=0, xmax=2*pi), color="green", size=.5)
+```
+
+```{r show-exp-baseline, echo=FALSE, warning=FALSE, fig.cap="The baseline for the exponential is the horizontal asymptote."}
+slice_plot(exp(x) ~ x, domain(x=c(-2, 2))) %>%
+  gf_hline(yintercept=0, color = "blue") %>%
+  gf_refine(theme_void())
+```
 :::
+
+::: {.why}
+The straight-line function is like a penguin: even when it's naked, it's still fully dressed!
+
+Now we can let you in on a little secret. All along, the straight-line function has been dressed, not naked. The actual naked form is so simple that it can be confusing:
+
+$$\text{identity}(x) \equiv x$$
+Clothing the identity function by scaling looks like this:
+
+$$ x \underbrace{\longrightarrow}_\mbox{input scaling} k x + c \underbrace{\longrightarrow}_\mbox{output scaling} A(kx + c) + C$$
+A little bit of algebra transforms the scaled function into a more concise form:
+
+$$A(kx + c) + C \longrightarrow \underbrace{Ak}_ax + \underbrace{Ac + C}_b \longrightarrow ax + b$$
+Most students have thoroughly explored the straight-line function in their high-school studies, so we thought it ill-advised to start out with the identity function.
+:::
+
 
 
 ## Exercises {.unnumbered}
@@ -1914,10 +1993,11 @@ add_scale(pnorm(x) ~ x, domain(x=c(-3, 3)), 1.5, 2)
 
 Exercise 3
 
-Pick out the characteristic inputs on the curve. E.g. start and doubling times: where outputs will be 1 and 2
-
-
 Each graph shows a basic modeling function written in this style: $\sin(r(t-t_0))$. Your job is to estimate $t_0$ and $r$. 
+
+Exercise 4
+
+Find the scaling function that translates
 
 <!--chapter:end:Fun-parameterization.Rmd-->
 
@@ -1966,32 +2046,379 @@ show_objectives <- function() {
 # A blank image for spacing
 BlankImage <- gf_blank(hp ~ wt, data=mtcars) %>% gf_theme(theme_void())
 ```
-# Calculus: Functions and change {#fun-slopes}
+# The process of modeling
 
-For our purposes, the definition of calculus is
+Seen very abstractly, a mathematical model, as we are using the term, is a set of ***functions*** that represent the relationships between inputs and outputs.
+
+At the most simple level, building a model can be a short process:
+
+1. Develop an understanding of the relationship you want to model. Often, part of this "understanding" is the pattern seen in data.
+2. Choose a function type---e.g. exponential, sinusoidal, sigmoid---that you think would be a good match to the relationship.
+3. Find parameters that scales your function to be able to accept real-world inputs and generate real-world outputs.
+
+It's important to distinguish between two basic types of model:
+
+1. ***Empirical models*** which are rooted in ***observation*** and ***data***.
+2. ***Mechanistic models*** such as those created by applying fundamental laws of physics, chemistry, and such.
+
+We are going to put off mechanistic models for a while, for two reasons. First, the "fundamental laws of physics, chemistry, and such" are often expressed with the concepts and methods of calculus. We are heading there, but at this point you don't yet know the core concepts and methods of calculus. Second, most students don't make a careful study of the "fundamental laws of physics, chemistry, and such" until *after* they have studied calculus. So examples of mechanistic models will be a bit hollow at this point.
+
+The process of constructing a model that is a good match for data is called ***curve fitting***, or, more generally, ***fitting a model***.
+
+## Variations from scaling
+
+A good place to start building a model is to pick one of the basic modeling functions. This works surprisingly often. To remind you, here are our seven basic modeling functions: 
+
+- straight-line
+- exponential
+- power-law
+- logarithm
+- sinusoid
+- hump
+- sigmoid
+
+It helps in making the selection to have ready to mind the basic shape of each of these function families. To review, revisit Section \@ref(function-shapes).
+
+Remember also that, in general, we scale the inputs and scale the output. This means that in choose a model family, we don't have to worry at first about the numbers on the axes. (Of course, those numbers will be critically important later on in the process!) The scaling does, however, allow us to consider some variations on the shapes of the modeling functions. In particular, the ***input scaling*** lets us flip the shape right-for-left. And the ***output scaling*** lets us flip the shape top-for-bottom.
+
+- $f(t)$, basic shape
+- $f(-t)$, flipped right-for-left
+- $-f(t)$, flipped top-for-bottom
+- $-f(-t)$, flipped both top-for-bottom and right-for-left
+
+For functions such as the sinusoid, flipping is not much use, since the flipped sinusoid curve is still a sinusoid. Similarly, a right-for-left flipped hump function has the same shape as the original. For the straight-line function, flipping of either sort accomplishes the same thing: changing the sign of the slope. 
+
+For the exponential function, the two possible types of flipping---right-for-left and top-for-bottom---produce four different curves, all of which are exponential, shown in Figure \@ref(fig:four-variations).
+
+```{r four-variations, echo=FALSE, fig.cap="Four variations of the exponential functions."}
+slice_plot(exp(x) ~ x, domain(x=c(-2,2))) %>%
+  gf_refine(theme_void()) %>%
+  gf_labs(title="A. The exponential function, no flipping")
+slice_plot(exp(-x) ~ x, domain(x=c(-2,2))) %>%
+  gf_refine(theme_void()) %>%
+  gf_labs(title="B. Flipped right-for-left")
+slice_plot(-exp(x) ~ x, domain(x=c(-2,2))) %>%
+  gf_refine(theme_void()) %>%
+  gf_labs(title="C. Flipped top-for-bottom")
+slice_plot(-exp(-x) ~ x, domain(x=c(-2,2))) %>%
+  gf_refine(theme_void()) %>%
+  gf_labs(title="D. Flipped both right-for-left and top-for-bottom")
+
+```
+
+## Curve fitting an exponential function
+
+Figure \@ref(fig:Fun-4-intro-1) shows some data collected by Prof. Stan Wagon to support his making a detailed mechanistic model of an everyday phenomenon: [The cooling of a mug of hot beverage to room temperature](https://www.researchgate.net/profile/Gianluca_Argentini/post/Is_analogy_reasoning_between_heat_transfert_and_electriocity_allows_to_apply_the_electricity_laws_about_resistance_to_thermal_resistances/attachment/59d6573379197b80779ada64/AS%3A533325451403264%401504166104259/download/Stan+WAGON+How+quickly+does+water+cool.pdf). The mug started at room temperature, which was measured at 26 degrees C. At time 0 he poured in boiling water from a kettle and measured the temperature of the water over the next few hours.
+
+```{r Fun-4-intro-1, echo=FALSE, fig.cap="Stan's data"}
+set.seed(101)
+gf_point(temp ~ time, data=CoolingWater %>% sample_n(20)) %>%
+  gf_labs(x = "Time (minutes)", y="Temperature (deg. C)")
+```
+
+Our task is to translate this data into the form of a function that takes time as input and returns temperature as output. Such a model would be useful for, say, filling in the gaps of the data. For instance, we might want to find the temperature of the water immediately after being poured from the kettle into the mug.
+
+
+
+Looking at the data, one sees that the temperature decreases along a curve: cooling fast at first and then more slowly. This is the pattern of the flipped right-for-left exponential. (Figure \@ref(fig:four-variations)(B)) We can imagine then that an exponential, $A e^{kt} + C$ will be a suitable model form for the cooling water.
+
+What remains is to find the parameters $A$, $k$, and $C$.  Here is a general process for curve-fitting an exponential. Later, we'll apply this process specifically to the water-cooling situation. 
+
+**General process for curve-fitting an exponential**
+
+**Step 0**: Check that the data show an exponential pattern in one of its variations, namely a smooth increase or decrease and leveling out beyond some value of $t$. If this isn't true, reconsider whether you should be using an exponential function in the first place.
+
+**Step 1** Do the data show exponential growth or exponential decay? If it's exponential growth, then the flat region in Step 0 will be to the left and $k$ will be positive. If exponential decay, the flat region will be to the right and $k$ will be negative.
+
+Notice that the question of "growth or decay" depends only on the sign of the parameter $k$. You can have an exponentially decaying process that's increasing. Consider, for instance, the speed of a car as it merges onto a highway from a slow speed on the entrance ramp.  The car's velocity is increasing, but as you approach highway speed the rate of increase gets smaller. That's exponential decay.
+
+**Step 2** Where is the baseline? We're going to put aside $k$ for the moment and find the value of the output that is being approached asymptotically, that is, the height of the level zone of the data. This height is the coefficient $A$ in the linear combination.
+
+**Step 3** Once you know the baseline, you're set to find a numerical value for the parameter $k$. 
+
+i. Pick a point in the data far from the baseline. Call the input $t_1$. 
+ii. Scan forward or backward in time to find a point in the data that's vertically half way from the original point toward the baseline. Call the input at that point $t_{1/2}$. The difference between these, $t_1 - t_{1/2}$ is called the ***half-life*** or ***halving-time*** if it's negative and the ***doubling time*** if it's positive. 
+iii. The parameter $k$ is $0.693 / (t_1 - t_{1/2})$. Double check the sign of $k$ to make sure it's consistent with what you saw in Step 1. (Incidently, $0.693 = \ln(2)$. The 2 is the same as the 2 in doubling or halving.)
+
+**Step 4** Now that you have numerical values for the baseline $A$ and the parameter $k$, calculating the value of $B$ is straightforward.  
+    i. Pick a $t_0$ that's reasonably well represented in your data. Find the vertical coordinate represented by the data near that $t_0$. Call that ${\cal D}$. 
+    ii. Solve with respect to $B$ the equation $A + B e^{k t_0} = {\cal D}$. Things are particularly easy if you can use $t_0 = 0$. Then you just straight off calculate $B = {\cal D} - A$.
+
+**Step 5** Plot the function $A + B e^{k t}$ using the values for $A$, $B$, and $t$ that you just found. If you are not satisfied, tweak the parameters a bit until you are.
+
+**Exponential curve fitting applied to the water-cooling data**
+
+Let's illustrate the general process on the water-cooling data, redrawn in Figure \@ref(fig:Fun-4-a-2-1).
+
+```{r Fun-4-a-2-1, echo=FALSE, fig.cap="The cooling-water data, repeated here for convenience."}
+set.seed(101)
+gf_point(temp ~ time, data=CoolingWater %>% sample_n(20)) %>%
+  gf_lims(y = c(20, NA))
+```
+
+Step 0: The data indicate a smooth curve. As $t$ gets large, the curve approaches a constant. So an exponential model is reasonable.
+
+Step 1: The flat zone of the data is to the right. So we've got exponential decay and $k < 0$. 
+
+Step 2: The curve looks like it's leveling out at a temperature of about 25 degrees C for large $t$. So $A \approx 25^{\circ} \text{C}$.
+
+Step 3: 
+
+i. The point furthest from the baseline is located at $t_1 = 15 \text{sec}$ with a value ${\cal D} \approx 80^\circ\text{C}$. 
+ii. This if $55^\circ\text{C}$ from the baseline. We want to find the value of $t_1$ where the temperature will be half way from 80 to the baseline. That's a temperature of about $80 - 55/2 = 53.5$. Scanning over to the right, the function that I can imagine going through the data crossed $53^\circ$ at about $t_{1/2} = 40$. Thus, the half-life is estimated at 25s. 
+iii. The parameter $k$ is therefore $k\approx $0.693 / \mbox{half-life}) = - 0.63 / 25 = -0.0277$. Since we identified in Step 1 that exponential decay is involved, we expect $k$ to be negative. It is.
+
+Step 4. 
+
+i. We know $A \approx 25$ and $k \approx -0.0277$. We also now that for $t=15$ the function output is about ${\cal D} = 80^\circ$. 
+ii. This means $25^\circ + B e^{- 0.0277 \times 15} \approx 80^\circ = 25 + 0.66 B$. Solving for $B$ gives $B = (80 - 25)/0.66 = 83.3$
+
+Step 5. Graph the function over the data.
+
+```{r Fun-4-a-2-2, echo=FALSE, fig.cap="An exponential function that roughly aligns with the data."}
+set.seed(101)
+gf_point(temp ~ time, data=CoolingWater %>% sample_n(20)) %>%
+  gf_lims(y = c(20, NA)) %>%
+  slice_plot(25 + 83.3*exp(-.0277*time) ~ time, color="blue")
+```
+
+## Curve fitting a periodic function
+
+## Modeling periodicity
+
+::: {.objectives}
+```{r echo=FALSE, results="asis"}
+state_objective("Fun-7a", "Know how the parameter values in a sinusoidal function affect the amplitude, period, phase shift, and vertical shift (table page 185)")
+state_objective("Fun-7b", "Given a sinusoidal graph, be able to estimate the amplitude, period, phase shift, and vertical shift (table page 185)")
+state_objective("Fun-7c", "Recognize when a sinusoidal model is appropriate.")
+```
+:::
+
+Figure \@ref(fig:Fun-4-a-3) shows the tide level in [Providence, Rhode Island](https://www.google.com/maps/place/Providence,+RI/@41.8071,-71.4012,14z/data=!4m5!3m4!1s0x89e444e0437e735d:0x69df7c4d48b3b627!8m2!3d41.8071!4d-71.4012), starting at midnight on April 1, 2020 and recorded every minute for four and a half days. (These data were collected by the US National Oceanic and Atmospheric Administration. [Link](https://tidesandcurrents.noaa.gov/api/datagetter?begin_date=20200401%2010:00&end_date=20200405%201:59&station=8454000&product=one_minute_water_level&datum=mllw&units=metric&time_zone=gmt&application=web_services&format=csv))
+
+```{r Fun-4-a-3-1, echo=FALSE, fig.cap="About four days of tide-level data from Providence, Rhode Island"}
+#gf_line(level ~ hour, data = math141Z::Anchorage_tide[1:1000,])
+gf_line(level ~ hour, data = math141Z::RI_tide) %>%
+  gf_labs(y="Water level (meters)", x="Time (hours)", title="Tide level in Providence, Rhode Island") %>%
+  gf_lims(y =c(0, 2))
+```
+
+It's not too hard to see what's going on. The tide rises and falls about every 12 hours. The difference between high tide and low tide is a little more than one meter. The tide gauge is calibrated so that a typical reading is 1 meter, although we don't know what that is respect to. (Certainly not sea level, since then the typical reading would be around zero.)
+
+This simple description tells almost everything needed to construct an A/B model of the tide level using a sinusoid, that is, a function of the form $$A + B \sin(2\pi t/P)$$ The procedure is straightforward:
+
+**Step 0**: Determine whether a sinusoid model is appropriate. As you know, sinusoids oscillate up and down repeatedly with a steady ***period***. That certainly seems the case here. But sinusoids are also steady in the ***peak*** and ***trough*** values for each cycle. That's only approximately true in the Providence data. Models inevitably involve approximation. We'll have to keep an eye on whether the ***fixed amplitude*** feature of sinusoids 
+
+**Step 1**: Choose a sensible value to represent the low point repeatedly reached. 0.5 m seems appropriate here, but obviously the exact position of the trough of each cycle varies over the 4.5 day duration of the data.  Similarly, the peak is near 1.6 m. Parameter $A$ is the mean of the peak and trough values: $\frac{1.6 + 0.5}{2} = 1.05$ m here. Parameter $B$ is half the difference between the peak and trough values: $\frac{1.6 - 0.5}{2} = 0.55$. Parameter $A$ is called the ***baseline*** of the sinusoid. Paramter $B$ is the ***amplitude***. (Note that by convention, the amplitude is always *half* the high-to-low range of the sinusoid.)
+
+**Step 2**: Estimate the period $P$ of the sinusoid. This can be done with a ruler: the horizontal duration of a complete cycle. I like to use the time between peaks, but the time between troughs would work just as well. Another good choice is the time between positive sloping crossings of the baseline. (But be careful. The time between *successive* baseline crossings, one positive sloping and the other negative, give just *half* the period.) 
+
+On the scale of the above plot, it's hard to read off the time of the first peak. So, zoom in until it becomes more obvious.
+
+```{r Fun-4-a-3-2, echo=FALSE, out.width="50%", fig.show="hold", fig.cap="Zooming in on the start of the data (left) and on the last part of the data (right)."}
+gf_line(level ~ hour, 
+         data = math141Z::RI_tide %>% filter(hour < 25)) %>%
+  gf_labs(y="Water level (meters)", x="Time (hours)",
+          title="Start of record") %>%
+  gf_lims(y =c(0, 2))
+gf_line(level ~ hour, 
+         data = math141Z::RI_tide %>% filter(hour > 90)) %>%
+  gf_labs(y="Water level (meters)", x="Time (hours)",
+          title = "End of record") %>%
+  gf_lims(y =c(0, 2))
+```
+
+The left panel in Figure \@ref(fig:Fun-4-a-3-2) shows about 24 hours at the start of the record. The first peak is at about 7 hours, the second at about 18 hours. That indicates that the period is 18 - 7 = 11 hours. 
+
+**Step 3** Plot out the model over the data. Replacing the symbols $A$, $B$, and $P$ with our estimates, the model is 
+
+$$\require{color}
+{\color{green}\mbox{tide}(t) \equiv 1.05 + 0.55 \sin(2\pi t/11)}$$
+
+Figure \@ref(fig:Fun-4-a-3-3) shows this model in $\color{green}\mbox{green}$.
+
+```{r Fun-4-a-3-3, echo=FALSE, out.width="50%", fig.show="hold", fig.cap="The sinusoid fails to align with the timing of peaks and troughs."}
+mod1 <- makeFun(1.05 + 0.55*sin(2*pi*hour/11) ~ hour)
+mod2 <- makeFun(1.05 + 0.55*sin(2*pi*(hour-17)/11) ~ hour)
+gf_line(level ~ hour, 
+         data = math141Z::RI_tide %>% filter(hour < 25)) %>%
+  slice_plot(mod1(hour) ~ hour, color="green") %>%
+  gf_labs(y="Water level (meters)", x="Time (hours)") %>%
+  gf_lims(y =c(0, 2))
+gf_line(level ~ hour, 
+         data = math141Z::RI_tide %>% filter(hour > 90)) %>%
+  slice_plot(mod1(hour) ~ hour, color="green") %>%
+  gf_labs(y="Water level (meters)", x="Time (hours)") %>%
+  gf_lims(y =c(0, 2))
+```
+
+
+## The modeling cycle
+
+Need intro explaining cycle
+
+
+### Example: Cooling water
+
+It looks like our estimate of the half-life is a bit too small; the data doesn't seem to decay at the rate implied by $k = -0.0277$. Perhaps we should try $k = -0.2$ and go on from there.
+
+EXERCISE: Have them try $k=0.02$ and iterate until they get something they like.
+
+Later in CalcZ, we'll study ***optimization***. There are optimization techniques for directing the computer to refine the parameters to best match the data. Just to illustrate, here's what we get:
+
+```{r echo=FALSE}
+set.seed(101)
+Stans_data <- CoolingWater %>% sample_n(20)
+```
+
+```{r Fun-4-a-2-3, fig.cap="Polishing the fit using the rough model as a starting point."}
+refined_params <- 
+  fitModel(temp ~ A + B*exp(k*time), data = Stans_data, 
+           start = list(A = 25, B = 83.3, k = -0.0277))
+coef(refined_params)
+new_f <- makeFun(refined_params)
+gf_point(temp ~ time, data = Stans_data) %>%
+  slice_plot(new_f(time) ~ time, color="blue")
+```
+
+The refined parameters give a much better fit to the data than our original rough estimates by eye. 
+
+We had two rounds of the ***modeling cycle***. First, choice of an A/B expontential model and a rough estimate of the parameters A, B, and $k$. Second, refinement of those parameters using the computer.
+
+Looking at the results of the second round, the experienced modeler can see some disturbing discrepancies. First, the estimated baseline appears to be too high. Related, the initial decay of the model function doesn't seem to be fast enough and the decay of the model function for large $t$ appears to be too slow. Prof. Stan Wagon noticed this. He used additional data to fill in the gaps for small $t$ and refined his model further by changing the basis functions in the linear combination. He hypothesized that there are at least two different cooling processes. First, the newly poured water raises the temperature of the mug itself. Since the water and mug are in direct contact, this is a fast process. Then, the complete water/mug unit comes slowly into equilibrium with the room temperature.
+
+The newly refined model was a even better match to the data. But nothing's perfect and Prof. Wagon saw an opportunity for additional refinement based on the idea that there is a third physical mechanism of cooling: evaporation from the surface of the hot water. Prof. Wagon's additional circuits of the modeling cycle were appropriate to his purpose, which was to develop a detailed understanding of the process of cooling. For other purposes, such as demonstrating the appropriateness of an exponential process or interpolating between the data points, earlier cycles might have sufficed.
+
+Here's a graph of the model Prof. Wagon constructed to match the data.
+
+```{r Fun-4-a-2-4, echo=FALSE, out.width="70%", fig.align="center", fig.cap="A model that combines three exponentials provides an excellent fit."}
+knitr::include_graphics(normalizePath("www/Wagon-water-fit.png"))
+```
+
+This is an excellent match to the data. But ... matching the data isn't always the only goal of modeling. Prof. Wagon wanted to make sure the model was physically plausible. And looking at the refined parameters, which include two exponential processes with parameters $k_1$ and $k_2$, he saw something wrong:
+
+> *But what can we make of $k_1$, whose [positive value] violates the laws of thermodynamics by suggesting that the water gets hotter by virtue of its presence in the cool air? The most likely problem is that our simple model (the proportionality assumption) is not adequate near the boiling point. There are many complicated factors that affect heat transportation, such as air movement, boundary layer dissipation, and diffusion, and our use of a single linear relationship appears to be inadequate. In the next section [of our paper] we suggest some further experiments, but we also hope that our experiments might inspire readers to come up with a better mathematical model.*
+
+The modeling cycle can go round and round!
+
+### Example: The tides
+
+**Step 4**: Evaluate and refine. The green model would make poor predictions. The model says "high tide" when the data say otherwise. What's missing is the ***phase*** of the sinusoid. A model that incorporates the phase is 
+
+$${\color{blue}\mbox{tide}(t) \equiv 1.05 + 0.55 \sin(2\pi (t - t_0)/11)}$$
+
+The new parameter, $t_0$, should be set to be the time of a positive-going crossing of the baseline. There's such a crossing at about time = 17. Happily, changing the phase does not itself necessitate re-estimating the other parameters: baseline, amplitude, period. This model, incorporating the phase, has been graphed in $\color{blue}\mbox{blue}$.
+
+```{r Fun-4-a-3-4, echo=FALSE, out.width="50%", fig.show="hold", fig.cap="Shifting the **phase** of the sinusoid gives the flexibility needed to align the peaks and troughs of the model with the data. Performing this alignment for one peak makes it clear that the period is wrong."}
+mod1 <- makeFun(1.05 + 0.55*sin(2*pi*hour/11) ~ hour)
+mod2 <- makeFun(1.05 + 0.55*sin(2*pi*(hour-17)/11) ~ hour)
+gf_line(level ~ hour, 
+         data = math141Z::RI_tide %>% filter(hour < 25)) %>%
+  slice_plot(mod2(hour) ~ hour, color="blue") %>%
+  gf_labs(y="Water level (meters)", x="Time (hours)") %>%
+  gf_lims(y =c(0, 2))
+gf_line(level ~ hour, 
+         data = math141Z::RI_tide %>% filter(hour > 90)) %>%
+  slice_plot(mod2(hour) ~ hour, color="blue") %>%
+  gf_labs(y="Water level (meters)", x="Time (hours)")%>%
+  gf_lims(y =c(0, 2))
+```
+
+For some modeling purposes, such as prediction of future tides, the phase information is impossible. For others, say, description of the amplitude of the tides, not. But getting the phase roughly right can help point out other problems. For instance, having the blue sinusoid for comparison makes it clear that the estimated period of 11 hours is too short. Maybe 13 hours would be better. Better still, since at $t=t_0 = 17$ the model is a close match to the data, let's use that as the estimate of the start of a cycle. But then, let's move much further along in the data to find another baseline crossing. To judge from the right panel, there is a baseline crossing at $t=103$. The difference between these two times is $103 - 17 = 86$ hours. Of course, the period is not 86 hours. Looking back at the whole set of data we can see 7 complete cycles between $t=17$ and $t=103$. So our new estimate of the period is $86/7 = 12.3$ hours.
+
+With this refinement the model is
+$${\color{violet}\mbox{tide}(t) \equiv 1.05 + 0.55 \sin(2\pi (t - 17)/12.3)}$$
+
+```{r Fun-4-a-3-5, echo=FALSE, fig.cap="With the phase about right, a better estimate can be made of the period: 12.3 hours."}
+mod3 <- makeFun(1.05 + 0.55*sin(2*pi*(hour-17)/12.3) ~ hour)
+gf_line(level ~ hour, data = math141Z::RI_tide) %>%
+  slice_plot(mod3(hour) ~ hour, color="violet") %>%
+  gf_labs(y="Water level (meters)", x="Time (hours)", title="Period 12.3 hours") %>%
+  gf_lims(y =c(0, 2))
+```
+That's a pretty good match to the data! We might call it quits at that. First, let's polish up the parameter estimates, letting the computer do the tedious work of trying little tweaks to see if it can improve the fit.
+
+```{r}
+tide_mod <- 
+  fitModel(level ~ A + B*sin(2*pi*(hour-hzero)/P),
+  data = RI_tide,
+  start=list(A=1.05, B=0.55, hzero=17, P=12.3))
+coef(tide_mod)
+```
+```{r Fun-4-a-3-6, echo=FALSE, fig.cap="Polishing the parameters of the sinusoid"}
+mod4 <- makeFun(tide_mod)
+gf_line(level ~ hour, data = math141Z::RI_tide) %>%
+  slice_plot(mod4(hour) ~ hour, color="red", npts=200) %>%
+  gf_labs(y="Water level (meters)", x="Time (hours)", title="After polishing by the computer") %>%
+  gf_lims(y =c(0, 2))
+```
+This last model seems capable of making reasonable predictions, so if we collected up-to-date data we might be able to fit a new model to predict the tide level pretty accurately a few days ahead of time. Also, the excellent alignment of the model peaks with the data tell us that the cyclic tide has a period that constant, at least so far as well can tell. 
+
+With the period estimate $P=12.56$ hours, we can go looking for other phenomena that might account for the tides. The period of the day-night cycle is, of course 24 hours. So the tides in Providence come in and out twice a day. But not exactly. Something else must be going on. 
+
+Isaac Newton was the first to propose that the tides were caused by the gravitational attraction of the Moon. A complete cycle of the Moon---moon rise to moon rise---takes about 50 minutes longer than a full day: the Earth revolves once every 24 hours, but in that time the Moon has moved a bit further on in its orbit of the Earth. So the Moon's period, seen from a fixed place on Earth is about 24.8 hours. Half of this, 12.4 hours, is awfully close to our estimate of the tidal period: 12.56 hours. The difference in periods, 8 minutes a day, might be hard to observe over only 4 days. Maybe with more data we'd get a better match between the tides and the moon. 
+
+This is the modeling cycle at work: Propose a model form (A/B model with sinusoid), adjust parameters to match what we know (the Providence tide record), compare the model to the data, observe discrepancies, propose a refined model. You can stop the model when it is giving you what you need. The period 12.56 hour model seems good enough to make a prediction of the tide level a few days ahead, and is certainly better than the "two tides a day" model. But our model is not yet able to implicate precisely the Moon's orbit in in tidal oscillations.
+
+Discrepancies between a model and data play two roles: they help us decide if the model is fit for the purpose we have in mind and they can point the way to improved models. That the tidal data deviates from the steady amplitude of our model can be a clue for where to look next. It's not always obvious where this will lead. 
+
+Historically, careful analysis of tides led to a highly detailed, highly accurate model: a linear combination of sinusoids with diurnal periods 12.42, 12.00, 12.66, and 11.97 hours as well components with period 23.93, 25.82, 24.07, 26.87, and 24.00 hours. A tide-prediction model is constructed by finding the coefficients of the linear combination; these differ from locale to locale.
+
+
+<!--chapter:end:Fun-modeling.Rmd-->
+
+```{r include=FALSE, cache=FALSE}
+library(mosaic)
+library(mosaicCalc)
+library(glue)
+library(math141Z) # REPLACE THIS WHEN PACKAGES ARE RE-ALIGNED
+library(here) # for file locations
+
+
+
+exercise_file <- function(day,  file_name, course="141Z") {
+    path=glue::glue("Exercises/DD-{course}-{day}/{file_name}")
+    here(path)
+}
+
+if (!exists("objective_list"))
+  objective_list <- list()
+
+add_objective <- function(ID, text) {
+  objective_list[[length(objective_list) + 1]] <<-
+                      list(ID = ID, text = text)
+}
+
+state_objective <- function(ID, text) {
+  add_objective(ID, text)
+  format_objective(list(ID=ID, text=text))
+}
+
+format_objective <- function(obj) {
+  knitr::asis_output(glue::glue("#. **[{obj$ID}]** *{obj$text}*\n\n"))
+}
+
+show_objectives <- function() {
+  Tmp <- lapply(objective_list, tibble::as_tibble) %>%
+    bind_rows()
+  readr::write_csv(Tmp, file="objective-list.csv")
+
+  lapply(objective_list, format_objective) %>%
+    unlist() %>%
+    paste(collapse="\n") %>%
+    knitr::asis_output()
+}
+
+# A blank image for spacing
+BlankImage <- gf_blank(hp ~ wt, data=mtcars) %>% gf_theme(theme_void())
+```
+# The slope function {#fun-slopes}
+
+For our purposes, the ***definition of calculus*** is
 
 > *The use of functions to model and explore continuous change*
 
-We've introduced in a preliminary way the words "function" and "continuous" as they relate to calculus. The agenda of this chapter is to give specific mathematical meanings to the words "model" and "change."
-
-## Naked modeling functions
-
-Here is a list of functions most of which you have probably seen many times in your mathematics studies.
-
-- $x$, $x^2$, $\sqrt{x}$, $1/\sqrt{x}$, and so on. 
-- $e^x$ as well as $2^x$ or $10^x$
-- $\sin(x)$ and $\cos(x)$
-- $\ln(x)$ as well as $\log_{10}(x)$ and $\log_2(x)$
-
-You will see these functions---or something very much like them---throughout this book. As such, it might be appropriate to call them "core" functions. But we will not. Instead, we refer to these as the ***naked modeling functions***.
-
-There's mathematics ... and then there's the real world. The term ***mathematical modeling*** is about constructing representations of situations or phenomena in the real world in terms of mathematical objects. The advantage of being able to construct models is that models are easy to study, explore, take apart, do experiments on, and deduce the implications of.
-
-We use computers to interact with the world, whether that be record-keeping, communications, media displays, and so on. The "things" that computers work with are always mathematical representations of the real world: models. Computers carry out operations on models. For instance, sound is a real-world phenomenon that resides somewhere between the vibrations of air and the psycho-acoustics of the brain. A simple computer representation of sound is constructed using mathematical stuff: a long series of numbers. Suppose we want to *slow down* sound (say, for someone learning a foreign language) or to speed it up (to get through a slow-paced video) or to translate it into text. The technologies for doing these things are almost always implemented by doing arithmetic or more complicated mathematical procedures on the mathematical stuff.
-
-A major theme of this course is how to make such mathematical representations of real-world phenomena and how to work with the representations to extract the results we want. In particular, we will focus on representations in the form of mathematical functions. (There are other mathematical representations, but functions have a special importance and are ubiquitous in scientific work and computing.) 
-
-As you'll see, when we need a new function for some purpose, we practically always build it out of existing functions. For instance, by dressing up the naked modeling functions of the previous chapter with parameters, we generate the "basic modeling functions" that enable us to interact with the world. 
+The agenda of this chapter is to give specific mathematical meaning to the word "change."
 
 ## Change and slope
 
@@ -2023,17 +2450,219 @@ Calculus is about ***continuous change***. For instance, if the weather bureau p
 
 Finding a language to describe continuous change---famously, the position of the moon or planets in their orbit, or the speed of a ball rolling down a ramp---was central to the emergence of what historians call the "Age of Enlightenment" or "modern scientific method." The first complete presentation of that language was published by Isaac Newton based on his work in the 1660s. As you might guess, the name of the language is "calculus."
 
-## Slopes and curves
+## Slope
 
-::: {.todo}
-Review how to compute the slope of a line.
+You already know pretty much everything there is to know about the straight-line function,
 
-Point out that only the straight-line function has a slope that is the same everywhere. The other naked modeling functions don't have *a slope*, they have a local property that is a function of $x$.
+- **Formula**: $f(x) \equiv a x + b$. The parameters $a$ and $b$ are the "slope" and "intercept" respectively. (More precisely, $b$ is the "y-intercept." But in statistics and modeling, it's just the "intercept.")
+- **Reading parameters from a graph**: You learned several ways to do this which are all equivalent. Maybe the easiest is the read the y-intercept off the graph. That's $b$. Then choose some non-zero $x_1$ and read off from the graph the value of $f(x_1)$. The slope is simply $$\frac{f(x_1) - b}{x_0}$$
+
+    The ***y-intercept method*** is a special case of a more general method, the ***two-point method***, that you can use even if the y-intercept isn't shown on the graph. Pick two specific values of $x$, which we'll call $x_0$ and $x_1$. Evalate the function at these input values and compute the rise over run: $$\mbox{rise over run} \equiv \frac{f(x_1) - f(x_0)}{x_1 - x_0}$$
+The rise over run is the slope of the straight line.
+
+    The y-intercept method is exactly the same as the two-point method with $x_0 = 0$.
+    
+- **Matching a straight-line function to data**: You might not have been taught this formally, but the basic process is easy to imitate. The process is called ***line fitting*** or, in statistics and other fields, ***linear regression***.
+
+## The fitted line
+
+::: {.objectives}
+```{r echo=FALSE, results="asis"}
+state_objective("Fun-4-a-1", "Construct a straight-line model that fits data.")
+```
 :::
 
 
 
-So much of what we will do in calculus depends on being able to construct and manipulate functions. Doing this successfully requires a more careful consideration of how we know when something is a function and the anatomy of functions generally. The major way this is accomplished both in mathematical notation and computer languages is via ***notation***, the subject of the next chapter.
+To illustrate line fitting, let's return to the cooling mug of water. Figure \@ref(fig:Fun-4-a) shows the data along with a dozen candidate straight line functions, each one drawn in its own color.
+
+```{r Fun-4-a, echo=FALSE, warning=FALSE, fig.cap="Some candidate straight-line function models plotted on top of the cooling water data. Which one(s) would you pick as good matches to the data?"}
+set.seed(101)
+gf_point(temp ~ time, data=CoolingWater %>% sample_n(20)) %>%
+  gf_labs(x = "Time (minutes)", y="Temperature (deg. C)") %>%
+  gf_lm(temp ~ time, data = CoolingWater %>% sample_n(20), color="blue") %>%
+  gf_lm(temp ~ time, data = CoolingWater %>% sample_n(20), color="aquamarine") %>%
+  gf_lm(temp ~ time, data = CoolingWater %>% sample_n(20), color="cadetblue") %>%
+  gf_lm(temp ~ time, data = CoolingWater %>% sample_n(20), color="green") %>%
+  gf_lm(temp ~ time, data = CoolingWater %>% sample_n(20), color="cadetblue") %>%
+  gf_lm(temp ~ time, data = CoolingWater %>% sample_n(20), color="royalblue") %>%
+  gf_lm(temp ~ time, data = CoolingWater %>% sample_n(20),color="seagreen") %>%
+  gf_abline(intercept = 100, slope=-0.21, color = "plum") %>%
+  gf_abline(intercept = 90, slope=-0.19, color = "plum3") %>%
+  gf_abline(intercept = 63, slope=-0.05, color = "purple") %>%
+  gf_abline(intercept = 120, slope=-0.51, color = "purple3") %>%
+  gf_abline(intercept = 7, slope=.21, color = "orchid")
+```
+
+Some of the straight-line models are a much better match to the data than others. The blue-shaded functions are pretty good fits, the greenish functions are maybe OK but a little sketchy, and the purple-shaded functions are just horrible.
+
+Now that you know what a reasonable straight-line model looks like, you will find it pretty easy to draw one on data graphics that even remotely show a straight-line pattern. 
+
+Step 1: Draw a reasonable straight-line through the data points. 
+
+Step 2: Find the parameters that correspond to the line you drew. 
+
+## Average rate of change
+
+Since the slope is our standard way of representing a relationship of change, we will often use it as a way of summarizing a function. To illustrate, consider the exponential model we constructed to match the cooling-water data:
+
+```{r}
+water <- makeFun(60.7*exp(-0.019*t) + 25.93 ~ t)
+```
+
+
+
+```{r water-average, echo=FALSE, fig.cap="The exponential function that was previously matched to the cooling-water data. The slope of the straight line connecting two points on the function graph is the average rate of change during the interval."}
+
+Pts <- tibble::tibble(
+  x = c(10,125),
+  y = water(x),
+  baselabel = c("t0", "t1"),
+  flabel = c("f(t0)", "f(t1)")
+)
+slice_plot(water(t) ~ t, domain(t = c(0,200))) %>%
+  gf_point(y ~ x, data = Pts, color="red", alpha=0.25, size=4) %>%
+  gf_line(y ~ x, data = Pts, color="red") %>%
+  gf_point(0 ~ x, data = Pts, color="blue", alpha=0.25, size=4) %>%
+  gf_lims(y=c(0,90)) %>%
+  gf_segment(0 + y ~ x + x, data=Pts, color="blue", linetype=2) %>%
+  gf_text(0 ~ x, data = Pts, label = ~baselabel, color="blue", nudge_x=7) %>%
+  gf_text(y ~ x, data = Pts, label = ~flabel, color="red", nudge_y=7, nudge_x=2)
+```
+
+During the interval $[t_0, t_1]$ the rate at which the water cools is higher at first and lower at the end. The ***average*** rate of change is a single number that summarizes the whole interval.
+
+For all except straight-line models, the average rate of change depends on the interval chosen.
+
+EXERCISE: From the graph, compute the average rate of change over the interval $10 \leq t \leq 200$. How does it compare to the average rate of change over the interval $10 \leq t \leq 125$?
+
+EXERCISE: Same, but for a sinusoid. Give a couple of intervals, including one where there is no net change.
+
+
+
+## Instantaneous rate of change
+
+The water is cooling continuously. Sometimes we'll be interested in the rate of change at a given instant $t_0$. If we choose a very small interval, say $[t_0, t_0 + 0.1]$, we'll get a good approximation to this ***instantaneous rate of change***.
+$$\text{instantaneous rate of change} = \frac{f(t_0 + 0.1) - f(t_0)}{0.1}$$
+
+On a graph, the instantaneous rate of change is the slope of the tangent line to a point, as shown in Figure \@ref(fig:tangent-line-exp).
+
+```{r tangent-line-exp, echo=FALSE, fig.cap="Instantaneous rate of change is the slope of the line tangent to a the curve at a single point."}
+Pt <- tibble::tibble(
+  x = 25,
+  y = water(x),
+  baselabel="x0",
+  flabel = "f(x0)"
+)
+tangent <- makeFun(-0.71722*(t-25) + 63.7 ~ t)
+slice_plot(water(t) ~ t, domain(t=c(0, 200))) %>%
+  gf_point(y ~ x, data=Pt, 
+           color="sienna", alpha = 0.25, size=4) %>%
+  gf_point(25 ~ x, data=Pt, 
+           color="tomato", alpha = 0.25, size=4) %>%
+  slice_plot(tangent(t) ~ t, color = "sienna", 
+             domain(t=c(0,80))) %>%
+  gf_text(y ~ x, data = Pt, label = ~ flabel, 
+          nudge_x = 10, color="sienna") %>%
+  gf_text(25 ~ x, data = Pt, label = ~ baselabel, 
+          nudge_x = 10, color="tomato") %>%
+  gf_segment(25 + y ~ x + x, data=Pt, color="tomato", linetype=2)
+```
+
+In Block 2, we'll see that a good way to define an instantaneous rate of change at $t_0$ is as the average rate of change over the interval $t_0 \leq t \leq t_1$ with the proviso that the interval length $t_1 - t_0$ goes as closely as it can to zero.
+
+Figure \@ref(fig:three-rates) shows the fitted rate of change and average rate of change in the interval $10 \leq t \leq 125$ as well as the instantaneous rate of change at $t_0 = 50$. As you can see, they are different from one another.
+
+```{r three-rates, echo=FALSE, warning=FALSE, fig.cap="Comparing the average rate of change (red) over the interval $10 \\leq t \\leq 125$, the instantaneous rate of change at $x_0 =25$, and the fitted linear model (orange). The exponential model is shown in gray."}
+gf_point(temp ~ time, data = Stans_data, color="orange") %>%
+  gf_lm(color="orange") %>%
+  slice_plot(water(time) ~ time, domain(time=c(0, 200)), color="gray", size=2, alpha = 0.5) %>%
+  slice_plot(tangent(time) ~ time, color = "sienna", 
+             domain(time=c(0,80))) %>%
+  gf_point(y ~ x, data = Pts, color="red", alpha=0.25, size=4) %>%
+  gf_line(y ~ x, data = Pts, color="red") %>%
+  gf_point(25 ~ x, data = Pts, color="blue", alpha=0.25, size=4) %>%
+  gf_point(y ~ x, data=Pt, 
+           color="sienna", alpha = 0.25, size=4) %>%
+  gf_point(25 ~ x, data = Pt, color="tomato", alpha=0.25, size=4) %>%
+  gf_segment(25 + y ~ x + x, data=Pt, color="tomato", linetype=2) %>%
+  gf_segment(25 + y ~ x + x, data=Pts, color="blue", linetype=2) %>%
+  gf_lims(y=c(25, NA))
+```
+
+## The slope function
+
+We have a way to estimate the instantaneous rate of change of a function at a given input $t_0$:
+$$\text{instantaneous_rate_of_change} \equiv \frac{f(t_0 + 0.1) - f(t_0)}{0.1}$$
+Now we'll let notation do some work for us and re-write the above as the instantaneous-rate-of-change function, which we'll call the ***slope*** function.
+$$\text{slope}(t) \equiv \frac{f(t + 0.1) - f(t)}{0.1}$$
+We've merely made it clear that $\text{slope}(t)$ is a function and written the formula in terms of the input $t$ rather than a fixed number $t_0$. Of course, the "instantaneous rate of change at $t_0$" is simply $\text{slope}(t)$.
+
+Let's look at the slope function that corresponds to some of our naked modeling functions: $e^x$, $\sin(x)$, $x^{-1}$ and $\ln(x)$. Recall that the input to the naked functions is always a number. The output is a number as well. Thus we can display the function and the corresponding slope function on the same coordinate frame. (This will not be true when the input is a quantity and the output is another quantity.)
+
+
+```{r compare-naked-slopes, echo=FALSE, out.width="50%", fig.show="hold", fig.cap="Comparing the naked modeling function (blue) to it's slope function (red)"}
+slice_plot(sin(x) ~ x, domain(x=c(-10,10)), color="blue") %>%
+  slice_plot(cos(x) ~ x, color="red", alpha=0.25, size=2) %>%
+  gf_labs(title="Sinusoid")
+slice_plot(exp(x) ~ x, domain(x=c(-2,2)), color="blue") %>%
+  slice_plot(exp(x) ~ x, color="red", alpha=0.25, size=2) %>%
+  gf_labs(title="Exponential function")
+slice_plot(log(x) ~ x, domain(x=c(0.1,5)), color="blue") %>%
+  slice_plot(1/x ~ x, color="red", alpha=0.25, size=2) %>%
+  gf_labs(title="Logarithm function")
+slice_plot(1/x ~ x, domain(x=c(0.1,5)), color="blue") %>%
+  slice_plot(-1/x^2 ~ x, color="red", alpha=0.25, size=2) %>%
+  gf_labs(title="Power law function (with p=-1)")
+```
+
+EXERCISE: There is a web of connections between the naked modeling functions and their slopes. 
+
+```{r slope-sin, echo=FALSE, results="markup"}
+etude2::etudeQ(
+  "1. Which naked modeling function has a slope function that is simply a input-shifted version of itself?",
+  "exponential",
+  "+sinusoid+",
+  "logarithm",
+  "power-law $x^{-1}$",
+  random_answer_order = FALSE
+)
+```
+
+```{r slope-exp, echo=FALSE, results="markup"}
+etude2::etudeQ(
+  "2. Which naked modeling function has a slope function that is identical to itself?",
+  "+exponential+",
+  "sinusoid",
+  "logarithm",
+  "power-law $x^{-1}$",
+  random_answer_order = FALSE
+)
+```
+
+```{r slope-log, echo=FALSE, results="markup"}
+etude2::etudeQ(
+  "3. Which naked modeling function has a slope function that is another naked modeling function? (Hint: The other function is also shown in the set of graphs.)",
+  "exponential",
+  "sinusoid",
+  "+logarithm+",
+  "power-law $x^{-1}$+",
+  random_answer_order = FALSE
+)
+```
+
+
+::: {.why}
+We defined the "slope function" as
+$$\text{slope}(t) \equiv \frac{f(t + 0.1) - f(t)}{0.1}$$
+
+The 0.1 in the definition of the slope function is definitely a kluge.  0.1 minutes may be small when it comes to cooling water, but it might not be small in other contexts. We'll fix that in Block 2 when we define the ***derivative operator*** which replaces 0.1 with something that small in every context.
+:::
+
+
+
+
+
 
 
 <!--chapter:end:Fun-slopes.Rmd-->
@@ -2085,7 +2714,125 @@ BlankImage <- gf_blank(hp ~ wt, data=mtcars) %>% gf_theme(theme_void())
 ```
 # Assembling functions {#fun-assembling}
 
-composition, linear combination, multiplication
+::: {.todo}
+This is text dumped from various chapters of the first draft. It needs to be re-organized and smoothed.
+:::
+
+When we need a new function for some purpose, we practically always build it out of existing functions. For instance, a  parameterized function like $$A \sin\left(\frac{2 \pi}{P}x\right) + C$$ is built by assempling together a straight-line input scaling, a naked $\sin()$ function, and another straight-line function for scaling the output from $\sin()$. 
+
+In this chapter, we'll introduce three general frameworks for combining functions: linear combination, composition, and multiplication.
+
+## Linear combination 
+
+One of the most widely used sorts of combination is called a ***linear combination***. The mathematics of linear combination is, it happens, at the core of the use of math in applications, whether that be constructing a Google-like search engine or analyzing medical data to see if a treatment has a positive effect.
+
+Suppose we have a set of functions, for instance, $g_1(t), g_2(t), g_3(t), \ldots$.
+To make a linear combination we select one or more of the functions. The selected functions are called the ***basis functions***, perhaps because they provide the basis for constructing the combination. Each selected basis function gets multiplied by a number, called a ***scalar*** since it sets the vertical scale. Then add up all the variously scaled basis functions. 
+
+For instance, here is one linear combination of the $g_i()$ functions:
+$$3 g_1(x) + 6.5 g_2(x) - 2.1 g_3(x)$$ Another linear combination of the $g_i(x)$ is $$\frac{1}{5} g_1(x) + 10 g_3(x)$$ There are all sorts. The scalars used in a linear combination (for instance, (3, 6.5, -2.1) or (0.5, 10) in the previous examples) are called ***coefficients***.
+
+The framework of linear combinations provides a powerful and flexible means of constructing models. Indeed, **any smooth function** can be constructed as a linear combination of basic modeling functions. (We haven't said what "smooth" means, but all of our basic modeling functions are smooth.) 
+
+Even better, there is an automatic, reliable, and fast algorithm for finding the coefficients on any set of basis functions in order to match data as closely as possible. So the modeler just has to select the basis functions, the computer can find the coefficients. That's one reason why we've put the basic modeling functions at the very start of this course. (We'll explore the mathematics and methods of linear combinations, usually called ***linear algebra***, later in CalcZ.)
+
+You have worked with linear combinations of functions for many years, although probably nobody used that term. Consider this linear combination of power-law functions: 
+$$P(x) = 3 x^2 - 16 x + 4$$
+The basis functions $x^0$, $x^1$, $x^2$, $x^3$, and so on have a specific name: they are the ***monomials***. (Monomials all belong to the family of power-law functions.) A linear combination of monomials is called a ***polynomial***, just as a big molecule called a polymer is constructed out of many monomers.
+
+
+
+
+
+## (from original draft) Combining and composing functions
+
+
+::: {.objectives}
+```{r echo=FALSE, results="asis"}
+state_objective("Fun-4-c-1", "Use linear combination and direct multiplication of functions of one variable to produce functions of multiple variables")
+state_objective("Fun-4-c-2", "Recognize that composition of functions does not itself create a function of multiple variables.")
+```
+:::
+
+Linear combination and composition of functions are often used hand-in-hand to construct models. For instance, our model of the data from cooling water was a linear combination of a constant function and a sinusoidal function $$\mbox{temperature}(t) \equiv 25.9 + 60.7\, e^{-0.019 t}$$
+Similarly, our model from the Providence tide data was 
+$$\mbox{tide}(t) \equiv 1.02 + 0.50 \sin(2\pi (t - 15.4)/12.56)$$
+In both cases, the sine part of the combination is a mathematical ($\exp(x)$ or $\sin(x)$) function composed with a linear interior function: $-0.019 t$ for the cooling water, and $2\pi (t - 15.4)/12.56$ for the tides.
+
+Each of these models was a function of one input. (Coincidentally, the input in both cases was "time", measured in minutes in the cooling-water example and hours in the tide example.)
+
+But 
+
+*** RAW TEXT FROM FIRST DRAFT ***
+
+linear combinations are a powerful way to construct functions of multiple inputs. This can be as simple as $$h(x, t) \equiv A + B f(x) + C g(t)$$
+
+::: {.workedexample}
+Earlier we introduced a model of natural gas consumption (ccf) in the author's home during a month as a function of the average temperature during that month. Using $T$ for temperature, the model, constructed from the record of utility bills, was: $$ccf(T) \equiv 293.1 - 4.62 T$$ the blue line in Figure \@ref(fig:Fun-1-c-1).
+
+```{r Fun-1-c-1, echo=FALSE, fig.cap="Natural gas used (ccf) versus average outdoor temperature for the author's home in Saint Paul, Minnesota."}
+gf_point(ccf ~ temp, data = Home_utilities) %>%
+  gf_labs(title="Household natural gas use", x = "Average temperature for the month (deg. F)", y = "Volume of gas used (cubic feet)") %>%
+  gf_lims(x = c(0, 85)) %>% 
+  gf_lm(ccf ~ temp, data = Home_utilities %>% filter(temp < 60))
+```
+
+The amount of natural gas needed to heat the home presumably depends on many other factors as well: how windy was the weather, the thermostat setting, how often the back door was left open, ....
+
+For the sake of demonstration, here is model matched to the data of the natural gas ccf as a function of both temperature *and* the amount of electricity (E) used each month.
+
+$$\mbox{ccf}(T, E) \equiv 295.8 - 4.66\, T - 0.0010\, E$$
+
+The coefficients suggest that more electricity use corresponds to less natural gas use, perhaps because light bulbs are partially heating the home. But the effect, if any is very small: a doubling of monthly electricity use (from, say 400 kWh to 800 kWh) has about the same effect of 1/8 degree increase in outdoor temperature. That would be useful to know if you were having, say, an argument with your brother-in-law about whether it's OK to leave the lights on in an empty room, because it saves natural gas.
+
+
+```{r echo=FALSE}
+mod <- lm(ccf ~ temp + kwh, 
+   data = Home_utilities %>% filter(temp < 59, ccf > 20))
+```   
+:::
+
+Although linear combinations of functions of different variables are a very common way of constructing functions of multiple variables, function ***composition*** is useless when it comes to this. 
+
+For instance, consider the two functions $f(x)$ and $g(t)$. The composition $f(g(t))$ has only **one** input: $t$. Similarly, $g(f(x))$ has only one input: $x$. 
+
+In contrast to composition, multiplication of two functions is very effective for constructing functions of multiple variables: $h(x,y) \equiv f(x) g(y)$. 
+
+::: {.workedexample  data-latex=""}
+
+**A wave packet**
+
+An important idea in physics and communication is the "wave packet." This is a function that is local, like a hump, but periodic within the hump.
+
+```{r fig.cap="A *wave packet* constructed by multiplying a sinusoid by a hump function."}
+wave_packet <- function(x, A=1, center = 0, width = 5, P=1, phase = 0) {
+  A*sin(2*pi*x/P)*dnorm((x - center)/width)
+}
+slice_plot(wave_packet(x, A=2, center=3, width  = 4, P  = 2 ) ~ x, 
+           domain(x = c(-15, 15)), npts = 500)
+```
+:::
+
+::: {.workedexample}
+A simple but powerful and general framework for constructing functions of two variables to match data or to assemble into one function facts about a relationship among three variables is the linear combination of four simple functions: $$a_0 + a_x\, x + a_y\, y + a_{xy}\, xy$$
+The coefficients in the linear combination are $a_0$, $a_x$, $a_y$, and $a_{xy}$. Those names were selected to make it easier to keep track of which coefficient scales which function, but ultimately they are just scalars and could have been called $a, b, c$, and $d$.
+
+The basis function $g_4(x, y) \equiv x y$ is called an ***interaction term*** and arises very often in models of phenemona such as the spread of epidemics, the population dynamics of predator and prey animals, and the rates of chemical reactions
+. 
+
+:::
+
+
+
+
+EXERCISE:
+
+Recall the Pythagorean theorem: $C^2 = A^2 + B^2$. Let's write this as a function that takes as inputs the lengths of the two legs and produces as output the length of the hypotenuse. 
+
+$$\mbox{hypotenuse}(x, y) \equiv \sqrt{\strut x^2 + y^2}$$
+
+This can be seen as a composition of a function $f()$ together with a linear combination of two power-law functions $g()$ and $h()$ of different inputs. What is the function $f()$? What are $g()$ and $h()$? What are the coefficients in the linear combination?
+
 
 <!--chapter:end:Fun-assembling.Rmd-->
 
@@ -2189,6 +2936,21 @@ show_objectives <- function() {
 BlankImage <- gf_blank(hp ~ wt, data=mtcars) %>% gf_theme(theme_void())
 ```
 # Piecewise functions {#fun-piecewise}
+
+
+
+::: {.objectives}
+```{r echo=FALSE, results="asis"}
+state_objective("Fun-4-b-4a", "Identify graphs of a piecewise linear function.")
+state_objective("Fun-1C-d", "Construct a hock-stick function by piecewise combination of a constant function and a straight-line function with non-zero slope.")
+state_objective("Fun-4-b-4b", "Recognize traditional curly-brace notation for piecewise functions.")
+state_objective("Fun-4-b-4c", "Be able to create a piecewise function in R.")
+state_objective("Fun-4-b-4d", "Distinguish between continuous and discontinuous functions")
+```
+:::
+
+
+**Example: Piecewise functions in machine learning**
 
 
 <!--chapter:end:Fun-piecewise.Rmd-->

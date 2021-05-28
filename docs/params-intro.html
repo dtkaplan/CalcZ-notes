@@ -64,12 +64,13 @@
 <li><a class="" href="fun-notation.html"><span class="header-section-number">4</span> Notation for functions</a></li>
 <li><a class="" href="graphs-and-graphics.html"><span class="header-section-number">5</span> Graphics &amp; function graphs</a></li>
 <li><a class="active" href="params-intro.html"><span class="header-section-number">6</span> Parameters for functions</a></li>
-<li><a class="" href="fun-slopes.html"><span class="header-section-number">7</span> Calculus: Functions and change</a></li>
-<li><a class="" href="fun-assembling.html"><span class="header-section-number">8</span> Assembling functions</a></li>
-<li><a class="" href="fun-multiple-inputs.html"><span class="header-section-number">9</span> Functions with multiple inputs</a></li>
-<li><a class="" href="fun-piecewise.html"><span class="header-section-number">10</span> Piecewise functions</a></li>
-<li><a class="" href="magnitudes.html"><span class="header-section-number">11</span> Magnitudes</a></li>
-<li><a class="" href="dimensions.html"><span class="header-section-number">12</span> Dimensions</a></li>
+<li><a class="" href="the-process-of-modeling.html"><span class="header-section-number">7</span> The process of modeling</a></li>
+<li><a class="" href="fun-slopes.html"><span class="header-section-number">8</span> The slope function</a></li>
+<li><a class="" href="fun-assembling.html"><span class="header-section-number">9</span> Assembling functions</a></li>
+<li><a class="" href="fun-multiple-inputs.html"><span class="header-section-number">10</span> Functions with multiple inputs</a></li>
+<li><a class="" href="fun-piecewise.html"><span class="header-section-number">11</span> Piecewise functions</a></li>
+<li><a class="" href="magnitudes.html"><span class="header-section-number">12</span> Magnitudes</a></li>
+<li><a class="" href="dimensions.html"><span class="header-section-number">13</span> Dimensions</a></li>
 <li class="book-part">Block 2: Differentiation</li>
 <li><a class="" href="outline-of-block-2.html">Outline of Block 2</a></li>
 </ul>
@@ -276,9 +277,69 @@ You may have noticed that the above uses <span class="math inline">\(k\)</span> 
 </tr>
 </tbody>
 </table></div>
-<div class="workedexample">
-<p>There is a parameterization of the straight-line function that is handy for finding parameters of a function from a graph.</p>
-<p>Recall from Section</p>
+</div>
+<div id="scale-the-output" class="section level2">
+<h2>
+<span class="header-section-number">6.2</span> Scale the output<a class="anchor" aria-label="anchor" href="#scale-the-output"><i class="fas fa-link"></i></a>
+</h2>
+<p>Just as the natural input usually needs to be scaled before it reaches the naked modeling function, so the output from the naked function may need to be scaled before it presents a result suited for interpreting in the real world.</p>
+<div class="figure">
+<span id="fig:scaling-nature"></span>
+<img src="www/scaling-nature.png" alt="Natural **quantities** must be scaled to pure numbers before being suited to the naked modeling functions. The output is a pure number which is scaled to the natural **quantity** of interest." width="100%"><p class="caption">
+Figure 6.5: Natural <strong>quantities</strong> must be scaled to pure numbers before being suited to the naked modeling functions. The output is a pure number which is scaled to the natural <strong>quantity</strong> of interest.
+</p>
+</div>
+<p>The overall result of input and output scaling is a smartly dressed modeling function ready to engage the real world.</p>
+<div class="inline-table"><table class="table table-sm">
+<thead><tr class="header">
+<th>Name</th>
+<th>Naked form</th>
+<th>Dressed for action</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td>exponential</td>
+<td><span class="math inline">\(e^x\)</span></td>
+<td><span class="math inline">\(A e^{kx} + C\)</span></td>
+</tr>
+<tr class="even">
+<td>sinusoid</td>
+<td><span class="math inline">\(\sin(x)\)</span></td>
+<td><span class="math inline">\(A \sin(\frac{2 \pi}{P} x) + C\)</span></td>
+</tr>
+<tr class="odd">
+<td>straight-line</td>
+<td><span class="math inline">\(a x + b\)</span></td>
+<td><span class="math inline">\(a x + b\)</span></td>
+</tr>
+</tbody>
+</table></div>
+<div class="takenote">
+<p>The parameter <span class="math inline">\(C\)</span> is often called the <strong><em>baseline</em></strong> or the <strong><em>offset</em></strong>. Statisticians call it the “intercept,” because it plays the same role as <span class="math inline">\(b\)</span> in the straight-line function.</p>
+<p>When working with sinusoids, parameter <span class="math inline">\(A\)</span> is called the <strong><em>amplitude</em></strong>.</p>
+<p>Of course, you’re already familiar with <span class="math inline">\(a\)</span> and <span class="math inline">\(b\)</span>: the slope and intercept of a straight line.</p>
+<div class="figure">
+<span id="fig:show-sin-params"></span>
+<img src="CalcZ-notes_files/figure-html/show-sin-params-1.png" alt="Baseline (blue), amplitude (red), and period (green) for the sinusoid." width="672"><p class="caption">
+Figure 6.6: Baseline (blue), amplitude (red), and period (green) for the sinusoid.
+</p>
+</div>
+<div class="figure">
+<span id="fig:show-exp-baseline"></span>
+<img src="CalcZ-notes_files/figure-html/show-exp-baseline-1.png" alt="The baseline for the exponential is the horizontal asymptote." width="672"><p class="caption">
+Figure 6.7: The baseline for the exponential is the horizontal asymptote.
+</p>
+</div>
+</div>
+<div class="why">
+<p>The straight-line function is like a penguin: even when it’s naked, it’s still fully dressed!</p>
+<p>Now we can let you in on a little secret. All along, the straight-line function has been dressed, not naked. The actual naked form is so simple that it can be confusing:</p>
+<p><span class="math display">\[\text{identity}(x) \equiv x\]</span>
+Clothing the identity function by scaling looks like this:</p>
+<p><span class="math display">\[ x \underbrace{\longrightarrow}_\mbox{input scaling} k x + c \underbrace{\longrightarrow}_\mbox{output scaling} A(kx + c) + C\]</span>
+A little bit of algebra transforms the scaled function into a more concise form:</p>
+<p><span class="math display">\[A(kx + c) + C \longrightarrow \underbrace{Ak}_ax + \underbrace{Ac + C}_b \longrightarrow ax + b\]</span>
+Most students have thoroughly explored the straight-line function in their high-school studies, so we thought it ill-advised to start out with the identity function.</p>
 </div>
 </div>
 <div id="exercises-2" class="section level2 unnumbered">
@@ -311,20 +372,22 @@ You may have noticed that the above uses <span class="math inline">\(k\)</span> 
 <code class="sourceCode R"><span class="fu">add_scale</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">pnorm</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">~</span> <span class="va">x</span>, <span class="fu">domain</span><span class="op">(</span>x<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">3</span>, <span class="fl">3</span><span class="op">)</span><span class="op">)</span>, <span class="fl">1.5</span>, <span class="fl">2</span><span class="op">)</span></code></pre></div>
 <div class="inline-figure"><img src="CalcZ-notes_files/figure-html/unnamed-chunk-51-4.png" width="672"></div>
 <p>Exercise 3</p>
-<p>Pick out the characteristic inputs on the curve. E.g. start and doubling times: where outputs will be 1 and 2</p>
 <p>Each graph shows a basic modeling function written in this style: <span class="math inline">\(\sin(r(t-t_0))\)</span>. Your job is to estimate <span class="math inline">\(t_0\)</span> and <span class="math inline">\(r\)</span>.</p>
+<p>Exercise 4</p>
+<p>Find the scaling function that translates</p>
 
 </div>
 </div>
 
   <div class="chapter-nav">
 <div class="prev"><a href="graphs-and-graphics.html"><span class="header-section-number">5</span> Graphics &amp; function graphs</a></div>
-<div class="next"><a href="fun-slopes.html"><span class="header-section-number">7</span> Calculus: Functions and change</a></div>
+<div class="next"><a href="the-process-of-modeling.html"><span class="header-section-number">7</span> The process of modeling</a></div>
 </div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
     <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
       <ul class="nav navbar-nav">
 <li><a class="nav-link" href="#params-intro"><span class="header-section-number">6</span> Parameters for functions</a></li>
 <li><a class="nav-link" href="#parallel-scales"><span class="header-section-number">6.1</span> Parallel scales</a></li>
+<li><a class="nav-link" href="#scale-the-output"><span class="header-section-number">6.2</span> Scale the output</a></li>
 <li><a class="nav-link" href="#exercises-2">Exercises</a></li>
 </ul>
 
@@ -343,7 +406,7 @@ You may have noticed that the above uses <span class="math inline">\(k\)</span> 
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>CalcZ Student Notes</strong>" was written by Daniel Kaplan. It was last built on 2021-05-27.</p>
+    <p>"<strong>CalcZ Student Notes</strong>" was written by Daniel Kaplan. It was last built on 2021-05-28.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">
