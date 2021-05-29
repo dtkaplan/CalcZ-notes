@@ -13,5 +13,63 @@ state_objective("Fun-4-b-4d", "Distinguish between continuous and discontinuous 
 :::
 
 
+EXAMPLE: We can't produce the ccf vs temperature as a linear combination of straight-line functions: such a linear combination would be just another linear function. We need a piecewise function to do the job.
+
+Consider the data plotted below recording monthly household natural gas use for the author's family. This varies from month to month, and since gas is mainly used for heating the house, it's reasonable to think that gas usage is related to the outdoor temperature. Each dot in the graph shows one month's data, with temperature measured in degrees F and natural gas measured by volume: cubic feet appreviated ccf. A straight-line function has been ***fitted*** to the data.
+
+```{r Fun-1C-abcd-1, echo=FALSE}
+gf_point(ccf ~ temp, data = Home_utilities) %>%
+  gf_labs(title="Household natural gas use", x = "Average temperature for the month (deg. F)", y = "Volume of gas used (cubic feet)") %>%
+  gf_lims(x = c(0, 85)) %>% 
+  gf_lm(ccf ~ temp, data = Home_utilities %>% filter(temp < 60))
+```
+
+The graph has several features that are not unusual when using data to construct a mathematical model. 
+
+i. The function selected, which gives ccf versus outdoor temperature, is roughly centered on the cloud of data. That is, for a given input value, the function output goes through the vertical center of the data points near that input value.
+
+ii. For part of the domain, the function is a good match to the data.
+
+iii. For another part of the domain, temperatures above about 60 degrees, the function deviates systematically from the data. Indeed, the output of the function is *negative* when temperature is above the mid 60s. (Of course, the *amount* of natural gas used can hardly be negative!)
+
+iv. There are a few data points, near 40 and 60 deg. F that are far from the output of the model at those temperature. Such points are called ***outliers***. One of the uses of mathematical models in interpreting data is to make it easier to spot data records that don't fit an overall pattern. (From the graph itself, one can only speculate about what might be responsible for the outliers. Here it seems to be an error in transcribing the data.)
+
+The straight-line function has two parameters: the ***slope*** and the ***intercept***. Since the domain of the graph includes 0, we can read the intercept directly from the graph: at an input of 0 the function output is roughly 300 ccf.
+
+The slope is, famously, the "rise over run."  Mark off a convenient interval on the domain. We'll use 0 to 64 degrees. Then find the vertical interval of the function output over that interval on the domain. We selected 0 to 64 for the domain since the function output is easy to read: about 300 ccf at 0 deg and 0 ccf at 64 degrees. The amount of "rise" is therefore $0-300$ ccf and the run is $64 - 0$ deg, so the slope is $$\frac{0-300}{64-0} \frac{\text{ccf}}{\text{deg}} \approx -4.6 \frac{\text{ccf}}{\text{deg}}$$ The negative sign on the slope indicates that the function output falls as the input increases.
+
+For a straight-line function, you will find the same slope whatever non-zero interval on the domain you choose for the run. Many other kinds of functions have a slope that differs for different inputs. One of the central ideas of calculus is that even for non-straight-line functions, a meaningful calculation of the ***slope at a single input*** can be constructed. We'll examine that issue carefully later in the course. 
+
+In calculus, the slope of a function is a quantity of particular interest. Here, the slope tells us that a one degree increase in outdoor temperature (averaged over a month) corresponds to a 4.6 ccf *decrease* in natural gas use. 
+
+As you'll see later in the course, the slope of a function is the ***sensitivity*** of the output to a change in the ***input***.
+
+It's often the case that a given model ***accounts*** for only part of the pattern seen in data. There are many synonyms for "accounts": "*captures* only part of the pattern," "*matches* only part of the pattern," and so on. The blue straight-line model in Figure \@ref(fig:Fun-1C-abcd-1) doesn't account for the leveling out of natural gas use for temperatures greater than about 60 degrees. 
+
+Modelers look for such discrepancies between a candidate model (here, the blue line) and the data. Sometimes such discrepancies indicate that the wrong kind of mathematical function has been selected for the model or that the model has not been fitted to the data properly. A skilled modeler will treat the discrepancies as an opportunity to learn more about the real-world system being modeled. With this additional knowledge, a better model can be constructed. 
+
+Those familiar with home heating will know that for temperatures about about 60 degrees F, **no heating is necessary** and fuel use for heating falls to zero. But there are other uses for fuel such as cooking and water heating. To judge from the data, those uses don't depend in any strong or obvious way on outdoor temperature.
+
+---
+
+Exercise: Compare the straight-line model fitted to *all* the ccf data to the model fitted to data where the temperature was less than 60 degrees. Implement as `heating_ccf(temp)`
+
+Exercise: Make a straight-line model for the energy used for cooking and heating.  Implement as `other_ccf(temp)`
+
+Exercise: Piece together the two models to make a more comprehensive model of energy use. Show the computer implementation of this function.
+
+```r
+all_ccf <- makeFun(
+              ifelse(temp < 60, 
+                     heating_ccf(temp) + other_ccf(temp),
+                     other_ccf(temp)) ~ temp)
+```
+
+
+**Example: ASDR envelope in synthesized music**
+
+<https://en.wikipedia.org/wiki/Envelope_(music)>
+
+
 **Example: Piecewise functions in machine learning**
 

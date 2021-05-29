@@ -1,6 +1,80 @@
 # Functions with multiple inputs {#fun-multiple-inputs}
 
 
+
+
+
 ```{exercise, NOAA, name="Tables are functions"}
 ```
 `r knitr::knit_child(exercise_file("01", "NOAA.Rmd"))`
+
+
+linear combinations are a powerful way to construct functions of multiple inputs. This can be as simple as $$h(x, t) \equiv A + B f(x) + C g(t)$$
+
+::: {.workedexample}
+Earlier we introduced a model of natural gas consumption (ccf) in the author's home during a month as a function of the average temperature during that month. Using $T$ for temperature, the model, constructed from the record of utility bills, was: $$ccf(T) \equiv 293.1 - 4.62 T$$ the blue line in Figure \@ref(fig:Fun-1-c-1).
+
+```{r Fun-1-c-1, echo=FALSE, fig.cap="Natural gas used (ccf) versus average outdoor temperature for the author's home in Saint Paul, Minnesota."}
+gf_point(ccf ~ temp, data = Home_utilities) %>%
+  gf_labs(title="Household natural gas use", x = "Average temperature for the month (deg. F)", y = "Volume of gas used (cubic feet)") %>%
+  gf_lims(x = c(0, 85)) %>% 
+  gf_lm(ccf ~ temp, data = Home_utilities %>% filter(temp < 60))
+```
+
+The amount of natural gas needed to heat the home presumably depends on many other factors as well: how windy was the weather, the thermostat setting, how often the back door was left open, ....
+
+For the sake of demonstration, here is model matched to the data of the natural gas ccf as a function of both temperature *and* the amount of electricity (E) used each month.
+
+$$\mbox{ccf}(T, E) \equiv 295.8 - 4.66\, T - 0.0010\, E$$
+
+The coefficients suggest that more electricity use corresponds to less natural gas use, perhaps because light bulbs are partially heating the home. But the effect, if any is very small: a doubling of monthly electricity use (from, say 400 kWh to 800 kWh) has about the same effect of 1/8 degree increase in outdoor temperature. That would be useful to know if you were having, say, an argument with your brother-in-law about whether it's OK to leave the lights on in an empty room, because it saves natural gas.
+
+
+```{r echo=FALSE}
+mod <- lm(ccf ~ temp + kwh, 
+   data = Home_utilities %>% filter(temp < 59, ccf > 20))
+```   
+:::
+
+
+Although linear combinations of functions of different variables are a very common way of constructing functions of multiple variables, function ***composition*** is useless when it comes to this. 
+
+For instance, consider the two functions $f(x)$ and $g(t)$. The composition $f(g(t))$ has only **one** input: $t$. Similarly, $g(f(x))$ has only one input: $x$. 
+
+In contrast to composition, multiplication of two functions is very effective for constructing functions of multiple variables: $h(x,y) \equiv f(x) g(y)$. 
+
+::: {.workedexample  data-latex=""}
+
+**A wave packet**
+
+An important idea in physics and communication is the "wave packet." This is a function that is local, like a hump, but periodic within the hump.
+
+```{r fig.cap="A *wave packet* constructed by multiplying a sinusoid by a hump function."}
+wave_packet <- function(x, A=1, center = 0, width = 5, P=1, phase = 0) {
+  A*sin(2*pi*x/P)*dnorm((x - center)/width)
+}
+slice_plot(wave_packet(x, A=2, center=3, width  = 4, P  = 2 ) ~ x, 
+           domain(x = c(-15, 15)), npts = 500)
+```
+:::
+
+::: {.workedexample}
+A simple but powerful and general framework for constructing functions of two variables to match data or to assemble into one function facts about a relationship among three variables is the linear combination of four simple functions: $$a_0 + a_x\, x + a_y\, y + a_{xy}\, xy$$
+The coefficients in the linear combination are $a_0$, $a_x$, $a_y$, and $a_{xy}$. Those names were selected to make it easier to keep track of which coefficient scales which function, but ultimately they are just scalars and could have been called $a, b, c$, and $d$.
+
+The basis function $g_4(x, y) \equiv x y$ is called an ***interaction term*** and arises very often in models of phenemona such as the spread of epidemics, the population dynamics of predator and prey animals, and the rates of chemical reactions
+. 
+
+:::
+
+
+
+
+EXERCISE:
+
+Recall the Pythagorean theorem: $C^2 = A^2 + B^2$. Let's write this as a function that takes as inputs the lengths of the two legs and produces as output the length of the hypotenuse. 
+
+$$\mbox{hypotenuse}(x, y) \equiv \sqrt{\strut x^2 + y^2}$$
+
+This can be seen as a composition of a function $f()$ together with a linear combination of two power-law functions $g()$ and $h()$ of different inputs. What is the function $f()$? What are $g()$ and $h()$? What are the coefficients in the linear combination?
+

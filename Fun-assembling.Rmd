@@ -12,6 +12,35 @@ In this chapter, we'll introduce three general frameworks for combining function
 
 One of the most widely used sorts of combination is called a ***linear combination***. The mathematics of linear combination is, it happens, at the core of the use of math in applications, whether that be constructing a Google-like search engine or analyzing medical data to see if a treatment has a positive effect.
 
+You've worked for many years with one kind of linear combination: polynomials. No doubt you've seen functions^[It's likely that you saw polynomials as things to be factored, rather than as functions taking an input and producing an output. So they were written as *equations*: $e x^2 + 5x - 2 = 0$] like $$f(x) \equiv 3 x^2 + 5 x - 2$$
+
+There are three modeling functions in this polynomial. In this case, as in polynomials generally, they are all power-law functions: $g_0(x) \equiv 1$, $g_1(x) \equiv x$, and $g_2(x) \equiv x^2$. With these functions defined, we can write the polynomial $f(x)$ as $$f(x) \equiv 3 g_2(x) + 5 g_1(x) - 2 g_0(x)$$
+Each of the functions is being scaled by a quantity---3, 5, and -2 in this example---and the scaled functions are added up. That's a linear combination; scale and add. (Later, we'll see that the ***scalars*** generally come with units. So we might well have a metric polynomial and an equivalent traditional-unit polynomial. Just wait.)
+
+
+::: {.why}
+Notice that we said $g_0(x) \equiv 1$ is a power-law function. Why?  Since $x^0=1$ for all $x$, we might equally well have written $g_0(x) \equiv x^0$ which is visibly a power-law function. 
+
+We're just trying to emphasize that a polynomial is a linear combination of power-law functions, in particular those power-law functions with whole-number, positive exponents. The individual functions, say, $x^2$ or $x^5$ are called ***monomials***. A polynomial is a combination of monomials, just like a chemical polymer is a combination of monomers.
+:::
+
+There are other places where you have seen linear combinations: 
+
+- The parameterized ***sinusoid***  $$A \sin\left(\frac{2 \pi}{P}t\right) + C$$ is a linear combination of the functions $h_1(t) \equiv \sin\left(\frac{2 \pi}{P} t\right)$ and $g_0(t) \equiv 1$. The scalars are $A$ and $C$.
+- The parameterized ***exponential*** $$A e^{kt} + C$$ The functions being combined are $e^{kt}$ and $g_0(t) \equiv 1$. The scalars are, again, $A$ and $C$.
+- The straight line function $a x + b$. The functions being combined are $x$ and $1$, the scalars are $a$ and $b$.
+
+Note that neither the parameterized exponential or the parameterized sinusoid is a polynomial.
+
+There are a few reasons for us to be introducing linear combinations here.
+
+1. You will see linear combinations everywhere once you know to look for them.
+2. There is a highly refined mathematical theory of linear combinations that gives us powerful ways to think about them as well as computer software that can quickly find the best scalars to use to match input-output data.
+3. The concept of linear combination generalizes the simple idea that we have been calling "scaling the output." From now on, we'll use the linear-combination terminology and avoid the narrower idea of "scaling the output."
+4. Many physical systems are described by linear combinations. For instance, the motion of a vibrating molecule or a helicopter in flight or a building shaken by an earthquake are described in terms of simple "modes" which are linearly combined to make up the entire motion. More down to Earth, the timbre of a musical instrument is set by the scalars in a linear combination of pure tones.
+5. Many modeling tasks can be put into the framework of choosing an appropriate set of simple functions to combine and then (letting the computer) figure out the best scalars to use in the combination.
+
+
 Suppose we have a set of functions, for instance, $g_1(t), g_2(t), g_3(t), \ldots$.
 To make a linear combination we select one or more of the functions. The selected functions are called the ***basis functions***, perhaps because they provide the basis for constructing the combination. Each selected basis function gets multiplied by a number, called a ***scalar*** since it sets the vertical scale. Then add up all the variously scaled basis functions. 
 
@@ -20,11 +49,58 @@ $$3 g_1(x) + 6.5 g_2(x) - 2.1 g_3(x)$$ Another linear combination of the $g_i(x)
 
 The framework of linear combinations provides a powerful and flexible means of constructing models. Indeed, **any smooth function** can be constructed as a linear combination of basic modeling functions. (We haven't said what "smooth" means, but all of our basic modeling functions are smooth.) 
 
-Even better, there is an automatic, reliable, and fast algorithm for finding the coefficients on any set of basis functions in order to match data as closely as possible. So the modeler just has to select the basis functions, the computer can find the coefficients. That's one reason why we've put the basic modeling functions at the very start of this course. (We'll explore the mathematics and methods of linear combinations, usually called ***linear algebra***, later in CalcZ.)
+Even better, there is an automatic, reliable, and fast algorithm for finding the coefficients on any set of basis functions in order to match data as closely as possible. So the modeler just has to select the basis functions, the computer can find the coefficients. That's one reason why we've put the basic modeling functions at the very start of this course. (We'll explore the mathematics and methods of linear combinations, usually called ***linear algebra***, in Block 5.)
 
 You have worked with linear combinations of functions for many years, although probably nobody used that term. Consider this linear combination of power-law functions: 
 $$P(x) = 3 x^2 - 16 x + 4$$
 The basis functions $x^0$, $x^1$, $x^2$, $x^3$, and so on have a specific name: they are the ***monomials***. (Monomials all belong to the family of power-law functions.) A linear combination of monomials is called a ***polynomial***, just as a big molecule called a polymer is constructed out of many monomers.
+
+::: {.todo}
+Example: The tides as a linear combination of sinusoids.
+:::
+
+## Function composition
+
+Air pressure vs time for a car driving up a mountain.
+
+[[Solar declinsion as function of time of year.]] Then turn this into day-length. See <https://physics.stackexchange.com/questions/28563/hours-of-light-per-day-based-on-latitude-longitude-formula>
+
+[[Instantaneous power of AC voltage]] Power = I^2 R = V^2/R
+V will be a sinusoid
+
+
+Log transformation of prices (log income rises steadily, so compose exp with a straight-line function.
+
+Log-log and semi-log plots are an example of composing a log with a function to get a simpler function.
+
+[[Tukey's ladder]] Using a simple straight line with input composition and/or output composition. You can get a variety of curve shapes using only a linear function.
+
+[[Perceived brightness or loudness]] is a log scale.
+
+
+[[For integration chapter]] Wind energy potential: not the cube of the average wind velocity, but the average of the cube of wind velocity.
+
+## Function multiplication
+
+***Transient vibration***
+
+A guitar string is plucked to produce a note. The note is, of course, vibrations of the air created by vibrations of the string. 
+
+After plucking, the note fades away. An important model of this is a sinusoid (of the correct period to correspond to the frequency of the note) times an exponential.
+
+
+
+***Wave packet***
+
+An important idea in physics and communication is the ***wave packet.*** This is a function that is local, like a hump, but periodic within the hump.
+
+```{r fig.cap="A *wave packet* constructed by multiplying a sinusoid by a hump function."}
+wave_packet <- function(x, A=1, center = 0, width = 5, P=1, phase = 0) {
+  A*sin(2*pi*x/P)*dnorm((x - center)/width)
+}
+slice_plot(wave_packet(x, A=2, center=3, width  = 4, P  = 2 ) ~ x, 
+           domain(x = c(-15, 15)), npts = 500)
+```
 
 
 
@@ -49,73 +125,4 @@ Each of these models was a function of one input. (Coincidentally, the input in 
 
 But 
 
-*** RAW TEXT FROM FIRST DRAFT ***
-
-linear combinations are a powerful way to construct functions of multiple inputs. This can be as simple as $$h(x, t) \equiv A + B f(x) + C g(t)$$
-
-::: {.workedexample}
-Earlier we introduced a model of natural gas consumption (ccf) in the author's home during a month as a function of the average temperature during that month. Using $T$ for temperature, the model, constructed from the record of utility bills, was: $$ccf(T) \equiv 293.1 - 4.62 T$$ the blue line in Figure \@ref(fig:Fun-1-c-1).
-
-```{r Fun-1-c-1, echo=FALSE, fig.cap="Natural gas used (ccf) versus average outdoor temperature for the author's home in Saint Paul, Minnesota."}
-gf_point(ccf ~ temp, data = Home_utilities) %>%
-  gf_labs(title="Household natural gas use", x = "Average temperature for the month (deg. F)", y = "Volume of gas used (cubic feet)") %>%
-  gf_lims(x = c(0, 85)) %>% 
-  gf_lm(ccf ~ temp, data = Home_utilities %>% filter(temp < 60))
-```
-
-The amount of natural gas needed to heat the home presumably depends on many other factors as well: how windy was the weather, the thermostat setting, how often the back door was left open, ....
-
-For the sake of demonstration, here is model matched to the data of the natural gas ccf as a function of both temperature *and* the amount of electricity (E) used each month.
-
-$$\mbox{ccf}(T, E) \equiv 295.8 - 4.66\, T - 0.0010\, E$$
-
-The coefficients suggest that more electricity use corresponds to less natural gas use, perhaps because light bulbs are partially heating the home. But the effect, if any is very small: a doubling of monthly electricity use (from, say 400 kWh to 800 kWh) has about the same effect of 1/8 degree increase in outdoor temperature. That would be useful to know if you were having, say, an argument with your brother-in-law about whether it's OK to leave the lights on in an empty room, because it saves natural gas.
-
-
-```{r echo=FALSE}
-mod <- lm(ccf ~ temp + kwh, 
-   data = Home_utilities %>% filter(temp < 59, ccf > 20))
-```   
-:::
-
-Although linear combinations of functions of different variables are a very common way of constructing functions of multiple variables, function ***composition*** is useless when it comes to this. 
-
-For instance, consider the two functions $f(x)$ and $g(t)$. The composition $f(g(t))$ has only **one** input: $t$. Similarly, $g(f(x))$ has only one input: $x$. 
-
-In contrast to composition, multiplication of two functions is very effective for constructing functions of multiple variables: $h(x,y) \equiv f(x) g(y)$. 
-
-::: {.workedexample  data-latex=""}
-
-**A wave packet**
-
-An important idea in physics and communication is the "wave packet." This is a function that is local, like a hump, but periodic within the hump.
-
-```{r fig.cap="A *wave packet* constructed by multiplying a sinusoid by a hump function."}
-wave_packet <- function(x, A=1, center = 0, width = 5, P=1, phase = 0) {
-  A*sin(2*pi*x/P)*dnorm((x - center)/width)
-}
-slice_plot(wave_packet(x, A=2, center=3, width  = 4, P  = 2 ) ~ x, 
-           domain(x = c(-15, 15)), npts = 500)
-```
-:::
-
-::: {.workedexample}
-A simple but powerful and general framework for constructing functions of two variables to match data or to assemble into one function facts about a relationship among three variables is the linear combination of four simple functions: $$a_0 + a_x\, x + a_y\, y + a_{xy}\, xy$$
-The coefficients in the linear combination are $a_0$, $a_x$, $a_y$, and $a_{xy}$. Those names were selected to make it easier to keep track of which coefficient scales which function, but ultimately they are just scalars and could have been called $a, b, c$, and $d$.
-
-The basis function $g_4(x, y) \equiv x y$ is called an ***interaction term*** and arises very often in models of phenemona such as the spread of epidemics, the population dynamics of predator and prey animals, and the rates of chemical reactions
-. 
-
-:::
-
-
-
-
-EXERCISE:
-
-Recall the Pythagorean theorem: $C^2 = A^2 + B^2$. Let's write this as a function that takes as inputs the lengths of the two legs and produces as output the length of the hypotenuse. 
-
-$$\mbox{hypotenuse}(x, y) \equiv \sqrt{\strut x^2 + y^2}$$
-
-This can be seen as a composition of a function $f()$ together with a linear combination of two power-law functions $g()$ and $h()$ of different inputs. What is the function $f()$? What are $g()$ and $h()$? What are the coefficients in the linear combination?
 
