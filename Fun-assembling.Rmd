@@ -40,30 +40,237 @@ There are a few reasons for us to be introducing linear combinations here.
 4. Many physical systems are described by linear combinations. For instance, the motion of a vibrating molecule or a helicopter in flight or a building shaken by an earthquake are described in terms of simple "modes" which are linearly combined to make up the entire motion. More down to Earth, the timbre of a musical instrument is set by the scalars in a linear combination of pure tones.
 5. Many modeling tasks can be put into the framework of choosing an appropriate set of simple functions to combine and then (letting the computer) figure out the best scalars to use in the combination.
 
+Even better, there is an automatic, reliable, and fast algorithm for finding the scalars for a set of functions that are to be combined to match data as closely as possible. So the modeler just has to select the functions to be used, the computer can find the coefficients. (We'll explore the mathematics and methods of linear combinations, usually called ***linear algebra***, in Block 5.)
 
-Suppose we have a set of functions, for instance, $g_1(t), g_2(t), g_3(t), \ldots$.
-To make a linear combination we select one or more of the functions. The selected functions are called the ***basis functions***, perhaps because they provide the basis for constructing the combination. Each selected basis function gets multiplied by a number, called a ***scalar*** since it sets the vertical scale. Then add up all the variously scaled basis functions. 
 
-For instance, here is one linear combination of the $g_i()$ functions:
-$$3 g_1(x) + 6.5 g_2(x) - 2.1 g_3(x)$$ Another linear combination of the $g_i(x)$ is $$\frac{1}{5} g_1(x) + 10 g_3(x)$$ There are all sorts. The scalars used in a linear combination (for instance, (3, 6.5, -2.1) or (0.5, 10) in the previous examples) are called ***coefficients***.
-
-The framework of linear combinations provides a powerful and flexible means of constructing models. Indeed, **any smooth function** can be constructed as a linear combination of basic modeling functions. (We haven't said what "smooth" means, but all of our basic modeling functions are smooth.) 
-
-Even better, there is an automatic, reliable, and fast algorithm for finding the coefficients on any set of basis functions in order to match data as closely as possible. So the modeler just has to select the basis functions, the computer can find the coefficients. That's one reason why we've put the basic modeling functions at the very start of this course. (We'll explore the mathematics and methods of linear combinations, usually called ***linear algebra***, in Block 5.)
-
-You have worked with linear combinations of functions for many years, although probably nobody used that term. Consider this linear combination of power-law functions: 
-$$P(x) = 3 x^2 - 16 x + 4$$
-The basis functions $x^0$, $x^1$, $x^2$, $x^3$, and so on have a specific name: they are the ***monomials***. (Monomials all belong to the family of power-law functions.) A linear combination of monomials is called a ***polynomial***, just as a big molecule called a polymer is constructed out of many monomers.
 
 ::: {.todo}
 Example: The tides as a linear combination of sinusoids.
 :::
 
+::: {.todo}
+Example: Models of inequality
+
+Lorenz curve: Connects (0,0) and (1,1) and is never concave down.  
+
+- Any power-law with an exponent of 1 or greater.
+- Any linear combination of such power-laws with the scalars adding to 1.
+- Product of two Lorenz curves is a Lorenz curve. 
+
+$(1 - (1-p)^\alpha)$
+
+$p^\beta\left(1 - (1-p)^\alpha\right)$
+
+:::
+
 ## Function composition
 
+To ***compose*** two functions, $f(x)$ and $g(x)$, means to apply one of the functions to the output of the other. "$f()$ composed with $g()$" means $f(g(x))$. This is generally very different from "$g()$ composed with $f()$" which means $g(f(x))$.
+
+For instance, suppose you have recorded the outdoor temperature over the course of a day and packaged this into a function $\mbox{AirTemp}(t)$: temperature as a function of time $t$. Your digital thermometer uses degrees Celsius, but you want the output units to be degrees Kelvin. The conversion function is $$\mbox{CtoK}(C) \equiv C + 273.15$$
+Notice that CtoK() takes temperature as input. With this, we can write the "Kelvin as a function of time" as $$\mbox{CtoK}\left(\mbox{AirTemp}(t)\right)$$
+It's important to distinguish the above time $\rightarrow$ Kelvin function from something that looks very much the same but is utterly different: $\mbox{AirTemp}\left(\mbox{CtoK}(t)\right)$. As a matter of arithmetic, you can put time as an input to CtoK(). But it has a completely different meaning in terms of the real world. If time were measured in hours, then CtoK$(t)$ would be looking at the temperature eleven and a half days ago, instead of the temperature at time $t$.
+
+::: {.why}
+We used $C$ as the name of the input to CtoK(). Shouldn't it be something like $x$ or $y$?
+
+Keep in mind that the names of the inputs to a function can be anything whatsoever, so long as they are used consistently in the function algorithm. If we wanted, we could call the first input to any function $x$, or for that matter $y$ or giraffe.
+
+The point of the notation $\mbox{CtoK}(C) \equiv C + 273.15$ is to make it utterly clear that $C$ is the name we're using for the input by listing it in the parentheses that follow the function name CtoK(). This, unlike high-school notation, allows us great freedom in the choice of names. 
+
+We can use that freedom to make it easier to communicate with other people. (And remember, one of those other people is "future you.") We used the name $C$ to reinforce the message that CtoK() converts *celsius* to *kelvin*, and not vice versa.
+:::
+
+
+Here is a simple, approximate formula for the length of day (in hours) as a function of latitude $L$ and the declination angle $\delta$ of the sun. 
+
+$$\text{day_length}(L, \delta) \equiv \frac{2}{15} \arccos\left(-\tan(L)*\tan(δ)\right)$$
+The declination angle is the latitude of the point on the earth's surface pierced by an imagined line connecting the centers of the earth and the sun. On the summer solstice, it is $23.44^\circ$, the longest day of the year. 
+
+A computer implement must look different, since $L$ and $\delta$ are typically provided in degrees while the `tan()` and other trigonometric functions in most computer languages expect units of radians. The conversion is easy: $\text{deg2rad}(d) \equiv \frac{\pi}{180} d$. The conversion the other way is $\text{rad2deg}(r) \equiv \frac{180}{\pi} r$.
+
+In order to get the day-length formula to work in a computer, we have to compose the $\tan()$ function with `deg2rad()`. The output of `acos()` is in radians, so we have to convert it back to degrees. Like this:
+
+```{r}
+day_length <- makeFun(
+  (2/15)*rad2deg(
+    acos(
+      -tan(deg2rad(L))*tan(deg2rad(d))
+    )
+  ) ~ L+d)
+```
+
+```{r day-length-cos, echo=FALSE, results="markup"}
+etude2::etudeQ(
+  "Using an R sandbox, calculate the length of the day at latitude $39^\deg$ on the longest day of the year, which is when the declination of the sun is $23.44^\circ$. How long is it?",
+  "13.9 hours",
+  "+14.7 hours+",
+  "14.9 hours",
+  "15.1 hours",
+  random_answer_order = FALSE
+)
+```
+
+Now to make a plot of day length as a function of day of the year. Of course, `day_length(L, d)` does not take day of the year into account. What's missing is to know the declination of the sun as a function of calendar day.
+
+We'll represent calendar day as a number $n$ that runs from 0 at the start of January 1st to 365 at the end of December 31. Given this convention, the declination of the sun is
+```{r}
+delta_sun <- makeFun(-23.44*cos((2*pi/365)*(n+10) ) ~ n)
+```
+
+Composing `day_length()` with `delta_sun()` (on the `d` argument only) we get a function of day of year `n`:
+```{r}
+slice_plot(
+  day_length(39, delta_sun(n)) ~ n, 
+  domain(n=c(0,365))
+  )
+```
+
+$$\delta_\odot(n) \equiv - 23.44^\circ \cdot \cos \left [ \frac{360^\circ}{365} \cdot \left ( n + 10 \right) \right ]$$
+```{r april-fools, echo=FALSE, results="markup"}
+etude2::etudeQ(
+  "How long is the day on April Fools ($n=90$) at Latitude 39N? (Use a sandbox for the calculation.)",
+  "+12.38 hours+",
+  "12.59 hours",
+  "12.64 hours",
+  "12.74 hours",
+  random_answer_order = FALSE
+)
+```
+
+[[Tukey's ladder]] Using a simple straight line with input composition and/or output composition. You can get a variety of curve shapes using only a linear function.
+
+
+
+::: {.todo}
+As exercises?
+
+
+
+Log transformation of used car prices
+
+[[Perceived brightness or loudness]] is a log scale.
+
+
+:::
+
+## Function multiplication
+
+The third in our repertoire of methods for making new function out of old is plain old multiplication. With two functions $f(x)$ and $g(x)$, the product is simply $f(x)g(x)$.
+
+It's essential to distinguish between function multiplication and function composition:
+
+$$\underbrace{f(x) g(x)}_\mbox{multiplication}\ \ \ \ \underbrace{f(g(x)) \ \mbox{or}\ g(f(x))}_\mbox{composition}$$
+
+In function composition, only one of the functions---the ***interior function*** is applied to the overall input, $x$ in the above example. The other function gets its input from the output of its partner. 
+
+In multiplication, each of the functions is applied to the input individually. Then their outputs are multiplied to produce the overall output.
+
+In function composition, the order of the functions matters: $f(g(x))$ and $g(f(x))$ are in general completely different functions.
+
+In function multiplication, the order doesn't matter because multiplication is ***commutative***, that is, if $a$ and $b$ are each quantities, $a \times b = b \times a$. 
+
+
+
+***Transient vibration***
+
+A guitar string is plucked to produce a note. The note is, of course, vibrations of the air created by vibrations of the string. 
+
+After plucking, the note fades away. An important model of this is a sinusoid (of the correct period to correspond to the frequency of the note) times an exponential.
+
+Function multiplication is used so often in modeling that you'll see it in many modeling situations. Here's one example that is important in physics and communication: the ***wave packet.*** Overall, the wave packet is a localized oscillation as in Figure \@ref{fig:wave-packet}. 
+
+```{r wave-packet, echo=FALSE, fig.cap="A *wave packet* constructed by multiplying a sinusoid by a hump function."}
+wave_packet <- function(x, A=1, center = 0, width = 5, P=1, phase = 0) {
+  A*sin(2*pi*x/P)*dnorm((x - center)/width)
+}
+slice_plot(wave_packet(x, A=2, center=3, width  = 4, P  = 10/5 ) ~ x, 
+           domain(x = c(-15, 15)), npts = 500)
+```
+This is the product of two simple functions: a hump times a sinusoid.
+
+```{r making-wave-packet, echo=FALSE, out.width fig.show="hold", fig.cap="The two components of the wave packet in Figure \@ref(fig:wave-packet)"}
+sinusoid <- makeFun(sin(2*pi*x/P) ~ x, P=10/5)
+envelope <- makeFun(2*dnorm((x - center)/width) ~ x, center=3, width=4)
+slice_plot(envelope(x) ~ x, domain(x = c(-15, 15)), color="blue") %>%
+  gf_labs(title="The \"envelope\" of the wave packet")
+slice_plot(sinusoid(x) ~ x, domain(x = c(-15, 15)),
+           color="red", npts=500) %>%
+  gf_labs(title="The oscillation in the wave packet. ")
+```
+EXERCISES: Say which two kinds of functions are being multiplied here.
+
+```{r}
+slice_plot(sin(2*pi*t/2.1)*sin(2*pi*t/20) ~ t, domain(t=c(-30, 40)), npts=500)
+```
+```{r sine-in-sine1, echo=FALSE, results="markup}
+etude2::etudeQ(
+  "What are the two basic modeling functions being multiplied?",
+  "+A sinusoid and another sinusoid with a faster period.+",
+  "A hump and a sinusoid.",
+  "A sigmoidal function and a sinusoid.",
+  ""
+)
+```
+
+
+```{r sine-in-sine2, echo=FALSE, results="markup"}
+etude2::etudeQ(
+"What is the period of the envelope?", 
+"10" = "It's true that the broad peaks in the overall function occur every 10 time units. But a sine wave has two excursions from zero every cycle, one positive and one negative. So if the period of the envelope were 10, we would see an amplitude of the faster sinusoid near zero every 5 time units.",  
+"+20+",
+"30" = "If this were so, the dips in amplitude of the faster sign would occur every 15 time units.",
+random_answer_order = FALSE
+)
+```
+
+Other examples along the same lines.
+
+EXERCISE: Provide a sigmoid and a series of humps. Ask the student to sketch out the product.
+
+## All together now!
+
+Two or all three of the techniques for combining functions---linear combinations, function composition, and function multiplication---can be used in the same function.
+
+Consider the function for the length of the day
+$$\text{day_length}(L, \delta) \equiv \frac{2}{15} \arccos\left(-\tan(L)*\tan(δ)\right)$$
+The 2/15 is scaling the output of $\arccos()$: scaling is in linear combination.
+
+The $\arcos()$ is being composed with an interior function that is itself a scaled product of two functions. 
+
+
+
+<!--
 Air pressure vs time for a car driving up a mountain.
 
 [[Solar declinsion as function of time of year.]] Then turn this into day-length. See <https://physics.stackexchange.com/questions/28563/hours-of-light-per-day-based-on-latitude-longitude-formula>
+
+Sun's declination angle
+$$\delta = \Phi \cos\left(C (d-d_r)/dy\right)$$ where $\Phi =23.44^\circ$, $C=360^\circ$, $d_r$ is Julian day for summer solstice in northern hemisphere: June 21 which is day 172, $d_y$ is the number of days per year: 365.25.
+
+```{r}
+solar_dec <- makeFun(23.44*cos(2*pi*(d - 172)/365.25) ~ d)
+slice_plot(solar_dec(d)~ d, domain(d=c(0,1000)))
+```
+Hour angle of sunrise
+```{r}
+ha <- makeFun(acos( 
+  #cos(90.833*pi/180)/(cos(L)*cos(d))
+                - tan(L)*tan(d)) ~ L + d)
+ha(pi/4, 23*pi/180)
+slice_plot((180/pi)*ha(pi/4, ang) ~ ang, domain(ang=pi*c(-23, 23)/180))
+# Length of day at latitude L, Julian day d
+dlen <- makeFun(2*(180/pi)*ha(L, (pi/180)*solar_dec(d))/15 ~ L + d)
+slice_plot(dlen(66.5*pi/180, d) ~ d, domain(d=c(0,365)), npts=5000) %>%
+  gf_hline(yintercept=c(0, 24), color="blue") %>%
+  gf_lims(y=c(0,24))
+```
+
+Length of day: $2 \text{ha}(L, d)/15$
+Composition example: write ha() to accept degrees rather than radians
+
+
+ha = arccos (cos(90.833) /(cos(L)*cos(δ)) - tan(L)*tan(δ))
 
 [[Instantaneous power of AC voltage]] Power = I^2 R = V^2/R
 V will be a sinusoid
@@ -73,36 +280,10 @@ Log transformation of prices (log income rises steadily, so compose exp with a s
 
 Log-log and semi-log plots are an example of composing a log with a function to get a simpler function.
 
-[[Tukey's ladder]] Using a simple straight line with input composition and/or output composition. You can get a variety of curve shapes using only a linear function.
 
-[[Perceived brightness or loudness]] is a log scale.
 
 
 [[For integration chapter]] Wind energy potential: not the cube of the average wind velocity, but the average of the cube of wind velocity.
-
-## Function multiplication
-
-***Transient vibration***
-
-A guitar string is plucked to produce a note. The note is, of course, vibrations of the air created by vibrations of the string. 
-
-After plucking, the note fades away. An important model of this is a sinusoid (of the correct period to correspond to the frequency of the note) times an exponential.
-
-
-
-***Wave packet***
-
-An important idea in physics and communication is the ***wave packet.*** This is a function that is local, like a hump, but periodic within the hump.
-
-```{r fig.cap="A *wave packet* constructed by multiplying a sinusoid by a hump function."}
-wave_packet <- function(x, A=1, center = 0, width = 5, P=1, phase = 0) {
-  A*sin(2*pi*x/P)*dnorm((x - center)/width)
-}
-slice_plot(wave_packet(x, A=2, center=3, width  = 4, P  = 2 ) ~ x, 
-           domain(x = c(-15, 15)), npts = 500)
-```
-
-
 
 
 
@@ -123,6 +304,6 @@ In both cases, the sine part of the combination is a mathematical ($\exp(x)$ or 
 
 Each of these models was a function of one input. (Coincidentally, the input in both cases was "time", measured in minutes in the cooling-water example and hours in the tide example.)
 
-But 
+--> 
 
 
