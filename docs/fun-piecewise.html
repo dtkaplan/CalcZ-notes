@@ -64,8 +64,8 @@
 <li><a class="" href="fun-notation.html"><span class="header-section-number">4</span> Notation for functions</a></li>
 <li><a class="" href="graphs-and-graphics.html"><span class="header-section-number">5</span> Graphics &amp; function graphs</a></li>
 <li><a class="" href="params-intro.html"><span class="header-section-number">6</span> Parameters for functions</a></li>
-<li><a class="" href="the-process-of-modeling.html"><span class="header-section-number">7</span> The process of modeling</a></li>
-<li><a class="" href="fun-slopes.html"><span class="header-section-number">8</span> The slope function</a></li>
+<li><a class="" href="process-of-modeling.html"><span class="header-section-number">7</span> Process of modeling</a></li>
+<li><a class="" href="fun-slopes.html"><span class="header-section-number">8</span> Slope function</a></li>
 <li><a class="" href="fun-assembling.html"><span class="header-section-number">9</span> Assembling functions</a></li>
 <li><a class="" href="fun-multiple-inputs.html"><span class="header-section-number">10</span> Functions with multiple inputs</a></li>
 <li><a class="active" href="fun-piecewise.html"><span class="header-section-number">11</span> Piecewise functions</a></li>
@@ -103,7 +103,39 @@
 </li>
 </ol>
 </div>
+<p>EXAMPLE: We can’t produce the ccf vs temperature as a linear combination of straight-line functions: such a linear combination would be just another linear function. We need a piecewise function to do the job.</p>
+<p>Consider the data plotted below recording monthly household natural gas use for the author’s family. This varies from month to month, and since gas is mainly used for heating the house, it’s reasonable to think that gas usage is related to the outdoor temperature. Each dot in the graph shows one month’s data, with temperature measured in degrees F and natural gas measured by volume: cubic feet appreviated ccf. A straight-line function has been <strong><em>fitted</em></strong> to the data.</p>
+<div class="inline-figure"><img src="CalcZ-notes_files/figure-html/Fun-1C-abcd-1-1.png" width="672"></div>
+<p>The graph has several features that are not unusual when using data to construct a mathematical model.</p>
+<ol style="list-style-type: lower-roman">
+<li><p>The function selected, which gives ccf versus outdoor temperature, is roughly centered on the cloud of data. That is, for a given input value, the function output goes through the vertical center of the data points near that input value.</p></li>
+<li><p>For part of the domain, the function is a good match to the data.</p></li>
+<li><p>For another part of the domain, temperatures above about 60 degrees, the function deviates systematically from the data. Indeed, the output of the function is <em>negative</em> when temperature is above the mid 60s. (Of course, the <em>amount</em> of natural gas used can hardly be negative!)</p></li>
+<li><p>There are a few data points, near 40 and 60 deg. F that are far from the output of the model at those temperature. Such points are called <strong><em>outliers</em></strong>. One of the uses of mathematical models in interpreting data is to make it easier to spot data records that don’t fit an overall pattern. (From the graph itself, one can only speculate about what might be responsible for the outliers. Here it seems to be an error in transcribing the data.)</p></li>
+</ol>
+<p>The straight-line function has two parameters: the <strong><em>slope</em></strong> and the <strong><em>intercept</em></strong>. Since the domain of the graph includes 0, we can read the intercept directly from the graph: at an input of 0 the function output is roughly 300 ccf.</p>
+<p>The slope is, famously, the “rise over run.” Mark off a convenient interval on the domain. We’ll use 0 to 64 degrees. Then find the vertical interval of the function output over that interval on the domain. We selected 0 to 64 for the domain since the function output is easy to read: about 300 ccf at 0 deg and 0 ccf at 64 degrees. The amount of “rise” is therefore <span class="math inline">\(0-300\)</span> ccf and the run is <span class="math inline">\(64 - 0\)</span> deg, so the slope is <span class="math display">\[\frac{0-300}{64-0} \frac{\text{ccf}}{\text{deg}} \approx -4.6 \frac{\text{ccf}}{\text{deg}}\]</span> The negative sign on the slope indicates that the function output falls as the input increases.</p>
+<p>For a straight-line function, you will find the same slope whatever non-zero interval on the domain you choose for the run. Many other kinds of functions have a slope that differs for different inputs. One of the central ideas of calculus is that even for non-straight-line functions, a meaningful calculation of the <strong><em>slope at a single input</em></strong> can be constructed. We’ll examine that issue carefully later in the course.</p>
+<p>In calculus, the slope of a function is a quantity of particular interest. Here, the slope tells us that a one degree increase in outdoor temperature (averaged over a month) corresponds to a 4.6 ccf <em>decrease</em> in natural gas use.</p>
+<p>As you’ll see later in the course, the slope of a function is the <strong><em>sensitivity</em></strong> of the output to a change in the <strong><em>input</em></strong>.</p>
+<p>It’s often the case that a given model <strong><em>accounts</em></strong> for only part of the pattern seen in data. There are many synonyms for “accounts”: “<em>captures</em> only part of the pattern,” “<em>matches</em> only part of the pattern,” and so on. The blue straight-line model in Figure <a href="#fig:Fun-1C-abcd-1"><strong>??</strong></a> doesn’t account for the leveling out of natural gas use for temperatures greater than about 60 degrees.</p>
+<p>Modelers look for such discrepancies between a candidate model (here, the blue line) and the data. Sometimes such discrepancies indicate that the wrong kind of mathematical function has been selected for the model or that the model has not been fitted to the data properly. A skilled modeler will treat the discrepancies as an opportunity to learn more about the real-world system being modeled. With this additional knowledge, a better model can be constructed.</p>
+<p>Those familiar with home heating will know that for temperatures about about 60 degrees F, <strong>no heating is necessary</strong> and fuel use for heating falls to zero. But there are other uses for fuel such as cooking and water heating. To judge from the data, those uses don’t depend in any strong or obvious way on outdoor temperature.</p>
+<hr>
+<p>Exercise: Compare the straight-line model fitted to <em>all</em> the ccf data to the model fitted to data where the temperature was less than 60 degrees. Implement as <code>heating_ccf(temp)</code></p>
+<p>Exercise: Make a straight-line model for the energy used for cooking and heating. Implement as <code>other_ccf(temp)</code></p>
+<p>Exercise: Piece together the two models to make a more comprehensive model of energy use. Show the computer implementation of this function.</p>
+<div class="sourceCode" id="cb48"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">all_ccf</span> <span class="op">&lt;-</span> <span class="fu">makeFun</span><span class="op">(</span>
+              <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="va">temp</span> <span class="op">&lt;</span> <span class="fl">60</span>, 
+                     <span class="fu">heating_ccf</span><span class="op">(</span><span class="va">temp</span><span class="op">)</span> <span class="op">+</span> <span class="fu">other_ccf</span><span class="op">(</span><span class="va">temp</span><span class="op">)</span>,
+                     <span class="fu">other_ccf</span><span class="op">(</span><span class="va">temp</span><span class="op">)</span><span class="op">)</span> <span class="op">~</span> <span class="va">temp</span><span class="op">)</span></code></pre></div>
+<p><strong>Example: Find day length as a function of latitude. The formula from Fun-assembling can give a day length less than zero or greater than 24 hours. Write a function that takes such out-of-bound answers and replaces them with 0 or 24 as appropriate.</strong></p>
+<p><strong>Example: ASDR envelope in synthesized music</strong></p>
+<p><a href="https://en.wikipedia.org/wiki/Envelope_(music)" class="uri">https://en.wikipedia.org/wiki/Envelope_(music)</a></p>
 <p><strong>Example: Piecewise functions in machine learning</strong></p>
+<p><strong>Example: Wind power from wind-speed</strong></p>
+<p><strong>Example: Heating degree days. Cooling degree days.</strong></p>
 
 </div>
   <div class="chapter-nav">
@@ -128,7 +160,7 @@
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>CalcZ Student Notes</strong>" was written by Daniel Kaplan. It was last built on 2021-05-28.</p>
+    <p>"<strong>CalcZ Student Notes</strong>" was written by Daniel Kaplan. It was last built on 2021-05-30.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

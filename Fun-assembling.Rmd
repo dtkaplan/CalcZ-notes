@@ -1,9 +1,5 @@
 # Assembling functions {#fun-assembling}
 
-::: {.todo}
-This is text dumped from various chapters of the first draft. It needs to be re-organized and smoothed.
-:::
-
 When we need a new function for some purpose, we practically always build it out of existing functions. For instance, a  parameterized function like $$A \sin\left(\frac{2 \pi}{P}x\right) + C$$ is built by assempling together a straight-line input scaling, a naked $\sin()$ function, and another straight-line function for scaling the output from $\sin()$. 
 
 In this chapter, we'll introduce three general frameworks for combining functions: linear combination, composition, and multiplication.
@@ -102,7 +98,7 @@ day_length <- makeFun(
 
 ```{r day-length-cos, echo=FALSE, results="markup"}
 etude2::etudeQ(
-  "Using an R sandbox, calculate the length of the day at latitude $39^\deg$ on the longest day of the year, which is when the declination of the sun is $23.44^\circ$. How long is it?",
+  "Using an R sandbox, calculate the length of the day at latitude $39^\\deg$ on the longest day of the year, which is when the declination of the sun is $23.44^\\circ$. How long is it?",
   "13.9 hours",
   "+14.7 hours+",
   "14.9 hours",
@@ -160,7 +156,7 @@ The third in our repertoire of methods for making new function out of old is pla
 
 It's essential to distinguish between function multiplication and function composition:
 
-$$\underbrace{f(x) g(x)}_\mbox{multiplication}\ \ \ \ \underbrace{f(g(x)) \ \mbox{or}\ g(f(x))}_\mbox{composition}$$
+$$\underbrace{f(x) g(x)}_\mbox{multiplication}\ \ \ \ \underbrace{f(g(x)) \ \ \mbox{or}\ \ \ g(f(x))}_\mbox{composition}$$
 
 In function composition, only one of the functions---the ***interior function*** is applied to the overall input, $x$ in the above example. The other function gets its input from the output of its partner. 
 
@@ -189,7 +185,7 @@ slice_plot(wave_packet(x, A=2, center=3, width  = 4, P  = 10/5 ) ~ x,
 ```
 This is the product of two simple functions: a hump times a sinusoid.
 
-```{r making-wave-packet, echo=FALSE, out.width fig.show="hold", fig.cap="The two components of the wave packet in Figure \@ref(fig:wave-packet)"}
+```{r making-wave-packet, echo=FALSE, out.width="50%", fig.show="hold", fig.cap="The two components of the wave packet in Figure \\@ref(fig:wave-packet)"}
 sinusoid <- makeFun(sin(2*pi*x/P) ~ x, P=10/5)
 envelope <- makeFun(2*dnorm((x - center)/width) ~ x, center=3, width=4)
 slice_plot(envelope(x) ~ x, domain(x = c(-15, 15)), color="blue") %>%
@@ -200,10 +196,10 @@ slice_plot(sinusoid(x) ~ x, domain(x = c(-15, 15)),
 ```
 EXERCISES: Say which two kinds of functions are being multiplied here.
 
-```{r}
+```{r echo=FALSE}
 slice_plot(sin(2*pi*t/2.1)*sin(2*pi*t/20) ~ t, domain(t=c(-30, 40)), npts=500)
 ```
-```{r sine-in-sine1, echo=FALSE, results="markup}
+```{r sine-in-sine1, echo=FALSE, results="markup"}
 etude2::etudeQ(
   "What are the two basic modeling functions being multiplied?",
   "+A sinusoid and another sinusoid with a faster period.+",

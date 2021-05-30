@@ -43,20 +43,6 @@ For instance, consider the two functions $f(x)$ and $g(t)$. The composition $f(g
 
 In contrast to composition, multiplication of two functions is very effective for constructing functions of multiple variables: $h(x,y) \equiv f(x) g(y)$. 
 
-::: {.workedexample  data-latex=""}
-
-**A wave packet**
-
-An important idea in physics and communication is the "wave packet." This is a function that is local, like a hump, but periodic within the hump.
-
-```{r fig.cap="A *wave packet* constructed by multiplying a sinusoid by a hump function."}
-wave_packet <- function(x, A=1, center = 0, width = 5, P=1, phase = 0) {
-  A*sin(2*pi*x/P)*dnorm((x - center)/width)
-}
-slice_plot(wave_packet(x, A=2, center=3, width  = 4, P  = 2 ) ~ x, 
-           domain(x = c(-15, 15)), npts = 500)
-```
-:::
 
 ::: {.workedexample}
 A simple but powerful and general framework for constructing functions of two variables to match data or to assemble into one function facts about a relationship among three variables is the linear combination of four simple functions: $$a_0 + a_x\, x + a_y\, y + a_{xy}\, xy$$
@@ -67,7 +53,7 @@ The basis function $g_4(x, y) \equiv x y$ is called an ***interaction term*** an
 
 :::
 
-
+Contour plot of length of day versus latitude.
 
 
 EXERCISE:
@@ -76,5 +62,5 @@ Recall the Pythagorean theorem: $C^2 = A^2 + B^2$. Let's write this as a functio
 
 $$\mbox{hypotenuse}(x, y) \equiv \sqrt{\strut x^2 + y^2}$$
 
-This can be seen as a composition of a function $f()$ together with a linear combination of two power-law functions $g()$ and $h()$ of different inputs. What is the function $f()$? What are $g()$ and $h()$? What are the coefficients in the linear combination?
+This can be seen as a composition of a function $f()$ together with a linear combination of two power-law functions $g()$ and $h()$ of different inputs. What is the function $f()$? What are $g()$ and $h()$? What are the scalars in the linear combination?
 
