@@ -2773,7 +2773,7 @@ $p^\beta\left(1 - (1-p)^\alpha\right)$
 
 :::
 
-## Function composition
+## Function composition {#function-composition}
 
 To ***compose*** two functions, $f(x)$ and $g(x)$, means to apply one of the functions to the output of the other. "$f()$ composed with $g()$" means $f(g(x))$. This is generally very different from "$g()$ composed with $f()$" which means $g(f(x))$.
 
@@ -2836,7 +2836,7 @@ slice_plot(
   )
 ```
 
-$$\delta_\odot(n) \equiv - 23.44^\circ \cdot \cos \left [ \frac{360^\circ}{365} \cdot \left ( n + 10 \right) \right ]$$
+
 ```{r april-fools, echo=FALSE, results="markup"}
 etude2::etudeQ(
   "How long is the day on April Fools ($n=90$) at Latitude 39N? (Use a sandbox for the calculation.)",
@@ -2848,8 +2848,11 @@ etude2::etudeQ(
 )
 ```
 
-[[Tukey's ladder]] Using a simple straight line with input composition and/or output composition. You can get a variety of curve shapes using only a linear function.
+## Tukey's ladder
 
+::: {.todo}
+[[Tukey's ladder]] Using a simple straight line with input composition and/or output composition. You can get a variety of curve shapes using only a linear function.
+:::
 
 
 ::: {.todo}
@@ -3016,7 +3019,11 @@ Each of these models was a function of one input. (Coincidentally, the input in 
 
 --> 
 
+::: {.todo}
+**The modeling cycle**?????????
 
+Redo the length of day with the correction for diffraction and the angle subtended by the sun.
+:::
 
 <!--chapter:end:Fun-assembling.Rmd-->
 
@@ -3067,8 +3074,10 @@ BlankImage <- gf_blank(hp ~ wt, data=mtcars) %>% gf_theme(theme_void())
 ```
 # Functions with multiple inputs {#fun-multiple-inputs}
 
-
-
+```{r}
+bigger <- makeFun(ifelse(y > x, y, x) ~ x + y)
+contour_plot(bigger(x,y) ~ x+y, domain(x=c(-2,2), y=c(-2,2)))
+```
 
 
 ```{exercise, NOAA, name="Tables are functions"}
@@ -3110,20 +3119,6 @@ For instance, consider the two functions $f(x)$ and $g(t)$. The composition $f(g
 
 In contrast to composition, multiplication of two functions is very effective for constructing functions of multiple variables: $h(x,y) \equiv f(x) g(y)$. 
 
-::: {.workedexample  data-latex=""}
-
-**A wave packet**
-
-An important idea in physics and communication is the "wave packet." This is a function that is local, like a hump, but periodic within the hump.
-
-```{r fig.cap="A *wave packet* constructed by multiplying a sinusoid by a hump function."}
-wave_packet <- function(x, A=1, center = 0, width = 5, P=1, phase = 0) {
-  A*sin(2*pi*x/P)*dnorm((x - center)/width)
-}
-slice_plot(wave_packet(x, A=2, center=3, width  = 4, P  = 2 ) ~ x, 
-           domain(x = c(-15, 15)), npts = 500)
-```
-:::
 
 ::: {.workedexample}
 A simple but powerful and general framework for constructing functions of two variables to match data or to assemble into one function facts about a relationship among three variables is the linear combination of four simple functions: $$a_0 + a_x\, x + a_y\, y + a_{xy}\, xy$$
@@ -3134,7 +3129,7 @@ The basis function $g_4(x, y) \equiv x y$ is called an ***interaction term*** an
 
 :::
 
-
+Contour plot of length of day versus latitude.
 
 
 EXERCISE:
@@ -3143,7 +3138,7 @@ Recall the Pythagorean theorem: $C^2 = A^2 + B^2$. Let's write this as a functio
 
 $$\mbox{hypotenuse}(x, y) \equiv \sqrt{\strut x^2 + y^2}$$
 
-This can be seen as a composition of a function $f()$ together with a linear combination of two power-law functions $g()$ and $h()$ of different inputs. What is the function $f()$? What are $g()$ and $h()$? What are the coefficients in the linear combination?
+This can be seen as a composition of a function $f()$ together with a linear combination of two power-law functions $g()$ and $h()$ of different inputs. What is the function $f()$? What are $g()$ and $h()$? What are the scalars in the linear combination?
 
 
 <!--chapter:end:Fun-multiple-inputs.Rmd-->
@@ -3207,72 +3202,166 @@ state_objective("Fun-4-b-4d", "Distinguish between continuous and discontinuous 
 ```
 :::
 
+Each of our basic modeling functions, with two exceptions, has a domain that is the entire number line $-\infty < x < \infty$. No matter how big or small is the value of the input, the function has an output. Such functions are particularly nice to work with, since we never have to worry about the input going out of bounds.
 
-EXAMPLE: We can't produce the ccf vs temperature as a linear combination of straight-line functions: such a linear combination would be just another linear function. We need a piecewise function to do the job.
+The two exceptions are:
 
-Consider the data plotted below recording monthly household natural gas use for the author's family. This varies from month to month, and since gas is mainly used for heating the house, it's reasonable to think that gas usage is related to the outdoor temperature. Each dot in the graph shows one month's data, with temperature measured in degrees F and natural gas measured by volume: cubic feet appreviated ccf. A straight-line function has been ***fitted*** to the data.
+1. the logarithm function, which is defined only for $0 < x$.
+2. some of the power-law functions: $x^p$. 
+    - When $p$ is negative, the output of the function is undefined when $x=0$. You can see why with a simple example: $g(x) \equiv x^{-2}$. Most students had it drilled into them that "division by zero is illegal," and $g(0) = \frac{1}{0} \frac{1}{0}$, a double law breaker. 
+    - When $p$ is not an integer, that is $p \neq 1, 2, 3, \cdots$ the domain of the power-law function does not include negative inputs. To see why, consider the function $h(x) \equiv x^{1/3}$. 
+    
+It can be tedious to make sure that you are on the right side of the law when dealing with functions whose domain is not the whole number line. The designers of the hardware that does computer arithmetic, after several decades of work, found a clever system to make it easier. It's a standard part of such hardware that whenever ta function is handed an input that is not part of that function's domain, one of two special "numbers" is returned. To illustrate:
+```{r warning=FALSE}
+sqrt(-3)
+(-2)^0.9999
+1/0
+```
+`NaN` stands for "not a number." Just about any calculation involving `NaN` will generate `NaN` as a result, even those involving multiplication by zero or cancellation by subtraction or division.^[One that does produce a number is `NaN^0`.] For instance:
+```{r warning=FALSE}
+0 * NaN
+NaN - NaN
+NaN / NaN
+```
 
-```{r Fun-1C-abcd-1, echo=FALSE}
-gf_point(ccf ~ temp, data = Home_utilities) %>%
+Division by zero produces `Inf`, whose name is reminiscent of "infinity." `Inf` infiltrates any calculation in which it takes part:
+```{r warning=FALSE}
+3 * Inf
+sqrt(Inf)
+0 * Inf
+Inf + Inf
+Inf - Inf
+1/Inf
+```
+::: {.scaffolding}
+To see the benefits of the `NaN` / `Inf` system let's plot out the logarithm function over the graphics domain $-5 \leq x \leq 5$. Of course, part of that graphics domain, $-5 \leq x \leq 0$ is not in the domain of the logarithm function and the computer is entitled to give us a slap on the wrists. The `NaN` provides some room for politeness. 
+
+Open a sandbox and see what happens when you make the plot.
+```{r eval=FALSE}
+slice_plot(log(x) ~ x, domain(x=c(-5,5)))
+```
+:::
+
+In a purely mathematical sense, the problem with functions being undefined over an extended part of a domain has been handled with cunning and imagination. But the solution---the invention of complex numbers---is not our concern here. Instead, we're going to embrace functions that have a domain smaller than the whole number line and see what we can do with them. 
+
+To illustrate, let's use computer notation to create a function whose domain is $x < 1$. To do this, we need a way to write "if," as in, "If $x$ is 1 or greater, return `NaN`." We'll use a function in R that let's ask a TRUE/FALSE question and, depending on the answer, do one or another calculation. The question-answering R function is `ifelse()` whose name is remarkably descriptive. The `ifelse()` function takes three arguments. The first is the question to be asked, the second is the value to return if the answer is "yes," and the third is the value to return for a "no" answer.
+
+```{r warning=FALSE}
+g <- makeFun( ifelse(x < 1, x, NaN) ~ x)
+slice_plot(g(x) ~ x, domain(x = c(-2, 2)))
+```
+What takes getting used to here is the expression `x < 1` which is a ***question*** not a statement of fact. There's no standard traditional mathematical notation for questions, although some people use a question mark as in $x \stackrel{?}{<} 1$.
+
+The table shows computer notation for some common sorts of questions.
+
+R notation              | English
+------------------------|---------
+`x > 2`      | "Is $x$ greater than 2?"
+`y >= 3`     | "Is $y$ greater than or equal to 3?"
+`x == 4`     | "Is $x$ exactly 4?"
+`2 < x & x < 5`| "Is $x$ between 2 and 5?"^[Literally, "Is $x$ both greater than 2 and less than 5?"]
+`x < 2 | x > 6` | "Is $x$ either less than 2 or greater than 6?"
+`abs(x-5) < 2` | "Is $x$ within two units of 5?"
+
+## Piecewise functions
+
+Having an ability to split up the domain of a function and provide different formula for each of the pieces allows us to
+construct ***piecewise functions***. To illustrate, the function $h(x) \equiv |x|$. You'll recognize this as the "absolute value" function. The intuitive algorithm is to "strip the negative sign, if any" from the input. But with the ability to divide the domain into pieces, we gain access to a less mysterious sort of arithmetic operation and can re-write $$h(x) \equiv \left\{ 
+\begin{array}{cl} x & \text{for}\ 0 \leq x\\-x & \mbox{otherwise}\end{array}
+\right.$$ 
+Or, in computer notation
+```{r}
+h <- makeFun(ifelse(x >= 0, x, -x) ~ x)
+```
+Note that the absolute value function is built-in to R in the form of the `abs()` function.
+
+Less familiar is the ***Heaviside function*** which has important uses in physics and engineering:
+
+$$\mbox{Heaviside}(x) \equiv \left\{ 
+\begin{array}{cl} 0 & \text{for}\ x < 0\\1 & \mbox{otherwise}\end{array}
+\right.$$
+In computer notation, this is 
+```{r}
+Heaviside <- makeFun(ifelse(x < 0, 0, 1) ~ x)
+```
+
+```{r echo=FALSE}
+slice_plot(0 ~ x, domain(x = c(-10, 0)), size=2) %>%
+  slice_plot(1 ~ x, domain(x = c(0,10)), size=2) %>%
+  gf_labs(title="The Heaviside function") %>%
+  gf_lims(y = c(-0.5, 1.5))
+```
+The vertical gap between the two pieces is called a ***discontinuity***. Intuitively, you cannot draw a discontinuous function ***without lifting the pencil from the paper***. The Heaviside function has a discontinuity at $x=0$.
+
+Similarly, the ***ramp function*** is a kind of one-sided absolute value:
+$$\mbox{ramp}(x) \equiv \left\{ 
+\begin{array}{cl} x & \text{for}\ 0 \leq x\\0 & \mbox{otherwise}\end{array}
+\right.$$
+Or, in computer notation:
+```{r}
+ramp <- makeFun(ifelse(0 < x, x, 0) ~ x)
+slice_plot(ramp(x) ~ x, domain(x=c(-3, 3)))
+```
+
+A linear combination of two input-shifted ramp functions gives a piecewise version of the sigmoid.
+```{r}
+sig <- makeFun(ramp(x+0.5) - ramp(x-0.5) ~ x)
+slice_plot(sig(x) ~ x, domain(x=c(-3, 3)))
+```
+::: {r .workedexample}
+
+Figure \@ref(fig:gas-use-2) is a graph of monthly natural gas use in the author's household versus average temperature during the month. (Natural gas is measured in cubic feet, appreviated *ccf*.)
+
+```{r gas-use-2, echo=FALSE}
+gf_point(ccf ~ temp, data = Home_utilities, alpha=0.5) %>%
   gf_labs(title="Household natural gas use", x = "Average temperature for the month (deg. F)", y = "Volume of gas used (cubic feet)") %>%
-  gf_lims(x = c(0, 85)) %>% 
-  gf_lm(ccf ~ temp, data = Home_utilities %>% filter(temp < 60))
+  gf_lims(x = c(0, 85)) %>%
+  slice_plot(4.3*ramp(62 - temp) + 15 ~ temp, color="blue", size=2, alpha=0.5)
+```
+The graph looks somewhat like a hockey stick. A sloping straight-line dependence of ccf on temperature for temperatures below $60^\circ$F and constant for higher temperatures.  The shape originates from the dual uses of natural gas. Gas is used for cooking and domestic hot water, the demand for which is more of less independent of outdoor temperature at about 15 ccf per month. Gas is also used for heating the house, but that's needed only when the temperature is less than about $60^\circ$F.  
+
+We can accomplish the hockey-stick shape with a linear combination of the ramp() function and a constant. The ramp function represents gas used for heating, the constant is the other uses of gas (which are modeled as not depending on temperature. Overall, the model is  $$\text{gas_ccf}(x) \equiv 4.3\,  \mbox{ramp}(62-x)  + 15$$
+Even simpler is the model for the other uses of natural gas:
+$$\text{other_ccf}(x) \equiv 15$$. 
+:::
+
+::: {.todo}
+Do heating degree days in integration.
+
+Similarly with power from wind turbines
+:::
+
+Our last example concerns a bit of familiar technology: music synthesis. Generating a pure tone electronically is easy done using a sinusoid. Generating a note with rich instrumental timbre can be accomplished by a linear combination of sinusoids. Of course, the note will be localized in time. This could be accomplished by multiplying the sinusoids by a hump function envelope. 
+
+It turns out that our standard hump function, `dnorm()`, does not generate a realistic sound. Instead, a more complicated envelope is used, such as the [ADSR function](https://en.wikipedia.org/wiki/Envelope_(music)) shown in Figure \@ref(fig:ADSR). The function has six (!) parameters: the time the key is pressed, the duration A of the "attack" phase when the sound amplitude is increasing in response to the impulse imposed on the key, a decay of duration D to an output level S that lasts until the key is released, then a decay to zero over duration R. It's reasonable to think of the D and S phases as a piecewise linear approximation to exponential decay.
+
+```{r ADSR, echo=FALSE, out.width="50%", fig.align="center", fig.cap="The ADSR envelope function used in music synthesis consists of 6 pieces including zero output before the key is pressed and after the pulse ends. [Source](https://en.wikipedia.org/wiki/Envelope_(music))"}
+knitr::include_graphics("www/adsr.png")
 ```
 
-The graph has several features that are not unusual when using data to construct a mathematical model. 
-
-i. The function selected, which gives ccf versus outdoor temperature, is roughly centered on the cloud of data. That is, for a given input value, the function output goes through the vertical center of the data points near that input value.
-
-ii. For part of the domain, the function is a good match to the data.
-
-iii. For another part of the domain, temperatures above about 60 degrees, the function deviates systematically from the data. Indeed, the output of the function is *negative* when temperature is above the mid 60s. (Of course, the *amount* of natural gas used can hardly be negative!)
-
-iv. There are a few data points, near 40 and 60 deg. F that are far from the output of the model at those temperature. Such points are called ***outliers***. One of the uses of mathematical models in interpreting data is to make it easier to spot data records that don't fit an overall pattern. (From the graph itself, one can only speculate about what might be responsible for the outliers. Here it seems to be an error in transcribing the data.)
-
-The straight-line function has two parameters: the ***slope*** and the ***intercept***. Since the domain of the graph includes 0, we can read the intercept directly from the graph: at an input of 0 the function output is roughly 300 ccf.
-
-The slope is, famously, the "rise over run."  Mark off a convenient interval on the domain. We'll use 0 to 64 degrees. Then find the vertical interval of the function output over that interval on the domain. We selected 0 to 64 for the domain since the function output is easy to read: about 300 ccf at 0 deg and 0 ccf at 64 degrees. The amount of "rise" is therefore $0-300$ ccf and the run is $64 - 0$ deg, so the slope is $$\frac{0-300}{64-0} \frac{\text{ccf}}{\text{deg}} \approx -4.6 \frac{\text{ccf}}{\text{deg}}$$ The negative sign on the slope indicates that the function output falls as the input increases.
-
-For a straight-line function, you will find the same slope whatever non-zero interval on the domain you choose for the run. Many other kinds of functions have a slope that differs for different inputs. One of the central ideas of calculus is that even for non-straight-line functions, a meaningful calculation of the ***slope at a single input*** can be constructed. We'll examine that issue carefully later in the course. 
-
-In calculus, the slope of a function is a quantity of particular interest. Here, the slope tells us that a one degree increase in outdoor temperature (averaged over a month) corresponds to a 4.6 ccf *decrease* in natural gas use. 
-
-As you'll see later in the course, the slope of a function is the ***sensitivity*** of the output to a change in the ***input***.
-
-It's often the case that a given model ***accounts*** for only part of the pattern seen in data. There are many synonyms for "accounts": "*captures* only part of the pattern," "*matches* only part of the pattern," and so on. The blue straight-line model in Figure \@ref(fig:Fun-1C-abcd-1) doesn't account for the leveling out of natural gas use for temperatures greater than about 60 degrees. 
-
-Modelers look for such discrepancies between a candidate model (here, the blue line) and the data. Sometimes such discrepancies indicate that the wrong kind of mathematical function has been selected for the model or that the model has not been fitted to the data properly. A skilled modeler will treat the discrepancies as an opportunity to learn more about the real-world system being modeled. With this additional knowledge, a better model can be constructed. 
-
-Those familiar with home heating will know that for temperatures about about 60 degrees F, **no heating is necessary** and fuel use for heating falls to zero. But there are other uses for fuel such as cooking and water heating. To judge from the data, those uses don't depend in any strong or obvious way on outdoor temperature.
-
----
-
-Exercise: Compare the straight-line model fitted to *all* the ccf data to the model fitted to data where the temperature was less than 60 degrees. Implement as `heating_ccf(temp)`
-
-Exercise: Make a straight-line model for the energy used for cooking and heating.  Implement as `other_ccf(temp)`
-
-Exercise: Piece together the two models to make a more comprehensive model of energy use. Show the computer implementation of this function.
-
-```r
-all_ccf <- makeFun(
-              ifelse(temp < 60, 
-                     heating_ccf(temp) + other_ccf(temp),
-                     other_ccf(temp)) ~ temp)
+```{r echo=FALSE}
+adsr <- function(a,d,ts, s,r) {
+  function(t) {
+    ifelse( 
+      t < a, 2*t,
+      ifelse(
+        t < (a+d), 2*a - ((t-a)/d)*(s - 2*a),
+        elseif(
+          t < (a+d+ts), s,
+               elseif(
+                 t > a + d + ts + r, 0,
+                s - s*(t-(a + d + ts))/r
+                )
+        )
+      )
+    )
+  }
+}
 ```
 
 
-**Example: Find day length as a function of latitude. The formula from Fun-assembling can give a day length less than zero or greater than 24 hours. Write a function that takes such out-of-bound answers and replaces them with 0 or 24 as appropriate.**
-
-**Example: ASDR envelope in synthesized music**
-
-<https://en.wikipedia.org/wiki/Envelope_(music)>
 
 
-**Example: Piecewise functions in machine learning**
-
-**Example: Wind power from wind-speed**
-
-**Example: Heating degree days. Cooling degree days.**
 
 <!--chapter:end:Fun-piecewise.Rmd-->
 

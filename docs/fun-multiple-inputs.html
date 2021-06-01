@@ -84,6 +84,10 @@
 <h1>
 <span class="header-section-number">10</span> Functions with multiple inputs<a class="anchor" aria-label="anchor" href="#fun-multiple-inputs"><i class="fas fa-link"></i></a>
 </h1>
+<div class="sourceCode" id="cb47"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">bigger</span> <span class="op">&lt;-</span> <span class="fu">makeFun</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="va">y</span> <span class="op">&gt;</span> <span class="va">x</span>, <span class="va">y</span>, <span class="va">x</span><span class="op">)</span> <span class="op">~</span> <span class="va">x</span> <span class="op">+</span> <span class="va">y</span><span class="op">)</span>
+<span class="fu">contour_plot</span><span class="op">(</span><span class="fu">bigger</span><span class="op">(</span><span class="va">x</span>,<span class="va">y</span><span class="op">)</span> <span class="op">~</span> <span class="va">x</span><span class="op">+</span><span class="va">y</span>, <span class="fu">domain</span><span class="op">(</span>x<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">2</span>,<span class="fl">2</span><span class="op">)</span>, y<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">2</span>,<span class="fl">2</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<div class="inline-figure"><img src="CalcZ-notes_files/figure-html/unnamed-chunk-68-1.png" width="672"></div>
 
 <div class="exercise">
 <span id="exr:NOAA" class="exercise"><strong>Exercise 10.1  (Tables are functions)  </strong></span>
@@ -165,31 +169,16 @@ Figure 10.1: Natural gas used (ccf) versus average outdoor temperature for the a
 <p>For instance, consider the two functions <span class="math inline">\(f(x)\)</span> and <span class="math inline">\(g(t)\)</span>. The composition <span class="math inline">\(f(g(t))\)</span> has only <strong>one</strong> input: <span class="math inline">\(t\)</span>. Similarly, <span class="math inline">\(g(f(x))\)</span> has only one input: <span class="math inline">\(x\)</span>.</p>
 <p>In contrast to composition, multiplication of two functions is very effective for constructing functions of multiple variables: <span class="math inline">\(h(x,y) \equiv f(x) g(y)\)</span>.</p>
 <div class="workedexample">
-<p><strong>A wave packet</strong></p>
-<p>An important idea in physics and communication is the “wave packet.” This is a function that is local, like a hump, but periodic within the hump.</p>
-<div class="sourceCode" id="cb47"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">wave_packet</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span>, <span class="va">A</span><span class="op">=</span><span class="fl">1</span>, <span class="va">center</span> <span class="op">=</span> <span class="fl">0</span>, <span class="va">width</span> <span class="op">=</span> <span class="fl">5</span>, <span class="va">P</span><span class="op">=</span><span class="fl">1</span>, <span class="va">phase</span> <span class="op">=</span> <span class="fl">0</span><span class="op">)</span> <span class="op">{</span>
-  <span class="va">A</span><span class="op">*</span><span class="fu"><a href="https://rdrr.io/r/base/Trig.html">sin</a></span><span class="op">(</span><span class="fl">2</span><span class="op">*</span><span class="va">pi</span><span class="op">*</span><span class="va">x</span><span class="op">/</span><span class="va">P</span><span class="op">)</span><span class="op">*</span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">dnorm</a></span><span class="op">(</span><span class="op">(</span><span class="va">x</span> <span class="op">-</span> <span class="va">center</span><span class="op">)</span><span class="op">/</span><span class="va">width</span><span class="op">)</span>
-<span class="op">}</span>
-<span class="fu">slice_plot</span><span class="op">(</span><span class="fu">wave_packet</span><span class="op">(</span><span class="va">x</span>, A<span class="op">=</span><span class="fl">2</span>, center<span class="op">=</span><span class="fl">3</span>, width  <span class="op">=</span> <span class="fl">4</span>, P  <span class="op">=</span> <span class="fl">2</span> <span class="op">)</span> <span class="op">~</span> <span class="va">x</span>, 
-           <span class="fu">domain</span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">15</span>, <span class="fl">15</span><span class="op">)</span><span class="op">)</span>, npts <span class="op">=</span> <span class="fl">500</span><span class="op">)</span></code></pre></div>
-<div class="figure">
-<span id="fig:unnamed-chunk-69"></span>
-<img src="CalcZ-notes_files/figure-html/unnamed-chunk-69-1.png" alt="A *wave packet* constructed by multiplying a sinusoid by a hump function." width="672"><p class="caption">
-Figure 10.2: A <em>wave packet</em> constructed by multiplying a sinusoid by a hump function.
-</p>
-</div>
-</div>
-<div class="workedexample">
 <p>A simple but powerful and general framework for constructing functions of two variables to match data or to assemble into one function facts about a relationship among three variables is the linear combination of four simple functions: <span class="math display">\[a_0 + a_x\, x + a_y\, y + a_{xy}\, xy\]</span>
 The coefficients in the linear combination are <span class="math inline">\(a_0\)</span>, <span class="math inline">\(a_x\)</span>, <span class="math inline">\(a_y\)</span>, and <span class="math inline">\(a_{xy}\)</span>. Those names were selected to make it easier to keep track of which coefficient scales which function, but ultimately they are just scalars and could have been called <span class="math inline">\(a, b, c\)</span>, and <span class="math inline">\(d\)</span>.</p>
 <p>The basis function <span class="math inline">\(g_4(x, y) \equiv x y\)</span> is called an <strong><em>interaction term</em></strong> and arises very often in models of phenemona such as the spread of epidemics, the population dynamics of predator and prey animals, and the rates of chemical reactions
 .</p>
 </div>
+<p>Contour plot of length of day versus latitude.</p>
 <p>EXERCISE:</p>
 <p>Recall the Pythagorean theorem: <span class="math inline">\(C^2 = A^2 + B^2\)</span>. Let’s write this as a function that takes as inputs the lengths of the two legs and produces as output the length of the hypotenuse.</p>
 <p><span class="math display">\[\mbox{hypotenuse}(x, y) \equiv \sqrt{\strut x^2 + y^2}\]</span></p>
-<p>This can be seen as a composition of a function <span class="math inline">\(f()\)</span> together with a linear combination of two power-law functions <span class="math inline">\(g()\)</span> and <span class="math inline">\(h()\)</span> of different inputs. What is the function <span class="math inline">\(f()\)</span>? What are <span class="math inline">\(g()\)</span> and <span class="math inline">\(h()\)</span>? What are the coefficients in the linear combination?</p>
+<p>This can be seen as a composition of a function <span class="math inline">\(f()\)</span> together with a linear combination of two power-law functions <span class="math inline">\(g()\)</span> and <span class="math inline">\(h()\)</span> of different inputs. What is the function <span class="math inline">\(f()\)</span>? What are <span class="math inline">\(g()\)</span> and <span class="math inline">\(h()\)</span>? What are the scalars in the linear combination?</p>
 
 </div>
   <div class="chapter-nav">
@@ -214,7 +203,7 @@ The coefficients in the linear combination are <span class="math inline">\(a_0\)
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>CalcZ Student Notes</strong>" was written by Daniel Kaplan. It was last built on 2021-05-30.</p>
+    <p>"<strong>CalcZ Student Notes</strong>" was written by Daniel Kaplan. It was last built on 2021-05-31.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">
