@@ -1,7 +1,176 @@
-# (PART) Block 2: Differences and differentiation {.unnumbered}
+# Change relationships
 
-# Functions and patterns
+The questions that started it all had to do with motion. There were words to describe speed: fast and slow. There were words to describe force: strong and weak, heavy and light. And there were words to describe location: far and near, long and short. But what were the relationships among these things? And how did time fit in, an intangible quantity that had aspects of location (long and short) and of speed (quick and slow)?
 
+Galileo (1564-1642) started the ball rolling. As the son of a musician and music theorist, he had a sense of musical time, a steady beat of intervals. As a student of medicine in Pisa, he noted that swinging pendulums kept reliable time, regardless of the amplitude of their swing. After accidentally attending a lecture on geometry, he turned to mathematics and natural philosophy. Inventing the telescope, his observations put him on a collision course with the accepted classical truth about the nature of the planets. Seeking to understand gravity, he built an apparatus that enabled him to measure accurately the position in time of a ball rolling down a straight ramp. The belled gates he set up to mark the ball's passage were spaced arithmetically in musical time: 1, 2, 3, 4, .... But the distance between the gates was geometric: 1, 4, 9, 16, .... Thus he established a mathematical relationship between increments in time and increments in position. Time advanced as 1, 1, 1, 1, ... and position as 1, 3, 5, 7, .... He observed that the ***second*** increments of position, the increments of the increments 1, 3, 5, 7, ..., were themselves evenly spaced: 2, 2, 2, ....
+
+Putting these observations in tabular form, and adding columns for the 
+
+- first increment  $y(t) \equiv x(t+1) - x(t)$ and the
+- second increment $y(t+1) - y(t)$
+
+$t$ | $x(t)$ | first increment | second increment
+----|--------|-----------------|---------------
+0   | 0      | 1        | 2
+1   | 1      | 3        | 2
+2   | 4      | 5        | 2
+3   | 9      | 7        | 
+4   | 16     |          |
+
+Galileo had neither the mathematics nor the equipment to measure motion continuously in time. So what might be obvious to us now, that position is a function of time $x(t)$, would have had little practical significance to him. But we discover in his first increments of $x$ something very much like our ***slope function***. 
+
+$${\cal D}_t\, x(t) \equiv \frac{x(t + 1) - x(t)}{1}$$
+From his data, he observed that ${\cal D}_t\, x(t)$ increases linearly in $t$: $${\cal D}_t x(t) = 2 t + 1$$
+
+Calculating the second increments of $x$ is done by the "slope function of the slope function," which we can call ${\cal D}_{tt}$:
+$${\cal D}_{tt} x \equiv {\cal D}_t \left[{\cal D}_t x(t)\right] = 2(t+1) + 1 - (2 t + 1) = 2$$
+
+Newton considered the problem for continuous time rather than Galileo's discrete time. He reframed the slope function from the big increments of the slope operator ${\cal D}_t$ to imagined vanishingly small increments of a operator that we shall denote $\partial_t$ and call ***differentiation***.
+
+The kind of question for which Newton wanted to be able to calculate the answer was, "How to find the function $x(t)$ whose second increment, $\partial_{tt} x(t) = 2$?" His approach, which he called the "method of fluxions," became so important that its name became, simply, "Calculus."
+
+## Slopes and increments.
+
+The mathematical tools of Newton's day are the basis of today's conventional high-school curriculum.^[Perhaps this says something about how well education has kept up with technology.] We have today completely different tools based on the ability to do arithmetic and function evaluation very quickly with computers. We're going to use these new tools to explore the problem of relating the slope-function operator ${\cal D}_t$ to the differential operator $\partial_t$. We have the great advantage of being able to look backwards and so can focus on the functions that experience reveals have been the most widely useful: the basic modeling functions. 
+
+Our goal in this section is to discover what are the slope functions of our basic modeling functions. Recall that the slope-function operator can be written as a ratio of rise-over-run:
+$${\cal D}_t x(t) \equiv \frac{x(t+h) - x(t)}{h}$$ where $h$ is the length of the "run." We'll start with two of the basic modeling functions that have considerable "personality": the sinusoid (`sin()`) and the sigmoid (`pnorm()`).
+
+```{r sign-sig, echo=FALSE, out.width="50%", fig.show = "hold", fig.cap="The naked sinusoid and sigmoidal functions. A vertical blue line has been added to mark the input $t=0$", warning=FALSE, message=FALSE}
+slice_plot(sin(t) ~ t, domain(t=c(-5, 2*pi))) %>%
+  gf_labs(title="Sinusoid") %>%
+  gf_vline(xintercept=0, color="blue", alpha=0.5)
+slice_plot(pnorm(t) ~ t, domain(t=c(-5, 2*pi))) %>%
+  gf_labs(title="Sigmoid") %>%
+  gf_vline(xintercept=0, color="blue", alpha=0.5)
+```
+We'll use the computer to construct the slope functions for the sinusoid and sigmoid, which we'll call `Dsin()` and `Dsigma()` respectively.
+```{r}
+Dsin   <- makeFun((  sin(t+h) -   sin(t))/h ~ t, h=0.1)
+Dsigma <- makeFun((pnorm(t+h) - pnorm(t))/h ~ t, h=0.1)
+```
+
+In the tilde expression handed to `makeFun()`, we've identified `t` as the name of the input and given a "small" default value to the `h` parameter. But R recognizes that both `Dsin()` and `Dsigma()` are functions of two variables, `t` and `h`, as you can see in the parenthesized argument list for the functions.
+```{r}
+Dsin
+Dsigma
+```
+This is a nuisance, since when using the slope functions we will need always to think about `h`, a number that we'd like to describe simply as "small," but for which we always need to provide a numerical value. Let's look at `Dsin()` and `Dsigma()` for a range of values of `h`, as in Figure \@ref(fig:sin-sig-many-h).
+
+```{r sin-sig-many-h, echo=FALSE, out.width="50%", fig.show = "hold", fig.cap="The slope functions of the sinusoid and sigmoid. Each curve shows the slope function for a particular numerical choice of `h`. Both panels show $h=2, 1, 0.5, 0.1, 0.01, 0.001, 0.0001, 0.00001, 0.000001$.", warning=FALSE, message=FALSE}
+rain <- rev(hcl.colors(12)[-(1:3)])
+slice_plot(Dsin(t, h=1) ~ t, domain(t=c(-5, 2*pi)), color=rain[1], label_text="h=1", label_x=0.56) %>%
+  slice_plot(Dsin(t, h=2) ~ t, alpha = 1, label_text="h=2", label_x=.58, color=rain[1]) %>%
+  slice_plot(Dsin(t, h=0.5) ~ t, alpha = 1, label_text="h=0.5", label_x=.54, color=rain[3]) %>%
+  slice_plot(Dsin(t, h=0.1) ~ t, alpha = 1, label_text="h=0.1", label_x=.53, color=rain[4]) %>%
+  slice_plot(Dsin(t, h=0.01) ~ t, alpha = 1, label_text="h=0.01", label_x=.51, color=rain[5]) %>%
+  slice_plot(Dsin(t, h=0.001) ~ t, alpha = 1, color=rain[6], label_text="h=0.001", label_x=.5) %>%
+  slice_plot(Dsin(t, h=0.0001) ~ t, alpha = 1, color=rain[7], label_text="h=0.0001", label_x=.49) %>%
+  slice_plot(Dsin(t, h=0.00001) ~ t, alpha = 1, color=rain[8], label_text="h=0.00001", label_x=.48) %>%
+  slice_plot(Dsin(t, h=0.000001) ~ t, alpha = 1, color=rain[9], label_text="h=0.000001", label_x=.44) %>%
+  gf_labs(title="Slope functions of sinusoid") %>%
+  gf_vline(xintercept=0, color="blue", alpha=0.5)
+slice_plot(Dsigma(t, h=1) ~ t, domain(t=c(-5, 2*pi)), label_text="h=1", label_x=.28, color= rain[2]) %>%
+  slice_plot(Dsigma(t, h=2) ~ t, alpha = 1, label_text="h=2", label_x=.24, color=rain[1]) %>%
+  slice_plot(Dsigma(t, h=0.5) ~ t, alpha = 1, label_text="h=0.5", label_x=.54, color=rain[3]) %>%
+  slice_plot(Dsigma(t, h=0.1) ~ t, alpha = 1, label_text="h=0.1", label_x=.53, color=rain[4]) %>%
+  slice_plot(Dsigma(t, h=0.01) ~ t, alpha = 1, label_text="h=0.01", label_x=.51, color=rain[5]) %>%
+  slice_plot(Dsigma(t, h=0.001) ~ t, alpha = 1, color=rain[6], label_text="h=0.001", label_x=.5) %>%
+  slice_plot(Dsigma(t, h=0.0001) ~ t, alpha = 1, color=rain[7], label_text="h=0.0001", label_x=.49) %>%
+  slice_plot(Dsigma(t, h=0.00001) ~ t, alpha = 1, color=rain[8], label_text="h=0.00001", label_x=.48) %>%
+  slice_plot(Dsigma(t, h=0.000001) ~ t, alpha = 1, color=rain[9], label_text="h=0.000001", label_x=.44) %>%
+  gf_labs(title="Slope functions of sigmoid") %>%
+  gf_vline(xintercept=0, color="blue", alpha=0.5)
+```
+
+Some observations from this numerical experiment:
+
+1. As $h$ gets very small, the slope function doesn't depend on the exact value of $h$.
+
+    This will provide a way for us, eventually, to discard $h$ so that the slope function will not need an $h$ argument.
+    
+2. For small $h$, we have ${\cal D}_t \sin(t) = \sin(t + \pi/2) = \cos(t)$. That is, taking the slope function of a sinusoid gives another sinusoid, shifted left by $\pi/2$ from the original. Or, in plain words, the cosine is the slope function of the sine.
+3. For small $h$, we have ${\cal D}_t \text{pnorm}(t) = \text{dnorm(t)}$. That is, the hump function is the slope function of the sigmoid function.
+
+You can confirm these last two statements by comparison with the original functions, especially the alignment of the peaks of the slope functions with respect to the peak of the sinusoid and the half-way point of the sigmoid.
+
+Now consider the slope functions of the logarithm and exponential functions.
+
+```{r log-exp-many-h, echo=FALSE, out.width="50%", fig.show = "hold", fig.cap="The slope functions of the logarithm and exponential.", warning=FALSE, message=FALSE}
+rain <- rev(hcl.colors(12)[-(1:3)])
+Dlog <- makeFun((log(x+h) - log(x))/h ~ x)
+Dexp <- makeFun((exp(x+h) - exp(x))/h ~ x)
+slice_plot(Dlog(t, h=1) ~ t, domain(t=c(0.01, 2)), color=rain[2], label_text="h=1", label_x=0.8) %>%
+  slice_plot(Dlog(t, h=2) ~ t, domain(t=c(0.01, 2)), alpha = 1, label_text="h=2", label_x=.90, color=rain[1]) %>%
+  slice_plot(Dlog(t, h=0.5) ~ t, domain(t=c(0.02, 2)), alpha = 1, label_text="h=0.5", label_x=.7, color=rain[3]) %>%
+  slice_plot(Dlog(t, h=0.1) ~ t, alpha = 1, label_text="h=0.1", label_x=.6, color=rain[4]) %>%
+  slice_plot(Dlog(t, h=0.01) ~ t, alpha = 1, label_text="h=0.01", label_x=.5, color=rain[5]) %>%
+  slice_plot(Dlog(t, h=0.001) ~ t, domain(t=c(0.05, 2)), alpha = 1, color=rain[6], label_text="h=0.001", label_x=.4) %>%
+  slice_plot(Dlog(t, h=0.0001) ~ t, domain(t=c(0.1, 2)), alpha = 1, color=rain[7], label_text="h=0.0001", label_x=.3) %>%
+  slice_plot(Dlog(t, h=0.00001) ~ t, domain(t=c(0.125, 2)), alpha = 1, color=rain[8], label_text="h=0.00001", label_x=.2) %>%
+  slice_plot(Dlog(t, h=0.000001) ~ t, domain(t=c(0.125, 2)),alpha = 1, color=rain[9], label_text="h=0.000001", label_x=.1) %>%
+  gf_labs(title="Slope functions of logarithm") %>%
+  gf_vline(xintercept=0, color="blue", alpha=0.5) %>%
+  gf_lims(y=c(0,8))
+slice_plot(Dexp(t, h=1) ~ t, domain(t=c(-2, 2)), label_text="h=1", label_x=.4, color= rain[2]) %>%
+  slice_plot(Dexp(t, h=2) ~ t, alpha = 1, label_text="h=2", label_x=.3, color=rain[1]) %>%
+  slice_plot(Dexp(t, h=0.5) ~ t, alpha = 1, label_text="h=0.5", label_x=.5, color=rain[3]) %>%
+  slice_plot(Dexp(t, h=0.1) ~ t, alpha = 1, label_text="h=0.1", label_x=.55, color=rain[4]) %>%
+  slice_plot(Dexp(t, h=0.01) ~ t, alpha = 1, label_text="h=0.01", label_x=.6, color=rain[5]) %>%
+  slice_plot(Dexp(t, h=0.001) ~ t, alpha = 1, color=rain[6], label_text="h=0.001", label_x=.65) %>%
+  slice_plot(Dexp(t, h=0.0001) ~ t, alpha = 1, color=rain[7], label_text="h=0.0001", label_x=.75) %>%
+  slice_plot(Dexp(t, h=0.00001) ~ t, alpha = 1, color=rain[8], label_text="h=0.00001", label_x=.85) %>%
+  slice_plot(Dexp(t, h=0.000001) ~ t, alpha = 1, color=rain[9], label_text="h=0.000001", label_x=.9) %>%
+  gf_labs(title="Slope functions of exponential") %>%
+  gf_vline(xintercept=0, color="blue", alpha=0.5) %>%
+  gf_lims(y=c(0,8))
+```
+These numerical experiments with the logarithm and exponential functions are more evidence that, as $h$ gets small, the slope function doesn't depend on $x$. And, we find that:
+
+- For small $h$, the slope function of the logarithm is a power-law function: ${\cal D}_t \ln(t) = \frac{1}{t}$.
+- For small $h$, the slope function of the exponential is the exponential itself: ${\cal D}_t e^x = e^x$.
+
+You can confirm these by evaluating the slope function of the exponential at $t=0$ and $t=1$, and the slope function of the logarithm at $t= 2, 1, 1/2, 1/4, 1/8.$
+
+Such numerical experiments on the other naked modeling functions reveal a pattern: the slope function of the naked modeling functions tend to be similar to other naked modeling functions.
+
+name | $f(t)$ | ${\cal D}_t f(t)$ (for small $h$) | name of ${\cal D_t}f(t)$
+-----|---------|-----------------------------------|--------------------
+constant fun  | $f(t) = 1$       | ${\cal D}_t f(t) = 0$      | zero function
+proportional  | $f(x) = x$       | ${\cal D}_t f(t) = 1$      | constant
+exponential   | $e^t$ | $e^t$    | exponential
+logarithm     | $\ln(t)$ | $1/t$ | reciprocal (power-law $t^{-1}$)
+sinusoid      | $\sin(t)$ | $\sin(x + \pi/2) = \cos(t)$ | shifted sinusoid
+power-law     | $t^p$ with $p\neq 0$    | $p\,t^{p-1}$ | power-law
+sigmoid       | $\text{pnorm}(t)$ | $\text{dnorm}(t) | hump  
+
+With this list of experimentally determined slope functions (for small $h$) we're ready to start using slope functions without having to use left-shift combinations like $f(t+h) - f(t)$.
+
+## Slopes and motion
+
+Having worked out a theory of slope functions, Newton was ready to express the laws of motion in continuous time. He did this by expressing position as $x(t)$, and then familiar concepts velocity and force in terms of slope functions of position and the "quantity of matter," which we call "mass." 
+
+- Velocity is the slope function of position: $v(t) \equiv {\cal D}_t x(t)$.
+- Net force is the slope function of velocity times mass: $F(t) \equiv m {\cal D}_t v(t)$
+
+To take mass out of the formulation, we give a name specifically to the slope function of velocity; we call it ***acceleration***. 
+
+- Acceleration is the slope function of velocity: $a(t) \equiv {\cal D}_t v(t)$.
+
+With acceleration as a concept, we can define net force as mass times acceleration.
+
+::: {.why}
+We used **net force** as the quantity we related to mass and the slope function of velocity. There are different sources of forces which add up and can cancel out. Famously, Newton formulated the ***law of universal gravitation*** which ascribed the force between masses as proportional to the product of the two masses and inversely proportional to the square of the distance between them. But a mass on a table has no net force on it, since the table pushes back (push = force) on the mass to cancel out the force due to gravity. "Net force" takes such cancellation into account.
+:::
+
+
+## Crisis: $h \longrightarrow 0$
+
+
+
+## Functions and perception
+
+<!--
 As you know, a function takes one or more inputs and returns a value as output. The functions we examine in CalcZ take *quantities* as inputs and return a *quantity* as an output. 
 The algorithm that forms the body of the function describes arithmetic and other calculations that can turn the inputs into the output. 
 
@@ -17,7 +186,27 @@ It's common sense that data is stored in tables. But we could easily represent a
 
 In the computer era, we still routinely represent functions this way: data stored in computer files. For instance, an MP3 file is not much more than a sequence of numbers that record a complicated function of time: the air pressure variations of sound. Similarly, digital images record functions of $x$ and $y$ over a limited domain. Given $x$ and $y$ as input, you can look up the output by going to the right pixel.
 
-We humans of course, don't perceive the numerical output of either sound or image functions: we **hear** a sound and we **see** an image. We've got special biological equipment for this!
+-->
+
+We humans perceive the world using sight and sound and our other senses. Both sight and sound are highly complex biophysically, but the *process* can be broken down trivially into a relationship: *reality $\longrightarrow$ perception*. 
+
+Perception takes place in your mind and brain, extended by sensors such as the retina of the eye and cochlea of the ear. There is considerable scientific understanding of how the retina and cochlea work, but perception itself is still somewhat mysterious and involves the interaction of sensor input with our memory and other cognitive processes.
+
+Still, for both hearing and sight, we can analyze the *reality $\longrightarrow$ perception* process by adding an intermediate layer:
+
+- For sight: *reality $\longrightarrow$ image $\longrightarrow$ perception*
+- For hearing: *reality $\longrightarrow$ sound $\longrightarrow$ perception*
+
+We know a tremendous amount about sound and image. For instance, we can reliably and effectively create or synthesize realistic sounds and images. Indeed, we can study the *image $\longrightarrow$ perception* process in isolation. And, as so often happens in science, we study the process by creating a mathematical representation of it.
+
+This starts with the mathematical representation of image and sound. Since this is a calculus course, you won't be surprised when we propose that good mathematical representations are functions:
+
+- Sound: a function of one variable, $t$ for time.
+- Image: a function of two variables: the $x$ and $y$ coordinates of an image.
+
+A sound or an image are often represented as multiple functions, for example the left and right channel of stereo sound, or the red, green, and blue planes of a digital image. But a single channel or plane is able to represent sounds or images with considerable fidelity. For simplicity, we'll stick to that: sound(t) and image(x,y).
+
+What about the 3rd dimension? The retina is effectively a two-dimensional sensor. The third dimension comes in through the *reality $\longrightarrow$ image* part of the overall process.
 
 Consider the image in Figure \@ref{fig:sand-1}. It is a picture of some indentations in a small area of sand, about two inches wide in the middle of a hiking trail. The dots are individual grains of sand.
 
@@ -27,36 +216,81 @@ knitr::include_graphics("www/sand-furrows.png")
 
 Can you see three almost parallel furrows? How about the small crater in the upper left?
 
-You can see the individual grains of sand because they contrast sharply with their neighbors. Or, more precisely, you can see a few dozen grains **because** they contrast sharply with their neighbors.
+You can see the individual grains of sand because they contrast sharply with their neighbors.
 
 
-You can think of the surface of the sand as a function of $x$ and $y$. It's lower in some places and higher in others. But, in fact, you can't see the height of an individual point in the photograph. In the right light, you wouldn't notice the furrows at all. But the way the picture is lighted, raking sunlight from the left, the surface is translated into broad regions of brightness and shadow. In the light regions, the surface slants toward the sun. In the shadows, the surface slants away from the sun. 
+You can think of the surface of the sand as a function of $x$ and $y$. It's lower in some places and higher in others. But, in fact, you can't see the height of an individual point in the photograph. In the right light, you wouldn't notice the furrows at all. But the way the picture is lighted, raking sunlight from the left, the *reality $\longrightarrow image* process translates the surface into broad regions of brightness and shadow. In the light regions, the surface slants toward the sun. In the shadows, the surface slants away from the sun. 
 
-What you're mainly seeing in the photo is the ***slant*** or ***slope*** of the surface. The light has transformed *elevation* as a function of $x$ and $y$ into *slant* as a function of $x$ and $y$ and then encoded the slant as brightness, in much the same way the background of a contour plot encodes the output of the function as a color. 
+What you're mainly seeing in the photo is the ***slant*** or ***slope*** of the surface. The raking light has transformed *elevation* as a function of $x$ and $y$ into *slant* as a function of $x$ and $y$ and then encoded the slant as brightness. Ironically, it would be much less effective to present the surface height directly as an image 
 
 The moral here is that sometimes the data in a function is not in the right form for us to extract useful information. But by transforming that data to represent contrast or difference or slope, the information can be revealed.
 
-This Block is about transforming functions to show difference and slope. Such transformation, accomplished by mathematics rather than the raking light of the sun, can take a pattern that we're presented with and turn it into another pattern that can tell us what we want to know. 
+This Block is about transforming functions to show difference and slope. Such transformation, accomplished by mathematics rather than the raking light of the sun, can take a pattern that we're presented with and turn it into another pattern that can tell us what we want to know.
 
-## Average rate of change
+## Differencing
+
+Our basic tool for showing difference and slope is a remarkable simple operator that takes a function as input. For a function with one input, the operator ${\cal D}()$ is defined as 
+$${\cal D}(f) \equiv \frac{f(x + 0.1) - f(x)}{0.1}$$
+Notice that the ${\cal D}()$ operator returns a **function**. The output is a linear combination of the input function $f()$ and a shifted version of $f()$.
+
+For a function with two inputs, there are two versions of ${\cal D}$:
+$${\cal D}_x(f) \equiv \frac{f(x+0.1, y) - f(x, y)}{0.1}$$
+
+$${\cal D}_y(f) \equiv \frac{f(x, y+0.1) - f(x, y)}{0.1}$$
+
+
+::: {.workedexample}
+Suppose that $f(x)\equiv x^2$. What is the function ${\cal D}(f)$?
+
+$$
+{\cal D}(f) \equiv \frac{f(x+0.1) - f(x)}{0.1}\\ =
+10\left((x+0.1)^2 - x^2\right)\\
+=10 x^2 + 2x + 0.1 - 10x^2\\ = 2 x + 0.1$$
+:::
+
+::: {.workedexample}
+Suppose that $f(x) \equiv 2 x + y$. Find the function ${\cal D(f)}$.
+
+The linear combination will be 
+$$\frac{1}{0.1}\left(\left[2 (x + 0.1) + y\right] - \left[2 x + y\right]\right) =\\ \\
+20 x + 2 + 10y - \left[20 x - 10y\right] = 2$$
+:::
+
+```{r}
+f <- makeFun(2 *x * y ~ x + y)
+D(f(x, y) ~ x)
+```
+
+
+## Slope of an image
+
+```{r}
+set.seed(137)
+diam <- 8
+f <- rfun(~ x+ y)
+contour_plot(f(x, y) ~ x + y, domain(x=c(-diam, diam), y=c(-diam,diam)), contours_at = -100, fill_alpha=1, contour_color=NA, n_fill=500, fill_scale=ggplot2::scale_fill_grey())
+fx <- D(f(x, y) ~ x)
+contour_plot(fx(x, y) ~ x + y, domain(x=c(-diam,diam), y=c(-diam, diam)), contours_at = -100, fill_alpha=1, contour_color=NA, n_fill=500, fill_scale=ggplot2::scale_fill_grey())
+```
+
+## Instantaneous rate of change
 
 ::: {.objectives latex-data=""}
 ```{r echo=FALSE, results="asis"}
-state_objective("Deriv-2a", "Identify the \"average rate of change\" of a function over an interval as the overall change in output divided by the change in input.")
+state_objective("Deriv-2b", "Distinguish the \"average rate of change\" from the \"instantaneous rate of change\".")
 ```
 :::
 
-As you know, one way to calculate the slope of a straight-line function $f()$ is to pick two different values for the input: call the larger of them $x_1$ and the smaller $x_0$. Think of these input values as the endpoints of an ***interval*** or ***neighborhood*** of the domain. The length of this domain is $x_1 - x_0$. 
 
-Evaluate the function at those endpoints and calculate the slope simply as the difference in output divided by the length of the interval: $$\frac{f(x_1) - f(x_0)}{x_1 - x_0}$$
+Imagine a graph of the position of a car along a road as in Figure \@ref{fig:stop-and-go2}. 
 
-"Slope" is a natural metaphor when thinking of a function as a graph. But a more general way to describe the concept is the ***rate of change*** of the output with respect to the input. The change in the output from one end of the interval  is $f(x_1) - f(x_0)$, the change in the input is $x_1 - x_0$. If the input is time (in hours), and the output is the position of a car (in miles), then the rate of change is *miles-per-hour*: the car's velocity.
+::: {.todo}
+This graph appears in an exercise in Fun-slopes
+:::
 
-For a straight-line function---think of a car driving at constant speed on a highway---it doesn't matter what you choose for $x_1$ and $x_0$ (so long as they are not identical). But for other functions, the choice does matter.
+Over the course of an hour, the car travelled about 25 miles. In other words, the ***average*** speed is 25 miles/hour: the *slope* of the red line segment. Given the traffic, sometimes the car was stopped (time C), sometimes crawling (time D) and sometimes much faster than average (time B).  
 
-Imagine a graph of the position of a car along a road as in Figure \@ref{fig:stop-and-go}. Over the course of an hour, the car travelled about 25 miles. In other words, the ***average*** speed is 25 miles/hour: the *slope* of the red line segment. Given the traffic, sometimes the car was stopped (time C), sometimes crawling (time D) and sometimes much faster than average (time B).  
-
-```{r stop-and-go, echo=FALSE}
+```{r stop-and-go2, echo=FALSE}
 f <- rfun(~ t, seed=105, n=5)
 raw <- function(t) 
         f(t) - t - 30*dnorm(t, 0, 3) + 60*dnorm(t,7,1)
@@ -72,9 +306,9 @@ Pts <- tibble::tibble(
 Intervals <- tibble::tribble(
     ~t0, ~ t1, ~color,
     0, 1, "red",
-    .54, .65, "orange",
-    .19, .4, "green",
-    .4, .54, "brown",
+    # .54, .65, "orange",
+    # .19, .4, "green",
+    # .4, .54, "brown",
 ) %>%
     mutate(y0=position(t0), y1=position(t1))
 slice_plot(position(t) ~ t, domain(t = c(0, 1)), size=2) %>%
@@ -86,79 +320,18 @@ slice_plot(position(t) ~ t, domain(t = c(0, 1)), size=2) %>%
     gf_refine(scale_color_identity())
 ```
 
-During the interval from B to C, the car was travelling relatively fast. The slope of the brown segment connecting the position at times B and C is the ***average*** rate of change between times B and C. It's easy to see that the average rate of change from B to C is larger than the overall average from $t=0$ to $t=1$. Calculating that slope is a matter of evaluating the position at the endpoints and dividing by the length of the interval.
-
-::: {.workedexample latex-data=""}
-What is the average rate of change in the car's position during the interval $t_B = 0.40$ to $t_C=0.54$?
-
-The length of the interval is $t_C - t_B = 0.54-0.40=0.14$.
-
-Evaluating the function gives $x(t_C) = 18$ and $x(t_B) = 12.6$. 
-
-Rise is $x(t_C) - x(t_B) = 18 - 12.6 = 5.4$.
-
-Run is $t_C - t_B = 0.54-0.40=0.14$.
-
-The average rate of change during the interval is $5.4/0.14 = 38.6 $ miles/hour.
-:::
-
-::: {.workedexample latex-data=""}
-The graph shows a simplified model of the amount of usable wood that can be harvested from a typical tree in a managed forest of Ponderosa Pine. (You can see some actual forestry research models [here](https://www.fs.fed.us/rm/pubs/rmrs_gtr292/1992_milner.pdf).)
-
-```{r aver-tree, echo=FALSE}
-tree_volume <- makeFun(1000*pnorm(year, mean=15, sd=10)^3 ~ year)
-# do the deriv numerically to avoid bug in derivative 
-# of normal function.
-tree_growth <- numD(tree_volume(year) ~ year)
-slice_plot(tree_volume(year) ~ year, domain(year = c(0, 50))) %>%
-  gf_labs(y = "Usable wood product (board-feet)",
-          x = "Year after planting")
-```
-
-You are writing a business plan for a proposed pine forest. Among other things, you have to forecast the revenue that will be generated and when you will have salable product.
-
-They say that "time is money." Every year you wait before harvest is another year that you don't have the money. On the other hand, every year that you wait means more wood at the end. How to decide when to harvest? 
-
-The tree continues to grow until year 50, when it seems to have reached an equilibrium: perhaps growth goes to zero, or rot balances what growth there is. There's no point waiting until after year 50. 
-
-At year 25, the tree is growing as fast as it ever will. You'll get about 600 board-feet of lumber. Should you harvest at year 25? No! That the tree is growing so fast means that you will have a lot more wood at year 26, 27, and so on. The time to harvest is when the growth is getting smaller, so that it's not worth waiting an extra year.
-
-The quantity of interest is the average rate of growth from seedling to harvest. Harvesting at year 25 will give a total change of 600 board feet over 25 years, giving an average rate of change of $600 \div 25 = 24 \mbox{board-feet-per-year}$. But if you wait until year 35, you'll have about 900 board feet, giving an average rate of change of $900 \div 35 = 25.7 \mbox{board-feet-per-year}$. 
-:::
-
-We've been presenting the average rate of change as a **number**: $$\frac{f(t_B) - f(t_A)}{t_B - t_A}$$
-
-But it's helpful to think of it as a **function** that takes two inputs, which we can call $t_A$ and $t_B$:
-$$\text{ave_rate_of_change}(t_A, t_B) \equiv \frac{f(t_B) - f(t_A)}{t_B - t_A}$$
-This is a very subtle maneuver. The formula is exactly the same, but by writing the quantities $t_A$ and $t_B$ as inputs (by putting them in parentheses on the left side), we turn the formula into a function.
-
-Sometimes the average-rate-of-change function presents the information in a clear way.
-
-::: {.workedexample latex-data=""}
-Back to the forest ... Here's a graph of the average-rate-of change function. The function has two inputs, but botany dictates that we can only be growing word from the time the seedling is planted. So we'll set $t_A = 0$ and look at the corresponding *slice* of the function:
-
-```{r echo=FALSE}
-slice_plot(tree_volume(year)/year ~ year, domain(year = c(1, 50))) %>%
-  gf_labs(y = "Annual growth (board-feet)",
-          x = "Year after planting")
-```
-The graph makes it clear that the maximum average growth from planting to harvest will occur at about year 32.
-:::
-
-
-## Instantaneous rate of change
-
-::: {.objectives latex-data=""}
-```{r echo=FALSE, results="asis"}
-state_objective("Deriv-2b", "Distinguish the \"average rate of change\" from the \"instantaneous rate of change\".")
-```
-:::
 
 The car's speedometer shows the speed at each moment---or ***instant***---of the trip. As you can see in Figure \@ref{fig:stop-and-go}, the speed varies and is sometimes less than the average speed, sometimes greater, and occasionally equal to the average speed over the trip. The general term for the kind of quantity presented by the speedometer is the ***instantaneous rate of change*** of the position function with respect to the input to that function. 
 
 Figure \@ref{fig:instant-speed} shows the instantaneous rate of change of position with respect to time.
 
 ```{r instant-speed, echo=FALSE}
+f <- rfun(~ t, seed=105, n=5)
+raw <- function(t) 
+        f(t) - t - 30*dnorm(t, 0, 3) + 60*dnorm(t,7,1)
+speed <- function(t) {
+    pmax(4*raw(20*(t-.5)), 0)
+}
 Pts <- tibble::tibble(
     t = c(0, 0.19, 0.4, 0.56, 0.65, 1),
     y = speed(t) + 5,

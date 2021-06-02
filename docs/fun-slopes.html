@@ -73,6 +73,7 @@
 <li><a class="" href="dimensions.html"><span class="header-section-number">13</span> Dimensions</a></li>
 <li class="book-part">Block 2: Differentiation</li>
 <li><a class="" href="outline-of-block-2.html">Outline of Block 2</a></li>
+<li><a class="" href="change-relationships.html"><span class="header-section-number">14</span> Change relationships</a></li>
 </ul>
 
         <div class="book-extra">
@@ -287,6 +288,44 @@ Figure 8.5: Comparing the naked modeling function (blue) to it’s slope functio
 <span class="math display">\[\text{slope}(t) \equiv \frac{f(t + 0.1) - f(t)}{0.1}\]</span></p>
 <p>The 0.1 in the definition of the slope function is definitely a kluge. 0.1 minutes may be small when it comes to cooling water, but it might not be small in other contexts. We’ll fix that in Block 2 when we define the <strong><em>derivative operator</em></strong> which replaces 0.1 with something that small in every context.</p>
 </div>
+</div>
+<div id="to-be-turned-into-exercises" class="section level2">
+<h2>
+<span class="header-section-number">8.8</span> To be turned into exercises<a class="anchor" aria-label="anchor" href="#to-be-turned-into-exercises"><i class="fas fa-link"></i></a>
+</h2>
+<p>“Slope” is a natural metaphor when thinking of a function as a graph. But a more general way to describe the concept is the <strong><em>rate of change</em></strong> of the output with respect to the input. The change in the output from one end of the interval is <span class="math inline">\(f(x_1) - f(x_0)\)</span>, the change in the input is <span class="math inline">\(x_1 - x_0\)</span>. If the input is time (in hours), and the output is the position of a car (in miles), then the rate of change is <em>miles-per-hour</em>: the car’s velocity.</p>
+<p>For a straight-line function—think of a car driving at constant speed on a highway—it doesn’t matter what you choose for <span class="math inline">\(x_1\)</span> and <span class="math inline">\(x_0\)</span> (so long as they are not identical). But for other functions, the choice does matter.</p>
+<p>Imagine a graph of the position of a car along a road as in Figure @ref{fig:stop-and-go}. Over the course of an hour, the car travelled about 25 miles. In other words, the <strong><em>average</em></strong> speed is 25 miles/hour: the <em>slope</em> of the red line segment. Given the traffic, sometimes the car was stopped (time C), sometimes crawling (time D) and sometimes much faster than average (time B).</p>
+<div class="inline-figure"><img src="CalcZ-notes_files/figure-html/stop-and-go-1.png" width="672"></div>
+<p>During the interval from B to C, the car was travelling relatively fast. The slope of the brown segment connecting the position at times B and C is the <strong><em>average</em></strong> rate of change between times B and C. It’s easy to see that the average rate of change from B to C is larger than the overall average from <span class="math inline">\(t=0\)</span> to <span class="math inline">\(t=1\)</span>. Calculating that slope is a matter of evaluating the position at the endpoints and dividing by the length of the interval.</p>
+<div class="workedexample" latex-data="">
+<p>What is the average rate of change in the car’s position during the interval <span class="math inline">\(t_B = 0.40\)</span> to <span class="math inline">\(t_C=0.54\)</span>?</p>
+<p>The length of the interval is <span class="math inline">\(t_C - t_B = 0.54-0.40=0.14\)</span>.</p>
+<p>Evaluating the function gives <span class="math inline">\(x(t_C) = 18\)</span> and <span class="math inline">\(x(t_B) = 12.6\)</span>.</p>
+<p>Rise is <span class="math inline">\(x(t_C) - x(t_B) = 18 - 12.6 = 5.4\)</span>.</p>
+<p>Run is <span class="math inline">\(t_C - t_B = 0.54-0.40=0.14\)</span>.</p>
+<p>The average rate of change during the interval is $5.4/0.14 = 38.6 $ miles/hour.</p>
+</div>
+<div class="workedexample" latex-data="">
+<p>The graph shows a simplified model of the amount of usable wood that can be harvested from a typical tree in a managed forest of Ponderosa Pine. (You can see some actual forestry research models <a href="https://www.fs.fed.us/rm/pubs/rmrs_gtr292/1992_milner.pdf">here</a>.)</p>
+<div class="inline-figure"><img src="CalcZ-notes_files/figure-html/aver-tree-1.png" width="672"></div>
+<p>You are writing a business plan for a proposed pine forest. Among other things, you have to forecast the revenue that will be generated and when you will have salable product.</p>
+<p>They say that “time is money.” Every year you wait before harvest is another year that you don’t have the money. On the other hand, every year that you wait means more wood at the end. How to decide when to harvest?</p>
+<p>The tree continues to grow until year 50, when it seems to have reached an equilibrium: perhaps growth goes to zero, or rot balances what growth there is. There’s no point waiting until after year 50.</p>
+<p>At year 25, the tree is growing as fast as it ever will. You’ll get about 600 board-feet of lumber. Should you harvest at year 25? No! That the tree is growing so fast means that you will have a lot more wood at year 26, 27, and so on. The time to harvest is when the growth is getting smaller, so that it’s not worth waiting an extra year.</p>
+<p>The quantity of interest is the average rate of growth from seedling to harvest. Harvesting at year 25 will give a total change of 600 board feet over 25 years, giving an average rate of change of <span class="math inline">\(600 \div 25 = 24 \mbox{board-feet-per-year}\)</span>. But if you wait until year 35, you’ll have about 900 board feet, giving an average rate of change of <span class="math inline">\(900 \div 35 = 25.7 \mbox{board-feet-per-year}\)</span>.</p>
+</div>
+<p>We’ve been presenting the average rate of change as a <strong>number</strong>: <span class="math display">\[\frac{f(t_B) - f(t_A)}{t_B - t_A}\]</span></p>
+<p>But it’s helpful to think of it as a <strong>function</strong> that takes two inputs, which we can call <span class="math inline">\(t_A\)</span> and <span class="math inline">\(t_B\)</span>:
+<span class="math display">\[\text{ave_rate_of_change}(t_A, t_B) \equiv \frac{f(t_B) - f(t_A)}{t_B - t_A}\]</span>
+This is a very subtle maneuver. The formula is exactly the same, but by writing the quantities <span class="math inline">\(t_A\)</span> and <span class="math inline">\(t_B\)</span> as inputs (by putting them in parentheses on the left side), we turn the formula into a function.</p>
+<p>Sometimes the average-rate-of-change function presents the information in a clear way.</p>
+<div class="workedexample" latex-data="">
+<p>Back to the forest … Here’s a graph of the average-rate-of change function. The function has two inputs, but botany dictates that we can only be growing word from the time the seedling is planted. So we’ll set <span class="math inline">\(t_A = 0\)</span> and look at the corresponding <em>slice</em> of the function:</p>
+<div class="inline-figure">
+<img src="CalcZ-notes_files/figure-html/unnamed-chunk-59-1.png" width="672">
+The graph makes it clear that the maximum average growth from planting to harvest will occur at about year 32.</div>
+</div>
 
 </div>
 </div>
@@ -304,6 +343,7 @@ Figure 8.5: Comparing the naked modeling function (blue) to it’s slope functio
 <li><a class="nav-link" href="#average-rate-of-change"><span class="header-section-number">8.5</span> Average rate of change</a></li>
 <li><a class="nav-link" href="#instantaneous-rate-of-change"><span class="header-section-number">8.6</span> Instantaneous rate of change</a></li>
 <li><a class="nav-link" href="#the-slope-function"><span class="header-section-number">8.7</span> The slope function</a></li>
+<li><a class="nav-link" href="#to-be-turned-into-exercises"><span class="header-section-number">8.8</span> To be turned into exercises</a></li>
 </ul>
 
       <div class="book-extra">
@@ -321,7 +361,7 @@ Figure 8.5: Comparing the naked modeling function (blue) to it’s slope functio
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>CalcZ Student Notes</strong>" was written by Daniel Kaplan. It was last built on 2021-06-01.</p>
+    <p>"<strong>CalcZ Student Notes</strong>" was written by Daniel Kaplan. It was last built on 2021-06-02.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

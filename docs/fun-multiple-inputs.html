@@ -73,6 +73,7 @@
 <li><a class="" href="dimensions.html"><span class="header-section-number">13</span> Dimensions</a></li>
 <li class="book-part">Block 2: Differentiation</li>
 <li><a class="" href="outline-of-block-2.html">Outline of Block 2</a></li>
+<li><a class="" href="change-relationships.html"><span class="header-section-number">14</span> Change relationships</a></li>
 </ul>
 
         <div class="book-extra">
@@ -109,8 +110,11 @@ But there is an important extension of this, using what’s called a <strong><em
 <span class="math display">\[h_2(x, y) \equiv \underbrace{b_0}_\mbox{intercept} + \underbrace{b_x\, x + b_y\, y}_\mbox{linear terms} + \underbrace{b_{xy}\,x\, y}_\mbox{bilinear term}\]</span></p>
 <p>The bilinear term arises in models of phenemona such as the spread of epidemics, the population dynamics of predator and prey animals, and the rates of chemical reactions. In each of these situations one thing is interacting with another: a predator killing a prey animal, an infective individual meeting a person susceptible to the disease, one chemical compound reacting with another.</p>
 <p>Under certain circumstances, modelers include one or both <strong><em>quadratic terms</em></strong>, as in
-<span class="math display">\[h_3(x, y) \equiv b_0 + b_x\, x + b_y\, y + b_{xy}\,x\, y + \underbrace{b_{yy}\, y^2}_\mbox{quadratic in y}\]</span>
+<span class="math display">\[h_3(x, y) \equiv c_0 + c_x\, x + c_y\, y + c_{xy}\,x\, y + \underbrace{c_{yy}\, y^2}_\mbox{quadratic in y}\]</span>
 The skilled modeler can often deduce which terms to include from basic facts about the system being modeled. We’ll need some additional calculus concepts before we can explain this in a straightforward way.</p>
+<div class="why">
+<p>Explain why we are not using letter subscripts on the scalars in the linear combination.</p>
+</div>
 </div>
 <div id="function-composition-not" class="section level2">
 <h2>
@@ -193,7 +197,7 @@ The skilled modeler can often deduce which terms to include from basic facts abo
 <div class="sourceCode" id="cb47"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">bigger</span> <span class="op">&lt;-</span> <span class="fu">makeFun</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="va">y</span> <span class="op">&gt;</span> <span class="va">x</span>, <span class="va">y</span>, <span class="va">x</span><span class="op">)</span> <span class="op">~</span> <span class="va">x</span> <span class="op">+</span> <span class="va">y</span><span class="op">)</span>
 <span class="fu">contour_plot</span><span class="op">(</span><span class="fu">bigger</span><span class="op">(</span><span class="va">x</span>,<span class="va">y</span><span class="op">)</span> <span class="op">~</span> <span class="va">x</span><span class="op">+</span><span class="va">y</span>, <span class="fu">domain</span><span class="op">(</span>x<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">2</span>,<span class="fl">2</span><span class="op">)</span>, y<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">2</span>,<span class="fl">2</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<div class="inline-figure"><img src="CalcZ-notes_files/figure-html/unnamed-chunk-68-1.png" width="672"></div>
+<div class="inline-figure"><img src="CalcZ-notes_files/figure-html/unnamed-chunk-69-1.png" width="672"></div>
 
 </div>
 </div>
@@ -224,7 +228,7 @@ The skilled modeler can often deduce which terms to include from basic facts abo
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>CalcZ Student Notes</strong>" was written by Daniel Kaplan. It was last built on 2021-06-01.</p>
+    <p>"<strong>CalcZ Student Notes</strong>" was written by Daniel Kaplan. It was last built on 2021-06-02.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

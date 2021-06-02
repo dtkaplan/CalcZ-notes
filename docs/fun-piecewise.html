@@ -73,6 +73,7 @@
 <li><a class="" href="dimensions.html"><span class="header-section-number">13</span> Dimensions</a></li>
 <li class="book-part">Block 2: Differentiation</li>
 <li><a class="" href="outline-of-block-2.html">Outline of Block 2</a></li>
+<li><a class="" href="change-relationships.html"><span class="header-section-number">14</span> Change relationships</a></li>
 </ul>
 
         <div class="book-extra">
@@ -164,7 +165,7 @@
 <div class="sourceCode" id="cb73"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">g</span> <span class="op">&lt;-</span> <span class="fu">makeFun</span><span class="op">(</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="va">x</span> <span class="op">&lt;</span> <span class="fl">1</span>, <span class="va">x</span>, <span class="cn">NaN</span><span class="op">)</span> <span class="op">~</span> <span class="va">x</span><span class="op">)</span>
 <span class="fu">slice_plot</span><span class="op">(</span><span class="fu">g</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">~</span> <span class="va">x</span>, <span class="fu">domain</span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">2</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<p><img src="CalcZ-notes_files/figure-html/unnamed-chunk-75-1.png" width="672">
+<p><img src="CalcZ-notes_files/figure-html/unnamed-chunk-76-1.png" width="672">
 What takes getting used to here is the expression <code>x &lt; 1</code> which is a <strong><em>question</em></strong> not a statement of fact. There’s no standard traditional mathematical notation for questions, although some people use a question mark as in <span class="math inline">\(x \stackrel{?}{&lt;} 1\)</span>.</p>
 <p>The table shows computer notation for some common sorts of questions.</p>
 <div class="inline-table"><table class="table table-sm">
@@ -219,7 +220,7 @@ Or, in computer notation</p>
 In computer notation, this is</p>
 <div class="sourceCode" id="cb75"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">Heaviside</span> <span class="op">&lt;-</span> <span class="fu">makeFun</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="va">x</span> <span class="op">&lt;</span> <span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">1</span><span class="op">)</span> <span class="op">~</span> <span class="va">x</span><span class="op">)</span></code></pre></div>
-<p><img src="CalcZ-notes_files/figure-html/unnamed-chunk-78-1.png" width="672">
+<p><img src="CalcZ-notes_files/figure-html/unnamed-chunk-79-1.png" width="672">
 The vertical gap between the two pieces is called a <strong><em>discontinuity</em></strong>. Intuitively, you cannot draw a discontinuous function <strong><em>without lifting the pencil from the paper</em></strong>. The Heaviside function has a discontinuity at <span class="math inline">\(x=0\)</span>.</p>
 <p>Similarly, the <strong><em>ramp function</em></strong> is a kind of one-sided absolute value:
 <span class="math display">\[\mbox{ramp}(x) \equiv \left\{ 
@@ -229,13 +230,13 @@ Or, in computer notation:</p>
 <div class="sourceCode" id="cb76"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">ramp</span> <span class="op">&lt;-</span> <span class="fu">makeFun</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="fl">0</span> <span class="op">&lt;</span> <span class="va">x</span>, <span class="va">x</span>, <span class="fl">0</span><span class="op">)</span> <span class="op">~</span> <span class="va">x</span><span class="op">)</span>
 <span class="fu">slice_plot</span><span class="op">(</span><span class="fu">ramp</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">~</span> <span class="va">x</span>, <span class="fu">domain</span><span class="op">(</span>x<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">3</span>, <span class="fl">3</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<div class="inline-figure"><img src="CalcZ-notes_files/figure-html/unnamed-chunk-79-1.png" width="672"></div>
+<div class="inline-figure"><img src="CalcZ-notes_files/figure-html/unnamed-chunk-80-1.png" width="672"></div>
 <p>A linear combination of two input-shifted ramp functions gives a piecewise version of the sigmoid.</p>
 <div class="sourceCode" id="cb77"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">sig</span> <span class="op">&lt;-</span> <span class="fu">makeFun</span><span class="op">(</span><span class="fu">ramp</span><span class="op">(</span><span class="va">x</span><span class="op">+</span><span class="fl">0.5</span><span class="op">)</span> <span class="op">-</span> <span class="fu">ramp</span><span class="op">(</span><span class="va">x</span><span class="op">-</span><span class="fl">0.5</span><span class="op">)</span> <span class="op">~</span> <span class="va">x</span><span class="op">)</span>
 <span class="fu">slice_plot</span><span class="op">(</span><span class="fu">sig</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">~</span> <span class="va">x</span>, <span class="fu">domain</span><span class="op">(</span>x<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">3</span>, <span class="fl">3</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <div class="inline-figure">
-<img src="CalcZ-notes_files/figure-html/unnamed-chunk-80-1.png" width="672">
+<img src="CalcZ-notes_files/figure-html/unnamed-chunk-81-1.png" width="672">
 ::: {r .workedexample}</div>
 <p>Figure <a href="#fig:gas-use-2"><strong>??</strong></a> is a graph of monthly natural gas use in the author’s household versus average temperature during the month. (Natural gas is measured in cubic feet, appreviated <em>ccf</em>.)</p>
 <p><img src="CalcZ-notes_files/figure-html/gas-use-2-1.png" width="672">
@@ -285,7 +286,7 @@ Figure 11.1: The ADSR envelope function used in music synthesis consists of 6 pi
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>CalcZ Student Notes</strong>" was written by Daniel Kaplan. It was last built on 2021-06-01.</p>
+    <p>"<strong>CalcZ Student Notes</strong>" was written by Daniel Kaplan. It was last built on 2021-06-02.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

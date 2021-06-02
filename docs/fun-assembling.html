@@ -73,6 +73,7 @@
 <li><a class="" href="dimensions.html"><span class="header-section-number">13</span> Dimensions</a></li>
 <li class="book-part">Block 2: Differentiation</li>
 <li><a class="" href="outline-of-block-2.html">Outline of Block 2</a></li>
+<li><a class="" href="change-relationships.html"><span class="header-section-number">14</span> Change relationships</a></li>
 </ul>
 
         <div class="book-extra">
@@ -174,7 +175,7 @@ The declination angle is the latitude of the point on the earth’s surface pier
   <span class="fu">day_length</span><span class="op">(</span><span class="fl">39</span>, <span class="fu">delta_sun</span><span class="op">(</span><span class="va">n</span><span class="op">)</span><span class="op">)</span> <span class="op">~</span> <span class="va">n</span>, 
   <span class="fu">domain</span><span class="op">(</span>n<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">365</span><span class="op">)</span><span class="op">)</span>
   <span class="op">)</span></code></pre></div>
-<div class="inline-figure"><img src="CalcZ-notes_files/figure-html/unnamed-chunk-62-1.png" width="672"></div>
+<div class="inline-figure"><img src="CalcZ-notes_files/figure-html/unnamed-chunk-63-1.png" width="672"></div>
 <div class="etude-question">
 <p><strong>Q-12</strong>: How long is the day on April Fools (<span class="math inline">\(n=90\)</span>) at Latitude 39N? (Use a sandbox for the calculation.)</p>
 <ol>
@@ -192,7 +193,10 @@ The declination angle is the latitude of the point on the earth’s surface pier
 <p>Sometimes, in order to model some simple relationship you need to build a function whose graph has a simple, curving shape.</p>
 <p>A simple but surprisingly powerful approach is to use a <strong><em>low-order polynomial</em></strong>. The <strong><em>order of a polynomial</em></strong> is the highest exponent on the input. For example, a straight-line function, <span class="math inline">\(g_1(x) \equiv a_0 + a_1 x\)</span>, is a <strong>first-order</strong> polynomial. A <strong><em>quadratic</em></strong>, <span class="math inline">\(g_2(x) \equiv b_0 + b_1 x + b_2 x^2\)</span> is a <strong>second-order</strong> polynomial.</p>
 <p>Many modelers are tempted to extend the technique to third-, fourth-, fifth-order and even higher. This is only rarely worthwhile since all second-, fourth-, sixth- and higher-even-order <strong><em>monomials</em></strong> have basically the same U-shape, like a referee signalling a touch-down. Similarly, first-, third-, fifth- and higher odd-order monomial have similar <img src="www/cubic.png"> shapes.</p>
-<p>An oftimes better approach is to compose the polynomial with a curved but monotonic function, such as a logarithm.</p>
+<p>An ofttimes better approach is to compose the polynomial with a curved but monotonic function, such as a logarithm.</p>
+<div class="why">
+<p>Explain why we are now using subscripts for the names of scalars.</p>
+</div>
 </div>
 <div id="tukeys-ladder-optional" class="section level2">
 <h2>
@@ -237,7 +241,7 @@ Figure 9.2: The two components of the wave packet in Figure <a href="fun-assembl
 </div>
 <p>EXERCISES: Say which two kinds of functions are being multiplied here.</p>
 <div class="inline-figure">
-<img src="CalcZ-notes_files/figure-html/unnamed-chunk-63-1.png" width="672">
+<img src="CalcZ-notes_files/figure-html/unnamed-chunk-64-1.png" width="672">
 ::: {.etude-question}</div>
 <p><strong>Q-13</strong>: What are the two basic modeling functions being multiplied?</p>
 <ol>
@@ -267,6 +271,7 @@ Figure 9.2: The two components of the wave packet in Figure <a href="fun-assembl
 <span class="math display">\[\text{day_length}(L, \delta) \equiv \frac{2}{15} \arccos\left(-\tan(L)*\tan(δ)\right)\]</span>
 The 2/15 is scaling the output of <span class="math inline">\(\arccos()\)</span>: scaling is in linear combination.</p>
 <p>The <span class="math inline">\(\arcos()\)</span> is being composed with an interior function that is itself a scaled product of two functions.</p>
+<p>EXERCISE: The algebra of composition of the hump function <span class="math inline">\(e^{-x^2}\)</span>.</p>
 <!--
 Air pressure vs time for a car driving up a mountain.
 
@@ -281,7 +286,7 @@ solar_dec <- makeFun(23.44*cos(2*pi*(d - 172)/365.25) ~ d)
 slice_plot(solar_dec(d)~ d, domain(d=c(0,1000)))
 ```
 
-<img src="CalcZ-notes_files/figure-html/unnamed-chunk-64-1.png" width="672" />
+<img src="CalcZ-notes_files/figure-html/unnamed-chunk-65-1.png" width="672" />
 Hour angle of sunrise
 
 ```r
@@ -299,7 +304,7 @@ ha(pi/4, 23*pi/180)
 slice_plot((180/pi)*ha(pi/4, ang) ~ ang, domain(ang=pi*c(-23, 23)/180))
 ```
 
-<img src="CalcZ-notes_files/figure-html/unnamed-chunk-65-1.png" width="672" />
+<img src="CalcZ-notes_files/figure-html/unnamed-chunk-66-1.png" width="672" />
 
 ```r
 # Length of day at latitude L, Julian day d
@@ -313,7 +318,7 @@ slice_plot(dlen(66.5*pi/180, d) ~ d, domain(d=c(0,365)), npts=5000) %>%
 ## Warning: geom_hline(): Ignoring `mapping` because `yintercept` was provided.
 ```
 
-<img src="CalcZ-notes_files/figure-html/unnamed-chunk-65-2.png" width="672" />
+<img src="CalcZ-notes_files/figure-html/unnamed-chunk-66-2.png" width="672" />
 
 Length of day: $2 \text{ha}(L, d)/15$
 Composition example: write ha() to accept degrees rather than radians
@@ -393,7 +398,7 @@ Redo the length of day with the correction for diffraction and the angle subtend
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>CalcZ Student Notes</strong>" was written by Daniel Kaplan. It was last built on 2021-06-01.</p>
+    <p>"<strong>CalcZ Student Notes</strong>" was written by Daniel Kaplan. It was last built on 2021-06-02.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">
