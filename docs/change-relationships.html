@@ -74,6 +74,7 @@
 <li class="book-part">Block 2: Differentiation</li>
 <li><a class="" href="outline-of-block-2.html">Outline of Block 2</a></li>
 <li><a class="active" href="change-relationships.html"><span class="header-section-number">14</span> Change relationships</a></li>
+<li><a class="" href="h-and-derivatives.html"><span class="header-section-number">15</span> h and derivatives</a></li>
 </ul>
 
         <div class="book-extra">
@@ -138,13 +139,13 @@
 From his data, he observed that <span class="math inline">\({\cal D}_t\, x(t)\)</span> increases linearly in <span class="math inline">\(t\)</span>: <span class="math display">\[{\cal D}_t x(t) = 2 t + 1\]</span></p>
 <p>Calculating the second increments of <span class="math inline">\(x\)</span> is done by the “slope function of the slope function,” which we can call <span class="math inline">\({\cal D}_{tt}\)</span>:
 <span class="math display">\[{\cal D}_{tt} x \equiv {\cal D}_t \left[{\cal D}_t x(t)\right] = 2(t+1) + 1 - (2 t + 1) = 2\]</span></p>
-<p>Newton considered the problem for continuous time rather than Galileo’s discrete time. He reframed the slope function from the big increments of the slope operator <span class="math inline">\({\cal D}_t\)</span> to imagined vanishingly small increments of a operator that we shall cal <span class="math inline">\(\partial_t\)</span> and which is now called <strong><em>differentiation</em></strong>.</p>
+<p>Newton considered the problem for continuous time rather than Galileo’s discrete time. He reframed the slope function from the big increments of the slope operator <span class="math inline">\({\cal D}_t\)</span> to imagined vanishingly small increments of a operator that we shall denote <span class="math inline">\(\partial_t\)</span> and call <strong><em>differentiation</em></strong>.</p>
 <p>The kind of question for which Newton wanted to be able to calculate the answer was, “How to find the function <span class="math inline">\(x(t)\)</span> whose second increment, <span class="math inline">\(\partial_{tt} x(t) = 2\)</span>?” His approach, which he called the “method of fluxions,” became so important that its name became, simply, “Calculus.”</p>
 <div id="slopes-and-increments." class="section level2">
 <h2>
 <span class="header-section-number">14.1</span> Slopes and increments.<a class="anchor" aria-label="anchor" href="#slopes-and-increments."><i class="fas fa-link"></i></a>
 </h2>
-<p>The mathematical tools of Newton’s day were the basis of today’s conventional high-school curriculum. We have today completely different tools based on the ability to do arithmetic and function evaluation very quickly with computers. We’re going to use these new tools to explore the problem of relating the slope-function operator <span class="math inline">\({\cal D}_t\)</span> to the differential operator <span class="math inline">\(\partial_t\)</span>. We have the great advantage of being able to look backwards and so can focus on the functions that experience reveals have been the most widely useful: the basic modeling functions.</p>
+<p>The mathematical tools of Newton’s day are the basis of today’s conventional high-school curriculum.<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content="&lt;p&gt;Perhaps this says something about how well education has kept up with technology.&lt;/p&gt;"><sup>15</sup></a> We have today completely different tools based on the ability to do arithmetic and function evaluation very quickly with computers. We’re going to use these new tools to explore the problem of relating the slope-function operator <span class="math inline">\({\cal D}_t\)</span> to the differential operator <span class="math inline">\(\partial_t\)</span>. We have the great advantage of being able to look backwards and so can focus on the functions that experience reveals have been the most widely useful: the basic modeling functions.</p>
 <p>Our goal in this section is to discover what are the slope functions of our basic modeling functions. Recall that the slope-function operator can be written as a ratio of rise-over-run:
 <span class="math display">\[{\cal D}_t x(t) \equiv \frac{x(t+h) - x(t)}{h}\]</span> where <span class="math inline">\(h\)</span> is the length of the “run.” We’ll start with two of the basic modeling functions that have considerable “personality”: the sinusoid (<code><a href="https://rdrr.io/r/base/Trig.html">sin()</a></code>) and the sigmoid (<code><a href="https://rdrr.io/r/stats/Normal.html">pnorm()</a></code>).</p>
 <div class="figure">
@@ -169,8 +170,8 @@ Figure 14.1: The naked sinusoid and sigmoidal functions. A vertical blue line ha
 <p>This is a nuisance, since when using the slope functions we will need always to think about <code>h</code>, a number that we’d like to describe simply as “small,” but for which we always need to provide a numerical value. Let’s look at <code>Dsin()</code> and <code>Dsigma()</code> for a range of values of <code>h</code>, as in Figure <a href="change-relationships.html#fig:sin-sig-many-h">14.2</a>.</p>
 <div class="figure">
 <span id="fig:sin-sig-many-h"></span>
-<img src="CalcZ-notes_files/figure-html/sin-sig-many-h-1.png" alt="The slope functions of the sinusoid and sigmoid. Each curve shows the slope function for a particular numerical choice of `h`. Both panels show $h=2, 1, 0.5, 0.1, 0.01, 0.001, 0.0001, 0.00001, 0.000001" width="50%"><img src="CalcZ-notes_files/figure-html/sin-sig-many-h-2.png" alt="The slope functions of the sinusoid and sigmoid. Each curve shows the slope function for a particular numerical choice of `h`. Both panels show $h=2, 1, 0.5, 0.1, 0.01, 0.001, 0.0001, 0.00001, 0.000001" width="50%"><p class="caption">
-Figure 14.2: The slope functions of the sinusoid and sigmoid. Each curve shows the slope function for a particular numerical choice of <code>h</code>. Both panels show $h=2, 1, 0.5, 0.1, 0.01, 0.001, 0.0001, 0.00001, 0.000001
+<img src="CalcZ-notes_files/figure-html/sin-sig-many-h-1.png" alt="The slope functions of the sinusoid and sigmoid. Each curve shows the slope function for a particular numerical choice of `h`. Both panels show $h=2, 1, 0.5, 0.1, 0.01, 0.001, 0.0001, 0.00001, 0.000001$." width="50%"><img src="CalcZ-notes_files/figure-html/sin-sig-many-h-2.png" alt="The slope functions of the sinusoid and sigmoid. Each curve shows the slope function for a particular numerical choice of `h`. Both panels show $h=2, 1, 0.5, 0.1, 0.01, 0.001, 0.0001, 0.00001, 0.000001$." width="50%"><p class="caption">
+Figure 14.2: The slope functions of the sinusoid and sigmoid. Each curve shows the slope function for a particular numerical choice of <code>h</code>. Both panels show <span class="math inline">\(h=2, 1, 0.5, 0.1, 0.01, 0.001, 0.0001, 0.00001, 0.000001\)</span>.
 </p>
 </div>
 <p>Some observations from this numerical experiment:</p>
@@ -190,7 +191,7 @@ Figure 14.2: The slope functions of the sinusoid and sigmoid. Each curve shows t
 Figure 14.3: The slope functions of the logarithm and exponential.
 </p>
 </div>
-<p>These numerical experiments with the logarithm and exponential functions confirm that, as <span class="math inline">\(h\)</span> gets small, the slope function doesn’t depend on <span class="math inline">\(x\)</span>. And, we find that:</p>
+<p>These numerical experiments with the logarithm and exponential functions are more evidence that, as <span class="math inline">\(h\)</span> gets small, the slope function doesn’t depend on <span class="math inline">\(x\)</span>. And, we find that:</p>
 <ul>
 <li>For small <span class="math inline">\(h\)</span>, the slope function of the logarithm is a power-law function: <span class="math inline">\({\cal D}_t \ln(t) = \frac{1}{t}\)</span>.</li>
 <li>For small <span class="math inline">\(h\)</span>, the slope function of the exponential is the exponential itself: <span class="math inline">\({\cal D}_t e^x = e^x\)</span>.</li>
@@ -274,14 +275,87 @@ Figure 14.3: The slope functions of the logarithm and exponential.
 <p>We used <strong>net force</strong> as the quantity we related to mass and the slope function of velocity. There are different sources of forces which add up and can cancel out. Famously, Newton formulated the <strong><em>law of universal gravitation</em></strong> which ascribed the force between masses as proportional to the product of the two masses and inversely proportional to the square of the distance between them. But a mass on a table has no net force on it, since the table pushes back (push = force) on the mass to cancel out the force due to gravity. “Net force” takes such cancellation into account.</p>
 </div>
 </div>
-<div id="crisis-h-longrightarrow-0" class="section level2">
+<div id="differentiation" class="section level2">
 <h2>
-<span class="header-section-number">14.3</span> Crisis: <span class="math inline">\(h \longrightarrow 0\)</span><a class="anchor" aria-label="anchor" href="#crisis-h-longrightarrow-0"><i class="fas fa-link"></i></a>
+<span class="header-section-number">14.3</span> Differentiation<a class="anchor" aria-label="anchor" href="#differentiation"><i class="fas fa-link"></i></a>
 </h2>
+<p><strong><em>Differentiation</em></strong> is a process of transforming a function to produce another function. There are several traditional notations for differentiation of a function named <span class="math inline">\(f()\)</span>, for instance:</p>
+<ul>
+<li>Leibnitz: <span class="math inline">\(\frac{df}{dx}\)</span>
+</li>
+<li>Partial: <span class="math inline">\(\frac{\partial f}{\partial x}\)</span>
+</li>
+<li>One-line: <span class="math inline">\(\partial_x f\)</span>
+</li>
+<li>Newton: <span class="math inline">\(\dot{f}\)</span>
+</li>
+<li>Prime: <span class="math inline">\(f'\)</span>
+</li>
+</ul>
+<p>In this book, we will mainly use the one-line notation, <span class="math inline">\(\partial_x f\)</span>, but it means exactly the same as the Leibnitz and Partial notations, which are much more widely used in textbooks.</p>
+<p>If you’ve studied calculus before, you have likely seen the <span class="math inline">\(f'\)</span> notation. This is admirably concise but is only viable in a narrow circumstance: functions that take a single input. What <span class="math inline">\(f'\)</span> leaves out is a means to specify a crucial aspect of differentiation, the <strong>with-respect-to variable</strong>. The general situation for differentiation involves functions of one or more variables, for example, <span class="math inline">\(g(x, y, z)\)</span>. For such functions, you need to specify which is the with-respect-to variable. For instance, we can differentiate <span class="math inline">\(g()\)</span> three different ways, each way incrementing one or another of the three inputs:</p>
+<p><span class="math display">\[\partial_z g(x, y, z) \equiv \frac{g(x, y, z+h) - g(x, y, z)}{h}\\ 
+\ \\
+\partial_x g(x, y, z) \equiv \frac{g(x+h, y, z) - g(x, y, z)}{h}\\ 
+\ \\
+\partial_y g(x, y, z) \equiv \frac{g(x, y+h, z) - g(x, y, z)}{h}\]</span></p>
+<p>At this point in your studies, you haven’t seen why you might choose to differentiate a function with respect to one variable or another. That will come in time. But we want to set you up with notation that won’t narrow your options.</p>
+<p>Both the Leibnitz and Partial notations are explicit in identifying the function and the with-respect-to-variable. For example, using the Partial differentiation notation, the three ways of differentiating our example function <span class="math inline">\(g(x, y, z)\)</span> are labeled :</p>
+<p><span class="math display">\[\frac{\partial f}{\partial x},\ \ \ \frac{\partial f}{\partial y},\ \ \text{and}\ \ \frac{\partial f}{\partial z}\]</span></p>
+<p>Our R/mosaic computer differentiation is longer but explicit:</p>
+<div class="sourceCode" id="cb86"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/stats/deriv.html">D</a></span><span class="op">(</span><span class="fu">g</span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span>, <span class="va">z</span><span class="op">)</span> <span class="op">~</span> <span class="va">x</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/stats/deriv.html">D</a></span><span class="op">(</span><span class="fu">g</span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span>, <span class="va">z</span><span class="op">)</span> <span class="op">~</span> <span class="va">y</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/stats/deriv.html">D</a></span><span class="op">(</span><span class="fu">g</span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span>, <span class="va">z</span><span class="op">)</span> <span class="op">~</span> <span class="va">z</span><span class="op">)</span></code></pre></div>
+<p>Notice that the R/mosaic operator is named <code><a href="https://rdrr.io/r/stats/deriv.html">D()</a></code> and that it is a function. It follows the same pattern as <code>makeFun()</code> or <code>slice_plot()</code> or <code>contour_plot()</code>: the first argument is a tilde expression, for instance <code>g(x, y, z) ~ x</code>, which identifies the mathematical function to work with (<code>g()</code>) and the name of the with-respect-to input to that function. The R/mosaic notation makes it clear that differentiation is an <strong><em>operation</em></strong> on a function. The <code><a href="https://rdrr.io/r/stats/deriv.html">D()</a></code> operator takes a function as input and produces as output <strong>another function</strong>. We’ve seen similar behavior with, say, <code>slice_plot()</code>, which takes a function as input and produces graphics as output. Both <code><a href="https://rdrr.io/r/stats/deriv.html">D()</a></code> and <code>slice_plot()</code> need to know the identity of the with-respect-to variable as well as the function to work with. What’s why both pieces of input are packaged into a tilde expression.</p>
+<div class="why">
+<p>We’re calling <code><a href="https://rdrr.io/r/stats/deriv.html">D()</a></code> an <strong><em>operator</em></strong> rather than a <strong><em>function</em></strong>. The reason is purely for communication with other people. There are so many “functions” in a calculus course that we thought it would be helpful to distinguish between the kinds of functions that take quantities as input and produce a quantity as output, and the functions that take a <em>function</em> as input and produce a <em>function</em> as output. Both sorts are called “functions” in R terminology. But a sentence like, “Differentiation is a function that takes a function as input and produces a function as output,” true though it be, is dizzying.</p>
+</div>
+<div class="takenote">
+<p>It is a fact of mathematical and scientific life that a variety of notations are used for differentiation. To some extent, this reflects historical precedence and, to be honest, nationalistic European politics of the 18th century. To make sense of mathematical writing in the many areas in which calculus is used, you have to recognize all of them for what they are. Your skill will be enhanced if you also memorize the names of the different styles. It’s not all that different from the pattern in English of having multiple words for the same sort of object, for instance: car, automobile, junker, ride, wheels, crate, jalopy, limo, motor car, horseless carriage.</p>
+<p>In the days when carriages where pulled by horses, the phrase “horseless carriage” made a useful distinction. Today, when horses are rarely seen on the road, it make sense to trim down the notation to its essentials: ~<del>horseless</del>~ <strong>car</strong>~<del>iage</del>~. Think of <span class="math inline">\(\partial_x\)</span> as this sort of minification.<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content="&lt;p&gt;Yes, “minification” is a word!&lt;/p&gt;"><sup>16</sup></a></p>
+</div>
+</div>
+<div id="using-h" class="section level2">
+<h2>
+<span class="header-section-number">14.4</span> Using h<a class="anchor" aria-label="anchor" href="#using-h"><i class="fas fa-link"></i></a>
+</h2>
+<p>In working with differentiation, we introduced a quantity <span class="math inline">\(h\)</span> and then ignored it, saying that it doesn’t really matter so long as it is “small.” A reasonable person might wonder what “small” really means, and why we needed to introduce <span class="math inline">\(h\)</span> in the first place if we were eventually going to ignore it.</p>
+<p>One reason is that “small” and “zero,” although related, are different. For example, refering to the slope functions <code>Dsin()</code> and <code>Dsigma()</code> that we created in an early example in this chapter, we see that setting <span class="math inline">\(h\)</span> to zero does not get us where we need to be:</p>
+<div class="sourceCode" id="cb87"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu">Dsin</span><span class="op">(</span>t<span class="op">=</span><span class="fl">1</span>, h<span class="op">=</span><span class="fl">0</span><span class="op">)</span></code></pre></div>
+<pre><code>## [1] NaN</code></pre>
+<div class="sourceCode" id="cb89"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu">Dsigma</span><span class="op">(</span>t<span class="op">=</span><span class="fl">0</span>, h<span class="op">=</span><span class="fl">0</span><span class="op">)</span></code></pre></div>
+<pre><code>## [1] NaN</code></pre>
+<p>In <code>NaN</code>, you can hear the echo of your fourth-grade teacher reminding you that it is illegal to divide by zero.</p>
+<p>Think of <span class="math inline">\(h\)</span> as the solvent in paint. You don’t want the solvent once the paint is on the wall; wet paint is a nuisance. But getting the paint from the can to the wall absolutely needs the solvent.</p>
+<p>We used the solvent <span class="math inline">\(h\)</span> earlier in the chapter in the numerical experiments that led us to the derivatives of the naked modeling functions, for instance <span class="math inline">\(\partial_x e^x = e^x\)</span> or <span class="math inline">\(\partial_x \sin(x) = \cos(x)\)</span>. Eventually, we’ll construct an <span class="math inline">\(h\)</span>-free theory of differentiation, reducing the process to a set of algebraic rules in which <span class="math inline">\(h\)</span> never appears. With this as our goal, let’s continue using <span class="math inline">\(h\)</span> for a while to find some additional useful facts about derivatives.</p>
+<p><strong><em>Linear combination</em></strong> is one of the ways in which we make new functions from existing functions. As you recall, linear combination involves <strong><em>scaling</em></strong> a function and <strong><em>adding</em></strong> the scaled functions. We can easily use <span class="math inline">\(h\)</span> to show what is the result of differentiating a linear combination of functions. We’ll use <span class="math inline">\(f(x)\)</span> and <span class="math inline">\(g(x)\)</span> as the names that could stand for any function whatsoever. And we’ll let <span class="math inline">\(b\)</span> be the name of a scalar. First, let’s figure out what is <span class="math inline">\(\partial_x\, b f(x)\)</span>, Going back to writing <span class="math inline">\(\partial_x\)</span> in terms of a slope function:
+<span class="math display">\[\partial_x\, b\,f(x) = \frac{b\, f(x + h) - b\,f(x)}{h}\\
+\ \\
+= b \frac{f(x+h) - f(x)}{h} = b\, \partial_x f(x)\]</span>
+In other words, if we know the derivative <span class="math inline">\(\partial_x\, f(x)\)</span>, we can easily find the derivative of any scaled version of <span class="math inline">\(f()\)</span>.</p>
+<p>Now consider the derivative of the sum of two functions, <span class="math inline">\(f(x)\)</span> and <span class="math inline">\(g(x)\)</span>:
+<span class="math display">\[\partial_x\, \left[f(x) + g(x)\right] =\\
+\ \\
+=\frac{\left[f(x + h) + g(x + h)\right] - \left[f(x) + g(x)\right]}{h} = \\
+\ \\
+= \frac{\left[f(x+h) -f(x)\right] + \left[g(x+h) - g(x)\right]}{h}\\
+\ \\
+= \frac{\left[f(x+h) -f(x)\right]}{h} + \frac{\left[g(x+h) - g(x)\right]}{h}\\
+\ \\
+= \partial_x\, f(x) + \partial_x\, g(x)\]</span></p>
+<p>Using these two rules together, we can differentiate any linear combination of functions in terms of the differentiated functions themselves:</p>
+<p><span class="math display">\[\partial_x\ \left[\strut a_1 g_1(x) + a_2 g_2(x) + a_3 g_3(x) + \cdots\right] =\ \ \ \ \ \ \ \ \ \ \\
+\ \\
+\ \ \ \ \ \ \ \ \ a_1 \partial_x\, g_1(x) + a_2 \partial_x\, g_2(x) + a_3 \partial_x\, g_3(x) + \cdots\]</span></p>
+<p>Because of the way that <span class="math inline">\(\partial_x\)</span> can be “passed through” a linear combination, mathematicians say that differentiation is a <strong><em>linear operator</em></strong>. Consider this new fact about differentiation as a down payment on what will eventually become a complete theory telling us how to differentiate a <strong><em>product of two functions</em></strong> or the <strong><em>composition of two functions</em></strong>.</p>
+<p>EXERCISES: Simple drill on this</p>
 </div>
 <div id="functions-and-perception" class="section level2">
 <h2>
-<span class="header-section-number">14.4</span> Functions and perception<a class="anchor" aria-label="anchor" href="#functions-and-perception"><i class="fas fa-link"></i></a>
+<span class="header-section-number">14.5</span> Functions and perception<a class="anchor" aria-label="anchor" href="#functions-and-perception"><i class="fas fa-link"></i></a>
 </h2>
 <!--
 As you know, a function takes one or more inputs and returns a value as output. The functions we examine in CalcZ take *quantities* as inputs and return a *quantity* as an output. 
@@ -328,7 +402,7 @@ In the computer era, we still routinely represent functions this way: data store
 </div>
 <div id="differencing" class="section level2">
 <h2>
-<span class="header-section-number">14.5</span> Differencing<a class="anchor" aria-label="anchor" href="#differencing"><i class="fas fa-link"></i></a>
+<span class="header-section-number">14.6</span> Differencing<a class="anchor" aria-label="anchor" href="#differencing"><i class="fas fa-link"></i></a>
 </h2>
 <p>Our basic tool for showing difference and slope is a remarkable simple operator that takes a function as input. For a function with one input, the operator <span class="math inline">\({\cal D}()\)</span> is defined as
 <span class="math display">\[{\cal D}(f) \equiv \frac{f(x + 0.1) - f(x)}{0.1}\]</span>
@@ -349,7 +423,7 @@ Notice that the <span class="math inline">\({\cal D}()\)</span> operator returns
 <span class="math display">\[\frac{1}{0.1}\left(\left[2 (x + 0.1) + y\right] - \left[2 x + y\right]\right) =\\ \\
 20 x + 2 + 10y - \left[20 x - 10y\right] = 2\]</span></p>
 </div>
-<div class="sourceCode" id="cb86"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb91"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">f</span> <span class="op">&lt;-</span> <span class="fu">makeFun</span><span class="op">(</span><span class="fl">2</span> <span class="op">*</span><span class="va">x</span> <span class="op">*</span> <span class="va">y</span> <span class="op">~</span> <span class="va">x</span> <span class="op">+</span> <span class="va">y</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/stats/deriv.html">D</a></span><span class="op">(</span><span class="fu">f</span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span><span class="op">)</span> <span class="op">~</span> <span class="va">x</span><span class="op">)</span></code></pre></div>
 <pre><code>## function (x, y) 
@@ -357,22 +431,22 @@ Notice that the <span class="math inline">\({\cal D}()\)</span> operator returns
 </div>
 <div id="slope-of-an-image" class="section level2">
 <h2>
-<span class="header-section-number">14.6</span> Slope of an image<a class="anchor" aria-label="anchor" href="#slope-of-an-image"><i class="fas fa-link"></i></a>
+<span class="header-section-number">14.7</span> Slope of an image<a class="anchor" aria-label="anchor" href="#slope-of-an-image"><i class="fas fa-link"></i></a>
 </h2>
-<div class="sourceCode" id="cb88"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb93"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">137</span><span class="op">)</span>
 <span class="va">diam</span> <span class="op">&lt;-</span> <span class="fl">8</span>
 <span class="va">f</span> <span class="op">&lt;-</span> <span class="fu">rfun</span><span class="op">(</span><span class="op">~</span> <span class="va">x</span><span class="op">+</span> <span class="va">y</span><span class="op">)</span>
 <span class="fu">contour_plot</span><span class="op">(</span><span class="fu">f</span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span><span class="op">)</span> <span class="op">~</span> <span class="va">x</span> <span class="op">+</span> <span class="va">y</span>, <span class="fu">domain</span><span class="op">(</span>x<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="op">-</span><span class="va">diam</span>, <span class="va">diam</span><span class="op">)</span>, y<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="op">-</span><span class="va">diam</span>,<span class="va">diam</span><span class="op">)</span><span class="op">)</span>, contours_at <span class="op">=</span> <span class="op">-</span><span class="fl">100</span>, fill_alpha<span class="op">=</span><span class="fl">1</span>, contour_color<span class="op">=</span><span class="cn">NA</span>, n_fill<span class="op">=</span><span class="fl">500</span>, fill_scale<span class="op">=</span><span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_grey.html">scale_fill_grey</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<div class="inline-figure"><img src="CalcZ-notes_files/figure-html/unnamed-chunk-93-1.png" width="672"></div>
-<div class="sourceCode" id="cb89"><pre class="downlit sourceCode r">
+<div class="inline-figure"><img src="CalcZ-notes_files/figure-html/unnamed-chunk-95-1.png" width="672"></div>
+<div class="sourceCode" id="cb94"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">fx</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/deriv.html">D</a></span><span class="op">(</span><span class="fu">f</span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span><span class="op">)</span> <span class="op">~</span> <span class="va">x</span><span class="op">)</span>
 <span class="fu">contour_plot</span><span class="op">(</span><span class="fu">fx</span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span><span class="op">)</span> <span class="op">~</span> <span class="va">x</span> <span class="op">+</span> <span class="va">y</span>, <span class="fu">domain</span><span class="op">(</span>x<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="op">-</span><span class="va">diam</span>,<span class="va">diam</span><span class="op">)</span>, y<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="op">-</span><span class="va">diam</span>, <span class="va">diam</span><span class="op">)</span><span class="op">)</span>, contours_at <span class="op">=</span> <span class="op">-</span><span class="fl">100</span>, fill_alpha<span class="op">=</span><span class="fl">1</span>, contour_color<span class="op">=</span><span class="cn">NA</span>, n_fill<span class="op">=</span><span class="fl">500</span>, fill_scale<span class="op">=</span><span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_grey.html">scale_fill_grey</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<div class="inline-figure"><img src="CalcZ-notes_files/figure-html/unnamed-chunk-93-2.png" width="672"></div>
+<div class="inline-figure"><img src="CalcZ-notes_files/figure-html/unnamed-chunk-95-2.png" width="672"></div>
 </div>
 <div id="instantaneous-rate-of-change-1" class="section level2">
 <h2>
-<span class="header-section-number">14.7</span> Instantaneous rate of change<a class="anchor" aria-label="anchor" href="#instantaneous-rate-of-change-1"><i class="fas fa-link"></i></a>
+<span class="header-section-number">14.8</span> Instantaneous rate of change<a class="anchor" aria-label="anchor" href="#instantaneous-rate-of-change-1"><i class="fas fa-link"></i></a>
 </h2>
 <div class="objectives" latex-data="">
 <ol>
@@ -414,38 +488,21 @@ Early in the tree’s life, the growth is high compared to the volume of the tre
 </div>
 </div>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
   <div class="chapter-nav">
 <div class="prev"><a href="outline-of-block-2.html">Outline of Block 2</a></div>
-<div class="empty"></div>
+<div class="next"><a href="h-and-derivatives.html"><span class="header-section-number">15</span> h and derivatives</a></div>
 </div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
     <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
       <ul class="nav navbar-nav">
 <li><a class="nav-link" href="#change-relationships"><span class="header-section-number">14</span> Change relationships</a></li>
 <li><a class="nav-link" href="#slopes-and-increments."><span class="header-section-number">14.1</span> Slopes and increments.</a></li>
 <li><a class="nav-link" href="#slopes-and-motion"><span class="header-section-number">14.2</span> Slopes and motion</a></li>
-<li><a class="nav-link" href="#crisis-h-longrightarrow-0"><span class="header-section-number">14.3</span> Crisis: \(h \longrightarrow 0\)</a></li>
-<li><a class="nav-link" href="#functions-and-perception"><span class="header-section-number">14.4</span> Functions and perception</a></li>
-<li><a class="nav-link" href="#differencing"><span class="header-section-number">14.5</span> Differencing</a></li>
-<li><a class="nav-link" href="#slope-of-an-image"><span class="header-section-number">14.6</span> Slope of an image</a></li>
-<li><a class="nav-link" href="#instantaneous-rate-of-change-1"><span class="header-section-number">14.7</span> Instantaneous rate of change</a></li>
+<li><a class="nav-link" href="#differentiation"><span class="header-section-number">14.3</span> Differentiation</a></li>
+<li><a class="nav-link" href="#using-h"><span class="header-section-number">14.4</span> Using h</a></li>
+<li><a class="nav-link" href="#functions-and-perception"><span class="header-section-number">14.5</span> Functions and perception</a></li>
+<li><a class="nav-link" href="#differencing"><span class="header-section-number">14.6</span> Differencing</a></li>
+<li><a class="nav-link" href="#slope-of-an-image"><span class="header-section-number">14.7</span> Slope of an image</a></li>
+<li><a class="nav-link" href="#instantaneous-rate-of-change-1"><span class="header-section-number">14.8</span> Instantaneous rate of change</a></li>
 </ul>
 
       <div class="book-extra">
@@ -463,7 +520,7 @@ Early in the tree’s life, the growth is high compared to the volume of the tre
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>CalcZ Student Notes</strong>" was written by Daniel Kaplan. It was last built on 2021-06-02.</p>
+    <p>"<strong>CalcZ Student Notes</strong>" was written by Daniel Kaplan. It was last built on 2021-06-04.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">
