@@ -1,0 +1,74 @@
+# Optimization
+
+To "optimize" means to make something as good as possible with the available resources. Optimization problems are common in science, logistics, industry, and any other area where one seeks the best solution to a problem. Some everyday examples:
+
+- How much salt to add to a stew. Stews can be too salty, or they can be not salty enough. Somewhere in the middle is the optimum.
+- When to harvest trees being grown for lumber. Harvest too soon and you might be losing out on the prime growing years. Wait too long and trees will have settled in to slow growth, if any.
+- Walking up too steep a slope is tiring and slows you down; that's why hiking trails have switchbacks. When the switchbacks are too shallow, it takes a long time to cover the distance. What's the most efficient angle to enable hikers to get up the hill in the shortest time.
+
+## Structure of problem
+
+In an optimization problem, there is one or more input quantity whose value you have to choose. The amount of salt; the years to wait from planting to harvesting a tree; the angle of the trail with respect to the slope. We'll call this the ***decision quantity***. 
+
+Similarly, there is one or more output quantity that you value and want to make as good as possible. The taste of the stew; the income produced by selling the lumber; the time it takes to walk up the hill. The output quantity is called the ***objective***. 
+
+The model that relates to inputs to the objective output is called the ***objective function***. Solving an optimization problem---once the modeling phase is complete---amounts to finding a value for the decision quantity (the input to the objective function) that produces the best level of the objective (the output from the objective function).
+
+Sometimes the objective is something that you want to ***minimize***, make as small as possible. In the hiking trail problem, we seek to minimize the amount of time it takes to walk up the trail. Sometimes you want to ***maximize*** the objective, as in the wood-harvest problem where the objective is to harvest the most wood per year.
+
+Mathematically, maximization and minimization are the same thing. Every minimization problem can be turned into a maximization problem by putting a negative sign in front of the objective function. To simplify the discussion, in talking about finding the solution to an optimization problem we'll imagine that the goal is to maximize. But keep in mind that many circumstances in the real world, "best" can mean to minimization.  
+
+The solution you seek in a maximization problem is called the ***argmax***. This is a contraction of two words: the *argument* (that is, input) that produces the *maximum* output. (For minimization, the solution is the ***argmin.)
+
+Once you have found the argmax you can plug that value into the objective function to find the value of the output. That value is the ***maximum***. 
+
+::: {.takenote}
+People often talk about "finding the maximum." This is misleading. The setup for an optimization problem is:
+
+1. Construct (that is, model) the objective function.
+2. Now that you know the objective function, find the input to that function---that is, the **argmax**---that produces the maximum output.
+:::
+
+To illustrate the setup of an optimization problem, imagine yourself in the situation of a contest to see who can shoot a tennis ball the farthest into a field with a slingshot. During the contest, you will adjust the vertical angle of launch, place the ball into the slingshot's cradle, pull back as far as possible, and let go. To win the contest, you need to optimize how you launch the ball.
+
+The objective is the distance travelled by the ball. For simplicity, we'll imagine that the velocity of the ball at release is fixed at $v_0$. You'll win or lose based on the angle of launch you choose.
+
+Before you head out into the field to experiment, let's do a bit of preparation. We'll model how far the ball will travel (horizontally) as a function of the angle of launch $\theta$ and the initial velocity $v_0$.
+
+The mathematics of such problems involves an area called ***differential equations***, an important part of calculus which we'll come to later in the course. Since you don't have the tools yet, we'll just state a simple model of how long the ball stays in the air.
+$$\text{duration}(v_0, \theta) = 2 v_0 \sin(\theta)/g$$ $g$ is the acceleration due to gravity, which is about $9.8 \text{m}\text{s}^{-2}$, assuming that the contest is being held on Earth.
+
+The horizontal distance travelled by the tennis ball will be $$\text{hdist}(v_0, \theta) = \cos(\theta) v_0\, \text{duration}(v_0, \theta) = 2 v_0^2 \cos(\theta)\sin(\theta) / g$$
+Our objective function is hdist(), and we seek to find the argmax. The input $v_0$ is (we have assumed) fixed, so the decision quantity is the angle $\theta$.
+
+The best choice of $\theta$ will make the quantity $\cos(\theta)\sin(\theta)$ as large as possible. So in finding the argmax, we don't need to be concerned with $v_0$ or $g$. 
+
+Finding the argmax can be accomplished simply by plotting the function $\cos(\theta)\sin(\theta)$. We'll implement the function so that the input is in units of *degrees*.
+
+```{r ball-theta, fig.cap="The distance travelled by a ball launched at an angle of $\\theta$$, according to the simple model is duration of flight and distance travelled.", fig.show="hold"}
+f <- makeFun(cos(pi*theta/180)*sin(pi*theta/180) ~ theta)
+slice_plot(f(theta) ~ theta, domain(theta=c(0,90)))
+slice_plot(f(theta) ~ theta, domain(theta = c(40, 50)))
+```
+From the graph, especially the zoomed-in version, you can read off the argmax as $\theta = 45^\circ$.
+
+Finding the argmax solves the problem. You may also want to present your solution by saying what the value of the output of hdist() is when the argmax is given as input. You can read off the graph that the maximum of $\cos(\theta)\sin(\theta)$ is 0.5 at $\theta = 45^\circ$, so overall the distance will be $v_0^2 / g$
+:::
+
+Review Exercise: What is the dimension of $v_0^2 / g$?
+
+## Interpreting the argmax
+
+The graphical solution given to the slingshot problem is entirely satisfactory. Whether that solution will win the contest depends of course on whether the model we built for the objective function is correct. There are potentially important things we have left out, such as air resistence.
+
+Solving the optimization problem has prepared us to go out in the field and test the result. Perhaps we'll find that the real-world optimum angle is somewhat steeper or shallower than $\theta = 45^\circ$.
+
+Besides the argmax, another important quantity to read from the graph in Figure \@ref(fig:ball-theta) is the ***precision*** of the argmax. In strict mathematical terms, the argmax is exactly 45 degrees. But in practical terms, it may not matter so much to the outcome if we are a little away from $45^\circ$. For example, according to the model, any angle in the range $40^\circ < \theta < 50^\circ$ would produce an output that is within 1% of the distance reached at the argmax.
+
+Contests are won or lost by margins of less than 1%, so you should not casually deviate from the argmax. On the other hand, $45^\circ$ is the argmax of the *model*. Reality may deviate from the model. For instance, suppose that air resistance or wind might might have an effect of about 1% on the distance. You can expect that such factors might change the optimal angle by as much or more than $\pm 5^\circ$.
+
+## Derivative and optimization
+
+We're now going to reframe the search for the argmax in terms of the derivative of the objective function with respect to the decision quantity ($\theta$ in the slingshot problem). For a function of one variable, this will not be an improvement from the look-at-the-graph technique to find the argmax. A genuine reason to use derivatives is to set us up in the future to solve problems with more than one variable, where it is hard to draw or interpret a graph. Also, describing functions in the language of derivatives can help us think more clearly about aspects of the problem, such as the precision of the argmax.
+
+
