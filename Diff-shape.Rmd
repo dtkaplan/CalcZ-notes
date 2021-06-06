@@ -69,6 +69,83 @@ Contests are won or lost by margins of less than 1%, so you should not casually 
 
 ## Derivative and optimization
 
-We're now going to reframe the search for the argmax in terms of the derivative of the objective function with respect to the decision quantity ($\theta$ in the slingshot problem). For a function of one variable, this will not be an improvement from the look-at-the-graph technique to find the argmax. A genuine reason to use derivatives is to set us up in the future to solve problems with more than one variable, where it is hard to draw or interpret a graph. Also, describing functions in the language of derivatives can help us think more clearly about aspects of the problem, such as the precision of the argmax.
+We're now going to reframe the search for the argmax and it's interpretation in terms of  derivatives of the objective function with respect to the decision quantity ($\theta$ in the slingshot problem). For a function of one variable, this will not be an improvement from the look-at-the-graph technique to find the argmax. A genuine reason to use derivatives is to set us up in the future to solve problems with more than one variable, where it is hard to draw or interpret a graph. Also, describing functions in the language of derivatives can help us think more clearly about aspects of the problem, such as the precision of the argmax.
+
+With a graph such as Figure \@ref(fig:ball-theta), it's easy to find the argmax; common sense carries the day. So it won't be obvious at first why we are going to take the following approach:
+
+Let's denote an argmax of the objective function $f(x)$ by $x^\star$. 
+Let's look at the derivative $\partial_x f(x)$ in the neighborhood of $x^\star$. Referring to Figure \@ref(fig:ball-theta), where $x^\star = 45^\circ$, you may be able to see that $\partial_x f(x^\star)$ is zero; the line tangent to the function's graph at $x^\star$ is flat.  
+
+Seen another way, the slope of $f(x)$ to the left of $x^\star$ is positive; moving a tiny bit to the right (that is, increasing $x$ by a very small amount, leads to an increase in the output $f(x)$. Intuitively, as you approach the peak of a hill, you are walking uphill.) Just to the right of $x^\star$, the slope of $f(x)$ is negative; as you reach the top of a hill and continue on, you will be going downhill. So the derivative function is positive on one side of $x^\star$ and negative on the other, suggesting that it crosses zero at the argmax.
+
+Inputs $x^\star$ such that $\partial_x f(x^\star) = 0$ are called ***critical points***. Why not call them simply argmaxes? Because a the slope will also be zero at an argmin. And it's even possible to have the slope be zero at a point that's neither an argmin or an argmax.
+
+```{r ds1-1, echo=FALSE, results="markup"}
+etude2::etudeQ(
+  "Consider the function $f(x) \\equiv x^3$. Confirm that the value of the derivative $\\partial_x f(x = 0)$ and so $x^\\star = 0$ is a critical point. Which sort of critical point is $x^\\star=0$? (Hint: Draw the graph of $f(x)$ near $x=0$ to see what's going on.)" ,
+  "An argmax" = "But $f(0) < f(x > 0)$, so $x^\\star=0$ can't be an argmax.",
+  "An argmin" = "But $f(x < 0) < f(0)$, so $x^\\star=0$ can't be an argmin.",
+  "+Neither+",
+  random_answer_order = FALSE
+)
+```
+
+At this point, we know that values $x^\star$ that give $\partial_x f(x^\star) = 0$ are "critical points," but we haven't said how to figure out whether a given critical point is an argmax, an argmin, or neither. This is where the behavior of $\partial_x f(x)$ *near* x=x^\star$ is important. If $x^\star$ is an argmax, then $\partial_x f(x)$ will be positive to the left of $x^\star$ and negative to the right of $x^\star$; walk up the hill to get to $x^\star$, at the top the hill is flat, and just past the top the hill has a negative slope.
+
+For an argmin, changing $x$ from less than $x^\star$ to greater than $x\star$;  you will be walking down into the valley, then level at the very bottom $x=x^\star$, then back up the other side of the valley after you pass $x=x^\star$. Figure \@ref(fig:d2-hill) shows the situation. 
+
+```{r d2-hill, echo=FALSE, fig.show="hold", out.width="50%", fig.cap="Top row: An objective function near an argmax (left) and an argmin (right). Bottom row: The derivative of the objective function}
+f <- makeFun(sin(2*pi*x/4)~ x)
+f2 <- D(f(x) ~ x)
+slice_plot(f(x) ~ x, domain(x=c(0.5, 1.5))) %>%
+  gf_labs(title="Argmax x* = 1") %>%
+  gf_vline(xintercept = 1, color="blue", alpha = 0.25, size=2) %>%
+  gf_text(.7 ~ 1, label="x*", size=6, color="blue")
+slice_plot(f(x) ~ x, domain(x=c(2.5, 3.5))) %>%
+  gf_labs(title="Argmin x* = 3") %>%
+  gf_vline(xintercept = 3, color="blue", alpha = 0.25, size=2) %>%
+  gf_text(-1 ~ 3, label="x*", size=6, color="blue")
+slice_plot(f2(x) ~ x, domain(x=c(0.5, 1.5))) %>%
+  gf_labs(title="Argmax x* = 1", y="Derivative of f(x)") %>%
+  gf_vline(xintercept = 1, color="blue", alpha = 0.25, size=2) %>%
+  gf_text(-1 ~ 1, label="x*", size=6, color="blue")
+slice_plot(f2(x) ~ x, domain(x=c(2.5, 3.5))) %>%
+  gf_labs(title="Argmin x* = 3", y="Derivative of f(x)") %>%
+  gf_vline(xintercept = 3, color="blue", alpha = 0.25, size=2) %>%
+  gf_text(-1 ~ 3, label="x*", size=6, color="blue")
+```
+
+The bottom row of graphs in Figure \@ref(fig:d2-hill) shows the derivative of the objective function $f(x)$, that is, $\partial_x f(x)$. You can see that for the argmax of $f(x)$, the derivative $\partial_x f(x)$ is positive to the left and negative to the right. Similarly, near the argmin of $f(x)$, the derivative $\partial_x f(x)$ is negative to the left and positive to the right. 
+
+Stated another way, the derivative $\partial_x f(x)$ has a positive slope near an argmin and a negative slope near an argmax. 
+
+Just as we differentiate $f(x)$ to find it's slope, so to find the slope of the function $\partial_x f(x)$ we can differentiate it. The result is called the ***second derivative***. We could write it $\partial_x \left[\partial_x f(x)\right]$, but for brevity we write it $\partial_{xx} f(x)$. 
+
+The second derivative of the objective function $f(x)$ at a critical point $x^\star$ is what tells us whether the critical point is an argmax, an argmin, or neither. 
+
+Critical point $x^\star$ | $\partial_x f(x^\star)$ | $\partial_{xx} f(x^\star)$
+-----------------------|---------------------|-------------------
+argmax | 0 | negative
+argmin | 0 | positive
+neither| 0 | 0
+
+```{r ds1-2, echo=FALSE, results="markup"}
+etude2::etudeQ(
+  "Returning to the function $f(x) \\equiv x^3$,  find the value of the second-derivative $\\partial_{xx} f(x^\\star)$ evaluated at the critical point $x = x^\\star = 0$. Which of these is $\\partial_{xx} f( x=0$? " ,
+  "Negative" = "But you established in the previous exercise that the critical point $x^\star=0$ is neither an argmin nor wan argmax.",
+  "Positive" = "But you established in the previous exercise that the critical point $x^\star=0$ is neither an argmin nor wan argmax.",
+  "+Zero+",
+  random_answer_order = FALSE
+)
+```
+
+
+::: {.why}
+When we differentiate a function $f(x)$, we produce a new function that we can call anything we like. To help readers follow the thread of the story, it's nice to name the new function $\partial_x f(x)$. That signals clearly to the reader the origins of the new function with respect to the original function $f(x)$.
+
+In words, $\partial_x f(x)$ is often called the ***derivative*** of $f(x)$ (with respect to x). To "derive" is a very general term and could mean just about any way of creating something new from something old. In calculus, "derivative" always means "created by differentiation." Perhaps it would have been better if history had led us to call $\partial_x f(x)$ by the name "differentiated $f(x)$" or "the differential function of $f(x)$." 
+:::
+
+Graphically, we can read the second derivative $\partial_{xx} f(x)$ as the slope of the first derivative $\partial_x f(x)$ or as the ***concavity*** of the function $f(x)$ itself. When $\partial_{xx} f(x) < 0$, then $f(x)$ is ***concave down*** (a frown). Likewise, when $\partial_{xx} f(x) >0$ the $f(x)$ is ***concave up*** (a smile). When $\partial_{xx} f(x) = 0$, then $f(x)$ has no curvature.
 
 
