@@ -1,4 +1,4 @@
-# Optimization
+# Optimization {#optim-and-shape}
 
 To "optimize" means to make something as good as possible with the available resources. Optimization problems are common in science, logistics, industry, and any other area where one seeks the best solution to a problem. Some everyday examples:
 
@@ -148,4 +148,192 @@ In words, $\partial_x f(x)$ is often called the ***derivative*** of $f(x)$ (with
 
 Graphically, we can read the second derivative $\partial_{xx} f(x)$ as the slope of the first derivative $\partial_x f(x)$ or as the ***concavity*** of the function $f(x)$ itself. When $\partial_{xx} f(x) < 0$, then $f(x)$ is ***concave down*** (a frown). Likewise, when $\partial_{xx} f(x) >0$ the $f(x)$ is ***concave up*** (a smile). When $\partial_{xx} f(x) = 0$, then $f(x)$ has no curvature.
 
+::: {.takenote}
+To this point, we've translated features of functions that are evident on a graph into the language of derivatives:
+
+i. The **slope** of a function $f(x)$ at any input $x$ is the **value** of the derivative function $\partial_x f(x)$ at that same $x$.
+ii. The  **concavity** of a function $f(x)$ at any input is the **slope** of the derivative function, that is, $\partial_x f(x)$.
+iii. Putting (i) and (ii) together, we get that the **concavity** of a function $f(x)$ at any input $x$ is the **value of the second derivative** function, that is, $\partial_{xx} f(x)$.
+iv. At an argmax $x^\star$ of $f(x)$, the value of the derivative function $\partial_x f(x^\star)$ is zero and the value of the second derivative function $\partial_{xx} f(x^\star)$ is **negative**. (The situation at an argmin is similar, the derivative of the objective function is zero and the second derivative is **positive**.)
+:::
+
+
+::: {.workedexample}
+What's the critical point?
+
+You're familiar with the quadratic polynomial: $$g(x) = a_0 + a_1 x + a_2 x^2$$
+The graph of a quadratic polynomial is a ***parabola***, which might be concave up or concave down. As you know, a parabola has only one critical point, which might be an argmin or an argmax.
+
+Let's find the critical point. We know that the critical point is $x^\star$ such that $\partial_x g(x_0) = 0$. Since we know how to differentiate a power law, we can see that
+$$\partial_x g(x) = a_1 + 2 a_2 x$$ and, more specifically, at the critical point $x^\star$ the derivative will be
+$$a_1 + 2 a_2 x^\star = 0$$
+The above is an equation, not a definition. It says that whatever $x^\star$ happens to be, the quantity $a_1 + 2 a_2 x^\star$ must be zero. Using plain old algebra, we can find the location of the critical point $$x^\star = -\frac{a_1}{2 a_2}$$
+
+:::
+
+::: {.todo}
+Exercises involving computing derivatives
+:::
+
+## Approximations around $x^\star$
+
+Starting with just the naked modeling functions (e.g. $e^t$), you have a small but rich set of mathematical operations that enables you to make a huge variety of functions to suit a big range of modeling needs:
+
+- ***input scaling***, which turns the naked modeling functions into the more directly useful basic modeling functions.
+- ***linear combinations*** of functions, e.g. $A + B e^{-kt}$
+- ***compositions*** of functions, e.g. $e^{-kt^2}$ which you can recognize as the composition of an exponential with a power-law function.
+- ***products*** of functions, e.g., $\sin\left(\frac{2\pi}{P}x\right) e^{-kt}$
+
+Now we want to tame this profusion of possibilities and consider a way to construct stand-ins for any function, using a universal format that needs a minimum of information and can be used for many purposes ***in place of*** the original function. It's helpful to have a name for the stand-ins that reminds us of whom they are stand-ins for. If the original function is $f(x)$, we'll write the names of the stand-ins with a tilde, as in $\widetilde{\,f\ }(x)$. 
+
+The stand-in functions are intended to be much simpler than the original but useable as a substitute for the original. The catch is that the stand-in is warranteed to be a good substitute only ***within a small neighborhood*** of the domain of the origin.
+
+The information we need to construct the stand-ins is very limited. First, we need to specify where the warranteed neighborhood is. We'll tend to use $x_0$ as identifying the center of that neighborhood. We'll also need $f(x_0)$, the output of the original function when the input is $x_0$, and $\partial_x f(x_0)$ and $\partial_{xx} f(x_0)$. 
+\
+::: {.takenote}
+This is a good time to remind you of the notation conventions that we are using to write about functions and evaluating functions. 
+
+A ***function*** with all its individual characteristics and idiosyncracies is written $f(x)$: the function name and the name of the input or inputs. The ***name of this function*** is $f()$. The name of the input to $f()$ is $x$, or whatever is the input name that was given in the parentheses following the name.
+
+Every function has a derivative function. We could call that derivative function anything we like, but it's sensible to give it a name that states explicitly where it comes from. We're using $\partial_x f(x)$ for this purpose. Similarly, the name we use for the second derivative is $\partial_{xx} f(x)$.
+
+Evaluating a function means to specify a particular value for the input. We use several ways of making it clear when we are talking about a particular value of the input, e.g.
+$$\mbox{function output:}\ \ \ f(x = 3)\ \ \ \text{or}\ \ f(3)\ \ \ \text{or}\ \ \left.f(x)\strut\right|_{x=3}$$
+The output of such an evaluated function is a quantity. 
+
+Sometimes we want to refer to the output for some particular input, but *we don't have that specific quantity pinned down yet*. Our preferred style for writing this is to use a name that is similar to an input name, but which has a subscript as in $x_0$, $x_1$, $x_i$, $x_\star$ or, occasionally, a superscript as in $x^\star$. The output of the function is then written like this:
+$$\mbox{function output:}\ \ \ f(x = x_0)\ \ \ \text{or}\ \ f(x_0)\ \ \ \text{or}\ \ \left.f(x)\strut\right|_{x=x_0}$$
+This same style applies when the function has a name like $\partial_x f()$ or $\partial_{xx} f()$, for instance
+
+$$\mbox{function output:}\ \ \ \partial_x f(x = x_0)\ \ \ \text{or}\ \ \partial_x f(x_0)\ \ \ \text{or}\ \ \left.\partial_x f(x)\strut\right|_{x=x_0}$$
+:::
+
+
+Here are two universal formats that can be used to construct a stand-in for *any* function near a particular input $x_0$. Since it's useful to have a name for the stand-in, we'll use a tilde on top of the original function name:
+
+- First-order approximation: $\widetilde{f_1}(x) \equiv f(x_0) + \partial_x f(x_0) (x-x_0)$
+- Second-order approximation: $\widetilde{f_2}(x) \equiv f(x_0) + \partial_x f(x_0) [x-x_0] + \frac{1}{2} \partial_{xx} f(x_0) [x - x_0]^2$
+
+Notice that the first two terms of $\widetilde{f_2}(x)$ are identical to $\widetilde{f_1}(x)$, so we could write the second-order approximation as
+$$\widetilde{f_2}(x) \equiv \widetilde{f_1}(x) +\frac{1}{2} \partial_{xx} f(x_0) [x-x_0]^2$$ 
+
+
+The first-order approximation $\widetilde{f_1}(x)$ is nothing more than the straight-line function whose graph is tangent to the graph of $f(x)$ at the input $x=x_0$.
+
+The second-order approximation is a quadratic polynomial. Being quadratic, its graph is the familiar parabola. The graph of $\widetilde{f_2}(x)$ is the parabola that is tangent to the graph of $f(x)$.
+
+::: {.workedexample}
+Consider the function $g(x)$ whose graph is shown in Figure \@ref(fig:ds-g).
+
+```{r ds-g, echo=FALSE}
+g <- rfun( ~ x, seed=973)
+slice_plot(g(x) ~ x, domain(x=c(-3, 3))) %>%
+  gf_labs(title="g(x) vs x") %>%
+  gf_vline(xintercept=-1, color="blue", alpha=0.1, size=20) %>%
+  gf_vline(xintercept=-1, color="blue") %>%
+  gf_text(-5 ~ -1.1, label="x0 = -1", color="blue", angle=90) %>%
+  gf_theme(theme_minimal)
+```
+We haven't given you a formula for $g(x)$, but you can see that it isn't any of the basic modeling functions but something more complicated. We're going to construct a first-order and second-order approximation to $g(x)$ in a neighborhood $x_0 = -1$ as marked by the blue shaded area. 
+
+Note that $x_0$ is not an argmin of $g(x)$. You can see that the argmin is a little to the right of $x_0$. 
+
+The "facts" about $g(x)$ that are needed to construct the approximations, beyond the specification of the location of the neighborhood $x_0$, are the values $g(x_0)$, $\partial_x g(x_0)$, and $\partial_{xx} g(x_0)$. These are:
+
+```{r}
+x0 <- -1
+g(x0)
+dx_g <- D(g(x) ~ x)
+dxx_g <- D(g(x) ~ x + x)
+dx_g(x0)
+dxx_g(x0)
+```
+With these facts, we can construct the first- and second-order approximations:
+```{r}
+tilde1_g <- makeFun(-23.992 - 2.3493*(x-x0) ~ x)
+tilde2_g <- makeFun(tilde1_g(x) + (7.8077/2) * (x-x0)^2 ~ x)
+```
+
+Figure \@ref(fig:ds-g2) shows $\widetilde{g_1}(x)$ and $\widetilde{g_2}(x)$, zooming in around $x_0 = -1$.
+
+```{r ds-g2, echo=FALSE, fig.cap="The first-order (green) and second-order (red) approximations to $g(x)$ near $x_0=-1$."}
+g <- rfun( ~ x, seed=973)
+slice_plot(tilde1_g(x) ~ x, domain(x=c(-2, 0)),
+             color="green", size=2, alpha=0.25) %>%
+  slice_plot(tilde2_g(x) ~ x, domain(x=c(-2, 0)),
+             color="red", size=2, alpha=0.25) %>%
+
+slice_plot(g(x) ~ x, domain(x=c(-2, 0))) %>%
+  
+  
+  gf_labs(title="g(x) vs x") %>%
+  gf_vline(xintercept=-1, color="blue", alpha=0.1, size=50) %>%
+  gf_vline(xintercept=-1, color="blue") %>%
+  gf_text(-20 ~ -1.05, label="x0 = -1", color="blue", angle=90) %>%
+  gf_theme(theme_minimal())
+```
+
+You can see that $\widetilde{g_2}(x)$ is a good approximation to $g(x)$. In particular, the argmin of $\widetilde{g_2}(x)$ is close to the that of $g(x)$. 
+
+In a previous example, we showed that the argmin of the parabolic function $a_0 + a_1 x + a_2 x^2$ is $x^\star = -\frac{a_1}{2 a_2}$. Using that formula, the argmin of $\widetilde{g_2}(x)$ is  -2.3493/(7.8077/2) = -0.602.
+:::
+
+## Solving computationally
+
+::: {.todo}
+How to find the zeros of the derivative of a function and how to evaluate the second derivative at those zeros to find out what kind of critical point it is.
+:::
+
+::: {.todo}
+The cubic bifurcation. Start with a cubic with an argmax followed by an argmin. Then move the parameter to see the two critical points coalesce into a single point then disappear.
+
+Or, maybe, "the problem with polynomials." Linear function always has 1 root and no critical points. Quadratic function always has one critical point (and subject to a constant may have two roots generically). But a cubic might have 1 or 3 solutions and the behavior depends on the constant. It might have one or three critical points.
+
+:::
+
+
+
+::: {.takenote}
+In the previous discussion, we used phrases such as "every function has a derivative," or that "any function can be approximated" by a second-order polynomial. For most practical purposes, this is true. In the next chapter, however, we'll set mathematical conditions on "every" and "any" that will let us see when there can be an exception.
+:::
+
+
+::: {.todo}
+Move this earthquake example to a point where you can do parametric plots.
+
+:::
+
+
+
+## Use case: Risk of earthquakes
+
+For software designers, a ***use case*** is a description of how a person will use the software to accomplish a particular goal. It's fair to wonder what are the use cases of differentiation. It's early days in your study of calculus, so some of the use cases are beyond your reach. But knowing about first and second derivatives, argmaxes and maximums, curvature, and linear and quadratic approximations gives you access to one of the most important general patterns in scientific work: the measurement of ***precision***.
+
+As you know, precision refers to how well you know a quantity and is often expressed using the plus-or-minus notation. To illustrate, consider the earthquake risk situation in the Cascadia Subduction Zone that includes western Oregon and Washington states. The last devastating earthquake was on January 26, 1700, a date approximated by local oral tradition and derived from written tsunami records across the Pacific Ocean in Japan.
+
+Geologic features allow approximate dating of previous large earthquakes in the region, specifically one about 700 years previous to the latest and on about 2000 years before that. 
+<!-- https://agupubs.onlinelibrary.wiley.com/doi/epdf/10.1029/97RG00222 section 6.3 -->
+
+Your task as a modeler is to estimate the probability of another high-magnitude earthquake occuring in the next 100 years.
+
+A standard model for the time interval between consecutive earthquakes is $p(y) \equiv k e^{-ky}$, where $p(t)$ is the probability of an earthquake happening exactly $y$ years after the last. We can use data on previous earthquakes to find an approximate value for $k$. Once we know $k$, we can calculate the probability that the next earthquake will occur between 2025 and 2125 as $e^{-325 k} - e^{-425 k}$ where 325 is the time interval from 1700 to 2025 and 426 is the interval between 1700 and 2125. (You'll see where the formula comes from in Block 3.)
+
+We have information on two complete earthquake cycles, one lasting 2000 years and the other 700. A standard way to estimate the parameter $k$ is called "maximum likelihood." This amounts to assuming a value for $k$ and then, with that value, calculating the likelihood of having seen inter-quake intervals of 2000 and of 700 years. This likelihood is
+$$p(2000) \times p(700) = k^2 e^{-k (2000 + 700)}$$ A graph of the likelihood as a function of $k$, using a log vertical scale gives:
+
+```{r}
+slice_plot(log(k^2 * exp(-k*2700)) ~ k, domain(k=c(0.0001, 0.003)), npts=500)
+```
+Making a parametric plot
+
+```{r}
+Quakes <- tibble::tibble(
+  k = seq(0.0001, 0.0025, length=1000),
+  LL = log(k^2 * exp(-k*2700)),
+  prob = exp(-325*k) - exp(-425*k)         
+)
+gf_point(LL ~ k, data=Quakes)
+gf_point(LL ~ prob, data = Quakes)
+gf_point(prob ~ k, data = Quakes)
+```
 
