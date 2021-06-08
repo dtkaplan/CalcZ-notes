@@ -1,101 +1,330 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="" xml:lang="">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>Chapter 9 Assembling functions | CalcZ Student Notes</title>
-<meta name="author" content="Daniel Kaplan">
-<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.2"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="libs/bootstrap-4.5.3/bootstrap.min.css" rel="stylesheet">
-<script src="libs/bootstrap-4.5.3/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.2.4/tabs.js"></script><script src="libs/bs3compat-0.2.4/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
-<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script><script src="libs/htmlwidgets-1.5.3/htmlwidgets.js"></script><link href="libs/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet">
-<script src="libs/datatables-binding-0.12/datatables.js"></script><link href="libs/dt-core-1.10.20/css/jquery.dataTables.min.css" rel="stylesheet">
-<link href="libs/dt-core-1.10.20/css/jquery.dataTables.extra.css" rel="stylesheet">
-<script src="libs/dt-core-1.10.20/js/jquery.dataTables.min.js"></script><link href="libs/crosstalk-1.1.1/css/crosstalk.css" rel="stylesheet">
-<script src="libs/crosstalk-1.1.1/js/crosstalk.min.js"></script><script src="libs/kePrint-0.0.1/kePrint.js"></script><link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet">
-<script src="libs/plotly-binding-4.9.3/plotly.js"></script><script src="libs/typedarray-0.1/typedarray.min.js"></script><link href="libs/plotly-htmlwidgets-css-1.57.1/plotly-htmlwidgets.css" rel="stylesheet">
-<script src="libs/plotly-main-1.57.1/plotly-latest.min.js"></script><script type="text/x-mathjax-config">
-  const popovers = document.querySelectorAll('a.footnote-ref[data-toggle="popover"]');
-  for (let popover of popovers){
-    const div = document.createElement('div');
-    div.setAttribute('style', 'position: absolute; top: 0, left:0; width:0, height:0, overflow: hidden; visibility: hidden;');
-    div.innerHTML = popover.getAttribute('data-content');
-    
-    // Will this work with TeX on its own line?
-    var has_math = div.querySelector("span.math");
-    if (has_math) {
-      document.body.appendChild(div);
-    	MathJax.Hub.Queue(["Typeset", MathJax.Hub, div]);
-    	MathJax.Hub.Queue(function(){
-        popover.setAttribute('data-content', div.innerHTML);
-    	})
-    }
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 9 Assembling functions | CalcZ Student Notes</title>
+  <meta name="description" content="Textbook for Math 141Z/142Z for 2021-2022" />
+  <meta name="generator" content="bookdown 0.22 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 9 Assembling functions | CalcZ Student Notes" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="Textbook for Math 141Z/142Z for 2021-2022" />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 9 Assembling functions | CalcZ Student Notes" />
+  
+  <meta name="twitter:description" content="Textbook for Math 141Z/142Z for 2021-2022" />
+  
+
+<meta name="author" content="Daniel Kaplan" />
+
+
+<meta name="date" content="2021-06-08" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="fun-slopes.html"/>
+<link rel="next" href="fun-multiple-inputs.html"/>
+<script src="libs/header-attrs-2.8/header-attrs.js"></script>
+<script src="libs/jquery-3.5.1/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+<script src="libs/htmlwidgets-1.5.3/htmlwidgets.js"></script>
+<link href="libs/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet" />
+<script src="libs/datatables-binding-0.18/datatables.js"></script>
+<link href="libs/dt-core-1.10.20/css/jquery.dataTables.min.css" rel="stylesheet" />
+<link href="libs/dt-core-1.10.20/css/jquery.dataTables.extra.css" rel="stylesheet" />
+<script src="libs/dt-core-1.10.20/js/jquery.dataTables.min.js"></script>
+<link href="libs/crosstalk-1.1.1/css/crosstalk.css" rel="stylesheet" />
+<script src="libs/crosstalk-1.1.1/js/crosstalk.min.js"></script>
+<script src="libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
+<script src="libs/plotly-binding-4.9.4/plotly.js"></script>
+<script src="libs/typedarray-0.1/typedarray.min.js"></script>
+<link href="libs/plotly-htmlwidgets-css-1.57.1/plotly-htmlwidgets.css" rel="stylesheet" />
+<script src="libs/plotly-main-1.57.1/plotly-latest.min.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
   }
-  </script><script src="https://cdn.jsdelivr.net/autocomplete.js/0/autocomplete.jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/mark.js@8.11.1/dist/mark.min.js"></script><!-- CSS --><link rel="stylesheet" href="css/CalcZ-style.css">
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<link rel="stylesheet" href="css/CalcZ-style.css" type="text/css" />
 </head>
-<body data-spy="scroll" data-target="#toc">
 
-<div class="container-fluid">
-<div class="row">
-  <header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
+<body>
 
-    <div class="d-flex align-items-start justify-content-between">
-      <h1>
-        <a href="index.html" title="">CalcZ Student Notes</a>
-      </h1>
-      <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
-    </div>
 
-    <div id="main-nav" class="collapse-lg">
-      <form role="search">
-        <input id="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
-</form>
 
-      <nav aria-label="Table of contents"><h2>Table of contents</h2>
-        <ul class="book-toc list-unstyled">
-<li><a class="" href="index.html">Welcome to calculus</a></li>
-<li><a class="" href="calcz-project-development-plan.html">CalcZ Project Development Plan</a></li>
-<li class="book-part">Block 1: Functions and quantity</li>
-<li><a class="" href="outline-of-block-1.html">Outline of Block 1</a></li>
-<li><a class="" href="change.html"><span class="header-section-number">1</span> Change</a></li>
-<li><a class="" href="structure-of-a-function.html"><span class="header-section-number">2</span> Structure of a function</a></li>
-<li><a class="" href="fun-describing.html"><span class="header-section-number">3</span> Describing functions</a></li>
-<li><a class="" href="fun-notation.html"><span class="header-section-number">4</span> Notation for functions</a></li>
-<li><a class="" href="graphs-and-graphics.html"><span class="header-section-number">5</span> Graphics &amp; function graphs</a></li>
-<li><a class="" href="params-intro.html"><span class="header-section-number">6</span> Parameters for functions</a></li>
-<li><a class="" href="process-of-modeling.html"><span class="header-section-number">7</span> Process of modeling</a></li>
-<li><a class="" href="fun-slopes.html"><span class="header-section-number">8</span> Slope function</a></li>
-<li><a class="active" href="fun-assembling.html"><span class="header-section-number">9</span> Assembling functions</a></li>
-<li><a class="" href="fun-multiple-inputs.html"><span class="header-section-number">10</span> Functions with multiple inputs</a></li>
-<li><a class="" href="fun-piecewise.html"><span class="header-section-number">11</span> Piecewise functions</a></li>
-<li><a class="" href="magnitudes.html"><span class="header-section-number">12</span> Magnitudes</a></li>
-<li><a class="" href="dimensions.html"><span class="header-section-number">13</span> Dimensions</a></li>
-<li class="book-part">Block 2: Differentiation</li>
-<li><a class="" href="outline-of-block-2.html">Outline of Block 2</a></li>
-<li><a class="" href="change-relationships.html"><span class="header-section-number">14</span> Change relationships</a></li>
-<li><a class="" href="h-and-derivatives.html"><span class="header-section-number">15</span> h and derivatives</a></li>
-<li><a class="" href="optim-and-shape.html"><span class="header-section-number">16</span> Optimization</a></li>
-<li><a class="" href="cont-and-smooth.html"><span class="header-section-number">17</span> Continuity and smoothness</a></li>
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><strong><a href="./">CalcZ</a></strong></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Welcome to calculus</a>
+<ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#computing-and-apps"><i class="fa fa-check"></i>Computing and apps</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#exercises-and-feedback"><i class="fa fa-check"></i>Exercises and feedback</a></li>
+<li class="chapter" data-level="0.1" data-path="index.html"><a href="index.html#taken-out.-is-there-any-use-for-it"><i class="fa fa-check"></i><b>0.1</b> [[Taken out. Is there any use for it?]]</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="calcz-project-development-plan.html"><a href="calcz-project-development-plan.html"><i class="fa fa-check"></i>CalcZ Project Development Plan</a>
+<ul>
+<li class="chapter" data-level="" data-path="calcz-project-development-plan.html"><a href="calcz-project-development-plan.html#development-schedule"><i class="fa fa-check"></i>Development schedule</a></li>
+<li class="chapter" data-level="" data-path="calcz-project-development-plan.html"><a href="calcz-project-development-plan.html#resources-from-ay-2020-2021"><i class="fa fa-check"></i>Resources from AY 2020-2021</a>
+<ul>
+<li class="chapter" data-level="" data-path="calcz-project-development-plan.html"><a href="calcz-project-development-plan.html#software"><i class="fa fa-check"></i>Software</a></li>
+<li class="chapter" data-level="" data-path="calcz-project-development-plan.html"><a href="calcz-project-development-plan.html#exercises"><i class="fa fa-check"></i>Exercises</a></li>
+<li class="chapter" data-level="" data-path="calcz-project-development-plan.html"><a href="calcz-project-development-plan.html#projects-from-ay-2020-2021"><i class="fa fa-check"></i>Projects from AY 2020-2021</a></li>
+<li class="chapter" data-level="" data-path="calcz-project-development-plan.html"><a href="calcz-project-development-plan.html#apps"><i class="fa fa-check"></i>Apps</a></li>
+</ul></li>
+</ul></li>
+<li class="part"><span><b>I Block 1: Functions and quantity</b></span></li>
+<li class="chapter" data-level="" data-path="outline-of-block-1.html"><a href="outline-of-block-1.html"><i class="fa fa-check"></i>Outline of Block 1</a></li>
+<li class="chapter" data-level="1" data-path="change.html"><a href="change.html"><i class="fa fa-check"></i><b>1</b> Change</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="change.html"><a href="change.html#quantity-vs-number"><i class="fa fa-check"></i><b>1.1</b> Quantity vs number</a></li>
+<li class="chapter" data-level="1.2" data-path="change.html"><a href="change.html#functions"><i class="fa fa-check"></i><b>1.2</b> Functions</a></li>
+<li class="chapter" data-level="1.3" data-path="change.html"><a href="change.html#naked-intro"><i class="fa fa-check"></i><b>1.3</b> The naked modeling functions</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="structure-of-a-function.html"><a href="structure-of-a-function.html"><i class="fa fa-check"></i><b>2</b> Structure of a function</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="structure-of-a-function.html"><a href="structure-of-a-function.html#domain-input-space"><i class="fa fa-check"></i><b>2.1</b> Domain: input space</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="fun-describing.html"><a href="fun-describing.html"><i class="fa fa-check"></i><b>3</b> Describing functions</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="fun-describing.html"><a href="fun-describing.html#computer-commands"><i class="fa fa-check"></i><b>3.1</b> Computer commands</a></li>
+<li class="chapter" data-level="3.2" data-path="fun-describing.html"><a href="fun-describing.html#tables-of-inputs-and-outputs"><i class="fa fa-check"></i><b>3.2</b> Tables of inputs and outputs</a></li>
+<li class="chapter" data-level="3.3" data-path="fun-describing.html"><a href="fun-describing.html#word-descriptions"><i class="fa fa-check"></i><b>3.3</b> Word descriptions</a></li>
+<li class="chapter" data-level="3.4" data-path="fun-describing.html"><a href="fun-describing.html#computer-function-names"><i class="fa fa-check"></i><b>3.4</b> Computer function names</a></li>
+<li class="chapter" data-level="3.5" data-path="fun-describing.html"><a href="fun-describing.html#mathematical-notation"><i class="fa fa-check"></i><b>3.5</b> Mathematical notation</a></li>
+<li class="chapter" data-level="3.6" data-path="fun-describing.html"><a href="fun-describing.html#exercises-1"><i class="fa fa-check"></i><b>3.6</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="fun-notation.html"><a href="fun-notation.html"><i class="fa fa-check"></i><b>4</b> Notation for functions</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="fun-notation.html"><a href="fun-notation.html#a-notation-for-computing"><i class="fa fa-check"></i><b>4.1</b> A notation for computing</a></li>
+<li class="chapter" data-level="4.2" data-path="fun-notation.html"><a href="fun-notation.html#objects-and-actions"><i class="fa fa-check"></i><b>4.2</b> Objects and actions</a></li>
+<li class="chapter" data-level="4.3" data-path="fun-notation.html"><a href="fun-notation.html#algorithms"><i class="fa fa-check"></i><b>4.3</b> Formulas and algorithms</a></li>
+<li class="chapter" data-level="4.4" data-path="fun-notation.html"><a href="fun-notation.html#algorithms-without-formulas"><i class="fa fa-check"></i><b>4.4</b> Algorithms without formulas</a></li>
+<li class="chapter" data-level="4.5" data-path="fun-notation.html"><a href="fun-notation.html#computer-notation"><i class="fa fa-check"></i><b>4.5</b> Computer notation</a></li>
+<li class="chapter" data-level="4.6" data-path="fun-notation.html"><a href="fun-notation.html#calcz-naming-conventions"><i class="fa fa-check"></i><b>4.6</b> CalcZ naming conventions</a></li>
+<li class="chapter" data-level="4.7" data-path="fun-notation.html"><a href="fun-notation.html#functions-in-r"><i class="fa fa-check"></i><b>4.7</b> Functions in R</a></li>
+<li class="chapter" data-level="4.8" data-path="fun-notation.html"><a href="fun-notation.html#foursigns"><i class="fa fa-check"></i><b>4.8</b> E unibus plurum: <span class="math inline">\(=\)</span>, <span class="math inline">\(\equiv\)</span>, <span class="math inline">\(\rightarrow\)</span>, <code>&lt;-</code></a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="graphs-and-graphics.html"><a href="graphs-and-graphics.html"><i class="fa fa-check"></i><b>5</b> Graphics &amp; function graphs</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="graphs-and-graphics.html"><a href="graphs-and-graphics.html#the-graphics-frame"><i class="fa fa-check"></i><b>5.1</b> The graphics frame</a></li>
+<li class="chapter" data-level="5.2" data-path="graphs-and-graphics.html"><a href="graphs-and-graphics.html#data-graphics-the-point-plot"><i class="fa fa-check"></i><b>5.2</b> Data graphics: the point plot</a>
+<ul>
+<li class="chapter" data-level="5.2.1" data-path="graphs-and-graphics.html"><a href="graphs-and-graphics.html#asymptotes-of-functions"><i class="fa fa-check"></i><b>5.2.1</b> Asymptotes of functions</a></li>
+</ul></li>
+<li class="chapter" data-level="5.3" data-path="graphs-and-graphics.html"><a href="graphs-and-graphics.html#function-shapes"><i class="fa fa-check"></i><b>5.3</b> Graphs of the basic functions</a></li>
+<li class="chapter" data-level="5.4" data-path="graphs-and-graphics.html"><a href="graphs-and-graphics.html#exercises-in-draft"><i class="fa fa-check"></i><b>5.4</b> EXERCISES in draft</a></li>
+<li class="chapter" data-level="5.5" data-path="graphs-and-graphics.html"><a href="graphs-and-graphics.html#inputs-to-output"><i class="fa fa-check"></i><b>5.5</b> Inputs to output</a></li>
+<li class="chapter" data-level="5.6" data-path="graphs-and-graphics.html"><a href="graphs-and-graphics.html#outputs-to-inputs"><i class="fa fa-check"></i><b>5.6</b> Outputs to inputs</a></li>
+<li class="chapter" data-level="5.7" data-path="graphs-and-graphics.html"><a href="graphs-and-graphics.html#graphs-of-functions-with-two-inputs"><i class="fa fa-check"></i><b>5.7</b> Graphs of functions with two inputs</a></li>
+<li class="chapter" data-level="5.8" data-path="graphs-and-graphics.html"><a href="graphs-and-graphics.html#contour-plots"><i class="fa fa-check"></i><b>5.8</b> Contour plots</a></li>
+<li class="chapter" data-level="5.9" data-path="graphs-and-graphics.html"><a href="graphs-and-graphics.html#slice-plots"><i class="fa fa-check"></i><b>5.9</b> Slice plots</a></li>
+<li class="chapter" data-level="5.10" data-path="graphs-and-graphics.html"><a href="graphs-and-graphics.html#creating-graphics"><i class="fa fa-check"></i><b>5.10</b> Creating graphics</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="params-intro.html"><a href="params-intro.html"><i class="fa fa-check"></i><b>6</b> Parameters for functions</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="params-intro.html"><a href="params-intro.html#parallel-scales"><i class="fa fa-check"></i><b>6.1</b> Parallel scales</a></li>
+<li class="chapter" data-level="6.2" data-path="params-intro.html"><a href="params-intro.html#scale-the-output"><i class="fa fa-check"></i><b>6.2</b> Scale the output</a></li>
+<li class="chapter" data-level="" data-path="params-intro.html"><a href="params-intro.html#exercises-2"><i class="fa fa-check"></i>Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="process-of-modeling.html"><a href="process-of-modeling.html"><i class="fa fa-check"></i><b>7</b> Process of modeling</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="process-of-modeling.html"><a href="process-of-modeling.html#variations-from-scaling"><i class="fa fa-check"></i><b>7.1</b> Variations from scaling</a></li>
+<li class="chapter" data-level="7.2" data-path="process-of-modeling.html"><a href="process-of-modeling.html#curve-fitting-an-exponential-function"><i class="fa fa-check"></i><b>7.2</b> Curve fitting an exponential function</a></li>
+<li class="chapter" data-level="7.3" data-path="process-of-modeling.html"><a href="process-of-modeling.html#curve-fitting-a-periodic-function"><i class="fa fa-check"></i><b>7.3</b> Curve fitting a periodic function</a></li>
+<li class="chapter" data-level="7.4" data-path="process-of-modeling.html"><a href="process-of-modeling.html#modeling-periodicity"><i class="fa fa-check"></i><b>7.4</b> Modeling periodicity</a></li>
+<li class="chapter" data-level="7.5" data-path="process-of-modeling.html"><a href="process-of-modeling.html#the-modeling-cycle"><i class="fa fa-check"></i><b>7.5</b> The modeling cycle</a>
+<ul>
+<li class="chapter" data-level="7.5.1" data-path="process-of-modeling.html"><a href="process-of-modeling.html#example-cooling-water"><i class="fa fa-check"></i><b>7.5.1</b> Example: Cooling water</a></li>
+<li class="chapter" data-level="7.5.2" data-path="process-of-modeling.html"><a href="process-of-modeling.html#example-the-tides"><i class="fa fa-check"></i><b>7.5.2</b> Example: The tides</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="fun-slopes.html"><a href="fun-slopes.html"><i class="fa fa-check"></i><b>8</b> Slope function</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="fun-slopes.html"><a href="fun-slopes.html#change-and-slope"><i class="fa fa-check"></i><b>8.1</b> Change and slope</a></li>
+<li class="chapter" data-level="8.2" data-path="fun-slopes.html"><a href="fun-slopes.html#continuous-change"><i class="fa fa-check"></i><b>8.2</b> Continuous change</a></li>
+<li class="chapter" data-level="8.3" data-path="fun-slopes.html"><a href="fun-slopes.html#slope"><i class="fa fa-check"></i><b>8.3</b> Slope</a></li>
+<li class="chapter" data-level="8.4" data-path="fun-slopes.html"><a href="fun-slopes.html#the-fitted-line"><i class="fa fa-check"></i><b>8.4</b> The fitted line</a></li>
+<li class="chapter" data-level="8.5" data-path="fun-slopes.html"><a href="fun-slopes.html#average-rate-of-change"><i class="fa fa-check"></i><b>8.5</b> Average rate of change</a></li>
+<li class="chapter" data-level="8.6" data-path="fun-slopes.html"><a href="fun-slopes.html#instantaneous-rate-of-change"><i class="fa fa-check"></i><b>8.6</b> Instantaneous rate of change</a></li>
+<li class="chapter" data-level="8.7" data-path="fun-slopes.html"><a href="fun-slopes.html#the-slope-function"><i class="fa fa-check"></i><b>8.7</b> The slope function</a></li>
+<li class="chapter" data-level="8.8" data-path="fun-slopes.html"><a href="fun-slopes.html#to-be-turned-into-exercises"><i class="fa fa-check"></i><b>8.8</b> To be turned into exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="fun-assembling.html"><a href="fun-assembling.html"><i class="fa fa-check"></i><b>9</b> Assembling functions</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="fun-assembling.html"><a href="fun-assembling.html#linear-combination"><i class="fa fa-check"></i><b>9.1</b> Linear combination</a></li>
+<li class="chapter" data-level="9.2" data-path="fun-assembling.html"><a href="fun-assembling.html#function-composition"><i class="fa fa-check"></i><b>9.2</b> Function composition</a></li>
+<li class="chapter" data-level="9.3" data-path="fun-assembling.html"><a href="fun-assembling.html#modeling-polynomial-1"><i class="fa fa-check"></i><b>9.3</b> The modeling polynomial</a></li>
+<li class="chapter" data-level="9.4" data-path="fun-assembling.html"><a href="fun-assembling.html#tukeys-ladder-optional"><i class="fa fa-check"></i><b>9.4</b> Tukey’s ladder (optional)</a></li>
+<li class="chapter" data-level="9.5" data-path="fun-assembling.html"><a href="fun-assembling.html#function-multiplication"><i class="fa fa-check"></i><b>9.5</b> Function multiplication</a></li>
+<li class="chapter" data-level="9.6" data-path="fun-assembling.html"><a href="fun-assembling.html#all-together-now"><i class="fa fa-check"></i><b>9.6</b> All together now!</a></li>
+<li class="chapter" data-level="9.7" data-path="fun-assembling.html"><a href="fun-assembling.html#exercises-3"><i class="fa fa-check"></i><b>9.7</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="fun-multiple-inputs.html"><a href="fun-multiple-inputs.html"><i class="fa fa-check"></i><b>10</b> Functions with multiple inputs</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="fun-multiple-inputs.html"><a href="fun-multiple-inputs.html#fx-times-gt"><i class="fa fa-check"></i><b>10.1</b> f(x) times g(t)</a></li>
+<li class="chapter" data-level="10.2" data-path="fun-multiple-inputs.html"><a href="fun-multiple-inputs.html#two-variable-modeling-polynomial"><i class="fa fa-check"></i><b>10.2</b> Two-variable modeling polynomial</a></li>
+<li class="chapter" data-level="10.3" data-path="fun-multiple-inputs.html"><a href="fun-multiple-inputs.html#function-composition-not"><i class="fa fa-check"></i><b>10.3</b> Function composition (not!)</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="fun-piecewise.html"><a href="fun-piecewise.html"><i class="fa fa-check"></i><b>11</b> Piecewise functions</a>
+<ul>
+<li class="chapter" data-level="11.1" data-path="fun-piecewise.html"><a href="fun-piecewise.html#piecewise-functions"><i class="fa fa-check"></i><b>11.1</b> Piecewise functions</a></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="magnitudes.html"><a href="magnitudes.html"><i class="fa fa-check"></i><b>12</b> Magnitudes</a>
+<ul>
+<li class="chapter" data-level="12.1" data-path="magnitudes.html"><a href="magnitudes.html#counting-digits"><i class="fa fa-check"></i><b>12.1</b> Counting digits</a></li>
+<li class="chapter" data-level="12.2" data-path="magnitudes.html"><a href="magnitudes.html#using-digit-to-understand-magnitude"><i class="fa fa-check"></i><b>12.2</b> Using digit() to understand magnitude</a></li>
+<li class="chapter" data-level="12.3" data-path="magnitudes.html"><a href="magnitudes.html#composing-ln-with-exponential-and-power-law-functions"><i class="fa fa-check"></i><b>12.3</b> Composing <span class="math inline">\(\ln()\)</span> with exponential and power-law functions</a></li>
+<li class="chapter" data-level="12.4" data-path="magnitudes.html"><a href="magnitudes.html#fractional-digits"><i class="fa fa-check"></i><b>12.4</b> Fractional digits (optional)</a></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="dimensions.html"><a href="dimensions.html"><i class="fa fa-check"></i><b>13</b> Dimensions</a></li>
+<li class="part"><span><b>II Block 2: Differentiation</b></span></li>
+<li class="chapter" data-level="" data-path="outline-of-block-2.html"><a href="outline-of-block-2.html"><i class="fa fa-check"></i>Outline of Block 2</a></li>
+<li class="chapter" data-level="14" data-path="change-relationships.html"><a href="change-relationships.html"><i class="fa fa-check"></i><b>14</b> Change relationships</a>
+<ul>
+<li class="chapter" data-level="14.1" data-path="change-relationships.html"><a href="change-relationships.html#slopes-and-increments."><i class="fa fa-check"></i><b>14.1</b> Slopes and increments.</a></li>
+<li class="chapter" data-level="14.2" data-path="change-relationships.html"><a href="change-relationships.html#slopes-and-motion"><i class="fa fa-check"></i><b>14.2</b> Slopes and motion</a></li>
+<li class="chapter" data-level="14.3" data-path="change-relationships.html"><a href="change-relationships.html#differentiation"><i class="fa fa-check"></i><b>14.3</b> Differentiation</a></li>
+<li class="chapter" data-level="14.4" data-path="change-relationships.html"><a href="change-relationships.html#dimension-of-derivatives"><i class="fa fa-check"></i><b>14.4</b> Dimension of derivatives</a></li>
+<li class="chapter" data-level="14.5" data-path="change-relationships.html"><a href="change-relationships.html#using-h"><i class="fa fa-check"></i><b>14.5</b> Using h</a></li>
+<li class="chapter" data-level="14.6" data-path="change-relationships.html"><a href="change-relationships.html#differencing"><i class="fa fa-check"></i><b>14.6</b> Differencing</a></li>
+<li class="chapter" data-level="14.7" data-path="change-relationships.html"><a href="change-relationships.html#instantaneous-rate-of-change-1"><i class="fa fa-check"></i><b>14.7</b> Instantaneous rate of change</a></li>
+</ul></li>
+<li class="chapter" data-level="15" data-path="h-and-derivatives.html"><a href="h-and-derivatives.html"><i class="fa fa-check"></i><b>15</b> h and derivatives</a>
+<ul>
+<li class="chapter" data-level="15.1" data-path="h-and-derivatives.html"><a href="h-and-derivatives.html#the-h-framework"><i class="fa fa-check"></i><b>15.1</b> The <span class="math inline">\(h\)</span> framework</a></li>
+<li class="chapter" data-level="15.2" data-path="h-and-derivatives.html"><a href="h-and-derivatives.html#approximations-to-naked-modeling-functions"><i class="fa fa-check"></i><b>15.2</b> Approximations to naked modeling functions</a></li>
+</ul></li>
+<li class="chapter" data-level="16" data-path="optim-and-shape.html"><a href="optim-and-shape.html"><i class="fa fa-check"></i><b>16</b> Optimization</a>
+<ul>
+<li class="chapter" data-level="16.1" data-path="optim-and-shape.html"><a href="optim-and-shape.html#structure-of-the-problem"><i class="fa fa-check"></i><b>16.1</b> Structure of the problem</a></li>
+<li class="chapter" data-level="16.2" data-path="optim-and-shape.html"><a href="optim-and-shape.html#interpreting-the-argmax"><i class="fa fa-check"></i><b>16.2</b> Interpreting the argmax</a></li>
+<li class="chapter" data-level="16.3" data-path="optim-and-shape.html"><a href="optim-and-shape.html#derivative-and-optimization"><i class="fa fa-check"></i><b>16.3</b> Derivative and optimization</a></li>
+<li class="chapter" data-level="16.4" data-path="optim-and-shape.html"><a href="optim-and-shape.html#approximations-around-xstar"><i class="fa fa-check"></i><b>16.4</b> Approximations around <span class="math inline">\(x^\star\)</span></a></li>
+<li class="chapter" data-level="16.5" data-path="optim-and-shape.html"><a href="optim-and-shape.html#solving-computationally"><i class="fa fa-check"></i><b>16.5</b> Solving computationally</a></li>
+<li class="chapter" data-level="16.6" data-path="optim-and-shape.html"><a href="optim-and-shape.html#use-case-risk-of-earthquakes"><i class="fa fa-check"></i><b>16.6</b> Use case: Risk of earthquakes</a></li>
+</ul></li>
+<li class="chapter" data-level="17" data-path="cont-and-smooth.html"><a href="cont-and-smooth.html"><i class="fa fa-check"></i><b>17</b> Continuity and smoothness</a></li>
 </ul>
 
-        <div class="book-extra">
-          <p><a id="book-repo" href="https://github.com/dtkaplan/CalcZ-notes">View book source <i class="fab fa-github"></i></a></p>
-        </div>
       </nav>
-</div>
-  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="fun-assembling" class="section level1">
-<h1>
-<span class="header-section-number">9</span> Assembling functions<a class="anchor" aria-label="anchor" href="#fun-assembling"><i class="fas fa-link"></i></a>
-</h1>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">CalcZ Student Notes</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="fun-assembling" class="section level1" number="9">
+<h1><span class="header-section-number">Chapter 9</span> Assembling functions</h1>
 <p>When we need a new function for some purpose, we practically always build it out of existing functions. For instance, a parameterized function like <span class="math display">\[A \sin\left(\frac{2 \pi}{P}x\right) + C\]</span> is built by assempling together a straight-line input scaling, a naked <span class="math inline">\(\sin()\)</span> function, and another straight-line function for scaling the output from <span class="math inline">\(\sin()\)</span>.</p>
 <p>In this chapter, we’ll introduce three general frameworks for combining functions: linear combination, composition, and multiplication.</p>
-<div id="linear-combination" class="section level2">
-<h2>
-<span class="header-section-number">9.1</span> Linear combination<a class="anchor" aria-label="anchor" href="#linear-combination"><i class="fas fa-link"></i></a>
-</h2>
+<div id="linear-combination" class="section level2" number="9.1">
+<h2><span class="header-section-number">9.1</span> Linear combination</h2>
 <p>One of the most widely used sorts of combination is called a <strong><em>linear combination</em></strong>. The mathematics of linear combination is, it happens, at the core of the use of math in applications, whether that be constructing a Google-like search engine or analyzing medical data to see if a treatment has a positive effect.</p>
-<p>You’ve worked for many years with one kind of linear combination: polynomials. No doubt you’ve seen functions<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content='&lt;p&gt;It’s likely that you saw polynomials as things to be factored, rather than as functions taking an input and producing an output. So they were written as &lt;em&gt;equations&lt;/em&gt;: &lt;span class="math inline"&gt;\(e x^2 + 5x - 2 = 0\)&lt;/span&gt;&lt;/p&gt;'><sup>11</sup></a> like <span class="math display">\[f(x) \equiv 3 x^2 + 5 x - 2\]</span></p>
+<p>You’ve worked for many years with one kind of linear combination: polynomials. No doubt you’ve seen functions<a href="#fn11" class="footnote-ref" id="fnref11"><sup>11</sup></a> like <span class="math display">\[f(x) \equiv 3 x^2 + 5 x - 2\]</span></p>
 <p>There are three modeling functions in this polynomial. In this case, as in polynomials generally, they are all power-law functions: <span class="math inline">\(g_0(x) \equiv 1\)</span>, <span class="math inline">\(g_1(x) \equiv x\)</span>, and <span class="math inline">\(g_2(x) \equiv x^2\)</span>. With these functions defined, we can write the polynomial <span class="math inline">\(f(x)\)</span> as <span class="math display">\[f(x) \equiv 3 g_2(x) + 5 g_1(x) - 2 g_0(x)\]</span>
 Each of the functions is being scaled by a quantity—3, 5, and -2 in this example—and the scaled functions are added up. That’s a linear combination; scale and add. (Later, we’ll see that the <strong><em>scalars</em></strong> generally come with units. So we might well have a metric polynomial and an equivalent traditional-unit polynomial. Just wait.)</p>
 <div class="why">
@@ -133,10 +362,8 @@ Each of the functions is being scaled by a quantity—3, 5, and -2 in this examp
 <p><span class="math inline">\(p^\beta\left(1 - (1-p)^\alpha\right)\)</span></p>
 </div>
 </div>
-<div id="function-composition" class="section level2">
-<h2>
-<span class="header-section-number">9.2</span> Function composition<a class="anchor" aria-label="anchor" href="#function-composition"><i class="fas fa-link"></i></a>
-</h2>
+<div id="function-composition" class="section level2" number="9.2">
+<h2><span class="header-section-number">9.2</span> Function composition</h2>
 <p>To <strong><em>compose</em></strong> two functions, <span class="math inline">\(f(x)\)</span> and <span class="math inline">\(g(x)\)</span>, means to apply one of the functions to the output of the other. “<span class="math inline">\(f()\)</span> composed with <span class="math inline">\(g()\)</span>” means <span class="math inline">\(f(g(x))\)</span>. This is generally very different from “<span class="math inline">\(g()\)</span> composed with <span class="math inline">\(f()\)</span>” which means <span class="math inline">\(g(f(x))\)</span>.</p>
 <p>For instance, suppose you have recorded the outdoor temperature over the course of a day and packaged this into a function <span class="math inline">\(\mbox{AirTemp}(t)\)</span>: temperature as a function of time <span class="math inline">\(t\)</span>. Your digital thermometer uses degrees Celsius, but you want the output units to be degrees Kelvin. The conversion function is <span class="math display">\[\mbox{CtoK}(C) \equiv C + 273.15\]</span>
 Notice that CtoK() takes temperature as input. With this, we can write the “Kelvin as a function of time” as <span class="math display">\[\mbox{CtoK}\left(\mbox{AirTemp}(t)\right)\]</span>
@@ -150,17 +377,16 @@ It’s important to distinguish the above time <span class="math inline">\(\righ
 <p>Here is a simple, approximate formula for the length of day (in hours) as a function of latitude <span class="math inline">\(L\)</span> and the declination angle <span class="math inline">\(\delta\)</span> of the sun.</p>
 <p><span class="math display">\[\text{day_length}(L, \delta) \equiv \frac{2}{15} \arccos\left(-\tan(L)*\tan(δ)\right)\]</span>
 The declination angle is the latitude of the point on the earth’s surface pierced by an imagined line connecting the centers of the earth and the sun. On the summer solstice, it is <span class="math inline">\(23.44^\circ\)</span>, the longest day of the year.</p>
-<p>A computer implement must look different, since <span class="math inline">\(L\)</span> and <span class="math inline">\(\delta\)</span> are typically provided in degrees while the <code><a href="https://rdrr.io/r/base/Trig.html">tan()</a></code> and other trigonometric functions in most computer languages expect units of radians. The conversion is easy: <span class="math inline">\(\text{deg2rad}(d) \equiv \frac{\pi}{180} d\)</span>. The conversion the other way is <span class="math inline">\(\text{rad2deg}(r) \equiv \frac{180}{\pi} r\)</span>.</p>
-<p>In order to get the day-length formula to work in a computer, we have to compose the <span class="math inline">\(\tan()\)</span> function with <code>deg2rad()</code>. The output of <code><a href="https://rdrr.io/r/base/Trig.html">acos()</a></code> is in radians, so we have to convert it back to degrees. Like this:</p>
-<div class="sourceCode" id="cb46"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">day_length</span> <span class="op">&lt;-</span> <span class="fu">makeFun</span><span class="op">(</span>
-  <span class="op">(</span><span class="fl">2</span><span class="op">/</span><span class="fl">15</span><span class="op">)</span><span class="op">*</span><span class="fu">rad2deg</span><span class="op">(</span>
-    <span class="fu"><a href="https://rdrr.io/r/base/Trig.html">acos</a></span><span class="op">(</span>
-      <span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/base/Trig.html">tan</a></span><span class="op">(</span><span class="fu">deg2rad</span><span class="op">(</span><span class="va">L</span><span class="op">)</span><span class="op">)</span><span class="op">*</span><span class="fu"><a href="https://rdrr.io/r/base/Trig.html">tan</a></span><span class="op">(</span><span class="fu">deg2rad</span><span class="op">(</span><span class="va">d</span><span class="op">)</span><span class="op">)</span>
-    <span class="op">)</span>
-  <span class="op">)</span> <span class="op">~</span> <span class="va">L</span><span class="op">+</span><span class="va">d</span><span class="op">)</span></code></pre></div>
+<p>A computer implement must look different, since <span class="math inline">\(L\)</span> and <span class="math inline">\(\delta\)</span> are typically provided in degrees while the <code>tan()</code> and other trigonometric functions in most computer languages expect units of radians. The conversion is easy: <span class="math inline">\(\text{deg2rad}(d) \equiv \frac{\pi}{180} d\)</span>. The conversion the other way is <span class="math inline">\(\text{rad2deg}(r) \equiv \frac{180}{\pi} r\)</span>.</p>
+<p>In order to get the day-length formula to work in a computer, we have to compose the <span class="math inline">\(\tan()\)</span> function with <code>deg2rad()</code>. The output of <code>acos()</code> is in radians, so we have to convert it back to degrees. Like this:</p>
+<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb47-1"><a href="fun-assembling.html#cb47-1" aria-hidden="true" tabindex="-1"></a>day_length <span class="ot">&lt;-</span> <span class="fu">makeFun</span>(</span>
+<span id="cb47-2"><a href="fun-assembling.html#cb47-2" aria-hidden="true" tabindex="-1"></a>  (<span class="dv">2</span><span class="sc">/</span><span class="dv">15</span>)<span class="sc">*</span><span class="fu">rad2deg</span>(</span>
+<span id="cb47-3"><a href="fun-assembling.html#cb47-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">acos</span>(</span>
+<span id="cb47-4"><a href="fun-assembling.html#cb47-4" aria-hidden="true" tabindex="-1"></a>      <span class="sc">-</span><span class="fu">tan</span>(<span class="fu">deg2rad</span>(L))<span class="sc">*</span><span class="fu">tan</span>(<span class="fu">deg2rad</span>(d))</span>
+<span id="cb47-5"><a href="fun-assembling.html#cb47-5" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb47-6"><a href="fun-assembling.html#cb47-6" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">~</span> L<span class="sc">+</span>d)</span></code></pre></div>
 <div class="etude-question">
-<p><strong>Q-32</strong>: Using an R sandbox, calculate the length of the day at latitude <span class="math inline">\(39^\deg\)</span> on the longest day of the year, which is when the declination of the sun is <span class="math inline">\(23.44^\circ\)</span>. How long is it?</p>
+<p><strong>Question tmp-32</strong>: Using an R sandbox, calculate the length of the day at latitude <span class="math inline">\(39^\deg\)</span> on the longest day of the year, which is when the declination of the sun is <span class="math inline">\(23.44^\circ\)</span>. How long is it?</p>
 <ol>
 <li><p>13.9 hours []</p></li>
 <li><p>14.7 hours (+) []</p></li>
@@ -170,17 +396,15 @@ The declination angle is the latitude of the point on the earth’s surface pier
 </div>
 <p>Now to make a plot of day length as a function of day of the year. Of course, <code>day_length(L, d)</code> does not take day of the year into account. What’s missing is to know the declination of the sun as a function of calendar day.</p>
 <p>We’ll represent calendar day as a number <span class="math inline">\(n\)</span> that runs from 0 at the start of January 1st to 365 at the end of December 31. Given this convention, the declination of the sun is</p>
-<div class="sourceCode" id="cb47"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">delta_sun</span> <span class="op">&lt;-</span> <span class="fu">makeFun</span><span class="op">(</span><span class="op">-</span><span class="fl">23.44</span><span class="op">*</span><span class="fu"><a href="https://rdrr.io/r/base/Trig.html">cos</a></span><span class="op">(</span><span class="op">(</span><span class="fl">2</span><span class="op">*</span><span class="va">pi</span><span class="op">/</span><span class="fl">365</span><span class="op">)</span><span class="op">*</span><span class="op">(</span><span class="va">n</span><span class="op">+</span><span class="fl">10</span><span class="op">)</span> <span class="op">)</span> <span class="op">~</span> <span class="va">n</span><span class="op">)</span></code></pre></div>
+<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb48-1"><a href="fun-assembling.html#cb48-1" aria-hidden="true" tabindex="-1"></a>delta_sun <span class="ot">&lt;-</span> <span class="fu">makeFun</span>(<span class="sc">-</span><span class="fl">23.44</span><span class="sc">*</span><span class="fu">cos</span>((<span class="dv">2</span><span class="sc">*</span>pi<span class="sc">/</span><span class="dv">365</span>)<span class="sc">*</span>(n<span class="sc">+</span><span class="dv">10</span>) ) <span class="sc">~</span> n)</span></code></pre></div>
 <p>Composing <code>day_length()</code> with <code>delta_sun()</code> (on the <code>d</code> argument only) we get a function of day of year <code>n</code>:</p>
-<div class="sourceCode" id="cb48"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">slice_plot</span><span class="op">(</span>
-  <span class="fu">day_length</span><span class="op">(</span><span class="fl">39</span>, <span class="fu">delta_sun</span><span class="op">(</span><span class="va">n</span><span class="op">)</span><span class="op">)</span> <span class="op">~</span> <span class="va">n</span>, 
-  <span class="fu">domain</span><span class="op">(</span>n<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">365</span><span class="op">)</span><span class="op">)</span>
-  <span class="op">)</span></code></pre></div>
-<div class="inline-figure"><img src="CalcZ-notes_files/figure-html/unnamed-chunk-68-1.png" width="672"></div>
+<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb49-1"><a href="fun-assembling.html#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="fu">slice_plot</span>(</span>
+<span id="cb49-2"><a href="fun-assembling.html#cb49-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">day_length</span>(<span class="dv">39</span>, <span class="fu">delta_sun</span>(n)) <span class="sc">~</span> n, </span>
+<span id="cb49-3"><a href="fun-assembling.html#cb49-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">domain</span>(<span class="at">n=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">365</span>))</span>
+<span id="cb49-4"><a href="fun-assembling.html#cb49-4" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
+<p><img src="CalcZ-notes_files/figure-html/unnamed-chunk-68-1.png" width="672" /></p>
 <div class="etude-question">
-<p><strong>Q-33</strong>: How long is the day on April Fools (<span class="math inline">\(n=90\)</span>) at Latitude 39N? (Use a sandbox for the calculation.)</p>
+<p><strong>Question tmp-33</strong>: How long is the day on April Fools (<span class="math inline">\(n=90\)</span>) at Latitude 39N? (Use a sandbox for the calculation.)</p>
 <ol>
 <li><p>12.38 hours (+) []</p></li>
 <li><p>12.59 hours []</p></li>
@@ -189,22 +413,18 @@ The declination angle is the latitude of the point on the earth’s surface pier
 </ol>
 </div>
 </div>
-<div id="modeling-polynomial-1" class="section level2">
-<h2>
-<span class="header-section-number">9.3</span> The modeling polynomial<a class="anchor" aria-label="anchor" href="#modeling-polynomial-1"><i class="fas fa-link"></i></a>
-</h2>
+<div id="modeling-polynomial-1" class="section level2" number="9.3">
+<h2><span class="header-section-number">9.3</span> The modeling polynomial</h2>
 <p>Sometimes, in order to model some simple relationship you need to build a function whose graph has a simple, curving shape.</p>
 <p>A simple but surprisingly powerful approach is to use a <strong><em>low-order polynomial</em></strong>. The <strong><em>order of a polynomial</em></strong> is the highest exponent on the input. For example, a straight-line function, <span class="math inline">\(g_1(x) \equiv a_0 + a_1 x\)</span>, is a <strong>first-order</strong> polynomial. A <strong><em>quadratic</em></strong>, <span class="math inline">\(g_2(x) \equiv b_0 + b_1 x + b_2 x^2\)</span> is a <strong>second-order</strong> polynomial.</p>
-<p>Many modelers are tempted to extend the technique to third-, fourth-, fifth-order and even higher. This is only rarely worthwhile since all second-, fourth-, sixth- and higher-even-order <strong><em>monomials</em></strong> have basically the same U-shape, like a referee signalling a touch-down. Similarly, first-, third-, fifth- and higher odd-order monomial have similar <img src="www/cubic.png"> shapes.</p>
+<p>Many modelers are tempted to extend the technique to third-, fourth-, fifth-order and even higher. This is only rarely worthwhile since all second-, fourth-, sixth- and higher-even-order <strong><em>monomials</em></strong> have basically the same U-shape, like a referee signalling a touch-down. Similarly, first-, third-, fifth- and higher odd-order monomial have similar <img src="www/cubic.png" /> shapes.</p>
 <p>An ofttimes better approach is to compose the polynomial with a curved but monotonic function, such as a logarithm.</p>
 <div class="why">
 <p>Explain why we are now using subscripts for the names of scalars.</p>
 </div>
 </div>
-<div id="tukeys-ladder-optional" class="section level2">
-<h2>
-<span class="header-section-number">9.4</span> Tukey’s ladder (optional)<a class="anchor" aria-label="anchor" href="#tukeys-ladder-optional"><i class="fas fa-link"></i></a>
-</h2>
+<div id="tukeys-ladder-optional" class="section level2" number="9.4">
+<h2><span class="header-section-number">9.4</span> Tukey’s ladder (optional)</h2>
 <div class="todo">
 <p>[[Tukey’s ladder]] Using a simple straight line with input composition and/or output composition. You can get a variety of curve shapes using only a linear function.</p>
 </div>
@@ -214,10 +434,8 @@ The declination angle is the latitude of the point on the earth’s surface pier
 <p>[[Perceived brightness or loudness]] is a log scale.</p>
 </div>
 </div>
-<div id="function-multiplication" class="section level2">
-<h2>
-<span class="header-section-number">9.5</span> Function multiplication<a class="anchor" aria-label="anchor" href="#function-multiplication"><i class="fas fa-link"></i></a>
-</h2>
+<div id="function-multiplication" class="section level2" number="9.5">
+<h2><span class="header-section-number">9.5</span> Function multiplication</h2>
 <p>The third in our repertoire of methods for making new function out of old is plain old multiplication. With two functions <span class="math inline">\(f(x)\)</span> and <span class="math inline">\(g(x)\)</span>, the product is simply <span class="math inline">\(f(x)g(x)\)</span>.</p>
 <p>It’s essential to distinguish between function multiplication and function composition:</p>
 <p><span class="math display">\[\underbrace{f(x) g(x)}_\mbox{multiplication}\ \ \ \ \underbrace{f(g(x)) \ \ \mbox{or}\ \ \ g(f(x))}_\mbox{composition}\]</span></p>
@@ -229,24 +447,23 @@ The declination angle is the latitude of the point on the earth’s surface pier
 <p>A guitar string is plucked to produce a note. The note is, of course, vibrations of the air created by vibrations of the string.</p>
 <p>After plucking, the note fades away. An important model of this is a sinusoid (of the correct period to correspond to the frequency of the note) times an exponential.</p>
 <p>Function multiplication is used so often in modeling that you’ll see it in many modeling situations. Here’s one example that is important in physics and communication: the <strong><em>wave packet.</em></strong> Overall, the wave packet is a localized oscillation as in Figure @ref{fig:wave-packet}.</p>
-<div class="figure">
-<span id="fig:wave-packet"></span>
-<img src="CalcZ-notes_files/figure-html/wave-packet-1.png" alt="A *wave packet* constructed by multiplying a sinusoid by a hump function." width="672"><p class="caption">
+<div class="figure"><span id="fig:wave-packet"></span>
+<img src="CalcZ-notes_files/figure-html/wave-packet-1.png" alt="A *wave packet* constructed by multiplying a sinusoid by a hump function." width="672" />
+<p class="caption">
 Figure 9.1: A <em>wave packet</em> constructed by multiplying a sinusoid by a hump function.
 </p>
 </div>
 <p>This is the product of two simple functions: a hump times a sinusoid.</p>
-<div class="figure">
-<span id="fig:making-wave-packet"></span>
-<img src="CalcZ-notes_files/figure-html/making-wave-packet-1.png" alt="The two components of the wave packet in Figure \@ref(fig:wave-packet)" width="50%"><img src="CalcZ-notes_files/figure-html/making-wave-packet-2.png" alt="The two components of the wave packet in Figure \@ref(fig:wave-packet)" width="50%"><p class="caption">
+<div class="figure"><span id="fig:making-wave-packet"></span>
+<img src="CalcZ-notes_files/figure-html/making-wave-packet-1.png" alt="The two components of the wave packet in Figure \@ref(fig:wave-packet)" width="50%" /><img src="CalcZ-notes_files/figure-html/making-wave-packet-2.png" alt="The two components of the wave packet in Figure \@ref(fig:wave-packet)" width="50%" />
+<p class="caption">
 Figure 9.2: The two components of the wave packet in Figure <a href="fun-assembling.html#fig:wave-packet">9.1</a>
 </p>
 </div>
 <p>EXERCISES: Say which two kinds of functions are being multiplied here.</p>
-<div class="inline-figure">
-<img src="CalcZ-notes_files/figure-html/unnamed-chunk-69-1.png" width="672">
-::: {.etude-question}</div>
-<p><strong>Q-34</strong>: What are the two basic modeling functions being multiplied?</p>
+<p><img src="CalcZ-notes_files/figure-html/unnamed-chunk-69-1.png" width="672" />
+::: {.etude-question}</p>
+<p><strong>Question tmp-34</strong>: What are the two basic modeling functions being multiplied?</p>
 <ol>
 <li><p>A sinusoid and another sinusoid with a faster period. (+) []</p></li>
 <li><p>A hump and a sinusoid. []</p></li>
@@ -255,7 +472,7 @@ Figure 9.2: The two components of the wave packet in Figure <a href="fun-assembl
 </ol>
 <p>:::</p>
 <div class="etude-question">
-<p><strong>Q-35</strong>: What is the period of the envelope?</p>
+<p><strong>Question tmp-35</strong>: What is the period of the envelope?</p>
 <ol>
 <li><p>10 [It’s true that the broad peaks in the overall function occur every 10 time units. But a sine wave has two excursions from zero every cycle, one positive and one negative. So if the period of the envelope were 10, we would see an amplitude of the faster sinusoid near zero every 5 time units.]</p></li>
 <li><p>20 (+) []</p></li>
@@ -265,20 +482,16 @@ Figure 9.2: The two components of the wave packet in Figure <a href="fun-assembl
 <p>Other examples along the same lines.</p>
 <p>EXERCISE: Provide a sigmoid and a series of humps. Ask the student to sketch out the product.</p>
 </div>
-<div id="all-together-now" class="section level2">
-<h2>
-<span class="header-section-number">9.6</span> All together now!<a class="anchor" aria-label="anchor" href="#all-together-now"><i class="fas fa-link"></i></a>
-</h2>
+<div id="all-together-now" class="section level2" number="9.6">
+<h2><span class="header-section-number">9.6</span> All together now!</h2>
 <p>Two or all three of the techniques for combining functions—linear combinations, function composition, and function multiplication—can be used in the same function.</p>
 <p>Consider the function for the length of the day
 <span class="math display">\[\text{day_length}(L, \delta) \equiv \frac{2}{15} \arccos\left(-\tan(L)*\tan(δ)\right)\]</span>
 The 2/15 is scaling the output of <span class="math inline">\(\arccos()\)</span>: scaling is in linear combination.</p>
 <p>The <span class="math inline">\(\arcos()\)</span> is being composed with an interior function that is itself a scaled product of two functions.</p>
 </div>
-<div id="exercises-3" class="section level2">
-<h2>
-<span class="header-section-number">9.7</span> Exercises<a class="anchor" aria-label="anchor" href="#exercises-3"><i class="fas fa-link"></i></a>
-</h2>
+<div id="exercises-3" class="section level2" number="9.7">
+<h2><span class="header-section-number">9.7</span> Exercises</h2>
 <!--
 \BeginKnitrBlock{exercise}\iffalse{-91-97-114-105-116-104-45-119-105-116-104-45-102-117-110-115-93-}\fi{}<div class="exercise"><span class="exercise" id="exr:unnamed-chunk-70"><strong>(\#exr:unnamed-chunk-70)  \iffalse (arith-with-funs) \fi{} </strong></span></div>\EndKnitrBlock{exercise}
 <details>
@@ -317,7 +530,7 @@ We are going to use this strategy of modeling complex phenomena as a  sum of two
 
 ::: {.etude-question}
 
-**Q-36**: Assuming that there were no way to distinguish between red and blue cases, the epidemic would look like just one curve. Which of the following curves would the overall epidemic look like? (The colors are just  to  help you  distinguish the different functions)
+**Question tmp-36**: Assuming that there were no way to distinguish between red and blue cases, the epidemic would look like just one curve. Which of the following curves would the overall epidemic look like? (The colors are just  to  help you  distinguish the different functions)
 
 
 #. A [The cumulative number of cases can't possibly go down!]
@@ -338,7 +551,7 @@ Each of the functions shown in the above graph is a "linear combination" of the 
 
 ::: {.etude-question}
 
-**Q-37**: For made-up function (A) in  the graph, what was the linear combination?
+**Question tmp-37**: For made-up function (A) in  the graph, what was the linear combination?
 
 
 #. 1000 - wave1(t) + wave2(t)  (+) []
@@ -353,12 +566,12 @@ Each of the functions shown in the above graph is a "linear combination" of the 
 <div class="exercise">
 <span id="exr:unnamed-chunk-71" class="exercise"><strong>Exercise 9.1  (multiplying-functions)  </strong></span>
 </div>
-
-<details><p>It’s very common in communications systems to have a signal that is a sine-wave <em>carrier</em> that is <em>modulated</em> by another function. That is, the carrier is <em>multiplied</em> by the other function: <code>waveform(t) = modulator(t)</code> <span class="math inline">\(\times\)</span> <code>carrier(t)</code>.</p>
+<details>
+<p>It’s very common in communications systems to have a signal that is a sine-wave <em>carrier</em> that is <em>modulated</em> by another function. That is, the carrier is <em>multiplied</em> by the other function: <code>waveform(t) = modulator(t)</code> <span class="math inline">\(\times\)</span> <code>carrier(t)</code>.</p>
 <p>Here are four examples in each of which a sine with a period of about 2 units is modulated by another function, one of the modeling functions we have studied.</p>
-<div class="inline-figure"><img src="CalcZ-notes_files/figure-html/unnamed-chunk-130-1.png" width="672"></div>
+<p><img src="CalcZ-notes_files/figure-html/unnamed-chunk-130-1.png" width="672" /></p>
 <div class="etude-question">
-<p><strong>Q-38</strong>: (A) Of what sort is the function that is modulating the carrier?</p>
+<p><strong>Question tmp-38</strong>: (A) Of what sort is the function that is modulating the carrier?</p>
 <ol>
 <li><p>exponential (+) []</p></li>
 <li><p>hump []</p></li>
@@ -366,10 +579,9 @@ Each of the functions shown in the above graph is a "linear combination" of the 
 <li><p>sine []</p></li>
 </ol>
 </div>
-<div class="inline-figure">
-<img src="CalcZ-notes_files/figure-html/unnamed-chunk-131-1.png" width="672">
-::: {.etude-question}</div>
-<p><strong>Q-39</strong>: (B) Of what sort is the function that is modulating the carrier?</p>
+<p><img src="CalcZ-notes_files/figure-html/unnamed-chunk-131-1.png" width="672" />
+::: {.etude-question}</p>
+<p><strong>Question tmp-39</strong>: (B) Of what sort is the function that is modulating the carrier?</p>
 <ol>
 <li><p>exponential []</p></li>
 <li><p>hump (+) []</p></li>
@@ -377,9 +589,9 @@ Each of the functions shown in the above graph is a "linear combination" of the 
 <li><p>sine []</p></li>
 </ol>
 <p>:::</p>
-<div class="inline-figure"><img src="CalcZ-notes_files/figure-html/unnamed-chunk-132-1.png" width="672"></div>
+<p><img src="CalcZ-notes_files/figure-html/unnamed-chunk-132-1.png" width="672" /></p>
 <div class="etude-question">
-<p><strong>Q-40</strong>: (C) Of what sort is the function that is modulating the carrier?</p>
+<p><strong>Question tmp-40</strong>: (C) Of what sort is the function that is modulating the carrier?</p>
 <ol>
 <li><p>exponential []</p></li>
 <li><p>hump []</p></li>
@@ -387,10 +599,9 @@ Each of the functions shown in the above graph is a "linear combination" of the 
 <li><p>sine []</p></li>
 </ol>
 </div>
-<div class="inline-figure">
-<img src="CalcZ-notes_files/figure-html/unnamed-chunk-133-1.png" width="672">
-::: {.etude-question}</div>
-<p><strong>Q-41</strong>: (D) Of what sort is the function that is modulating the carrier?</p>
+<p><img src="CalcZ-notes_files/figure-html/unnamed-chunk-133-1.png" width="672" />
+::: {.etude-question}</p>
+<p><strong>Question tmp-41</strong>: (D) Of what sort is the function that is modulating the carrier?</p>
 <ol>
 <li><p>exponential []</p></li>
 <li><p>hump []</p></li>
@@ -398,7 +609,8 @@ Each of the functions shown in the above graph is a "linear combination" of the 
 <li><p>sine (+) []</p></li>
 </ol>
 :::
-</details><!--
+</details>
+<!--
 
 \BeginKnitrBlock{exercise}\iffalse{-91-97-118-97-105-108-97-98-108-101-45-104-101-97-108-116-104-45-99-97-114-101-93-}\fi{}<div class="exercise"><span class="exercise" id="exr:unnamed-chunk-72"><strong>(\#exr:unnamed-chunk-72)  \iffalse (available-health-care) \fi{} </strong></span></div>\EndKnitrBlock{exercise}
 <details>
@@ -437,7 +649,7 @@ Define this function in R and graph it over your  data. Confirm that it is a rea
 
 ::: {.etude-question}
 
-**Q-42**: What kind of function is the instructor's proposed model?
+**Question tmp-42**: What kind of function is the instructor's proposed model?
 
 
 #. linear [Is it  a straight line on  linear axes?]
@@ -453,7 +665,7 @@ Define this function in R and graph it over your  data. Confirm that it is a rea
 
 ::: {.etude-question}
 
-**Q-43**: According to  the instructor's model, what's the life expectancy when there are no physicians at all?
+**Question tmp-43**: According to  the instructor's model, what's the life expectancy when there are no physicians at all?
 
 
 #. 0 years  (+) [Not very believable, since there were (living) people before there were physicians. The power-law functional form always forces zero input to be zero output. So maybe not to be taken so seriously.]
@@ -472,7 +684,7 @@ Define this function in R and graph it over your  data. Confirm that it is a rea
 
 ::: {.etude-question}
 
-**Q-44**: According to  the instructor's model, would be the  life expectancy if every person in the world were a physician? (Hint: Translate this into physicians/1000-people.)
+**Question tmp-44**: According to  the instructor's model, would be the  life expectancy if every person in the world were a physician? (Hint: Translate this into physicians/1000-people.)
 
 
 #. 0 years []
@@ -495,7 +707,7 @@ It could  be argued that the doctor-density should be a function  of life  expec
 
 ::: {.etude-question}
 
-**Q-45**: Which of these models agrees reasonably well with the data? (Hint: You can plot the model over the data.)
+**Question tmp-45**: Which of these models agrees reasonably well with the data? (Hint: You can plot the model over the data.)
 
 
 #. $D(L) \equiv 7.24\times 10^{-19} \times L^9.8$  (+) []
@@ -519,7 +731,7 @@ In the sandbox, plot both the instructor's proposed model $L(D)$ and the model $
 
 ::: {.etude-question}
 
-**Q-46**: Which model,  $L(D)$ or $D^{inv}(D)$ is  a better match to the data when $D < 1$?
+**Question tmp-46**: Which model,  $L(D)$ or $D^{inv}(D)$ is  a better match to the data when $D < 1$?
 
 
 #. $L(D)$  (+) []
@@ -538,53 +750,68 @@ Notice from the data that the countries with the highest life expectancies are t
 
 </details>
 
---><div class="todo">
+-->
+<div class="todo">
 <p>EXERCISE: The algebra of composition of the hump function <span class="math inline">\(e^{-\frac{x^2}{2}}\)</span>. Parabola is a nice starting point. But we want it to go to zero asymptotically, not to <span class="math inline">\(-\infty\)</span>. That might seem a tall order, but the exponential function is up to it.</p>
 </div>
 
 </div>
 </div>
-
-  <div class="chapter-nav">
-<div class="prev"><a href="fun-slopes.html"><span class="header-section-number">8</span> Slope function</a></div>
-<div class="next"><a href="fun-multiple-inputs.html"><span class="header-section-number">10</span> Functions with multiple inputs</a></div>
-</div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
-    <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
-      <ul class="nav navbar-nav">
-<li><a class="nav-link" href="#fun-assembling"><span class="header-section-number">9</span> Assembling functions</a></li>
-<li><a class="nav-link" href="#linear-combination"><span class="header-section-number">9.1</span> Linear combination</a></li>
-<li><a class="nav-link" href="#function-composition"><span class="header-section-number">9.2</span> Function composition</a></li>
-<li><a class="nav-link" href="#modeling-polynomial-1"><span class="header-section-number">9.3</span> The modeling polynomial</a></li>
-<li><a class="nav-link" href="#tukeys-ladder-optional"><span class="header-section-number">9.4</span> Tukey’s ladder (optional)</a></li>
-<li><a class="nav-link" href="#function-multiplication"><span class="header-section-number">9.5</span> Function multiplication</a></li>
-<li><a class="nav-link" href="#all-together-now"><span class="header-section-number">9.6</span> All together now!</a></li>
-<li><a class="nav-link" href="#exercises-3"><span class="header-section-number">9.7</span> Exercises</a></li>
-</ul>
-
-      <div class="book-extra">
-        <ul class="list-unstyled">
-<li><a id="book-source" href="https://github.com/dtkaplan/CalcZ-notes/blob/master/Fun-assembling.Rmd">View source <i class="fab fa-github"></i></a></li>
-          <li><a id="book-edit" href="https://github.com/dtkaplan/CalcZ-notes/edit/master/Fun-assembling.Rmd">Edit this page <i class="fab fa-github"></i></a></li>
-        </ul>
+<div class="footnotes">
+<hr />
+<ol start="11">
+<li id="fn11"><p>It’s likely that you saw polynomials as things to be factored, rather than as functions taking an input and producing an output. So they were written as <em>equations</em>: <span class="math inline">\(e x^2 + 5x - 2 = 0\)</span><a href="fun-assembling.html#fnref11" class="footnote-back">↩︎</a></p></li>
+</ol>
 </div>
-    </nav>
-</div>
+            </section>
 
-</div>
-</div> <!-- .container -->
-
-<footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
-
-  <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>CalcZ Student Notes</strong>" was written by Daniel Kaplan. It was last built on 2021-06-08.</p>
+          </div>
+        </div>
+      </div>
+<a href="fun-slopes.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="fun-multiple-inputs.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
   </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": false,
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/dtkaplan/CalcZ-notes/edit/main/Fun-assembling.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"toc": {
+"collapse": "section"
+}
+});
+});
+</script>
 
-  <div class="col-12 col-md-6 mt-3">
-    <p>This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
-  </div>
-
-</div></div>
-</footer><!-- dynamically load mathjax for compatibility with self-contained --><script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
   (function () {
     var script = document.createElement("script");
     script.type = "text/javascript";
@@ -598,4 +825,5 @@ Notice from the data that the countries with the highest life expectancies are t
   })();
 </script>
 </body>
+
 </html>
