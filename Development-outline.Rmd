@@ -54,11 +54,16 @@ The [R Command Guide](https://maa-statprep.shinyapps.io/141Z-R_command_guide/) f
 
 The Daily Digitals from AY 2020-2021 have integrated R consoles that are sufficient for all computations in the course. 
 
-You can also use RStudio directly. You will need to install the following packages:
+You can also use RStudio directly. After installing R and RStudio, install Rtools from [here](https://cran.rstudio.com/bin/windows/Rtools/). 
+
+You will then need to run the following commands and install the following packages:
 ```r
 install.packages(c("mosaic", "ggplot2", "ggformula", "MMAC"))
-remotes::install.github("ProjectMosaic/mosaicCalc", ref="beta")
-remotes::install.github("dtkaplan/math141Z", ref="master")
+writeLines('PATH="${RTOOLS40_HOME}\\usr\\bin;${PATH}"', con = "~/.Renviron")
+install.packages("tidyverse")
+install.packages("remotes")
+remotes::install_github("ProjectMosaic/mosaicCalc", ref="beta", upgrade = "always")
+remotes::install_github("dtkaplan/math141Z", ref="master", upgrade = "always")
 ```
 
 Collaborators who wish to compile the book will need to use the RStudio interface and install several additional packages. Be a volunteer to identify these packages! Start with a fresh installation of R and RStudio and work with Danny to get a comprehensive list. (It's hard for me to do this since I have the packages installed on the computers I use and don't want to start over with a brand-new installation to make sure I've got them all.)
