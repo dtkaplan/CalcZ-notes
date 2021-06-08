@@ -6,7 +6,7 @@ To "optimize" means to make something as good as possible with the available res
 - When to harvest trees being grown for lumber. Harvest too soon and you might be losing out on the prime growing years. Wait too long and trees will have settled in to slow growth, if any.
 - Walking up too steep a slope is tiring and slows you down; that's why hiking trails have switchbacks. When the switchbacks are too shallow, it takes a long time to cover the distance. What's the most efficient angle to enable hikers to get up the hill in the shortest time.
 
-## Structure of problem
+## Structure of the problem
 
 In an optimization problem, there is one or more input quantity whose value you have to choose. The amount of salt; the years to wait from planting to harvesting a tree; the angle of the trail with respect to the slope. We'll call this the ***decision quantity***. 
 
@@ -94,7 +94,7 @@ At this point, we know that values $x^\star$ that give $\partial_x f(x^\star) = 
 
 For an argmin, changing $x$ from less than $x^\star$ to greater than $x\star$;  you will be walking down into the valley, then level at the very bottom $x=x^\star$, then back up the other side of the valley after you pass $x=x^\star$. Figure \@ref(fig:d2-hill) shows the situation. 
 
-```{r d2-hill, echo=FALSE, fig.show="hold", out.width="50%", fig.cap="Top row: An objective function near an argmax (left) and an argmin (right). Bottom row: The derivative of the objective function}
+```{r d2-hill, echo=FALSE, fig.show="hold", out.width="50%", fig.cap="Top row: An objective function near an argmax (left) and an argmin (right). Bottom row: The derivative of the objective function"}
 f <- makeFun(sin(2*pi*x/4)~ x)
 f2 <- D(f(x) ~ x)
 slice_plot(f(x) ~ x, domain(x=c(0.5, 1.5))) %>%
@@ -132,8 +132,8 @@ neither| 0 | 0
 ```{r ds1-2, echo=FALSE, results="markup"}
 etude2::etudeQ(
   "Returning to the function $f(x) \\equiv x^3$,  find the value of the second-derivative $\\partial_{xx} f(x^\\star)$ evaluated at the critical point $x = x^\\star = 0$. Which of these is $\\partial_{xx} f( x=0$? " ,
-  "Negative" = "But you established in the previous exercise that the critical point $x^\star=0$ is neither an argmin nor wan argmax.",
-  "Positive" = "But you established in the previous exercise that the critical point $x^\star=0$ is neither an argmin nor wan argmax.",
+  "Negative" = "But you established in the previous exercise that the critical point $x^\\star=0$ is neither an argmin nor wan argmax.",
+  "Positive" = "But you established in the previous exercise that the critical point $x^\\star=0$ is neither an argmin nor wan argmax.",
   "+Zero+",
   random_answer_order = FALSE
 )

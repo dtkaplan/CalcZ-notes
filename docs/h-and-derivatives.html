@@ -75,6 +75,8 @@
 <li><a class="" href="outline-of-block-2.html">Outline of Block 2</a></li>
 <li><a class="" href="change-relationships.html"><span class="header-section-number">14</span> Change relationships</a></li>
 <li><a class="active" href="h-and-derivatives.html"><span class="header-section-number">15</span> h and derivatives</a></li>
+<li><a class="" href="optim-and-shape.html"><span class="header-section-number">16</span> Optimization</a></li>
+<li><a class="" href="cont-and-smooth.html"><span class="header-section-number">17</span> Continuity and smoothness</a></li>
 </ul>
 
         <div class="book-extra">
@@ -145,7 +147,7 @@
 </table></div>
 <p>A mathematician might prefer to replace the word “established” in the first sentence of this table with a weaker word “motivated” or “proposed.” This is entirely fair. Indeed, let’s do another experiment that will cause us to wonder just how solid are the conclusions presented in the table above.</p>
 <p>Recall that we can easily define the slope function for any <span class="math inline">\(f(x)\)</span>, for example the slope function of <span class="math inline">\(\sin(x)\)</span>:</p>
-<div class="sourceCode" id="cb95"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb96"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">Dsin</span> <span class="op">&lt;-</span> <span class="fu">makeFun</span><span class="op">(</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Trig.html">sin</a></span><span class="op">(</span><span class="va">x</span><span class="op">+</span><span class="va">h</span><span class="op">)</span> <span class="op">-</span> <span class="fu"><a href="https://rdrr.io/r/base/Trig.html">sin</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span><span class="op">/</span><span class="va">h</span>  <span class="op">~</span> <span class="va">x</span><span class="op">)</span></code></pre></div>
 <p>In justifying the entry for <span class="math inline">\(\sin()\)</span> in the table, we plotted <code>Dsin()</code> using small <code>h</code>, for instance, <code>h=0.000001</code>. It would be comforting to continue the experiment with even smaller <code>h</code>. Doing so, we discover a problem.</p>
 <div class="figure">
@@ -156,17 +158,17 @@ Figure 15.1: Graphing the slope function of <span class="math inline">\(\sin(x)\
 </div>
 <p>Things get even worse for smaller <span class="math inline">\(h\)</span> still, as you can confirm for yourself using a computing sandbox.</p>
 <p>It turns out that the reason for this behavior is the way in which computer arithmetic has been engineered. To demonstrate the non-mathematical behavior of computer arithmetic, consider what happens when we add and subtract using 1 and a number that is small compared to 1.</p>
-<div class="sourceCode" id="cb96"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb97"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/options.html">options</a></span><span class="op">(</span>digits<span class="op">=</span><span class="fl">20</span><span class="op">)</span>
 <span class="fl">0.000000000000000000000001</span></code></pre></div>
 <pre><code>## [1] 9.999999999999999237e-25</code></pre>
-<div class="sourceCode" id="cb98"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb99"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fl">1</span> <span class="op">+</span> <span class="fl">0.000000000000000000000001</span></code></pre></div>
 <pre><code>## [1] 1</code></pre>
-<div class="sourceCode" id="cb100"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb101"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fl">1</span> <span class="op">-</span> <span class="fl">0.000000000000000000000001</span></code></pre></div>
 <pre><code>## [1] 1</code></pre>
-<div class="sourceCode" id="cb102"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb103"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fl">1</span> <span class="op">+</span> <span class="fl">0.000000000000000000000001</span> <span class="op">-</span> <span class="fl">1</span></code></pre></div>
 <pre><code>## [1] 0</code></pre>
 <p>Using technical computing successfully at a professional level requires some understanding of the ways in which computer arithmetic differs from mathematical arithmetic, And the R/mosaic <code><a href="https://rdrr.io/r/stats/deriv.html">D()</a></code> operator has been constructed with these considerations in mind. But our purpose here is not to push the computer beyond it’s arithmetic limits but to demonstrate that the differentiation table for the naked modeling functions is correct.</p>
@@ -188,7 +190,7 @@ The above steps are completely justified for any <span class="math inline">\(h\)
 Again, we have a formula which is correct for any <span class="math inline">\(h\)</span> whatsoever, so long as <span class="math inline">\(h\)</span> is not zero. Unfortunately, <span class="math inline">\(h\)</span> is still present in the formula. In differentiating <span class="math inline">\(x^2\)</span> we want to make <span class="math inline">\(h\)</span> go away.</p>
 <p>I like to think of <span class="math inline">\(h\)</span> as a kind of <em>tire iron</em>, a small tool used to stretch the bead of a bicycle tire in order to pull it over the wheel rim.</p>
 <div class="figure" style="text-align: center">
-<span id="fig:unnamed-chunk-102"></span>
+<span id="fig:unnamed-chunk-108"></span>
 <img src="www/tire-iron.png" alt="A tire iron in use" width="30%"><p class="caption">
 Figure 15.2: A tire iron in use
 </p>
@@ -271,29 +273,9 @@ In practice, however, we perform differentiation whenever possible not with the 
 
 </div>
 </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
   <div class="chapter-nav">
 <div class="prev"><a href="change-relationships.html"><span class="header-section-number">14</span> Change relationships</a></div>
-<div class="empty"></div>
+<div class="next"><a href="optim-and-shape.html"><span class="header-section-number">16</span> Optimization</a></div>
 </div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
     <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
       <ul class="nav navbar-nav">
@@ -317,7 +299,7 @@ In practice, however, we perform differentiation whenever possible not with the 
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>CalcZ Student Notes</strong>" was written by Daniel Kaplan. It was last built on 2021-06-04.</p>
+    <p>"<strong>CalcZ Student Notes</strong>" was written by Daniel Kaplan. It was last built on 2021-06-08.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

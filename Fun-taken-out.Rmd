@@ -1,0 +1,76 @@
+# Taken out of Functions block
+
+
+<!--
+Air pressure vs time for a car driving up a mountain.
+
+[[Solar declinsion as function of time of year.]] Then turn this into day-length. See <https://physics.stackexchange.com/questions/28563/hours-of-light-per-day-based-on-latitude-longitude-formula>
+
+Sun's declination angle
+$$\delta = \Phi \cos\left(C (d-d_r)/dy\right)$$ where $\Phi =23.44^\circ$, $C=360^\circ$, $d_r$ is Julian day for summer solstice in northern hemisphere: June 21 which is day 172, $d_y$ is the number of days per year: 365.25.
+
+```{r}
+solar_dec <- makeFun(23.44*cos(2*pi*(d - 172)/365.25) ~ d)
+slice_plot(solar_dec(d)~ d, domain(d=c(0,1000)))
+```
+Hour angle of sunrise
+```{r}
+ha <- makeFun(acos(
+  #cos(90.833*pi/180)/(cos(L)*cos(d))
+                - tan(L)*tan(d)) ~ L + d)
+ha(pi/4, 23*pi/180)
+slice_plot((180/pi)*ha(pi/4, ang) ~ ang, domain(ang=pi*c(-23, 23)/180))
+# Length of day at latitude L, Julian day d
+dlen <- makeFun(2*(180/pi)*ha(L, (pi/180)*solar_dec(d))/15 ~ L + d)
+slice_plot(dlen(66.5*pi/180, d) ~ d, domain(d=c(0,365)), npts=5000) %>%
+  gf_hline(yintercept=c(0, 24), color="blue") %>%
+  gf_lims(y=c(0,24))
+```
+
+Length of day: $2 \text{ha}(L, d)/15$
+Composition example: write ha() to accept degrees rather than radians
+
+
+ha = arccos (cos(90.833) /(cos(L)*cos(δ)) - tan(L)*tan(δ))
+
+[[Instantaneous power of AC voltage]] Power = I^2 R = V^2/R
+V will be a sinusoid
+
+
+Log transformation of prices (log income rises steadily, so compose exp with a straight-line function.
+
+Log-log and semi-log plots are an example of composing a log with a function to get a simpler function.
+
+
+
+
+[[For integration chapter]] Wind energy potential: not the cube of the average wind velocity, but the average of the cube of wind velocity.
+
+
+
+## (from original draft) Combining and composing functions
+
+
+::: {.objectives}
+```{r echo=FALSE, results="asis"}
+state_objective("Fun-4-c-1", "Use linear combination and direct multiplication of functions of one variable to produce functions of multiple variables")
+state_objective("Fun-4-c-2", "Recognize that composition of functions does not itself create a function of multiple variables.")
+```
+:::
+
+Linear combination and composition of functions are often used hand-in-hand to construct models. For instance, our model of the data from cooling water was a linear combination of a constant function and a sinusoidal function $$\mbox{temperature}(t) \equiv 25.9 + 60.7\, e^{-0.019 t}$$
+Similarly, our model from the Providence tide data was
+$$\mbox{tide}(t) \equiv 1.02 + 0.50 \sin(2\pi (t - 15.4)/12.56)$$
+In both cases, the sine part of the combination is a mathematical ($\exp(x)$ or $\sin(x)$) function composed with a linear interior function: $-0.019 t$ for the cooling water, and $2\pi (t - 15.4)/12.56$ for the tides.
+
+Each of these models was a function of one input. (Coincidentally, the input in both cases was "time", measured in minutes in the cooling-water example and hours in the tide example.)
+
+-->
+
+<!--
+::: {.todo}
+**The modeling cycle**?????????
+
+Redo the length of day with the correction for diffraction and the angle subtended by the sun.
+:::
+-->

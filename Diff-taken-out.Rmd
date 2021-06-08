@@ -1,0 +1,73 @@
+# Taken out of Diff- series
+
+
+
+## Functions and perception
+
+<!--
+As you know, a function takes one or more inputs and returns a value as output. The functions we examine in CalcZ take *quantities* as inputs and return a *quantity* as an output.
+The algorithm that forms the body of the function describes arithmetic and other calculations that can turn the inputs into the output.
+
+On the other hand, we can also use ***tables*** as functions. With a table, you specify the input, look up that input in one of the colums of the table which brings you to the right row. Then read out from that row the value in another column to be the output. The quantitative operation needed for table lookup is simple comparison. The floor/corridor/door metaphor describes table lookup as well as function evaluation.
+
+In the previous block, we constructed functions to represent the patterns seen in data. In one example, we constructed a function $g(t) = A + B e^{-k t}$ to represent the temperature of water cooling in a mug as a function of time. In another example, we summarized the pattern of rising and falling tides.
+
+It's common sense that data is stored in tables. But we could easily represent any smooth mathematical function, such as our basic modeling functions, as a table look-up problem. Indeed, in the era before computers, many mathematical functions were used in exactly this manner: a printed table in which a person could search for a match to the input and retrieve a value for the output.
+
+::: {.todo}
+[Picture of some nice old table.]
+:::
+
+In the computer era, we still routinely represent functions this way: data stored in computer files. For instance, an MP3 file is not much more than a sequence of numbers that record a complicated function of time: the air pressure variations of sound. Similarly, digital images record functions of $x$ and $y$ over a limited domain. Given $x$ and $y$ as input, you can look up the output by going to the right pixel.
+
+-->
+
+We humans perceive the world using sight and sound and our other senses. Both sight and sound are highly complex biophysically, but the *process* can be broken down trivially into a relationship: *reality $\longrightarrow$ perception*.
+
+Perception takes place in your mind and brain, extended by sensors such as the retina of the eye and cochlea of the ear. There is considerable scientific understanding of how the retina and cochlea work, but perception itself is still somewhat mysterious and involves the interaction of sensor input with our memory and other cognitive processes.
+
+Still, for both hearing and sight, we can analyze the *reality $\longrightarrow$ perception* process by adding an intermediate layer:
+
+- For sight: *reality $\longrightarrow$ image $\longrightarrow$ perception*
+- For hearing: *reality $\longrightarrow$ sound $\longrightarrow$ perception*
+
+We know a tremendous amount about sound and image. For instance, we can reliably and effectively create or synthesize realistic sounds and images. Indeed, we can study the *image $\longrightarrow$ perception* process in isolation. And, as so often happens in science, we study the process by creating a mathematical representation of it.
+
+This starts with the mathematical representation of image and sound. Since this is a calculus course, you won't be surprised when we propose that good mathematical representations are functions:
+
+- Sound: a function of one variable, $t$ for time.
+- Image: a function of two variables: the $x$ and $y$ coordinates of an image.
+
+A sound or an image are often represented as multiple functions, for example the left and right channel of stereo sound, or the red, green, and blue planes of a digital image. But a single channel or plane is able to represent sounds or images with considerable fidelity. For simplicity, we'll stick to that: sound(t) and image(x,y).
+
+What about the 3rd dimension? The retina is effectively a two-dimensional sensor. The third dimension comes in through the *reality $\longrightarrow$ image* part of the overall process.
+
+Consider the image in Figure \@ref{fig:sand-1}. It is a picture of some indentations in a small area of sand, about two inches wide in the middle of a hiking trail. The dots are individual grains of sand.
+
+```{r sand-1, echo=FALSE, out.width="50%", fig.align="center"}
+knitr::include_graphics("www/sand-furrows.png")
+```
+
+Can you see three almost parallel furrows? How about the small crater in the upper left?
+
+You can see the individual grains of sand because they contrast sharply with their neighbors.
+
+
+You can think of the surface of the sand as a function of $x$ and $y$. It's lower in some places and higher in others. But, in fact, you can't see the height of an individual point in the photograph. In the right light, you wouldn't notice the furrows at all. But the way the picture is lighted, raking sunlight from the left, the *reality $\longrightarrow image* process translates the surface into broad regions of brightness and shadow. In the light regions, the surface slants toward the sun. In the shadows, the surface slants away from the sun.
+
+What you're mainly seeing in the photo is the ***slant*** or ***slope*** of the surface. The raking light has transformed *elevation* as a function of $x$ and $y$ into *slant* as a function of $x$ and $y$ and then encoded the slant as brightness. Ironically, it would be much less effective to present the surface height directly as an image
+
+The moral here is that sometimes the data in a function is not in the right form for us to extract useful information. But by transforming that data to represent contrast or difference or slope, the information can be revealed.
+
+This Block is about transforming functions to show difference and slope. Such transformation, accomplished by mathematics rather than the raking light of the sun, can take a pattern that we're presented with and turn it into another pattern that can tell us what we want to know.
+
+## Slope of an image
+
+```{r}
+set.seed(137)
+diam <- 8
+f <- rfun(~ x+ y)
+contour_plot(f(x, y) ~ x + y, domain(x=c(-diam, diam), y=c(-diam,diam)), contours_at = -100, fill_alpha=1, contour_color=NA, n_fill=500, fill_scale=ggplot2::scale_fill_grey())
+fx <- D(f(x, y) ~ x)
+contour_plot(fx(x, y) ~ x + y, domain(x=c(-diam,diam), y=c(-diam, diam)), contours_at = -100, fill_alpha=1, contour_color=NA, n_fill=500, fill_scale=ggplot2::scale_fill_grey())
+```

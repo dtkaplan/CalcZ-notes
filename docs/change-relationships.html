@@ -75,6 +75,8 @@
 <li><a class="" href="outline-of-block-2.html">Outline of Block 2</a></li>
 <li><a class="active" href="change-relationships.html"><span class="header-section-number">14</span> Change relationships</a></li>
 <li><a class="" href="h-and-derivatives.html"><span class="header-section-number">15</span> h and derivatives</a></li>
+<li><a class="" href="optim-and-shape.html"><span class="header-section-number">16</span> Optimization</a></li>
+<li><a class="" href="cont-and-smooth.html"><span class="header-section-number">17</span> Continuity and smoothness</a></li>
 </ul>
 
         <div class="book-extra">
@@ -155,15 +157,15 @@ Figure 14.1: The naked sinusoid and sigmoidal functions. A vertical blue line ha
 </p>
 </div>
 <p>We’ll use the computer to construct the slope functions for the sinusoid and sigmoid, which we’ll call <code>Dsin()</code> and <code>Dsigma()</code> respectively.</p>
-<div class="sourceCode" id="cb81"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb83"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">Dsin</span>   <span class="op">&lt;-</span> <span class="fu">makeFun</span><span class="op">(</span><span class="op">(</span>  <span class="fu"><a href="https://rdrr.io/r/base/Trig.html">sin</a></span><span class="op">(</span><span class="va">t</span><span class="op">+</span><span class="va">h</span><span class="op">)</span> <span class="op">-</span>   <span class="fu"><a href="https://rdrr.io/r/base/Trig.html">sin</a></span><span class="op">(</span><span class="va">t</span><span class="op">)</span><span class="op">)</span><span class="op">/</span><span class="va">h</span> <span class="op">~</span> <span class="va">t</span>, h<span class="op">=</span><span class="fl">0.1</span><span class="op">)</span>
 <span class="va">Dsigma</span> <span class="op">&lt;-</span> <span class="fu">makeFun</span><span class="op">(</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">pnorm</a></span><span class="op">(</span><span class="va">t</span><span class="op">+</span><span class="va">h</span><span class="op">)</span> <span class="op">-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">pnorm</a></span><span class="op">(</span><span class="va">t</span><span class="op">)</span><span class="op">)</span><span class="op">/</span><span class="va">h</span> <span class="op">~</span> <span class="va">t</span>, h<span class="op">=</span><span class="fl">0.1</span><span class="op">)</span></code></pre></div>
 <p>In the tilde expression handed to <code>makeFun()</code>, we’ve identified <code>t</code> as the name of the input and given a “small” default value to the <code>h</code> parameter. But R recognizes that both <code>Dsin()</code> and <code>Dsigma()</code> are functions of two variables, <code>t</code> and <code>h</code>, as you can see in the parenthesized argument list for the functions.</p>
-<div class="sourceCode" id="cb82"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb84"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">Dsin</span></code></pre></div>
 <pre><code>## function (t, h = 0.1) 
 ## (sin(t + h) - sin(t))/h</code></pre>
-<div class="sourceCode" id="cb84"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb86"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">Dsigma</span></code></pre></div>
 <pre><code>## function (t, h = 0.1) 
 ## (pnorm(t + h) - pnorm(t))/h</code></pre>
@@ -255,6 +257,30 @@ Figure 14.3: The slope functions of the logarithm and exponential.
 </tbody>
 </table></div>
 <p>With this list of experimentally determined slope functions (for small <span class="math inline">\(h\)</span>) we’re ready to start using slope functions without having to use left-shift combinations like <span class="math inline">\(f(t+h) - f(t)\)</span>.</p>
+
+<div class="exercise">
+<span id="exr:unnamed-chunk-98" class="exercise"><strong>Exercise 14.1  (lion-find-bowl)  </strong></span>
+</div>
+
+<details><p>For each exercise, you are given a series of intervals that get smaller and smaller. Your job is to calculate the <em>average rate of change</em> of the function <span class="math inline">\(f(x) \equiv x^2\)</span> for each of the intervals. As the width of the intervals approach zero, our <em>average</em> rates of change become better approximations of the <em>instantaneous</em> rates of change. You should use the results you calculate to make an informed <em>estimate</em> of the <strong>instantaneous rate of change</strong>.</p>
+<div class="scaffolding">
+<div class="sourceCode" id="cb88"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb88-1"><a href="change-relationships.html#cb88-1"></a>interval &lt;-<span class="st"> </span><span class="kw">c</span>(__start__ , __end__ )</span>
+<span id="cb88-2"><a href="change-relationships.html#cb88-2"></a>f &lt;-<span class="st"> </span><span class="kw">makeFun</span>(x<span class="op">^</span><span class="dv">2</span> <span class="op">~</span><span class="st"> </span>x)</span>
+<span id="cb88-3"><a href="change-relationships.html#cb88-3"></a><span class="kw">diff</span>(<span class="kw">f</span>(interval)) <span class="op">/</span><span class="st"> </span><span class="kw">diff</span>(interval)</span></code></pre></div>
+</div>
+<p>A. Use these three intervals to estimate the instantaneous rate of change <span class="math inline">\(\partial_x f(x=3)\)</span>
+- [3, 3.1]
+- [3, 3.01]
+- [3, 3.001]</p>
+<p>B. Use these three intervals to estimate the instantaneous rate of change <span class="math inline">\(\partial_x f(x=5)\)</span>
+- [4.9, 5]
+- [4.99, 5]
+- [4.999, 5]</p>
+<p>C. Use these three intervals to estimate the instantaneous rate of change <span class="math inline">\(\partial_x f(x=-2)\)</span>
+- [-2, -1.9]
+- [-2, -1.99]
+- [-2, -1.999]</p>
+</details>
 </div>
 <div id="slopes-and-motion" class="section level2">
 <h2>
@@ -303,7 +329,7 @@ Figure 14.3: The slope functions of the logarithm and exponential.
 <p>Both the Leibnitz and Partial notations are explicit in identifying the function and the with-respect-to-variable. For example, using the Partial differentiation notation, the three ways of differentiating our example function <span class="math inline">\(g(x, y, z)\)</span> are labeled :</p>
 <p><span class="math display">\[\frac{\partial f}{\partial x},\ \ \ \frac{\partial f}{\partial y},\ \ \text{and}\ \ \frac{\partial f}{\partial z}\]</span></p>
 <p>Our R/mosaic computer differentiation is longer but explicit:</p>
-<div class="sourceCode" id="cb86"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb89"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/stats/deriv.html">D</a></span><span class="op">(</span><span class="fu">g</span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span>, <span class="va">z</span><span class="op">)</span> <span class="op">~</span> <span class="va">x</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/stats/deriv.html">D</a></span><span class="op">(</span><span class="fu">g</span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span>, <span class="va">z</span><span class="op">)</span> <span class="op">~</span> <span class="va">y</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/stats/deriv.html">D</a></span><span class="op">(</span><span class="fu">g</span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span>, <span class="va">z</span><span class="op">)</span> <span class="op">~</span> <span class="va">z</span><span class="op">)</span></code></pre></div>
@@ -316,16 +342,57 @@ Figure 14.3: The slope functions of the logarithm and exponential.
 <p>In the days when carriages where pulled by horses, the phrase “horseless carriage” made a useful distinction. Today, when horses are rarely seen on the road, it make sense to trim down the notation to its essentials: ~<del>horseless</del>~ <strong>car</strong>~<del>iage</del>~. Think of <span class="math inline">\(\partial_x\)</span> as this sort of minification.<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content="&lt;p&gt;Yes, “minification” is a word!&lt;/p&gt;"><sup>15</sup></a></p>
 </div>
 </div>
+<div id="dimension-of-derivatives" class="section level2">
+<h2>
+<span class="header-section-number">14.4</span> Dimension of derivatives<a class="anchor" aria-label="anchor" href="#dimension-of-derivatives"><i class="fas fa-link"></i></a>
+</h2>
+<p>Recall that the differencing operator takes as input a function and returns as output another function that takes the same kind of input, but produces a different kind of output.</p>
+<p>For instance, suppose the function <code><a href="https://rdrr.io/r/datasets/pressure.html">pressure()</a></code> takes an altitude as input (in km) and returns a pressure (kPA–air pressure at sea level is about 100 kiloPascal).</p>
+<p>The derivative function, let’s call it <code>d_pressure()</code>, also takes an input in km, but produces an output in kPA per km: a rate.</p>
+<p>You can see this by examining the differencing operator itself:</p>
+<p><span class="math display">\[{\cal D}_x f(x) \equiv \frac{f(x+h) - f(x)}{h}\]</span></p>
+<p>Remember the notation for dimensions. A quantity <span class="math inline">\(x\)</span> has dimensions denoted as <span class="math inline">\([x]\)</span>. (This is nothing more than saying, “Pronounce ‘<span class="math inline">\([x]\)</span>’ as ‘the dimensions of <span class="math inline">\(x\)</span>’.”)
+The input to <span class="math inline">\(f()\)</span> has dimension <span class="math inline">\([x]\)</span>. The output from <span class="math inline">\(f()\)</span> has dimension <span class="math inline">\([f(x)]\)</span>.</p>
+<p>What is the dimension of <span class="math inline">\(h\)</span>? (We could write this question more simply, "What is <span class="math inline">\([h]\)</span>?) Since the operator adds <span class="math inline">\(x + h\)</span>, it must be that <span class="math inline">\([h] = [x]\)</span>.</p>
+<p>What is the dimension of <span class="math inline">\(f(x + h) - f(x)\)</span>? (Again, we could ask this more simply, “What is <span class="math inline">\([f(x+h) - f(x)]\)</span>?”) Since we’re subtracting two quantities, the two quantities must have the same dimension and the result is also that dimension. So <span class="math inline">\([f(x+h) - f(x)] = [f(x)]\)</span>.</p>
+<p>The output of the function <span class="math inline">\(df(x)\)</span> produced by <span class="math inline">\(\mbox{Diff}(f)\)</span> therefore has dimension <span class="math inline">\([f(x)] / [x]\)</span>.</p>
+
+<div class="exercise">
+<span id="exr:unnamed-chunk-99" class="exercise"><strong>Exercise 14.2  (kitten-put-kayak)  </strong></span>
+</div>
+
+<details><p>A. The given function is <span class="math inline">\(N(y)\)</span>, the population of the Netherlands in year <span class="math inline">\(y\)</span>.</p>
+<ol style="list-style-type: lower-roman">
+<li>Dimension of input to <span class="math inline">\(N(y)\)</span>?</li>
+<li>Dimension of output from <span class="math inline">\(N(y)\)</span>?</li>
+<li>Dimension of input to <span class="math inline">\(\partial_y N(y)\)</span>?</li>
+<li>Dimension of output from <span class="math inline">\(\partial_y N(y)\)</span>?</li>
+</ol>
+<p>B. The given function is <span class="math inline">\(p(u)\)</span>, the net profit from a manufactured good as a function of the number of units manufactured.</p>
+<ol style="list-style-type: lower-roman">
+<li>Dimension of input to <span class="math inline">\(p(u)\)</span>?</li>
+<li>Dimension of output from <span class="math inline">\(p(u)\)</span>?</li>
+<li>Dimension of input to <span class="math inline">\(\partial_u p(u)\)</span>?</li>
+<li>Dimension of output from <span class="math inline">\(\partial_u p(u)\)</span>?</li>
+</ol>
+<p>C. The given function is <span class="math inline">\(w(t)\)</span>, the amount of water in a leaky bucket at any time after the bucket was filled.</p>
+<ol style="list-style-type: lower-roman">
+<li>Dimension of input to <span class="math inline">\(w(t)\)</span>?</li>
+<li>Dimension of output from <span class="math inline">\(w(t)\)</span>?</li>
+<li>Dimension of input to <span class="math inline">\(\partial_t w(t)\)</span>?</li>
+<li>Dimension of output from <span class="math inline">\(\partial_t w(t)\)</span>?</li>
+</ol></details>
+</div>
 <div id="using-h" class="section level2">
 <h2>
-<span class="header-section-number">14.4</span> Using h<a class="anchor" aria-label="anchor" href="#using-h"><i class="fas fa-link"></i></a>
+<span class="header-section-number">14.5</span> Using h<a class="anchor" aria-label="anchor" href="#using-h"><i class="fas fa-link"></i></a>
 </h2>
 <p>In working with differentiation, we introduced a quantity <span class="math inline">\(h\)</span> and then ignored it, saying that it doesn’t really matter so long as it is “small.” A reasonable person might wonder what “small” really means, and why we needed to introduce <span class="math inline">\(h\)</span> in the first place if we were eventually going to ignore it.</p>
 <p>One reason is that “small” and “zero,” although related, are different. For example, refering to the slope functions <code>Dsin()</code> and <code>Dsigma()</code> that we created in an early example in this chapter, we see that setting <span class="math inline">\(h\)</span> to zero does not get us where we need to be:</p>
-<div class="sourceCode" id="cb87"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb90"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">Dsin</span><span class="op">(</span>t<span class="op">=</span><span class="fl">1</span>, h<span class="op">=</span><span class="fl">0</span><span class="op">)</span></code></pre></div>
 <pre><code>## [1] NaN</code></pre>
-<div class="sourceCode" id="cb89"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb92"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">Dsigma</span><span class="op">(</span>t<span class="op">=</span><span class="fl">0</span>, h<span class="op">=</span><span class="fl">0</span><span class="op">)</span></code></pre></div>
 <pre><code>## [1] NaN</code></pre>
 <p>In <code>NaN</code>, you can hear the echo of your fourth-grade teacher reminding you that it is illegal to divide by zero.</p>
@@ -353,58 +420,11 @@ In other words, if we know the derivative <span class="math inline">\(\partial_x
 <p>Because of the way that <span class="math inline">\(\partial_x\)</span> can be “passed through” a linear combination, mathematicians say that differentiation is a <strong><em>linear operator</em></strong>. Consider this new fact about differentiation as a down payment on what will eventually become a complete theory telling us how to differentiate a <strong><em>product of two functions</em></strong> or the <strong><em>composition of two functions</em></strong>.</p>
 <p>EXERCISES: Simple drill on this</p>
 </div>
-<div id="functions-and-perception" class="section level2">
-<h2>
-<span class="header-section-number">14.5</span> Functions and perception<a class="anchor" aria-label="anchor" href="#functions-and-perception"><i class="fas fa-link"></i></a>
-</h2>
-<!--
-As you know, a function takes one or more inputs and returns a value as output. The functions we examine in CalcZ take *quantities* as inputs and return a *quantity* as an output. 
-The algorithm that forms the body of the function describes arithmetic and other calculations that can turn the inputs into the output. 
-
-On the other hand, we can also use ***tables*** as functions. With a table, you specify the input, look up that input in one of the colums of the table which brings you to the right row. Then read out from that row the value in another column to be the output. The quantitative operation needed for table lookup is simple comparison. The floor/corridor/door metaphor describes table lookup as well as function evaluation. 
-
-In the previous block, we constructed functions to represent the patterns seen in data. In one example, we constructed a function $g(t) = A + B e^{-k t}$ to represent the temperature of water cooling in a mug as a function of time. In another example, we summarized the pattern of rising and falling tides. 
-
-It's common sense that data is stored in tables. But we could easily represent any smooth mathematical function, such as our basic modeling functions, as a table look-up problem. Indeed, in the era before computers, many mathematical functions were used in exactly this manner: a printed table in which a person could search for a match to the input and retrieve a value for the output.
-
-::: {.todo}
-[Picture of some nice old table.]
-:::
-
-In the computer era, we still routinely represent functions this way: data stored in computer files. For instance, an MP3 file is not much more than a sequence of numbers that record a complicated function of time: the air pressure variations of sound. Similarly, digital images record functions of $x$ and $y$ over a limited domain. Given $x$ and $y$ as input, you can look up the output by going to the right pixel.
-
--->
-<p>We humans perceive the world using sight and sound and our other senses. Both sight and sound are highly complex biophysically, but the <em>process</em> can be broken down trivially into a relationship: <em>reality <span class="math inline">\(\longrightarrow\)</span> perception</em>.</p>
-<p>Perception takes place in your mind and brain, extended by sensors such as the retina of the eye and cochlea of the ear. There is considerable scientific understanding of how the retina and cochlea work, but perception itself is still somewhat mysterious and involves the interaction of sensor input with our memory and other cognitive processes.</p>
-<p>Still, for both hearing and sight, we can analyze the <em>reality <span class="math inline">\(\longrightarrow\)</span> perception</em> process by adding an intermediate layer:</p>
-<ul>
-<li>For sight: <em>reality <span class="math inline">\(\longrightarrow\)</span> image <span class="math inline">\(\longrightarrow\)</span> perception</em>
-</li>
-<li>For hearing: <em>reality <span class="math inline">\(\longrightarrow\)</span> sound <span class="math inline">\(\longrightarrow\)</span> perception</em>
-</li>
-</ul>
-<p>We know a tremendous amount about sound and image. For instance, we can reliably and effectively create or synthesize realistic sounds and images. Indeed, we can study the <em>image <span class="math inline">\(\longrightarrow\)</span> perception</em> process in isolation. And, as so often happens in science, we study the process by creating a mathematical representation of it.</p>
-<p>This starts with the mathematical representation of image and sound. Since this is a calculus course, you won’t be surprised when we propose that good mathematical representations are functions:</p>
-<ul>
-<li>Sound: a function of one variable, <span class="math inline">\(t\)</span> for time.</li>
-<li>Image: a function of two variables: the <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span> coordinates of an image.</li>
-</ul>
-<p>A sound or an image are often represented as multiple functions, for example the left and right channel of stereo sound, or the red, green, and blue planes of a digital image. But a single channel or plane is able to represent sounds or images with considerable fidelity. For simplicity, we’ll stick to that: sound(t) and image(x,y).</p>
-<p>What about the 3rd dimension? The retina is effectively a two-dimensional sensor. The third dimension comes in through the <em>reality <span class="math inline">\(\longrightarrow\)</span> image</em> part of the overall process.</p>
-<p>Consider the image in Figure @ref{fig:sand-1}. It is a picture of some indentations in a small area of sand, about two inches wide in the middle of a hiking trail. The dots are individual grains of sand.</p>
-<div class="inline-figure"><img src="www/sand-furrows.png" width="50%" style="display: block; margin: auto;"></div>
-<p>Can you see three almost parallel furrows? How about the small crater in the upper left?</p>
-<p>You can see the individual grains of sand because they contrast sharply with their neighbors.</p>
-<p>You can think of the surface of the sand as a function of <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span>. It’s lower in some places and higher in others. But, in fact, you can’t see the height of an individual point in the photograph. In the right light, you wouldn’t notice the furrows at all. But the way the picture is lighted, raking sunlight from the left, the <em>reality $image</em> process translates the surface into broad regions of brightness and shadow. In the light regions, the surface slants toward the sun. In the shadows, the surface slants away from the sun.</p>
-<p>What you’re mainly seeing in the photo is the <strong><em>slant</em></strong> or <strong><em>slope</em></strong> of the surface. The raking light has transformed <em>elevation</em> as a function of <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span> into <em>slant</em> as a function of <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span> and then encoded the slant as brightness. Ironically, it would be much less effective to present the surface height directly as an image</p>
-<p>The moral here is that sometimes the data in a function is not in the right form for us to extract useful information. But by transforming that data to represent contrast or difference or slope, the information can be revealed.</p>
-<p>This Block is about transforming functions to show difference and slope. Such transformation, accomplished by mathematics rather than the raking light of the sun, can take a pattern that we’re presented with and turn it into another pattern that can tell us what we want to know.</p>
-</div>
 <div id="differencing" class="section level2">
 <h2>
 <span class="header-section-number">14.6</span> Differencing<a class="anchor" aria-label="anchor" href="#differencing"><i class="fas fa-link"></i></a>
 </h2>
-<p>Our basic tool for showing difference and slope is a remarkable simple operator that takes a function as input. For a function with one input, the operator <span class="math inline">\({\cal D}()\)</span> is defined as
+<p>Our basic tool for showing difference and slope is a remarkably simple operator that takes a function as input. For a function with one input, the operator <span class="math inline">\({\cal D}()\)</span> is defined as
 <span class="math display">\[{\cal D}(f) \equiv \frac{f(x + 0.1) - f(x)}{0.1}\]</span>
 Notice that the <span class="math inline">\({\cal D}()\)</span> operator returns a <strong>function</strong>. The output is a linear combination of the input function <span class="math inline">\(f()\)</span> and a shifted version of <span class="math inline">\(f()\)</span>.</p>
 <p>For a function with two inputs, there are two versions of <span class="math inline">\({\cal D}\)</span>:
@@ -418,35 +438,20 @@ Notice that the <span class="math inline">\({\cal D}()\)</span> operator returns
 =10 x^2 + 2x + 0.1 - 10x^2\\ = 2 x + 0.1\]</span></p>
 </div>
 <div class="workedexample">
-<p>Suppose that <span class="math inline">\(f(x) \equiv 2 x + y\)</span>. Find the function <span class="math inline">\({\cal D(f)}\)</span>.</p>
+<p>Suppose that <span class="math inline">\(f(x) \equiv 2 x + y\)</span>. Find the function <span class="math inline">\({\cal D_x(f)}\)</span>.</p>
 <p>The linear combination will be
 <span class="math display">\[\frac{1}{0.1}\left(\left[2 (x + 0.1) + y\right] - \left[2 x + y\right]\right) =\\ \\
 20 x + 2 + 10y - \left[20 x - 10y\right] = 2\]</span></p>
 </div>
-<div class="sourceCode" id="cb91"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb94"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">f</span> <span class="op">&lt;-</span> <span class="fu">makeFun</span><span class="op">(</span><span class="fl">2</span> <span class="op">*</span><span class="va">x</span> <span class="op">*</span> <span class="va">y</span> <span class="op">~</span> <span class="va">x</span> <span class="op">+</span> <span class="va">y</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/stats/deriv.html">D</a></span><span class="op">(</span><span class="fu">f</span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span><span class="op">)</span> <span class="op">~</span> <span class="va">x</span><span class="op">)</span></code></pre></div>
 <pre><code>## function (x, y) 
 ## 2 * (y)</code></pre>
 </div>
-<div id="slope-of-an-image" class="section level2">
-<h2>
-<span class="header-section-number">14.7</span> Slope of an image<a class="anchor" aria-label="anchor" href="#slope-of-an-image"><i class="fas fa-link"></i></a>
-</h2>
-<div class="sourceCode" id="cb93"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">137</span><span class="op">)</span>
-<span class="va">diam</span> <span class="op">&lt;-</span> <span class="fl">8</span>
-<span class="va">f</span> <span class="op">&lt;-</span> <span class="fu">rfun</span><span class="op">(</span><span class="op">~</span> <span class="va">x</span><span class="op">+</span> <span class="va">y</span><span class="op">)</span>
-<span class="fu">contour_plot</span><span class="op">(</span><span class="fu">f</span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span><span class="op">)</span> <span class="op">~</span> <span class="va">x</span> <span class="op">+</span> <span class="va">y</span>, <span class="fu">domain</span><span class="op">(</span>x<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="op">-</span><span class="va">diam</span>, <span class="va">diam</span><span class="op">)</span>, y<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="op">-</span><span class="va">diam</span>,<span class="va">diam</span><span class="op">)</span><span class="op">)</span>, contours_at <span class="op">=</span> <span class="op">-</span><span class="fl">100</span>, fill_alpha<span class="op">=</span><span class="fl">1</span>, contour_color<span class="op">=</span><span class="cn">NA</span>, n_fill<span class="op">=</span><span class="fl">500</span>, fill_scale<span class="op">=</span><span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_grey.html">scale_fill_grey</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<div class="inline-figure"><img src="CalcZ-notes_files/figure-html/unnamed-chunk-95-1.png" width="672"></div>
-<div class="sourceCode" id="cb94"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">fx</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/deriv.html">D</a></span><span class="op">(</span><span class="fu">f</span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span><span class="op">)</span> <span class="op">~</span> <span class="va">x</span><span class="op">)</span>
-<span class="fu">contour_plot</span><span class="op">(</span><span class="fu">fx</span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span><span class="op">)</span> <span class="op">~</span> <span class="va">x</span> <span class="op">+</span> <span class="va">y</span>, <span class="fu">domain</span><span class="op">(</span>x<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="op">-</span><span class="va">diam</span>,<span class="va">diam</span><span class="op">)</span>, y<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="op">-</span><span class="va">diam</span>, <span class="va">diam</span><span class="op">)</span><span class="op">)</span>, contours_at <span class="op">=</span> <span class="op">-</span><span class="fl">100</span>, fill_alpha<span class="op">=</span><span class="fl">1</span>, contour_color<span class="op">=</span><span class="cn">NA</span>, n_fill<span class="op">=</span><span class="fl">500</span>, fill_scale<span class="op">=</span><span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_grey.html">scale_fill_grey</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<div class="inline-figure"><img src="CalcZ-notes_files/figure-html/unnamed-chunk-95-2.png" width="672"></div>
-</div>
 <div id="instantaneous-rate-of-change-1" class="section level2">
 <h2>
-<span class="header-section-number">14.8</span> Instantaneous rate of change<a class="anchor" aria-label="anchor" href="#instantaneous-rate-of-change-1"><i class="fas fa-link"></i></a>
+<span class="header-section-number">14.7</span> Instantaneous rate of change<a class="anchor" aria-label="anchor" href="#instantaneous-rate-of-change-1"><i class="fas fa-link"></i></a>
 </h2>
 <div class="objectives" latex-data="">
 <ol>
@@ -457,7 +462,7 @@ Notice that the <span class="math inline">\({\cal D}()\)</span> operator returns
 </div>
 <p>Imagine a graph of the position of a car along a road as in Figure @ref{fig:stop-and-go2}.</p>
 <div class="todo">
-<p>This graph appears in an exercise in Fun-slopes</p>
+<p>This graph appears in an exercise in Fun-slopes. What did I intend to prompt with this note. Perhaps a link to Fun-slopes.</p>
 </div>
 <p>Over the course of an hour, the car travelled about 25 miles. In other words, the <strong><em>average</em></strong> speed is 25 miles/hour: the <em>slope</em> of the red line segment. Given the traffic, sometimes the car was stopped (time C), sometimes crawling (time D) and sometimes much faster than average (time B).</p>
 <div class="inline-figure"><img src="CalcZ-notes_files/figure-html/stop-and-go2-1.png" width="672"></div>
@@ -498,11 +503,10 @@ Early in the tree’s life, the growth is high compared to the volume of the tre
 <li><a class="nav-link" href="#slopes-and-increments."><span class="header-section-number">14.1</span> Slopes and increments.</a></li>
 <li><a class="nav-link" href="#slopes-and-motion"><span class="header-section-number">14.2</span> Slopes and motion</a></li>
 <li><a class="nav-link" href="#differentiation"><span class="header-section-number">14.3</span> Differentiation</a></li>
-<li><a class="nav-link" href="#using-h"><span class="header-section-number">14.4</span> Using h</a></li>
-<li><a class="nav-link" href="#functions-and-perception"><span class="header-section-number">14.5</span> Functions and perception</a></li>
+<li><a class="nav-link" href="#dimension-of-derivatives"><span class="header-section-number">14.4</span> Dimension of derivatives</a></li>
+<li><a class="nav-link" href="#using-h"><span class="header-section-number">14.5</span> Using h</a></li>
 <li><a class="nav-link" href="#differencing"><span class="header-section-number">14.6</span> Differencing</a></li>
-<li><a class="nav-link" href="#slope-of-an-image"><span class="header-section-number">14.7</span> Slope of an image</a></li>
-<li><a class="nav-link" href="#instantaneous-rate-of-change-1"><span class="header-section-number">14.8</span> Instantaneous rate of change</a></li>
+<li><a class="nav-link" href="#instantaneous-rate-of-change-1"><span class="header-section-number">14.7</span> Instantaneous rate of change</a></li>
 </ul>
 
       <div class="book-extra">
@@ -520,7 +524,7 @@ Early in the tree’s life, the growth is high compared to the volume of the tre
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>CalcZ Student Notes</strong>" was written by Daniel Kaplan. It was last built on 2021-06-04.</p>
+    <p>"<strong>CalcZ Student Notes</strong>" was written by Daniel Kaplan. It was last built on 2021-06-08.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

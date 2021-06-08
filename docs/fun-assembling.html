@@ -75,6 +75,8 @@
 <li><a class="" href="outline-of-block-2.html">Outline of Block 2</a></li>
 <li><a class="" href="change-relationships.html"><span class="header-section-number">14</span> Change relationships</a></li>
 <li><a class="" href="h-and-derivatives.html"><span class="header-section-number">15</span> h and derivatives</a></li>
+<li><a class="" href="optim-and-shape.html"><span class="header-section-number">16</span> Optimization</a></li>
+<li><a class="" href="cont-and-smooth.html"><span class="header-section-number">17</span> Continuity and smoothness</a></li>
 </ul>
 
         <div class="book-extra">
@@ -150,7 +152,7 @@ It’s important to distinguish the above time <span class="math inline">\(\righ
 The declination angle is the latitude of the point on the earth’s surface pierced by an imagined line connecting the centers of the earth and the sun. On the summer solstice, it is <span class="math inline">\(23.44^\circ\)</span>, the longest day of the year.</p>
 <p>A computer implement must look different, since <span class="math inline">\(L\)</span> and <span class="math inline">\(\delta\)</span> are typically provided in degrees while the <code><a href="https://rdrr.io/r/base/Trig.html">tan()</a></code> and other trigonometric functions in most computer languages expect units of radians. The conversion is easy: <span class="math inline">\(\text{deg2rad}(d) \equiv \frac{\pi}{180} d\)</span>. The conversion the other way is <span class="math inline">\(\text{rad2deg}(r) \equiv \frac{180}{\pi} r\)</span>.</p>
 <p>In order to get the day-length formula to work in a computer, we have to compose the <span class="math inline">\(\tan()\)</span> function with <code>deg2rad()</code>. The output of <code><a href="https://rdrr.io/r/base/Trig.html">acos()</a></code> is in radians, so we have to convert it back to degrees. Like this:</p>
-<div class="sourceCode" id="cb44"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb46"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">day_length</span> <span class="op">&lt;-</span> <span class="fu">makeFun</span><span class="op">(</span>
   <span class="op">(</span><span class="fl">2</span><span class="op">/</span><span class="fl">15</span><span class="op">)</span><span class="op">*</span><span class="fu">rad2deg</span><span class="op">(</span>
     <span class="fu"><a href="https://rdrr.io/r/base/Trig.html">acos</a></span><span class="op">(</span>
@@ -158,7 +160,7 @@ The declination angle is the latitude of the point on the earth’s surface pier
     <span class="op">)</span>
   <span class="op">)</span> <span class="op">~</span> <span class="va">L</span><span class="op">+</span><span class="va">d</span><span class="op">)</span></code></pre></div>
 <div class="etude-question">
-<p><strong>Q-11</strong>: Using an R sandbox, calculate the length of the day at latitude <span class="math inline">\(39^\deg\)</span> on the longest day of the year, which is when the declination of the sun is <span class="math inline">\(23.44^\circ\)</span>. How long is it?</p>
+<p><strong>Q-32</strong>: Using an R sandbox, calculate the length of the day at latitude <span class="math inline">\(39^\deg\)</span> on the longest day of the year, which is when the declination of the sun is <span class="math inline">\(23.44^\circ\)</span>. How long is it?</p>
 <ol>
 <li><p>13.9 hours []</p></li>
 <li><p>14.7 hours (+) []</p></li>
@@ -168,17 +170,17 @@ The declination angle is the latitude of the point on the earth’s surface pier
 </div>
 <p>Now to make a plot of day length as a function of day of the year. Of course, <code>day_length(L, d)</code> does not take day of the year into account. What’s missing is to know the declination of the sun as a function of calendar day.</p>
 <p>We’ll represent calendar day as a number <span class="math inline">\(n\)</span> that runs from 0 at the start of January 1st to 365 at the end of December 31. Given this convention, the declination of the sun is</p>
-<div class="sourceCode" id="cb45"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb47"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">delta_sun</span> <span class="op">&lt;-</span> <span class="fu">makeFun</span><span class="op">(</span><span class="op">-</span><span class="fl">23.44</span><span class="op">*</span><span class="fu"><a href="https://rdrr.io/r/base/Trig.html">cos</a></span><span class="op">(</span><span class="op">(</span><span class="fl">2</span><span class="op">*</span><span class="va">pi</span><span class="op">/</span><span class="fl">365</span><span class="op">)</span><span class="op">*</span><span class="op">(</span><span class="va">n</span><span class="op">+</span><span class="fl">10</span><span class="op">)</span> <span class="op">)</span> <span class="op">~</span> <span class="va">n</span><span class="op">)</span></code></pre></div>
 <p>Composing <code>day_length()</code> with <code>delta_sun()</code> (on the <code>d</code> argument only) we get a function of day of year <code>n</code>:</p>
-<div class="sourceCode" id="cb46"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb48"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">slice_plot</span><span class="op">(</span>
   <span class="fu">day_length</span><span class="op">(</span><span class="fl">39</span>, <span class="fu">delta_sun</span><span class="op">(</span><span class="va">n</span><span class="op">)</span><span class="op">)</span> <span class="op">~</span> <span class="va">n</span>, 
   <span class="fu">domain</span><span class="op">(</span>n<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">365</span><span class="op">)</span><span class="op">)</span>
   <span class="op">)</span></code></pre></div>
-<div class="inline-figure"><img src="CalcZ-notes_files/figure-html/unnamed-chunk-63-1.png" width="672"></div>
+<div class="inline-figure"><img src="CalcZ-notes_files/figure-html/unnamed-chunk-68-1.png" width="672"></div>
 <div class="etude-question">
-<p><strong>Q-12</strong>: How long is the day on April Fools (<span class="math inline">\(n=90\)</span>) at Latitude 39N? (Use a sandbox for the calculation.)</p>
+<p><strong>Q-33</strong>: How long is the day on April Fools (<span class="math inline">\(n=90\)</span>) at Latitude 39N? (Use a sandbox for the calculation.)</p>
 <ol>
 <li><p>12.38 hours (+) []</p></li>
 <li><p>12.59 hours []</p></li>
@@ -242,9 +244,9 @@ Figure 9.2: The two components of the wave packet in Figure <a href="fun-assembl
 </div>
 <p>EXERCISES: Say which two kinds of functions are being multiplied here.</p>
 <div class="inline-figure">
-<img src="CalcZ-notes_files/figure-html/unnamed-chunk-64-1.png" width="672">
+<img src="CalcZ-notes_files/figure-html/unnamed-chunk-69-1.png" width="672">
 ::: {.etude-question}</div>
-<p><strong>Q-13</strong>: What are the two basic modeling functions being multiplied?</p>
+<p><strong>Q-34</strong>: What are the two basic modeling functions being multiplied?</p>
 <ol>
 <li><p>A sinusoid and another sinusoid with a faster period. (+) []</p></li>
 <li><p>A hump and a sinusoid. []</p></li>
@@ -253,7 +255,7 @@ Figure 9.2: The two components of the wave packet in Figure <a href="fun-assembl
 </ol>
 <p>:::</p>
 <div class="etude-question">
-<p><strong>Q-14</strong>: What is the period of the envelope?</p>
+<p><strong>Q-35</strong>: What is the period of the envelope?</p>
 <ol>
 <li><p>10 [It’s true that the broad peaks in the overall function occur every 10 time units. But a sine wave has two excursions from zero every cycle, one positive and one negative. So if the period of the envelope were 10, we would see an amplitude of the faster sinusoid near zero every 5 time units.]</p></li>
 <li><p>20 (+) []</p></li>
@@ -272,99 +274,273 @@ Figure 9.2: The two components of the wave packet in Figure <a href="fun-assembl
 <span class="math display">\[\text{day_length}(L, \delta) \equiv \frac{2}{15} \arccos\left(-\tan(L)*\tan(δ)\right)\]</span>
 The 2/15 is scaling the output of <span class="math inline">\(\arccos()\)</span>: scaling is in linear combination.</p>
 <p>The <span class="math inline">\(\arcos()\)</span> is being composed with an interior function that is itself a scaled product of two functions.</p>
-<p>EXERCISE: The algebra of composition of the hump function <span class="math inline">\(e^{-x^2}\)</span>.</p>
+</div>
+<div id="exercises-3" class="section level2">
+<h2>
+<span class="header-section-number">9.7</span> Exercises<a class="anchor" aria-label="anchor" href="#exercises-3"><i class="fas fa-link"></i></a>
+</h2>
 <!--
-Air pressure vs time for a car driving up a mountain.
+\BeginKnitrBlock{exercise}\iffalse{-91-97-114-105-116-104-45-119-105-116-104-45-102-117-110-115-93-}\fi{}<div class="exercise"><span class="exercise" id="exr:unnamed-chunk-70"><strong>(\#exr:unnamed-chunk-70)  \iffalse (arith-with-funs) \fi{} </strong></span></div>\EndKnitrBlock{exercise}
+<details>
 
-[[Solar declinsion as function of time of year.]] Then turn this into day-length. See <https://physics.stackexchange.com/questions/28563/hours-of-light-per-day-based-on-latitude-longitude-formula>
 
-Sun's declination angle
-$$\delta = \Phi \cos\left(C (d-d_r)/dy\right)$$ where $\Phi =23.44^\circ$, $C=360^\circ$, $d_r$ is Julian day for summer solstice in northern hemisphere: June 21 which is day 172, $d_y$ is the number of days per year: 365.25.
+
+
+
+
+
+Each simple function such as a hump, a sigmoid, a straight-line function, or a sinusoid can be likened to a character in a story. For instance, a sinusoid with a period of 10 seconds and an amplitude of 5 feet might be all we need to say about the shaking encountered in an earthquake. A sigmoid might be a good description of the uptake of a social media platform such as Facebook. 
+
+Many stories require more than one character. For instance, the initial rise in popularity  of social media platform might be exponential, then turning into a sigmoid, then an eventual exponential decay as popularity wanes as with Yik Yak.
+
+Being able to add or multiply functions can enable us to  tell a more complicated story. For example, the  graph shows a simple model of the hourly  temperature in from June through September
 
 
 ```r
-solar_dec <- makeFun(23.44*cos(2*pi*(d - 172)/365.25) ~ d)
-slice_plot(solar_dec(d)~ d, domain(d=c(0,1000)))
+temp <- makeFun(20*cos(2*pi*(t-120)/365) + 
+                  10*sin(2*pi*t/1) + 50 ~ t)
+slice_plot(temp(day) ~ day, domain(day=c(90, 180)),  npt=1000) %>%
+  gf_labs(y = "Temperature  (F)", x = "Day of year")
 ```
 
-<img src="CalcZ-notes_files/figure-html/unnamed-chunk-65-1.png" width="672" />
-Hour angle of sunrise
+<img src="CalcZ-notes_files/figure-html/unnamed-chunk-126-1.png" width="672" />
 
-```r
-ha <- makeFun(acos( 
-  #cos(90.833*pi/180)/(cos(L)*cos(d))
-                - tan(L)*tan(d)) ~ L + d)
-ha(pi/4, 23*pi/180)
-```
+You can see in the graph the slow seasonal change in  temperature represented by a sine  function with a period of 365 days, as well as the relatively rapid hour-by-hour variation over the course of 24 hours. There are two different mechanisms at  work, 1) the annual orbit of the Earth around the Sun  which creates the seasons,  2) the daily rotation of the Earth around its axis. Each mechanism is approximated by a simple function. The  overall  pattern can be represented by  a sum of functions.
 
-```
-## [1] 2.009178
-```
+We are going to use this strategy of modeling complex phenomena as a  sum of two or more simple functions.
 
-```r
-slice_plot((180/pi)*ha(pi/4, ang) ~ ang, domain(ang=pi*c(-23, 23)/180))
-```
+**Problem 1** Epidemics are often modeled as a series of "waves." Each wave involves different  people. Let's imagine two epidemic waves, one passing through the "blue" population  and a smaller one through  the "red" population, like this:
 
-<img src="CalcZ-notes_files/figure-html/unnamed-chunk-66-1.png" width="672" />
-
-```r
-# Length of day at latitude L, Julian day d
-dlen <- makeFun(2*(180/pi)*ha(L, (pi/180)*solar_dec(d))/15 ~ L + d)
-slice_plot(dlen(66.5*pi/180, d) ~ d, domain(d=c(0,365)), npts=5000) %>%
-  gf_hline(yintercept=c(0, 24), color="blue") %>%
-  gf_lims(y=c(0,24))
-```
-
-```
-## Warning: geom_hline(): Ignoring `mapping` because `yintercept` was provided.
-```
-
-<img src="CalcZ-notes_files/figure-html/unnamed-chunk-66-2.png" width="672" />
-
-Length of day: $2 \text{ha}(L, d)/15$
-Composition example: write ha() to accept degrees rather than radians
-
-
-ha = arccos (cos(90.833) /(cos(L)*cos(δ)) - tan(L)*tan(δ))
-
-[[Instantaneous power of AC voltage]] Power = I^2 R = V^2/R
-V will be a sinusoid
-
-
-Log transformation of prices (log income rises steadily, so compose exp with a straight-line function.
-
-Log-log and semi-log plots are an example of composing a log with a function to get a simpler function.
+<img src="CalcZ-notes_files/figure-html/unnamed-chunk-127-1.png" width="672" />
 
 
 
+::: {.etude-question}
 
-[[For integration chapter]] Wind energy potential: not the cube of the average wind velocity, but the average of the cube of wind velocity.
-
-
-
-## (from original draft) Combining and composing functions
+**Q-36**: Assuming that there were no way to distinguish between red and blue cases, the epidemic would look like just one curve. Which of the following curves would the overall epidemic look like? (The colors are just  to  help you  distinguish the different functions)
 
 
-::: {.objectives}
-#. **[Fun-4-c-1]** *Use linear combination and direct multiplication of functions of one variable to produce functions of multiple variables*
-#. **[Fun-4-c-2]** *Recognize that composition of functions does not itself create a function of multiple variables.*
+#. A [The cumulative number of cases can't possibly go down!]
+
+#. B [The cumulative number of cases can't possibly go down!]
+
+#. C [You can't see the separate waves in (C) even though the rise in the blue wave is clearly distinct in  time from the rise in  the red wave. ]
+
+#. D  (+) [Yes. Each wave adds another layer to the cumulative number of cases]
+
 :::
 
-Linear combination and composition of functions are often used hand-in-hand to construct models. For instance, our model of the data from cooling water was a linear combination of a constant function and a sinusoidal function $$\mbox{temperature}(t) \equiv 25.9 + 60.7\, e^{-0.019 t}$$
-Similarly, our model from the Providence tide data was 
-$$\mbox{tide}(t) \equiv 1.02 + 0.50 \sin(2\pi (t - 15.4)/12.56)$$
-In both cases, the sine part of the combination is a mathematical ($\exp(x)$ or $\sin(x)$) function composed with a linear interior function: $-0.019 t$ for the cooling water, and $2\pi (t - 15.4)/12.56$ for the tides.
 
-Each of these models was a function of one input. (Coincidentally, the input in both cases was "time", measured in minutes in the cooling-water example and hours in the tide example.)
+<img src="CalcZ-notes_files/figure-html/unnamed-chunk-128-1.png" width="672" />
 
+Each of the functions shown in the above graph is a "linear combination" of the red function and the blue function. The real total cumulative cases is "wave1(t)"  plus "wave2(t)". The other functions are made up and are irrelevant to the real epidemic. Still, we can ask what arithmetic combination of "wave1(t)" and "wave2(t)"  was used to create the made-up function.
+
+
+::: {.etude-question}
+
+**Q-37**: For made-up function (A) in  the graph, what was the linear combination?
+
+
+#. 1000 - wave1(t) + wave2(t)  (+) []
+
+#. 2*wave1(t) - 3*wave2(t) [When t=0,  both wave1(t) and wave2(t) are zero, so the sum would also be zero. That's not  true in function (A)]
+
+#. 1000 + wave1(t) - wave2(t) [This  linear combination would rise from 1000 to 2000 (at time t=100) and  then  fall off to 1500 as the negative  wave2(t)  comes into play.]
+
+:::</details>
 -->
-<!--
-::: {.todo}
-**The modeling cycle**?????????
 
-Redo the length of day with the correction for diffraction and the angle subtended by the sun.
+<div class="exercise">
+<span id="exr:unnamed-chunk-71" class="exercise"><strong>Exercise 9.1  (multiplying-functions)  </strong></span>
+</div>
+
+<details><p>It’s very common in communications systems to have a signal that is a sine-wave <em>carrier</em> that is <em>modulated</em> by another function. That is, the carrier is <em>multiplied</em> by the other function: <code>waveform(t) = modulator(t)</code> <span class="math inline">\(\times\)</span> <code>carrier(t)</code>.</p>
+<p>Here are four examples in each of which a sine with a period of about 2 units is modulated by another function, one of the modeling functions we have studied.</p>
+<div class="inline-figure"><img src="CalcZ-notes_files/figure-html/unnamed-chunk-130-1.png" width="672"></div>
+<div class="etude-question">
+<p><strong>Q-38</strong>: (A) Of what sort is the function that is modulating the carrier?</p>
+<ol>
+<li><p>exponential (+) []</p></li>
+<li><p>hump []</p></li>
+<li><p>sigmoid []</p></li>
+<li><p>sine []</p></li>
+</ol>
+</div>
+<div class="inline-figure">
+<img src="CalcZ-notes_files/figure-html/unnamed-chunk-131-1.png" width="672">
+::: {.etude-question}</div>
+<p><strong>Q-39</strong>: (B) Of what sort is the function that is modulating the carrier?</p>
+<ol>
+<li><p>exponential []</p></li>
+<li><p>hump (+) []</p></li>
+<li><p>sigmoid []</p></li>
+<li><p>sine []</p></li>
+</ol>
+<p>:::</p>
+<div class="inline-figure"><img src="CalcZ-notes_files/figure-html/unnamed-chunk-132-1.png" width="672"></div>
+<div class="etude-question">
+<p><strong>Q-40</strong>: (C) Of what sort is the function that is modulating the carrier?</p>
+<ol>
+<li><p>exponential []</p></li>
+<li><p>hump []</p></li>
+<li><p>sigmoid (+) []</p></li>
+<li><p>sine []</p></li>
+</ol>
+</div>
+<div class="inline-figure">
+<img src="CalcZ-notes_files/figure-html/unnamed-chunk-133-1.png" width="672">
+::: {.etude-question}</div>
+<p><strong>Q-41</strong>: (D) Of what sort is the function that is modulating the carrier?</p>
+<ol>
+<li><p>exponential []</p></li>
+<li><p>hump []</p></li>
+<li><p>sigmoid []</p></li>
+<li><p>sine (+) []</p></li>
+</ol>
 :::
--->
+</details><!--
+
+\BeginKnitrBlock{exercise}\iffalse{-91-97-118-97-105-108-97-98-108-101-45-104-101-97-108-116-104-45-99-97-114-101-93-}\fi{}<div class="exercise"><span class="exercise" id="exr:unnamed-chunk-72"><strong>(\#exr:unnamed-chunk-72)  \iffalse (available-health-care) \fi{} </strong></span></div>\EndKnitrBlock{exercise}
+<details>
+
+
+
+
+
+
+
+One common measure of quality of life is "life expectancy at birth." A measure of the availability of  health  care is the number of physicians per 1000 people.
+
+The question we are going to examine is whether life expectancy is a function of the availability of health care  and, if so, what kind of function  it is.
+
+The data frame `LifeExpectancyPhysicians` contains the official 2010 figures from  many countries for life  expectancy and  the number of physicians per 1000 population.
+
+Graph `LifeExpectancy` versus `Physicians`. Use linear axes, semi-log axes, or log-log axes to determine a reasonable functional form. (Recall  that giving `scale_y_log10()` as  an argument to  `gf_refine()` will set the y axis on  a log scale, and  similarly for the x axis.)
+
+::: {.scaffolding}
+
+```r
+gf_point(LifeExpectancy ~ Physicians,
+         data = LifeExpectancyPhysicians) %>%
+  gf_refine()
+```
+
+<img src="CalcZ-notes_files/figure-html/unnamed-chunk-135-1.png" width="672" />
+:::
+
+Using `fitModel()`, your instructor found the following model of life-expectancy (which we'll call L, in years) as a function of physicians-per-1000 people. (We'll call this "doctor-density" for short, so D.)
+
+The instructor's model is:
+
+$$L(D) \equiv 70.9 \times D^{0.0683}$$
+Define this function in R and graph it over your  data. Confirm that it is a reasonable match to the data. (If not, you've copied the parameters  wrong.)
+
+::: {.etude-question}
+
+**Q-42**: What kind of function is the instructor's proposed model?
+
+
+#. linear [Is it  a straight line on  linear axes?]
+
+#. exponential [Is it a straight line on semi-log axes?]
+
+#. power-law  (+) [C is a consonant, Chub]
+
+#. sigmoidal [Is it S-shaped]
+
+:::
+
+
+::: {.etude-question}
+
+**Q-43**: According to  the instructor's model, what's the life expectancy when there are no physicians at all?
+
+
+#. 0 years  (+) [Not very believable, since there were (living) people before there were physicians. The power-law functional form always forces zero input to be zero output. So maybe not to be taken so seriously.]
+
+#. 35 years []
+
+#. 50 years []
+
+#. 70 years []
+
+#. 100 years []
+
+#. 115 years []
+
+:::
+
+::: {.etude-question}
+
+**Q-44**: According to  the instructor's model, would be the  life expectancy if every person in the world were a physician? (Hint: Translate this into physicians/1000-people.)
+
+
+#. 0 years []
+
+#. 35 years []
+
+#. 50 years []
+
+#. 70 years []
+
+#. 100 years []
+
+#. 110 years+  (+) [But probably  we would all starve to  death if everybody was a physician! This also is an unreasonable extrapolation.]
+
+:::
+
+
+It could  be argued that the doctor-density should be a function  of life  expectancy rather than  the other way around. (All those seniors consume a lot of medical care.)
+
+
+::: {.etude-question}
+
+**Q-45**: Which of these models agrees reasonably well with the data? (Hint: You can plot the model over the data.)
+
+
+#. $D(L) \equiv 7.24\times 10^{-19} \times L^9.8$  (+) []
+
+#. $D(L) \equiv 3.19 \times L^{3.1}$ []
+
+#. $D(L) \equiv 8.64 \times L^{6.3}$ []
+
+#. $D(L) \equiv 5.50 \times L^{2.4}$ []
+
+:::
+
+The question now is whether the function $D(L)$ (from the previous question) which  is a good match to the data, is equivalent to  the function $L(D)$ which the instructor first proposed.
+
+In order to compare them, we have to make both of them  functions of the same input. Let's say we take  $D(L)$ and algebraically  find the inverse which we'll call $D^{inv}(D)$. That inverse function takes an input in the form D and produces an output  in the form L.
+
+Using algebra, confirm that
+
+$$D^{inv}(D) \equiv  70.9 \times D^{1/9.8}$$
+In the sandbox, plot both the instructor's proposed model $L(D)$ and the model $D^{inv}(D)$ on the same axes, along with  the data. (You'll have to decide which variable to put  on  the horizontal axis, but the notation $L(D)$ and $D^{inv}(D)$ should give you  a good clue.)
+
+::: {.etude-question}
+
+**Q-46**: Which model,  $L(D)$ or $D^{inv}(D)$ is  a better match to the data when $D < 1$?
+
+
+#. $L(D)$  (+) []
+
+#. $D^{inv}(D)$ []
+
+#. They are the same function. []
+
+:::
+
+Complex social phenomena, like life expectancy, are  ... well, complex. Life expectancy depends on many factors other than health care: nutrition, war, automobile safety, etc.
+
+Notice from the data that the countries with the highest life expectancies are those where $D  \approx 3$. And yet, there  are many countries with $D \approx 3$ that have relatively low  life expectancy. One reason for this is inequality. In many countries, urbanites live at a high  standard  and people in the countryside have very little access to health care or reliably good nutrition, civil order, and so on.
+
+
+
+</details>
+
+--><div class="todo">
+<p>EXERCISE: The algebra of composition of the hump function <span class="math inline">\(e^{-\frac{x^2}{2}}\)</span>. Parabola is a nice starting point. But we want it to go to zero asymptotically, not to <span class="math inline">\(-\infty\)</span>. That might seem a tall order, but the exponential function is up to it.</p>
+</div>
 
 </div>
 </div>
@@ -382,6 +558,7 @@ Redo the length of day with the correction for diffraction and the angle subtend
 <li><a class="nav-link" href="#tukeys-ladder-optional"><span class="header-section-number">9.4</span> Tukey’s ladder (optional)</a></li>
 <li><a class="nav-link" href="#function-multiplication"><span class="header-section-number">9.5</span> Function multiplication</a></li>
 <li><a class="nav-link" href="#all-together-now"><span class="header-section-number">9.6</span> All together now!</a></li>
+<li><a class="nav-link" href="#exercises-3"><span class="header-section-number">9.7</span> Exercises</a></li>
 </ul>
 
       <div class="book-extra">
@@ -399,7 +576,7 @@ Redo the length of day with the correction for diffraction and the angle subtend
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>CalcZ Student Notes</strong>" was written by Daniel Kaplan. It was last built on 2021-06-04.</p>
+    <p>"<strong>CalcZ Student Notes</strong>" was written by Daniel Kaplan. It was last built on 2021-06-08.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

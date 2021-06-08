@@ -75,6 +75,8 @@
 <li><a class="" href="outline-of-block-2.html">Outline of Block 2</a></li>
 <li><a class="" href="change-relationships.html"><span class="header-section-number">14</span> Change relationships</a></li>
 <li><a class="" href="h-and-derivatives.html"><span class="header-section-number">15</span> h and derivatives</a></li>
+<li><a class="" href="optim-and-shape.html"><span class="header-section-number">16</span> Optimization</a></li>
+<li><a class="" href="cont-and-smooth.html"><span class="header-section-number">17</span> Continuity and smoothness</a></li>
 </ul>
 
         <div class="book-extra">
@@ -215,8 +217,236 @@ Figure 8.2: The exponential function that was previously matched to the cooling-
 </div>
 <p>During the interval <span class="math inline">\([t_0, t_1]\)</span> the rate at which the water cools is higher at first and lower at the end. The <strong><em>average</em></strong> rate of change is a single number that summarizes the whole interval.</p>
 <p>For all except straight-line models, the average rate of change depends on the interval chosen.</p>
-<p>EXERCISE: From the graph, compute the average rate of change over the interval <span class="math inline">\(10 \leq t \leq 200\)</span>. How does it compare to the average rate of change over the interval <span class="math inline">\(10 \leq t \leq 125\)</span>?</p>
-<p>EXERCISE: Same, but for a sinusoid. Give a couple of intervals, including one where there is no net change.</p>
+
+<div class="exercise">
+<span id="exr:unnamed-chunk-59" class="exercise"><strong>Exercise 8.1  (snail-tear-blanket)  </strong></span>
+</div>
+
+<details><p>We will be working extensively with the <em>change</em> in output value of a function when the <em>input value changes</em>.</p>
+<ul>
+<li><p>The change in the output value of a function <span class="math inline">\(f()\)</span> when the input changes from <span class="math inline">\(x = a\)</span> to <span class="math inline">\(x = b\)</span> is <span class="math display">\[f(x=b) - f(x=a)\]</span> Notice that when we talk about the change from <span class="math inline">\(x=a\)</span> to <span class="math inline">\(x=b\)</span> we subtract <span class="math inline">\(f(x=a)\)</span> from <span class="math inline">\(f(x=b)\)</span>. That change is sometimes called the <strong>rise</strong> in the value of the function. Rise always compares (by subtraction) the two <strong>output values</strong> corresponding to two specific input values. Remember that <span class="math inline">\(a\)</span> and <span class="math inline">\(b\)</span> stand for specific numbers.</p></li>
+<li><p>Corresponding with the idea of the change in output being <span class="math inline">\(f(x=b) - f(x=a)\)</span> the change in the input value to a function is <span class="math inline">\(b - a\)</span>. This is often called the <em>run</em> in the value of the input.</p></li>
+</ul>
+<p>Each point on the graph of a function has Cartesian coordinates <span class="math inline">\((a, f(x=a))\)</span>. For example, the graph of the function <span class="math inline">\(f()\)</span> shown in Graph I includes points such as <span class="math inline">\((1.0, 4.0)\)</span>, and <span class="math inline">\((3.5, 3.0)\)</span>. The second coordinate is the output value when we provide the first coordinate as an input value. The nature of the <span class="math inline">\(f()\)</span> function (as defined by the graph) is such that <span class="math inline">\(f(x=1) \equiv 4\)</span> and <span class="math inline">\(f(x=3.5) \equiv 3\)</span>.</p>
+<div class="inline-figure"><img src="CalcZ-notes_files/figure-html/unnamed-chunk-120-1.png" width="672"></div>
+<div class="etude-question">
+<p><strong>Q-8</strong>: True or false: In Graph I, the <em>rise</em> from a to b is positive.</p>
+<ol>
+<li><p>TRUE [<span class="math inline">\(f(x=a) &gt; f(x=b)\)</span>, so the rise <span class="math inline">\(f(x=b) - f(x=a)\)</span> is <em>negative</em>.]</p></li>
+<li><p>FALSE (+) []</p></li>
+</ol>
+</div>
+<div class="etude-question">
+<p><strong>Q-9</strong>: True or false: In Graph I, the <em>run</em> from <span class="math inline">\(x=a\)</span> to <span class="math inline">\(x=b\)</span> is positive.</p>
+<ol>
+<li><p>TRUE (+) []</p></li>
+<li><p>FALSE [The <em>run</em> is about the relative positions of <span class="math inline">\(x=a\)</span> and <span class="math inline">\(x=b\)</span> on the x-axis. Since <span class="math inline">\(a &lt; b\)</span>, the run from <span class="math inline">\(x=a\)</span> to <span class="math inline">\(x=b\)</span> is positive.]</p></li>
+</ol>
+</div>
+<div class="inline-figure"><img src="CalcZ-notes_files/figure-html/unnamed-chunk-121-1.png" width="672"></div>
+<div class="etude-question">
+<p><strong>Q-10</strong>: True or false: In Graph II, the <em>run</em> from a to b is positive.</p>
+<ol>
+<li><p>TRUE (+) []</p></li>
+<li><p>FALSE [The <em>run</em> is about the relative positions of a and b on the x-axis. Since a is to the left of b, the run from a to b is positive.]</p></li>
+</ol>
+</div>
+<div class="etude-question">
+<p><strong>Q-11</strong>: True or false: In Graph II, the <em>rise</em> from a to b is positive.</p>
+<ol>
+<li><p>TRUE [Remember, the <em>rise</em> from <span class="math inline">\(x=a\)</span> to <span class="math inline">\(x=b\)</span> is <span class="math inline">\(f(x=b) - f(x=a)\)</span>]</p></li>
+<li><p>FALSE (+) []</p></li>
+</ol>
+</div>
+<div class="etude-question">
+<p><strong>Q-12</strong>: True or false: In Graph II, the <em>run</em> from b to c is positive.</p>
+<ol>
+<li><p>TRUE [The <em>run</em> from <span class="math inline">\(x=b\)</span> to <span class="math inline">\(x=c\)</span> is <span class="math inline">\(c - b\)</span>. Since <span class="math inline">\(b&gt;c\)</span> b to c is negative.]</p></li>
+<li><p>FALSE (+) []</p></li>
+</ol>
+</div>
+<div class="etude-question">
+<p><strong>Q-13</strong>: True or false: In Graph II, the <em>rise</em> from b to c is positive.</p>
+<ol>
+<li><p>TRUE (+) []</p></li>
+<li><p>FALSE [The <em>rise</em> from <span class="math inline">\(x=b\)</span> to <span class="math inline">\(x=c\)</span> is <span class="math inline">\(f(x = c) - f(x = b)\)</span>. Since <span class="math inline">\(f(x=c) &gt; f(x=b)\)</span>, the rise is positive.]</p></li>
+</ol>
+</div>
+<div class="etude-question">
+<p><strong>Q-14</strong>: For an interval [2, 6] what is the value of the run? (The answer is independent of any particular graph/function.)</p>
+<ol>
+<li><p>4 (+) [The run is always the second number in the interval minus the first number. That’s <span class="math inline">\(6 - 2\)</span> here.]</p></li>
+<li><p>-4 [You got it backwards! The second number in the interval, 6, is numerically to the right of 2, so the run is positive.]</p></li>
+</ol>
+</div>
+<div class="etude-question">
+<p><strong>Q-15</strong>: Which is the run of the interval [6, 2]? (Again, the answer is independent of any particular graph/function.)</p>
+<ol>
+<li><p>4 [Sorry. The run from <span class="math inline">\(x=6\)</span> to <span class="math inline">\(x=2\)</span> is <span class="math inline">\(2 - 6\)</span> which is <span class="math inline">\(-4\)</span>.]</p></li>
+<li><p>-4 (+) [The run is <span class="math inline">\(2 - 6\)</span>, the second number in the interval minus the first number.]</p></li>
+</ol>
+</div>
+</details><div class="exercise">
+<span id="exr:unnamed-chunk-60" class="exercise"><strong>Exercise 8.2  (goat-dive-saucer)  </strong></span>
+</div>
+
+<details><p>From the graph in Figure <a href="fun-slopes.html#fig:water-average">8.2</a>, compute the average rate of change over the interval <span class="math inline">\(10 \leq t \leq 200\)</span>. How does it compare to the average rate of change over the interval <span class="math inline">\(10 \leq t \leq 125\)</span>?</p>
+</details><div class="exercise">
+<span id="exr:unnamed-chunk-61" class="exercise"><strong>Exercise 8.3  (chicken-show-map)  </strong></span>
+</div>
+
+<details><div class="scaffolding">
+<p>Open an R sandbox. You can use these function definitions to help you in your calculations.</p>
+<div class="sourceCode" id="cb44"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">f</span> <span class="op">&lt;-</span> <span class="fu">makeFun</span><span class="op">(</span><span class="fl">2</span><span class="op">*</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html">exp</a></span><span class="op">(</span><span class="va">x</span><span class="op">+</span><span class="fl">1</span><span class="op">)</span> <span class="op">~</span> <span class="va">x</span><span class="op">)</span>
+<span class="va">g</span> <span class="op">&lt;-</span> <span class="fu">makeFun</span><span class="op">(</span><span class="fl">3</span><span class="op">*</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html">exp</a></span><span class="op">(</span><span class="op">-</span><span class="va">x</span><span class="op">)</span> <span class="op">~</span> <span class="va">x</span><span class="op">)</span>
+<span class="va">h</span> <span class="op">&lt;-</span> <span class="fu">makeFun</span><span class="op">(</span><span class="va">x</span><span class="op">*</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html">exp</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">~</span> <span class="va">x</span><span class="op">)</span></code></pre></div>
+</div>
+<p>Using R, compute the <em>average</em> rate of change of the function over the given interval. Choose the closest answer for each problem.</p>
+<div class="etude-question">
+<p><strong>Q-16</strong>: <span class="math inline">\(f(x) \equiv 2 e^{x+1}\)</span> over [-2, 2]</p>
+<ol>
+<li><p>-2.99 []</p></li>
+<li><p>1.54 []</p></li>
+<li><p>2.72 []</p></li>
+<li><p>4.68 []</p></li>
+<li><p>9.85 (+) []</p></li>
+<li><p>11.32 []</p></li>
+</ol>
+</div>
+<div class="etude-question">
+<p><strong>Q-17</strong>: <span class="math inline">\(g(x) \equiv 3 e^{-x}\)</span> over [-1, 1.5]</p>
+<ol>
+<li><p>-2.99 (+) []</p></li>
+<li><p>1.54 []</p></li>
+<li><p>2.72 []</p></li>
+<li><p>4.68 []</p></li>
+<li><p>9.85 []</p></li>
+<li><p>11.32 []</p></li>
+</ol>
+</div>
+<div class="etude-question">
+<p><strong>Q-18</strong>: <span class="math inline">\(h(x) \equiv x e^x\)</span> over [0, 1]</p>
+<ol>
+<li><p>-3 []</p></li>
+<li><p>1.54 []</p></li>
+<li><p>2.72 (+) []</p></li>
+<li><p>4.68 []</p></li>
+<li><p>9.85 []</p></li>
+<li><p>11.32 []</p></li>
+</ol>
+</div>
+<p>It’s much less work if we use the R function <code><a href="https://rdrr.io/r/base/c.html">c()</a></code> to define the interval, and the R function <code><a href="https://rdrr.io/r/base/diff.html">diff()</a></code> to calculate differences. The next sandbox contains an example asking you to compute the average rate of change of <span class="math inline">\(f(x) \equiv e^x\)</span> over the interval [0, 4]. You only need lines 1, 3, and 5. The other lines show intermediate results to help you understand what <code><a href="https://rdrr.io/r/base/diff.html">diff()</a></code> is doing.</p>
+<div class="scaffolding">
+<div class="sourceCode" id="cb45"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">interval</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">4</span><span class="op">)</span>  <span class="co"># creates the interval</span>
+<span class="fu"><a href="https://rdrr.io/r/base/diff.html">diff</a></span><span class="op">(</span><span class="va">interval</span><span class="op">)</span>       <span class="co"># calculate the run</span>
+<span class="va">f</span> <span class="op">&lt;-</span> <span class="fu">makeFun</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html">exp</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">~</span> <span class="va">x</span><span class="op">)</span>   <span class="co">#  create the function</span>
+<span class="fu">f</span><span class="op">(</span><span class="va">interval</span><span class="op">)</span>     <span class="co"># evaluate  function at the endpoints of  the interval</span>
+<span class="fu"><a href="https://rdrr.io/r/base/diff.html">diff</a></span><span class="op">(</span><span class="fu">f</span><span class="op">(</span><span class="va">interval</span><span class="op">)</span><span class="op">)</span> <span class="op">/</span> <span class="fu"><a href="https://rdrr.io/r/base/diff.html">diff</a></span><span class="op">(</span><span class="va">interval</span><span class="op">)</span>  <span class="co"># complete answer</span></code></pre></div>
+</div>
+<div class="etude-question">
+<p><strong>Q-19</strong>: MMAC 4.1.61: True or false: The average rate of change of <span class="math inline">\(f(x) \equiv e^{x^2}\)</span> over [0.0, 0.1] is 0.1005017</p>
+<ol>
+<li><p>TRUE (+) []</p></li>
+<li><p>FALSE []</p></li>
+</ol>
+</div>
+<div class="etude-question">
+<p><strong>Q-20</strong>: MMAC 4.1.62: True or false: The average rate of change of <span class="math inline">\(f(x) \equiv \log(x)\)</span> over [2, 3] is 0.5062353.<br>
+(Hint: Change the code above so the interval variable goes from 2 to 3 and f becomes the function <span class="math inline">\(f(x) \equiv \log(x)\)</span>)</p>
+<ol>
+<li><p>TRUE []</p></li>
+<li><p>FALSE (+) []</p></li>
+</ol>
+</div>
+<div class="etude-question">
+<p><strong>Q-21</strong>: MMAC 4.1.61: True or false: The average rate of change of <span class="math inline">\(f(x) \equiv \sin(x)\)</span> over [0.0, 0.5] is 0.9588511</p>
+<ol>
+<li><p>TRUE (+) []</p></li>
+<li><p>FALSE []</p></li>
+</ol>
+</div>
+</details><div class="exercise">
+<span id="exr:unnamed-chunk-62" class="exercise"><strong>Exercise 8.4  (eagle-bring-car)  </strong></span>
+</div>
+
+<details><p>Consider the sinusoid function, graphed below.</p>
+<div class="inline-figure">
+<img src="CalcZ-notes_files/figure-html/unnamed-chunk-124-1.png" width="672">
+::: {.etude-question}</div>
+<p><strong>Q-22</strong>: What is the average rate of change over the interval <span class="math inline">\(0 &lt; x &lt; \frac{1}{2}\)</span>? (Choose the closest value.)</p>
+<ol>
+<li><p>0 [For this to be true, the function output would need to be the same at the two endpoints of the interval.]</p></li>
+<li><p>0.5 [Did you forget to divide the rise by the run?]</p></li>
+<li><p>1 (+) [Right. From the interval you have that the run is 1/2. The rise over that interval is from 0 to 1/2, so a rise of 1/2. ]</p></li>
+</ol>
+<p>:::</p>
+<div class="etude-question">
+<p><strong>Q-23</strong>: What is the average rate of change over the interval <span class="math inline">\(0 &lt; x &lt; 6.25\)</span>? (Choose the closest value.)</p>
+<ol>
+<li><p>-0.5 []</p></li>
+<li><p>0 (+) [Right. The function output is zero at both endpoints of the interval, so the rise is zero. Hence, the run is zero.]</p></li>
+<li><p>0.5 []</p></li>
+</ol>
+</div>
+<div class="etude-question">
+<p><strong>Q-24</strong>: What is the average rate of change over the interval <span class="math inline">\(0 &lt; x &lt; 10\)</span>? (Choose the closest value.)</p>
+<ol>
+<li><p>-0.05 (+) [Right. The rise is -0.5 and the run is 10.]</p></li>
+<li><p>-0.5 [This is the “rise” over the interval, but it’s not the average rate of change. You’ll need to divide the rise by another quantity to get the average rate of change.]</p></li>
+<li><p>0 []</p></li>
+<li><p>0.5 [The rise will be <span class="math inline">\(f(10) - f(0) pprox -0.5 - 0 = -0.5\)</span>. You’ve got the sign wrong.]</p></li>
+</ol>
+</div>
+</details><div class="exercise">
+<span id="exr:unnamed-chunk-63" class="exercise"><strong>Exercise 8.5  (pig-look-rug)  </strong></span>
+</div>
+
+<details><p>For each of the following, compute the <em>average</em> rate of change of the function over the given interval.</p>
+<div class="etude-question">
+<p><strong>Q-25</strong>: The average rate of change of <span class="math inline">\(f(x) \equiv x + 5\)</span> over [3, 5] is</p>
+<ol>
+<li><p>-2 [Remember, the <em>difference</em> from <span class="math inline">\(x=3\)</span> to 5 is <span class="math inline">\(f(5) - f(3)\)</span>, not the other way around. And the average <em>rate</em> of change is the difference divided by the length of the interval.]</p></li>
+<li><p>-1 [Remember, the <em>difference</em> from <span class="math inline">\(x=3\)</span> to 5 is <span class="math inline">\(f(5) - f(3)\)</span>, not the other way around. Similarly, the length of the interval from <span class="math inline">\(x=3\)</span> to 5 is <span class="math inline">\(5-3\)</span>, not <span class="math inline">\(3-5\)</span>.]</p></li>
+<li><p>1 (+) [<span class="math inline">\(f(x=5) = 10\)</span> and <span class="math inline">\(f(x=3) = 8\)</span>, so the <em>difference</em> in values is 2. Since this difference occurs over an interval of length 2 (that is, from #x=3$ to 5), the average <em>rate</em> of change is 2/2.]</p></li>
+<li><p>2 [Are you sure you took the <strong>rate</strong> of change rather than simply the change?]</p></li>
+</ol>
+</div>
+<div class="etude-question">
+<p><strong>Q-26</strong>: The average rate of change of <span class="math inline">\(f(x) \equiv 3 - 2 x\)</span> over [-4, -2] is</p>
+<ol>
+<li><p>-4 [This is the total difference over the interval, not the <em>rate</em> of change.]</p></li>
+<li><p>-2 (+) [The difference from <span class="math inline">\(x=-4\)</span> to <span class="math inline">\(-2\)</span> is <span class="math inline">\(f(-2) - f(-4) = (7) - (11) = -4\)</span>. The length of the interval is <span class="math inline">\((-2) - (-4) = 2\)</span>. So the rate is -4/2, just as you got.]</p></li>
+<li><p>0 []</p></li>
+<li><p>1 [When <span class="math inline">\(x\)</span> changes by two units, <span class="math inline">\(f(x)\)</span> changes by 4. The <em>rate</em> of change is 4/2 = -2.]</p></li>
+<li><p>2 [Check your +/- signs.]</p></li>
+<li><p>4 [This is the negative total difference over the interval, not the <em>rate</em> of change. Also check your +/- signs.]</p></li>
+</ol>
+</div>
+<div class="etude-question">
+<p><strong>Q-27</strong>: The average rate of change of <span class="math inline">\(f(x) \equiv -3 x^2\)</span> over [0, 4] is</p>
+<ol>
+<li><p>-24 [Perhaps you are looking at the derivative at <span class="math inline">\(x=4\)</span> and not the average rate of change from <span class="math inline">\(x=0\)</span> to 4.]</p></li>
+<li><p>-12 (+) [The difference in <span class="math inline">\(f()\)</span> over the interval is <span class="math inline">\(f(4) - f(2) = (-48) - 0 = -48\)</span>. The length of the interval is <span class="math inline">\(4-0\)</span>, so the average rate of change over the interval is <span class="math inline">\((-48)/4 = -12\)</span>.]</p></li>
+<li><p>0 [Perhaps you are looking at the derivative at <span class="math inline">\(x=0\)</span> and not the average rate of change from <span class="math inline">\(x=0\)</span> to 4.]</p></li>
+<li><p>1 []</p></li>
+<li><p>2 []</p></li>
+<li><p>12 [Check the signs in your arithmetic.]</p></li>
+<li><p>24 []</p></li>
+</ol>
+</div>
+<div class="etude-question">
+<p><strong>Q-28</strong>: The average rate of change of <span class="math inline">\(f(x) \equiv x^3 - 2 x + 1\)</span> over [0, 2] is</p>
+<ol>
+<li><p>-2 [Either check your +/- signs or perhaps you are looking at the derivative at <span class="math inline">\(x=0\)</span> and not the average rate of change from <span class="math inline">\(x=0\)</span> to 2.]</p></li>
+<li><p>1.5 []</p></li>
+<li><p>2 (+) [The difference in <span class="math inline">\(f()\)</span> over the interval is <span class="math inline">\(f(2) - f(0) = 5 - 1 = 4\)</span>. The length of the interval is <span class="math inline">\(2 - 0\)</span> so the average <em>rate</em> of change is <span class="math inline">\(4/2 = 2\)</span>. ]</p></li>
+<li><p>7 []</p></li>
+<li><p>10 [I think you are looking at the derivative at <span class="math inline">\(x=2\)</span> rather than the average rate of change from 0 to 2.]</p></li>
+</ol>
+</div>
+</details>
 </div>
 <div id="instantaneous-rate-of-change" class="section level2">
 <h2>
@@ -258,7 +488,7 @@ Figure 8.5: Comparing the naked modeling function (blue) to it’s slope functio
 </div>
 <p>EXERCISE: There is a web of connections between the naked modeling functions and their slopes.</p>
 <div class="etude-question">
-<p><strong>Q-8</strong>: 1. Which naked modeling function has a slope function that is simply a input-shifted version of itself?</p>
+<p><strong>Q-29</strong>: 1. Which naked modeling function has a slope function that is simply a input-shifted version of itself?</p>
 <ol>
 <li><p>exponential []</p></li>
 <li><p>sinusoid (+) []</p></li>
@@ -267,7 +497,7 @@ Figure 8.5: Comparing the naked modeling function (blue) to it’s slope functio
 </ol>
 </div>
 <div class="etude-question">
-<p><strong>Q-9</strong>: 2. Which naked modeling function has a slope function that is identical to itself?</p>
+<p><strong>Q-30</strong>: 2. Which naked modeling function has a slope function that is identical to itself?</p>
 <ol>
 <li><p>exponential (+) []</p></li>
 <li><p>sinusoid []</p></li>
@@ -276,7 +506,7 @@ Figure 8.5: Comparing the naked modeling function (blue) to it’s slope functio
 </ol>
 </div>
 <div class="etude-question">
-<p><strong>Q-10</strong>: 3. Which naked modeling function has a slope function that is another naked modeling function? (Hint: The other function is also shown in the set of graphs.)</p>
+<p><strong>Q-31</strong>: 3. Which naked modeling function has a slope function that is another naked modeling function? (Hint: The other function is also shown in the set of graphs.)</p>
 <ol>
 <li><p>exponential []</p></li>
 <li><p>sinusoid []</p></li>
@@ -324,7 +554,7 @@ This is a very subtle maneuver. The formula is exactly the same, but by writing 
 <div class="workedexample" latex-data="">
 <p>Back to the forest … Here’s a graph of the average-rate-of change function. The function has two inputs, but botany dictates that we can only be growing word from the time the seedling is planted. So we’ll set <span class="math inline">\(t_A = 0\)</span> and look at the corresponding <em>slice</em> of the function:</p>
 <div class="inline-figure">
-<img src="CalcZ-notes_files/figure-html/unnamed-chunk-59-1.png" width="672">
+<img src="CalcZ-notes_files/figure-html/unnamed-chunk-64-1.png" width="672">
 The graph makes it clear that the maximum average growth from planting to harvest will occur at about year 32.</div>
 </div>
 
@@ -362,7 +592,7 @@ The graph makes it clear that the maximum average growth from planting to harves
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>CalcZ Student Notes</strong>" was written by Daniel Kaplan. It was last built on 2021-06-04.</p>
+    <p>"<strong>CalcZ Student Notes</strong>" was written by Daniel Kaplan. It was last built on 2021-06-08.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

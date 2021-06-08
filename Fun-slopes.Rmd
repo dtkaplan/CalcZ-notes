@@ -120,9 +120,28 @@ During the interval $[t_0, t_1]$ the rate at which the water cools is higher at 
 
 For all except straight-line models, the average rate of change depends on the interval chosen.
 
-EXERCISE: From the graph, compute the average rate of change over the interval $10 \leq t \leq 200$. How does it compare to the average rate of change over the interval $10 \leq t \leq 125$?
+```{exercise, name="snail-tear-blanket"}
+```
+<details>`r knitr::knit_child("Exercises/Fun/snail-tear-blanket.Rmd")`</details>
 
-EXERCISE: Same, but for a sinusoid. Give a couple of intervals, including one where there is no net change.
+
+```{exercise, name="goat-dive-saucer"}
+```
+<details>`r knitr::knit_child("Exercises/Fun/goat-dive-saucer.Rmd")`</details>
+
+```{exercise, name="chicken-show-map"}
+```
+<details>`r knitr::knit_child("Exercises/Fun/chicken-show-map.Rmd")`</details>
+
+
+```{exercise, name="eagle-bring-car"}
+```
+<details>`r knitr::knit_child("Exercises/Fun/eagle-bring-car.Rmd")`</details>
+
+```{exercise, name="pig-look-rug"}
+```
+<details>`r knitr::knit_child("Exercises/Fun/pig-look-rug.Rmd")`</details>
+
 
 
 
@@ -159,21 +178,24 @@ In Block 2, we'll see that a good way to define an instantaneous rate of change 
 
 Figure \@ref(fig:three-rates) shows the fitted rate of change and average rate of change in the interval $10 \leq t \leq 125$ as well as the instantaneous rate of change at $t_0 = 50$. As you can see, they are different from one another.
 
-```{r three-rates, echo=FALSE, warning=FALSE, fig.cap="Comparing the average rate of change (red) over the interval $10 \\leq t \\leq 125$, the instantaneous rate of change at $x_0 =25$, and the fitted linear model (orange). The exponential model is shown in gray."}
+```{r three-rates,  echo=FALSE, warning=FALSE, fig.cap="Comparing the average rate of change (red) over the interval $10 \\leq t \\leq 125$, the instantaneous rate of change at $x_0 =25$, and the fitted linear model (orange). The exponential model is shown in gray."}
+set.seed(101)
+Stans_data <- CoolingWater %>% sample_n(20)
 gf_point(temp ~ time, data = Stans_data, color="orange") %>%
   gf_lm(color="orange") %>%
   slice_plot(water(time) ~ time, domain(time=c(0, 200)), color="gray", size=2, alpha = 0.5) %>%
   slice_plot(tangent(time) ~ time, color = "sienna", 
-             domain(time=c(0,80))) %>%
-  gf_point(y ~ x, data = Pts, color="red", alpha=0.25, size=4) %>%
+             domain(time=c(0,80)))  %>%
+   gf_point(y ~ x, data = Pts, color="red", alpha=0.25, size=4, inherit=FALSE) %>%
   gf_line(y ~ x, data = Pts, color="red") %>%
   gf_point(25 ~ x, data = Pts, color="blue", alpha=0.25, size=4) %>%
-  gf_point(y ~ x, data=Pt, 
+  gf_point(y ~ x, data=Pt,
            color="sienna", alpha = 0.25, size=4) %>%
   gf_point(25 ~ x, data = Pt, color="tomato", alpha=0.25, size=4) %>%
   gf_segment(25 + y ~ x + x, data=Pt, color="tomato", linetype=2) %>%
   gf_segment(25 + y ~ x + x, data=Pts, color="blue", linetype=2) %>%
-  gf_lims(y=c(25, NA))
+  gf_lims(y=c(25, NA)) %>%
+  I()
 ```
 
 ## The slope function
