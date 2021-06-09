@@ -1,0 +1,83 @@
+---
+chapter: "none yet"
+author: "Danny Kaplan"
+difficulty: "XX"
+date: 2021-06-09 
+version: 0.1
+tags: [first, second, third]
+id: finch-trim-kayak
+---
+
+```{r finch-trim-kayak-default, include = FALSE}
+library(etude2)
+library(mosaic)
+library(mosaicCalc)
+```
+
+::: {.scaffolding}
+The R command defines a new operator named `Diff()` which implements the differencing operator $\cal D_x$ for functions with one input.
+```{r}
+Diff <- function(f, h=0.001) {
+  function(x) {
+    (f(x + h) - f(x)) / h
+  }
+}
+```
+Open an R sandbox and copy the definition of `Diff()` into it. 
+
+As an example of the use of `Diff()`, here is R code that defines a function `f()` and finds ${\cal D}_x f()$, calling it `D_f()`. Then a slice plot is of both `f()` and `D_f()`.
+
+```{r}
+f   <- makeFun(sqrt(exp(x)) - x^2 ~ x)
+D_f <- Diff(f)
+slice_plot(f(x) ~ x, domain(x=c(0, 5))) %>%
+  slice_plot(D_f(x) ~ x, color = "red")
+```
+:::
+
+For each of the following functions, write a brief comparison of the function to it's differenced version. You can combine phrases such as "same shape", "different shape. larger in amplitude", "smaller in amplitude", "same period", "shorter period", "longer period", or whatever seems appropriate. For instance, for the original example in the sandbox, a reasonable comparison might be, "f() is concave down but Diff(f) is concave up."
+
+
+```{r daily-digital-26-Essay1, echo=FALSE}
+etude2::etudeEssay(
+  prompt = "A. For the function $f(x) \\equiv 3 x$, compare $f()$ to $\\cal D_x f$."
+)
+```
+
+```{r daily-digital-26-Essay2, echo=FALSE}
+etude2::etudeEssay(
+  prompt = "B. For the function $f(x) \\equiv x^2$, compare $f()$ to $\\cal D_x f$."
+)
+```
+
+```{r daily-digital-26-Essay3, echo=FALSE}
+etude2::etudeEssay(
+  prompt = "C. For the function $f(x) \\equiv \\exp(x)$, compare $f()$ to $\\cal D_x f$."
+)
+```
+
+```{r daily-digital-26-Essay4, echo=FALSE}
+etude2::etudeEssay(
+  prompt = "D. For the function $f(x) \\equiv \\exp(-0.3 x)$, compare $f()$ to $\cal D_x f$."
+)
+```
+
+```{r daily-digital-26-Essay5, echo=FALSE}
+etude2::etudeEssay(
+  prompt = "E. For the function $f(x) \\equiv \\sin(x)$, compare $f()$ to $\\cal D_x f$."
+)
+```
+
+```{r daily-digital-26-Essay6, echo=FALSE}
+etude2::etudeEssay(
+  prompt = "F. For the function $f(x) \\equiv \\sin(2 \\pi x)$, compare $f()$ to $\\cal D_x f$)."
+)
+```
+
+```{r daily-digital-26-Essay7, echo=FALSE}
+etude2::etudeEssay(
+  prompt = "G. For the function $f(x) \\equiv \\sin(\\frac{2 \\pi}{20} x)$, compare $f()$ to $\\cal D_x f$)."
+)
+```
+
+
