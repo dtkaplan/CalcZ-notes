@@ -1,5 +1,6 @@
 # Optimization {#optim-and-shape}
 
+
 To "optimize" means to make something as good as possible with the available resources. Optimization problems are common in science, logistics, industry, and any other area where one seeks the best solution to a problem. Some everyday examples:
 
 - How much salt to add to a stew. Stews can be too salty, or they can be not salty enough. Somewhere in the middle is the optimum.
@@ -53,7 +54,7 @@ slice_plot(f(theta) ~ theta, domain(theta = c(40, 50)))
 From the graph, especially the zoomed-in version, you can read off the argmax as $\theta = 45^\circ$.
 
 Finding the argmax solves the problem. You may also want to present your solution by saying what the value of the output of hdist() is when the argmax is given as input. You can read off the graph that the maximum of $\cos(\theta)\sin(\theta)$ is 0.5 at $\theta = 45^\circ$, so overall the distance will be $v_0^2 / g$
-:::
+
 
 ::: {.todo}
 Review Exercise: What is the dimension of $v_0^2 / g$?
@@ -69,7 +70,7 @@ Besides the argmax, another important quantity to read from the graph in Figure 
 
 Contests are won or lost by margins of less than 1%, so you should not casually deviate from the argmax. On the other hand, $45^\circ$ is the argmax of the *model*. Reality may deviate from the model. For instance, suppose that air resistance or wind might might have an effect of about 1% on the distance. You can expect that such factors might change the optimal angle by as much or more than $\pm 5^\circ$.
 
-## Derivative and optimization
+## Derivatives and optimization
 
 We're now going to reframe the search for the argmax and it's interpretation in terms of  derivatives of the objective function with respect to the decision quantity ($\theta$ in the slingshot problem). For a function of one variable, this will not be an improvement from the look-at-the-graph technique to find the argmax. A genuine reason to use derivatives is to set us up in the future to solve problems with more than one variable, where it is hard to draw or interpret a graph. Also, describing functions in the language of derivatives can help us think more clearly about aspects of the problem, such as the precision of the argmax.
 
@@ -124,7 +125,6 @@ Stated another way, the derivative $\partial_x f(x)$ has a positive slope near a
 Just as we differentiate $f(x)$ to find it's slope, so to find the slope of the function $\partial_x f(x)$ we can differentiate it. The result is called the ***second derivative***. We could write it $\partial_x \left[\partial_x f(x)\right]$, but for brevity we write it $\partial_{xx} f(x)$. 
 
 The second derivative of the objective function $f(x)$ at a critical point $x^\star$ is what tells us whether the critical point is an argmax, an argmin, or neither. 
-
 Critical point $x^\star$ | $\partial_x f(x^\star)$ | $\partial_{xx} f(x^\star)$
 -----------------------|---------------------|-------------------
 argmax | 0 | negative
@@ -159,6 +159,11 @@ iii. Putting (i) and (ii) together, we get that the **concavity** of a function 
 iv. At an argmax $x^\star$ of $f(x)$, the value of the derivative function $\partial_x f(x^\star)$ is zero and the value of the second derivative function $\partial_{xx} f(x^\star)$ is **negative**. (The situation at an argmin is similar, the derivative of the objective function is zero and the second derivative is **positive**.)
 :::
 
+```{exercise, name="tree-loves-fish"}
+```
+<details>`r knitr::knit_child("Exercises/Diff/tree-loves-fish.Rmd")`</details>
+
+
 
 ::: {.workedexample}
 What's the critical point?
@@ -191,7 +196,7 @@ Now we want to tame this profusion of possibilities and consider a way to constr
 The stand-in functions are intended to be much simpler than the original but useable as a substitute for the original. The catch is that the stand-in is warranteed to be a good substitute only ***within a small neighborhood*** of the domain of the origin.
 
 The information we need to construct the stand-ins is very limited. First, we need to specify where the warranteed neighborhood is. We'll tend to use $x_0$ as identifying the center of that neighborhood. We'll also need $f(x_0)$, the output of the original function when the input is $x_0$, and $\partial_x f(x_0)$ and $\partial_{xx} f(x_0)$. 
-\
+
 ::: {.takenote}
 This is a good time to remind you of the notation conventions that we are using to write about functions and evaluating functions. 
 
@@ -290,7 +295,6 @@ How to find the zeros of the derivative of a function and how to evaluate the se
 The cubic bifurcation. Start with a cubic with an argmax followed by an argmin. Then move the parameter to see the two critical points coalesce into a single point then disappear.
 
 Or, maybe, "the problem with polynomials." Linear function always has 1 root and no critical points. Quadratic function always has one critical point (and subject to a constant may have two roots generically). But a cubic might have 1 or 3 solutions and the behavior depends on the constant. It might have one or three critical points.
-
 :::
 
 
@@ -298,44 +302,4 @@ Or, maybe, "the problem with polynomials." Linear function always has 1 root and
 ::: {.takenote}
 In the previous discussion, we used phrases such as "every function has a derivative," or that "any function can be approximated" by a second-order polynomial. For most practical purposes, this is true. In the next chapter, however, we'll set mathematical conditions on "every" and "any" that will let us see when there can be an exception.
 :::
-
-
-::: {.todo}
-Move this earthquake example to a point where you can do parametric plots.
-
-:::
-
-
-
-## Use case: Risk of earthquakes
-
-For software designers, a ***use case*** is a description of how a person will use the software to accomplish a particular goal. It's fair to wonder what are the use cases of differentiation. It's early days in your study of calculus, so some of the use cases are beyond your reach. But knowing about first and second derivatives, argmaxes and maximums, curvature, and linear and quadratic approximations gives you access to one of the most important general patterns in scientific work: the measurement of ***precision***.
-
-As you know, precision refers to how well you know a quantity and is often expressed using the plus-or-minus notation. To illustrate, consider the earthquake risk situation in the Cascadia Subduction Zone that includes western Oregon and Washington states. The last devastating earthquake was on January 26, 1700, a date approximated by local oral tradition and derived from written tsunami records across the Pacific Ocean in Japan.
-
-Geologic features allow approximate dating of previous large earthquakes in the region, specifically one about 700 years previous to the latest and on about 2000 years before that. 
-<!-- https://agupubs.onlinelibrary.wiley.com/doi/epdf/10.1029/97RG00222 section 6.3 -->
-
-Your task as a modeler is to estimate the probability of another high-magnitude earthquake occuring in the next 100 years.
-
-A standard model for the time interval between consecutive earthquakes is $p(y) \equiv k e^{-ky}$, where $p(t)$ is the probability of an earthquake happening exactly $y$ years after the last. We can use data on previous earthquakes to find an approximate value for $k$. Once we know $k$, we can calculate the probability that the next earthquake will occur between 2025 and 2125 as $e^{-325 k} - e^{-425 k}$ where 325 is the time interval from 1700 to 2025 and 426 is the interval between 1700 and 2125. (You'll see where the formula comes from in Block 3.)
-
-We have information on two complete earthquake cycles, one lasting 2000 years and the other 700. A standard way to estimate the parameter $k$ is called "maximum likelihood." This amounts to assuming a value for $k$ and then, with that value, calculating the likelihood of having seen inter-quake intervals of 2000 and of 700 years. This likelihood is
-$$p(2000) \times p(700) = k^2 e^{-k (2000 + 700)}$$ A graph of the likelihood as a function of $k$, using a log vertical scale gives:
-
-```{r}
-slice_plot(log(k^2 * exp(-k*2700)) ~ k, domain(k=c(0.0001, 0.003)), npts=500)
-```
-Making a parametric plot
-
-```{r}
-Quakes <- tibble::tibble(
-  k = seq(0.0001, 0.0025, length=1000),
-  LL = log(k^2 * exp(-k*2700)),
-  prob = exp(-325*k) - exp(-425*k)         
-)
-gf_point(LL ~ k, data=Quakes)
-gf_point(LL ~ prob, data = Quakes)
-gf_point(prob ~ k, data = Quakes)
-```
 

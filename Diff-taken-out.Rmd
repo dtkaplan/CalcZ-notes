@@ -71,3 +71,44 @@ contour_plot(f(x, y) ~ x + y, domain(x=c(-diam, diam), y=c(-diam,diam)), contour
 fx <- D(f(x, y) ~ x)
 contour_plot(fx(x, y) ~ x + y, domain(x=c(-diam,diam), y=c(-diam, diam)), contours_at = -100, fill_alpha=1, contour_color=NA, n_fill=500, fill_scale=ggplot2::scale_fill_grey())
 ```
+
+
+
+::: {.todo}
+Move this earthquake example to a point where you can do parametric plots.
+
+:::
+
+
+
+## Use case: Risk of earthquakes
+
+For software designers, a ***use case*** is a description of how a person will use the software to accomplish a particular goal. It's fair to wonder what are the use cases of differentiation. It's early days in your study of calculus, so some of the use cases are beyond your reach. But knowing about first and second derivatives, argmaxes and maximums, curvature, and linear and quadratic approximations gives you access to one of the most important general patterns in scientific work: the measurement of ***precision***.
+
+As you know, precision refers to how well you know a quantity and is often expressed using the plus-or-minus notation. To illustrate, consider the earthquake risk situation in the Cascadia Subduction Zone that includes western Oregon and Washington states. The last devastating earthquake was on January 26, 1700, a date approximated by local oral tradition and derived from written tsunami records across the Pacific Ocean in Japan.
+
+Geologic features allow approximate dating of previous large earthquakes in the region, specifically one about 700 years previous to the latest and on about 2000 years before that. 
+<!-- https://agupubs.onlinelibrary.wiley.com/doi/epdf/10.1029/97RG00222 section 6.3 -->
+
+Your task as a modeler is to estimate the probability of another high-magnitude earthquake occuring in the next 100 years.
+
+A standard model for the time interval between consecutive earthquakes is $p(y) \equiv k e^{-ky}$, where $p(t)$ is the probability of an earthquake happening exactly $y$ years after the last. We can use data on previous earthquakes to find an approximate value for $k$. Once we know $k$, we can calculate the probability that the next earthquake will occur between 2025 and 2125 as $e^{-325 k} - e^{-425 k}$ where 325 is the time interval from 1700 to 2025 and 426 is the interval between 1700 and 2125. (You'll see where the formula comes from in Block 3.)
+
+We have information on two complete earthquake cycles, one lasting 2000 years and the other 700. A standard way to estimate the parameter $k$ is called "maximum likelihood." This amounts to assuming a value for $k$ and then, with that value, calculating the likelihood of having seen inter-quake intervals of 2000 and of 700 years. This likelihood is
+$$p(2000) \times p(700) = k^2 e^{-k (2000 + 700)}$$ A graph of the likelihood as a function of $k$, using a log vertical scale gives:
+
+```{r}
+slice_plot(log(k^2 * exp(-k*2700)) ~ k, domain(k=c(0.0001, 0.003)), npts=500)
+```
+Making a parametric plot
+
+```{r}
+Quakes <- tibble::tibble(
+  k = seq(0.0001, 0.0025, length=1000),
+  LL = log(k^2 * exp(-k*2700)),
+  prob = exp(-325*k) - exp(-425*k)         
+)
+gf_point(LL ~ k, data=Quakes)
+gf_point(LL ~ prob, data = Quakes)
+gf_point(prob ~ k, data = Quakes)
+```
