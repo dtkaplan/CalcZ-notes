@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>Chapter 8 Slope function | CalcZ Student Notes</title>
+<meta name="author" content="Daniel Kaplan">
+<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.2"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="libs/bootstrap-4.5.3/bootstrap.min.css" rel="stylesheet">
+<script src="libs/bootstrap-4.5.3/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.2.4/tabs.js"></script><script src="libs/bs3compat-0.2.4/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script><script src="libs/htmlwidgets-1.5.3/htmlwidgets.js"></script><link href="libs/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet">
+<script src="libs/datatables-binding-0.12/datatables.js"></script><link href="libs/dt-core-1.10.20/css/jquery.dataTables.min.css" rel="stylesheet">
+<link href="libs/dt-core-1.10.20/css/jquery.dataTables.extra.css" rel="stylesheet">
+<script src="libs/dt-core-1.10.20/js/jquery.dataTables.min.js"></script><link href="libs/crosstalk-1.1.1/css/crosstalk.css" rel="stylesheet">
+<script src="libs/crosstalk-1.1.1/js/crosstalk.min.js"></script><script src="libs/kePrint-0.0.1/kePrint.js"></script><link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet">
+<script src="libs/plotly-binding-4.9.3/plotly.js"></script><script src="libs/typedarray-0.1/typedarray.min.js"></script><link href="libs/plotly-htmlwidgets-css-1.57.1/plotly-htmlwidgets.css" rel="stylesheet">
+<script src="libs/plotly-main-1.57.1/plotly-latest.min.js"></script><script type="text/x-mathjax-config">
+  const popovers = document.querySelectorAll('a.footnote-ref[data-toggle="popover"]');
+  for (let popover of popovers){
+    const div = document.createElement('div');
+    div.setAttribute('style', 'position: absolute; top: 0, left:0; width:0, height:0, overflow: hidden; visibility: hidden;');
+    div.innerHTML = popover.getAttribute('data-content');
+    
+    // Will this work with TeX on its own line?
+    var has_math = div.querySelector("span.math");
+    if (has_math) {
+      document.body.appendChild(div);
+    	MathJax.Hub.Queue(["Typeset", MathJax.Hub, div]);
+    	MathJax.Hub.Queue(function(){
+        popover.setAttribute('data-content', div.innerHTML);
+    	})
+    }
+  }
+  </script><script src="https://cdn.jsdelivr.net/autocomplete.js/0/autocomplete.jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/mark.js@8.11.1/dist/mark.min.js"></script><!-- CSS --><link rel="stylesheet" href="css/CalcZ-style.css">
+</head>
+<body data-spy="scroll" data-target="#toc">
+
+<div class="container-fluid">
+<div class="row">
+  <header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
+
+    <div class="d-flex align-items-start justify-content-between">
+      <h1>
+        <a href="index.html" title="">CalcZ Student Notes</a>
+      </h1>
+      <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
+    </div>
+
+    <div id="main-nav" class="collapse-lg">
+      <form role="search">
+        <input id="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
+</form>
+
+      <nav aria-label="Table of contents"><h2>Table of contents</h2>
+        <ul class="book-toc list-unstyled">
+<li><a class="" href="index.html">Welcome to calculus</a></li>
+<li><a class="" href="calcz-project-development-plan.html">CalcZ Project Development Plan</a></li>
+<li class="book-part">Block 1: Functions and quantity</li>
+<li><a class="" href="outline-of-block-1.html">Outline of Block 1</a></li>
+<li><a class="" href="change.html"><span class="header-section-number">1</span> Change</a></li>
+<li><a class="" href="structure-of-a-function.html"><span class="header-section-number">2</span> Structure of a function</a></li>
+<li><a class="" href="fun-describing.html"><span class="header-section-number">3</span> Describing functions</a></li>
+<li><a class="" href="fun-notation.html"><span class="header-section-number">4</span> Notation for functions</a></li>
+<li><a class="" href="graphs-and-graphics.html"><span class="header-section-number">5</span> Graphics &amp; function graphs</a></li>
+<li><a class="" href="params-intro.html"><span class="header-section-number">6</span> Parameters for functions</a></li>
+<li><a class="" href="process-of-modeling.html"><span class="header-section-number">7</span> Process of modeling</a></li>
+<li><a class="active" href="fun-slopes.html"><span class="header-section-number">8</span> Slope function</a></li>
+<li><a class="" href="fun-assembling.html"><span class="header-section-number">9</span> Assembling functions</a></li>
+<li class="book-part">Block 2: Differentiation</li>
+<li><a class="" href="outline-of-block-2.html">Outline of Block 2</a></li>
+<li><a class="" href="change-relationships.html"><span class="header-section-number">10</span> Change relationships</a></li>
+<li><a class="" href="h-and-derivatives.html"><span class="header-section-number">11</span> h and derivatives</a></li>
+<li><a class="" href="optim-and-shape.html"><span class="header-section-number">12</span> Optimization</a></li>
+<li><a class="" href="cont-and-smooth.html"><span class="header-section-number">13</span> Continuity and smoothness</a></li>
+<li><a class="" href="derivatives-of-composed-functions.html"><span class="header-section-number">14</span> Derivatives of composed functions</a></li>
+<li><a class="" href="approximating-functions.html"><span class="header-section-number">15</span> Approximating functions</a></li>
+<li><a class="" href="partial-change.html"><span class="header-section-number">16</span> Partial change</a></li>
+<li><a class="" href="approximation-around-a-point.html"><span class="header-section-number">17</span> Approximation around a point</a></li>
+</ul>
+
+        <div class="book-extra">
+          <p><a id="book-repo" href="https://github.com/dtkaplan/CalcZ-notes">View book source <i class="fab fa-github"></i></a></p>
+        </div>
+      </nav>
+</div>
+  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="fun-slopes" class="section level1">
+<h1>
+<span class="header-section-number">8</span> Slope function<a class="anchor" aria-label="anchor" href="#fun-slopes"><i class="fas fa-link"></i></a>
+</h1>
+<p>For our purposes, the <strong><em>definition of calculus</em></strong> is</p>
+<blockquote>
+<p><em>The use of functions to model and explore continuous change</em></p>
+</blockquote>
+<p>The agenda of this chapter is to give specific mathematical meaning to the word “change.”</p>
+<div id="change-and-slope" class="section level2">
+<h2>
+<span class="header-section-number">8.1</span> Change and slope<a class="anchor" aria-label="anchor" href="#change-and-slope"><i class="fas fa-link"></i></a>
+</h2>
+<p>You have an solid, intuitive sense of what “change” means. In mathematics, and especially the mathematics of functions, change has a very simple meaning that you have already touched on in your previous math education.</p>
+<p>The word that encapsulates “change” in high-school math is <strong><em>slope</em></strong>. For instance, you’ve undoubtedly had to calculate the slope of a straight line in a graph. You learned about “rise” and “run” and how to read them from a graph or from a formula. The slope is the ratio: rise over run.</p>
+<p>Slope is a lovely <strong><em>metaphor</em></strong> for change, since everyone has a intuitive sense of the slope of a road or of a hillside. You learned to apply this intuition to reading graphs and the slope of a line. We’ll exploit the intuitive ability to read a landscape in order to introduce abstract mathematical ideas in a down-to-earth setting. It’s a very effective pedagogical strategy.</p>
+<p>But not everything that changes has a “slope.” For instance, the population of a country can change, as can the number of new cases of an epidemic disease, the temperature of a cup of coffee, or the distance from Earth of a spacecraft. A major part of learning calculus is generalizing and abstracting the mathematical concept of which “slope” is an example and becoming proficient with mathematical procedures for working with change.</p>
+</div>
+<div id="continuous-change" class="section level2">
+<h2>
+<span class="header-section-number">8.2</span> Continuous change<a class="anchor" aria-label="anchor" href="#continuous-change"><i class="fas fa-link"></i></a>
+</h2>
+<p>Most people are comfortable with the ideas of daily changes in temperature or monthly changes in credit-card debt or quarterly changes in the unemployment rate or annual changes in the height of a child. Such things are easy to record in, say, a spreadsheet. For example, as I write, the weather forecast for the next several days (in southeastern Colorado in mid-May) is</p>
+<div class="inline-table"><table class="table table-sm">
+<thead><tr class="header">
+<th>Day</th>
+<th>High</th>
+<th>Low</th>
+<th>Description</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td>Thursday</td>
+<td>73</td>
+<td>43</td>
+<td>sunny</td>
+</tr>
+<tr class="even">
+<td>Friday</td>
+<td>72</td>
+<td>48</td>
+<td>windy</td>
+</tr>
+<tr class="odd">
+<td>Saturday</td>
+<td>66</td>
+<td>48</td>
+<td>thunderstorms</td>
+</tr>
+<tr class="even">
+<td>Sunday</td>
+<td>68</td>
+<td>43</td>
+<td>windy</td>
+</tr>
+<tr class="odd">
+<td>Monday</td>
+<td>70</td>
+<td>39</td>
+<td>sunny</td>
+</tr>
+<tr class="even">
+<td>Tuesday</td>
+<td>70</td>
+<td>43</td>
+<td>sunny</td>
+</tr>
+<tr class="odd">
+<td>Wednesday</td>
+<td>66</td>
+<td>45</td>
+<td>partly cloudy</td>
+</tr>
+</tbody>
+</table></div>
+<p>Such data is said to be <strong><em>discrete</em></strong>. The day is listed, but not the time of day. The high temperature is forecast, but not the time of that high. The “description” is also discrete, one of the several words that are used to summarize the quality of the weather, as opposed to the quantity of rain.</p>
+<p>Calculus is about <strong><em>continuous change</em></strong>. For instance, if the weather bureau provide a web interface that let me enter the date and time to the nearest fraction of a second, they would be giving a way to track the change <strong><em>continuously</em></strong>. Many physical processes are intrinsically continuous, for instance the motion (change in position) of a spacecraft or the height of the tide or the stress on a tree as a function of wind velocity.</p>
+<p>Finding a language to describe continuous change—famously, the position of the moon or planets in their orbit, or the speed of a ball rolling down a ramp—was central to the emergence of what historians call the “Age of Enlightenment” or “modern scientific method.” The first complete presentation of that language was published by Isaac Newton based on his work in the 1660s. As you might guess, the name of the language is “calculus.”</p>
+</div>
+<div id="slope" class="section level2">
+<h2>
+<span class="header-section-number">8.3</span> Slope<a class="anchor" aria-label="anchor" href="#slope"><i class="fas fa-link"></i></a>
+</h2>
+<p>You already know pretty much everything there is to know about the straight-line function,</p>
+<ul>
+<li><p><strong>Formula</strong>: <span class="math inline">\(f(x) \equiv a x + b\)</span>. The parameters <span class="math inline">\(a\)</span> and <span class="math inline">\(b\)</span> are the “slope” and “intercept” respectively. (More precisely, <span class="math inline">\(b\)</span> is the “y-intercept.” But in statistics and modeling, it’s just the “intercept.”)</p></li>
+<li>
+<p><strong>Reading parameters from a graph</strong>: You learned several ways to do this which are all equivalent. Maybe the easiest is the read the y-intercept off the graph. That’s <span class="math inline">\(b\)</span>. Then choose some non-zero <span class="math inline">\(x_1\)</span> and read off from the graph the value of <span class="math inline">\(f(x_1)\)</span>. The slope is simply <span class="math display">\[\frac{f(x_1) - b}{x_0}\]</span></p>
+<p>The <strong><em>y-intercept method</em></strong> is a special case of a more general method, the <strong><em>two-point method</em></strong>, that you can use even if the y-intercept isn’t shown on the graph. Pick two specific values of <span class="math inline">\(x\)</span>, which we’ll call <span class="math inline">\(x_0\)</span> and <span class="math inline">\(x_1\)</span>. Evalate the function at these input values and compute the rise over run: <span class="math display">\[\mbox{rise over run} \equiv \frac{f(x_1) - f(x_0)}{x_1 - x_0}\]</span>
+The rise over run is the slope of the straight line.</p>
+<p>The y-intercept method is exactly the same as the two-point method with <span class="math inline">\(x_0 = 0\)</span>.</p>
+</li>
+<li><p><strong>Matching a straight-line function to data</strong>: You might not have been taught this formally, but the basic process is easy to imitate. The process is called <strong><em>line fitting</em></strong> or, in statistics and other fields, <strong><em>linear regression</em></strong>.</p></li>
+</ul>
+</div>
+<div id="the-fitted-line" class="section level2">
+<h2>
+<span class="header-section-number">8.4</span> The fitted line<a class="anchor" aria-label="anchor" href="#the-fitted-line"><i class="fas fa-link"></i></a>
+</h2>
+<div class="objectives">
+<ol>
+<li>
+<strong>[Fun-4-a-1]</strong> <em>Construct a straight-line model that fits data.</em>
+</li>
+</ol>
+</div>
+<p>To illustrate line fitting, let’s return to the cooling mug of water. Figure <a href="fun-slopes.html#fig:Fun-4-a">8.1</a> shows the data along with a dozen candidate straight line functions, each one drawn in its own color.</p>
+<div class="figure">
+<span id="fig:Fun-4-a"></span>
+<img src="CalcZ-notes_files/figure-html/Fun-4-a-1.png" alt="Some candidate straight-line function models plotted on top of the cooling water data. Which one(s) would you pick as good matches to the data?" width="672"><p class="caption">
+Figure 8.1: Some candidate straight-line function models plotted on top of the cooling water data. Which one(s) would you pick as good matches to the data?
+</p>
+</div>
+<p>Some of the straight-line models are a much better match to the data than others. The blue-shaded functions are pretty good fits, the greenish functions are maybe OK but a little sketchy, and the purple-shaded functions are just horrible.</p>
+<p>Now that you know what a reasonable straight-line model looks like, you will find it pretty easy to draw one on data graphics that even remotely show a straight-line pattern.</p>
+<p>Step 1: Draw a reasonable straight-line through the data points.</p>
+<p>Step 2: Find the parameters that correspond to the line you drew.</p>
+</div>
+<div id="average-rate-of-change" class="section level2">
+<h2>
+<span class="header-section-number">8.5</span> Average rate of change<a class="anchor" aria-label="anchor" href="#average-rate-of-change"><i class="fas fa-link"></i></a>
+</h2>
+<p>Since the slope is our standard way of representing a relationship of change, we will often use it as a way of summarizing a function. To illustrate, consider the exponential model we constructed to match the cooling-water data:</p>
+<div class="sourceCode" id="cb44"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">water</span> <span class="op">&lt;-</span> <span class="fu">makeFun</span><span class="op">(</span><span class="fl">60.7</span><span class="op">*</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html">exp</a></span><span class="op">(</span><span class="op">-</span><span class="fl">0.019</span><span class="op">*</span><span class="va">t</span><span class="op">)</span> <span class="op">+</span> <span class="fl">25.93</span> <span class="op">~</span> <span class="va">t</span><span class="op">)</span></code></pre></div>
+<div class="figure">
+<span id="fig:water-average"></span>
+<img src="CalcZ-notes_files/figure-html/water-average-1.png" alt="The exponential function that was previously matched to the cooling-water data. The slope of the straight line connecting two points on the function graph is the average rate of change during the interval." width="672"><p class="caption">
+Figure 8.2: The exponential function that was previously matched to the cooling-water data. The slope of the straight line connecting two points on the function graph is the average rate of change during the interval.
+</p>
+</div>
+<p>During the interval <span class="math inline">\([t_0, t_1]\)</span> the rate at which the water cools is higher at first and lower at the end. The <strong><em>average</em></strong> rate of change is a single number that summarizes the whole interval.</p>
+<p>For all except straight-line models, the average rate of change depends on the interval chosen.</p>
+
+<div class="exercise">
+<span id="exr:unnamed-chunk-59" class="exercise"><strong>Exercise 8.1  (snail-tear-blanket)  </strong></span>
+</div>
+
+<details><p>We will be working extensively with the <em>change</em> in output value of a function when the <em>input value changes</em>.</p>
+<ul>
+<li><p>The change in the output value of a function <span class="math inline">\(f()\)</span> when the input changes from <span class="math inline">\(x = a\)</span> to <span class="math inline">\(x = b\)</span> is <span class="math display">\[f(x=b) - f(x=a)\]</span> Notice that when we talk about the change from <span class="math inline">\(x=a\)</span> to <span class="math inline">\(x=b\)</span> we subtract <span class="math inline">\(f(x=a)\)</span> from <span class="math inline">\(f(x=b)\)</span>. That change is sometimes called the <strong>rise</strong> in the value of the function. Rise always compares (by subtraction) the two <strong>output values</strong> corresponding to two specific input values. Remember that <span class="math inline">\(a\)</span> and <span class="math inline">\(b\)</span> stand for specific numbers.</p></li>
+<li><p>Corresponding with the idea of the change in output being <span class="math inline">\(f(x=b) - f(x=a)\)</span> the change in the input value to a function is <span class="math inline">\(b - a\)</span>. This is often called the <em>run</em> in the value of the input.</p></li>
+</ul>
+<p>Each point on the graph of a function has Cartesian coordinates <span class="math inline">\((a, f(x=a))\)</span>. For example, the graph of the function <span class="math inline">\(f()\)</span> shown in Graph I includes points such as <span class="math inline">\((1.0, 4.0)\)</span>, and <span class="math inline">\((3.5, 3.0)\)</span>. The second coordinate is the output value when we provide the first coordinate as an input value. The nature of the <span class="math inline">\(f()\)</span> function (as defined by the graph) is such that <span class="math inline">\(f(x=1) \equiv 4\)</span> and <span class="math inline">\(f(x=3.5) \equiv 3\)</span>.</p>
+<div class="inline-figure"><img src="CalcZ-notes_files/figure-html/unnamed-chunk-129-1.png" width="672"></div>
+<div class="etude-question">
+<p><strong>Q-8</strong>: True or false: In Graph I, the <em>rise</em> from a to b is positive.</p>
+<ol>
+<li><p>TRUE [<span class="math inline">\(f(x=a) &gt; f(x=b)\)</span>, so the rise <span class="math inline">\(f(x=b) - f(x=a)\)</span> is <em>negative</em>.]</p></li>
+<li><p>FALSE (+) []</p></li>
+</ol>
+</div>
+<div class="etude-question">
+<p><strong>Q-9</strong>: True or false: In Graph I, the <em>run</em> from <span class="math inline">\(x=a\)</span> to <span class="math inline">\(x=b\)</span> is positive.</p>
+<ol>
+<li><p>TRUE (+) []</p></li>
+<li><p>FALSE [The <em>run</em> is about the relative positions of <span class="math inline">\(x=a\)</span> and <span class="math inline">\(x=b\)</span> on the x-axis. Since <span class="math inline">\(a &lt; b\)</span>, the run from <span class="math inline">\(x=a\)</span> to <span class="math inline">\(x=b\)</span> is positive.]</p></li>
+</ol>
+</div>
+<div class="inline-figure"><img src="CalcZ-notes_files/figure-html/unnamed-chunk-130-1.png" width="672"></div>
+<div class="etude-question">
+<p><strong>Q-10</strong>: True or false: In Graph II, the <em>run</em> from a to b is positive.</p>
+<ol>
+<li><p>TRUE (+) []</p></li>
+<li><p>FALSE [The <em>run</em> is about the relative positions of a and b on the x-axis. Since a is to the left of b, the run from a to b is positive.]</p></li>
+</ol>
+</div>
+<div class="etude-question">
+<p><strong>Q-11</strong>: True or false: In Graph II, the <em>rise</em> from a to b is positive.</p>
+<ol>
+<li><p>TRUE [Remember, the <em>rise</em> from <span class="math inline">\(x=a\)</span> to <span class="math inline">\(x=b\)</span> is <span class="math inline">\(f(x=b) - f(x=a)\)</span>]</p></li>
+<li><p>FALSE (+) []</p></li>
+</ol>
+</div>
+<div class="etude-question">
+<p><strong>Q-12</strong>: True or false: In Graph II, the <em>run</em> from b to c is positive.</p>
+<ol>
+<li><p>TRUE [The <em>run</em> from <span class="math inline">\(x=b\)</span> to <span class="math inline">\(x=c\)</span> is <span class="math inline">\(c - b\)</span>. Since <span class="math inline">\(b&gt;c\)</span> b to c is negative.]</p></li>
+<li><p>FALSE (+) []</p></li>
+</ol>
+</div>
+<div class="etude-question">
+<p><strong>Q-13</strong>: True or false: In Graph II, the <em>rise</em> from b to c is positive.</p>
+<ol>
+<li><p>TRUE (+) []</p></li>
+<li><p>FALSE [The <em>rise</em> from <span class="math inline">\(x=b\)</span> to <span class="math inline">\(x=c\)</span> is <span class="math inline">\(f(x = c) - f(x = b)\)</span>. Since <span class="math inline">\(f(x=c) &gt; f(x=b)\)</span>, the rise is positive.]</p></li>
+</ol>
+</div>
+<div class="etude-question">
+<p><strong>Q-14</strong>: For an interval [2, 6] what is the value of the run? (The answer is independent of any particular graph/function.)</p>
+<ol>
+<li><p>4 (+) [The run is always the second number in the interval minus the first number. That’s <span class="math inline">\(6 - 2\)</span> here.]</p></li>
+<li><p>-4 [You got it backwards! The second number in the interval, 6, is numerically to the right of 2, so the run is positive.]</p></li>
+</ol>
+</div>
+<div class="etude-question">
+<p><strong>Q-15</strong>: Which is the run of the interval [6, 2]? (Again, the answer is independent of any particular graph/function.)</p>
+<ol>
+<li><p>4 [Sorry. The run from <span class="math inline">\(x=6\)</span> to <span class="math inline">\(x=2\)</span> is <span class="math inline">\(2 - 6\)</span> which is <span class="math inline">\(-4\)</span>.]</p></li>
+<li><p>-4 (+) [The run is <span class="math inline">\(2 - 6\)</span>, the second number in the interval minus the first number.]</p></li>
+</ol>
+</div>
+</details><div class="exercise">
+<span id="exr:unnamed-chunk-60" class="exercise"><strong>Exercise 8.2  (goat-dive-saucer)  </strong></span>
+</div>
+
+<details><p>From the graph in Figure <a href="fun-slopes.html#fig:water-average">8.2</a>, compute the average rate of change over the interval <span class="math inline">\(10 \leq t \leq 200\)</span>. How does it compare to the average rate of change over the interval <span class="math inline">\(10 \leq t \leq 125\)</span>?</p>
+</details><div class="exercise">
+<span id="exr:unnamed-chunk-61" class="exercise"><strong>Exercise 8.3  (chicken-show-map)  </strong></span>
+</div>
+
+<details><div class="scaffolding">
+<p>Open an R sandbox. You can use these function definitions to help you in your calculations.</p>
+<div class="sourceCode" id="cb45"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">f</span> <span class="op">&lt;-</span> <span class="fu">makeFun</span><span class="op">(</span><span class="fl">2</span><span class="op">*</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html">exp</a></span><span class="op">(</span><span class="va">x</span><span class="op">+</span><span class="fl">1</span><span class="op">)</span> <span class="op">~</span> <span class="va">x</span><span class="op">)</span>
+<span class="va">g</span> <span class="op">&lt;-</span> <span class="fu">makeFun</span><span class="op">(</span><span class="fl">3</span><span class="op">*</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html">exp</a></span><span class="op">(</span><span class="op">-</span><span class="va">x</span><span class="op">)</span> <span class="op">~</span> <span class="va">x</span><span class="op">)</span>
+<span class="va">h</span> <span class="op">&lt;-</span> <span class="fu">makeFun</span><span class="op">(</span><span class="va">x</span><span class="op">*</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html">exp</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">~</span> <span class="va">x</span><span class="op">)</span></code></pre></div>
+</div>
+<p>Using R, compute the <em>average</em> rate of change of the function over the given interval. Choose the closest answer for each problem.</p>
+<div class="etude-question">
+<p><strong>Q-16</strong>: <span class="math inline">\(f(x) \equiv 2 e^{x+1}\)</span> over [-2, 2]</p>
+<ol>
+<li><p>-2.99 []</p></li>
+<li><p>1.54 []</p></li>
+<li><p>2.72 []</p></li>
+<li><p>4.68 []</p></li>
+<li><p>9.85 (+) []</p></li>
+<li><p>11.32 []</p></li>
+</ol>
+</div>
+<div class="etude-question">
+<p><strong>Q-17</strong>: <span class="math inline">\(g(x) \equiv 3 e^{-x}\)</span> over [-1, 1.5]</p>
+<ol>
+<li><p>-2.99 (+) []</p></li>
+<li><p>1.54 []</p></li>
+<li><p>2.72 []</p></li>
+<li><p>4.68 []</p></li>
+<li><p>9.85 []</p></li>
+<li><p>11.32 []</p></li>
+</ol>
+</div>
+<div class="etude-question">
+<p><strong>Q-18</strong>: <span class="math inline">\(h(x) \equiv x e^x\)</span> over [0, 1]</p>
+<ol>
+<li><p>-3 []</p></li>
+<li><p>1.54 []</p></li>
+<li><p>2.72 (+) []</p></li>
+<li><p>4.68 []</p></li>
+<li><p>9.85 []</p></li>
+<li><p>11.32 []</p></li>
+</ol>
+</div>
+<p>It’s much less work if we use the R function <code><a href="https://rdrr.io/r/base/c.html">c()</a></code> to define the interval, and the R function <code><a href="https://rdrr.io/r/base/diff.html">diff()</a></code> to calculate differences. The next sandbox contains an example asking you to compute the average rate of change of <span class="math inline">\(f(x) \equiv e^x\)</span> over the interval [0, 4]. You only need lines 1, 3, and 5. The other lines show intermediate results to help you understand what <code><a href="https://rdrr.io/r/base/diff.html">diff()</a></code> is doing.</p>
+<div class="scaffolding">
+<div class="sourceCode" id="cb46"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">interval</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">4</span><span class="op">)</span>  <span class="co"># creates the interval</span>
+<span class="fu"><a href="https://rdrr.io/r/base/diff.html">diff</a></span><span class="op">(</span><span class="va">interval</span><span class="op">)</span>       <span class="co"># calculate the run</span>
+<span class="va">f</span> <span class="op">&lt;-</span> <span class="fu">makeFun</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html">exp</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">~</span> <span class="va">x</span><span class="op">)</span>   <span class="co">#  create the function</span>
+<span class="fu">f</span><span class="op">(</span><span class="va">interval</span><span class="op">)</span>     <span class="co"># evaluate  function at the endpoints of  the interval</span>
+<span class="fu"><a href="https://rdrr.io/r/base/diff.html">diff</a></span><span class="op">(</span><span class="fu">f</span><span class="op">(</span><span class="va">interval</span><span class="op">)</span><span class="op">)</span> <span class="op">/</span> <span class="fu"><a href="https://rdrr.io/r/base/diff.html">diff</a></span><span class="op">(</span><span class="va">interval</span><span class="op">)</span>  <span class="co"># complete answer</span></code></pre></div>
+</div>
+<div class="etude-question">
+<p><strong>Q-19</strong>: MMAC 4.1.61: True or false: The average rate of change of <span class="math inline">\(f(x) \equiv e^{x^2}\)</span> over [0.0, 0.1] is 0.1005017</p>
+<ol>
+<li><p>TRUE (+) []</p></li>
+<li><p>FALSE []</p></li>
+</ol>
+</div>
+<div class="etude-question">
+<p><strong>Q-20</strong>: MMAC 4.1.62: True or false: The average rate of change of <span class="math inline">\(f(x) \equiv \log(x)\)</span> over [2, 3] is 0.5062353.<br>
+(Hint: Change the code above so the interval variable goes from 2 to 3 and f becomes the function <span class="math inline">\(f(x) \equiv \log(x)\)</span>)</p>
+<ol>
+<li><p>TRUE []</p></li>
+<li><p>FALSE (+) []</p></li>
+</ol>
+</div>
+<div class="etude-question">
+<p><strong>Q-21</strong>: MMAC 4.1.61: True or false: The average rate of change of <span class="math inline">\(f(x) \equiv \sin(x)\)</span> over [0.0, 0.5] is 0.9588511</p>
+<ol>
+<li><p>TRUE (+) []</p></li>
+<li><p>FALSE []</p></li>
+</ol>
+</div>
+</details><div class="exercise">
+<span id="exr:unnamed-chunk-62" class="exercise"><strong>Exercise 8.4  (eagle-bring-car)  </strong></span>
+</div>
+
+<details><p>Consider the sinusoid function, graphed below.</p>
+<div class="inline-figure">
+<img src="CalcZ-notes_files/figure-html/unnamed-chunk-133-1.png" width="672">
+::: {.etude-question}</div>
+<p><strong>Q-22</strong>: What is the average rate of change over the interval <span class="math inline">\(0 &lt; x &lt; \frac{1}{2}\)</span>? (Choose the closest value.)</p>
+<ol>
+<li><p>0 [For this to be true, the function output would need to be the same at the two endpoints of the interval.]</p></li>
+<li><p>0.5 [Did you forget to divide the rise by the run?]</p></li>
+<li><p>1 (+) [Right. From the interval you have that the run is 1/2. The rise over that interval is from 0 to 1/2, so a rise of 1/2. ]</p></li>
+</ol>
+<p>:::</p>
+<div class="etude-question">
+<p><strong>Q-23</strong>: What is the average rate of change over the interval <span class="math inline">\(0 &lt; x &lt; 6.25\)</span>? (Choose the closest value.)</p>
+<ol>
+<li><p>-0.5 []</p></li>
+<li><p>0 (+) [Right. The function output is zero at both endpoints of the interval, so the rise is zero. Hence, the run is zero.]</p></li>
+<li><p>0.5 []</p></li>
+</ol>
+</div>
+<div class="etude-question">
+<p><strong>Q-24</strong>: What is the average rate of change over the interval <span class="math inline">\(0 &lt; x &lt; 10\)</span>? (Choose the closest value.)</p>
+<ol>
+<li><p>-0.05 (+) [Right. The rise is -0.5 and the run is 10.]</p></li>
+<li><p>-0.5 [This is the “rise” over the interval, but it’s not the average rate of change. You’ll need to divide the rise by another quantity to get the average rate of change.]</p></li>
+<li><p>0 []</p></li>
+<li><p>0.5 [The rise will be <span class="math inline">\(f(10) - f(0) pprox -0.5 - 0 = -0.5\)</span>. You’ve got the sign wrong.]</p></li>
+</ol>
+</div>
+</details><div class="exercise">
+<span id="exr:unnamed-chunk-63" class="exercise"><strong>Exercise 8.5  (pig-look-rug)  </strong></span>
+</div>
+
+<details><p>For each of the following, compute the <em>average</em> rate of change of the function over the given interval.</p>
+<div class="etude-question">
+<p><strong>Q-25</strong>: The average rate of change of <span class="math inline">\(f(x) \equiv x + 5\)</span> over [3, 5] is</p>
+<ol>
+<li><p>-2 [Remember, the <em>difference</em> from <span class="math inline">\(x=3\)</span> to 5 is <span class="math inline">\(f(5) - f(3)\)</span>, not the other way around. And the average <em>rate</em> of change is the difference divided by the length of the interval.]</p></li>
+<li><p>-1 [Remember, the <em>difference</em> from <span class="math inline">\(x=3\)</span> to 5 is <span class="math inline">\(f(5) - f(3)\)</span>, not the other way around. Similarly, the length of the interval from <span class="math inline">\(x=3\)</span> to 5 is <span class="math inline">\(5-3\)</span>, not <span class="math inline">\(3-5\)</span>.]</p></li>
+<li><p>1 (+) [<span class="math inline">\(f(x=5) = 10\)</span> and <span class="math inline">\(f(x=3) = 8\)</span>, so the <em>difference</em> in values is 2. Since this difference occurs over an interval of length 2 (that is, from #x=3$ to 5), the average <em>rate</em> of change is 2/2.]</p></li>
+<li><p>2 [Are you sure you took the <strong>rate</strong> of change rather than simply the change?]</p></li>
+</ol>
+</div>
+<div class="etude-question">
+<p><strong>Q-26</strong>: The average rate of change of <span class="math inline">\(f(x) \equiv 3 - 2 x\)</span> over [-4, -2] is</p>
+<ol>
+<li><p>-4 [This is the total difference over the interval, not the <em>rate</em> of change.]</p></li>
+<li><p>-2 (+) [The difference from <span class="math inline">\(x=-4\)</span> to <span class="math inline">\(-2\)</span> is <span class="math inline">\(f(-2) - f(-4) = (7) - (11) = -4\)</span>. The length of the interval is <span class="math inline">\((-2) - (-4) = 2\)</span>. So the rate is -4/2, just as you got.]</p></li>
+<li><p>0 []</p></li>
+<li><p>1 [When <span class="math inline">\(x\)</span> changes by two units, <span class="math inline">\(f(x)\)</span> changes by 4. The <em>rate</em> of change is 4/2 = -2.]</p></li>
+<li><p>2 [Check your +/- signs.]</p></li>
+<li><p>4 [This is the negative total difference over the interval, not the <em>rate</em> of change. Also check your +/- signs.]</p></li>
+</ol>
+</div>
+<div class="etude-question">
+<p><strong>Q-27</strong>: The average rate of change of <span class="math inline">\(f(x) \equiv -3 x^2\)</span> over [0, 4] is</p>
+<ol>
+<li><p>-24 [Perhaps you are looking at the derivative at <span class="math inline">\(x=4\)</span> and not the average rate of change from <span class="math inline">\(x=0\)</span> to 4.]</p></li>
+<li><p>-12 (+) [The difference in <span class="math inline">\(f()\)</span> over the interval is <span class="math inline">\(f(4) - f(2) = (-48) - 0 = -48\)</span>. The length of the interval is <span class="math inline">\(4-0\)</span>, so the average rate of change over the interval is <span class="math inline">\((-48)/4 = -12\)</span>.]</p></li>
+<li><p>0 [Perhaps you are looking at the derivative at <span class="math inline">\(x=0\)</span> and not the average rate of change from <span class="math inline">\(x=0\)</span> to 4.]</p></li>
+<li><p>1 []</p></li>
+<li><p>2 []</p></li>
+<li><p>12 [Check the signs in your arithmetic.]</p></li>
+<li><p>24 []</p></li>
+</ol>
+</div>
+<div class="etude-question">
+<p><strong>Q-28</strong>: The average rate of change of <span class="math inline">\(f(x) \equiv x^3 - 2 x + 1\)</span> over [0, 2] is</p>
+<ol>
+<li><p>-2 [Either check your +/- signs or perhaps you are looking at the derivative at <span class="math inline">\(x=0\)</span> and not the average rate of change from <span class="math inline">\(x=0\)</span> to 2.]</p></li>
+<li><p>1.5 []</p></li>
+<li><p>2 (+) [The difference in <span class="math inline">\(f()\)</span> over the interval is <span class="math inline">\(f(2) - f(0) = 5 - 1 = 4\)</span>. The length of the interval is <span class="math inline">\(2 - 0\)</span> so the average <em>rate</em> of change is <span class="math inline">\(4/2 = 2\)</span>. ]</p></li>
+<li><p>7 []</p></li>
+<li><p>10 [I think you are looking at the derivative at <span class="math inline">\(x=2\)</span> rather than the average rate of change from 0 to 2.]</p></li>
+</ol>
+</div>
+</details>
+</div>
+<div id="instantaneous-rate-of-change" class="section level2">
+<h2>
+<span class="header-section-number">8.6</span> Instantaneous rate of change<a class="anchor" aria-label="anchor" href="#instantaneous-rate-of-change"><i class="fas fa-link"></i></a>
+</h2>
+<p>The water is cooling continuously. Sometimes we’ll be interested in the rate of change at a given instant <span class="math inline">\(t_0\)</span>. If we choose a very small interval, say <span class="math inline">\([t_0, t_0 + 0.1]\)</span>, we’ll get a good approximation to this <strong><em>instantaneous rate of change</em></strong>.
+<span class="math display">\[\text{instantaneous rate of change} = \frac{f(t_0 + 0.1) - f(t_0)}{0.1}\]</span></p>
+<p>On a graph, the instantaneous rate of change is the slope of the tangent line to a point, as shown in Figure <a href="fun-slopes.html#fig:tangent-line-exp">8.3</a>.</p>
+<div class="figure">
+<span id="fig:tangent-line-exp"></span>
+<img src="CalcZ-notes_files/figure-html/tangent-line-exp-1.png" alt="Instantaneous rate of change is the slope of the line tangent to a the curve at a single point." width="672"><p class="caption">
+Figure 8.3: Instantaneous rate of change is the slope of the line tangent to a the curve at a single point.
+</p>
+</div>
+<p>In Block 2, we’ll see that a good way to define an instantaneous rate of change at <span class="math inline">\(t_0\)</span> is as the average rate of change over the interval <span class="math inline">\(t_0 \leq t \leq t_1\)</span> with the proviso that the interval length <span class="math inline">\(t_1 - t_0\)</span> goes as closely as it can to zero.</p>
+<p>Figure <a href="fun-slopes.html#fig:three-rates">8.4</a> shows the fitted rate of change and average rate of change in the interval <span class="math inline">\(10 \leq t \leq 125\)</span> as well as the instantaneous rate of change at <span class="math inline">\(t_0 = 50\)</span>. As you can see, they are different from one another.</p>
+<div class="figure">
+<span id="fig:three-rates"></span>
+<img src="CalcZ-notes_files/figure-html/three-rates-1.png" alt="Comparing the average rate of change (red) over the interval $10 \leq t \leq 125$, the instantaneous rate of change at $x_0 =25$, and the fitted linear model (orange). The exponential model is shown in gray." width="672"><p class="caption">
+Figure 8.4: Comparing the average rate of change (red) over the interval <span class="math inline">\(10 \leq t \leq 125\)</span>, the instantaneous rate of change at <span class="math inline">\(x_0 =25\)</span>, and the fitted linear model (orange). The exponential model is shown in gray.
+</p>
+</div>
+</div>
+<div id="the-slope-function" class="section level2">
+<h2>
+<span class="header-section-number">8.7</span> The slope function<a class="anchor" aria-label="anchor" href="#the-slope-function"><i class="fas fa-link"></i></a>
+</h2>
+<p>We have a way to estimate the instantaneous rate of change of a function at a given input <span class="math inline">\(t_0\)</span>:
+<span class="math display">\[\text{instantaneous_rate_of_change} \equiv \frac{f(t_0 + 0.1) - f(t_0)}{0.1}\]</span>
+Now we’ll let notation do some work for us and re-write the above as the instantaneous-rate-of-change function, which we’ll call the <strong><em>slope</em></strong> function.
+<span class="math display">\[\text{slope}(t) \equiv \frac{f(t + 0.1) - f(t)}{0.1}\]</span>
+We’ve merely made it clear that <span class="math inline">\(\text{slope}(t)\)</span> is a function and written the formula in terms of the input <span class="math inline">\(t\)</span> rather than a fixed number <span class="math inline">\(t_0\)</span>. Of course, the “instantaneous rate of change at <span class="math inline">\(t_0\)</span>” is simply <span class="math inline">\(\text{slope}(t)\)</span>.</p>
+<p>Let’s look at the slope function that corresponds to some of our naked modeling functions: <span class="math inline">\(e^x\)</span>, <span class="math inline">\(\sin(x)\)</span>, <span class="math inline">\(x^{-1}\)</span> and <span class="math inline">\(\ln(x)\)</span>. Recall that the input to the naked functions is always a number. The output is a number as well. Thus we can display the function and the corresponding slope function on the same coordinate frame. (This will not be true when the input is a quantity and the output is another quantity.)</p>
+<div class="figure">
+<span id="fig:compare-naked-slopes"></span>
+<img src="CalcZ-notes_files/figure-html/compare-naked-slopes-1.png" alt="Comparing the naked modeling function (blue) to it's slope function (red)" width="50%"><img src="CalcZ-notes_files/figure-html/compare-naked-slopes-2.png" alt="Comparing the naked modeling function (blue) to it's slope function (red)" width="50%"><img src="CalcZ-notes_files/figure-html/compare-naked-slopes-3.png" alt="Comparing the naked modeling function (blue) to it's slope function (red)" width="50%"><img src="CalcZ-notes_files/figure-html/compare-naked-slopes-4.png" alt="Comparing the naked modeling function (blue) to it's slope function (red)" width="50%"><p class="caption">
+Figure 8.5: Comparing the naked modeling function (blue) to it’s slope function (red)
+</p>
+</div>
+<p>EXERCISE: There is a web of connections between the naked modeling functions and their slopes.</p>
+<div class="etude-question">
+<p><strong>Q-29</strong>: 1. Which naked modeling function has a slope function that is simply a input-shifted version of itself?</p>
+<ol>
+<li><p>exponential []</p></li>
+<li><p>sinusoid (+) []</p></li>
+<li><p>logarithm []</p></li>
+<li><p>power-law <span class="math inline">\(x^{-1}\)</span> []</p></li>
+</ol>
+</div>
+<div class="etude-question">
+<p><strong>Q-30</strong>: 2. Which naked modeling function has a slope function that is identical to itself?</p>
+<ol>
+<li><p>exponential (+) []</p></li>
+<li><p>sinusoid []</p></li>
+<li><p>logarithm []</p></li>
+<li><p>power-law <span class="math inline">\(x^{-1}\)</span> []</p></li>
+</ol>
+</div>
+<div class="etude-question">
+<p><strong>Q-31</strong>: 3. Which naked modeling function has a slope function that is another naked modeling function? (Hint: The other function is also shown in the set of graphs.)</p>
+<ol>
+<li><p>exponential []</p></li>
+<li><p>sinusoid []</p></li>
+<li><p>logarithm (+) []</p></li>
+<li><p>power-law <span class="math inline">\(x^{-1}\)</span>+ []</p></li>
+</ol>
+</div>
+<div class="why">
+<p>We defined the “slope function” as
+<span class="math display">\[\text{slope}(t) \equiv \frac{f(t + 0.1) - f(t)}{0.1}\]</span></p>
+<p>The 0.1 in the definition of the slope function is definitely a kluge. 0.1 minutes may be small when it comes to cooling water, but it might not be small in other contexts. We’ll fix that in Block 2 when we define the <strong><em>derivative operator</em></strong> which replaces 0.1 with something that small in every context.</p>
+</div>
+</div>
+<div id="to-be-turned-into-exercises" class="section level2">
+<h2>
+<span class="header-section-number">8.8</span> To be turned into exercises<a class="anchor" aria-label="anchor" href="#to-be-turned-into-exercises"><i class="fas fa-link"></i></a>
+</h2>
+<p>“Slope” is a natural metaphor when thinking of a function as a graph. But a more general way to describe the concept is the <strong><em>rate of change</em></strong> of the output with respect to the input. The change in the output from one end of the interval is <span class="math inline">\(f(x_1) - f(x_0)\)</span>, the change in the input is <span class="math inline">\(x_1 - x_0\)</span>. If the input is time (in hours), and the output is the position of a car (in miles), then the rate of change is <em>miles-per-hour</em>: the car’s velocity.</p>
+<p>For a straight-line function—think of a car driving at constant speed on a highway—it doesn’t matter what you choose for <span class="math inline">\(x_1\)</span> and <span class="math inline">\(x_0\)</span> (so long as they are not identical). But for other functions, the choice does matter.</p>
+<p>Imagine a graph of the position of a car along a road as in Figure @ref{fig:stop-and-go}. Over the course of an hour, the car travelled about 25 miles. In other words, the <strong><em>average</em></strong> speed is 25 miles/hour: the <em>slope</em> of the red line segment. Given the traffic, sometimes the car was stopped (time C), sometimes crawling (time D) and sometimes much faster than average (time B).</p>
+<div class="inline-figure"><img src="CalcZ-notes_files/figure-html/stop-and-go-1.png" width="672"></div>
+<p>During the interval from B to C, the car was travelling relatively fast. The slope of the brown segment connecting the position at times B and C is the <strong><em>average</em></strong> rate of change between times B and C. It’s easy to see that the average rate of change from B to C is larger than the overall average from <span class="math inline">\(t=0\)</span> to <span class="math inline">\(t=1\)</span>. Calculating that slope is a matter of evaluating the position at the endpoints and dividing by the length of the interval.</p>
+<div class="workedexample" latex-data="">
+<p>What is the average rate of change in the car’s position during the interval <span class="math inline">\(t_B = 0.40\)</span> to <span class="math inline">\(t_C=0.54\)</span>?</p>
+<p>The length of the interval is <span class="math inline">\(t_C - t_B = 0.54-0.40=0.14\)</span>.</p>
+<p>Evaluating the function gives <span class="math inline">\(x(t_C) = 18\)</span> and <span class="math inline">\(x(t_B) = 12.6\)</span>.</p>
+<p>Rise is <span class="math inline">\(x(t_C) - x(t_B) = 18 - 12.6 = 5.4\)</span>.</p>
+<p>Run is <span class="math inline">\(t_C - t_B = 0.54-0.40=0.14\)</span>.</p>
+<p>The average rate of change during the interval is $5.4/0.14 = 38.6 $ miles/hour.</p>
+</div>
+<div class="workedexample" latex-data="">
+<p>The graph shows a simplified model of the amount of usable wood that can be harvested from a typical tree in a managed forest of Ponderosa Pine. (You can see some actual forestry research models <a href="https://www.fs.fed.us/rm/pubs/rmrs_gtr292/1992_milner.pdf">here</a>.)</p>
+<div class="inline-figure"><img src="CalcZ-notes_files/figure-html/aver-tree-1.png" width="672"></div>
+<p>You are writing a business plan for a proposed pine forest. Among other things, you have to forecast the revenue that will be generated and when you will have salable product.</p>
+<p>They say that “time is money.” Every year you wait before harvest is another year that you don’t have the money. On the other hand, every year that you wait means more wood at the end. How to decide when to harvest?</p>
+<p>The tree continues to grow until year 50, when it seems to have reached an equilibrium: perhaps growth goes to zero, or rot balances what growth there is. There’s no point waiting until after year 50.</p>
+<p>At year 25, the tree is growing as fast as it ever will. You’ll get about 600 board-feet of lumber. Should you harvest at year 25? No! That the tree is growing so fast means that you will have a lot more wood at year 26, 27, and so on. The time to harvest is when the growth is getting smaller, so that it’s not worth waiting an extra year.</p>
+<p>The quantity of interest is the average rate of growth from seedling to harvest. Harvesting at year 25 will give a total change of 600 board feet over 25 years, giving an average rate of change of <span class="math inline">\(600 \div 25 = 24 \mbox{board-feet-per-year}\)</span>. But if you wait until year 35, you’ll have about 900 board feet, giving an average rate of change of <span class="math inline">\(900 \div 35 = 25.7 \mbox{board-feet-per-year}\)</span>.</p>
+</div>
+<p>We’ve been presenting the average rate of change as a <strong>number</strong>: <span class="math display">\[\frac{f(t_B) - f(t_A)}{t_B - t_A}\]</span></p>
+<p>But it’s helpful to think of it as a <strong>function</strong> that takes two inputs, which we can call <span class="math inline">\(t_A\)</span> and <span class="math inline">\(t_B\)</span>:
+<span class="math display">\[\text{ave_rate_of_change}(t_A, t_B) \equiv \frac{f(t_B) - f(t_A)}{t_B - t_A}\]</span>
+This is a very subtle maneuver. The formula is exactly the same, but by writing the quantities <span class="math inline">\(t_A\)</span> and <span class="math inline">\(t_B\)</span> as inputs (by putting them in parentheses on the left side), we turn the formula into a function.</p>
+<p>Sometimes the average-rate-of-change function presents the information in a clear way.</p>
+<div class="workedexample" latex-data="">
+<p>Back to the forest … Here’s a graph of the average-rate-of change function. The function has two inputs, but botany dictates that we can only be growing word from the time the seedling is planted. So we’ll set <span class="math inline">\(t_A = 0\)</span> and look at the corresponding <em>slice</em> of the function:</p>
+<div class="inline-figure">
+<img src="CalcZ-notes_files/figure-html/unnamed-chunk-64-1.png" width="672">
+The graph makes it clear that the maximum average growth from planting to harvest will occur at about year 32.</div>
+</div>
+
+</div>
+</div>
+  <div class="chapter-nav">
+<div class="prev"><a href="process-of-modeling.html"><span class="header-section-number">7</span> Process of modeling</a></div>
+<div class="next"><a href="fun-assembling.html"><span class="header-section-number">9</span> Assembling functions</a></div>
+</div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
+    <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
+      <ul class="nav navbar-nav">
+<li><a class="nav-link" href="#fun-slopes"><span class="header-section-number">8</span> Slope function</a></li>
+<li><a class="nav-link" href="#change-and-slope"><span class="header-section-number">8.1</span> Change and slope</a></li>
+<li><a class="nav-link" href="#continuous-change"><span class="header-section-number">8.2</span> Continuous change</a></li>
+<li><a class="nav-link" href="#slope"><span class="header-section-number">8.3</span> Slope</a></li>
+<li><a class="nav-link" href="#the-fitted-line"><span class="header-section-number">8.4</span> The fitted line</a></li>
+<li><a class="nav-link" href="#average-rate-of-change"><span class="header-section-number">8.5</span> Average rate of change</a></li>
+<li><a class="nav-link" href="#instantaneous-rate-of-change"><span class="header-section-number">8.6</span> Instantaneous rate of change</a></li>
+<li><a class="nav-link" href="#the-slope-function"><span class="header-section-number">8.7</span> The slope function</a></li>
+<li><a class="nav-link" href="#to-be-turned-into-exercises"><span class="header-section-number">8.8</span> To be turned into exercises</a></li>
+</ul>
+
+      <div class="book-extra">
+        <ul class="list-unstyled">
+<li><a id="book-source" href="https://github.com/dtkaplan/CalcZ-notes/blob/master/Fun-slopes.Rmd">View source <i class="fab fa-github"></i></a></li>
+          <li><a id="book-edit" href="https://github.com/dtkaplan/CalcZ-notes/edit/master/Fun-slopes.Rmd">Edit this page <i class="fab fa-github"></i></a></li>
+        </ul>
+</div>
+    </nav>
+</div>
+
+</div>
+</div> <!-- .container -->
+
+<footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>"<strong>CalcZ Student Notes</strong>" was written by Daniel Kaplan. It was last built on 2021-06-09.</p>
+  </div>
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
+  </div>
+
+</div></div>
+</footer><!-- dynamically load mathjax for compatibility with self-contained --><script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+</html>

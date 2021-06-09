@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>Chapter 16 Partial change | CalcZ Student Notes</title>
+<meta name="author" content="Daniel Kaplan">
+<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.2"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="libs/bootstrap-4.5.3/bootstrap.min.css" rel="stylesheet">
+<script src="libs/bootstrap-4.5.3/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.2.4/tabs.js"></script><script src="libs/bs3compat-0.2.4/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script><script src="libs/htmlwidgets-1.5.3/htmlwidgets.js"></script><link href="libs/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet">
+<script src="libs/datatables-binding-0.12/datatables.js"></script><link href="libs/dt-core-1.10.20/css/jquery.dataTables.min.css" rel="stylesheet">
+<link href="libs/dt-core-1.10.20/css/jquery.dataTables.extra.css" rel="stylesheet">
+<script src="libs/dt-core-1.10.20/js/jquery.dataTables.min.js"></script><link href="libs/crosstalk-1.1.1/css/crosstalk.css" rel="stylesheet">
+<script src="libs/crosstalk-1.1.1/js/crosstalk.min.js"></script><script src="libs/kePrint-0.0.1/kePrint.js"></script><link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet">
+<script src="libs/plotly-binding-4.9.3/plotly.js"></script><script src="libs/typedarray-0.1/typedarray.min.js"></script><link href="libs/plotly-htmlwidgets-css-1.57.1/plotly-htmlwidgets.css" rel="stylesheet">
+<script src="libs/plotly-main-1.57.1/plotly-latest.min.js"></script><script type="text/x-mathjax-config">
+  const popovers = document.querySelectorAll('a.footnote-ref[data-toggle="popover"]');
+  for (let popover of popovers){
+    const div = document.createElement('div');
+    div.setAttribute('style', 'position: absolute; top: 0, left:0; width:0, height:0, overflow: hidden; visibility: hidden;');
+    div.innerHTML = popover.getAttribute('data-content');
+    
+    // Will this work with TeX on its own line?
+    var has_math = div.querySelector("span.math");
+    if (has_math) {
+      document.body.appendChild(div);
+    	MathJax.Hub.Queue(["Typeset", MathJax.Hub, div]);
+    	MathJax.Hub.Queue(function(){
+        popover.setAttribute('data-content', div.innerHTML);
+    	})
+    }
+  }
+  </script><script src="https://cdn.jsdelivr.net/autocomplete.js/0/autocomplete.jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/mark.js@8.11.1/dist/mark.min.js"></script><!-- CSS --><link rel="stylesheet" href="css/CalcZ-style.css">
+</head>
+<body data-spy="scroll" data-target="#toc">
+
+<div class="container-fluid">
+<div class="row">
+  <header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
+
+    <div class="d-flex align-items-start justify-content-between">
+      <h1>
+        <a href="index.html" title="">CalcZ Student Notes</a>
+      </h1>
+      <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
+    </div>
+
+    <div id="main-nav" class="collapse-lg">
+      <form role="search">
+        <input id="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
+</form>
+
+      <nav aria-label="Table of contents"><h2>Table of contents</h2>
+        <ul class="book-toc list-unstyled">
+<li><a class="" href="index.html">Welcome to calculus</a></li>
+<li><a class="" href="calcz-project-development-plan.html">CalcZ Project Development Plan</a></li>
+<li class="book-part">Block 1: Functions and quantity</li>
+<li><a class="" href="outline-of-block-1.html">Outline of Block 1</a></li>
+<li><a class="" href="change.html"><span class="header-section-number">1</span> Change</a></li>
+<li><a class="" href="structure-of-a-function.html"><span class="header-section-number">2</span> Structure of a function</a></li>
+<li><a class="" href="fun-describing.html"><span class="header-section-number">3</span> Describing functions</a></li>
+<li><a class="" href="fun-notation.html"><span class="header-section-number">4</span> Notation for functions</a></li>
+<li><a class="" href="graphs-and-graphics.html"><span class="header-section-number">5</span> Graphics &amp; function graphs</a></li>
+<li><a class="" href="params-intro.html"><span class="header-section-number">6</span> Parameters for functions</a></li>
+<li><a class="" href="process-of-modeling.html"><span class="header-section-number">7</span> Process of modeling</a></li>
+<li><a class="" href="fun-slopes.html"><span class="header-section-number">8</span> Slope function</a></li>
+<li><a class="" href="fun-assembling.html"><span class="header-section-number">9</span> Assembling functions</a></li>
+<li class="book-part">Block 2: Differentiation</li>
+<li><a class="" href="outline-of-block-2.html">Outline of Block 2</a></li>
+<li><a class="" href="change-relationships.html"><span class="header-section-number">10</span> Change relationships</a></li>
+<li><a class="" href="h-and-derivatives.html"><span class="header-section-number">11</span> h and derivatives</a></li>
+<li><a class="" href="optim-and-shape.html"><span class="header-section-number">12</span> Optimization</a></li>
+<li><a class="" href="cont-and-smooth.html"><span class="header-section-number">13</span> Continuity and smoothness</a></li>
+<li><a class="" href="derivatives-of-composed-functions.html"><span class="header-section-number">14</span> Derivatives of composed functions</a></li>
+<li><a class="" href="approximating-functions.html"><span class="header-section-number">15</span> Approximating functions</a></li>
+<li><a class="active" href="partial-change.html"><span class="header-section-number">16</span> Partial change</a></li>
+<li><a class="" href="approximation-around-a-point.html"><span class="header-section-number">17</span> Approximation around a point</a></li>
+</ul>
+
+        <div class="book-extra">
+          <p><a id="book-repo" href="https://github.com/dtkaplan/CalcZ-notes">View book source <i class="fab fa-github"></i></a></p>
+        </div>
+      </nav>
+</div>
+  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="partial-change" class="section level1">
+<h1>
+<span class="header-section-number">16</span> Partial change<a class="anchor" aria-label="anchor" href="#partial-change"><i class="fas fa-link"></i></a>
+</h1>
+<div class="objectives">
+<ol>
+<li>
+<strong>[Deriv-4a]</strong> <em>Understand that there are many different slopes at any point of a non-constant function of 2 or more variables.</em>
+</li>
+<li>
+<strong>[Deriv-4b]</strong> <em>Calculate partial derivatives on a contour plot</em>
+</li>
+<li>
+<strong>[Deriv-4c]</strong> <em>Understand “partial derivative” as “changing one input while holding constant all the other inputs.”</em>
+</li>
+<li>
+<strong>[Deriv-8b]</strong> <em>Calculate partial derivatives by “changing one input while holding constant all the other inputs.”</em>
+</li>
+<li>
+<strong>[Deriv-4d]</strong> <em>Know the three properties of gradient vectors</em>
+</li>
+</ol>
+</div>
+<div id="all-other-things-being-equal" class="section level2">
+<h2>
+<span class="header-section-number">16.1</span> All other things being equal …<a class="anchor" aria-label="anchor" href="#all-other-things-being-equal"><i class="fas fa-link"></i></a>
+</h2>
+
+<div class="exercise">
+<span id="exr:unnamed-chunk-113" class="exercise"><strong>Exercise 16.1  (partial-purple)  </strong></span>
+</div>
+
+<details><div class="scaffolding">
+<p>Open a sandbox and use the following commands to make a “surface plot” and a contour plot of a function <span class="math inline">\(g(x)\)</span> centered on the reference point <span class="math inline">\((x_0\!=\!0,\, y_0\!=\!0)\)</span>.</p>
+<div class="sourceCode" id="cb95"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">g</span> <span class="op">&lt;-</span> <span class="fu">rfun</span><span class="op">(</span> <span class="op">~</span> <span class="va">x</span> <span class="op">+</span> <span class="va">y</span>, seed <span class="op">=</span> <span class="fl">802</span>, n <span class="op">=</span> <span class="fl">15</span><span class="op">)</span>
+<span class="va">x0</span> <span class="op">&lt;-</span>  <span class="fl">0</span>
+<span class="va">y0</span> <span class="op">&lt;-</span>  <span class="fl">0</span>
+<span class="va">size</span> <span class="op">&lt;-</span> <span class="fl">5</span>
+<span class="fu">interactive_plot</span><span class="op">(</span><span class="fu">g</span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span><span class="op">)</span> <span class="op">~</span> <span class="va">x</span> <span class="op">+</span> <span class="va">y</span>,
+             <span class="fu">domain</span><span class="op">(</span>x <span class="op">=</span> <span class="va">x0</span> <span class="op">+</span> <span class="va">size</span><span class="op">*</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">1</span>, <span class="fl">1</span><span class="op">)</span>,
+                    y <span class="op">=</span> <span class="va">y0</span> <span class="op">+</span> <span class="va">size</span><span class="op">*</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">1</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
+<span class="fu">contour_plot</span><span class="op">(</span><span class="fu">g</span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span><span class="op">)</span> <span class="op">~</span> <span class="va">x</span> <span class="op">+</span> <span class="va">y</span>,
+             <span class="fu">domain</span><span class="op">(</span>x <span class="op">=</span> <span class="va">x0</span> <span class="op">+</span> <span class="va">size</span><span class="op">*</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">1</span>, <span class="fl">1</span><span class="op">)</span>,
+                    y <span class="op">=</span> <span class="va">y0</span> <span class="op">+</span> <span class="va">size</span><span class="op">*</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">1</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<div class="inline-figure"><img src="CalcZ-notes_files/figure-html/unnamed-chunk-171-1.png" width="672"></div>
+<p>Rotate the graphic around until you feel comfortable with the controls.</p>
+<p>By making <code>size</code> smaller, you can zoom in around the reference point. Zoom in gradually (say, <code>size =</code> 1.0, 0.5, 0.1, 0.05, 0.01) until you reach a point where the surface plot is (practically) a pretty simple inclined plane.</p>
+</div>
+<p>From either the surface plot or from the contour plot, zoomed in so that the graph shows an inclined plane, figure out the sign of <span class="math inline">\(\partial_x g(0,0)\)</span> and <span class="math inline">\(\partial_y g(0,0)\)</span>.</p>
+<div class="etude-question">
+<p><strong>Q-108</strong>: Which answer best describes the signs of the partial derivatives of <span class="math inline">\(g(x,y)\)</span> at the reference point <span class="math inline">\((x_0=0, y_0=0)\)</span>?</p>
+<ol>
+<li><p><span class="math inline">\(\partial_x g(0,0)\)</span> is pos, <span class="math inline">\(\partial_y g(0,0)\)</span> is pos []</p></li>
+<li><p><span class="math inline">\(\partial_x g(0,0)\)</span> is pos, <span class="math inline">\(\partial_y g(0,0)\)</span> is neg []</p></li>
+<li><p><span class="math inline">\(\partial_x g(0,0)\)</span> is neg, <span class="math inline">\(\partial_y g(0,0)\)</span> is neg []</p></li>
+<li><p><span class="math inline">\(\partial_x g(0,0)\)</span> is neg, <span class="math inline">\(\partial_y g(0,0)\)</span> is pos. (+) []</p></li>
+<li><p><span class="math inline">\(\partial_x g(0,0)\)</span> is 0, <span class="math inline">\(\partial_y g(0,0)\)</span> is pos []</p></li>
+</ol>
+</div>
+</details><div class="exercise">
+<span id="exr:unnamed-chunk-114" class="exercise"><strong>Exercise 16.2  (partial-tan)  </strong></span>
+</div>
+
+<details><p>Consider this close up of a function around a reference point at the center of the graph.</p>
+<div class="inline-figure"><img src="CalcZ-notes_files/figure-html/unnamed-chunk-173-1.png" width="672"></div>
+<p>By eye, estimate these derivatives of the function at the reference point <span class="math inline">\((x_0=-2, y_0=-5)\)</span>.</p>
+<div class="etude-question">
+<p><strong>Q-109</strong>: What is the numerical value of <span class="math inline">\(\partial_x g(x,y)\)</span> at the reference point?</p>
+<ol>
+<li><p>-1 []</p></li>
+<li><p>-0.50 []</p></li>
+<li><p>-0.25 []</p></li>
+<li><p>0 []</p></li>
+<li><p>0.25 []</p></li>
+<li><p>0.50 (+) []</p></li>
+<li><p>1 []</p></li>
+</ol>
+</div>
+<div class="etude-question">
+<p><strong>Q-110</strong>: What is the numerical value of <span class="math inline">\(\partial_y g(x,y)\)</span> at the reference point?</p>
+<ol>
+<li><p>-1 []</p></li>
+<li><p>-0.50 []</p></li>
+<li><p>-0.25 []</p></li>
+<li><p>0 []</p></li>
+<li><p>0.25 []</p></li>
+<li><p>0.50 []</p></li>
+<li><p>1 (+) []</p></li>
+</ol>
+</div>
+<p>The next questions ask about second-order partial derivatives. As you know, the second derivative is about how the first derivative changes with x or y. Insofar as the function is a simple inclined plane, where the contours would be straight, parallel, and evenly spaced, the second derivatives would all be zero. But you can see that it is not such a plane: the contours curve a bit.</p>
+<p>In determining the second derivatives by eye from the graph, you are encouraged to compare first derivatives at the opposing edges of the graph, as opposed to at very nearby points.</p>
+<div class="etude-question">
+<p><strong>Q-111</strong>: What is the sign of <span class="math inline">\(\partial_{xx} g(x,y)\)</span> at the reference point?</p>
+<ol>
+<li><p>negative (+) []</p></li>
+<li><p>positive []</p></li>
+</ol>
+</div>
+<div class="etude-question">
+<p><strong>Q-112</strong>: What is the sign of <span class="math inline">\(\partial_{yy} g(x,y)\)</span> at the reference point?</p>
+<ol>
+<li><p>negative []</p></li>
+<li><p>positive (+) []</p></li>
+</ol>
+</div>
+<div class="etude-question">
+<p><strong>Q-113</strong>: What is the sign of <span class="math inline">\(\partial_{xy} g(x,y)\)</span> at the reference point?</p>
+<ol>
+<li><p>negative []</p></li>
+<li><p>positive (+) []</p></li>
+</ol>
+</div>
+<p>::: {.etude-question}</p>
+<p><strong>Q-114</strong>: What is the sign of <span class="math inline">\(\partial_{yx} g(x,y)\)</span> at the reference point?</p>
+<ol>
+<li><p>negative []</p></li>
+<li><p>positive (+) []</p></li>
+</ol>
+:::
+</details><div class="exercise">
+<span id="exr:unnamed-chunk-115" class="exercise"><strong>Exercise 16.3  (partial-doctor)  </strong></span>
+</div>
+
+<details><p>At numerous occasions in your professional life, you will be in one or both of these positions:</p>
+<ol style="list-style-type: decimal">
+<li>You are a decision-maker being presented with the results of an analysis conducted by a team of unknown reliability, and you need to figure out whether what they are telling you is credible.</li>
+<li>You are a member of the analysis team needing to demonstrate to the decision-maker that your work should be believed.</li>
+</ol>
+<p>As an example, consider one of the functions presented in a comedy book, <em>Geek Logic: 50 Foolproof Equations for Everyday Life</em> (2006), by Garth Sundem. The particular function we’ll consider here is <code>Dr()</code>, intended to help answer the question, “Should you go to the doctor?”</p>
+<p><span class="math display">\[\mbox{Dr}(d, c, p,  e,  n, s) = \frac{\frac{s^2}{2} + e(n-e)}{100 -  3(d + \frac{p^3}{70} - c)}\]</span> where</p>
+<ul>
+<li>
+<span class="math inline">\(d\)</span> = How many days in the past month have you been incapacitated? <span class="math inline">\(d_0 \equiv 3\)</span>
+</li>
+<li>
+<span class="math inline">\(c\)</span> = Does the issue seem to be getting better or worse. (-10 to 10 with -10 being “circling the drain” and 10 being “dramatic improvement”) <span class="math inline">\(c_0 \equiv -2\)</span>
+</li>
+<li>
+<span class="math inline">\(p\)</span> = How much pain or discomfort are you currently experiencing? (1-10 with 10 being “currently holding detached toe in Ziploc bag”) <span class="math inline">\(p_0 = 3\)</span>
+</li>
+<li>
+<span class="math inline">\(e\)</span> = How embarrassing is this issue? (1-10 with 10 being “slipped on ice and fell on 1972 Mercedes-Benz hood ornament, which is now part of my body”) <span class="math inline">\(e_0 = 4\)</span>
+</li>
+<li>
+<span class="math inline">\(n\)</span> = How noticeable is the issue? (1-10 with 10 being “fell asleep on waffle iron”) <span class="math inline">\(n_0 = 5\)</span>
+</li>
+<li>
+<span class="math inline">\(s\)</span> = How serious does the issue seem? (1-10 with 10 being “may well have nail embedded in frontal lobe [of brain]”) <span class="math inline">\(s_0 = 3\)</span>
+</li>
+</ul>
+<p>Although the function is offered tongue-in-cheek, let’s examine it to see if it even roughly matches common sense. The tool we will use relates to low-order polynomial approximation around a reference point and examining appropriate partial derivatives. To save time, we stipulate a reference point for you, noted in the description of variables above.</p>
+<div class="scaffolding">
+<p>The code creates an R implementation of the function that is set up so that the default values of the variables are those at the given reference point. You can use this in a sandbox to try different changes in each of the input quantities.</p>
+</div>
+<p>According to the instructions in the book, if <code>Dr()</code><span class="math inline">\(&gt; 1\)</span>, you should go to the doctor.</p>
+<div class="etude-question">
+<p><strong>Essay question Q-115</strong>: 1) The value of <code>Dr()</code> at the reference point is 0.10, indicating that you shouldn’t go to the doctor. But we don’t yet know whether 0.10 is very close to the decision threshold of 1 or very far away. Describe a reasonable way to figure this out. Report your description and the results here.</p>
+</div>
+<div class="etude-question">
+<p><strong>Essay question Q-116</strong>: There are six inputs to the function. Go through the list of all six and (without thinking too hard about it) write down for all of them your intuitive sense of whether an increase of one point in that input should raise or lower the output of Dr() at the reference point. Also write down whether you think the input should be a large or small determinant of whether to go to the doctor. (You don’t need to refer to the Dr() function itself, just to your own intuitive sense of what should be the effect of each of the inputs.)</p>
+</div>
+<p>The operator <code><a href="https://rdrr.io/r/stats/deriv.html">D()</a></code> can calculate partial derivatives. You can calculate the value of a partial derivative very easily at the reference point, using an expression like this, which gives the value of the partial of Dr() with respect to input <span class="math inline">\(s\)</span> at the reference point:</p>
+<div class="sourceCode" id="cb96"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/stats/deriv.html">D</a></span><span class="op">(</span><span class="fu">Dr</span><span class="op">(</span>s <span class="op">=</span> <span class="va">s</span><span class="op">)</span> <span class="op">~</span> <span class="va">s</span><span class="op">)</span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<p>We’re now going to use these partial derivatives to compare your intuition about going to the doctor to what the function has to say. Of course, we don’t know yet whether the function is reasonable, so don’t be disappointed if your intuition conflicts with the function.</p>
+<div class="etude-question">
+<p><strong>Essay question Q-117</strong>: Calculate the numerical value of each of the partial derivatives at the reference point. List them here and say, for each one, whether it accords with your intuition.</p>
+</div>
+</details>
+</div>
+<div id="gradient-vector" class="section level2">
+<h2>
+<span class="header-section-number">16.2</span> Gradient vector<a class="anchor" aria-label="anchor" href="#gradient-vector"><i class="fas fa-link"></i></a>
+</h2>
+
+<div class="exercise">
+<span id="exr:unnamed-chunk-116" class="exercise"><strong>Exercise 16.4  (partial-house)  </strong></span>
+</div>
+
+<details><p>For almost everyone, a house is too expensive to buy with cash, so people need to borrow money. The usual form of the loan is called a “mortgage”. Mortgages extend over many years and involve paying a fixed amount each month. That amount is calculated so that, by paying it each month for the duration of the mortgage, the last payment will completely repay the amount borrowed plus the accumulated interest.</p>
+<p>The monthly mortgage payment in dollars, <span class="math inline">\(P\)</span>, for a house is a function of three variables, <span class="math display">\[P(A, r, N)\]</span> where <span class="math inline">\(A\)</span> is the amount borrowed in dollars, <span class="math inline">\(r\)</span> is the interest rate (per year), and <span class="math inline">\(N\)</span> is the number of years before the mortgage is paid off.</p>
+<p>A studio apartment is selling for $220,000. You will need to borrow $184,000 to make the purchase.</p>
+<div class="etude-question">
+<p><strong>Q-118</strong>: Suppose <span class="math inline">\(P(184000,4,10) = 2180.16\)</span>. What does this tell you in financial terms?</p>
+<ol>
+<li><p>The monthly cost of borrowing $184,000 for 10 years at 4% interest per year. (+) []</p></li>
+<li><p>The monthly cost of borrowing $184,000 for 4 years at 10% interest per year. [You’ve got the order of the argument wrong.]</p></li>
+<li><p>The annual cost of the mortgage at 4% interest for 10 years. [The output of the function <span class="math inline">\(P()\)</span> is the <em>monthly</em> mortgage payment.]</p></li>
+<li><p>The annual cost of the mortgage at 10% interest for 4 years [The output of the function <span class="math inline">\(P()\)</span> is the <em>monthly</em> mortgage payment.]</p></li>
+</ol>
+</div>
+<div class="etude-question">
+<p><strong>Q-119</strong>: What would you expect about the quantity <span class="math inline">\(\partial P / \partial A\)</span>?</p>
+<ol>
+<li><p>It’s positive (+) [If you borrow more money, holding mortgage duration and interest rate constant, you are going to have to pay more each month.]</p></li>
+<li><p>It’s zero []</p></li>
+<li><p>It’s negative []</p></li>
+</ol>
+</div>
+<div class="etude-question">
+<p><strong>Q-120</strong>: What would you expect about the quantity <span class="math inline">\(\partial P / \partial N\)</span>?</p>
+<ol>
+<li><p>It’s positive []</p></li>
+<li><p>It’s zero []</p></li>
+<li><p>It’s negative (+) [If you borrow the same amount of money at the same interest rate, but have more years to pay it back, your monthly payment will be smaller.]</p></li>
+</ol>
+</div>
+<div class="etude-question">
+<p><strong>Q-121</strong>: Suppose <span class="math inline">\(\partial P / \partial r (184000,4,30) =\)</span> $145.64. What is the financial significance of the number $145.65??</p>
+<ol>
+<li><p>If the interest rate <span class="math inline">\(r\)</span> went up from 4 to 5, the monthly payment would increase by $145.65. [This is a perfectly reasonable answer, but … recall that the derivative gives the rate of increase in the output of the function when the input changes by a tiny amount. It turns out that a 1 percentage point increase in interest rate is a very large amount of change.]</p></li>
+<li><p>If the interest rate <span class="math inline">\(r\)</span> went up from 4 to 4.001, the monthly payment would increase by $145.65. [This is indeed a small change in interest rate, but the value of the derivative is the <em>rate</em> of increase, not the increase itself.]</p></li>
+<li><p>If the interest rate <span class="math inline">\(r\)</span> went up from 4 to 4.001, the monthly payment would increase by $0.001 imes $145.65. (+) [You might think that nobody would be concerned about such a small increase in interest rate. But knowing the result for each very small increase allows us to calculate what would be the impact of a large increase by a process called <em>integration</em>.]</p></li>
+</ol>
+</div>
+</details><div class="exercise">
+<span id="exr:unnamed-chunk-117" class="exercise"><strong>Exercise 16.5  (spider-blow-lamp)  </strong></span>
+</div>
+
+<details><p>In economic theory, the quantity of the demand for any good is a decreasing function of the price of that good and an <em>increasing</em> function of the price of a competing good.</p>
+<p>The classical example is that apple juice competes with orange juice. The demand for orange juice is in units of thousands of liters of orange juice. The price is in units of dollars per liter.</p>
+<p>Here’s a graph with the input variables unlabeled.</p>
+<div class="inline-figure"><img src="CalcZ-notes_files/figure-html/unnamed-chunk-178-1.png" width="672"></div>
+<p>The concept of partial derivatives makes it much easier to think about the situation. There are two partial derivative functions relevant to the function in the graph. Well denote the input variables <code>apple</code> and <code>orange</code>, but remember that these are the prices of those commodities in dollars per liter.</p>
+<ul>
+<li>
+<span class="math inline">\(\partial_\mbox{apple} \mbox{demand}()\)</span> – how the <em>demand</em> changes when apple-juice price goes up, <em>holding orange-juice price constant</em>. (Another notation that is more verbose but perhaps easier to read <span class="math inline">\(\frac{\partial\, \mbox{demand}}{\partial\,\mbox{apple}}\)</span>)</li>
+<li>
+<span class="math inline">\(\partial_\mbox{orange} \mbox{demand}()\)</span> – how the <em>demand</em> changes when orange-juice price goes up, <em>holding apple-juice price constant</em>. (Another notation: <span class="math inline">\(\frac{\partial\, \mbox{demand}}{\partial\,\mbox{orange}}\)</span>)</li>
+</ul>
+<p>Notice that the notation names both the output and the single input which is to be changed–the other inputs will be held constant.</p>
+<p>The first paragraph of this problem gives the economic theory which amounts to saying that one of the partial derivatives is positive and the other negative.</p>
+<div class="etude-question">
+<p><strong>Q-122</strong>: What are the numbers labeling the contours?</p>
+<ol>
+<li><p>Quantity of orange juice. (+) []</p></li>
+<li><p>Price of apple juice. [The prices of apple juice and of orange juice are the <em>inputs</em> to the function. Input values are displayed as position on an axis. The contour labels identify the output value for any input that corresponds to a point on the contour.]</p></li>
+<li><p>Price of orange juice. [The prices of apple juice and of orange juice are the <em>inputs</em> to the function. Input values are displayed as position on an axis. The contour labels identify the output value for any input that corresponds to a point on the contour.]</p></li>
+<li><p>Quantity of apple juice. [A reasonable answer, but the function output is the quantity of <em>orange</em> juice.]</p></li>
+</ol>
+</div>
+<div class="etude-question">
+<p><strong>Q-123</strong>: What is the proper translation of the notation <span class="math inline">\(\partial_\mbox{apple}\mbox{demand}()\)</span>?</p>
+<ol>
+<li><p>The partial derivative of orange-juice demand <em>with repect to</em> apple-juice price (+) []</p></li>
+<li><p>The partial derivative of apple-juice price <em>with repect to</em> demand for orange juice [Derivatives are always with respect to an <em>input</em> variable. Demand for orange juice is the output variable.]</p></li>
+<li><p>The partial derivative of apple-juice demand *with respect to price of apple juice [This problem is about orange-juice demand, not apple-juice demand.]</p></li>
+<li><p>The partial derivative of orange-juice price <em>with respect to</em> apple-juice price. [Both of these are <em>input</em> variables to the demand function. A partial derivative is always about the change in output when one of the inputs changes, not the change in one input when another input changes.]</p></li>
+</ol>
+</div>
+<div class="etude-question">
+<p><strong>Q-124</strong>: According to the economic theory described above, one of the partial derivatives will be positive and the other negative. Which will be <em>positive</em>.</p>
+<ol>
+<li><p><span class="math inline">\(\partial_\mbox{apple} \mbox{demand}()\)</span> (+) []</p></li>
+<li><p><span class="math inline">\(\partial_\mbox{orange} \mbox{demand}()\)</span> [If orange juice prices went up, would you drink more orange juice?]</p></li>
+</ol>
+</div>
+<div class="etude-question">
+<p><strong>Q-125</strong>: What does the vertical axis measure?</p>
+<ol>
+<li><p>Price of orange juice (+) []</p></li>
+<li><p>Quantity of apple juice []</p></li>
+<li><p>Quantity of orange juice []</p></li>
+<li><p>Price of apple juice []</p></li>
+</ol>
+</div>
+<div class="etude-question">
+<p><strong>Q-126</strong>: Consider the magnitude (absolute value) of the partial derivative of demand with respect to orange-juice price. Is this magnitude greater toward the top of the graph or the bottom?</p>
+<ol>
+<li><p>top (+) []</p></li>
+<li><p>bottom [The horizontal distance between contour lines is larger at the bottom of the graph than at the top. Far-apart contours mean that the function is flatter.]</p></li>
+<li><p>neither [Remember, we’re talking about the partial derivative with respect to orange juice price. That corresponds to the slope when moving in a <em>horizontal</em> direction.]</p></li>
+</ol>
+</div>
+</details><div class="exercise">
+<span id="exr:unnamed-chunk-118" class="exercise"><strong>Exercise 16.6  (grass-grows-red)  </strong></span>
+</div>
+
+<details><p>The contour plot of function <span class="math inline">\(g(y, z)\)</span> is overlaid with vectors. The black vector is a correct representation of the gradient (at the root of the vector). The other vectors are also supposed to represent the gradient, but might have something wrong with them (or might not). You’re job is to say what’s wrong with each of those vectors.</p>
+<div class="inline-figure"><img src="Exercises/Diff/www/substance.png" width="60%" style="display: block; margin: auto;"></div>
+<div class="etude-question">
+<p><strong>Q-127</strong>: What’s wrong with the <span style="color:red;"><strong>red</strong></span> vector?</p>
+<ol>
+<li><p>nothing []</p></li>
+<li><p>too long (+) [The red vector is located in a place where the function is almost level. You can tell this because the contour lines are spaced far apart. The magnitude of the gradient will be small in such an area. But here, the red vector is even longer than the black vector, even though black is in a very steep area (with closely spaced contours).]</p></li>
+<li><p>too short []</p></li>
+<li><p>points downhill []</p></li>
+<li><p>points uphill [Pointing uphill is what gradient vectors do! No problem with this.]</p></li>
+<li><p>wrong direction entirely []</p></li>
+</ol>
+</div>
+<div class="etude-question">
+<p><strong>Q-128</strong>: What’s wrong with the <span style="color:green;"><strong>green</strong></span> vector?</p>
+<ol>
+<li><p>nothing []</p></li>
+<li><p>too long [Note that the vector reflects the steepness at the point where the root of the vector is drawn. The root of the green vector is in an area where the contour lines are spaced similarly to the area near the root of the black vector. So it’s correct that the length of the green vector is similar to the length of the black vector.]</p></li>
+<li><p>too short []</p></li>
+<li><p>points downhill (+) [The root of the green vector is near contour=4, the head at contour=2. So the vector is incorrectly pointing downhill. Gradients point in the steepest direction uphill.]</p></li>
+<li><p>points uphill [Pointing uphill is what gradient vectors do! No problem with this.]</p></li>
+<li><p>wrong direction entirely []</p></li>
+</ol>
+</div>
+<div class="etude-question">
+<p><strong>Q-129</strong>: What’s wrong with the <span style="color:blue;"><strong>blue</strong></span> vector?</p>
+<ol>
+<li><p>nothing (+) []</p></li>
+<li><p>too long []</p></li>
+<li><p>too short [The blue vector is in a very flat area of the function. That’s why it’s so short.]</p></li>
+<li><p>points downhill []</p></li>
+<li><p>points uphill [Pointing uphill is what gradient vectors do! No problem with this.]</p></li>
+<li><p>wrong direction entirely []</p></li>
+</ol>
+</div>
+<div class="etude-question">
+<p><strong>Q-130</strong>: What’s wrong with the <span style="color:orange;"><strong>orange</strong></span> vector?</p>
+<ol>
+<li><p>nothing []</p></li>
+<li><p>too long []</p></li>
+<li><p>too short []</p></li>
+<li><p>points downhill []</p></li>
+<li><p>points uphill []</p></li>
+<li><p>wrong direction entirely (+) [Gradient vectors should be perpendicular to nearby contours and should point uphill. The orange vector is neither]</p></li>
+</ol>
+</div>
+<div class="etude-question">
+<p><strong>Q-131</strong>: What’s wrong with the <span style="color:gray;"><strong>gray</strong></span> vector?</p>
+<ol>
+<li><p>nothing []</p></li>
+<li><p>too long []</p></li>
+<li><p>too short (+) [The function is practically as steep at the root of the gray vector as it is at the root of the black vector. (You can tell this from the spacing of the contour lines.) So the magnitude of the gray vector should be just about the same as the magnitude of the black vector.]</p></li>
+<li><p>points downhill []</p></li>
+<li><p>points uphill []</p></li>
+</ol>
+</div>
+</details><div class="exercise">
+<span id="exr:unnamed-chunk-119" class="exercise"><strong>Exercise 16.7  (grass-grows-blue)  </strong></span>
+</div>
+
+<details></details>
+</div>
+</div>
+  <div class="chapter-nav">
+<div class="prev"><a href="approximating-functions.html"><span class="header-section-number">15</span> Approximating functions</a></div>
+<div class="next"><a href="approximation-around-a-point.html"><span class="header-section-number">17</span> Approximation around a point</a></div>
+</div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
+    <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
+      <ul class="nav navbar-nav">
+<li><a class="nav-link" href="#partial-change"><span class="header-section-number">16</span> Partial change</a></li>
+<li><a class="nav-link" href="#all-other-things-being-equal"><span class="header-section-number">16.1</span> All other things being equal …</a></li>
+<li><a class="nav-link" href="#gradient-vector"><span class="header-section-number">16.2</span> Gradient vector</a></li>
+</ul>
+
+      <div class="book-extra">
+        <ul class="list-unstyled">
+<li><a id="book-source" href="https://github.com/dtkaplan/CalcZ-notes/blob/master/Diff-partial.Rmd">View source <i class="fab fa-github"></i></a></li>
+          <li><a id="book-edit" href="https://github.com/dtkaplan/CalcZ-notes/edit/master/Diff-partial.Rmd">Edit this page <i class="fab fa-github"></i></a></li>
+        </ul>
+</div>
+    </nav>
+</div>
+
+</div>
+</div> <!-- .container -->
+
+<footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>"<strong>CalcZ Student Notes</strong>" was written by Daniel Kaplan. It was last built on 2021-06-09.</p>
+  </div>
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
+  </div>
+
+</div></div>
+</footer><!-- dynamically load mathjax for compatibility with self-contained --><script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+</html>

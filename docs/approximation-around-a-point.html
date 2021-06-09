@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>Chapter 17 Approximation around a point | CalcZ Student Notes</title>
+<meta name="author" content="Daniel Kaplan">
+<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.2"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="libs/bootstrap-4.5.3/bootstrap.min.css" rel="stylesheet">
+<script src="libs/bootstrap-4.5.3/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.2.4/tabs.js"></script><script src="libs/bs3compat-0.2.4/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script><script src="libs/htmlwidgets-1.5.3/htmlwidgets.js"></script><link href="libs/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet">
+<script src="libs/datatables-binding-0.12/datatables.js"></script><link href="libs/dt-core-1.10.20/css/jquery.dataTables.min.css" rel="stylesheet">
+<link href="libs/dt-core-1.10.20/css/jquery.dataTables.extra.css" rel="stylesheet">
+<script src="libs/dt-core-1.10.20/js/jquery.dataTables.min.js"></script><link href="libs/crosstalk-1.1.1/css/crosstalk.css" rel="stylesheet">
+<script src="libs/crosstalk-1.1.1/js/crosstalk.min.js"></script><script src="libs/kePrint-0.0.1/kePrint.js"></script><link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet">
+<script src="libs/plotly-binding-4.9.3/plotly.js"></script><script src="libs/typedarray-0.1/typedarray.min.js"></script><link href="libs/plotly-htmlwidgets-css-1.57.1/plotly-htmlwidgets.css" rel="stylesheet">
+<script src="libs/plotly-main-1.57.1/plotly-latest.min.js"></script><script type="text/x-mathjax-config">
+  const popovers = document.querySelectorAll('a.footnote-ref[data-toggle="popover"]');
+  for (let popover of popovers){
+    const div = document.createElement('div');
+    div.setAttribute('style', 'position: absolute; top: 0, left:0; width:0, height:0, overflow: hidden; visibility: hidden;');
+    div.innerHTML = popover.getAttribute('data-content');
+    
+    // Will this work with TeX on its own line?
+    var has_math = div.querySelector("span.math");
+    if (has_math) {
+      document.body.appendChild(div);
+    	MathJax.Hub.Queue(["Typeset", MathJax.Hub, div]);
+    	MathJax.Hub.Queue(function(){
+        popover.setAttribute('data-content', div.innerHTML);
+    	})
+    }
+  }
+  </script><script src="https://cdn.jsdelivr.net/autocomplete.js/0/autocomplete.jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/mark.js@8.11.1/dist/mark.min.js"></script><!-- CSS --><link rel="stylesheet" href="css/CalcZ-style.css">
+</head>
+<body data-spy="scroll" data-target="#toc">
+
+<div class="container-fluid">
+<div class="row">
+  <header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
+
+    <div class="d-flex align-items-start justify-content-between">
+      <h1>
+        <a href="index.html" title="">CalcZ Student Notes</a>
+      </h1>
+      <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
+    </div>
+
+    <div id="main-nav" class="collapse-lg">
+      <form role="search">
+        <input id="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
+</form>
+
+      <nav aria-label="Table of contents"><h2>Table of contents</h2>
+        <ul class="book-toc list-unstyled">
+<li><a class="" href="index.html">Welcome to calculus</a></li>
+<li><a class="" href="calcz-project-development-plan.html">CalcZ Project Development Plan</a></li>
+<li class="book-part">Block 1: Functions and quantity</li>
+<li><a class="" href="outline-of-block-1.html">Outline of Block 1</a></li>
+<li><a class="" href="change.html"><span class="header-section-number">1</span> Change</a></li>
+<li><a class="" href="structure-of-a-function.html"><span class="header-section-number">2</span> Structure of a function</a></li>
+<li><a class="" href="fun-describing.html"><span class="header-section-number">3</span> Describing functions</a></li>
+<li><a class="" href="fun-notation.html"><span class="header-section-number">4</span> Notation for functions</a></li>
+<li><a class="" href="graphs-and-graphics.html"><span class="header-section-number">5</span> Graphics &amp; function graphs</a></li>
+<li><a class="" href="params-intro.html"><span class="header-section-number">6</span> Parameters for functions</a></li>
+<li><a class="" href="process-of-modeling.html"><span class="header-section-number">7</span> Process of modeling</a></li>
+<li><a class="" href="fun-slopes.html"><span class="header-section-number">8</span> Slope function</a></li>
+<li><a class="" href="fun-assembling.html"><span class="header-section-number">9</span> Assembling functions</a></li>
+<li class="book-part">Block 2: Differentiation</li>
+<li><a class="" href="outline-of-block-2.html">Outline of Block 2</a></li>
+<li><a class="" href="change-relationships.html"><span class="header-section-number">10</span> Change relationships</a></li>
+<li><a class="" href="h-and-derivatives.html"><span class="header-section-number">11</span> h and derivatives</a></li>
+<li><a class="" href="optim-and-shape.html"><span class="header-section-number">12</span> Optimization</a></li>
+<li><a class="" href="cont-and-smooth.html"><span class="header-section-number">13</span> Continuity and smoothness</a></li>
+<li><a class="" href="derivatives-of-composed-functions.html"><span class="header-section-number">14</span> Derivatives of composed functions</a></li>
+<li><a class="" href="approximating-functions.html"><span class="header-section-number">15</span> Approximating functions</a></li>
+<li><a class="" href="partial-change.html"><span class="header-section-number">16</span> Partial change</a></li>
+<li><a class="active" href="approximation-around-a-point.html"><span class="header-section-number">17</span> Approximation around a point</a></li>
+</ul>
+
+        <div class="book-extra">
+          <p><a id="book-repo" href="https://github.com/dtkaplan/CalcZ-notes">View book source <i class="fab fa-github"></i></a></p>
+        </div>
+      </nav>
+</div>
+  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="approximation-around-a-point" class="section level1">
+<h1>
+<span class="header-section-number">17</span> Approximation around a point<a class="anchor" aria-label="anchor" href="#approximation-around-a-point"><i class="fas fa-link"></i></a>
+</h1>
+<div class="sourceCode" id="cb97"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/ProjectMOSAIC/mosaic">mosaic</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/ProjectMOSAIC/mosaicCalc">mosaicCalc</a></span><span class="op">)</span></code></pre></div>
+
+<div class="exercise">
+<span id="exr:unnamed-chunk-122" class="exercise"><strong>Exercise 17.1  (approx-orange)  </strong></span>
+</div>
+
+<details><p>The following graph shows a function <span class="math inline">\(f(x)\)</span>. Five values of <span class="math inline">\(x\)</span> are labelled A, B, …. These are the possible values of <span class="math inline">\(x_0\)</span> in the questions.</p>
+<div class="inline-figure"><img src="CalcZ-notes_files/figure-html/unnamed-chunk-185-1.png" width="672"></div>
+<p>Each of the graphs that follow show an approximation to <span class="math inline">\(f(x)\)</span> at one of the points A, B, …. in the above graph. The approximations are either constant (“order 0” approximation), linear (“order 1” approximation), quadratic (“order 2” approximation), or something else. For each graph, say what order approximation is being used.</p>
+<div class="inline-figure"><img src="CalcZ-notes_files/figure-html/unnamed-chunk-186-1.png" width="672"></div>
+<div class="etude-question">
+<p><strong>Q-132</strong>: What order approximation in graph (I)?</p>
+<ol>
+<li><p>constant (+) []</p></li>
+<li><p>linear [A linear approximation would have exactly the same slope as <span class="math inline">\(f()\)</span> at the reference point <span class="math inline">\(x_0\)</span>.]</p></li>
+<li><p>quadratic []</p></li>
+<li><p>none of these []</p></li>
+</ol>
+</div>
+<div class="etude-question">
+<p><strong>Q-133</strong>: What is the reference position <span class="math inline">\(x_0\)</span> for approximation in graph (I)?</p>
+<ol>
+<li><p>A [Not a bad choice, but notice that the constant approximation has a value a little lower than f(A).]</p></li>
+<li><p>B (+) [You’re right. This has the correct value for f(B).]</p></li>
+<li><p>C []</p></li>
+<li><p>D []</p></li>
+<li><p>E []</p></li>
+<li><p>None of them []</p></li>
+</ol>
+</div>
+<!-- Second graph -->
+<div class="inline-figure"><img src="CalcZ-notes_files/figure-html/unnamed-chunk-187-1.png" width="672"></div>
+<div class="etude-question">
+<p><strong>Q-134</strong>: What order approximation in graph (II)?</p>
+<ol>
+<li><p>constant []</p></li>
+<li><p>linear []</p></li>
+<li><p>quadratic (+) []</p></li>
+<li><p>none of these []</p></li>
+</ol>
+</div>
+<div class="etude-question">
+<p><strong>Q-135</strong>: What is the reference position <span class="math inline">\(x_0\)</span> for approximation in graph (II)?</p>
+<ol>
+<li><p>A []</p></li>
+<li><p>B []</p></li>
+<li><p>C (+) []</p></li>
+<li><p>D [At the reference position, the value of the approximation should always be <span class="math inline">\(f(x_0)\)</span>. That’s not the case here.]</p></li>
+<li><p>E []</p></li>
+<li><p>None of them []</p></li>
+</ol>
+</div>
+<!-- Third graph -->
+<div class="inline-figure"><img src="CalcZ-notes_files/figure-html/unnamed-chunk-188-1.png" width="672"></div>
+<div class="etude-question">
+<p><strong>Q-136</strong>: What order approximation in graph (III)?</p>
+<ol>
+<li><p>constant []</p></li>
+<li><p>linear []</p></li>
+<li><p>quadratic []</p></li>
+<li><p>none of these (+) [You can’t have two bends in a linear or quadratic function.]</p></li>
+</ol>
+</div>
+<div class="etude-question">
+<p><strong>Q-137</strong>: What is the reference position <span class="math inline">\(x_0\)</span> for approximation in graph (III)?</p>
+<ol>
+<li><p>A []</p></li>
+<li><p>B []</p></li>
+<li><p>C []</p></li>
+<li><p>D [At the reference position, the value of the approximation should always be <span class="math inline">\(f(x_0)\)</span>. That’s not the case here.]</p></li>
+<li><p>E []</p></li>
+<li><p>None of them (+) [It’s not a polynomial approximation at any of those points.]</p></li>
+</ol>
+</div>
+<!-- Fourth graph -->
+<div class="inline-figure"><img src="CalcZ-notes_files/figure-html/unnamed-chunk-189-1.png" width="672"></div>
+<div class="etude-question">
+<p><strong>Q-138</strong>: What order approximation in graph (IV)?</p>
+<ol>
+<li><p>constant []</p></li>
+<li><p>linear (+) []</p></li>
+<li><p>quadratic []</p></li>
+<li><p>none of these []</p></li>
+</ol>
+</div>
+<div class="etude-question">
+<p><strong>Q-139</strong>: What is the reference position <span class="math inline">\(x_0\)</span> for approximation in graph (IV)?</p>
+<ol>
+<li><p>A (+) []</p></li>
+<li><p>B []</p></li>
+<li><p>C []</p></li>
+<li><p>D []</p></li>
+<li><p>E []</p></li>
+<li><p>None of them []</p></li>
+</ol>
+</div>
+<!-- Fifth graph -->
+<div class="inline-figure"><img src="CalcZ-notes_files/figure-html/unnamed-chunk-190-1.png" width="672"></div>
+<div class="etude-question">
+<p><strong>Q-140</strong>: What order approximation in graph (V)?</p>
+<ol>
+<li><p>constant []</p></li>
+<li><p>linear []</p></li>
+<li><p>quadratic (+) []</p></li>
+<li><p>none of these []</p></li>
+</ol>
+</div>
+<div class="etude-question">
+<p><strong>Q-141</strong>: What is the reference position <span class="math inline">\(x_0\)</span> for approximation in graph (V)?</p>
+<ol>
+<li><p>A []</p></li>
+<li><p>B []</p></li>
+<li><p>C []</p></li>
+<li><p>D []</p></li>
+<li><p>E []</p></li>
+<li><p>None of them (+) []</p></li>
+</ol>
+</div>
+</details><div class="exercise">
+<span id="exr:unnamed-chunk-123" class="exercise"><strong>Exercise 17.2  (approx-blue)  </strong></span>
+</div>
+
+<details><p>Here is a somewhat complex function in two variables. The labels A, B, C, D mark some possible reference points <span class="math inline">\((x_0, y_0)\)</span> around which polynomial approximations are being made.</p>
+<div class="inline-figure"><img src="CalcZ-notes_files/figure-html/unnamed-chunk-193-1.png" width="672"></div>
+<p>For each of the following graphs, say what kind of two-variable polynomial approximation is being made and which reference point the approximation is centered on.</p>
+<!-- Graph I -->
+<div class="inline-figure"><img src="CalcZ-notes_files/figure-html/unnamed-chunk-194-1.png" width="672"></div>
+<div class="etude-question">
+<p><strong>Q-142</strong>: What order approximation in graph (I)?</p>
+<ol>
+<li><p>constant []</p></li>
+<li><p>linear [The contours would be straight if the approximation were linear]</p></li>
+<li><p>bilinear (+) [Right. But it turns out that the quadratic approximation is similar, presumably because <span class="math inline">\(d_{xx}f(x_0, y_0)\)</span> and <span class="math inline">\(d_{yy} f(x_0, y_0)\)</span> are too small to make a difference.]</p></li>
+<li><p>quadratic [Not a bad answer. In this case, the bilinear approximation looks a lot like the quadratic.]</p></li>
+</ol>
+</div>
+<div class="etude-question">
+<p><strong>Q-143</strong>: What is the reference position <span class="math inline">\((x_0, y_0)\)</span> for approximation in graph (I)?</p>
+<ol>
+<li><p>A (+) []</p></li>
+<li><p>B []</p></li>
+<li><p>C []</p></li>
+<li><p>D []</p></li>
+</ol>
+</div>
+<!-- Graph II -->
+<div class="inline-figure">
+<img src="CalcZ-notes_files/figure-html/unnamed-chunk-195-1.png" width="672">
+::: {.etude-question}</div>
+<p><strong>Q-144</strong>: What order approximation in graph (II)?</p>
+<ol>
+<li><p>constant []</p></li>
+<li><p>linear [The contours would be straight if the approximation were linear]</p></li>
+<li><p>bilinear (+) [Right. But it turns out that the quadratic approximation is similar, presumably because <span class="math inline">\(d_{xx}f(x_0, y_0)\)</span> and <span class="math inline">\(d_{yy} f(x_0, y_0)\)</span> are too small to make a difference.]</p></li>
+<li><p>quadratic [The circular (or elliptical) contours are the hallmark of a quadratic approximation near a maximum or minimum.]</p></li>
+</ol>
+<p>:::</p>
+<div class="etude-question">
+<p><strong>Q-145</strong>: What is the reference position <span class="math inline">\((x_0, y_0)\)</span> for approximation in graph (II)?</p>
+<ol>
+<li><p>A []</p></li>
+<li><p>B (+) [Practically a bullseye on B!]</p></li>
+<li><p>C []</p></li>
+<li><p>D []</p></li>
+</ol>
+</div>
+<!-- Graph III -->
+<div class="inline-figure"><img src="CalcZ-notes_files/figure-html/unnamed-chunk-196-1.png" width="672"></div>
+<div class="etude-question">
+<p><strong>Q-146</strong>: What order approximation in graph (III)?</p>
+<ol>
+<li><p>constant []</p></li>
+<li><p>linear (+) [A linear approximation always produces straight, parallel, evenly spaced contours.]</p></li>
+<li><p>bilinear []</p></li>
+<li><p>quadratic []</p></li>
+</ol>
+</div>
+<div class="etude-question">
+<p><strong>Q-147</strong>: What is the reference position <span class="math inline">\((x_0, y_0)\)</span> for approximation in graph (III)?</p>
+<ol>
+<li><p>A []</p></li>
+<li><p>B []</p></li>
+<li><p>C []</p></li>
+<li><p>D (+) []</p></li>
+</ol>
+</div>
+<!-- Graph IV -->
+<div class="inline-figure">
+<img src="CalcZ-notes_files/figure-html/unnamed-chunk-197-1.png" width="672">
+::: {.etude-question}</div>
+<p><strong>Q-148</strong>: What order approximation in graph (IV)?</p>
+<ol>
+<li><p>constant []</p></li>
+<li><p>linear [The contours would be straight if the approximation were linear]</p></li>
+<li><p>bilinear [Not a bad answer. But curvature in bilinear approximations is always in one direction.]</p></li>
+<li><p>quadratic (+) [Sometimes quadratic approximations produce elliptical contours, as in a previous problem. But sometimes they produce the X-shaped contours seen here. In both cases, the contours curve in opposing ways in different parts of the domain. By the way, the contour pattern seen in the upper right of this graph corresponds to the shape of a saddle: curving up along one line and down along the perpendicular line. The place right in the middle of the saddle is called a ‘saddle point’.]</p></li>
+</ol>
+<p>:::</p>
+<p>::: {.etude-question}</p>
+<p><strong>Q-149</strong>: What is the reference position <span class="math inline">\((x_0, y_0)\)</span> for approximation in graph (IV)?</p>
+<ol>
+<li><p>A []</p></li>
+<li><p>B []</p></li>
+<li><p>C (+) []</p></li>
+<li><p>D []</p></li>
+</ol>
+:::
+</details>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <div class="chapter-nav">
+<div class="prev"><a href="partial-change.html"><span class="header-section-number">16</span> Partial change</a></div>
+<div class="empty"></div>
+</div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
+    <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
+      <ul class="nav navbar-nav"><li><a class="nav-link" href="#approximation-around-a-point"><span class="header-section-number">17</span> Approximation around a point</a></li></ul>
+
+      <div class="book-extra">
+        <ul class="list-unstyled">
+<li><a id="book-source" href="https://github.com/dtkaplan/CalcZ-notes/blob/master/Diff-taylor.Rmd">View source <i class="fab fa-github"></i></a></li>
+          <li><a id="book-edit" href="https://github.com/dtkaplan/CalcZ-notes/edit/master/Diff-taylor.Rmd">Edit this page <i class="fab fa-github"></i></a></li>
+        </ul>
+</div>
+    </nav>
+</div>
+
+</div>
+</div> <!-- .container -->
+
+<footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>"<strong>CalcZ Student Notes</strong>" was written by Daniel Kaplan. It was last built on 2021-06-09.</p>
+  </div>
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
+  </div>
+
+</div></div>
+</footer><!-- dynamically load mathjax for compatibility with self-contained --><script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+</html>
