@@ -71,12 +71,24 @@ i. Linear combinations: e.g. $a f(x) + b g(x)$
 i. Products: e.g. $f(x) g(x)$
 i. Composition:, e.g. $f(g(x))$ (which is usually a different function than $g(f(x))$.)
 
-The rule for linear combinations is particularly simple: the derivative of a linear combination of functions is the same linear combination of the derivatives of the functions, that is, if $$h(x) \equiv a f(x) + b g(x)\ \ \implies \ \ \partial_x h(x) = a \,\partial_x f(x) + b\, \partial_x g(x)$$
+In all three cases, you start with two functions $f(x)$ and $g(x)$. Whatever those functions be, you'll need to find their individual derivative. Normally, we write those derivatives as $\partial_x f(x)$ and $\partial_x g(x)$. But for seeing the patterns of the derivatives of the three cases, it helps to use a much more compact (though less general) notation: $\partial_x f(x) = f'(x)$ and similarly for $g'(x)$. With this notation, the derivatives of linear combinations, products, and compositions is a matter of applying a formula, traditionally called a ***rule***.
+
+i. Linear combinations
+
+$$\partial_x \left[\strut a f(x) + b g(x)\right] = a f'(x) + b g'(x)$$
+ii. Products: 
+$$\partial_x \left[\strut f(x) g(x)\right] = f'(x) g(x) + f(x) g'(x)$$
+iii. Composition:
+$$\partial_x \left[\strut f(g(x))\right] = f'(g(x)) g'(x)\\
+\ \\
+\partial_x \left[\strut g(f(x))\right] = g'(f(x)) f'(x)$$
+
+The derivative of a linear combinations is particularly simple: the derivative of a linear combination of functions is the same linear combination of the derivatives of the functions, that is, if $$h(x) \equiv a f(x) + b g(x)\ \ \implies \ \ \partial_x h(x) = a \,\partial_x f(x) + b\, \partial_x g(x)$$
 
 ::: {.workedexample}
 Consider the function $h(t) \equiv A e^{kt} + B$. This is a linear combination of two functions, which we can call $f(t) \equiv e^{kt}$ and $g(t) \equiv 1$.
 
-Of course, $f(t)$ and $g(t)$ are basic modeling functions so we have memorized their derivatives: $\partial_t f(t) = k e^{kt}$ and $\partial_t g(t) = 0$. 
+Of course, $f(t)$ and $g(t)$ are basic modeling functions so we have memorized their derivatives: $f'(t) = k e^{kt}$ and $g'(t) = 0$. 
 
 Putting this together gives $$\partial_t h(t) = A\, k\, e^{kt} + B\times 0= A\, k\, e^{kt}$$
 :::
@@ -97,18 +109,54 @@ Example:  $f(x) \equiv a + b x +  c  x^2\  \  \implies\ \ \partial_x f(x) \equiv
 
 
 
+The chain rule, which considers the  derivative  of a function $h(x)$ which  is the *composition* of two functions: $h(x) \equiv f(g(x))$. 
 
+We'll call $f()$  the "exterior function" and  $g()$ the interior  function. When we write the exterior function on its own, we'll call  the input $y$.  The interior  function will be written in  the ordinary way. For example:
 
+Composition                     | Exterior function | Interior  function
+:------------------------------:|:-----------------:|:-----------------:
+$h(x) \equiv \sin(a x)$         | $\sin(y)$         | $y(x) \equiv  ax$
+$h(t) \equiv e^{k x}$           | $e^y$             | $y(x)  \equiv  kx$
+$h(x) \equiv \sqrt{1  + x^2}$   | $\sqrt{y}$        | $y(x) \equiv 1  + x^2$
+
+To apply the chain rule, follow these  steps:
+
+1. Identify the exterior function $f(y)$ and the interior function $y(x) \equiv g(x)$.
+2. Calculate the derivative of the interior function: $\partial_x y(x)$
+3. Calculate the derivative  of the exterior function with respect  to  $y$,  that  is,  $\partial_y f(y)$ 
+4. Write down $\partial_y f(y)$ but, everywhere that a $y$ appears, replace it with  $g(x)$.
+5. Multiply the expression in (4) by $\partial_x g(x)$.  The result is  the derivative  of the composition with respect to $x$.
+
+Example:  $\partial_x \sin(a x)$.
+
+1. The exterior function is $\sin(y)$ and the interior function is  $y(x) \equiv ax$
+2. Derivative  of interior  function:  $\partial_x y(x)  \equiv a$.
+3. Derivative  of exterior function:  $\partial_y \sin(y) \equiv \cos(y)$
+4. Replace $y$ in (3) with $y(x) \equiv ax$,  giving  $\cos(ax)$.
+5. Multiply the result in (4)  by  $\partial_x y(x)$,  giving the final  result $a \cos(ax)$.  
+
+Example: $\partial_x \sqrt{1 + x^2}$
+
+1. The exterior function is $\sqrt{y}$, the interior function is $y(x) \equiv 1 + x^2$.
+2. The derivative  of the  interior function  is $\partial_x  y(x)  \equiv 2 x$.
+3. The derivative of the exterior function  is  $-1/\sqrt{y}$
+4. Replace  $y$ in  (3) with the interior function, giving  $-1/\sqrt{1 + x^2}$
+5. Multiply the result in (4) by $\partial_x y(x)$, giving the final result $-2x/\sqrt{1 + x^2}$
 
 
 ::: {.workedexample}
-Derivation of the chain rule. Break down the following, step by step.
 
-$$\partial_ f(g(x)) = \frac{f(g(x+h)) - f(g(x))}{h} \\
-= \frac{1}{h} \left[f(g(x)) + \partial_x f(g(x)) \partial_x g(x) h - f(g(x) \right] \\
-=\partial_x f(g(x)) \partial_x g(x)
-$$
+We'll start with the familiar linear approximation for $f()$, namely
+
+$$f({\cal X} + {\cal H}) = f({\cal X}) + {\cal H}f'({\cal X})$$
+We have used funny symbols $\cal X$ and $\cal H$ here, but that doesn't make any fundamental difference. Since $\cal X$ can be any value whatsoever, let's make it the output of $g()$ for an input $x$: that is, ${\cal X} = g(x)$. If we were to increase the input to $x+h$, the output would change: $g(x+h) = g(x) + h g'(x)$. Since the output of $g()$ with input $x+h$ is ${\cal X} + {\cal H}$, that is, $g(x+h) = {\cal X} + {\cal H}$. Since we already know that ${\cal X} = g(x)$ we can solve for ${\cal H}$, namely
+$${\cal H} = h g'(x)$$
+With the definitions of ${\cal X}$ and ${\cal H}$ in terms of $g(x)$ and $h$, we find
+$$f(g(x+h)) = f(g(x)) + h g'(x) f'(g(x))$$ Re-arranging, we get $$\frac{f(g(x+h)) - f(g(x))}{h} = f'(g(x)) g'(x)$$ the formula for the chain rule.
 :::
+
+
+
 
 ## Product of functions
 
@@ -116,3 +164,15 @@ $$
 ::: {.todo}
 See 141 DD 31 for drill problems
 :::
+
+
+## Working with algebraic derivatives
+
+```{exercise, name="optim-red"}
+```
+<details>`r knitr::knit_child("Exercises/Diff/optim-red.Rmd")`</details>
+
+```{exercise, name="optim-blue"}
+```
+<details>`r knitr::knit_child("Exercises/Diff/optim-blue.Rmd")`</details>
+
