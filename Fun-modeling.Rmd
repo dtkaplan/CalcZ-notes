@@ -58,6 +58,10 @@ slice_plot(-exp(-x) ~ x, domain(x=c(-2,2))) %>%
 
 ```
 
+```{exercise, name="mag-red"}
+```
+<details>`r knitr::knit_child("Exercises/Fun/mag-red.Rmd")`</details>
+
 ## Curve fitting an exponential function
 
 Figure \@ref(fig:Fun-4-intro-1) shows some data collected by Prof. Stan Wagon to support his making a detailed mechanistic model of an everyday phenomenon: [The cooling of a mug of hot beverage to room temperature](https://www.researchgate.net/profile/Gianluca_Argentini/post/Is_analogy_reasoning_between_heat_transfert_and_electriocity_allows_to_apply_the_electricity_laws_about_resistance_to_thermal_resistances/attachment/59d6573379197b80779ada64/AS%3A533325451403264%401504166104259/download/Stan+WAGON+How+quickly+does+water+cool.pdf). The mug started at room temperature, which was measured at 26 degrees C. At time 0 he poured in boiling water from a kettle and measured the temperature of the water over the next few hours.
@@ -134,6 +138,10 @@ gf_point(temp ~ time, data=CoolingWater %>% sample_n(20)) %>%
   slice_plot(25 + 83.3*exp(-.0277*time) ~ time, color="blue")
 ```
 
+```{exercise, name="maple-hit-saucer"}
+```
+<details>`rr knitr::knit_child("Exercises/Fun/maple-hit-saucer.Rmd")`</details>
+
 ## Curve fitting a periodic function
 
 ## Modeling periodicity
@@ -203,6 +211,40 @@ gf_line(level ~ hour,
   gf_labs(y="Water level (meters)", x="Time (hours)") %>%
   gf_lims(y =c(0, 2))
 ```
+
+```{exercise, name="sunset-in-LA"}
+```
+<details>`rr knitr::knit_child("Exercises/Fun/sunset-in-LA.Rmd")`</details>
+
+```{exercise, name="lamb-talk-gloves"}
+```
+<details>`rr knitr::knit_child("Exercises/Fun/lamb-talk-gloves.Rmd")`</details>
+
+```{exercise, name="spirometer"}
+```
+<details>`rr knitr::knit_child("Exercises/Fun/spirometer.Rmd")`</details>
+
+## Hump and sigmoid functions
+
+```{exercise, name="hump-intro"}
+```
+<details>`r knitr::knit_child("Exercises/Fun/hump-intro.Rmd")`</details>
+
+
+
+```{exercise, name="sigmoid-intro"}
+```
+<details>`r knitr::knit_child("Exercises/Fun/sigmoid-intro.Rmd")`</details>
+
+```{exercise, name="sigmoid-bath"}
+```
+<details>`r knitr::knit_child("Exercises/Fun/sigmoid-bath.Rmd")`</details>
+
+```{exercise, name="ebola-sigmoid"}
+```
+<details>`r knitr::knit_child("Exercises/Fun/ebola-sigmoid.Rmd")`</details>
+
+
 
 
 ## The modeling cycle
@@ -315,4 +357,8 @@ This is the modeling cycle at work: Propose a model form (A/B model with sinusoi
 Discrepancies between a model and data play two roles: they help us decide if the model is fit for the purpose we have in mind and they can point the way to improved models. That the tidal data deviates from the steady amplitude of our model can be a clue for where to look next. It's not always obvious where this will lead. 
 
 Historically, careful analysis of tides led to a highly detailed, highly accurate model: a linear combination of sinusoids with diurnal periods 12.42, 12.00, 12.66, and 11.97 hours as well components with period 23.93, 25.82, 24.07, 26.87, and 24.00 hours. A tide-prediction model is constructed by finding the coefficients of the linear combination; these differ from locale to locale.
+
+```{exercise, daylength, name="sunset-in-LA"}
+```
+<details>`rr knitr::knit_child("Exercises/Fun/sunset-in-LA.Rmd")`</details>
 
