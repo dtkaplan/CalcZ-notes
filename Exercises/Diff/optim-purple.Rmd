@@ -9,11 +9,36 @@ library(mosaic)
 library(mosaicCalc)
 ```
 
-Figure 1 shows a lens together with a source and target point. Light passing through the lens is refracted. The path followed by the light will be the one with the shortest time of transit from source to target.
-
 ```{r echo=FALSE}
+plot_lens <- function(x_in, x_out, top, bottom) {
+  Points <- tibble::tribble(
+    ~ x, ~ y, ~ label,
+    -20, -30, "Source",
+    x_in, bottom(x_in), "P_in",
+    x_out, top(x_out), "P_out",
+    -10, 50, "Target",
+  )
+  
+  lens_x <- seq(-40, 40, length = 100)
+  lens_y <- bottom(lens_x)
+  lens_y <- c(lens_y, top(rev(lens_x)))
+  lens_x <- c(lens_x, rev(lens_x))
+  Lens_shape <- tibble(lens_x, lens_y)
+  gf_text(y ~ x,  data=Points, label = ~label, 
+          hjust=0, vjust=1, nudge_x = 3) %>%
+    gf_point() %>%
+    gf_path(color = "red") %>%
+    gf_polygon(lens_y ~ lens_x, data = Lens_shape, fill="blue", alpha = .2,
+               color = NA, inherit=FALSE) %>%
+    gf_refine(coord_fixed())
+}
 
 ```
+
+
+
+Figure 1 shows a lens together with a source and target point. Light passing through the lens is refracted. The path followed by the light will be the one with the shortest time of transit from source to target.
+
 
 The light enters the lens at some point $P_{in} = (x_{in}\ , \ -\mbox{Lens}(x_{in}))$ and leaves at $P_{out} = (x_{out}\ ,\  \mbox{Lens}(x_{out}))$. We don't know either $x_{in}$ or $x_{out}$. but we can find them by optimization.
 
@@ -23,7 +48,7 @@ Of course, light also has to travel through the lens. We'll make the lens out of
 
 The objective function will be the sum of the three legs' transit times. It's already programmed for you in the sandbox. So is the command to make a contour plot of the output of the objective function over a domain of $x_{in}$ and $x_{out}$. Finally, the last line in the sandbox draws a picture of the lens and the light path, but you will have to insert the argmins $x_{in}$ and $x_{out}$ that you pick from the contour plot of the objective function. (The $x_{in}$ and $x_{out}$ shown in the initial code of the sandbox are not right!)
 
-```{r daily-digital-38-sandbox2, exercise=TRUE, exercise.cap="Lens sandbox", exercise.eval=FALSE, exercise.lines=18, exercise.completion=FALSE, exercise.startover=TRUE, exercise.diagnostics=TRUE}
+```{r}
 # Describe the shape of the lens
 Lens_top <- makeFun(-90 + sqrt(100^2 - x^2)  ~ x)
 Lens_bottom <- makeFun(-Lens_top(x) ~ x)

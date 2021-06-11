@@ -64,6 +64,25 @@ slice_plot(-exp(-x) ~ x, domain(x=c(-2,2))) %>%
 
 ## Curve fitting an exponential function
 
+The exponential function is particularly useful when the quantity we want to model shows ***constant proportional increase***. Many quantities in everyday life are this way. For instance, an increase in salary is typically presented in a format like "a 3% increase." The population growth of a country is often presented as "percent per year." Inflation in the price of goods is similarly described in percent per year. Interest on money in a bank savings account is also described as percent per year. But if you have the bad fortune to owe money to a loan shark, the proportional increase might be described as "percent per month" or "percent per week."
+
+When you know the "percent increase per time" of a quantity whose initial value is $A$, the exponential function is easy to write down: $$f(t) = A (1+r)^t$$ 
+The number $r$ is often called the ***interest rate*** or ***discount rate*** and is given in **percent**. 
+
+::: {.takenote}
+Regrettably, it's extremely easy amd common to forget the rules for addition with percent. If $r = 5\%$, then $(1+r) = 1.05$, not 6. Always keep in mind that $5\%$ means $\frac{5}{100}$.
+
+Another source of error stems from the tradition in mathematics of using the number $e=2.718282$ as the "natural" base of the exponential function, whereas in $f(t) = A (1+r)^t$ the base is $1+r$. 
+
+You can translate an exponential $b^t$ in any base $b$ to the "natural" base. This is just a matter of calculating the appropriate parameter $k$ such that $e^k = b$. Using logarithms, $$e^k = b\ \ \implies \ \  k=\ln(b)$$ For instance, if 
+$r=5\%$ per year, we'll have $k = \ln(1+r) = \ln(1.05) = 0.488$ per year.
+
+Almost everybody is happier doing arithmetic with numbers like 2 and 10 rather than $e=2.718282$. For this reason, you may see formulations of the exponential function as $g(t) \equiv 2^{a t}$ or $h(t) \equiv 10^{c t}$. Remember that $2^{a t}$ and $e^{at}$, although both exponential functions, are quantitatively different. If you want to write $2^{at}$ using the "natural" base, it will be $e^{\ln(2) a\, t }$. Similarly, $10^{ct} = e^{\ln(10) c\, t}$.
+:::
+
+
+Exponential functions also describe ***decrease*** or ***decay***. Just replace $t$ with $-t$. That is, a movie of a decreasing quantity is just the movie of an increasing quantity played backwards in time! 
+
 Figure \@ref(fig:Fun-4-intro-1) shows some data collected by Prof. Stan Wagon to support his making a detailed mechanistic model of an everyday phenomenon: [The cooling of a mug of hot beverage to room temperature](https://www.researchgate.net/profile/Gianluca_Argentini/post/Is_analogy_reasoning_between_heat_transfert_and_electriocity_allows_to_apply_the_electricity_laws_about_resistance_to_thermal_resistances/attachment/59d6573379197b80779ada64/AS%3A533325451403264%401504166104259/download/Stan+WAGON+How+quickly+does+water+cool.pdf). The mug started at room temperature, which was measured at 26 degrees C. At time 0 he poured in boiling water from a kettle and measured the temperature of the water over the next few hours.
 
 ```{r Fun-4-intro-1, echo=FALSE, fig.cap="Stan's data"}
@@ -138,21 +157,22 @@ gf_point(temp ~ time, data=CoolingWater %>% sample_n(20)) %>%
   slice_plot(25 + 83.3*exp(-.0277*time) ~ time, color="blue")
 ```
 
+
+```{exercise, name="chicken-choose-vase"}
+```
+<details>`r knitr::knit_child(exercise_file("05", "chicken-choose-vase.Rmd"))`</details>
+
+```{exercise, name="cow-type-kayak-new"}
+```
+<details>`r knitr::knit_child(exercise_file("05", "cow-type-kayak-new.Rmd"))`</details>
+
+
+
 ```{exercise, name="maple-hit-saucer"}
 ```
-<details>`rr knitr::knit_child("Exercises/Fun/maple-hit-saucer.Rmd")`</details>
+<details>`r knitr::knit_child("Exercises/Fun/maple-hit-saucer.Rmd")`</details>
 
 ## Curve fitting a periodic function
-
-## Modeling periodicity
-
-::: {.objectives}
-```{r echo=FALSE, results="asis"}
-state_objective("Fun-7a", "Know how the parameter values in a sinusoidal function affect the amplitude, period, phase shift, and vertical shift (table page 185)")
-state_objective("Fun-7b", "Given a sinusoidal graph, be able to estimate the amplitude, period, phase shift, and vertical shift (table page 185)")
-state_objective("Fun-7c", "Recognize when a sinusoidal model is appropriate.")
-```
-:::
 
 Figure \@ref(fig:Fun-4-a-3) shows the tide level in [Providence, Rhode Island](https://www.google.com/maps/place/Providence,+RI/@41.8071,-71.4012,14z/data=!4m5!3m4!1s0x89e444e0437e735d:0x69df7c4d48b3b627!8m2!3d41.8071!4d-71.4012), starting at midnight on April 1, 2020 and recorded every minute for four and a half days. (These data were collected by the US National Oceanic and Atmospheric Administration. [Link](https://tidesandcurrents.noaa.gov/api/datagetter?begin_date=20200401%2010:00&end_date=20200405%201:59&station=8454000&product=one_minute_water_level&datum=mllw&units=metric&time_zone=gmt&application=web_services&format=csv))
 
@@ -214,17 +234,94 @@ gf_line(level ~ hour,
 
 ```{exercise, name="sunset-in-LA"}
 ```
-<details>`rr knitr::knit_child("Exercises/Fun/sunset-in-LA.Rmd")`</details>
+<details>`r knitr::knit_child("Exercises/Fun/sunset-in-LA.Rmd")`</details>
 
 ```{exercise, name="lamb-talk-gloves"}
 ```
-<details>`rr knitr::knit_child("Exercises/Fun/lamb-talk-gloves.Rmd")`</details>
+<details>`r knitr::knit_child("Exercises/Fun/lamb-talk-gloves.Rmd")`</details>
 
 ```{exercise, name="spirometer"}
 ```
-<details>`rr knitr::knit_child("Exercises/Fun/spirometer.Rmd")`</details>
+<details>`r knitr::knit_child("Exercises/Fun/spirometer.Rmd")`</details>
+
+
+## Curve fitting a power-law function
+
+You have been using power-law functions from early in your math and science education.  Some examples:
+
+Setting | Function formula | exponent
+--------|------------------|----------
+Circumference of a circle | $C(r) = 2 \pi r$ | 1
+Area of a circle | $A(r) = \pi r^2$ | 2
+Volume of a sphere | $V(r) = \frac{4}{3} \pi r^3$ | 3
+Distance traveled by a falling object | $d(t) = \frac{1}{2} g t^2$ | 2
+Gas pressure versus volume | $P(V) = \frac{n R T}{V}$ | $-1$
+... perhaps less familiar ... | | 
+Distance traveled by a diffusing gas | $X(t) = D \sqrt{
+\strut t}$ | $1/2$
+Animal lifespan (in the wild) versus body mass | $L(M) = a M^{0.25} | 0.25
+Blood flow versus body mass | $F(M) = b M^{0.75}$ | 0.75
+
+The reason why power-law functions have their important role in science have to do with the logic of physical quantities such as length, mass, time, area, volume, force, power, and so on. We'll discuss this at length later in the course and the principles will appear throughout calculus.
+
+As for finding the power law $f(x) \equiv A x^p$ that provides a good match to data, we'll need some additional tools to be introduced in Chapter \@ref(magnitudes).
+
+
 
 ## Hump and sigmoid functions
+
+Our last two basic modeling functions express an important idea in modeling: ***localness***. To put this in concrete terms, imagine creating a function to depict the elevation above sea level of a long road as a function of distance in miles, $x$, from the start of the road. If the road were level at 1200 feet elevation, a sensible model would be $\mbox{elevation}(x) = 1200 \text{ft}$. If the road were gently sloping, a better model would be $\mbox{elevation}(x) = 1200 + 3 x$. 
+
+Now let's add a bump to the road. A bump is a local feature, often only a few feet wide. Or, perhaps the road is crossing a mountain range. That's also a local feature, but unlike a bump in the road a mountain range extends for many miles.
+
+The basic modeling function suited to represent bumps in the road, or potholes, or mountain ranges is called a ***hump function***. 
+
+A hump function has two parameters: the location of the hump, which we'll call the ***center*** parameter, and the sideways extent of the hump, which we'll call the ***spread***. Figure \@ref(fig:Fun-3C-1) shows a few hump functions with different parameters.
+
+```{r Fun-3C-1, echo=FALSE, warning=FALSE, fig.show="hold", fig.height=3, fig.width=6}
+slice_plot(dnorm(x, 1, 0.5) ~ x, domain(x=c(-3, 3))) %>%
+    gf_labs(title="(a) Hump with center=1, spread = 0.5")
+slice_plot(dnorm(x, -1, 0.05) ~ x, domain(x=c(-3, 3)), npts=500) %>%
+    gf_labs(title="(b) Hump with center=-1, spread = 0.05")
+slice_plot(dnorm(x, 0.25, 1.2) ~ x, domain(x=c(-3, 3)), npts=500) %>%
+    gf_labs(title="(c) Hump with center=0.25, spread = 1.2") %>%
+  gf_hline(yintercept = dnorm(1.2+0.25, 0.25, 1.2), color="red") %>%
+    gf_segment(0.2016 + 0.2016 ~ -0.95 + 1.45, color="red", size=3, alpha=.03)
+```
+
+It's easy to read off the ***center*** parameter from a graph of a hump. It's the location of the top of the hump. (We mentioned before that a mathematical word for "the location of the top" is ***argmax***; the value for the input of the function that produces the maximum output.)
+
+The ***spread*** parameter is also pretty straightforward, but you first have to become familiar with an unusual feature of the hump function. The output of the hump function *far from the center* is practically zero. But it is not exactly zero. You can see from the graphs that the hump function has long flanks which approach zero output more or less in the manner of an exponential function. This means that we can't measure the spread of the hump function by the distance between the zeros on either side of the peak. Instead, we need a ***convention*** that will allow us to be precise in quantifying what is admittedly a vague concept of width.
+
+A simple convention is that the spread is the "half-width at half-height." Come down half-way from the peak of the hump. Panel (c) of Figure \@ref(fig:Fun-3C-1) marks that elevation with a thin, red, horizontal line. Along that line, measure the width of the hump, as marked by the thick red line in Panel (c). The ***spread*** parameter is half the width of the hump measured in this way. 
+
+If you have a keen eye, you'll notice that the red line is not exactly half-way down from the peak. It's down 39.35% from the peak. The official definition of width of a hump is not actually half-width at half-height, but that simple formulation will do for us for the present.
+
+Another seeming oddity about the hump function is the value of the maximum. It would have seemed natural to define this as 1, so-called "unit height." The way it actually works is different: the maximum height is set so that the ***area*** under the hump function is 1.
+
+This business with the area will make more sense when you've learned some calculus tools, specifically "differentation" and "integration." For now though ...
+
+Consider another road feature, a local ***change*** from one elevation to another as you might accomplish with a ramp. The basic modeling function corresponding to a ***local change*** from one level to another is the ***sigmoid*** function. Figure \@ref(fig:Fun-3C-2) shows three sigmoid functions.
+
+```{r Fun-3C-2, echo=FALSE, fig.show="hold", warning=FALSE, fig.height=3, fig.width=6}
+slice_plot(pnorm(x, 1, 0.5) ~ x, domain(x=c(-3, 3))) %>%
+    gf_labs(title="(a) Sigmoid with center=1, spread = 0.5")
+slice_plot(pnorm(x, -1, 0.05) ~ x, domain(x=c(-3, 3)), npts=500) %>%
+    gf_labs(title="(b) Sigmoid with center=-1, spread = 0.05")
+slice_plot(pnorm(x, 0.25, 1.2) ~ x, domain(x=c(-3, 3)), npts=500) %>%
+    gf_labs(title="(c) Sigmoid with center=0.25, spread = 1.2") 
+```
+The name "sigmoid" comes from vague resemblance of the graph to the letter S (which is "sigma" in Greek: ς). 
+
+The parameters of the sigmoid function are the same as for the hump function: ***center*** and ***width***. The center is easy to estimate from a graph. It's the value of the input that produces an output of 0.5, half-way between the max and min of the sigmoid. As with the hump function, the ***width*** is measured according to a convention. The width is the ***change in input*** needed to go from an output of 0.5 to an output of 0.8413. This use of 0.8413 must seem loony at first exposure, but there is a reason. We'll need more calculus tools before it can make sense.
+
+Hump functions and sigmoid functions with the same center and width parameters have a very close relationship. The ***slope*** of the sigmoid function is the corresponding ***hump*** function. Figures \@ref(fig:Fun-3C-1) and \@ref(fig:Fun-3C-2) show corresponding hump and sigmoid functions. To the very far left, the sigmoid function is effectively flat: a slope near zero. Moving toward the center the sigmoid has a gentle slope: a low number. In the center, the sigmoid is steepest: a higher number. Then the slope of the sigmoid becomes gentle again before gradually falling off to zero. Near zero, then low, then higher, then low again, then falling off to zero: that's also the description of a hump function!
+
+In R, the name of the sigmoid function is `pnorm()`. The hump is `dnorm()`. The parameters that specify center and spread are named `mean` and `sd`. The word "mean" accurately conveys the idea of "center." It would be nice to be able to say that `sd` comes from `s`prea`d`, but in fact `sd` is short for ***standard deviation***, a old-fashioned term familiar to students of statistics. 
+
+::: {.why}
+"Standard deviation" is off-putting to many people and it really should be replaced with something less weird, perhaps ***typical spread***. The "standard" can be interpreted as "widely used convention." What about "deviation?" The hump function first appeared two-hundred years ago as part of a theory of measurement error. In the context of "error", "deviation" might have made sense. But the theory of measurement error long ago became a more general theory of ***variation***. Errors are just one source of variation. 
+:::
 
 ```{exercise, name="hump-intro"}
 ```
@@ -360,5 +457,5 @@ Historically, careful analysis of tides led to a highly detailed, highly accurat
 
 ```{exercise, daylength, name="sunset-in-LA"}
 ```
-<details>`rr knitr::knit_child("Exercises/Fun/sunset-in-LA.Rmd")`</details>
+<details>`r knitr::knit_child("Exercises/Fun/sunset-in-LA.Rmd")`</details>
 
