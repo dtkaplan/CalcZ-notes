@@ -14,7 +14,7 @@ Consider a hay field that has just been harvested in the middle of summer. The g
 The grass will grow back, a very simple model of which will be $\partial_t G(t) \equiv C$. This rate, $\partial_t G(t)$, corresponds to the grass growing back at a constant rate. Imagine we measure this rate as *tons of biomass* per day, and measure time $t$ in days.
 
 ```{r grass0, echo=FALSE}
-etude2::etudeQ(
+askMC(
   "To model the everyday real world of growing grass, should $C$ be positive or negative?",
   "+positive+",
   "negative" = "The amount of grass would be decreasing. This is not what we ordinarily think of as \"growing\"",
@@ -24,7 +24,7 @@ etude2::etudeQ(
 ```
 
 ```{r grass1, echo=FALSE}
-etude2::etudeQ(
+askMC(
   "What units does the output $G(t)$ have?",
   "tons per day" = "These are the units of $C$ and therefore, because of the equality, of $\\partial_t G(t)$. We're asking about the units of $G(t)$, not $\\partial_t G(t)$.",
   "+tons+",
@@ -34,7 +34,7 @@ etude2::etudeQ(
 ```
 
 ```{r grass2, echo=FALSE}
-etude2::etudeQ(
+askMC(
   "Which of these equations best describes the *trajectory* of the growing grass under the $\\partial_t G(t) = C$ dynamics?",
   "$G(t) = G(0) + C$", 
   "+$G(t) = G(0) + C t$+",
@@ -44,7 +44,7 @@ etude2::etudeQ(
 ```
 
 ```{r grass3, echo=FALSE}
-etude2::etudeQ(
+askMC(
   "According to the dynamics $\\partial_t G(t) = C$, what will $G(t)$ look like (without future harvesting)?",
   "Growth until the field is choked up with grass.",
   "+Growth without limit.+",
@@ -58,7 +58,7 @@ The standard simple model for a system with growth to a carrying capacity is $$\
 
 ```{r grass4, echo=FALSE}
 explain <- "Plug $-K$ into the dynamics in place of $G$. Do you get $\\partial_t G=0$?"
-etude2::etudeQ(
+askMC(
   "The logistic growth model has two fixed points. What are they?",
   "+$G=0$ and $G=K$+",
   "$G=0$ and $G=1/K$" = "Plug $1/K$ into the dynamics in place of $G$. Do you get $\\partial_t G = 0$?",
@@ -68,7 +68,7 @@ etude2::etudeQ(
 ```
 
 ```{r grass5, echo=FALSE}
-etude2::etudeQ(
+askMC(
   "Which of these stories best describes the trajectory of the logistics growth version of $G(t)$ starting with $G(0)$ very small but positive?",
   "The grass grows slowly at first, then gradually growth speeds up and stays high.",
   "The grass grows rapidly at first then declines gradually to no growth.",
@@ -89,7 +89,7 @@ slice_plot(f(g) ~ g, domain(g=c(0,10))) %>%
 ```
 
 ```{r grass6, echo=FALSE}
-etude2::etudeQ(
+askMC(
   "Which of the graphs represents a possible trajectory $G(t)$?",
   "A",
   "+B+",

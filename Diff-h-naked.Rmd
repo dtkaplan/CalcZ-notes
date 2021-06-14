@@ -177,12 +177,27 @@ In practice, however, we perform differentiation whenever possible not with the 
 
 ```{exercise, name="low-low-rates"}
 ```
-<details>`r knitr::knit_child("Exercises/Diff/low-low-rates.Rmd")`</details>
+<details>`r MC_counter$reset()` `r knitr::knit_child("Exercises/Diff/low-low-rates.Rmd")`</details>
 
 ```{exercise, name="singularity-numerics"}
 ```
-<details>`r knitr::knit_child("Exercises/Diff/singularity-numerics.Rmd")`</details>
+<details>`r MC_counter$reset()` `r knitr::knit_child("Exercises/Diff/singularity-numerics.Rmd")`</details>
 
 ```{exercise, name="NaN-numerics"}
 ```
-<details>`r knitr::knit_child("Exercises/Diff/NaN-numerics.Rmd")`</details>
+<details>`r MC_counter$reset()` `r knitr::knit_child("Exercises/Diff/NaN-numerics.Rmd")`</details>
+
+::: {.todo}
+In the limits section or an exercise, ask about $x^0$? Is that the same as 1? What about when $x=0$. Zero raised to any positive power is 0. But any positive number raised to 0 is 1. So two ways of thinking about it give different answers.
+
+The computer handles the question with ease:
+
+```{r}
+0^0
+```
+But computer results don't always agree with mathematical results.
+
+In this case, mathematicians looking at the question through the lens of limits, agree with the computer when looking at the function $g(x) \equiv x^0$. But they disagree if the function is $h(x) \equiv 0^x$ or $f(x) \equiv x^x$.  These three functions are not the same when it comes to limits.
+
+Remember that $\lim_{x\rightarrow 0}$ is not about replacing $x$ with zero, it is about a process of examining the result for non-zero $x$ as $x$ approaches zero. In "zero raised to any positive power" we're talking about $0^{\lim_{x\rightarrow 0}}$, which is not the same as $\lim_{x\rightarrow 0} \left[x^x\right]$.  Similarly, $\left[\lim_{x\rightarrow 0}\right]^0$ is different from
+:::

@@ -1,12 +1,16 @@
 # Notation for functions {#fun-notation}
 
-Part of the difficulty of mathematics for many people is making sense of the nomenclature and notation. What you were taught in high school is a highly idiomatic system that can be mastered only with experience. Mathematicians are undoubtedly skilled in logic, but mathematics itself has an ancient history which has littered the language with synonyms, near synonyms, inconsistencies, diacritical marks, letters in unfamiliar alphabets. An Oxford mathematician wrote a poem that has become famous as nonsense:
+Part of the difficulty of mathematics for many people is making sense of the nomenclature and notation. What you were taught in high school is a highly idiomatic system that can be mastered only with extensive experience. Mathematicians are undoubtedly skilled in logic, but mathematics itself has an ancient history which has littered the language with synonyms, near synonyms, inconsistencies, diacritical marks, and letters in unfamiliar alphabets. 
+
+::: {.intheworld}
+To illustrate the cultural admiration for abstraction in mathematics, consider this famous poem by an University of Oxford mathematician\:
 
 *’Twas brillig, and the slithy toves  
        Did gyre and gimble in the wabe:  
 All mimsy were the borogoves,  
        And the mome raths outgrabe.*  
-    
+:::
+
 Here are some words commonly encountered in traditional mathematics notation. 
 
 **equation**, **formula**, **function**, **variable**, **unknown**, **root** 
@@ -36,11 +40,7 @@ y = sqrt(3)
 y - x = 0
 0 = (x+3)(x-2)
 ```
-Once you've made your guesses, open a sandbox to see if you got it right.
-:::
-
-::: {.todo}
-Produce an MC exercise that addresses the why's of the above.
+Once you've made your guesses, open a `r sandbox()` to see if you got it right.
 :::
 
 The student who knows how to make sense of math notation will find this not of much help in writing computer notation. It's like a well educated foreigner trying to make sense of how some of these sentences are meaningful and others not.
@@ -67,7 +67,7 @@ state_objective("F-30", "Identify the structure of function notation when the fu
 
 We're going to give names to mathematical "objects" and actions. In this introduction, we'll use **boldface for objects** and *italics for actions.*
 
-* A **function** is a mathematical object that gives instructions about how to transform one or more **inputs** into an **output**. Typically, but not always, we will give names to functions so that we can refer to them. You can think of a function like a recipe: it tells you what to do with the inputs to create the output. You're used to functions where the recipe is written as a **formula** using arithmetic and other operators. A more general term for the recipe in a function is **algorithm**. (Sectin \@ref(sec:algorithms) gives a definition of "algorithm" and shows examples that are not formulas.)
+* A **function** is a mathematical object that gives instructions about how to transform one or more **inputs** into an **output**. Typically, but not always, we will give names to functions so that we can refer to them. You can think of a function like a recipe: it tells you what to do with the inputs to create the output. You're used to functions where the recipe is written as a ***formula*** using arithmetic and other operators. A more general term for the recipe in a function is ***algorithm***. (Section \@ref(algorithms) gives a definition of "algorithm" and shows examples that are not formulas.)
 
 
 * An **argument** is a symbol that stands for an **input** in an **algorithm**.
@@ -89,7 +89,7 @@ g <- makeFun(4*x^2 - 7 ~ x)
 ```
 
 i. The name of the function, without parentheses, is on the left side of the ***assignment operator*** `<-`. 
-ii. We could use the name `g` to refer to anything, function or not. Here, you can see that `g` is the name of a function by looking at the object on the right side of `<-`. The R/mosaic operator `makeFun()` is what constructs functions. 
+ii. We could use the name `g` to refer to anything, function or not. The R/mosaic operator `makeFun()` constructs functions and leading a command with `g <- ` gives the output from `makeFun()` a name. 
 iii. The text in the parentheses of `makeFun` is also an R expression. We call this sort of expression a ***tilde expression***. (The symbol `~` is called "tilde.") The tilde character is simply punctuation to separate the expression on the left side, `4*x^2 - 7`, from the expression on the right side. The right side of the tilde expression identifies which symbols are the arguments. (In this case, `x` is the only argument.) The left side of the tilde expression describes the algorithm for the function, using the argument names specified on the right side.
 
 To *apply the function* $g()$ to an argument, we write an R expression with the value for the argument given in the parentheses. For instance, to apply $g()$ to the value 3, we write:
@@ -102,7 +102,7 @@ g(3)
 
 ## Formulas and algorithms {#algorithms}
 
-The function algorithms in the previous section involves only arithmetic. More generally, a formula will involve the invocation of another function. For example: $\sqrt{\strut m x + b}$ or $\sin(m x) + \ln(b)$.
+The algorithms for the example functions in the previous section involved only arithmetic. More generally, a formula will involve the invocation of another function. For example: $\sqrt{\strut m x + b}$ or $\sin(m x) + \ln(b)$.
     
 The idea of "algorithm" generalizes that of formulas. A starter definition is:
 
@@ -114,7 +114,7 @@ A slightly more detailed definition of "algorithm" highlights that algorithms ar
 
 > An ***algorithm*** is a set of instructions for performing a computation written in terms of other algorithms that we already know how to perform.
 
-For our purposes, the "algorithms that we already know how to perform" will be taken to be arithmetic---addition, subtraction, multiplication, division---as well as the evaluation of the naked modeling functions. Admittedly, people cannot compute logarithms as fluently as they can add numbers, but you already have the R implementations of the basic modeling functions: `exp()`, `log()`, `sin()`, power-law, `dnorm()`, and `cnorm()`. 
+For our purposes, the "algorithms that we already know how to perform" will be taken to be arithmetic---addition, subtraction, multiplication, division---as well as the evaluation of the naked modeling functions. Admittedly, people cannot compute logarithms as fluently as they can add numbers, but you already have the R implementations of the basic modeling functions: `exp()`, `log()`, `sin()`, power-law, `dnorm()`, and `pnorm()`. 
 The vast majority of functions you will see in this book (and in mathematical modeling in general) can be constructed out of basic arithmetic and the application of the naked modeling functions.
 
 ## Algorithms without formulas
@@ -135,9 +135,9 @@ The $m$ and $b$ are different; they appear **only** in the algorithm. The word f
 ## Computer notation
 
 The notation used in computer programming lets us be explicit about which symbols refer to function inputs and which to parameters of the function. 
-Depending on the computer language things can be handled in one way or another. For experienced computer programmers: This is the issue of ***scope*** and can be complex in its own right. 
+Depending on the computer language things can be handled in one way or another. (For experienced computer programmers: This is the issue of ***scope*** and can be complex in its own right.) 
 
-In the software used in CalcZ (R, with the `mosaic` package of extensions, which we'll refer to as R/mosaic), we will take a simple-to-use approach. It works like this: 
+In the software used in CalcZ (R/`mosaic`, which is the R language augmented with the `mosaic` package of extensions), we will take a simple-to-use approach. It works like this: 
 
 > All modeling functions we construct with R/`mosaic` will list parameters formally as ***arguments*** to the function.
 
@@ -206,6 +206,15 @@ Here's an illustration that will only make sense to those who have already studi
 $$\int_0^3\!\! f(x) dx\ \ \text{is a number, but }\int_0^x\!\! f(x) dx \ \ \text{is a function.}\ \ $$
 
 In high-school math notation, it can be hard to tell if an expression is intended to be a function or a number. Careful attention to the CalcZ conventions will make it much easier to figure whether an expression resolves to a function or a number. When you first read a mathematical expression, a good first question to ask is, "What kind of thing is this? A function? A number?"
+
+::: {.takenote}
+It is essential that you can apply these conventions reflexively. Being able to say what kind of thing a symbol stands for is a key to understanding what a mathematical expression means.
+:::
+
+
+```{exercise, name="convention-drill"}
+```
+<details>`r MC_counter$reset()` `r knitr::knit_child("Exercises/Fun/convention-drill.Rmd")`</details>
 
 ## Functions in R
 

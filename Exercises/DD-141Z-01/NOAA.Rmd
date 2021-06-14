@@ -16,7 +16,7 @@ knitr::include_graphics(exercise_file("01", "www/heat-index.png"))
 
 
 ```{r daily-digital-01-QA2, echo=FALSE}
-etude2::etudeQ(
+askMC(
   prompt = "A) What are the inputs to the heat-index function",
     "+temperature and relative humidity+",
     "temperature and wind speed" = "Those are the inputs to the wind-chill function, not the heat index.",
@@ -31,7 +31,7 @@ The table actually shows three different functions:
 3. A caution warning level.
 
 ```{r daily-digital-01-QA3, echo=FALSE}
-etude2::etudeQ(
+askMC(
   prompt = "B) For inputs of 70% relative humidity and $88^{\\circ}$ F, what are the outputs of the three functions?",
     "+$100^{\\circ}$ F, $38^\\circ$ C, and \"extreme caution\".+" = "",
     "$100^\\circ$ F, $38^\\circ$ C, and \"danger\"." = "Check again!",
@@ -41,7 +41,7 @@ etude2::etudeQ(
 
 
 ```{r daily-digital-01-QA4, echo=FALSE}
-etude2::etudeQ(
+askMC(
   prompt = "C) Holding the relative humidity at 70%, how much would the ambient temperature have to increase (from $88^\\circ$ F) to change the caution-level output to \"dangerous\"?",
     "+Increase by $2^\\circ$ F+" = "",
     "Increase by  $6^\\circ$ F" = "It looks like you're increasing the humidity to the point where the heat index is $106^circ$ F. But we  asked you how much the temperature *input* has to change, not the heat-index output.",
@@ -51,7 +51,7 @@ etude2::etudeQ(
 
 
 ```{r daily-digital-01-QA5, echo=FALSE}
-etude2::etudeQ(
+askMC(
   prompt = "D) From a starting point of $88^\\circ$ F and 70% humidity, what is the slope of the increase in heat index when moving to 80% humidity.",
     "+$6^\\circ$ F per 10 percentage points humidity+" = "",
     "$6^\\circ$ F" = "A slope is always \"rise over run\". You've got the rise right, but what about the run?",
@@ -60,7 +60,7 @@ etude2::etudeQ(
 ```
 
 ```{r daily-digital-01-QA6, echo=FALSE}
-etude2::etudeQ(
+askMC(
   prompt = "E) What is the heat-index output when the inputs are 52% relative humidity and $91^\\circ$ F? Choose the best answer.",
   "+$98.4^\\circ$ F+" = "Of course, the 4 in the last digit is sketchy, but it's reasonable to calculate the interpolated output by averaging over neighboring outputs.",
     "$101^\\circ$ F" = "That's the output at 55% humidity and $92^\\circ$ F.",
@@ -69,7 +69,7 @@ etude2::etudeQ(
 ```
 
 ```{r daily-digital-01-TF1, echo=FALSE}
-etude2::etudeQ(
+askMC(
   prompt = "True or false: The caution-level output could have been presented as a function of just one variable, rather than needing both temperature and humidity both.",
   "+TRUE+" = "The caution-level output is not a function of ambient temperature alone or of humidity alone. But if you know the heat-index, you know that caution level exactly.",
   "FALSE" = "Notice that the caution-level output is the same for any given level of the heat index, regardless of the ambient temperature or humidity separately."

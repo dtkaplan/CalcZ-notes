@@ -37,7 +37,7 @@ As usual, click on the picture of the app to open it in another browser tab, the
 Since you already have experience searching for matches between the red and green functions, we'll handle this quickly.
 
 ```{r blog1, echo=FALSE, results="markup"}
-etude2::etudeQ(
+askMC(
   "Of the several candidates for an ansatz, only one will work. Go through them one at a time quickly. What you're looking for is a candidate for which the green function is proportional to the red function, even if they don't yet match. Which is the candidate that makes the red function proportional to the blue function?",
   "sinusoid", "exponential", "exponentially decaying sinusoid", "+sigmoid+",
   random_answer_order = FALSE
@@ -46,7 +46,7 @@ etude2::etudeQ(
 
 
 ```{r blog2, echo=FALSE, results="markup"}
-etude2::etudeQ(
+askMC(
   "Even once you've found the correct answer to the previous question, it still may be the case that no settings for the parameters (center and width) will produce red and green functions that both are concave down. But there is a range of the growth-rate $r$ that will work. What is that range?",
   "+$0 < r$+",
   "$r < 0$",
@@ -58,7 +58,7 @@ etude2::etudeQ(
 We're going to work with $r$ only in the correct range from the previous question. So pick one such $r$ and then find values for the parameters that lead to a balance between the red and green functions. (For reasons we'll explain later, success will be signalled by the message "Close enough.")
 
 ```{r blog3, echo=FALSE, results="markup"}
-etude2::etudeQ(
+askMC(
   "What values for `center` can provide a solution?",
   "+any `center` will do+",
   "`center` < 4",
@@ -68,7 +68,7 @@ etude2::etudeQ(
 ```
 
 ```{r blog4, echo=FALSE, results="markup"}
-etude2::etudeQ(
+askMC(
   "Using some $r = 0.25$, find a value of `width` that gives a match between the red and green functions that is \"close enough\".  When you have done this, increase $r$ and do it again. And once more.   What is the relationship between $r$ and `width` that leads to valid solutions?",
   "No relationship. A successful value of `width` doesn't depend on $r$.",
   "+As $r$ gets bigger, `width` needs to get smaller.+",
@@ -78,7 +78,7 @@ etude2::etudeQ(
 ```
 
 ```{r blog5, echo=FALSE, results="markup"}
-etude2::etudeQ(
+askMC(
   "Recall that in the equation $\\dot{x} = r x (1-x/K)$, the $r$ represents the growth rate when $x > 0$ but much less than the carrying capacity $K$. Which of these statements does **not** contribute to explaining the relationship between $r$ and successful `width` in the previous question?",
   "When $r$ is bigger, growth proceeds more quickly.",
   "A steeper sigmoid corresponds to smaller `width`.",

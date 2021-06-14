@@ -26,7 +26,7 @@ We're using both `gf_point()` and `gf_line()`. With data that oscillates up and 
 :::
 
 ```{r dd-07-QA1, echo=FALSE}
-etude2::etudeQ(
+askMC(
   prompt = "What is the range of the number of minutes until sunset over the whole 4-year period?",
     "+40 to 190 minutes+" = "",
     "120 minutes" = "A range is an interval spanned by *two* numbers.",
@@ -36,7 +36,7 @@ etude2::etudeQ(
 ```
 
 ```{r dd-07-QA2, echo=FALSE}
-etude2::etudeQ(
+askMC(
   prompt = "The data fall nicely on a sine-shaped curve. What is the period of that sine?",
     "6 months"  = "Look at the number of months from one peak to another.",
     "11 months" = "Look more carefully. And remember that the change in length of day is an *annual* phenomenon.",
@@ -71,7 +71,7 @@ The domain for `slice_plot()` is inherited to that implied by the `SunsetLA` dat
 :::
 
 ```{r dd-07-QA3, echo=FALSE}
-etude2::etudeQ(
+askMC(
   prompt = "Your `sunset()` function should be a pretty good match to the data except for one thing. What is that thing?",
     "The `sunset()` function has a completely different range than the data." = "This won't be the case if you have estimated $C$ and $A$ correctly.",
     "The period of the `sunset()` function doesn't match the data." = "Did you use `sin(2*pi*Month/12)`? If so, the period should be right.",
@@ -83,7 +83,7 @@ etude2::etudeQ(
 We're going to fix the problem with `sunset()` by defining a *time offset* to use as a reference. For a sine function, a suitable time offset is the value along  the horizontal axis when the phenomenon being modeled crosses $C$ with  a positive slope. There are 4 such points along the horizontal axis readily identifiable in the data. (They may not be at an integer value of `Month`.)
 
 ```{r dd-07-QA4, echo=FALSE}
-etude2::etudeQ(
+askMC(
   prompt = "Which of these is a suitable value for the time offset?",
     "0 months" = "That's not a time when the data suggest that $C$ is being crossed.",
     "19 months" = "That's a maximum, not a crossing  of $C$.",

@@ -57,7 +57,7 @@ SIR_flow(nsteps=10, dom=domain(I=c(0,200), S=c(0,1000))) %>%
 
 
 ```{r sir1-1, echo=FALSE, results="markup"}
-etude2::etudeQ(
+askMC(
   "At the state labeled [1], how many susceptible and how many infective people are there?",
   "$S=500, I = 150$",
   "+$S=750, I=150$+",
@@ -67,7 +67,7 @@ etude2::etudeQ(
 ```
   
 ```{r sir1-2, echo=FALSE, results="markup"}
-etude2::etudeQ(
+askMC(
   "At the state labeled [1], how will $S$ and $I$ be changing?",
   "$S$ going up, $I$ going up",
   "$S$ going up, $I$ going down",
@@ -78,7 +78,7 @@ etude2::etudeQ(
 ```
 
 ```{r sir1-3, echo=FALSE, results="markup"}
-etude2::etudeQ(
+askMC(
   "Is there any place in the state space where both $S$ and $I$ are increasing?",
   "Yes",
   "+No+" = "The reason is that the model imagines that susceptible people are being converted to infectious people (that is, when susceptible people get sick, they become infective.",
@@ -94,7 +94,7 @@ Near label [2], the number of susceptible isn't so big, so there are few new inf
 Make sure you understand the two preceding paragraphs before moving on. If you can't make sense of them, ask for help.
 
 ```{r sir1-4, echo=FALSE, results="markup"}
-etude2::etudeQ(
+askMC(
  "Near label [3], the flows are vertical and downward. This means that the number of susceptibles is decreasing, but the number of infectives is staying the same. What's happening?",
  "+There are just enough susceptibles to replace those infectives who recover.+",
  "Some other illness is removing people from the population." = "Possible, but ... The nice thing about a model is that *we make the rules*. This model focuses on the pandemic.",
@@ -105,7 +105,7 @@ etude2::etudeQ(
 The model isn't intended to account for where the original infectives come from. Remember, each flow point is a statement about what *would happen* if the susceptibles and the infectives were at the given level. 
 
 ```{r sir1-5, echo=FALSE, results="markup"}
-etude2::etudeQ(
+askMC(
   "Suppose the epidemic starts with about 800 susceptibles and 10 infectives. Follow the flow to work out the long-term result. Which of these is the best description?",
   "The infection will dissipate with only a handful of people getting sick.",
   "About 250 people will get sick." = "Do you mean that at the end, only 250 people will still be susceptible? If so, then 800-250 people got sick.",
@@ -122,7 +122,7 @@ SIR_flow(dom = domain(I=c(0,20), S=c(450,550)), nsteps=25)
 ```
 
 ```{r sir1-6, echo=FALSE, results="markup"}
-etude2::etudeQ(
+askMC(
   "Is there a fixed point in the dynamics?",
   "None is visible in this region.",
   "+Yes, at about $I=10, $S=500$+",
@@ -131,7 +131,7 @@ etude2::etudeQ(
 ```
 
 ```{r sir1-7, echo=FALSE, results="markup"}
-etude2::etudeQ(
+askMC(
   "Look carefully at the flow near $I=0$ and $S=500$. Which of these is the best description?",
   "+The number of susceptibles increases over time, but the number of infectives stays near 0.+",
   "Steady state. The population doesn't change at all.",

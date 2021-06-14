@@ -20,7 +20,7 @@ NOTE: We've written the above on several lines just to make it more readable. It
 
 
 ```{r fdem2-1, echo=FALSE, results="markup"}
-etude2::etudeQ(
+askMC(
   "Given the system ${\\mathbf S}_{n+1} = g( {\\mathbf S}_n)$ with $g(S) \\equiv 5 + S/2$, which of these is a trajectory of the system?",
   "+{16, 13, 11.5, 10.75, 10.375, 10.1875, 10.09375}+",
   "{16, 8, 4, 2, 1}",
@@ -30,7 +30,7 @@ etude2::etudeQ(
 ``` 
 
 ```{r fdem2-2, echo=FALSE, results="markup"}
-etude2::etudeQ(
+askMC(
   "Given the system ${\\mathbf S}_{n+1} = g( {\\mathbf S}_n)$ with $g(S) \\equiv 5 + S/2$, which of these is **NOT** a trajectory of the system?",
   paste0("{",paste(Iterate(makeFun(5 + s/2 ~ s), x=0, 5)$s, collapse=", "),"}"),
   paste0("{",paste(Iterate(makeFun(5 + s/2 ~ s), x=1, 3)$s, collapse=", "),"}"),

@@ -44,7 +44,7 @@ gf_point(kepler.radius ~ kepler.angle,
 **Code-reading questions**
 
 ```{r rdi1-2, echo=FALSE, results="markup"}
-etude2::etudeQ(
+askMC(
   "The data are stored in an object named `Kepler`. What kind of object is `Kepler`?",
   "+A data frame+",
   "A matrix",
@@ -54,7 +54,7 @@ etude2::etudeQ(
 ```
 
 ```{r rdi1-3, echo=FALSE, results="markup"}
-etude2::etudeQ(
+askMC(
   "There are two variables from Kepler's data used in the code. What are their names?", 
   "`time` and `angle`",
   "`distance` and `angle`",
@@ -64,7 +64,7 @@ etude2::etudeQ(
 ```
 
 ```{r rdi1-4, echo=FALSE, results="markup"}
-etude2::etudeQ(
+askMC(
   "The object `connector` is defined on lines 2 and 3 of the sandbox code. What kind of R object is `connector`? (Hint, you may need to read further along in the code to figure this out.)",
   "A data frame",
   "A number",
@@ -76,7 +76,7 @@ etude2::etudeQ(
 
 
 ```{r rdi1-5, echo=FALSE, results="markup"}
-etude2::etudeQ(
+askMC(
   "What kind of R object is `kepler.radius ~ kepler.angle`?",
   "+A tilde expression+",
   "An arithmetic expression",
@@ -85,14 +85,14 @@ etude2::etudeQ(
 )
 ```
 ```{r rdi1-6, echo=FALSE, results="markup"}
-etude2::etudeQ(
+askMC(
   "The R function `gf_point()` as used here has how many arguments?",
   1, 2, 3, 4, right_one = 3, random_answer_order = FALSE
 )
 ```
 
 ```{r rdi1-7, echo=FALSE, results="markup"}
-etude2::etudeQ(
+askMC(
   "What's the give away that `polynomial` (as used here) is a **function**?",
   "+The name `polynomial` is followed by open and close parentheses.+",
   "The name `polynomial` begins with a `p`.",
@@ -101,7 +101,7 @@ etude2::etudeQ(
 ```
 
 ```{r rdi1-8, echo=FALSE, results="markup"}
-etude2::etudeQ(  
+askMC(  
   "Why are there quotation marks in `'red'`?",
   "Because the color is only sort of red-ish, not pure red.",
   "Because Mars is the \"Red Planet\"",
@@ -114,7 +114,7 @@ etude2::etudeQ(
 The black curve in the graphic drawn by the sandbox is a "cubic spline" interpolating function. Remember that the spline was constructed referencing **only** the selected points drawn as large dots. The other points from Kepler's data are there only to show how well the interpolant provides a match
 
 ```{r di2-1, echo=FALSE, results="markup"}
-etude2::etudeQ(
+askMC(
   "Does the spline go through the selected points?",
   "+Yes, right through the middle of the dot.+",
   "Pretty close, but tangent to the edge of the dots.",
@@ -126,7 +126,7 @@ etude2::etudeQ(
 The red curve in the graphic is a "global" polynomial. Here, "global" means "the same polynomial at all points in the domain."
 
 ```{r di2-2, echo=FALSE, results="markup"}
-etude2::etudeQ(
+askMC(
   "To judge from the shape of the polynomial, what is the order of the polynomial? (Make sure the sandbox is reset to the original code before you form your answer.)",
   "Fries and a chocolate shake" = "Just kidding.",
   0, 1, "+2+" = "Right, it's a downward facing parabola.", 3, 4, 5, 6, random_answer_order = FALSE
@@ -134,7 +134,7 @@ etude2::etudeQ(
 ``` 
 
 ```{r di2-3, echo=FALSE, results="markup"}
-etude2::etudeQ(
+askMC(
   "Does the global polynomial go through the selected points?",
   "Yes, through all of them.",
   "It runs tangent to the dots.",
@@ -145,7 +145,7 @@ etude2::etudeQ(
 The 2nd-order polynomial is **not** a function that interpolates these data. This is simply because the six selected data points do not lie on a parabola. 
 
 ```{r di2-4, echo=FALSE, results="markup"}
-etude2::etudeQ(
+askMC(
   "The six selected points used to construct the spline and the parabola were selected at random. When you rerun the code, a new random sample will be used. Repeatedly run the code to get some idea of the amount of random variation. This will help you see whether the spline method always constructs an interpolating function and whether the 2nd-order polynomial ever gives an interpolating function for these data.  
   
 Which of these is true as you look at different samples of data?",
@@ -158,7 +158,7 @@ Actually, it's possible to get a global polynomial to act as an interpolating fu
 Change the order of the polynomial used by changing the integer argument in `poly(kepler.angle, 2)`. If you make the integer too large, you'll get an error message. If you make the integer too small, the global polynomial won't go exactly through the data. 
 
 ```{r di2-5, echo=FALSE, results="markup"}
-etude2::etudeQ(
+askMC(
   "What order of polynomial *always* goes exactly through the six selected points.",
   3, 4, "+5+", 6, 7, 
   random_answer_order = FALSE
@@ -168,7 +168,7 @@ etude2::etudeQ(
 Let's try making functions based on more data. To do this, in the `kepler_sample()` function use an argument `n`. For instance, `n=10` will select ten instead of the default six points. You can leave the `seed=NULL` argument.
 
 ```{r di2-6, echo=FALSE, results="markup"}
-etude2::etudeQ(
+askMC(
   "What order of polynomial *always* goes exactly through 10 randomly selected points. Try several different random samples of data.",
   6, 7, 8, "+9+", 10,  
   random_answer_order = FALSE
