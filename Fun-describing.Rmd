@@ -16,9 +16,11 @@ We will need to communicate about functions to your fellow humans and to compute
 
 In this chapter, we'll illustrate these five different modes using the naked modeling functions. It's important to become proficient at all five.
 
+
+
 ## Computer commands
 
-We'll start with simple computer commands that enable us to draw graphs.
+We'll start with computer commands that enable us to draw graphs.
 
 ::: {.scaffolding}
 To make a graph of a function with one input, use the `slice_plot()` command, like this:
@@ -39,7 +41,7 @@ Another way of describing a function is to give a table of inputs and outputs. L
 
 ```{r echo=FALSE}
 tibble::tibble(
-  input = seq(-2, 2, by = 0.25),
+  input = seq(-1, 0.5, by = 0.25),
   output = exp(input)
 ) %>%
   knitr::kable() %>%
@@ -53,13 +55,6 @@ Even today, a table can be a nice way to describe a function when we are interes
 
 Conceptually, it's helpful to keep in mind that every naked modeling function is just a way of organizing information that could have been stored in a table. 
 
-::: {.todo}
-Exercise: give seven tables of the naked modeling functions. Use a sandbox to determine which table is which function.
-
-
-
-:::
-
 ## Word descriptions
 
 Knowing and correctly using a handful of phrases goes a long way in being able to communicate with other people about functions with a single input. Often, the words make sense in everyday speech ("steep", "growing", "decaying", "goes up", "goes down", "flat). 
@@ -68,13 +63,33 @@ Sometimes the words are used in everyday speech but the casual person isn't sure
 
 Still other words are best understood by those who learn calculus. "Concave up," "concave down", "approaching 0 asymptotically," "continuous", "discontinuous", "smooth", "having a minimum **at** ...," "having a minimum **of** ...", "approaching $\infty$ asymptotically," "having a vertical asymptote."
 
-::: {.todo}
-Exercise: Show graphs of the naked modeling functions. Ask which of the phrases apply.
-:::
+To illustrate the patterns described by these phrases, consider the three naked modeling functions in Figure \@ref(fig:for-words):
 
-::: {.todo}
-Exercise: Show a graph and ask questions about asymptotes. Use the phrases "as the input gets very small" (meaning $x \rightarrow -\infty$), "as $x$ goes to zero" (meaning $x \rightarrow 0)"
-:::
+```{r for-words, echo=FALSE, out.width="50%", fig.show="hold", fig.cap="Three of the naked modeling functions: (a) exponential, (b) sinusoid, (c) power-law $x^{-1}$."}
+slice_plot(exp(x) ~ x, domain(x=c(-3,3))) %>%
+  gf_labs(title="(a) exponential")
+slice_plot(sin(x) ~ x, domain(x=c(-5,5))) %>%
+  gf_labs(title="(b) sinusoid")
+slice_plot(1/x ~ x, domain(x=c(.01, 1.25))) %>%
+  slice_plot(1/x ~ x, domain(x=c(-1.25, -.01))) %>%
+  gf_labs(title="(c) power-law")
+```
+
+* **Concave**
+    a. The exponential is ***concave up*** everywhere in its domain.
+    b. The sinusoid alternates back and forth between ***concave up*** and ***concave down***.
+    c. This particular power law $x^{-1}$ is ***concave up*** for $x > 0$ and ***concave down*** for $x < 0$.
+* **Continuous**
+    a. The exponential is continuous everywhere in its domain.
+    b. The sinusoid is continuous everywhere in its domain.
+    c. The power law $x^{-1}$ is discontinuous at $x = 0$
+* **Periodic**. Only the sinusoid is periodic, that is, repeating the same shape over and over again.
+* **Asymptote**. 
+    a. The exponential has a ***horizontal asymptote*** of zero as $x \rightarrow -\infty$
+    b. The sinusoid has neither a vertical nor a horizontal asymptote.
+    c. The power law $x^{-1}$ has a ***vertical asymptote*** of $\infty$ as $x \rightarrow 0$ from the right, and of $-\infty$ as $x \rightarrow 0$ from the left. 
+* **Maximum**. Only the sinusoid has a maximum, that is, an input for which the output is larger than for any other nearby input. The sinusoid similarly has a minimum.
+
 
 ## Computer function names
 

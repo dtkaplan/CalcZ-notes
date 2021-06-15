@@ -1,0 +1,24 @@
+---
+id: "scale-input-2"
+author: "Daniel Kaplan"
+---
+
+```{r include=FALSE}
+library(etude2)
+library(mosaic)
+library(mosaicCalc)
+```
+
+Find the straight-line function that will give the value on the red scale for each point on the black scale.
+
+```{r echo=FALSE}
+add_scale(exp(x) ~ x, domain(x=c(-2,2)), 3, 0) %>% 
+  gf_labs(title="Graph (A)")
+add_scale(pnorm(x) ~ x, domain(x=c(-3, 3)), -1.5, 0) %>% 
+  gf_labs(title="Graph (B)")
+add_scale(dnorm(x) ~ x, domain(x=c(-3, 3)), 2, -1) %>% 
+  gf_labs(title="Graph (C)")
+add_scale(pnorm(x) ~ x, domain(x=c(-3, 3)), 1.5, 2) %>% 
+  gf_labs(title="Graph (D)")
+```
+

@@ -1,0 +1,163 @@
+# Naked modeling functions {#naked-intro}
+
+Experience allows us to make a short list of mathematical functions that provide a large majority of the tools for representing the real world as a mathematical object. Think of this list as different actors, each of whom is skilled in portraying an archetypical character: hero, outlaw, lover, fool, comic. A play brings together different characters, costumes them, builds on dialog.
+
+A mathematical modeler is a kind of playwright. She combines mathematical character types to tell a story about relationships. But there is only a handful of archetypical mathematical functions, the analog of the character actors in drama and comedy. We are calling these the ***naked modeling functions***. In writing a mathematical model, you will clothe the actors to suit the era and location and assemble them together in harmony or discord.
+
+## The list
+
+Here is a list of our basic, unadorned functions, the naked model function,
+
+* Exponential $e^x$
+* Logarithm $\ln(x)$
+* Power-law $x^p$
+* Sinusoid $\sin(x)$
+* Straight-line $m x + b$
+* Hump $\text{dnorm}(x)$
+* Sigmoid $\text{pnorm}(x)$
+
+We've written these here in a traditional notation so that you can see the connections to the math you've already studied. We've used $x$ to stand for the single input to these functions just because that's traditional.
+
+It's good to refer to the functions by their word name---exponential, logarithm, power-law, sinusoid, straight-line, etc. This helps to avoid the source of common confusion. For example, the mathematical expressions $e^x$ and $x^e$ are easily confused, but they are notation for ***utterly different patterns***. You won't so easily mistake "exponential" and "power-law."
+
+::: {.takenote}
+One important point to make here is that our list of naked modeling functions is very short. You should memorize the names and be able easily to associate each name with the traditional notation.
+
+Over the next several chapters, we will introduce several features of functions. Some of our basic modeling functions have these features, some don't. These features include:
+
+- monotonicity up or down
+- concavity up or down
+- horizontal asymptotes
+- vertical asymptotes
+- periodicity
+
+By the end of Block 1, you should be able to list all seven basic modeling functions and say which of these features are relevant to each.
+
+:::
+
+You will also use and see the computer names for these functions. The names can differ somewhat from one computer language to another, but the names in the language we will use, R, are easily recognized by programmers who use any other language.
+
+For ease of reference, here's a table
+
+Name | Traditional notation | R expression
+-----|----------------------|---------------
+Exponential | $e^x$ | `exp(x)`
+Logarithm | $\ln(x)$ | `log(x)`
+Power law | $x^p$ | `x^p`
+Sinusoid | $\sin(x)$ | `sin(x)`
+Straight-line | $m x + b$ | `m*x+b`
+Hump |   | `dnorm(x)`
+Sigmoid | | `pnorm(x)`
+
+We've left out the traditional notation for the hump and sigmoid because there isn't a standard one. Surprisingly, there is no specific name in R for the Power law or Straight-Line functions, but it's easy to implement them when needed using the code above.
+
+You noticed that the section heading is "The naked modeling functions." We mean "naked" in a metaphorical sense, and chose the metaphor to make it easy to remember. Think of this list of seven functions as the celebrities of the world of calculus. Unlike human celebrities who appear and wane over the years, and marry and divorce each other frequently, these celebrities have been with us for generations and maintain intimate connections with one another that reflect the nature of mathematics rather than the fads and fancies of celebrities. (Mastering calculus is largely a matter of becoming familiar with the mathematical connections. You'll see these in due time.)
+
+These (basic) celebrity functions appear in many mathematical settings, just as a human celebrity strives to maintain a public image. The human celebrity is a human organism and that organism is naturally naked. In public appearance, however, the celebrity always is clothed in one way or another. (OK ... Rarely some of them appear unclothed and the same is true in mathematics.) In other words, in order to interact with the world at large, the celebrities need attire.
+
+Similarly, the mathematical functions that appear in real-world applications---as opposed to most math textbooks---always wear clothes, they are adorned with what we call ***parameters***. Parameters help them deal with the units and dimension of quantities. And just as there are standard elements of clothing: shirt, skirt, trousers, ... there are standard ways of clothing the naked modeling function. The process of decorating basic modeling functions is called the ***parameterization*** of the function, and there are often multiple ways of paremeterizing the same function.
+
+Once we dress the naked functions---that is, *parameterize* them---they will become the superheroes of calculus. We'll call this league of superheroes the ***basic modeling functions***..
+
+::: {.forinstructor}
+To be consistent, $mx + b$ is not really naked. The naked equivalent is simply $x$. Almost always, the way we will clothe functions is to replace the naked $x$ with $mx + b$
+:::
+
+##  Function shapes
+
+You are going to be building models by selecting an appropriate function or by putting functions together in various ways. This might remind you of Lego blocks. As you know, these come in different shapes: $6\times 2$, $4\times 2$, $2\times 2$, and so on. Similarly, each of the naked modeling function has a distinctively shaped graph. Knowing the shapes by name will help you when you need to build a model.
+
+
+```{r echo=FALSE, out.width="50%", fig.show="hold"}
+dom <- domain(x=c(-1.25, 1.25))
+slice_plot(exp(x) ~ x, domain=dom) %>%
+  gf_labs(title="Exponential") %>%
+  gf_lims(y=c(0, 3))
+slice_plot(log(x) ~ x, domain=dom) %>%
+  gf_labs(title="Logarithm")
+slice_plot(sin(x) ~ x, domain(x=c(-10,10)), npts=500) %>%
+  gf_labs(title="Sinusoid")
+slice_plot(dnorm(x) ~ x, domain(x=c(-3,3))) %>%
+  gf_labs(title="Hump")
+slice_plot(pnorm(x) ~ x, domain(x=c(-3,3))) %>%
+  gf_labs(title="Sigmoid")
+```
+I didn't include a graph of the straight-line function, since you already know what that looks like. Instead, I'll plot two more basic functions, the ***identity function*** and the ***constant function***. As you'll see later, every straight-line function is a "linear combination" of these two.
+
+```{r echo=FALSE, out.width="50%", fig.show="hold"}
+dom <- domain(x=c(-1.25, 1.25))
+slice_plot(x ~ x, domain=dom) %>%
+  gf_labs(title="Identity function")
+slice_plot(1 ~ x, domain=dom) %>%
+  gf_labs(title="Constant function") %>%
+  gf_lims(y=c(0, 2))
+```
+
+It's tempting to deny that the constant function is a function. After all, the output **does not depend** on the input. Still, this situation arises frequently in modeling: you start out supposing that one quantity depends on another but it turns out that it does not. Since functions are our way of representing relationships, it's helpful to have a function for the situation of "no relationship." The constant function does the job.
+
+## The power-law family
+
+The power-law "function" is really a set of differently shaped functions. We lump them together under the name "power-law" because they are strongly related, especially when it comes to the calculus operations you will be learning to use.
+
+Even within the power-law family, it's helpful to consider different but overlapping groups:
+
+1. The ***monomials***: $m_0(x) \equiv x^0$, $m_1(x) \equiv x^1$, $m_2(x) \equiv x^2$, $\ldots$. Of course, $m_0()$ is exactly the same as the constant function, and $m_1(x)$ is the same as the identity function. As for the rest, they have just two general shapes: both arms up (for even powers); one arm up and the other down (for odd powers.)
+
+```{r monomial-graphs, echo=FALSE, out.width="25%", fig.show="keep", warning=FALSE}
+dom <- domain(x=c(-1.25, 1.25))
+slice_plot(x^2 ~ x, domain=dom) %>% gf_labs(title=expression(x^2)) %>%
+  slice_plot(-x^2 ~ x, alpha=0)
+slice_plot(x^3 ~ x, domain=dom) %>% gf_labs(title=expression(x^3)) %>%
+  slice_plot(-x^2 ~ x, alpha=0)
+slice_plot(x^4 ~ x, domain=dom) %>% gf_labs(title=expression(x^4)) %>%
+  slice_plot(-x^2 ~ x, alpha=0)
+slice_plot(x^5 ~ x, domain=dom) %>% gf_labs(title=expression(x^5)) %>%
+  slice_plot(-x^2 ~ x, alpha=0)
+```
+2. The ***negative powers***, e.g. $f(x) \equiv x^{-1}$, $g(x) \equiv x^{-2}$, $h(x) \equiv x^{-1.5}$
+
+```{r negative-graphs, echo=FALSE, out.width="33%", fig.show="keep", warning=FALSE}
+pos_domain <- function(p, max=200) {
+  domain(x=c(max^(1/p), 1.25))
+}
+neg_domain <- function(p, max=200) {
+  res <- pos_domain(p, max)
+  res$x <- -res$x
+  res
+}
+
+slice_plot(x^-1 ~ x, domain=pos_domain(-1), npts=500) %>%
+  slice_plot(x^-1 ~ x, domain=neg_domain(-1), npts=500) %>%
+  gf_labs(title=expression(x^{-1})) %>%
+  slice_plot(-x^2 ~ x, alpha=0) %>%
+  gf_lims(y=c(-200, 200))
+slice_plot(x^-2 ~ x, domain=pos_domain(-2), npts=500) %>%
+  slice_plot(x^-2 ~ x, domain=neg_domain(-2), npts=500) %>%
+  gf_labs(title=expression(x^{-2})) %>%
+  slice_plot(-x^2 ~ x, alpha=0) %>%
+  gf_lims(y=c(-200, 200))
+slice_plot(x^-1.5 ~ x, domain=pos_domain(-1.5), npts=500) %>%
+  gf_labs(title=expression(x^{-1.5})) %>%
+  slice_plot(-x^2 ~ x, alpha=0) %>%
+  gf_lims(y=c(-200, 200), x=c(-1.25,1.25))
+```
+
+3. The **non-integer powers**, e.g. $f(x) = \sqrt{x}$, $g(x) = x^\pi$, and so on.
+
+```{r non-integer-graphs, echo=FALSE, out.width="25%", fig.show="keep", warning=FALSE}
+dom <- domain(x=c(-1.25, 1.25))
+slice_plot(x^(1/2) ~ x, domain=dom, npts=500) %>%
+  gf_labs(title=expression(x^{1/2})) %>%
+  slice_plot(-sqrt(x) ~ x, alpha=0)
+slice_plot(x^pi ~ x, domain=dom, npts=500) %>%
+  gf_labs(title=expression(x^{pi})) %>%
+  slice_plot(-x^pi ~ x, alpha=0)
+```
+
+```{exercise, name="naked-descriptions"}
+```
+<details>`r MC_counter$reset()` `r knitr::knit_child("Exercises/Fun/naked-descriptions.Rmd")`</details>
+
+::: {.todo}
+We need questions about asymptotes.
+:::

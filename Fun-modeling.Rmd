@@ -42,7 +42,7 @@ For functions such as the sinusoid, flipping is not much use, since the flipped 
 
 For the exponential function, the two possible types of flipping---right-for-left and top-for-bottom---produce four different curves, all of which are exponential, shown in Figure \@ref(fig:four-variations).
 
-```{r four-variations, echo=FALSE, fig.cap="Four variations of the exponential functions."}
+```{r four-variations, out.width="50%", echo=FALSE, fig.cap="Four variations of the exponential functions.", fig.show="keep"}
 slice_plot(exp(x) ~ x, domain(x=c(-2,2))) %>%
   gf_refine(theme_void()) %>%
   gf_labs(title="A. The exponential function, no flipping")
@@ -62,7 +62,7 @@ slice_plot(-exp(-x) ~ x, domain(x=c(-2,2))) %>%
 ```
 <details>`r MC_counter$reset()` `r knitr::knit_child("Exercises/DD-141Z-04/exponential-bases.Rmd")`</details>
 
-## Curve fitting an exponential function
+## Curve fitting an exponential function {#fit-exponential}
 
 The exponential function is particularly useful when the quantity we want to model shows ***constant proportional increase***. Many quantities in everyday life are this way. For instance, an increase in salary is typically presented in a format like "a 3% increase." The population growth of a country is often presented as "percent per year." Inflation in the price of goods is similarly described in percent per year. Interest on money in a bank savings account is also described as percent per year. But if you have the bad fortune to owe money to a loan shark, the proportional increase might be described as "percent per month" or "percent per week."
 
@@ -172,9 +172,9 @@ gf_point(temp ~ time, data=CoolingWater %>% sample_n(20)) %>%
 ```
 <details>`r MC_counter$reset()` `r knitr::knit_child("Exercises/Fun/maple-hit-saucer.Rmd")`</details>
 
-## Curve fitting a periodic function
+## Curve fitting a periodic function {#fit-periodic}
 
-Figure \@ref(fig:Fun-4-a-3) shows the tide level in [Providence, Rhode Island](https://www.google.com/maps/place/Providence,+RI/@41.8071,-71.4012,14z/data=!4m5!3m4!1s0x89e444e0437e735d:0x69df7c4d48b3b627!8m2!3d41.8071!4d-71.4012), starting at midnight on April 1, 2020 and recorded every minute for four and a half days. (These data were collected by the US National Oceanic and Atmospheric Administration. [Link](https://tidesandcurrents.noaa.gov/api/datagetter?begin_date=20200401%2010:00&end_date=20200405%201:59&station=8454000&product=one_minute_water_level&datum=mllw&units=metric&time_zone=gmt&application=web_services&format=csv))
+Figure \@ref(fig:Fun-4-a-3-1) shows the tide level in [Providence, Rhode Island](https://www.google.com/maps/place/Providence,+RI/@41.8071,-71.4012,14z/data=!4m5!3m4!1s0x89e444e0437e735d:0x69df7c4d48b3b627!8m2!3d41.8071!4d-71.4012), starting at midnight on April 1, 2020 and recorded every minute for four and a half days. (These data were collected by the US National Oceanic and Atmospheric Administration. [Link](https://tidesandcurrents.noaa.gov/api/datagetter?begin_date=20200401%2010:00&end_date=20200405%201:59&station=8454000&product=one_minute_water_level&datum=mllw&units=metric&time_zone=gmt&application=web_services&format=csv))
 
 ```{r Fun-4-a-3-1, echo=FALSE, fig.cap="About four days of tide-level data from Providence, Rhode Island"}
 #gf_line(level ~ hour, data = math141Z::Anchorage_tide[1:1000,])
@@ -240,9 +240,6 @@ gf_line(level ~ hour,
 ```{exercise, name="spirometer"}
 ```
 <details>`r MC_counter$reset()` `r knitr::knit_child("Exercises/Fun/spirometer.Rmd")`</details>
-
-
-WORKED TO HERE
 
 ## Curve fitting a power-law function
 
@@ -349,16 +346,34 @@ In R, the name of the sigmoid function is `pnorm()`. The hump is `dnorm()`. The 
 
 
 
-## The modeling cycle
+## The modeling cycle {#modeling-cycle}
 
-Need intro explaining cycle
+Effective modelers treat models with skepticism. They look for ways in which models failure to capture salient features of the real world. They have an eye out for deviations between what their models show and what they believe they know about the system being modeled. They consider ways in which the models might not serve the purpose for which they were developed. 
+
+When modelers spot a failure or deviation or lack of proper utility, they might discard the model but more often they make a series of small adjustments, tuning up the model until is successfully serves the purposes for which it is intended. 
+
+Thus, modeling is a cyclic process of creating a model, assessing the model, and revising the model. The process comes to a sort of preliminary end when the model serves its purposes. But even then, models are often revised to check whether the results are sensitive to some factor that was not included or to check whether some component that was deemed essential really is so.
 
 
 ### Example: Cooling water
 
-It looks like our estimate of the half-life is a bit too small; the data doesn't seem to decay at the rate implied by $k = -0.0277$. Perhaps we should try $k = -0.2$ and go on from there.
+Looking back on the exponential fitted to the cooling water data in Section \@ref(fit-exponential), it looks like our original estimate of the half-life is a bit too small; the data doesn't seem to decay at the rate implied by $k = -0.0277$. Perhaps we should try a somewhat slower decay, say $k = -0.2$ and see if that improves things. 
 
-EXERCISE: Have them try $k=0.02$ and iterate until they get something they like.
+::: {.scaffolding}
+In the cooling water example, we're using only a subset of the data collected by Prof. Wagon. The next commands re-create that subset so that you can work with it. They also plot the data and an exponential model.
+```{r results="hide"}
+# reconstruct the sample
+set.seed(101)
+Stans_data <- CoolingWater %>% sample_n(20)
+# Plot the sample and overlay a model
+gf_point(temp ~ time, data=Stans_data) %>%
+  gf_lims(y = c(20, NA)) %>%
+  slice_plot(25 + 83.3*exp(-.0277*time) ~ time, color="blue")
+```
+
+See if $k=-0.02$ provides a better fit to the model. (You can add another `slice_plot()` to be able to compare the original and $k=-0.02$ models.)
+:::
+
 
 Later in CalcZ, we'll study ***optimization***. There are optimization techniques for directing the computer to refine the parameters to best match the data. Just to illustrate, here's what we get:
 

@@ -193,43 +193,16 @@ $$A(kx + c) + C \longrightarrow \underbrace{Ak}_ax + \underbrace{Ac + C}_b \long
 Most students have thoroughly explored the straight-line function in their high-school studies, so we thought it ill-advised to start out with the identity function.
 :::
 
-
-
-## Exercises {.unnumbered}
-
-Exercise 1: Each of the graphs shows two horizontal scales and one of the basic modeling functions. Which horizontal scale (black or red) corresponds to the naked modeling function? 
-
-```{r}
-add_scale(dnorm(x) ~ x, domain(x=c(-3,3)), 0.25, 10) %>%
-  gf_labs(y="output", x="input", title="Graph (A)")
-  
+```{exercise, name="scale-input-1"}
 ```
+<details>`r MC_counter$reset()` `r knitr::knit_child("Exercises/Fun/scale-input-1.Rmd")`</details>
 
-```{r}
-add_scale(pnorm(x, -3, .5) ~ x, domain(x=c(-6,0)), .5, -3) %>%
-  gf_labs(y="output", x="input", title="Graph (B)")
-  
+```{exercise, name="scale-input-2"}
 ```
+<details>`r MC_counter$reset()` `r knitr::knit_child("Exercises/Fun/scale-input-2.Rmd")`</details>
 
-```{r}
-add_scale(sin(2*pi*x/3+1) ~ x, domain(x=c(-2,10)), (2*pi)/3, 16/(2*pi)) %>%
-  gf_labs(y="output", x="input", title="Graph (C)")
-  
-```
 
-Exercise 2: Find the straight-line function that will give the value on the red scale for each point on the black scale.
-
-```{r}
-add_scale(exp(x) ~ x, domain(x=c(-2,2)), 3, 0)
-add_scale(pnorm(x) ~ x, domain(x=c(-3, 3)), -1.5, 0)
-add_scale(dnorm(x) ~ x, domain(x=c(-3, 3)), 2, -1)
-add_scale(pnorm(x) ~ x, domain(x=c(-3, 3)), 1.5, 2)
-```
-
-Exercise 3
-
+::: {.todo}
 Each graph shows a basic modeling function written in this style: $\sin(r(t-t_0))$. Your job is to estimate $t_0$ and $r$. 
+:::
 
-Exercise 4
-
-Find the scaling function that translates

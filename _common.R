@@ -4,6 +4,8 @@ library(glue)
 library(math141Z) # REPLACE THIS WHEN PACKAGES ARE RE-ALIGNED
 library(here) # for file locations
 
+knitr::opts_chunk$set(out.width="90%", fig.align="center")
+
 # Link to the CalcZ sandbox
 sandbox <- function() {
   "[sandbox](https://maa-statprep.shinyapps.io/CalcZ-Sandbox/){target=\"_blank\"}"
@@ -90,7 +92,7 @@ askMC <- function (prompt = "The question prompt", ..., id = NULL, right_one = N
   }
 
   feedback <- paste("<span class='mcanswer'>",
-                    ifelse(answer_table$correct, "Y", "N"),
+                    ifelse(answer_table$correct, "✓", "☹︎"),
                      answer_table$feedback, "</span>")
   answers <- paste0(answer_labels[1:nrow(answer_table)],
                     answer_table$item,

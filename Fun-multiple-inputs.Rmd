@@ -10,7 +10,7 @@ For example, soon after a guitar string is plucked it conforms to a sinusoid pat
 
 For a string of length $L$, the string displacement is a function of position $x$ along the string and is a linear combination of functions $$g_k(x) \equiv \sin(k \pi x /L)$$ where $k$ is an integer.  A few of these functions are graphed in Figure \@ref(fig:guitar-string-modes).
 
-```{r guitar-string-modes, echo=FALSE, fig.height=3, fig.width=7, fig.show="hold"}
+```{r guitar-string-modes, echo=FALSE, fig.height=3, fig.width=7, fig.show="hold", fig.cap="Vibrational modes of a guitar string."}
 slice_plot(sin(pi*x/100) ~ x, domain(x=c(0, 100)), 
            label_text = "k=1") %>% 
   slice_plot(sin(2* pi*x/100) ~ x, color="blue",
@@ -32,7 +32,7 @@ slice_plot(
 Shapes of the sort in Figure \@ref(fig:guitar-string-modes) are a stop-motion flash snapshot of the string. The string's shape also changes in time, so the string's displacement is a function of both $x$ and $t$. The displacement itself is a sinusoid whose time period depends on the length and tension of the string as well as the number of cycles of the spatial sine: 
 $$g_k(x, t) \equiv \sin(\frac{k \pi}{L} x) \ \sin(\frac{k \pi}{P}t)$$ Figure \@ref(fig:string-motion) shows a few snapshots of the 1.5 cycle string at different moments in time, and the motion of the linear combination.
 
-```{r string-motion, echo=FALSE, fig.height=3, fig.width=7, fig.show="hold"}
+```{r string-motion, echo=FALSE, fig.height=3, fig.width=7, fig.show="hold", fig.cap="String position changes over time."}
 slice_plot(sin(3*pi*x/100) * sin(.5) ~ x, 
            domain(x=c(0,100))) %>%
   slice_plot(sin(3*pi*x/100) * sin(.6) ~ x, alpha = 0.5) %>%
@@ -91,23 +91,15 @@ Give function. DRAW CONTOUR PLOT, take slices. Day length as seen by a migrating
 
 ```{exercise, NOAA, name="Tables are functions"}
 ```
-`r MC_counter$reset()` `r knitr::knit_child(exercise_file("01", "NOAA.Rmd"))`
-
-Contour plot of length of day versus latitude.
+<details>`r MC_counter$reset()` `r knitr::knit_child(exercise_file("01", "NOAA.Rmd"))`</details>
 
 
-EXERCISE:
-
-Recall the Pythagorean theorem: $C^2 = A^2 + B^2$. Let's write this as a function that takes as inputs the lengths of the two legs and produces as output the length of the hypotenuse. 
-
-$$\mbox{hypotenuse}(x, y) \equiv \sqrt{\strut x^2 + y^2}$$
-
-This can be seen as a composition of a function $f()$ together with a linear combination of two power-law functions $g()$ and $h()$ of different inputs. What is the function $f()$? What are $g()$ and $h()$? What are the scalars in the linear combination?
-
-EXERCISE: What are the two pieces in this piecewise function of two variables?
-
-```{r}
-bigger <- makeFun(ifelse(y > x, y, x) ~ x + y)
-contour_plot(bigger(x,y) ~ x+y, domain(x=c(-2,2), y=c(-2,2)))
+```{exercise, name="pythagorus-two"}
 ```
+<details>`r MC_counter$reset()` `r knitr::knit_child("Exercises/Fun/pythagorus-two.Rmd")`</details>
+
+```{exercise, name="bigger-two"}
+```
+<details>`r MC_counter$reset()` `r knitr::knit_child("Exercises/Fun/bigger-two.Rmd")`</details>
+
 

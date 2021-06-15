@@ -490,3 +490,81 @@ To describe an *algorithm* for computing the output of the sigmoid function, we 
 
 If you haven't studied calculus before, $\partial_t$ and $\int$ will be new to you. You can hardly be expected at this point to understand them. But now you've seen them and will hopefully come to be friends with them.
 
+## Graphs of the basic functions {#function-shapes}
+
+One helpful way to get to know the naked modeling functions individually is to graph them. People have a natural talent to remember shapes and distinguish one from another; your job is to associate each shape with it's name.
+
+```{r echo=FALSE, out.width="50%", fig.show="hold", warning=FALSE}
+slice_plot(exp(x) ~ x, domain(x=c(-5, 5))) %>%
+  gf_labs(title = expression(paste("Naked exponential:   f(x) =",, e^x)))
+slice_plot(sin(x) ~ x, domain(x=c(-5, 5))) %>%
+  gf_labs(title = "Naked sinusoid:    f(x) = sin(x)")
+slice_plot(log(x) ~ x, domain(x=c(-5, 5))) %>%
+  gf_labs(title = "logarithm:   f(x) = ln(x)")
+slice_plot(dnorm(x) ~ x, domain(x=c(-5,5))) %>%
+  gf_labs(title = "Naked hump function:   f(x) = dnorm(x)")
+slice_plot(pnorm(x) ~ x, domain(x=c(-5,5))) %>%
+  gf_labs(title = "Naked sigmoid function:  f(x) = pnorm(x)")
+slice_plot(x ~ x, domain(x=c(-5,5))) %>%
+  gf_labs(title = "Identity function:    f(x) = x")
+```
+The shape of a power-law function $x^p$ depends on the exponent $p$. 
+
+* If $p$ is not an integer, that is $p \neq \ldots,-2, -1, 0, 1, 2, 3, ...$ then the domain is $0 \leq x$, the positive side of the number line.
+    - For positive $p$, the function is *increasing*.
+    - For negative $p$, the function is *decreasing*.
+* If $p$ is an integer, then the domain is the entire number line, $-\infty < x < \infty$
+    - For p even, that is $p = 2, 4, 6, ...$ the output is positive.
+    - For p odd, the output is negative.
+
+```{r power-law-graphs, echo=FALSE, out.width="50%"}
+slice_plot(x^2.5 ~ x, domain(x=c(0,3))) %>%
+  slice_plot(abs(x)^2.5 ~ x, domain(x=c(-3, 0)), size=2,
+             color="blue", alpha =0.2) %>%
+  gf_labs(title = "Power law with p > 0") %>%
+  gf_text(5 ~ -2, label="When p = 2, 4, 6, 8, ...", color="blue") 
+  
+slice_plot(abs(x)^2.5 ~ x, domain(x=c(0,3))) %>%
+  slice_plot(-abs(x)^2.5 ~ x, domain(x=c(-3, 0)), size=2,
+             color="blue", alpha =0.2) %>%
+  gf_labs(title = "Power law with p > 0") %>%
+  gf_text(5 ~ -2, label="When p = 1, 3, 5, 7, ...", color="blue") 
+
+slice_plot(x^-1 ~ x, domain(x=c(0.1,3))) %>%
+  slice_plot(1/abs(x) ~ x, domain(x=c(-3, -0.1)), size=2, alpha=0.2, color="blue") %>%
+  gf_text(5 ~ -2, label="When p = 2, 4, 6, 8, ...", color="blue") %>%
+  gf_labs(title = "Power law with p < 0")
+
+slice_plot(x^-1 ~ x, domain(x=c(0.1,3))) %>%
+  slice_plot(-1/abs(x) ~ x, domain(x=c(-3, -0.1)), size=2, alpha=0.2, color="blue") %>%
+  gf_text(-4.5 ~ -2, label="When p = -1, -3, -5, -7, ...", color="blue", alpha = 0.3) %>%
+  gf_labs(title = "Power law with p < 0")
+```
+
+::: {.notethis}
+With some practice, you should be able to sketch roughly any of the naked modeling functions from memory. When you can do this, you'll have an easier time envisioning which function might best suit a situation.
+
+In addition to the shape, here are some facts about the naked modeling functions that will let you sketch accurately.
+
+::: {.todo}
+[OR, think of each function as being ***anchored*** at one input. ]
+:::
+
+- Exponential
+    - $x=0 \implies e^x=1$
+    - $x=3 \implies e^x\approx 20$
+- Logarithm
+    - $x=1 \implies log(x)=0$
+    - $x=3 \implies e^x\approx 20$
+- Hump
+    - $x=0 \implies$ peak of hump: dnorm(0) $\approx 0.4$
+    - $x=\pm 1 \implies$ output is $\approx 0.25$
+- Sigmoid
+    - $x=0 \implies$ mid-way up the hill: pnorm(0) $= 0.5$
+    - $x=2 \implies$ output is $\approx 0.975$
+    - $x = -2 \implies$ output is $\approx 0.025$
+- Sinusoid
+    - Peaks are always at 1, valleys at $-1$
+    - $x=0, \pm \pi, \pm 2\pi, \pm 3\pi, \ldots$ gives output 0.
+:::
+
