@@ -33,7 +33,7 @@ As a placeholder, we can look to the auctions of inflation-adjusted US Treasury 
 Let's turn the problem of calculating a net present value into a calculus problem. Rather than summing over the discounted yearly dollar payout, we'll consider a continuous payout rate in dollars per year. 
 
 ```{r pb1-1, echo=FALSE, results="markup"}
-etude2::etudeQ(
+askMC(
   "In continuous time, a continuously compounding interest rate $r$ is a parameter in a differential equation $$\\dot{P} = r P$$ where $P$ is the amount of money (\"principal\") under investment.  Solve the differential equation at $t=1$ year  with an initial principal of $100  to find the corresponding *effective annual interest rate*. Which of these is the conversion between $r$ in the differential equation and the effective annual interest rate? (Hint: Think carefully about the distinction between the interest rate $r$ and the increase at the end of one year $1+r$)",
   "+$\\exp(r) - 1$+",
   "$\\exp(1+r) -1$",
@@ -43,7 +43,7 @@ etude2::etudeQ(
 ```
 
 ```{r pb1-2, echo=FALSE, results="markup"}
-etude2::etudeQ(
+askMC(
   "Using the correct answer from the previous question, find the continuously compounding interest rate $r$ that corresponds to an effective annual discount rate of 8%. Which of these is it?",
   "$r = \\ln(0.08)$",
   "+$r = \\ln(1.08)$+",
@@ -55,7 +55,7 @@ etude2::etudeQ(
 
 
 ```{r pb1-3, echo=FALSE, results="markup"}
-etude2::etudeQ(
+askMC(
   "Which of these integrals corresponds to the discrete sum in the formula for the net present value of the Powerball payout?",
   "+$\\int_0^{29} 873711 (1-r)^t dt$+",
   "$\\int_1^{30} 873711 (1-r)^t dr$",
@@ -84,7 +84,7 @@ F <- antiD((1-r)^t ~ t, r=0.077)
 We're going to use an effective annual discount rate of 8% in the following problems.
 
 ```{r pb1-4, echo=FALSE, results="markup"}
-etude2::etudeQ(
+askMC(
   "Which of the following is the continuously compounded interest rate that corresponds to the effective annual interest rate of 8%?",
   "7.3%",
   "+7.7%+",
@@ -95,7 +95,7 @@ etude2::etudeQ(
 ```
 
 ```{r pb1-5, echo=FALSE, results="markup"}
-etude2::etudeQ(
+askMC(
   "Using the continously compounded interest rate that's equivalent to an effective annual rate of 8%, calculate the appropriate integral for the net present value of a continuous payout at a rate of $873,711 dollars/year$ for the 30-year annuity term used in Powerball. Which of these is it? (Hint: Construct the appropriate anti-derivative and from that compute the appropriate definite integral.)", 
   "$8,970,000",
   "+$9,840,000+",
@@ -116,7 +116,7 @@ etude2::etudeEssay(
 ```
 
 ```{r pb1-6b, echo=FALSE, results="markup"}
-etude2::etudeQ(
+askMC(
   "At the continuously compounded interest rate corresponding to an effective annual rate of 8%, find the net present value of $10 per year over a hundred-thousand years. Which one of these is closest?",
   "+$124.80+",
   "$1248.00$",

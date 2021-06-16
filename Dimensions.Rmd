@@ -1,2 +1,302 @@
 # Dimensions {#dimensions}
 
+::: {.todo}
+This is currently just a jumble. Reorganize it!
+:::
+
+Next time you're at a family gathering with your 10-year old cousin, give her the following math quiz.
+
+1. What's 3 + 2?
+2. What's 7 - 3?
+3. What's 3 miles + 2 miles?
+4. What's 3 miles + 2 kilometers?
+5. What's 3 miles + 2 kilograms?
+
+I don't know your cousin, but I suspect she will have an easy time answering (1) and (2) correctly. As for (3), she might give the correct answer, "5 miles," or just say "5." If so, you'll follow up with "5 what?" at which point she'll definitely say "miles."
+
+(4) is a bit harder. You might need to prompt her with the information that 1 kilometer is about 0.6 miles. Then, if she's pretty smart, she'll answer "4.2 miles."
+
+10-year olds are pretty creative, so I'm not sure how she'll answer (5). But if you ask your Ph.D. aunt, she'll answer along the lines of "silly question," or "there's no such thing." That's true.
+
+Consider these everyday quantities:
+
+i. 60 miles per hour: a typical *speed* for driving on a highway
+ii. 2106 square feet: the in-bounds *area* for a court used for singles tennis.
+iii. 375 cubic centimeters: the *volume* in a canned beverage (in the US).
+iv. 2.5 gallons per minute: the US mandated maximum *flow rate* for water through a shower head. 
+v. 35 miles per gallon: a typical fuel economy for a small car in the US.
+vi. Your body mass index: measure your mass then divide by the square of your height.
+
+Consider how you would measure such things:
+
+i. We ordinarily use a speedometer to measure instantaneous car speed and police use a radar gun. But fundamentally, you measure the distance traveled and the time used and divide distance by time.
+ii. Most people would rely on the internet for this information, but you would check your local court by measuring the width (27 feet is the standard) and the length of the course (78). Multiply the two.
+iii. Pour the beverage into a measuring cup and read off the volume. But more fundamentally, you could measure the circumference of the can ($2 \pi r$), square it ($4 \pi^2 r^2$) and divide by $4 \pi$ to get the cross section area of the can. Then multiply that by the height of the can.
+iv. We don't usually monitor water use by a shower. But if you need to, get a 5-gallon pail (the standard volume of the plastic pails used for so many purposes in construction), put it under the shower head, and measure the time it takes to fill the pail. Divide volume by the time.
+v. Record the mileage on the car's odometer when you fill up the car with gas. Drive. When you next get gas, measure the new odometer reading and the volume of gas you purchased. Divide the change in odometer reading by the gas volume. (In Europe, you would divide the gas volume by the change in odometer reading.)
+vi. Weigh yourself. The scale is usually graduated in both pounds and kilograms: take your choice. Measure your height; the ruler-in-the-doorway method works well. Then divide your weight by the square of your height.
+
+Evidently, it makes sense to *multiply* and *divide* different types of quantities: feet, gallons, kilometers, kilograms, pounds, hours, .... But you won't ever see a quantity constructed by *adding* or *subtracting* miles and hours or gallons and and square feet. You can square feet and cube centimeters, but can you take the square root of a gallon? Does it make sense to raise 2 to the power of 3 yards? 
+
+This section is about the mathematical structure of combining quantities; which kinds of mathematical operations are legitimate and which are not. 
+
+## Mathematics of quantity
+
+::: {.objectives}
+```{r echo=FALSE, results="asis"}
+state_objective("Fun-10a", "Know the definition of a fundamental dimension and the notation for the most common ones (definition page 241-242)")
+state_objective("Fun-10b", "Understand how derived dimensions are formed from fundamental dimensions (definition page 241-242)")
+state_objective("Fun-10c", "Know that units are ways of measuring dimensions and derived dimensions.")
+```
+:::
+
+The first step in understanding the mathematics of quantity is to make an absolute distinction between two concepts that, in everyday life, are used interchangeably: ***dimension*** and ***unit***.
+
+***Length*** is a dimension. Meters is a unit of length. We also measure length in microns, mm, cm, inches, feet, yards, kilometers, and miles, to say nothing of furlongs, fathoms, astronomical units (AU), and parsecs.
+
+***Time*** is a dimension. Seconds is a unit of time. We also measure time in micro-seconds, milli-seconds, minutes, hours, days, weeks, months, years, decades, centuries, millenia.
+
+***Mass*** is a dimension. Kilograms is a unit of mass.
+
+Length, time, and mass are called ***fundamental dimensions***. This is not because length is more important than area or volume. It's because you can construct area and volume by multiplying lengths together. This is evident when you consider units of area like square-inches or cubic centimeters, but obscured in the names of units like acre, liter, gallon.
+
+We'll use the notation L, T, and M to refer to the fundamental dimensions. (Electrical charge Q is also a fundamental dimension, but we won't have much use for it in our examples.)
+
+## Compound dimensions
+
+There are other dimensions: volume, force, pressure, energy, torque, velocity, acceleration, and such. These are called ***compound dimensions*** because we represent them as combinations of the fundamental dimensions, L, T, and M. The notation for these combinations involves multiplication and division. For instance:
+
+- Volume is L $\times$ L $\times$ L $=$ L$^3$, as in "cubic centimeters"
+- Velocity is L/T, as in "miles per hour"
+- Force is M L/T$^2$, which is obscure unless you remember Newton's Second Law that $\text{F} = \text{m}\,\text{a}$: "force equals mass times acceleration." In terms of dimension, mass is M, acceleration is L/T$^2$. Multiply the two together and you get the dimension "force."
+
+Multiplication and division are used to construct a compound dimension from the fundamental dimensions L, T, and M.
+
+Addition and subtraction are **never** used to form a compound dimension.
+
+Much of the work in understanding dimensions involves overcoming the looseness of everyday speech. Remember the weight scale graduated in pounds *and* kilograms. The unit kilograms is a way of measuring M, but the unit of pounds is a way of measuring *force*: M L/T$^2$.
+
+Weight is not the same as mass. This makes no sense to most people and doesn't really matter in everyday life. It's only when you venture off the surface of the Earth that the difference shows up. A person in orbit is "weightless" but that person continues to have mass. The weight of a woman on Mars is different from her weight on Earth but her martian mass is exactly the same as her earthly mass.
+
+Another source of confusion carried over from everyday life is that sometimes we measure the same quantity using different dimensions. You can measure a volume by *weighing* water; a gallon of water weighs 8 pounds, a liter of water has a mass of 1 kg. Serious bakers measure flour by weight; a casual baker uses a measuring cup. We can measure water volume with length because water has a (more-or-less) constant mass density. But 8 pounds of gasoline is considerably more than a gallon. It turns out that the density of flour varies substantially depending on how it's packed, on humidity, etc. This is why it matters whether you weigh flour for baking or measure it by volume. You can measure time by the swing of a pendulum. To measure the same time successfully with different pendula they need to have the same length, not the same mass.
+
+A ***unit*** is a conventional amount of a quantity of a given dimension. All lengths are the same dimensionally, but they can be measured with different conventions: inches, hards, meters, ... Units for the same dimension can all be converted unambiguously one into the other. A meter is exactly the same quantity of length as 39.3701 inches, a mile is the same length as 1609.34 meters. Liters and gallons are both units of volume (L$^3$): a gallon is the same as 3.78541 liters.
+
+You will hear it said that a kilogram is 2.2 pounds. That's not strictly true. A kilogram has dimension M and a pound has dimension ML/T$^2$. Quantities with different dimensions cannot be "equal" or even legitimately compared to one another. Unless you bring something else into the game that physically changes the situation, for instance gravity (dimension of acceleration due to gravity (dimension $\text{L}/\text{T}^2$). The *weight* of a kilogram on the surface of the Earth is is 2.2 pounds because gravitational acceleration is (almost) the same everywhere on the surface of the Earth.
+
+It's also potentially confusing that sometimes different dimensions are used to get at the same idea. For instance, the same car that gets 35 miles / gallon in the US (dimension $\text{L}/\text{L}^3 = 1/\text{L}^2$) will use 6.7 liters per 100 kilometers ($\text{L}^3 / L = \text{L}^2$) in Europe. Same car. Same fuel. Different conventions using different dimensions.
+
+::: {.objectives}
+```{r echo=FALSE, results="asis"}
+state_objective("Fun-10d", "Understand the bracket notation and how it works with dimensional arithmetic.")
+```
+:::
+
+
+Keeping track of the various compound dimensions can be tricky. For many people, it's easier to keep track of the physical relationships involved and use that knowledge to put together the dimensions appropriately. Often, the relationship can be described using specific calculus operations, so knowing dimensions and units helps you use calculus successfully. 
+
+We'll use a specific bracket notation to translate between words for the concept and the dimension. For instance, [length] = L, [mass] = M, [time] = T, [inches] = L, ...
+
+Easy compound dimensions that you likely already know:
+
+i. [***Area***] $= \text{L}^2$. Some corresponding units to remind you: "square feet", "square miles", "square centimeters."
+#. [***Volume***] $= \text{L}^3$. Units to remind you: "cubic centimeters", "cubic feet", "cubic yards." (What landscapers informally call a "yard," for instance "10 yards of topsoil" should properly be called "10 cubic-yards of topsoil.")
+#. [***Velocity***] $= \text{L}/\text{T}$. Units: "miles per hour," "inches per second."
+#. [***Momentum***] $= \text{M}\text{L}/\text{T}$. Units: "kilogram meters per second."
+
+
+Anticipating that you will return to this section for reference, we've also added some dimensions that can be understood through the relevant calculus operations.
+
+- acceleration: [Calculus: derivative of velocity with respect to time, 2nd derivative of position with respect to time]
+- force: [Calculus: Derivative of momentum with respect to time]
+- energy: [Calculus: Integral of force with respect to length]
+- power: [Calculus: Derivative of energy with respect to time]
+
+
+::: {.intheworld}
+***Density*** sounds like a specific concept, but there are many different kinds of densities. These have in common that they are a ratio of a physical amount to a geometric extent:
+
+i. a physical amount: which might be mass, charge, people, etc.
+ii. a geometric extent: which might be length, area, or volume.
+
+Some examples:
+
+- "paper weight" is the mass per area, typically grams-per-square-meter
+- "charge density" is the amount of electrical charge, usually per area or volume
+- "lineal density of red blood cells" is the number of cells in a capillary divided by the length of the capillary. (Capillaries are narrow. Red blood cells go through one after the other.) 
+- "population density" is people per area of ground.
+:::
+
+
+::: {.intheworld}
+The theory of dimensions and units was developed for the physical sciences. Consequently the fundamental dimensions are those of physics: length, mass, time, electrical current, luminous intensity.
+
+Since proper use of units is important even outside the physical sciences, it's helpful to recognize several other kinds of quantity as dimensions.
+
+"people"/"passengers"/"customers"/"patients"/"children"/"students"/"professors" --- these are different dimensions and not really units: no fixed translation between them as you would have with units.
+"money": Units are dollars (in many varieties: US, Canadian, Australian, New Zealand), euros, yuan (synonym: renminbi), yen, pounds (many varieties: UK, Egypt, Syria, Lebanon, Sudan and South Sudan), pesos (many varieties), dinar, franc (Swiss, CFA), rand, riyal, rupee, won, and many others. Conversion rates depend on situation and national policy.
+
+Examples: Passenger-miles is a standard unit of transport. Passenger-miles-per-dollar is an appropriate unit of the economic efficiency of transport. Passenger-deaths per million passenger-mile is one way to describe the risk of transport.
+:::
+
+
+
+
+
+## Arithmetic with dimensions
+
+Recall the rules for arithmetic dimensioned quantities. We restate them briefly with the square-bracket notation for "the dimension of." For instance, "the dimension of $b$" is written $[b]$. We also  write $[1]$ to stand for the dimension  of a  pure number, that is, a quantity without dimension. 
+
+Operation | Result | Only if satisfies | Metaphor
+----------|--------|-------------------|---------
+Multiplication | $[a \times b] = [a]  \times [b]$ | anything goes  |promiscuous
+Division | $[a \div b] = [a] \div  [b]$ | anything goes  |promiscuous
+Addition  |$[a + b] = [a]$|  $[a] = [b]$ | monogomous
+Subtraction|  $[a - b] = [a]$ | $[a] = [b]$ | monogomous
+Trigonometric | $[\sin(a)] = [1]$ |  $[a] = [1]$ | celibate
+Exponential | $[e^a] = [1]$ | $[a] = [1]$ (of course, $[e] = [1]$)| celibate
+Power-law  | $[b  ^  a] = \underbrace{[b]\times[b]\times ...\times [b]}_{a\ \ \mbox{times}}$  |  $[a]  = [1]$ with $a$ an integer | exponent celibate
+Square root | $[\sqrt{b}] = [c]$ | $[b] = [c\times c]$ | idiosyncratic
+Cube root | $[\sqrt[3]{b}] = [c]$  | $[b] = [c \times c \times  c]$ | idiosyncratic
+Hump   | $[\mbox{hump}(a)] = [1]$ | $[a] =  [1]$ | celibate
+Sigmoidal | $[\mbox{sigmoid}(a)] =  [1]$ | $[a] = [1]$ |celibate
+
+
+
+
+
+
+## Example: Dimensional analysis 
+
+We want to relate the **period** (in T) of a pendulum to it's **length** and **mass**. **Gravity** also plays a role. For simplicity, we'll assume that the pendulum cable or rod is massless.
+
+The analysis strategy is to combine the four quantities we think play a role into one total quantity that is **dimensionless**. Since it is dimensionless, it can be constant regardless of the mass, length, period, gravity of each individual situation.
+
+$$\mbox{[Period]}^a \cdot \mbox{[Mass]}^b \cdot \mbox{[Length]}^c \cdot \mbox{[Gravity]}^d = T^a \cdot M^b \cdot L^c \cdot L^d \cdot T^{-2d}$$
+To be dimensionless ...
+
+- $c = -d$, cancel out the L
+- $a = -2d$, cancel out the T
+- $b=0$, there's no other mass term, and we need to cancel out the M
+
+Let $d=1$ and see what happens. 
+
+$$ \frac{\mbox{Gravity}}{\mbox{Length}\cdot \mbox{Period}^2} \equiv c$$
+Consequently
+
+$$Period = \sqrt{\frac{\mbox{Gravity}}{\mbox{Length}} }$$
+::: {.forinstructors} 
+Test via experiment
+
+String knotted into 4 equal segments (about 1 foot each) with a bolt at the end
+
+    o-------o-------o-------o-------Bolt
+
+1. Hang the string from the first knot: length L=4
+    - Time 10 oscillations and record result
+2. Hang the string from the second knot: length L=3
+    - Time 10 oscillations and record result
+... and so on
+
+Calculate the dimensionless quantity $c$ in each case. They should all be approximately the same.
+:::
+
+```{exercise, name="satellite-dimensions"}
+```
+<details>`r MC_counter$reset()` `r knitr::knit_child("Exercises/Dimension/satellite-dimensions.Rmd")`</details>
+
+## Conversion: Flavors of 1
+
+Numbers are dimensionless but not necessarily unitless. Failure to accept this distinction is one of the prime reasons people have trouble figuring out to to convert from one unit to another.
+
+
+1 is a favorite of elementary school students because its multiplication  and division tables are  completely  simple. Anything times one, or anything divided by one, is simply that thing.  Addition and subtraction are pretty simple, too, but that's not my concern here.
+
+When it comes to ***quantities***, there's not just one one but many. And often they look nothing like the numeral 1. Some examples of 1 as a quantity:
+
+- $\frac{180}{\pi} \frac{\text{degrees}}{\text{radians}}$
+
+- $0.621371 \frac{\text{mile}}{\text{kilometer}}$
+
+- $3.78541 \frac{\text{liter}}{\text{gallon}}$
+
+- $\frac{9}{5} \frac{^\circ F}{^\circ C}$
+
+- $\frac{1}{12} \frac{\text{dozen}}{\text{item}}$
+
+I like to call these and others different ***flavors of one***. 
+
+In every example, the dimension of  the numerator matches the dimension of the denominator. [feet / meter] is L/L = 1.  [cups / pint] is L^3/L^3 = 1. [miles/hour / ft per sec] = L/T / L/T = 1. Each of these quantities has *units* but it has no *dimension*. 
+ 
+It's helpful to think about conversion between units as a matter of multiplying by the appropriate flavor of 1. Such conversion will not change the dimension of the quantity but will render it in new units.
+
+::: {.workedexample}
+Example: Convert 100 feet-per-second into miles-per-hour. First, write the quantity to be converted as a fraction and along side it, write the desired units after the conversion. In this case that will be $$100 \frac{\text{feet}}{\text{second}} \ \ \ \text{into} \ \ \ \frac{\text{miles}}{\text{hour}}$$
+
+First, we'll change feet into miles. This can be accomplished by multiplying by the flavor of one that has units miles-per-foot. What number will give a flavor of one? One mile is 5280 feet, so $$\frac{1}{5280} \frac{\text{miles}}{\text{foot}}$$ is a flavor of one.
+
+Next, we need a flavor of one that will turn $\frac{1}{\text{second}}$ into $\frac{\text{1}}{\text{hour}}$. This will have the form $\frac{\text{second}}{\text{hour}}$. What number will give a flavor of one with these units. One hour is 3600 seconds, so $$3600 \frac{\text{second}}{\text{hour}}$$ is a flavor of one.
+
+Multiplying our carefully selected flavors of one by the initial quantity, we get $$
+\frac{1}{5280} \frac{\text{miles}}{\text{foot}} \times 3600 \frac{\text{second}}{\text{hour}}\times 100 \frac{\text{feet}}{\text{second}} = 100 \frac{3600}{5280} \frac{\text{miles}}{\text{hour}} = 68.18 \frac{\text{miles}}{\text{hour}}$$
+:::
+
+
+## Dimensions and linear combinations
+
+Low-order polynomials are a useful way of constructing model functions. And a polynomial is a linear combination of monomials. For instance, suppose we want a model of the yield of corn in a field per inch of rain over the growing season, will call it corn(rain). The output will have units of bushels (of corn). The input will have units of inches (of rain). A second-order polynomial will be appropriate for reasons to be discussed in Chapter \@ref(optimization1). 
+
+$$\text{corn(rain)} \equiv a_0 + a_1\, \text{rain} + \frac{1}{2} a_2\, \text{rain}^2$$
+Of course, the addition in the linear combination will only make sense if all three terms $a_0$, $a_1\,\text{rain}$, and $a_2\, \text{rain}^2/2$ have the same dimension. But clearly $[\text{rain}] \neq [\text{rain}^2]$. In order for things to work out, the **scalars must themselves have dimension**. We know the output of the function will have dimension $[\text{volume}] = \text{L}^3$.  Thus, $[a_0] = \text{L}^3$. 
+
+$[a_1]$ must be different, because it has to cancel out the $[\text{rain}] = \text{L}$ and produce $\text{L}^3$. Thus, $[a_1] = \text{L}^2$. 
+
+Finally, $[a_2] = \text{L}$. Multiplying that by $[\text{rain}]^2$ will give the required $\text{L}^3$
+
+
+<!--
+## Stress and strain
+
+For the civil engineers, introduce the words stress and strain and talk about the units: [stress] = ML/T2 and [strain] = L).
+
+-->
+
+::: {.intheworld}
+
+In everyday communication as well as in most domains such as construction, geography, navigation, and astronomy we measure angles in ***degrees***. 90 degrees is a right angle. But in mathematics, the unit of angle is ***radians*** where a right angle is 1.5708 radians. (1.5708 is the decimal version of $\pi/2$.) The conversion function, which we'll call raddeg(), is $$\mbox{raddeg}(r) \equiv \frac{180}{\pi} r$$ The function that converts degrees to radians, which we'll call degrad() is very similar: $$\mbox{degrad}(d) \equiv \frac{\pi}{180} d$$
+(Incidentally, $\frac{180}{\pi} = 57.296$ while $\frac{\pi}{180} = 0.017453$.)
+
+In traditional notation, the trigonometric functions such as $\sin()$ and $\tan()$ can be written with an argument either in degrees or radians. For instance, $\sin(90^\circ) = \sin\left(\frac{\pi}{2}\right)$. Similarly, for the inverse functions like $\arccos()$ the units of the output are not specified. This works because there is always a human to intervene between the written expression and the eventual computation. With the computer, there is no valid expression like `sin(90 deg)` (although it would be good if there were!). The angles are always given in radians. Such consistency is admirable, but people are not always so consistent. It is a common source of computer bugs that angles in degrees are handed off to functions like $\sin()$ and that the output of $\acos()$ is (wrongly) interpreted  as degrees rather than radians.
+
+:::
+
+Function composition to the rescue!
+
+Consider this function given in the [Wikipedia article on the position of the sun] (as seen from Earth)^[Article accessed on May 30, 2021].
+$$\delta_\odot(n) \equiv - 23.44^\circ \cdot \cos \left [ \frac{360^\circ}{365} \cdot \left ( n + 10 \right ) \right ]$$
+Where $n$ is zero at the midnight marking New Years and increases by 1 per day. (The $n+10$ translates New Years back 10 days, to the day of the winter solstice.) $\delta_\odot()$ gives the declination of the sun: the latitude pieced by an imagined line connecting the centers of the earth and the sun.
+
+The Wikipedia formula is well written in that it uses some familiar numbers to help the reader see where the formula comes from. 365 is recognizably the length of the year in days. $360^\circ$ is the angle traversed when making a full cycle around a circle. $23.44^\circ$ is less familiar, but the student of geography might recognize it as the latitude of the Tropic of Cancer, the latitude farthest north where the sun is directly overhead at noon (on the day of the summer solstice).
+
+But there's a world of trouble for programmer who implements the formula as
+```{r}
+dec_sun <- makeFun(-23.44 * cos((360/365)*(n-10)) ~ n)
+```
+:::
+
+
+```{exercise, name="dim-formulas"}
+```
+<details>`r MC_counter$reset()` `r knitr::knit_child("Exercises/Dimension/dim-formulas.Rmd")`</details>
+
+```{exercise, name="dim-params"}
+```
+<details>`r MC_counter$reset()` `r knitr::knit_child("Exercises/Dimension/dim-params.Rmd")`</details>
+
+
+```{exercise, name="crow-mean-dress"}
+```
+<details>`r MC_counter$reset()` `r knitr::knit_child("Exercises/Dimension/crow-mean-dress.Rmd")`</details>
+
+
+

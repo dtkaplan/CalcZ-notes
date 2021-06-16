@@ -1,0 +1,93 @@
+---
+id: "satellite-dimensions"
+author: "Daniel Kaplan"
+---
+
+```{r include=FALSE, context="setup"}
+library(etude2)
+library(mosaic)
+library(mosaicCalc)
+```
+
+This activity will apply some of the concepts and techniques you're learning to answer the following question:
+
+> How fast does a satellite move along its orbit?
+
+As you can imagine, the answer is already known and you could look it up. The point of our reconstructing what is already known is to see the totality of a modeling project, even if it is a very simple one.
+
+In  textbooks and in-class demonstrations, students are often shown complete, flawless models. In  reality, model construction   is a matter of trial  and  error. Whoops! We're supposed  to  say "modeling cycle." That phrase doesn't  suggest anything about "error." But in  reality, modelers make mistakes, operate under misconceptions, collect erroneous data, misunderstand the purpose of building a model, and make all sorts of mistakes. To cope with this  unhappy situation, good modelers are constantly checking and testing their models for inconsistencies.
+
+To  start, you should  have
+
+1. **A good idea  of what the  eventual answer will be**. Often, that idea comes from somewhat vague and imprecise knowledge. For example, you may have heard that it takes a satellite in low orbit about 90 minutes to complete  one circuit  of the Earth. You may also know that the length of the equator is roughly 40,000 kilometers. (This is actually the original definition of the meter.) A velocity is distance traveled over time, so a satellite in low orbit has a velocity of roughly $40000 / 90$ km/minute, which comes out to 7400 meters/second.
+
+2. A **theory** that relates what you want to know to  what  you  already know. For our purposes, that theory  comes directly  from  Isaac Newton in  the  1680s: his laws of motion and his theory of  universal gravitation.
+
+**The theory**
+
+We won't assume that you have  anything more than a vague understanding  of  Newton's laws  and theory of gravitation. The  diagram shows the situation schematically.
+
+```{r echo=FALSE}
+knitr::include_graphics(normalizePath("www/orbit-force.png"))
+```
+
+The satellite is traveling clockwise along a curved trajectory  encircling the Earth. The position of the satellite is shown at several times by the  numbered blue dots. Let's focus on the satellite at time 1.
+
+The satellite is an object in  motion. Newton's First Law ("Lex I") is stated in his 1687 book, *Philosophiae Naturis Principia Mathematica* (Mathematical principles of natural philosophy) on p.12
+
+
+```{r echo=FALSE}
+knitr::include_graphics(normalizePath("www/principia.png"))
+```
+
+Translating into English, this is
+
+> Law I: *Every body persists in its state of rest or uniform motion in a straight line, unless compelled to change that motion by forces impressed upon it.*
+
+The dashed line connecting the points labeled 1 and 2' shows the path that the satellite would follow *if there were no forces impressed upon it*.
+
+Yet there is a force impressed on the satellite: the gravitational attraction between the Earth and the satellite. This force accelerates the satellite perpendicular to its orbit (toward the center of the Earth) causing the satellite  to follow a curved path rather than a straight path off into deep space. The  acceleration of the satellite traveling at constant  speed in orbit depends on  both the velocity $v$  of the satellite and the radius $r$  of its  orbit.
+
+**Task #1:**  Let $A_1$ be the  acceleration needed to  keep the satellite in  a circular orbit.  Find a plausible relationship between $A_1$, $r$, and $v$. One possibility is that the relationship  is  a general product of the form $$A_1 = v^n\ r^m .$$ Use dimensional  analysis to  find $n$ and $m$. Recall that acceleration has dimension L/T$^{2}$, velocity has dimension $L/T$ and radius has dimension L.
+
+Once you determine  $n$ and $m$, write down the relationship  $A_1$ as a function  of $r$  and $v$.
+
+---
+
+As  we  all know, gravity pulls  all objects toward  the center  of the Earth.  The acceleration $A_2$  due to  gravity on an object a distance $r$ from the enter of the Earth  is proportional to  the mass of the Earth and  is known to be  $$A_2  = G\ M_e/r^2$$
+where $G$ is a constant of  proportionality and $M_e$ is the mass of Earth.
+
+In  order for the  satellite  to  stay  in orbit, the two accelerations  $A_1$  (what's needed  to  stay  in orbit) and $A_2$ (what the Earth's gravity provides)  must  be equal.
+
+**Task #2:** Set your expression  for $A_1$ equal to the  expression  for $A_2$ and solve for the velocity $v$ of  the satellite  (our original objective for this exercise). Your answer will  involve  $G$, $M_e$, and $r$.
+
+Use the known numerical values  for $G$  and $M_e$ given  in the next section to check that your answer  makes  sense.
+
+
+**The data**
+
+The data here come from scientific observations made over centuries that give  us numerical values (with units) of $M_e$ and $G$ in  the theory.
+
+$G$ is a universal constant (according  to  Newton's  theory of  gravitation).  The quantity is given by several sources as
+
+$$G = 6.67 \times 10^{−11} m^3 /(s^2 kg).$$
+
+Similarly, the mass of the Earth is given as
+
+$$M_e  = 5.972 × 10^{24} kg$$
+
+These reported facts seem plausible, but it's a good practice to check. Toward that end, check
+
+1. The dimension  and  units of $A_2(v, r)$ are consistent.
+2. The value  of $A_2$ at the Earth's surface  is consistent with  the  famous value 9.8  m/s$^2$.
+
+**Task #3:** Finishing  up.
+
+Use the  formula  you derived for $v$ as a function of  $r$,  $G$,  and  $M_e$  to find $v$ for a satellite in low orbit around the Earth. (You'll have to decide what "low" means.)
+
+As always, you want to do the  calculation in a way that helps you  to spot possible errors. Here are  two good practices:
+
+1. You have  already  confirmed (or should  have) that your  formula for $v$ as a function  of  $r$, $G$,  and $M_e$  is dimensionally  consistent. As you plug in numerical values  for  $r$,  $G$,  and $M_e$, make sure to keep track of the *units* explicitly and  that the result you  get  has proper units for  velocity.
+2. Compare your result to the rough estimate of $v$ for satellites in  low orbit that you made at the beginning of this activity. If there  is a discrepancy, review  both your initial rough estimate  as well as  your gravity-based  derivation of $v$ to figure  out  where the inconsistency comes from. Then fix it.
+
+

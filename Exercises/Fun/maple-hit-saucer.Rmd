@@ -28,11 +28,12 @@ We're going to plot confirmed cases in blue and deaths in red.
 gf_point(confirmed ~ date, data = Covid_US, color = "blue") %>%
   gf_point(deaths ~ date, color = "red")
 ```
+:::
 
 ```{r maple-hit-saucer-QA1, echo=FALSE}
 message1 <- "The number 1e6 means 1,000,000, that is, six zeros following the one."
 message2 <- "Mid July is the tick mark *after* the one labelled `Jul`."
-etude2::etudeQ(
+askMC(
   prompt = "As of mid July, about how many confirmed cases were there? (Note that the labeled tick marks refer to the beginning of the month, so the point labeled `Feb` is February 1.)",
     "about 300,000" = message1,
     "about 350,000" = message1,
@@ -64,7 +65,7 @@ The first (official) US death from Covid-19 was recorded was recorded on Feb. 29
 
 
 ```{r maple-hit-saucer-QA3, echo=FALSE}
-etude2::etudeQ(
+askMC(
   prompt = "The red data points for Feb 29/March 1 show up at zero on the vertical scale. The red data point for March 2 is at around 2 on the vertical scale. Is this consistent with the facts stated above?",
     "No. The data contradict the facts." = "Think about what it means to be 0 on the vertical scale.",
     "+Yes. The vertical scale is in log units, so 0 corresponds to 1 death, since $\\ln 1 = 0$.+" = "",
@@ -81,7 +82,7 @@ On a semi-log plot, the arithmetic difference between the two curves tells you w
 Calculate what the proportion between deaths and cases was in the month of May. Here's a mathematical hint: $\ln \frac{a}{b} == \ln a - \ln b$. We are interested in $\frac{a}{b}$.
 
 ```{r maple-hit-saucer-QA4, echo=FALSE}
-etude2::etudeQ(
+askMC(
   prompt = "What is the proportion of deaths to cases during the month of May?",
     "about 0.2%" = "Remember, it's the natural logarithm that's being plotted, so the inverse function is `exp()`.",
     "about 1%" = "This would correspond to a (vertical) difference between the curves of about 4.6 log units. Is it really that big?",
@@ -110,7 +111,7 @@ The next question has to do with the meaning of the interval between grid lines 
 
 
 ```{r maple-hit-saucer-QA5, echo=FALSE}
-etude2::etudeQ(
+askMC(
   prompt = "What is the numerical spacing (in terms of raw counts) between adjacent grid lines on the vertical axis?",
     "$10^1$" = "If this were true, moving up from the lowest label (`1e+01`, that is, 10) the next grid line would be at 20, then 30, then 40.",
     "$10^2$" = "If this were true, moving up from the lowest label (`1e+01`) the next grid line would be at 110, then 210, then 310.",

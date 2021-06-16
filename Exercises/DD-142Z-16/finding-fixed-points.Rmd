@@ -24,7 +24,7 @@ There are several ways to find fixed points.
 1. If you have a simple algebraic form for $g()$ you can solve $g(x) = x$ for $x$. For instance, suppose $g(x) \equiv 4 x (1-x)$. Then the fixed points satisfy $$x^\star = 4x^\star (1-x^\star)$$  This has two solutions: one at $x^\star = 0$ and the other at $x^\star = 3/4$.
 
 ```{r ffp-a, echo=FALSE, results="markup"}
-etude2::etudeQ(
+askMC(
   "Consider the dynamical system $$x_{n+1} = 2 x_n + 3$$ To find the fixed point, re-write the equation as $x^\\star = 2 x^\\star + 3$ and solve for $x^\\star$. What is the fixed point $x^\\star$?",
   "+-3+" = "Right. Plug in $-3$ for $x^\\star$ in $2 x^\\star + 3$ and you get ... -3. ",
   "-1.5",
@@ -36,7 +36,7 @@ etude2::etudeQ(
 ```
 
 ```{r ffp-b, echo=FALSE, results="markup"}
-etude2::etudeQ(
+askMC(
   "Consider the dynamical system $$y_{n+1} =  1/y_n + 9$$ To find the fixed point, re-write the equation as $y^\\star = 1/y^\\star + 9$ and solve for $y^\\star$. How many fixed points are there",
   0, 1, "+2+" = "Right, because the equation becomes $(y^\\star)^2 = 9$ which has two solutions, $y^\\star = \\pm 3$.", 3, 4, "an infinite number",
   random_answer_order = FALSE
@@ -44,7 +44,7 @@ etude2::etudeQ(
 ```
 
 ```{r ffp-c, echo=FALSE, results="markup"}
-etude2::etudeQ(
+askMC(
   "How come the first question used $x_n$ for the state while the second on used $y_n$?",
   "Because you can't write $1/x_n$",
   "Using $y_n$ is a mistake. Dear problem writer, Please be more careful in the future!",
@@ -57,7 +57,7 @@ etude2::etudeQ(
 2. Numerical solving. If solving $g(x)=x$ is not so easy, then we can instead create a new function $h(x)\equiv g(x)-x$ and then solve for the zeros of $h()$.  The point of setting up the helper function $h()$ is that computer algorithms for finding zeros generally take a *function* as their input rather than an *equation*. 
 
 ```{r ffp-1, echo=FALSE, results="markup"}
-etude2::etudeQ(
+askMC(
   "Consider the system $$x_{n+1} = 5 [\\cos(x_n)]^2$$ Where are the fixed points? (You can use the sandbox to solve the system numerically.)",
   "+$x^\\star \\in \\{1.086, 2.320, 3.681\\}$+",
   paste("$x^\\star \\in \\{", paste(round(sort(runif(4, 0.5, 4)), 4), collapse=", "), "\\}$"),
@@ -92,7 +92,7 @@ Iterate(g, x0=.872, 100) %>% tail(5)
 You can look for different fixed points by trying different values for $x0$. 
 
 ```{r fpp-4, echo=FALSE, results="markup"}
-etude2::etudeQ(
+askMC(
   "Find the fixed points of $$g(x) \\equiv x + \\sin(x)$$ by picking several random initial conditions in the range $0 \\leq x \\leq 10$. Compare your results to the fixed points seen using the graphical method. Which of these fixed points does iteration **NOT** reveal? Hint: the initial condition is $x_0$, so this is the value you need to change.",
   "$x^\\star = \\pi$",
   "+$x^\\star = 2\\pi$+",

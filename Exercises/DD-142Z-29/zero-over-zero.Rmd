@@ -53,7 +53,7 @@ sin(x) / x
 Although $\sin(x) / x$ is not defined at $x=0$, it is defined *everywhere* else. Recall that the idea of a **limit** is to find a value to stand in for the undefined $\sin(0)/0$ by making $x$ very small and seeing what you get. If you get something sensible for very small $x$, and get the same thing for *even smaller* $x$, then we have a reasonable claim for what value to insert for $\sin(x)/x$.
 
 ```{r zoz1-2, echo=FALSE, results="markup"}
-etude2::etudeQ(
+askMC(
   "Using the sandbox above, add more zeros to $x$ to make it even smaller. You can stop when you get tired. Does $\\sin(x)/x$ evaluate to something sensible for such tiny $x$? If so, what value?",
   "0", 
   "1/2",
@@ -68,7 +68,7 @@ Saying, "so small that I got tired typing the zeros" is not a convincing definit
 Fortunately, R and other computer languages have a scientific notation that allows you just to name the number of zeros you want after the decimal point. For instance `1e-2` is $0.01$---one zero. Similarly `1e-20` is $0.00000000000000000001$, nineteen zeros.
 
 ```{r zoz1-3, echo=FALSE, results="markup"}
-etude2::etudeQ(
+askMC(
   "Use the previous sandbox, but this time use scientific notation so that you can look at $x$ as small as 1e-31 (30 zeros) or even smaller. Starting at `x = 1e-31`, calculate `sin(x)/x`. Then double the number of zeros, keep on doubling the number of zeros. The result will continue to be 1 ... until it eventually becomes `NaN`. How many zeros are there in the `x` that produces `NaN` as the answer to `sin(x)/x`?",
   127,
   191,
@@ -82,7 +82,7 @@ etude2::etudeQ(
 What's happening here has more to do with the nature of computers than the nature of numbers. Computers (in the manner they are ordinarily programmed) use packets of bits to represent numbers, and the chips have been engineered to make those bit packets respond to arithmetic operations as if they were the numbers they represent. A typical computer number, like 0.001, uses 64 bits in a special, standard format. Since there is a finite number of bits, there is a largest possible non-`Inf` number and a smallest possible non-zero number. According to the IEEE standard for "floating-point" arithmetic the largest non-`Inf` number is around `1e300` and the smallest non-zero number is around `1e-320`. This failure to behave like genuine mathematical numbers is called "overflow" (for large numbers which turn into `Inf`) and "underflow" (for small numbers which turn into `0`).
 
 ```{r zoz1-4, echo=FALSE, results="markup"}
-etude2::etudeQ(
+askMC(
   "Play around with numbers in the format `1e300`, `1e301` and so on until you find the smallest `1e???` that prints as `Inf`. Similarly, try numbers in the format `1e-320` and `1e-321` until you find the largest one that prints out as exactly zero. What are those two numbers?",
   "`1e305` and `1e-322`",
   "`1e306` and `1e-323`",
@@ -99,7 +99,7 @@ $$f(x) = a_1 x^1 + a_2 x^2 + a_3 x^3 + \cdots$$
 What's special here is that the `a_0` term does not need to be included in the polynomial, since $f(0) = 0$.
 
 ```{r zoz1-5, echo=FALSE, results="markup"}
-etude2::etudeQ(
+askMC(
   "One of these functions has a Taylor polynomial at $x_0 = 0$ the *does need* a non-zero $a_0$ term. The other's don't. Which function needs the non-zero $a_0$ term?",
   "`sin()`",
   "`tan()`",
@@ -134,7 +134,7 @@ $$\lim_{x\rightarrow 0}\frac{u(x)}{v(x)} = \lim_{x\rightarrow 0} \frac{a_1 x}{b_
 That's the answer, $a_1/b_1$, at least when $b_1 \neq 0$. We'll come back to that case later.
 
 ```{r zoz1-6, echo=FALSE, results="markup"}
-etude2::etudeQ(
+askMC(
   "For $\\lim_{x\\rightarrow 0} \\sin(x) / x$, what are $a_1$ and $b_1$?",
   "+$a_1 = 1$ and $b_1 = 1$+",
   "$a_1 = \\pi$ and $b_1 = \\pi$",
@@ -179,7 +179,7 @@ slice_plot(g(x) ~ x, domain(x=c(0, 0.5)))
 You may have to zoom in on the domain to get a clear read of the function value at $x=0$ singularity.
 
 ```{r zoz1-8, echo=FALSE, results="markup"}
-etude2::etudeQ(
+askMC(
   "From the graph, determine $\\lim_{x\\rightarrow 0} x \\ln(x()$. Choose the correct answer.",
   -0.2, "+0+", 0.1, 0.5,
   random_answer_order = FALSE

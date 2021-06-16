@@ -61,7 +61,7 @@ slice_plot(2 * x * (1 - x/100) ~ x, domain(x=c(-10,110))) %>%
 You're at the point in CalcZ where you should be able to make sense of most of the code we're using. So, some basic questions (which have little to do with dynamics).
 
 ```{r gg-code1, echo=FALSE, results="markup"}
-etude2::etudeQ(
+askMC(
 "What is the `%>%` doing at the end of the first line in the graphics-making command?",
   "It's punctuation to help the human reader distinguish between the two lines.",
   "+It connects the graphics produced by the first `slice_plot()` application and two the second, so that the new (red) curve will be added on top of the old.+",
@@ -71,7 +71,7 @@ etude2::etudeQ(
 ```
 
 ```{r gg-code1b, echo=FALSE, results="markup"}
-etude2::etudeQ(
+askMC(
 "Why is the `%>%` at the end of the first line rather than at the beginning of the second?",
   "No good reason. You could do it either way.",
   "+Without the `%>%, the computer wouldn't know to look to the next line of code to include in the overall chain of commands.+",
@@ -80,7 +80,7 @@ etude2::etudeQ(
 ```
 
 ```{r gg-code1c, echo=FALSE, results="markup"}
-etude2::etudeQ(
+askMC(
   "What is the `%>%` operator called?",
   "+a pipe+" = "Although any of these names might do, it's important to use the right name so that you can communicate effectively with other people.",
   "forwards",
@@ -90,7 +90,7 @@ etude2::etudeQ(
 ```
 
 ```{r gg-code2, echo=FALSE, results="markup"}
-etude2::etudeQ(
+askMC(
 "What is an expression like `2*x*(1-x/100)` called?",
   "+A tilde expression+",
   "A wiggle expression",
@@ -102,7 +102,7 @@ etude2::etudeQ(
 
 
 ```{r gg-code3, echo=FALSE, results="markup"}
-etude2::etudeQ(
+askMC(
 "Which of the two function graphs is drawn in red?",
   "The quadratic growth function",
   "+The piecewise growth function+",
@@ -111,7 +111,7 @@ etude2::etudeQ(
 ```
 
 ```{r gg-code3b, echo=FALSE, results="markup"}
-etude2::etudeQ(
+askMC(
   'How come `"red"` is in quotes?',
   "+Without quotes, the interpreter would look for an R object named `red`+",
   "Because the color isn't pure red.",
@@ -120,7 +120,7 @@ etude2::etudeQ(
 ```
 
 ```{r gg-code4, echo=FALSE, results="markup"}
-etude2::etudeQ(
+askMC(
   "What would happen if the `%>%` were removed from the code? (Hint: Try it!)",
   "An error message would be thrown.",
   "Only the black curve would be drawn.",
@@ -129,7 +129,7 @@ etude2::etudeQ(
 ```
 
 ```{r gg-code5, echo=FALSE, results="markup"}
-etude2::etudeQ(
+askMC(
 "Why is there a `domain()` argument given in the first line but not the second?",
   "+Because of the pipe, the domain is inherited by the second part of the pipeline.+",
   "The author was careless.",
@@ -154,7 +154,7 @@ slice_plot(soln2$x(t) ~ t, color='red')
 ```
 
 ```{r gg2, echo=FALSE, results="markup"}
-etude2::etudeQ(
+askMC(
   "Compare those two solutions (in the graph) and draw a correct conclusion about the extent to which the \"details\" in the shape of the dynamics function makes a difference in the solution.",
   "+So long as the fixed points and rough magnitude of the dynamics function are the same, the solutions will also be much the same.+",
   "Any tweak in the shape of the dynamics function has a major impact on the shape of the solution.",
@@ -163,7 +163,7 @@ etude2::etudeQ(
 ```
 
 ```{r gg3, echo=FALSE, results="markup"}
-etude2::etudeQ(
+askMC(
   "The piecewise formulation makes it easier to choose different growth/decay rates at the fixed points $x=0$ and $x=K$$. To do this, use the `center` argument to specify the $x$ at which the peak of the triangle occurs. Set `center` so that the slope near $x=0$ is about 3 times greater than the slope at $x=K$. What value should you give to `center` to accomplish this when $K=100$?",
   "`center = 10`",
   "+`center = 25`+",
@@ -174,7 +174,7 @@ etude2::etudeQ(
 ```
 
 ```{r gg4, echo=FALSE, results="markup"}
-etude2::etudeQ(
+askMC(
   "Modify the code in the sandbox to add `center = ` as a fourth argument to `piecewise_fun()`. Give `center` the value of the correct answer to the previous problem. Comparing the solution of the (new) piecewise function to that of the original quadratic function, what differences are there?",
   "The location of the stable fixed point is different.",
   "There is no big difference between the two.",

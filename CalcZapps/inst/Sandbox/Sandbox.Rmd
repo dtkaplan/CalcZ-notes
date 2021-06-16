@@ -1,0 +1,149 @@
+---
+title: "CalcZ Sandbox"
+output: learnr::tutorial
+runtime: shiny_prerendered
+---
+
+```{r setup, context="setup", include=FALSE}
+library(learnr)
+library(mosaic)
+library(mosaicCalc)
+library(math141Z)
+knitr::opts_chunk$set(echo = FALSE)
+tutorial_options(exercise.timelimit = 30)
+```
+
+## Sandbox A
+
+The contents of the several R/mosaic sandboxes are cached in your browser, so you can save your work from day to day. All the sandboxes are the same, but they **do not communicate with each other**. All use the `mosaic` and `mosaicCalc` packages, which are already installed. 
+
+```{r sandboxA, exercise=TRUE, exercise.cap="Sandbox A", exercise.lines=15}
+# You can add comments by starting a line with the `#` mark.
+```
+
+
+## Sandbox B
+
+```{r sandboxB, exercise=TRUE, exercise.cap="Sandbox B", exercise.lines=15}
+
+```
+
+## Sandbox C
+
+```{r sandboxC, exercise=TRUE, exercise.cap="Sandbox C", exercise.lines=15}
+
+```
+
+## Sandbox D
+
+```{r sandboxD, exercise=TRUE, exercise.cap="Sandbox D", exercise.lines=15}
+
+```
+
+## Basic modeling functions
+
+```{r create-functions, exercise=TRUE, exercise.cap="Basic modeling functions", exercise.lines=15}
+identity_fun  <- makeFun(x ~ x)
+constant_fun  <- makeFun(1 ~ x)
+straight_line <- makeFun(m*x + b ~ x, b=0, m=1)
+exponential   <- makeFun(exp(k * x) ~ x, k=1)
+power_law     <- makeFun(x^p ~ x, p = 1/2)
+sinusoid      <- makeFun(2*pi*(t-t0)/P ~ t, P=2, t0=0)
+logarithm     <- makeFun(log(x, base=exp(1)) ~ x)
+hump          <- makeFun(dnorm(x, mean, sd) ~ x, mean=0, sd=1)
+sigmoid       <- makeFun(pnorm(x, mean, sd) ~ x, mean=0, sd=1)
+
+identity_fun(3)
+constant_fun(3)
+power_law(3)
+```
+
+## Assembling functions
+
+```{r assembling-functions, exercise=TRUE, exercise.cap="Assembling functions", exercise.lines=10}
+# Linear combination (example)
+f <- makeFun(a0 + a1*exp(k * x) ~ x, a0=30, a1=150, k=-0.5)
+# Product (example)
+g <- makeFun(dnorm(x, mean=0, sd=3) * sin(2*pi*t/P) ~ x + t, P=3)
+# Composition (example)
+h <- makeFun(exp(sin(2*pi*t/P) ~ x) ~ x, P = 3)
+```
+
+## Graphing functions
+
+```{r graphing-functions, exercise=TRUE,  exercise.cap="Graphing functions", exercise.lines=10}
+slice_plot(dnorm(x, mean=1, sd=2) ~ x, 
+           domain(x=c(-5, 5)))
+contour_plot(dnorm(x, mean=1, sd=2) * pnorm(y, mean=-3, sd=1) ~ x + y,
+             domain(x=c(-5, 5), y=c(-5,5)))
+
+```
+
+## Calculus operations
+
+
+```{r calculus-ops-der, exercise=TRUE, exercise.cap="Differentiation", exercise.lines=10}
+f <- makeFun(exp(-0.5*x) * sin(2*pi*x/3) ~ x)
+df <- D(f(x) ~ x)
+slice_plot(df(x) ~ x, domain(x=c(-5, 5))) %>%
+  slice_plot(f(x) ~ x, color="red")
+```
+
+```{r calculus-ops-anti, exercise=TRUE, exercise.cap="Anti-differentiation", exercise.lines=10}
+f <- makeFun(dnorm(x, mean=1, sd=2) ~ x)
+F <- antiD(f(x) ~ x)
+slice_plot(F(x) ~ x, domain(x=c(-5, 5))) %>%
+  slice_plot(f(x) ~ x, color="red")
+# Set "constant of integration"
+slice_plot(F(x) ~ x, domain(x=c(-5, 5))) %>%
+  slice_plot(f(x) ~ x, color="red") %>%
+  slice_plot(F(x, C=0.25) ~ x, color="green")
+# Definite integral
+F(5) - F(-5)
+```
+
+```{r calculus-ops-solve, exercise=TRUE, exercise.cap="Zero finding", warning=FALSE, exercise.lines=10}
+f <- makeFun(exp(sin(2*pi*x/3)) - 0.5 ~ x)
+Zeros <- findZeros(f(x) ~ x, near=0, within=5)
+Zeros
+slice_plot(f(x) ~ x, domain(x=c(-5,5))) %>%
+  gf_hline(yintercept=0, color="red") %>%
+  gf_vline(xintercept= ~ x, color="blue", data=Zeros)
+```
+
+## Fitting functions to data
+
+Use `fitModel()` to fit a function of one variable to data. 
+
+* The tilde expression uses the names in the data frame.
+* Response variable on left of tilde, formula for function on right.
+* Give starting values for any nonlinear parameters (e.g. $k$ in $e^kt$ or $P$ in $\sin(\frac{2\pi}{P} t).
+
+
+```{r stans-data, exercise=TRUE, exercise.lines=10, exercise.cap="fitModel"}
+gf_point(temp ~ time, data = CoolingWater)
+# Eyeball half-life at 25
+k0 <- -log(2)/25
+mod <- fitModel(temp ~ A + B*exp(-k*time), data=CoolingWater,
+                start=list(k=k0))
+Plot <- gf_point(temp ~ time, data = CoolingWater) %>%
+  slice_plot(mod(time) ~ time, color="blue", alpha=0.25, size=2) 
+```
+
+## Linear and quadratic approximations
+
+Approximate a function $f(x)$ around a selected point $x=x_0$.
+
+```{r linear-quad, exercise=TRUE, exercise.lines=10, warning=FALSE}
+f <- makeFun(exp(-0.5*x)*sin(2*pi*x/3) ~ x)
+x0 <- 0.9
+df <- D(f(x) ~ x)
+ddf <- D(df(x) ~ x) # alternatively, D(f(x) ~ x + x)
+lin_approx <- makeFun(f(x0) + df(x0)*(x-x0) ~ x)
+quad_approx <- makeFun(lin_approx(x) + 0.5*ddf(x0)*(x-x0)^2 ~ x)
+slice_plot(f(x) ~ x, domain(x=c(0, 1.5)), size=2) %>%
+  slice_plot(lin_approx(x) ~ x, color="blue") %>%
+  slice_plot(quad_approx(x) ~ x, color="red") %>%
+  gf_vline(xintercept = x0, alpha=0.2, color="yellow", size=3)
+```
+

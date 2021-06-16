@@ -46,7 +46,7 @@ slice_plot(f(x) ~ x, domain(x=c(0,100)), color="gray", lwd=3) %>%
 
 ```{r fox1-1, echo=FALSE}
 explain <- "You might be looking at the large difference between the functions for $x < 5$. That's reasonable. But focussing on the rest of the domain, the approximation is pretty good. "
-etude2::etudeQ(
+askMC(
   "The function value",
   "+Good+", "OK" = explain, "Horrible" = explain,
   random_answer_order = FALSE
@@ -54,7 +54,7 @@ etude2::etudeQ(
 ```
 
 ```{r fox1-2, echo=FALSE}
-etude2::etudeQ(
+askMC(
   "The function's derivative",
   "Good" = "A reasonable answer, so long as you disregard the function over $x<20$.", "+OK+", "Horrible" = "If you focus on the region $x < 20$ this is a good answer. And no instructions were given over how much of the domain the approximation needs to be good, ok, or horrible. The answer is a judgment call and your judgment is reasonable.",
   random_answer_order = FALSE
@@ -63,7 +63,7 @@ etude2::etudeQ(
 
 ```{r fox1-3, echo=FALSE}
 explain <- "Look at the region $70 < x < 100$. The sign of the 2nd-derivative of the approximation differs from that of the original function."
-etude2::etudeQ(
+askMC(
   "The function's second derivative",
   "Good"=explain, "OK"=explain, "+Horrible+",
   random_answer_order = FALSE
@@ -74,7 +74,7 @@ etude2::etudeQ(
 ```{r fox1-5, echo=FALSE}
 message <- "Perhaps this is surprising. The difference between the gray function and the blue function is sometimes positive and sometimes negative. In the integral, those positive differences cancel out the negative differences."
 
-etude2::etudeQ(
+askMC(
   prompt = "The function integral",
   list("+Good+" = message, 
        "OK" = "", 
@@ -98,7 +98,7 @@ slice_plot(f(x) ~ x, domain(x=c(0,100)), color="gray", size=3) %>%
 
 
 ```{r fox2-1, echo=FALSE}
-etude2::etudeQ(
+askMC(
   "The function value",
   "+Good+" = "", 
        "OK" = "", 
@@ -109,7 +109,7 @@ etude2::etudeQ(
 
 ```{r fox2-2, echo=FALSE}
 explain <- "Note that the derivative of the blue function often has a different sign than the derivative of the gray function."
-etude2::etudeQ(
+askMC(
   "The function's derivative",
   "Good" = explain, 
        "OK" = explain,
@@ -120,7 +120,7 @@ etude2::etudeQ(
 
 ```{r fox2-3, echo=FALSE}
 message <- "If the derivative is a horrible approximation, the second derivative won't generally be better."
-etude2::etudeQ(
+askMC(
   "The function's second derivative",
   "Good" = message, 
        "OK" = message, 
@@ -131,7 +131,7 @@ etude2::etudeQ(
 
 ```{r fox2-4, echo=FALSE}
 message <- "Perhaps this is surprising. The difference between the gray function and the blue function is sometimes positive and sometimes negative. In the integral, those positive differences cancel out the negative differences."
-etude2::etudeQ(
+askMC(
   "The function's integral from 10 to 90",
   "+Good+" = message, 
        "OK" = "", 

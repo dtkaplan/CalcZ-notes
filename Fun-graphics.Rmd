@@ -25,11 +25,12 @@ gf_blank(mpg ~ wt, data=mtcars) %>%
   gf_lims(y = c(-20,20), x=c(-5, 5))
 ```
 
+
 ## Data graphics: the point plot
 
 One of the most common uses of a graphics frame is to display visually two columns from a table containing data. For instance, here is a small part of a table about the size of penguins in the Palmer Archipelago in Antarctica.
 
-```{r}
+```{r echo=FALSE}
 library(palmerpenguins)
 set.seed(101)
 knitr::kable(
@@ -48,13 +49,14 @@ knitr::kable(
 
 A point plot displays two columns from the table. Each row in the table is represented by one point in the graphic. For instance:
 
-```{r echo=FALSE, warning=FALSE}
+```{r penguin-flipper,echo=FALSE, warning=FALSE, fig.cap="Data from 344 penguins on flipper length (cm) and body mass (kg)."}
 gf_point(flipper_length_mm/10 ~ body_mass_g/1000, 
          data=penguins) %>%
   gf_labs(y = "Flipper length (cm)", x = "Body mass (kg)") 
 ```
 
 Each penguin has a specific mass and flipper length. To look at the penguins with a mass of around 4 kg, you can see that the different penguins have a variety of flipper lengths. That's typical natural variability.
+
 
 A function graph can be constructed in the same way. Start with a table reporting the output of the function for a variety of inputs, like this:
 
@@ -69,136 +71,52 @@ Then make a point plot of the two columns in the table:
 ```{r echo=FALSE, fig.cap="A point plot of the table."}
 gf_point(output ~ input, data = Sigmoid1)
 ```
-The graph shows the shape of the sigmoid function, one of our naked modeling functions. Except ... the domain of the sigmoid is the entire number line from $-\infty$ to $\infty$. 
+
+Typically, when drawing the graph of a function we do not plot individual dots, but lines connecting the dots. It's very much the same as making a point plot, but use `gf_line()`.
 
 
 
 
-::: {.todo}
-** Working with data**
+::: {.tip}
+Data are stored in tables called ***data frames***. There are many ways to access data frames and many different ways to store them. This is an important topic in data science. In CalcZ we supply data frames in the simplest possible way: giving them a name that you can use to refer to the data frame.
 
-Instructions for accessing data in R here. 
-
-
-i. data frames: `names()`, `head()`, `gf_point()`
-ii. graphical layers and piping: Combining gf_point() and slice_plot() 
-
-
+Before you can use `gf_point()` to plot a pair of columns from a data frame, you have to know the names of the columns. A useful function for this is `names()`. Similarly, to look at the first few rows, use the `head()` function.
 :::
 
-### Asymptotes of functions
+## Graphics layers
 
-There's no need to plot out the entire domain. We know that all the "action" is happening near zero and that for inputs further to the left the function value heads toward zero. Similarly, for inputs far to the right, the function value heads toward zero. We have a particular mathematical notation for this sort of "far to the left" idea. In mathematical notation, we write the situation for the sigmoid this way:
+You will often want to compare to functions, or compare a function to data, or something more elaborage. You can do this using the ordinary graphics functions, e.g. `slice_plot()` or `gf_point()`. Each such command would generates a ***graphics layer***. You can stack layers on top of one another by connecting the commands with a ***pipe***, which is written `%>%` in R. The pipe token should always come at the end of a line, never at the beginning. The last command in the ***pipeline*** should not be followed by `%>%`.
 
-$$\lim_{x \rightarrow -\infty} \text{dnorm}(x) = 0\ \ \ \mbox{and}\ \ \ \lim_{x \rightarrow -\infty}\text{dnorm}(x) = 1$$
-This information about the function output is called the ***horizontal asymptotes*** of the function. It's expected of a mathematically literate person that they know by heart the asymptotes of the basic modeling functions, just as a geographically literate person knows Africa is a continent and Ghana is a country in Africa. We'll say more about horizontal asymptotes later. For now, note that such expected knowledge enables us to convey the shape of the function by plotting just a limited, but well chosen, part of the domain. 
+::: {.workedexample}
+Here is an ugly plot made of three layers, each layer displaying one of the naked modeling functions. When a `slice_plot()` is the first layer, the `domain()` must be given explicitly. You're welcome to do so in the later layers, but if you don't the original `domain()` will be passed down the pipeline.
 
-The graph drawn from the data table is incomplete. The domain of the sigmoid function is the entire number line---all numbers---but the graphic shows only a handful of input values. 
-
-It's perhaps common sense that you can find the function output for an input that isn't shown on the point plot by ***interpolating*** between the points that are shown. For instance, put a straight-line betwen consecutive points:
-
-```{r echo=FALSE, fig.cap="Interpolating between the data points"}
-gf_point(output ~ input, data = Sigmoid1) %>%
-  gf_line()
+```{r echo=TRUE}
+slice_plot(dnorm(x) ~ x, domain(x=c(-4,4))) %>%
+  slice_plot(pnorm(x) ~ x, color="red", size=2) %>%
+  slice_plot(sin(x) ~ x, color="green", size=4, alpha = 0.2)
 ```
-
-With the gaps between points filled in by interpolation, you can use the graphic to read off the output corresponding to every input in the graphic domain. (And *vice versa*: you can find an input that corresponds to any given output in the range of the function.)
-
-Typically a function's graph is drawn using many more points, so closely spaced that you can't see a gap. Since you can't see the gaps, you won't be misled by the sharp angles between consecutive line segments connecting the points. Like this:
-
-```{r sigmoid-graph, echo=FALSE}
-slice_plot(pnorm(x) ~ x, domain(x=c(-3, 3)))
-```
-
-A more traditional, mathematical definition of a function graph is the set of coordinate pairs which are a legitimate input/output pairs of the function. Placing ink at all such legitimate pairs displays the graph.
-
-::: {.takenote}
-In the data point plot of the penguin flipper length vs body mass, there are generally multiple penguins with the same body mass but different flipper lengths. In mathematics, part of the ***definition*** of the term "function" is that a function has ***only one output*** for any given input. Thus, the graph of a function with one input will always consist of a single ***curve***, as opposed to the ***cloud of points*** often seen in data.
+Just to show how these things are done, the functions have been drawn in different colors, different widths (e.g., `size=2`) and different levels of transparency (e.g. `alpha=0.2`).
 :::
 
-## Graphs of the basic functions {#function-shapes}
+## Data and functions
 
-One helpful way to get to know the naked modeling functions individually is to graph them. People have a natural talent to remember shapes and distinguish one from another; your job is to associate each shape with it's name.
+In Figure \@ref(fig:penguin-flipper), the data point plot of the penguin flipper length vs body mass, there are generally multiple penguins with the same body mass but different flipper lengths. The overall impression is that of a ***cloud of points***.
 
-```{r echo=FALSE, out.width="50%", fig.show="hold", warning=FALSE}
-slice_plot(exp(x) ~ x, domain(x=c(-5, 5))) %>%
-  gf_labs(title = expression(paste("Naked exponential:   f(x) =",, e^x)))
-slice_plot(sin(x) ~ x, domain(x=c(-5, 5))) %>%
-  gf_labs(title = "Naked sinusoid:    f(x) = sin(x)")
-slice_plot(log(x) ~ x, domain(x=c(-5, 5))) %>%
-  gf_labs(title = "logarithm:   f(x) = ln(x)")
-slice_plot(dnorm(x) ~ x, domain(x=c(-5,5))) %>%
-  gf_labs(title = "Naked hump function:   f(x) = dnorm(x)")
-slice_plot(pnorm(x) ~ x, domain(x=c(-5,5))) %>%
-  gf_labs(title = "Naked sigmoid function:  f(x) = pnorm(x)")
-slice_plot(x ~ x, domain(x=c(-5,5))) %>%
-  gf_labs(title = "Identity function:    f(x) = x")
-```
-The shape of a power-law function $x^p$ depends on the exponent $p$. 
+When we construct a function to model the pattern observed in that cloud, we need to respect the mathematical definition of function, part of which is that a function has ***only one output*** for any given input. 
 
-* If $p$ is not an integer, that is $p \neq \ldots,-2, -1, 0, 1, 2, 3, ...$ then the domain is $0 leq x$, the positive side of the number line.
-    - For positive $p$, the function is *increasing*.
-    - For negative $p$, the function is *decreasing*.
-* If $p$ is an integer, then the domain is the entire number line, $-\infty < x < \inft$
-    - For p even, that is $p = 2, 4, 6, ...$ the output is positive.
-    - For p odd, the output is negative.
-
-```{r power-law-graphs, echo=FALSE, out.width="50%"}
-slice_plot(x^2.5 ~ x, domain(x=c(0,3))) %>%
-  slice_plot(abs(x)^2.5 ~ x, domain(x=c(-3, 0)), size=2,
-             color="blue", alpha =0.2) %>%
-  gf_labs(title = "Power law with p > 0") %>%
-  gf_text(5 ~ -2, label="When p = 2, 4, 6, 8, ...", color="blue") 
-  
-slice_plot(abs(x)^2.5 ~ x, domain(x=c(0,3))) %>%
-  slice_plot(-abs(x)^2.5 ~ x, domain(x=c(-3, 0)), size=2,
-             color="blue", alpha =0.2) %>%
-  gf_labs(title = "Power law with p > 0") %>%
-  gf_text(5 ~ -2, label="When p = 1, 3, 5, 7, ...", color="blue") 
-
-slice_plot(x^-1 ~ x, domain(x=c(0.1,3))) %>%
-  slice_plot(1/abs(x) ~ x, domain(x=c(-3, -0.1)), size=2, alpha=0.2, color="blue") %>%
-  gf_text(5 ~ -2, label="When p = 2, 4, 6, 8, ...", color="blue") %>%
-  gf_labs(title = "Power law with p < 0")
-
-slice_plot(x^-1 ~ x, domain(x=c(0.1,3))) %>%
-  slice_plot(-1/abs(x) ~ x, domain(x=c(-3, -0.1)), size=2, alpha=0.2, color="blue") %>%
-  gf_text(-4.5 ~ -2, label="When p = -1, -3, -5, -7, ...", color="blue", alpha = 0.3) %>%
-  gf_labs(title = "Power law with p < 0")
+```{r penguin-flipper2,echo=FALSE, warning=FALSE, out.width="50%", fig.show="keep", fig.cap="The penguin data doesn't directly describe any sensible mathematical function. (left) We use modeling to create a function that stays close, but not too close, to the data points. (right)"}
+gf_line(flipper_length_mm/10 ~ body_mass_g/1000, 
+         data=penguins) %>%
+  gf_labs(y = "Flipper length (cm)", x = "Body mass (kg)") 
+gf_point(flipper_length_mm/10 ~ body_mass_g/1000, 
+         data=penguins) %>%
+  gf_smooth(color="red") %>%
+  gf_labs(y = "Flipper length (cm)", x = "Body mass (kg)") 
 ```
 
-::: {.notethis}
-With some practice, you should be able to sketch roughly any of the naked modeling functions from memory. When you can do this, you'll have an easier time envisioning which function might best suit a situation.
-
-In addition to the shape, here are some facts about the naked modeling functions that will let you sketch accurately.
-
-::: {.todo}
-[OR, think of each function as being ***anchored*** at one input. ]
+::: {.intheworld}
+To create the model of flipper length as a function of body mass, we used one of a set of techniques called ***machine learning***. That is, we didn't specify that the form should be an exponential or a hump or a sigmoid or any other particular shape. We simply asked the computer to figure out a smooth function that stays close to the data. The result, as it happens, was a sigmoid.
 :::
-
-- Exponential
-    - $x=0 \implies e^x=1$
-    - $x=3 \implies e^x\approx 20$
-- Logarithm
-    - $x=1 \implies log(x)=0$
-    - $x=3 \implies e^x\approx 20$
-- Hump
-    - $x=0 \implies$ peak of hump: dnorm(0) $\approx 0.4$
-    - $x=\pm 1 \implies$ output is $\approx 0.25$
-- Sigmoid
-    - $x=0 \implies$ mid-way up the hill: pnorm(0) $= 0.5$
-    - $x=2 \implies$ output is $\approx 0.975$
-    - $x = -2 \implies$ output is $\approx 0.025$
-- Sinusoid
-    - Peaks are always at 1, valleys at $-1$
-    - $x=0, \pm \pi, \pm 2\pi, \pm 3\pi, \ldots$ gives output 0.
-:::
-
-
-## EXERCISES in draft
-
-Show some graphs, ask which ones are mathematical functions, which ones have a unique inverse, what is the output corresponding to a given input, what is the input for a given output, what is the range of the function, .... 
-
 
 ## Inputs to output 
 
@@ -330,21 +248,17 @@ slice_plot(f2(input_1 = 0 , input_2) ~ input_2, domain(input_2=c(0, 5))) %>%
   gf_labs(title="Graph of function output versus input 2")
 ```
 
-## Creating graphics
-
-::: {.objectives}
-```{r echo=FALSE, results="markup"}
-state_objective("F-32-R", "Use the `slice_plot()`, `contour_plot()`, and `domain()` functions in R/`mosaic`.")
-```
-:::
-
-
 ::: {.todo}
-NO CONTENT YET
+Austin has a `surface_plot_with_contours()` function. Add that in to mosaicCalc.
 :::
 
 
-```{exercise}
+```{exercise, name="drawing"}
 ```
-`r knitr::knit_child(exercise_file("03", "drawing.Rmd"))`
+<details>`r MC_counter$reset()` `r knitr::knit_child(exercise_file("03", "drawing.Rmd"))`</details>
+
+
+```{exercise, daylength, name="length-of-day"}
+```
+<details>`r MC_counter$reset()` `r knitr::knit_child("Exercises/Fun/length-of-day.Rmd")`</details>
 

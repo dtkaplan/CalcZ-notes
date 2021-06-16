@@ -34,7 +34,7 @@ Clearly, a straight-line calculation is not going to match the doubling-time cur
 When centering on $r_0=5$ the value of $a$ will be `doubling_time(5)`, the value of $b$ will be `dr_doubling_time(5)`, and the value of $c$ will be `drr_doubling_time(5)`.
 
 ```{r daily-digital-28-QA1, echo=FALSE}
-etude2::etudeQ(
+askMC(
   prompt = "1) What's the numerical value of $a$?",
   10.2, 11.0, 11.9, 12.9, "+14.2+", 15.7, 17.7,
   random_answer_order = FALSE
@@ -42,7 +42,7 @@ etude2::etudeQ(
 ```
 
 ```{r daily-digital-28-QA2, echo=FALSE}
-etude2::etudeQ(
+askMC(
   prompt = "2) Just by looking at the graph of `doubling_time(r)` figure out what will be the signs of $b$ and $c$. What are they?",
   "$b$ positive and $c$ positive",
               "+$b$ negative and $c$ positive+",
@@ -55,7 +55,7 @@ etude2::etudeQ(
 
 
 ```{r daily-digital-28-QA3, echo=FALSE}
-etude2::etudeQ(
+askMC(
   prompt = "3) What's the numerical value of $b$? (Hint: Use the `D()` operator to calculate the derivative of `doubling_time()` with respect to `r`. Then evaluate that function at $r=5$.)",
   -3.4, "+-2.8+", -2.3, 2.3, 2.8, 3.4,
   random_answer_order = FALSE
@@ -63,7 +63,7 @@ etude2::etudeQ(
 ```
 
 ```{r daily-digital-28-QA4, echo=FALSE}
-etude2::etudeQ(
+askMC(
   prompt = "4) What's the numerical value of $c$? (Hint: Again, use `D()` to find the 2nd derivative with respect to `r`. Then evaluate that function at $r=5$.",
   -1.11, -0.83, -0.64, 0.64, 0.83, "+1.11+",
   random_answer_order = FALSE
@@ -73,7 +73,7 @@ etude2::etudeQ(
 Using the numerical values for $a$, $b$ and $c$ that you just calculated, construct the quadratic approximation function and plot it in red on top of the $n(r)$ function. (Hint: Connect the two `slice_plot()` commands with a pipe `%>%`. You can give `slice_plot()` a `color = "red"` argument.)
 
 ```{r daily-digital-28-QA5, echo=FALSE}
-etude2::etudeQ(
+askMC(
   prompt = "5) Comparing the actual $n(r)$ and your quadratic approximation, over what domain of $r$ do the functions match pretty well? Choose the best of these answers.",
   "+$r \\in [3,7]$+",
               "$r \\in [1,6]$",
@@ -89,7 +89,7 @@ What we've got with this quadratic approximation constructed from derivatives of
 Occasionally, there are other simple functions that give a good approximation. The one for interest rates is called the "Rule of 72". The function is $$n(r) \approx 72 / r$$. Plot the Rule of 72 function on top of the actual $n(r)$.
 
 ```{r daily-digital-28-QA6, echo=FALSE}
-etude2::etudeQ(
+askMC(
   prompt = "6) Comparing the actual $n(r)$ and the Rule of 72 function, over what domain of $r$ do the functions match pretty well? Choose the best of these answers.",
   "+$r \\in [1,25]$+",
               "$r \\in [3,9]$",
@@ -101,7 +101,7 @@ etude2::etudeQ(
 ```
 
 ```{r daily-digital-28-QA7, echo=FALSE}
-etude2::etudeQ(
+askMC(
   prompt = "6) Compare numerically the actual $n(r)$ and the Rule of 72 function for an interest rate of $r = 10$ (per year). How many years different are the two answers.",
     "0.007 years",
     "+0.07 years+",

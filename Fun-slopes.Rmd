@@ -122,25 +122,25 @@ For all except straight-line models, the average rate of change depends on the i
 
 ```{exercise, name="snail-tear-blanket"}
 ```
-<details>`r knitr::knit_child("Exercises/Fun/snail-tear-blanket.Rmd")`</details>
+<details>`r MC_counter$reset()` `r knitr::knit_child("Exercises/Fun/snail-tear-blanket.Rmd")`</details>
 
 
 ```{exercise, name="goat-dive-saucer"}
 ```
-<details>`r knitr::knit_child("Exercises/Fun/goat-dive-saucer.Rmd")`</details>
+<details>`r MC_counter$reset()` `r knitr::knit_child("Exercises/Fun/goat-dive-saucer.Rmd")`</details>
 
 ```{exercise, name="chicken-show-map"}
 ```
-<details>`r knitr::knit_child("Exercises/Fun/chicken-show-map.Rmd")`</details>
+<details>`r MC_counter$reset()` `r knitr::knit_child("Exercises/Fun/chicken-show-map.Rmd")`</details>
 
 
 ```{exercise, name="eagle-bring-car"}
 ```
-<details>`r knitr::knit_child("Exercises/Fun/eagle-bring-car.Rmd")`</details>
+<details>`r MC_counter$reset()` `r knitr::knit_child("Exercises/Fun/eagle-bring-car.Rmd")`</details>
 
 ```{exercise, name="pig-look-rug"}
 ```
-<details>`r knitr::knit_child("Exercises/Fun/pig-look-rug.Rmd")`</details>
+<details>`r MC_counter$reset()` `r knitr::knit_child("Exercises/Fun/pig-look-rug.Rmd")`</details>
 
 
 
@@ -176,7 +176,7 @@ slice_plot(water(t) ~ t, domain(t=c(0, 200))) %>%
 
 In Block 2, we'll see that a good way to define an instantaneous rate of change at $t_0$ is as the average rate of change over the interval $t_0 \leq t \leq t_1$ with the proviso that the interval length $t_1 - t_0$ goes as closely as it can to zero.
 
-Figure \@ref(fig:three-rates) shows the fitted rate of change and average rate of change in the interval $10 \leq t \leq 125$ as well as the instantaneous rate of change at $t_0 = 50$. As you can see, they are different from one another.
+Figure \@ref(fig:three-rates) shows the fitted rate of change and average rate of change in the interval $10 \leq t \leq 125$ as well as the instantaneous rate of change at $t_0 = 50$. They are different from one another.
 
 ```{r three-rates,  echo=FALSE, warning=FALSE, fig.cap="Comparing the average rate of change (red) over the interval $10 \\leq t \\leq 125$, the instantaneous rate of change at $x_0 =25$, and the fitted linear model (orange). The exponential model is shown in gray."}
 set.seed(101)
@@ -224,40 +224,9 @@ slice_plot(1/x ~ x, domain(x=c(0.1,5)), color="blue") %>%
   gf_labs(title="Power law function (with p=-1)")
 ```
 
-EXERCISE: There is a web of connections between the naked modeling functions and their slopes. 
-
-```{r slope-sin, echo=FALSE, results="markup"}
-etude2::etudeQ(
-  "1. Which naked modeling function has a slope function that is simply a input-shifted version of itself?",
-  "exponential",
-  "+sinusoid+",
-  "logarithm",
-  "power-law $x^{-1}$",
-  random_answer_order = FALSE
-)
+```{exercise, name="slope-web-1"}
 ```
-
-```{r slope-exp, echo=FALSE, results="markup"}
-etude2::etudeQ(
-  "2. Which naked modeling function has a slope function that is identical to itself?",
-  "+exponential+",
-  "sinusoid",
-  "logarithm",
-  "power-law $x^{-1}$",
-  random_answer_order = FALSE
-)
-```
-
-```{r slope-log, echo=FALSE, results="markup"}
-etude2::etudeQ(
-  "3. Which naked modeling function has a slope function that is another naked modeling function? (Hint: The other function is also shown in the set of graphs.)",
-  "exponential",
-  "sinusoid",
-  "+logarithm+",
-  "power-law $x^{-1}$+",
-  random_answer_order = FALSE
-)
-```
+<details>`r MC_counter$reset()` `r knitr::knit_child("Exercises/Fun/slope-web-1.Rmd")`</details>
 
 
 ::: {.why}

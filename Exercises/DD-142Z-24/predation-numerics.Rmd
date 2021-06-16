@@ -32,7 +32,7 @@ ii. the parameters $r$, $\beta$, $\gamma$, $\mu$
 Suppose we are intending to model a situation where the equilibrium population for rabbits is $R^\star = 1000$ and for foxes is $F^\star = 100$. Using our algebraic form for the location of the fixed point, this tells allows us how some parameters are related to others.
 
 ```{r pn1-1, echo=FALSE, results="markup"}
-etude2::etudeQ(
+askMC(
   "Knowing that $R^\\star = \\mu/\\gamma$, what does this say about the relationship between $\\mu$ and $\\gamma$ when $R^\\star \\equiv 1000$?",
   "+$\\mu = 1000\\, \\gamma$+",
   "$\\gamma = 1000\\, \\mu$",
@@ -41,7 +41,7 @@ etude2::etudeQ(
 ```
 
 ```{r pn1-2, echo=FALSE, results="markup"}
-etude2::etudeQ(
+askMC(
   "Knowing that $F^\\star = r/\\beta$, what does this say about the relationship between $r$ and $\\beta$ when $F^\\star \\equiv 10$?",
   "+$r = 10\\, \\beta$+",
   "$\\beta = 10\\, r$",
@@ -56,7 +56,7 @@ Part of the art of modeling is selecting parameters in a way that we can make at
 This being an exercise, we do a quick search on the internet. This reveals that [rabbits have 3-4 litters per year](https://www.reconnectwithnature.org/news-events/the-buzz/cottontail-rabbits-breeding) and that the [life-span of a red fox](https://en.wikipedia.org/wiki/Red_fox) (presumably with prey available) is 2-5 years. Intuition suggests that a dramatic shortage of food would reduce lifespan to a small fraction of this. For the purpose of simplicity, we'll continue under the assumption that the doubling time of a rabbit population (absent predation) is 3 months, and the half-life of a starving fox is also 3 months. 
 
 ```{r pn1-3, echo=FALSE, results="markup"}
-etude2::etudeQ(
+askMC(
   "In a world without foxes and unlimited resources, the dynamics of rabbit population is $\\dot{R} = r R$. What is $r$ to produce a 3-month doubling time, assuming that $t$ is measured in months? (Hint: $R(t) = R(0) e^{rt}$.)",
   "about 0.1 month$^{-1}$",
   "+about 0.3 month$^{-1}$+",
@@ -84,7 +84,7 @@ traj_plot(R(t) ~ t, Soln, color="red") %>%
 ```
 
 ```{r pn1-5, echo=FALSE, results="markup"}
-etude2::etudeQ(
+askMC(
   "Starting at $R(0) = 1000$ and $F(0) = 10$, look at the resulting dynamics over the 36-month period. Which of these describes the solutions best? Make sure your code matches the parameters in this question.",
   "Rabbit population oscillates, but fox population stays constant.",
   "Foth rabbit and fox populations oscillate.",
@@ -94,7 +94,7 @@ etude2::etudeQ(
 ```
 
 ```{r pn1-6, echo=FALSE, results="markup"}
-etude2::etudeQ(
+askMC(
   "Change the initial conditions to $R(0) = 1000$ and $F(0) = 15$. Which of these best describes the solutions?",
   "+The rabbit population oscillates around 1000, with a period of about 20 months.+",
   "The rabbit population oscillates around 1000, with a period of about 10 months.",
@@ -104,7 +104,7 @@ etude2::etudeQ(
 ```
 
 ```{r pn1-7, echo=FALSE, results="markup"}
-etude2::etudeQ(
+askMC(
   "Still sticking with $R(0) = 1000$, find an initial population for foxes that will eventually drive the *peak* rabbit population to around 3000. What is that value of $F(0)$?",
   20, 30, 40, 50, right_one = 30,
   random_answer_order = FALSE
@@ -112,7 +112,7 @@ etude2::etudeQ(
 ```
 
 ```{r pn1-8, echo=FALSE, results="markup"}
-etude2::etudeQ(
+askMC(
   "Due to the use of semi-log axes in the time-series plots, you can easily look for segments of time, if any, when the rabbit population grows exponentially and falls exponentially. The same for foxes. Which of these best describes the relationship?",
   "When foxes grow exponentially, rabbits decay exponentially.",
   "+When foxes grow exponentially, the rabbit population does *not* show an approximately exponential pattern. It's peaking.+",
@@ -121,7 +121,7 @@ etude2::etudeQ(
 ```
 
 ```{r pn1-9, echo=FALSE, results="markup"}
-etude2::etudeQ(
+askMC(
   "True or False: The peak fox population *follows* the peak rabbit population by just a few months.",
   "+True+",
   "False",
@@ -130,7 +130,7 @@ etude2::etudeQ(
 ```
 
 ```{r pn1-10, echo=FALSE, results="markup"}
-etude2::etudeQ(
+askMC(
   "True or False: The low point in the fox population proceeds, or *lags*, the low point in the rabbit population by a little over a year.",
   "+True+",
   "False",
@@ -157,7 +157,7 @@ traj_plot(F(t) ~ t, Soln, color="blue") %>%
 ```
 
 ```{r pn1-12, echo=FALSE, results="markup"}
-etude2::etudeQ(
+askMC(
   "With the seasonal rabbit breeding, which of these best describes the dynamics?",
   "A steady yearly pattern.",
   "+A mostly yearly pattern with some small fluctuations from one year to the next.+",
