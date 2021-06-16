@@ -4,35 +4,32 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>Chapter 9 Assembling functions | CalcZ Student Notes</title>
+<title>Chapter 11 Assembling functions | CalcZ Student Notes</title>
 <meta name="author" content="Daniel Kaplan">
-<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.2"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="libs/bootstrap-4.5.3/bootstrap.min.css" rel="stylesheet">
-<script src="libs/bootstrap-4.5.3/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.2.4/tabs.js"></script><script src="libs/bs3compat-0.2.4/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
-<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script><script src="libs/htmlwidgets-1.5.3/htmlwidgets.js"></script><link href="libs/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet">
-<script src="libs/datatables-binding-0.12/datatables.js"></script><link href="libs/dt-core-1.10.20/css/jquery.dataTables.min.css" rel="stylesheet">
-<link href="libs/dt-core-1.10.20/css/jquery.dataTables.extra.css" rel="stylesheet">
-<script src="libs/dt-core-1.10.20/js/jquery.dataTables.min.js"></script><link href="libs/crosstalk-1.1.1/css/crosstalk.css" rel="stylesheet">
-<script src="libs/crosstalk-1.1.1/js/crosstalk.min.js"></script><script src="libs/kePrint-0.0.1/kePrint.js"></script><link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet">
-<script src="libs/plotly-binding-4.9.3/plotly.js"></script><script src="libs/typedarray-0.1/typedarray.min.js"></script><link href="libs/plotly-htmlwidgets-css-1.57.1/plotly-htmlwidgets.css" rel="stylesheet">
+<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.2"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/header-attrs-2.8/header-attrs.js"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.2.5.1/tabs.js"></script><script src="libs/bs3compat-0.2.5.1/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="libs/kePrint-0.0.1/kePrint.js"></script><link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet">
+<script src="libs/htmlwidgets-1.5.3/htmlwidgets.js"></script><script src="libs/plotly-binding-4.9.4/plotly.js"></script><script src="libs/typedarray-0.1/typedarray.min.js"></script><link href="libs/crosstalk-1.1.1/css/crosstalk.css" rel="stylesheet">
+<script src="libs/crosstalk-1.1.1/js/crosstalk.min.js"></script><link href="libs/plotly-htmlwidgets-css-1.57.1/plotly-htmlwidgets.css" rel="stylesheet">
 <script src="libs/plotly-main-1.57.1/plotly-latest.min.js"></script><script type="text/x-mathjax-config">
-  const popovers = document.querySelectorAll('a.footnote-ref[data-toggle="popover"]');
-  for (let popover of popovers){
-    const div = document.createElement('div');
-    div.setAttribute('style', 'position: absolute; top: 0, left:0; width:0, height:0, overflow: hidden; visibility: hidden;');
-    div.innerHTML = popover.getAttribute('data-content');
-    
-    // Will this work with TeX on its own line?
-    var has_math = div.querySelector("span.math");
-    if (has_math) {
-      document.body.appendChild(div);
-    	MathJax.Hub.Queue(["Typeset", MathJax.Hub, div]);
-    	MathJax.Hub.Queue(function(){
-        popover.setAttribute('data-content', div.innerHTML);
-    	})
+    const popovers = document.querySelectorAll('a.footnote-ref[data-toggle="popover"]');
+    for (let popover of popovers){
+      const div = document.createElement('div');
+      div.setAttribute('style', 'position: absolute; top: 0, left:0; width:0, height:0, overflow: hidden; visibility: hidden;');
+      div.innerHTML = popover.getAttribute('data-content');
+      
+      // Will this work with TeX on its own line?
+      var has_math = div.querySelector("span.math");
+      if (has_math) {
+        document.body.appendChild(div);
+      	MathJax.Hub.Queue(["Typeset", MathJax.Hub, div]);
+      	MathJax.Hub.Queue(function(){
+          popover.setAttribute('data-content', div.innerHTML);
+      	})
+      }
     }
-  }
-  </script><script src="https://cdn.jsdelivr.net/autocomplete.js/0/autocomplete.jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/mark.js@8.11.1/dist/mark.min.js"></script><!-- CSS --><link rel="stylesheet" href="css/CalcZ-style.css">
+    </script><script src="https://cdn.jsdelivr.net/autocomplete.js/0/autocomplete.jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/mark.js@8.11.1/dist/mark.min.js"></script><!-- CSS --><link rel="stylesheet" href="css/CalcZ-style.css">
 </head>
 <body data-spy="scroll" data-target="#toc">
 
@@ -55,28 +52,30 @@
       <nav aria-label="Table of contents"><h2>Table of contents</h2>
         <ul class="book-toc list-unstyled">
 <li><a class="" href="index.html">Welcome to calculus</a></li>
-<li><a class="" href="calcz-project-development-plan.html">CalcZ Project Development Plan</a></li>
 <li class="book-part">Block 1: Functions and quantity</li>
 <li><a class="" href="outline-of-block-1.html">Outline of Block 1</a></li>
 <li><a class="" href="change.html"><span class="header-section-number">1</span> Change</a></li>
 <li><a class="" href="structure-of-a-function.html"><span class="header-section-number">2</span> Structure of a function</a></li>
-<li><a class="" href="fun-describing.html"><span class="header-section-number">3</span> Describing functions</a></li>
-<li><a class="" href="fun-notation.html"><span class="header-section-number">4</span> Notation for functions</a></li>
-<li><a class="" href="graphs-and-graphics.html"><span class="header-section-number">5</span> Graphics &amp; function graphs</a></li>
-<li><a class="" href="params-intro.html"><span class="header-section-number">6</span> Parameters for functions</a></li>
-<li><a class="" href="process-of-modeling.html"><span class="header-section-number">7</span> Process of modeling</a></li>
-<li><a class="" href="fun-slopes.html"><span class="header-section-number">8</span> Slope function</a></li>
-<li><a class="active" href="fun-assembling.html"><span class="header-section-number">9</span> Assembling functions</a></li>
+<li><a class="" href="naked-intro.html"><span class="header-section-number">3</span> Naked modeling functions</a></li>
+<li><a class="" href="fun-describing.html"><span class="header-section-number">4</span> Describing functions</a></li>
+<li><a class="" href="fun-notation.html"><span class="header-section-number">5</span> Notation for functions</a></li>
+<li><a class="" href="graphs-and-graphics.html"><span class="header-section-number">6</span> Graphics &amp; function graphs</a></li>
+<li><a class="" href="params-intro.html"><span class="header-section-number">7</span> Parameters for functions</a></li>
+<li><a class="" href="process-of-modeling.html"><span class="header-section-number">8</span> Process of modeling</a></li>
+<li><a class="" href="fun-slopes.html"><span class="header-section-number">9</span> Slope function</a></li>
+<li><a class="" href="function-inverses-and-solving.html"><span class="header-section-number">10</span> Function inverses and “solving”</a></li>
+<li><a class="active" href="fun-assembling.html"><span class="header-section-number">11</span> Assembling functions</a></li>
+<li><a class="" href="fun-multiple-inputs.html"><span class="header-section-number">12</span> Functions with multiple inputs</a></li>
+<li><a class="" href="fun-piecewise.html"><span class="header-section-number">13</span> Piecewise functions</a></li>
+<li><a class="" href="magnitudes.html"><span class="header-section-number">14</span> Magnitudes</a></li>
+<li><a class="" href="dimensions.html"><span class="header-section-number">15</span> Dimensions</a></li>
 <li class="book-part">Block 2: Differentiation</li>
 <li><a class="" href="outline-of-block-2.html">Outline of Block 2</a></li>
-<li><a class="" href="change-relationships.html"><span class="header-section-number">10</span> Change relationships</a></li>
-<li><a class="" href="h-and-derivatives.html"><span class="header-section-number">11</span> h and derivatives</a></li>
-<li><a class="" href="optim-and-shape.html"><span class="header-section-number">12</span> Optimization</a></li>
-<li><a class="" href="cont-and-smooth.html"><span class="header-section-number">13</span> Continuity and smoothness</a></li>
-<li><a class="" href="derivatives-of-composed-functions.html"><span class="header-section-number">14</span> Derivatives of composed functions</a></li>
-<li><a class="" href="approximating-functions.html"><span class="header-section-number">15</span> Approximating functions</a></li>
-<li><a class="" href="partial-change.html"><span class="header-section-number">16</span> Partial change</a></li>
-<li><a class="" href="approximation-around-a-point.html"><span class="header-section-number">17</span> Approximation around a point</a></li>
+<li><a class="" href="change-relationships.html"><span class="header-section-number">16</span> Change relationships</a></li>
+<li><a class="" href="h-and-derivatives.html"><span class="header-section-number">17</span> h and derivatives</a></li>
+<li><a class="" href="optim-and-shape.html"><span class="header-section-number">18</span> Optimization</a></li>
+<li><a class="" href="cont-and-smooth.html"><span class="header-section-number">19</span> Continuity and smoothness</a></li>
+<li><a class="" href="prod-comp-rules.html"><span class="header-section-number">20</span> Differentiation by algebra</a></li>
 </ul>
 
         <div class="book-extra">
@@ -84,18 +83,18 @@
         </div>
       </nav>
 </div>
-  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="fun-assembling" class="section level1">
+  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="fun-assembling" class="section level1" number="11">
 <h1>
-<span class="header-section-number">9</span> Assembling functions<a class="anchor" aria-label="anchor" href="#fun-assembling"><i class="fas fa-link"></i></a>
+<span class="header-section-number">11</span> Assembling functions<a class="anchor" aria-label="anchor" href="#fun-assembling"><i class="fas fa-link"></i></a>
 </h1>
 <p>When we need a new function for some purpose, we practically always build it out of existing functions. For instance, a parameterized function like <span class="math display">\[A \sin\left(\frac{2 \pi}{P}x\right) + C\]</span> is built by assempling together a straight-line input scaling, a naked <span class="math inline">\(\sin()\)</span> function, and another straight-line function for scaling the output from <span class="math inline">\(\sin()\)</span>.</p>
 <p>In this chapter, we’ll introduce three general frameworks for combining functions: linear combination, composition, and multiplication.</p>
-<div id="linear-combination" class="section level2">
+<div id="linear-combination" class="section level2" number="11.1">
 <h2>
-<span class="header-section-number">9.1</span> Linear combination<a class="anchor" aria-label="anchor" href="#linear-combination"><i class="fas fa-link"></i></a>
+<span class="header-section-number">11.1</span> Linear combination<a class="anchor" aria-label="anchor" href="#linear-combination"><i class="fas fa-link"></i></a>
 </h2>
 <p>One of the most widely used sorts of combination is called a <strong><em>linear combination</em></strong>. The mathematics of linear combination is, it happens, at the core of the use of math in applications, whether that be constructing a Google-like search engine or analyzing medical data to see if a treatment has a positive effect.</p>
-<p>You’ve worked for many years with one kind of linear combination: polynomials. No doubt you’ve seen functions<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content='&lt;p&gt;It’s likely that you saw polynomials as things to be factored, rather than as functions taking an input and producing an output. So they were written as &lt;em&gt;equations&lt;/em&gt;: &lt;span class="math inline"&gt;\(e x^2 + 5x - 2 = 0\)&lt;/span&gt;&lt;/p&gt;'><sup>11</sup></a> like <span class="math display">\[f(x) \equiv 3 x^2 + 5 x - 2\]</span></p>
+<p>You’ve worked for many years with one kind of linear combination: polynomials. No doubt you’ve seen functions<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content='&lt;p&gt;It’s likely that you saw polynomials as things to be factored, rather than as functions taking an input and producing an output. So they were written as &lt;em&gt;equations&lt;/em&gt;: &lt;span class="math inline"&gt;\(e x^2 + 5x - 2 = 0\)&lt;/span&gt;&lt;/p&gt;'><sup>12</sup></a> like <span class="math display">\[f(x) \equiv 3 x^2 + 5 x - 2\]</span></p>
 <p>There are three modeling functions in this polynomial. In this case, as in polynomials generally, they are all power-law functions: <span class="math inline">\(g_0(x) \equiv 1\)</span>, <span class="math inline">\(g_1(x) \equiv x\)</span>, and <span class="math inline">\(g_2(x) \equiv x^2\)</span>. With these functions defined, we can write the polynomial <span class="math inline">\(f(x)\)</span> as <span class="math display">\[f(x) \equiv 3 g_2(x) + 5 g_1(x) - 2 g_0(x)\]</span>
 Each of the functions is being scaled by a quantity—3, 5, and -2 in this example—and the scaled functions are added up. That’s a linear combination; scale and add. (Later, we’ll see that the <strong><em>scalars</em></strong> generally come with units. So we might well have a metric polynomial and an equivalent traditional-unit polynomial. Just wait.)</p>
 <div class="why">
@@ -118,24 +117,39 @@ Each of the functions is being scaled by a quantity—3, 5, and -2 in this examp
 <li>Many modeling tasks can be put into the framework of choosing an appropriate set of simple functions to combine and then (letting the computer) figure out the best scalars to use in the combination.</li>
 </ol>
 <p>Even better, there is an automatic, reliable, and fast algorithm for finding the scalars for a set of functions that are to be combined to match data as closely as possible. So the modeler just has to select the functions to be used, the computer can find the coefficients. (We’ll explore the mathematics and methods of linear combinations, usually called <strong><em>linear algebra</em></strong>, in Block 5.)</p>
-<div class="todo">
-<p>Example: The tides as a linear combination of sinusoids.</p>
+
+<div class="exercise">
+<span id="exr:unnamed-chunk-78" class="exercise"><strong>Exercise 11.1  (combining-hump-funs)  </strong></span>
 </div>
-<div class="todo">
-<p>Example: Models of inequality</p>
-<p>Lorenz curve: Connects (0,0) and (1,1) and is never concave down.</p>
-<ul>
-<li>Any power-law with an exponent of 1 or greater.</li>
-<li>Any linear combination of such power-laws with the scalars adding to 1.</li>
-<li>Product of two Lorenz curves is a Lorenz curve.</li>
-</ul>
-<p><span class="math inline">\((1 - (1-p)^\alpha)\)</span></p>
-<p><span class="math inline">\(p^\beta\left(1 - (1-p)^\alpha\right)\)</span></p>
+<details><p>The graph shows two hump functions, hump1(t) and hump2(t)</p>
+<div class="inline-figure"><img src="CalcZ-notes_files/figure-html/unnamed-chunk-219-1.png" width="90%" style="display: block; margin: auto;"></div>
+<p>A linear combination of the hump functions is shown in Graph (A).</p>
+<div class="inline-figure"><img src="CalcZ-notes_files/figure-html/unnamed-chunk-220-1.png" width="90%" style="display: block; margin: auto;"></div>
+<p><strong>Question A</strong> What is the linear combination of hump1(t) and hump2(t) shown in Graph (A)?</p>
+<ol style="list-style-type: lower-roman">
+<li>0.5*hump1(t) + hump2(t)<span class="mcanswer"> ✓ </span><br>
+</li>
+<li>hump1(t) + 0.25*hump2(t)<span class="mcanswer"> ☹︎ If this were the case, the right bump would be only one-quarter as big as the left bump. </span><br>
+</li>
+<li>hump1(t) + 2<em>hump2(t)<span class="mcanswer"> ☹︎ Since hump2(t) has a maximum value of 20, 2</span></em>hump2(t) would reach a value of 40. That isn’t what’s shown in the graph. </li>
+</ol>
+<p>Another linear combination of the hump functions is shown in Graph (B).</p>
+<div class="inline-figure"><img src="CalcZ-notes_files/figure-html/unnamed-chunk-221-1.png" width="90%" style="display: block; margin: auto;"></div>
+<p><strong>Question B</strong> Which linear combination of hump1(t) and hump2(t) is shown in Graph (B)?</p>
+<ol style="list-style-type: lower-roman">
+<li>hump1(t) - 2*hump2(t)<span class="mcanswer"> ✓ </span><br>
+</li>
+<li>hump1(t) - hump2(t)<span class="mcanswer"> ☹︎ The second (downward) hump is bigger than the first (upward) hump. </span><br>
+</li>
+<li>0.5*hump1(t) - 0.5*hump2(t)<span class="mcanswer"> ☹︎ If this were so, the first hump would reach a value of 10 rather than the 20 seen in Graph (B). </span><br>
+</li>
+<li>-hump1(t) - hump2(t)<span class="mcanswer"> ☹︎ The first hump is positive. </span>
+</li>
+</ol></details>
 </div>
-</div>
-<div id="function-composition" class="section level2">
+<div id="function-composition" class="section level2" number="11.2">
 <h2>
-<span class="header-section-number">9.2</span> Function composition<a class="anchor" aria-label="anchor" href="#function-composition"><i class="fas fa-link"></i></a>
+<span class="header-section-number">11.2</span> Function composition<a class="anchor" aria-label="anchor" href="#function-composition"><i class="fas fa-link"></i></a>
 </h2>
 <p>To <strong><em>compose</em></strong> two functions, <span class="math inline">\(f(x)\)</span> and <span class="math inline">\(g(x)\)</span>, means to apply one of the functions to the output of the other. “<span class="math inline">\(f()\)</span> composed with <span class="math inline">\(g()\)</span>” means <span class="math inline">\(f(g(x))\)</span>. This is generally very different from “<span class="math inline">\(g()\)</span> composed with <span class="math inline">\(f()\)</span>” which means <span class="math inline">\(g(f(x))\)</span>.</p>
 <p>For instance, suppose you have recorded the outdoor temperature over the course of a day and packaged this into a function <span class="math inline">\(\mbox{AirTemp}(t)\)</span>: temperature as a function of time <span class="math inline">\(t\)</span>. Your digital thermometer uses degrees Celsius, but you want the output units to be degrees Kelvin. The conversion function is <span class="math display">\[\mbox{CtoK}(C) \equiv C + 273.15\]</span>
@@ -152,46 +166,130 @@ It’s important to distinguish the above time <span class="math inline">\(\righ
 The declination angle is the latitude of the point on the earth’s surface pierced by an imagined line connecting the centers of the earth and the sun. On the summer solstice, it is <span class="math inline">\(23.44^\circ\)</span>, the longest day of the year.</p>
 <p>A computer implement must look different, since <span class="math inline">\(L\)</span> and <span class="math inline">\(\delta\)</span> are typically provided in degrees while the <code><a href="https://rdrr.io/r/base/Trig.html">tan()</a></code> and other trigonometric functions in most computer languages expect units of radians. The conversion is easy: <span class="math inline">\(\text{deg2rad}(d) \equiv \frac{\pi}{180} d\)</span>. The conversion the other way is <span class="math inline">\(\text{rad2deg}(r) \equiv \frac{180}{\pi} r\)</span>.</p>
 <p>In order to get the day-length formula to work in a computer, we have to compose the <span class="math inline">\(\tan()\)</span> function with <code>deg2rad()</code>. The output of <code><a href="https://rdrr.io/r/base/Trig.html">acos()</a></code> is in radians, so we have to convert it back to degrees. Like this:</p>
-<div class="sourceCode" id="cb47"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb56"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">day_length</span> <span class="op">&lt;-</span> <span class="fu">makeFun</span><span class="op">(</span>
   <span class="op">(</span><span class="fl">2</span><span class="op">/</span><span class="fl">15</span><span class="op">)</span><span class="op">*</span><span class="fu">rad2deg</span><span class="op">(</span>
     <span class="fu"><a href="https://rdrr.io/r/base/Trig.html">acos</a></span><span class="op">(</span>
       <span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/base/Trig.html">tan</a></span><span class="op">(</span><span class="fu">deg2rad</span><span class="op">(</span><span class="va">L</span><span class="op">)</span><span class="op">)</span><span class="op">*</span><span class="fu"><a href="https://rdrr.io/r/base/Trig.html">tan</a></span><span class="op">(</span><span class="fu">deg2rad</span><span class="op">(</span><span class="va">d</span><span class="op">)</span><span class="op">)</span>
     <span class="op">)</span>
   <span class="op">)</span> <span class="op">~</span> <span class="va">L</span><span class="op">+</span><span class="va">d</span><span class="op">)</span></code></pre></div>
-<div class="etude-question">
-<p><strong>Q-32</strong>: Using an R sandbox, calculate the length of the day at latitude <span class="math inline">\(39^\circ\)</span> on the longest day of the year, which is when the declination of the sun is <span class="math inline">\(23.44^\circ\)</span>. How long is it?</p>
+
+<div class="exercise">
+<span id="exr:unnamed-chunk-80" class="exercise"><strong>Exercise 11.2  (latitude-inline)  </strong></span>
+</div>
+<details><p><strong>Question tmp-7</strong>: Using an R sandbox, calculate the length of the day at latitude <span class="math inline">\(39^\circ\)</span> on the longest day of the year, which is when the declination of the sun is <span class="math inline">\(23.44^\circ\)</span>. How long is it?</p>
 <ol>
 <li><p>13.9 hours []</p></li>
 <li><p>14.7 hours (+) []</p></li>
 <li><p>14.9 hours []</p></li>
 <li><p>15.1 hours []</p></li>
-</ol>
-</div>
-<p>Now to make a plot of day length as a function of day of the year. Of course, <code>day_length(L, d)</code> does not take day of the year into account. What’s missing is to know the declination of the sun as a function of calendar day.</p>
+</ol></details><p>Now to make a plot of day length as a function of day of the year. Of course, <code>day_length(L, d)</code> does not take day of the year into account. What’s missing is to know the declination of the sun as a function of calendar day.</p>
 <p>We’ll represent calendar day as a number <span class="math inline">\(n\)</span> that runs from 0 at the start of January 1st to 365 at the end of December 31. Given this convention, the declination of the sun is</p>
-<div class="sourceCode" id="cb48"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb57"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">delta_sun</span> <span class="op">&lt;-</span> <span class="fu">makeFun</span><span class="op">(</span><span class="op">-</span><span class="fl">23.44</span><span class="op">*</span><span class="fu"><a href="https://rdrr.io/r/base/Trig.html">cos</a></span><span class="op">(</span><span class="op">(</span><span class="fl">2</span><span class="op">*</span><span class="va">pi</span><span class="op">/</span><span class="fl">365</span><span class="op">)</span><span class="op">*</span><span class="op">(</span><span class="va">n</span><span class="op">+</span><span class="fl">10</span><span class="op">)</span> <span class="op">)</span> <span class="op">~</span> <span class="va">n</span><span class="op">)</span></code></pre></div>
 <p>Composing <code>day_length()</code> with <code>delta_sun()</code> (on the <code>d</code> argument only) we get a function of day of year <code>n</code>:</p>
-<div class="sourceCode" id="cb49"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb58"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">slice_plot</span><span class="op">(</span>
   <span class="fu">day_length</span><span class="op">(</span><span class="fl">39</span>, <span class="fu">delta_sun</span><span class="op">(</span><span class="va">n</span><span class="op">)</span><span class="op">)</span> <span class="op">~</span> <span class="va">n</span>, 
   <span class="fu">domain</span><span class="op">(</span>n<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">365</span><span class="op">)</span><span class="op">)</span>
   <span class="op">)</span></code></pre></div>
-<div class="inline-figure"><img src="CalcZ-notes_files/figure-html/unnamed-chunk-68-1.png" width="672"></div>
-<div class="etude-question">
-<p><strong>Q-33</strong>: How long is the day on April Fools (<span class="math inline">\(n=90\)</span>) at Latitude 39N? (Use a sandbox for the calculation.)</p>
+<div class="inline-figure"><img src="CalcZ-notes_files/figure-html/unnamed-chunk-82-1.png" width="90%" style="display: block; margin: auto;"></div>
+
+<div class="exercise">
+<span id="exr:unnamed-chunk-83" class="exercise"><strong>Exercise 11.3  (april-fools)  </strong></span>
+</div>
+<details><p><strong>Question tmp-8</strong>: How long is the day on April Fools (<span class="math inline">\(n=90\)</span>) at Latitude 39N? (Use a sandbox for the calculation.)</p>
 <ol>
 <li><p>12.38 hours (+) []</p></li>
 <li><p>12.59 hours []</p></li>
 <li><p>12.64 hours []</p></li>
 <li><p>12.74 hours []</p></li>
-</ol>
+</ol></details><div class="intheworld">
+<p>Income inequality is a matter of perennial political debate. In the US, most people support Social Security, which is an income re-distribution programming dating back almost a century. But other re-distribution policies are controversial. Some believe they are essential to a healthy society, others that the “cure” is worse than the “disease.”</p>
+<p>Whatever one’s views, it’s helpful to have a way to quantify inequality. There are many ways that this might be done. A mathematically sophisticated one is called the <strong><em>Gini coefficient</em></strong>.</p>
+<p>Imagine that society was divided statistically into income groups, from poorest to richest. Each of these income groups consists of a fraction of the population and has, in aggregate, a fraction of the national income. Poor people tend to be many in number but to have a very small fraction of income. Wealthy people are few in number, but have a large fraction of income. The table shows data for US households in 2009:<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content="&lt;p&gt;These data, as well as the general idea for the topic come from La Haye and Zizler (2021), “The Lorenz Curve in the Classroom,” &lt;em&gt;The American Statistician&lt;/em&gt;, 75(2):217-225&lt;/p&gt;"><sup>13</sup></a></p>
+<div class="inline-table"><table class="table table-sm">
+<thead><tr class="header">
+<th align="left">group label</th>
+<th align="right">population</th>
+<th align="right">aggregate income</th>
+<th align="left">cumulative income</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="left">poorest</td>
+<td align="right">20%</td>
+<td align="right">3.4%</td>
+<td align="left">3.4%</td>
+</tr>
+<tr class="even">
+<td align="left">low-middle</td>
+<td align="right">20%</td>
+<td align="right">8.6%</td>
+<td align="left">12.0%</td>
+</tr>
+<tr class="odd">
+<td align="left">middle</td>
+<td align="right">20%</td>
+<td align="right">14.6%</td>
+<td align="left">26.6%</td>
+</tr>
+<tr class="even">
+<td align="left">high-middle</td>
+<td align="right">20%</td>
+<td align="right">23.2%</td>
+<td align="left">47.8%</td>
+</tr>
+<tr class="odd">
+<td align="left">richest</td>
+<td align="right">20%</td>
+<td align="right">50.2%</td>
+<td align="left">100.0%</td>
+</tr>
+</tbody>
+</table></div>
+<p>The <strong><em>cumulative</em></strong> income shows the fraction of income of all the people in that group or poorer. Similarly for the cumulative population.</p>
+<p>A function that relates the cumulative population to the cumulative income is called a “Lorenz” function. The data are graphed in Figure <a href="#fig:lorenz-data"><strong>??</strong></a> and a function has been fitted to the data.</p>
+<div class="figure" style="text-align: center">
+<span id="fig:lorenz"></span>
+<img src="CalcZ-notes_files/figure-html/lorenz-1.png" alt="Data on household incomes in the US in 2009." width="90%"><p class="caption">
+Figure 11.1: Data on household incomes in the US in 2009.
+</p>
+</div>
+<p>Lorenz curves are necessarily concave up, which amounts to saying that the curve gets steeper and steeper as the population percentile increases. (Why? Because at any point, poorer people are to the left and richer to the right.) And it must connect (0,0) to (1, 1).</p>
+<p>Calling the income percentile <span class="math inline">\(L\)</span> a function of the population percentile <span class="math inline">\(p\)</span>, a Lorenz function is <span class="math inline">\(L(p)\)</span> that satisfies the requirements in the previous paragraph.
+Here are some functions that meet the requirements:</p>
+<ul>
+<li>
+<span class="math inline">\(L_b(p) \equiv p^b\)</span> where <span class="math inline">\(1 \leq b\)</span>.</li>
+<li>
+<span class="math inline">\(L_q(p) \equiv 1 - (1-p)^q\)</span> where <span class="math inline">\(0 &lt; q \leq 1\)</span>
+</li>
+</ul>
+<p>Notice that each of these functions has just one parameter. It seems implausible that the workings of a complex society can be summarized with just one number. We can use the curve-polishing techniques introduced in Section <a href="process-of-modeling.html#modeling-cycle">8.6</a> to find the “best” parameter value to match the data. Then we can see if “best” is good enough.</p>
+<div class="sourceCode" id="cb59"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">Lb</span> <span class="op">&lt;-</span> <span class="fu">fitModel</span><span class="op">(</span><span class="va">income</span> <span class="op">~</span> <span class="va">pop</span><span class="op">^</span><span class="va">b</span>, data <span class="op">=</span> <span class="va">Income</span>, start<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>b<span class="op">=</span><span class="fl">1.5</span><span class="op">)</span><span class="op">)</span>
+<span class="va">Lq</span> <span class="op">&lt;-</span> <span class="fu">fitModel</span><span class="op">(</span><span class="va">income</span> <span class="op">~</span> <span class="fl">1</span> <span class="op">-</span> <span class="op">(</span><span class="fl">1</span><span class="op">-</span><span class="va">pop</span><span class="op">)</span><span class="op">^</span><span class="va">q</span>, data <span class="op">=</span> <span class="va">Income</span>, start<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>q<span class="op">=</span><span class="fl">0.5</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+Figure <a href="fun-assembling.html#fig:lorenz-1-fun">11.2</a> compares the polished functions to the data.
+<div class="figure" style="text-align: center">
+<span id="fig:lorenz-1-fun"></span>
+<img src="CalcZ-notes_files/figure-html/lorenz-1-fun-1.png" alt="Lorenz curves $L_b(p)$ (blue) and $L_q(p)$ (red) fitted to the household income data." width="90%"><p class="caption">
+Figure 11.2: Lorenz curves <span class="math inline">\(L_b(p)\)</span> (blue) and <span class="math inline">\(L_q(p)\)</span> (red) fitted to the household income data.
+</p>
+</div>
+<p>Neither form <span class="math inline">\(L_b(p)\)</span> or <span class="math inline">\(L_q(p)\)</span> gives a compelling description of the data. What to do.</p>
+<p>We can provide more parameters by constructing more complicated Lorenz functions. Here are two ways to build a new Lorenz function out of an existing one:</p>
+<ul>
+<li>The product of any two Lorenz functions, <span class="math inline">\(L_1(p) L_2(p)\)</span> is itself a Lorenz function.</li>
+<li>A linear combination of any two Lorenz functions, <span class="math inline">\(a L_1(p) + (1-a) L_2(p)\)</span>, so long as the scalars add up to 1, is itself a Lorenz function. For instance, the white curve in Figure <a href="fun-assembling.html#fig:lorenz-1-fun">11.2</a> is the linear combination of 0.45 times the red curve plus 0.55 times the blue curve.</li>
+</ul>
+<p>Question: Is the composition of two Lorenz functions a Lorenz function?</p>
+<p>To get started, figure out whether or not <span class="math inline">\(L_1(L_2(0)) = 0\)</span> and <span class="math inline">\(L_1(L_2(1)) = 1\)</span>. If the answer is yes, then we need to find a way to compute the concavity of a Lorenz function to determine if the composition will always be concave up. We’ll need additional tools for this.</p>
 </div>
 </div>
-<div id="modeling-polynomial-1" class="section level2">
+<div id="modeling-polynomial-1" class="section level2" number="11.3">
 <h2>
-<span class="header-section-number">9.3</span> The modeling polynomial<a class="anchor" aria-label="anchor" href="#modeling-polynomial-1"><i class="fas fa-link"></i></a>
+<span class="header-section-number">11.3</span> The modeling polynomial<a class="anchor" aria-label="anchor" href="#modeling-polynomial-1"><i class="fas fa-link"></i></a>
 </h2>
 <p>Sometimes, in order to model some simple relationship you need to build a function whose graph has a simple, curving shape.</p>
 <p>A simple but surprisingly powerful approach is to use a <strong><em>low-order polynomial</em></strong>. The <strong><em>order of a polynomial</em></strong> is the highest exponent on the input. For example, a straight-line function, <span class="math inline">\(g_1(x) \equiv a_0 + a_1 x\)</span>, is a <strong>first-order</strong> polynomial. A <strong><em>quadratic</em></strong>, <span class="math inline">\(g_2(x) \equiv b_0 + b_1 x + b_2 x^2\)</span> is a <strong>second-order</strong> polynomial.</p>
@@ -201,18 +299,17 @@ The declination angle is the latitude of the point on the earth’s surface pier
 <p>Explain why we are now using subscripts for the names of scalars.</p>
 </div>
 </div>
-<div id="tukeys-ladder-optional" class="section level2">
+<div id="tukeys-ladder-optional" class="section level2" number="11.4">
 <h2>
-<span class="header-section-number">9.4</span> Tukey’s ladder (optional)<a class="anchor" aria-label="anchor" href="#tukeys-ladder-optional"><i class="fas fa-link"></i></a>
+<span class="header-section-number">11.4</span> Tukey’s ladder (optional)<a class="anchor" aria-label="anchor" href="#tukeys-ladder-optional"><i class="fas fa-link"></i></a>
 </h2>
 <div class="todo">
 <p>[[Tukey’s ladder]] Using a simple straight line with input composition and/or output composition. You can get a variety of curve shapes using only a linear function.</p>
 </div>
 
 <div class="exercise">
-<span id="exr:unnamed-chunk-69" class="exercise"><strong>Exercise 9.1  (rule-of-72)  </strong></span>
+<span id="exr:unnamed-chunk-85" class="exercise"><strong>Exercise 11.4  (rule-of-72)  </strong></span>
 </div>
-
 <details><p><strong>The “Rule of 72”</strong></p>
 <p>For the quantitatively literate, systems showing exponential growth and decay are encountered almost every day and are usually presented as “percent per year” rates. Some examples:</p>
 <ul>
@@ -224,96 +321,79 @@ The declination angle is the latitude of the point on the earth’s surface pier
 <p>In understanding the long-term consequences of such growth or decay, it can be helpful to frame the rate of growth not as a percentage, but as a <em>doubling time</em> (or halving time for decay).</p>
 <p>Happily, there is a formula to calculating doubling (or halving) time directly from the <em>percentage</em> growth (or decay) rate. It is <span class="math display">\[n = \frac{\ln(2)}{\ln(1 + r/100)}\]</span> where <span class="math inline">\(r\)</span> is the percent per year growth rate and <span class="math inline">\(n\)</span> is the number of years for doubling (or halving).</p>
 <p>Could you do this calculation in your head? Perhaps you could carry around a card with a graph for looking up the answer:</p>
-<div class="sourceCode" id="cb50"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb60"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">doubling_time</span> <span class="op">&lt;-</span> <span class="fu">makeFun</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html">log</a></span><span class="op">(</span><span class="fl">2</span><span class="op">)</span> <span class="op">/</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html">log</a></span><span class="op">(</span><span class="fl">1</span> <span class="op">+</span> <span class="va">r</span><span class="op">/</span><span class="fl">100</span><span class="op">)</span> <span class="op">~</span> <span class="va">r</span><span class="op">)</span>
 <span class="fu">slice_plot</span><span class="op">(</span><span class="fu">doubling_time</span><span class="op">(</span><span class="va">r</span><span class="op">)</span> <span class="op">~</span> <span class="va">r</span>, <span class="fu">domain</span><span class="op">(</span>r <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">30</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> </code></pre></div>
 <div class="inline-figure">
-<img src="CalcZ-notes_files/figure-html/unnamed-chunk-135-1.png" width="672">
+<img src="CalcZ-notes_files/figure-html/unnamed-chunk-223-1.png" width="90%" style="display: block; margin: auto;">
 It’s hard to be very precise in reading off values from such a graph. Instead, maybe we can simplify the formula.</div>
 <p>Clearly, a straight-line calculation is not going to match the doubling-time curve well. How about a quadratic approximation? Let’s make one centered on <span class="math inline">\(r = 5\)</span>. The formula, as for all quadratic approximations will be <span class="math display">\[n(r) \approx a + b (r - r_0) + c (r-r_0)^2/2\]</span></p>
 <p>When centering on <span class="math inline">\(r_0=5\)</span> the value of <span class="math inline">\(a\)</span> will be <code>doubling_time(5)</code>, the value of <span class="math inline">\(b\)</span> will be <code>dr_doubling_time(5)</code>, and the value of <span class="math inline">\(c\)</span> will be <code>drr_doubling_time(5)</code>.</p>
-<div class="etude-question">
-<p><strong>Q-34</strong>: 1) What’s the numerical value of <span class="math inline">\(a\)</span>?</p>
-<ol>
-<li><p>10.2 []</p></li>
-<li><p>11 []</p></li>
-<li><p>11.9 []</p></li>
-<li><p>12.9 []</p></li>
-<li><p>14.2 (+) []</p></li>
-<li><p>15.7 []</p></li>
-<li><p>17.7 []</p></li>
+<p><strong>Question A</strong> 1) What’s the numerical value of <span class="math inline">\(a\)</span>?</p>
+<p>    10.2<span class="mcanswer"> ☹︎ </span>       11<span class="mcanswer"> ☹︎ </span>       11.9<span class="mcanswer"> ☹︎ </span>       12.9<span class="mcanswer"> ☹︎ </span>       14.2<span class="mcanswer"> ✓ </span>       15.7<span class="mcanswer"> ☹︎ </span>       17.7<span class="mcanswer"> ☹︎ </span></p>
+<p><strong>Question B</strong> 2) Just by looking at the graph of <code>doubling_time(r)</code> figure out what will be the signs of <span class="math inline">\(b\)</span> and <span class="math inline">\(c\)</span>. What are they?</p>
+<ol style="list-style-type: lower-roman">
+<li>
+<span class="math inline">\(b\)</span> positive and <span class="math inline">\(c\)</span> positive<span class="mcanswer"> ☹︎ </span><br>
+</li>
+<li>
+<span class="math inline">\(b\)</span> negative and <span class="math inline">\(c\)</span> positive<span class="mcanswer"> ✓ </span><br>
+</li>
+<li>
+<span class="math inline">\(b\)</span> negative and <span class="math inline">\(c\)</span> negative<span class="mcanswer"> ☹︎ </span><br>
+</li>
+<li>
+<span class="math inline">\(b\)</span> positive and <span class="math inline">\(c\)</span> negative<span class="mcanswer"> ☹︎ </span>
+</li>
 </ol>
-</div>
-<div class="etude-question">
-<p><strong>Q-35</strong>: 2) Just by looking at the graph of <code>doubling_time(r)</code> figure out what will be the signs of <span class="math inline">\(b\)</span> and <span class="math inline">\(c\)</span>. What are they?</p>
-<ol>
-<li><p><span class="math inline">\(b\)</span> positive and <span class="math inline">\(c\)</span> positive []</p></li>
-<li><p><span class="math inline">\(b\)</span> negative and <span class="math inline">\(c\)</span> positive (+) []</p></li>
-<li><p><span class="math inline">\(b\)</span> negative and <span class="math inline">\(c\)</span> negative []</p></li>
-<li><p><span class="math inline">\(b\)</span> positive and <span class="math inline">\(c\)</span> negative []</p></li>
-</ol>
-</div>
-<div class="etude-question">
-<p><strong>Q-36</strong>: 3) What’s the numerical value of <span class="math inline">\(b\)</span>? (Hint: Use the <code><a href="https://rdrr.io/r/stats/deriv.html">D()</a></code> operator to calculate the derivative of <code>doubling_time()</code> with respect to <code>r</code>. Then evaluate that function at <span class="math inline">\(r=5\)</span>.)</p>
-<ol>
-<li><p>-3.4 []</p></li>
-<li><p>-2.8 (+) []</p></li>
-<li><p>-2.3 []</p></li>
-<li><p>2.3 []</p></li>
-<li><p>2.8 []</p></li>
-<li><p>3.4 []</p></li>
-</ol>
-</div>
-<div class="etude-question">
-<p><strong>Q-37</strong>: 4) What’s the numerical value of <span class="math inline">\(c\)</span>? (Hint: Again, use <code><a href="https://rdrr.io/r/stats/deriv.html">D()</a></code> to find the 2nd derivative with respect to <code>r</code>. Then evaluate that function at <span class="math inline">\(r=5\)</span>.</p>
-<ol>
-<li><p>-1.11 []</p></li>
-<li><p>-0.83 []</p></li>
-<li><p>-0.64 []</p></li>
-<li><p>0.64 []</p></li>
-<li><p>0.83 []</p></li>
-<li><p>1.11 (+) []</p></li>
-</ol>
-</div>
+<p><strong>Question C</strong> 3) What’s the numerical value of <span class="math inline">\(b\)</span>? (Hint: Use the <code><a href="https://rdrr.io/r/stats/deriv.html">D()</a></code> operator to calculate the derivative of <code>doubling_time()</code> with respect to <code>r</code>. Then evaluate that function at <span class="math inline">\(r=5\)</span>.)</p>
+<p>    -3.4<span class="mcanswer"> ☹︎ </span>       -2.8<span class="mcanswer"> ✓ </span>       -2.3<span class="mcanswer"> ☹︎ </span>       2.3<span class="mcanswer"> ☹︎ </span>       2.8<span class="mcanswer"> ☹︎ </span>       3.4<span class="mcanswer"> ☹︎ </span></p>
+<p><strong>Question D</strong> 4) What’s the numerical value of <span class="math inline">\(c\)</span>? (Hint: Again, use <code><a href="https://rdrr.io/r/stats/deriv.html">D()</a></code> to find the 2nd derivative with respect to <code>r</code>. Then evaluate that function at <span class="math inline">\(r=5\)</span>.</p>
+<p>    -1.11<span class="mcanswer"> ☹︎ </span>       -0.83<span class="mcanswer"> ☹︎ </span>       -0.64<span class="mcanswer"> ☹︎ </span>       0.64<span class="mcanswer"> ☹︎ </span>       0.83<span class="mcanswer"> ☹︎ </span>       1.11<span class="mcanswer"> ✓ </span></p>
 <p>Using the numerical values for <span class="math inline">\(a\)</span>, <span class="math inline">\(b\)</span> and <span class="math inline">\(c\)</span> that you just calculated, construct the quadratic approximation function and plot it in red on top of the <span class="math inline">\(n(r)\)</span> function. (Hint: Connect the two <code>slice_plot()</code> commands with a pipe <code>%&gt;%</code>. You can give <code>slice_plot()</code> a <code>color = "red"</code> argument.)</p>
-<div class="etude-question">
-<p><strong>Q-38</strong>: 5) Comparing the actual <span class="math inline">\(n(r)\)</span> and your quadratic approximation, over what domain of <span class="math inline">\(r\)</span> do the functions match pretty well? Choose the best of these answers.</p>
-<ol>
-<li><p><span class="math inline">\(r \in [3,7]\)</span> (+) []</p></li>
-<li><p><span class="math inline">\(r \in [1,6]\)</span> []</p></li>
-<li><p><span class="math inline">\(r \in [2, 10]\)</span> []</p></li>
-<li><p><span class="math inline">\(r \in [4, 10]\)</span> []</p></li>
+<p><strong>Question E</strong> 5) Comparing the actual <span class="math inline">\(n(r)\)</span> and your quadratic approximation, over what domain of <span class="math inline">\(r\)</span> do the functions match pretty well? Choose the best of these answers.</p>
+<ol style="list-style-type: lower-roman">
+<li>
+<span class="math inline">\(r \in [3,7]\)</span><span class="mcanswer"> ✓ </span><br>
+</li>
+<li>
+<span class="math inline">\(r \in [1,6]\)</span><span class="mcanswer"> ☹︎ </span><br>
+</li>
+<li>
+<span class="math inline">\(r \in [2, 10]\)</span><span class="mcanswer"> ☹︎ </span><br>
+</li>
+<li>
+<span class="math inline">\(r \in [4, 10]\)</span><span class="mcanswer"> ☹︎ </span>
+</li>
 </ol>
-</div>
 <p>What we’ve got with this quadratic approximation constructed from derivatives of <span class="math inline">\(n(r)\)</span> is hardly very usable. You couldn’t do the calculations in your head and even if you could, the result would have a limited domain of relevance.</p>
-<p>Occasionally, there are other simple functions that give a good approximation. The one for interest rates is called the “Rule of 72”. The function is <span class="math display">\[n(r) \approx 72 / r\]</span>. Plot the Rule of 72 function on top of the actual <span class="math inline">\(n(r)\)</span>.</p>
-<div class="etude-question">
-<p><strong>Q-39</strong>: 6) Comparing the actual <span class="math inline">\(n(r)\)</span> and the Rule of 72 function, over what domain of <span class="math inline">\(r\)</span> do the functions match pretty well? Choose the best of these answers.</p>
-<ol>
-<li><p><span class="math inline">\(r \in [1,25]\)</span> (+) []</p></li>
-<li><p><span class="math inline">\(r \in [3,9]\)</span> []</p></li>
-<li><p><span class="math inline">\(r \in [4, 15]\)</span> []</p></li>
-<li><p><span class="math inline">\(r \in [8, 30]\)</span> []</p></li>
+<p>Occasionally, there are other simple functions that give a good approximation. The one for interest rates is called the “Rule of 72.” The function is <span class="math display">\[n(r) \approx 72 / r\]</span>. Plot the Rule of 72 function on top of the actual <span class="math inline">\(n(r)\)</span>.</p>
+<p><strong>Question F</strong> 6) Comparing the actual <span class="math inline">\(n(r)\)</span> and the Rule of 72 function, over what domain of <span class="math inline">\(r\)</span> do the functions match pretty well? Choose the best of these answers.</p>
+<ol style="list-style-type: lower-roman">
+<li>
+<span class="math inline">\(r \in [1,25]\)</span><span class="mcanswer"> ✓ </span><br>
+</li>
+<li>
+<span class="math inline">\(r \in [3,9]\)</span><span class="mcanswer"> ☹︎ </span><br>
+</li>
+<li>
+<span class="math inline">\(r \in [4, 15]\)</span><span class="mcanswer"> ☹︎ </span><br>
+</li>
+<li>
+<span class="math inline">\(r \in [8, 30]\)</span><span class="mcanswer"> ☹︎ </span>
+</li>
 </ol>
-</div>
-<div class="etude-question">
-<p><strong>Q-40</strong>: 6) Compare numerically the actual <span class="math inline">\(n(r)\)</span> and the Rule of 72 function for an interest rate of <span class="math inline">\(r = 10\)</span> (per year). How many years different are the two answers.</p>
-<ol>
-<li><p>0.007 years []</p></li>
-<li><p>0.07 years (+) []</p></li>
-<li><p>0.7 years []</p></li>
-<li><p>7 years []</p></li>
-</ol>
-</div>
+<p><strong>Question G</strong> 6) Compare numerically the actual <span class="math inline">\(n(r)\)</span> and the Rule of 72 function for an interest rate of <span class="math inline">\(r = 10\)</span> (per year). How many years different are the two answers.</p>
+    0.007 years<span class="mcanswer"> ☹︎ </span>       0.07 years<span class="mcanswer"> ✓ </span>       0.7 years<span class="mcanswer"> ☹︎ </span>       7 years<span class="mcanswer"> ☹︎ </span>
 </details><div class="todo">
 <p>As exercises?</p>
 <p>Log transformation of used car prices</p>
 <p>[[Perceived brightness or loudness]] is a log scale.</p>
 </div>
 </div>
-<div id="function-multiplication" class="section level2">
+<div id="function-multiplication" class="section level2" number="11.5">
 <h2>
-<span class="header-section-number">9.5</span> Function multiplication<a class="anchor" aria-label="anchor" href="#function-multiplication"><i class="fas fa-link"></i></a>
+<span class="header-section-number">11.5</span> Function multiplication<a class="anchor" aria-label="anchor" href="#function-multiplication"><i class="fas fa-link"></i></a>
 </h2>
 <p>The third in our repertoire of methods for making new function out of old is plain old multiplication. With two functions <span class="math inline">\(f(x)\)</span> and <span class="math inline">\(g(x)\)</span>, the product is simply <span class="math inline">\(f(x)g(x)\)</span>.</p>
 <p>It’s essential to distinguish between function multiplication and function composition:</p>
@@ -326,58 +406,53 @@ It’s hard to be very precise in reading off values from such a graph. Instead,
 <p>A guitar string is plucked to produce a note. The note is, of course, vibrations of the air created by vibrations of the string.</p>
 <p>After plucking, the note fades away. An important model of this is a sinusoid (of the correct period to correspond to the frequency of the note) times an exponential.</p>
 <p>Function multiplication is used so often in modeling that you’ll see it in many modeling situations. Here’s one example that is important in physics and communication: the <strong><em>wave packet.</em></strong> Overall, the wave packet is a localized oscillation as in Figure @ref{fig:wave-packet}.</p>
-<div class="figure">
+<div class="figure" style="text-align: center">
 <span id="fig:wave-packet"></span>
-<img src="CalcZ-notes_files/figure-html/wave-packet-1.png" alt="A *wave packet* constructed by multiplying a sinusoid by a hump function." width="672"><p class="caption">
-Figure 9.1: A <em>wave packet</em> constructed by multiplying a sinusoid by a hump function.
+<img src="CalcZ-notes_files/figure-html/wave-packet-1.png" alt="A *wave packet* constructed by multiplying a sinusoid by a hump function." width="90%"><p class="caption">
+Figure 11.3: A <em>wave packet</em> constructed by multiplying a sinusoid by a hump function.
 </p>
 </div>
 <p>This is the product of two simple functions: a hump times a sinusoid.</p>
-<div class="figure">
+<div class="figure" style="text-align: center">
 <span id="fig:making-wave-packet"></span>
 <img src="CalcZ-notes_files/figure-html/making-wave-packet-1.png" alt="The two components of the wave packet in Figure \@ref(fig:wave-packet)" width="50%"><img src="CalcZ-notes_files/figure-html/making-wave-packet-2.png" alt="The two components of the wave packet in Figure \@ref(fig:wave-packet)" width="50%"><p class="caption">
-Figure 9.2: The two components of the wave packet in Figure <a href="fun-assembling.html#fig:wave-packet">9.1</a>
+Figure 11.4: The two components of the wave packet in Figure <a href="fun-assembling.html#fig:wave-packet">11.3</a>
 </p>
 </div>
 <p>EXERCISES: Say which two kinds of functions are being multiplied here.</p>
-<div class="inline-figure">
-<img src="CalcZ-notes_files/figure-html/unnamed-chunk-70-1.png" width="672">
-::: {.etude-question}</div>
-<p><strong>Q-41</strong>: What are the two basic modeling functions being multiplied?</p>
+<div class="inline-figure"><img src="CalcZ-notes_files/figure-html/unnamed-chunk-86-1.png" width="90%" style="display: block; margin: auto;"></div>
+<p><strong>Question tmp-9</strong>: What are the two basic modeling functions being multiplied?</p>
 <ol>
 <li><p>A sinusoid and another sinusoid with a faster period. (+) []</p></li>
 <li><p>A hump and a sinusoid. []</p></li>
 <li><p>A sigmoidal function and a sinusoid. []</p></li>
 <li><p>[]</p></li>
 </ol>
-<p>:::</p>
-<div class="etude-question">
-<p><strong>Q-42</strong>: What is the period of the envelope?</p>
+<p><strong>Question tmp-10</strong>: What is the period of the envelope?</p>
 <ol>
 <li><p>10 [It’s true that the broad peaks in the overall function occur every 10 time units. But a sine wave has two excursions from zero every cycle, one positive and one negative. So if the period of the envelope were 10, we would see an amplitude of the faster sinusoid near zero every 5 time units.]</p></li>
 <li><p>20 (+) []</p></li>
 <li><p>30 [If this were so, the dips in amplitude of the faster sign would occur every 15 time units.]</p></li>
 </ol>
-</div>
 <p>Other examples along the same lines.</p>
 <p>EXERCISE: Provide a sigmoid and a series of humps. Ask the student to sketch out the product.</p>
 </div>
-<div id="all-together-now" class="section level2">
+<div id="all-together-now" class="section level2" number="11.6">
 <h2>
-<span class="header-section-number">9.6</span> All together now!<a class="anchor" aria-label="anchor" href="#all-together-now"><i class="fas fa-link"></i></a>
+<span class="header-section-number">11.6</span> All together now!<a class="anchor" aria-label="anchor" href="#all-together-now"><i class="fas fa-link"></i></a>
 </h2>
 <p>Two or all three of the techniques for combining functions—linear combinations, function composition, and function multiplication—can be used in the same function.</p>
 <p>Consider the function for the length of the day
 <span class="math display">\[\text{day_length}(L, \delta) \equiv \frac{2}{15} \arccos\left(-\tan(L)*\tan(δ)\right)\]</span>
 The 2/15 is scaling the output of <span class="math inline">\(\arccos()\)</span>. The <span class="math inline">\(\arcos()\)</span> is being composed with an interior function that is itself a scaled product of two functions.</p>
 </div>
-<div id="exercises-3" class="section level2">
+<div id="exercises-1" class="section level2" number="11.7">
 <h2>
-<span class="header-section-number">9.7</span> Exercises<a class="anchor" aria-label="anchor" href="#exercises-3"><i class="fas fa-link"></i></a>
+<span class="header-section-number">11.7</span> Exercises<a class="anchor" aria-label="anchor" href="#exercises-1"><i class="fas fa-link"></i></a>
 </h2>
 <!--
-\BeginKnitrBlock{exercise}\iffalse{-91-97-114-105-116-104-45-119-105-116-104-45-102-117-110-115-93-}\fi{}<div class="exercise"><span class="exercise" id="exr:unnamed-chunk-71"><strong>(\#exr:unnamed-chunk-71)  \iffalse (arith-with-funs) \fi{} </strong></span></div>\EndKnitrBlock{exercise}
-<details>
+\BeginKnitrBlock{exercise}\iffalse{-91-97-114-105-116-104-45-119-105-116-104-45-102-117-110-115-93-}\fi{}<div class="exercise"><span class="exercise" id="exr:unnamed-chunk-87"><strong>(\#exr:unnamed-chunk-87)  \iffalse (arith-with-funs) \fi{} </strong></span></div>\EndKnitrBlock{exercise}
+<details> 
 
 
 
@@ -399,7 +474,7 @@ slice_plot(temp(day) ~ day, domain(day=c(90, 180)),  npt=1000) %>%
   gf_labs(y = "Temperature  (F)", x = "Day of year")
 ```
 
-<img src="CalcZ-notes_files/figure-html/unnamed-chunk-137-1.png" width="672" />
+<img src="CalcZ-notes_files/figure-html/unnamed-chunk-225-1.png" width="90%" style="display: block; margin: auto;" />
 
 You can see in the graph the slow seasonal change in  temperature represented by a sine  function with a period of 365 days, as well as the relatively rapid hour-by-hour variation over the course of 24 hours. There are two different mechanisms at  work, 1) the annual orbit of the Earth around the Sun  which creates the seasons,  2) the daily rotation of the Earth around its axis. Each mechanism is approximated by a simple function. The  overall  pattern can be represented by  a sum of functions.
 
@@ -407,166 +482,124 @@ We are going to use this strategy of modeling complex phenomena as a  sum of two
 
 **Problem 1** Epidemics are often modeled as a series of "waves." Each wave involves different  people. Let's imagine two epidemic waves, one passing through the "blue" population  and a smaller one through  the "red" population, like this:
 
-<img src="CalcZ-notes_files/figure-html/unnamed-chunk-138-1.png" width="672" />
+<img src="CalcZ-notes_files/figure-html/unnamed-chunk-226-1.png" width="90%" style="display: block; margin: auto;" />
 
 
 
-::: {.etude-question}
+**Question A**  Assuming that there were no way to distinguish between red and blue cases, the epidemic would look like just one curve. Which of the following curves would the overall epidemic look like? (The colors are just  to  help you  distinguish the different functions) 
 
-**Q-43**: Assuming that there were no way to distinguish between red and blue cases, the epidemic would look like just one curve. Which of the following curves would the overall epidemic look like? (The colors are just  to  help you  distinguish the different functions)
-
-
-#. A [The cumulative number of cases can't possibly go down!]
-
-#. B [The cumulative number of cases can't possibly go down!]
-
-#. C [You can't see the separate waves in (C) even though the rise in the blue wave is clearly distinct in  time from the rise in  the red wave. ]
-
-#. D  (+) [Yes. Each wave adds another layer to the cumulative number of cases]
-
-:::
+    A<span class='mcanswer'> ☹︎ The cumulative number of cases can't possibly go down! </span>       B<span class='mcanswer'> ☹︎ The cumulative number of cases can't possibly go down! </span>       C<span class='mcanswer'> ☹︎ You can't see the separate waves in (C) even though the rise in the blue wave is clearly distinct in  time from the rise in  the red wave.  </span>       D<span class='mcanswer'> ✓ Yes. Each wave adds another layer to the cumulative number of cases </span>
 
 
-<img src="CalcZ-notes_files/figure-html/unnamed-chunk-139-1.png" width="672" />
+<img src="CalcZ-notes_files/figure-html/unnamed-chunk-227-1.png" width="90%" style="display: block; margin: auto;" />
 
 Each of the functions shown in the above graph is a "linear combination" of the red function and the blue function. The real total cumulative cases is "wave1(t)"  plus "wave2(t)". The other functions are made up and are irrelevant to the real epidemic. Still, we can ask what arithmetic combination of "wave1(t)" and "wave2(t)"  was used to create the made-up function.
 
 
-::: {.etude-question}
+**Question B**  For made-up function (A) in  the graph, what was the linear combination? 
 
-**Q-44**: For made-up function (A) in  the graph, what was the linear combination?
-
-
-#. 1000 - wave1(t) + wave2(t)  (+) []
-
-#. 2*wave1(t) - 3*wave2(t) [When t=0,  both wave1(t) and wave2(t) are zero, so the sum would also be zero. That's not  true in function (A)]
-
-#. 1000 + wave1(t) - wave2(t) [This  linear combination would rise from 1000 to 2000 (at time t=100) and  then  fall off to 1500 as the negative  wave2(t)  comes into play.]
-
-:::</details>
+i. 1000 - wave1(t) + wave2(t)<span class='mcanswer'> ✓  </span>     
+ii. 2*wave1(t) - 3*wave2(t)<span class='mcanswer'> ☹︎ When t=0,  both wave1(t) and wave2(t) are zero, so the sum would also be zero. That's not  true in function (A) </span>     
+iii. 1000 + wave1(t) - wave2(t)<span class='mcanswer'> ☹︎ This  linear combination would rise from 1000 to 2000 (at time t=100) and  then  fall off to 1500 as the negative  wave2(t)  comes into play. </span></details>
 -->
 
 <div class="exercise">
-<span id="exr:unnamed-chunk-72" class="exercise"><strong>Exercise 9.2  (multiplying-functions)  </strong></span>
+<span id="exr:unnamed-chunk-88" class="exercise"><strong>Exercise 11.5  (multiplying-functions)  </strong></span>
 </div>
-
 <details><p>It’s very common in communications systems to have a signal that is a sine-wave <em>carrier</em> that is <em>modulated</em> by another function. That is, the carrier is <em>multiplied</em> by the other function: <code>waveform(t) = modulator(t)</code> <span class="math inline">\(\times\)</span> <code>carrier(t)</code>.</p>
 <p>Here are four examples in each of which a sine with a period of about 2 units is modulated by another function, one of the modeling functions we have studied.</p>
-<div class="inline-figure"><img src="CalcZ-notes_files/figure-html/unnamed-chunk-141-1.png" width="672"></div>
-<div class="etude-question">
-<p><strong>Q-45</strong>: (A) Of what sort is the function that is modulating the carrier?</p>
-<ol>
-<li><p>exponential (+) []</p></li>
-<li><p>hump []</p></li>
-<li><p>sigmoid []</p></li>
-<li><p>sine []</p></li>
-</ol>
-</div>
-<div class="inline-figure">
-<img src="CalcZ-notes_files/figure-html/unnamed-chunk-142-1.png" width="672">
-::: {.etude-question}</div>
-<p><strong>Q-46</strong>: (B) Of what sort is the function that is modulating the carrier?</p>
-<ol>
-<li><p>exponential []</p></li>
-<li><p>hump (+) []</p></li>
-<li><p>sigmoid []</p></li>
-<li><p>sine []</p></li>
-</ol>
-<p>:::</p>
-<div class="inline-figure"><img src="CalcZ-notes_files/figure-html/unnamed-chunk-143-1.png" width="672"></div>
-<div class="etude-question">
-<p><strong>Q-47</strong>: (C) Of what sort is the function that is modulating the carrier?</p>
-<ol>
-<li><p>exponential []</p></li>
-<li><p>hump []</p></li>
-<li><p>sigmoid (+) []</p></li>
-<li><p>sine []</p></li>
-</ol>
-</div>
-<div class="inline-figure">
-<img src="CalcZ-notes_files/figure-html/unnamed-chunk-144-1.png" width="672">
-::: {.etude-question}</div>
-<p><strong>Q-48</strong>: (D) Of what sort is the function that is modulating the carrier?</p>
-<ol>
-<li><p>exponential []</p></li>
-<li><p>hump []</p></li>
-<li><p>sigmoid []</p></li>
-<li><p>sine (+) []</p></li>
-</ol>
-:::
+<div class="inline-figure"><img src="CalcZ-notes_files/figure-html/unnamed-chunk-229-1.png" width="90%" style="display: block; margin: auto;"></div>
+<p><strong>Question A</strong> (A) Of what sort is the function that is modulating the carrier?</p>
+<p>    exponential<span class="mcanswer"> ✓ </span>       hump<span class="mcanswer"> ☹︎ </span>       sigmoid<span class="mcanswer"> ☹︎ </span>       sine<span class="mcanswer"> ☹︎ </span></p>
+<p><img src="CalcZ-notes_files/figure-html/unnamed-chunk-230-1.png" width="90%" style="display: block; margin: auto;"><strong>Question B</strong> (B) Of what sort is the function that is modulating the carrier?</p>
+<p>    exponential<span class="mcanswer"> ☹︎ </span>       hump<span class="mcanswer"> ✓ </span>       sigmoid<span class="mcanswer"> ☹︎ </span>       sine<span class="mcanswer"> ☹︎ </span></p>
+<div class="inline-figure"><img src="CalcZ-notes_files/figure-html/unnamed-chunk-231-1.png" width="90%" style="display: block; margin: auto;"></div>
+<p><strong>Question C</strong> (C) Of what sort is the function that is modulating the carrier?</p>
+<p>    exponential<span class="mcanswer"> ☹︎ </span>       hump<span class="mcanswer"> ☹︎ </span>       sigmoid<span class="mcanswer"> ✓ </span>       sine<span class="mcanswer"> ☹︎ </span></p>
+<p><img src="CalcZ-notes_files/figure-html/unnamed-chunk-232-1.png" width="90%" style="display: block; margin: auto;"><strong>Question D</strong> (D) Of what sort is the function that is modulating the carrier?</p>
+    exponential<span class="mcanswer"> ☹︎ </span>       hump<span class="mcanswer"> ☹︎ </span>       sigmoid<span class="mcanswer"> ☹︎ </span>       sine<span class="mcanswer"> ✓ </span>
 </details><div class="exercise">
-<span id="exr:unnamed-chunk-73" class="exercise"><strong>Exercise 9.3  (available-health-care)  </strong></span>
+<span id="exr:unnamed-chunk-89" class="exercise"><strong>Exercise 11.6  (available-health-care)  </strong></span>
 </div>
-
 <details><p>One common measure of quality of life is “life expectancy at birth.” A measure of the availability of health care is the number of physicians per 1000 people.</p>
 <p>The question we are going to examine is whether life expectancy is a function of the availability of health care and, if so, what kind of function it is.</p>
 <p>The data frame <code>LifeExpectancyPhysicians</code> contains the official 2010 figures from many countries for life expectancy and the number of physicians per 1000 population.</p>
 <p>Graph <code>LifeExpectancy</code> versus <code>Physicians</code>. Use linear axes, semi-log axes, or log-log axes to determine a reasonable functional form. (Recall that giving <code>scale_y_log10()</code> as an argument to <code>gf_refine()</code> will set the y axis on a log scale, and similarly for the x axis.)</p>
 <div class="scaffolding">
-<div class="sourceCode" id="cb51"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb61"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">gf_point</span><span class="op">(</span><span class="va">LifeExpectancy</span> <span class="op">~</span> <span class="va">Physicians</span>,
          data <span class="op">=</span> <span class="va">LifeExpectancyPhysicians</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu">gf_refine</span><span class="op">(</span><span class="op">)</span></code></pre></div>
-<div class="inline-figure"><img src="CalcZ-notes_files/figure-html/unnamed-chunk-146-1.png" width="672"></div>
+<div class="inline-figure"><img src="CalcZ-notes_files/figure-html/unnamed-chunk-234-1.png" width="90%" style="display: block; margin: auto;"></div>
 </div>
 <p>Using <code>fitModel()</code>, your instructor found the following model of life-expectancy (which we’ll call L, in years) as a function of physicians-per-1000 people. (We’ll call this “doctor-density” for short, so D.)</p>
 <p>The instructor’s model is:</p>
 <p><span class="math display">\[L(D) \equiv 70.9 \times D^{0.0683}\]</span>
 Define this function in R and graph it over your data. Confirm that it is a reasonable match to the data. (If not, you’ve copied the parameters wrong.)</p>
-<div class="etude-question">
-<p><strong>Q-49</strong>: What kind of function is the instructor’s proposed model?</p>
-<ol>
-<li><p>linear [Is it a straight line on linear axes?]</p></li>
-<li><p>exponential [Is it a straight line on semi-log axes?]</p></li>
-<li><p>power-law (+) [C is a consonant, Chub]</p></li>
-<li><p>sigmoidal [Is it S-shaped]</p></li>
+<p><strong>Question A</strong> What kind of function is the instructor’s proposed model?</p>
+<p>    linear<span class="mcanswer"> ☹︎ Is it a straight line on linear axes? </span>       exponential<span class="mcanswer"> ☹︎ Is it a straight line on semi-log axes? </span>       power-law<span class="mcanswer"> ✓ C is a consonant, Chub </span>       sigmoidal<span class="mcanswer"> ☹︎ Is it S-shaped </span></p>
+<p><strong>Question B</strong> According to the instructor’s model, what’s the life expectancy when there are no physicians at all?</p>
+<ol style="list-style-type: lower-roman">
+<li>0 years<span class="mcanswer"> ✓ Not very believable, since there were (living) people before there were physicians. The power-law functional form always forces zero input to be zero output. So maybe not to be taken so seriously. </span><br>
+</li>
+<li>35 years<span class="mcanswer"> ☹︎ </span><br>
+</li>
+<li>50 years<span class="mcanswer"> ☹︎ </span><br>
+</li>
+<li>70 years<span class="mcanswer"> ☹︎ </span><br>
+</li>
+<li>100 years<span class="mcanswer"> ☹︎ </span><br>
+</li>
+<li>115 years<span class="mcanswer"> ☹︎ </span>
+</li>
 </ol>
-</div>
-<div class="etude-question">
-<p><strong>Q-50</strong>: According to the instructor’s model, what’s the life expectancy when there are no physicians at all?</p>
-<ol>
-<li><p>0 years (+) [Not very believable, since there were (living) people before there were physicians. The power-law functional form always forces zero input to be zero output. So maybe not to be taken so seriously.]</p></li>
-<li><p>35 years []</p></li>
-<li><p>50 years []</p></li>
-<li><p>70 years []</p></li>
-<li><p>100 years []</p></li>
-<li><p>115 years []</p></li>
+<p><strong>Question C</strong> According to the instructor’s model, would be the life expectancy if every person in the world were a physician? (Hint: Translate this into physicians/1000-people.)</p>
+<ol style="list-style-type: lower-roman">
+<li>0 years<span class="mcanswer"> ☹︎ </span><br>
+</li>
+<li>35 years<span class="mcanswer"> ☹︎ </span><br>
+</li>
+<li>50 years<span class="mcanswer"> ☹︎ </span><br>
+</li>
+<li>70 years<span class="mcanswer"> ☹︎ </span><br>
+</li>
+<li>100 years<span class="mcanswer"> ☹︎ </span><br>
+</li>
+<li>110 years+<span class="mcanswer"> ✓ But probably we would all starve to death if everybody was a physician! This also is an unreasonable extrapolation. </span>
+</li>
 </ol>
-</div>
-<div class="etude-question">
-<p><strong>Q-51</strong>: According to the instructor’s model, would be the life expectancy if every person in the world were a physician? (Hint: Translate this into physicians/1000-people.)</p>
-<ol>
-<li><p>0 years []</p></li>
-<li><p>35 years []</p></li>
-<li><p>50 years []</p></li>
-<li><p>70 years []</p></li>
-<li><p>100 years []</p></li>
-<li><p>110 years+ (+) [But probably we would all starve to death if everybody was a physician! This also is an unreasonable extrapolation.]</p></li>
-</ol>
-</div>
 <p>It could be argued that the doctor-density should be a function of life expectancy rather than the other way around. (All those seniors consume a lot of medical care.)</p>
-<div class="etude-question">
-<p><strong>Q-52</strong>: Which of these models agrees reasonably well with the data? (Hint: You can plot the model over the data.)</p>
-<ol>
-<li><p><span class="math inline">\(D(L) \equiv 7.24\times 10^{-19} \times L^9.8\)</span> (+) []</p></li>
-<li><p><span class="math inline">\(D(L) \equiv 3.19 \times L^{3.1}\)</span> []</p></li>
-<li><p><span class="math inline">\(D(L) \equiv 8.64 \times L^{6.3}\)</span> []</p></li>
-<li><p><span class="math inline">\(D(L) \equiv 5.50 \times L^{2.4}\)</span> []</p></li>
+<p><strong>Question D</strong> Which of these models agrees reasonably well with the data? (Hint: You can plot the model over the data.)</p>
+<ol style="list-style-type: lower-roman">
+<li>
+<span class="math inline">\(D(L) \equiv 7.24\times 10^{-19} \times L^9.8\)</span><span class="mcanswer"> ✓ </span><br>
+</li>
+<li>
+<span class="math inline">\(D(L) \equiv 3.19 \times L^{3.1}\)</span><span class="mcanswer"> ☹︎ </span><br>
+</li>
+<li>
+<span class="math inline">\(D(L) \equiv 8.64 \times L^{6.3}\)</span><span class="mcanswer"> ☹︎ </span><br>
+</li>
+<li>
+<span class="math inline">\(D(L) \equiv 5.50 \times L^{2.4}\)</span><span class="mcanswer"> ☹︎ </span>
+</li>
 </ol>
-</div>
 <p>The question now is whether the function <span class="math inline">\(D(L)\)</span> (from the previous question) which is a good match to the data, is equivalent to the function <span class="math inline">\(L(D)\)</span> which the instructor first proposed.</p>
 <p>In order to compare them, we have to make both of them functions of the same input. Let’s say we take <span class="math inline">\(D(L)\)</span> and algebraically find the inverse which we’ll call <span class="math inline">\(D^{inv}(D)\)</span>. That inverse function takes an input in the form D and produces an output in the form L.</p>
 <p>Using algebra, confirm that</p>
 <p><span class="math display">\[D^{inv}(D) \equiv  70.9 \times D^{1/9.8}\]</span>
 In the sandbox, plot both the instructor’s proposed model <span class="math inline">\(L(D)\)</span> and the model <span class="math inline">\(D^{inv}(D)\)</span> on the same axes, along with the data. (You’ll have to decide which variable to put on the horizontal axis, but the notation <span class="math inline">\(L(D)\)</span> and <span class="math inline">\(D^{inv}(D)\)</span> should give you a good clue.)</p>
-<div class="etude-question">
-<p><strong>Q-53</strong>: Which model, <span class="math inline">\(L(D)\)</span> or <span class="math inline">\(D^{inv}(D)\)</span> is a better match to the data when <span class="math inline">\(D &lt; 1\)</span>?</p>
-<ol>
-<li><p><span class="math inline">\(L(D)\)</span> (+) []</p></li>
-<li><p><span class="math inline">\(D^{inv}(D)\)</span> []</p></li>
-<li><p>They are the same function. []</p></li>
+<p><strong>Question E</strong> Which model, <span class="math inline">\(L(D)\)</span> or <span class="math inline">\(D^{inv}(D)\)</span> is a better match to the data when <span class="math inline">\(D &lt; 1\)</span>?</p>
+<ol style="list-style-type: lower-roman">
+<li>
+<span class="math inline">\(L(D)\)</span><span class="mcanswer"> ✓ </span><br>
+</li>
+<li>
+<span class="math inline">\(D^{inv}(D)\)</span><span class="mcanswer"> ☹︎ </span><br>
+</li>
+<li>They are the same function.<span class="mcanswer"> ☹︎ </span>
+</li>
 </ol>
-</div>
 <p>Complex social phenomena, like life expectancy, are … well, complex. Life expectancy depends on many factors other than health care: nutrition, war, automobile safety, etc.</p>
 <p>Notice from the data that the countries with the highest life expectancies are those where <span class="math inline">\(D \approx 3\)</span>. And yet, there are many countries with <span class="math inline">\(D \approx 3\)</span> that have relatively low life expectancy. One reason for this is inequality. In many countries, urbanites live at a high standard and people in the countryside have very little access to health care or reliably good nutrition, civil order, and so on.</p>
 </details><div class="todo">
@@ -576,22 +609,20 @@ In the sandbox, plot both the instructor’s proposed model <span class="math in
 </div>
 </div>
 
-
-
-<div class="chapter-nav">
-<div class="prev"><a href="fun-slopes.html"><span class="header-section-number">8</span> Slope function</a></div>
-<div class="next"><a href="outline-of-block-2.html">Outline of Block 2</a></div>
+  <div class="chapter-nav">
+<div class="prev"><a href="function-inverses-and-solving.html"><span class="header-section-number">10</span> Function inverses and “solving”</a></div>
+<div class="next"><a href="fun-multiple-inputs.html"><span class="header-section-number">12</span> Functions with multiple inputs</a></div>
 </div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
     <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
       <ul class="nav navbar-nav">
-<li><a class="nav-link" href="#fun-assembling"><span class="header-section-number">9</span> Assembling functions</a></li>
-<li><a class="nav-link" href="#linear-combination"><span class="header-section-number">9.1</span> Linear combination</a></li>
-<li><a class="nav-link" href="#function-composition"><span class="header-section-number">9.2</span> Function composition</a></li>
-<li><a class="nav-link" href="#modeling-polynomial-1"><span class="header-section-number">9.3</span> The modeling polynomial</a></li>
-<li><a class="nav-link" href="#tukeys-ladder-optional"><span class="header-section-number">9.4</span> Tukey’s ladder (optional)</a></li>
-<li><a class="nav-link" href="#function-multiplication"><span class="header-section-number">9.5</span> Function multiplication</a></li>
-<li><a class="nav-link" href="#all-together-now"><span class="header-section-number">9.6</span> All together now!</a></li>
-<li><a class="nav-link" href="#exercises-3"><span class="header-section-number">9.7</span> Exercises</a></li>
+<li><a class="nav-link" href="#fun-assembling"><span class="header-section-number">11</span> Assembling functions</a></li>
+<li><a class="nav-link" href="#linear-combination"><span class="header-section-number">11.1</span> Linear combination</a></li>
+<li><a class="nav-link" href="#function-composition"><span class="header-section-number">11.2</span> Function composition</a></li>
+<li><a class="nav-link" href="#modeling-polynomial-1"><span class="header-section-number">11.3</span> The modeling polynomial</a></li>
+<li><a class="nav-link" href="#tukeys-ladder-optional"><span class="header-section-number">11.4</span> Tukey’s ladder (optional)</a></li>
+<li><a class="nav-link" href="#function-multiplication"><span class="header-section-number">11.5</span> Function multiplication</a></li>
+<li><a class="nav-link" href="#all-together-now"><span class="header-section-number">11.6</span> All together now!</a></li>
+<li><a class="nav-link" href="#exercises-1"><span class="header-section-number">11.7</span> Exercises</a></li>
 </ul>
 
       <div class="book-extra">
@@ -602,19 +633,14 @@ In the sandbox, plot both the instructor’s proposed model <span class="math in
 </div>
     </nav>
 </div>
-</div>
-
-  
-
-  
 
 </div>
- <!-- .container -->
+</div> <!-- .container -->
 
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>CalcZ Student Notes</strong>" was written by Daniel Kaplan. It was last built on 2021-06-09.</p>
+    <p>"<strong>CalcZ Student Notes</strong>" was written by Daniel Kaplan. It was last built on 2021-06-15.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

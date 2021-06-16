@@ -4,35 +4,32 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>Chapter 11 h and derivatives | CalcZ Student Notes</title>
+<title>Chapter 17 h and derivatives | CalcZ Student Notes</title>
 <meta name="author" content="Daniel Kaplan">
-<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.2"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="libs/bootstrap-4.5.3/bootstrap.min.css" rel="stylesheet">
-<script src="libs/bootstrap-4.5.3/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.2.4/tabs.js"></script><script src="libs/bs3compat-0.2.4/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
-<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script><script src="libs/htmlwidgets-1.5.3/htmlwidgets.js"></script><link href="libs/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet">
-<script src="libs/datatables-binding-0.12/datatables.js"></script><link href="libs/dt-core-1.10.20/css/jquery.dataTables.min.css" rel="stylesheet">
-<link href="libs/dt-core-1.10.20/css/jquery.dataTables.extra.css" rel="stylesheet">
-<script src="libs/dt-core-1.10.20/js/jquery.dataTables.min.js"></script><link href="libs/crosstalk-1.1.1/css/crosstalk.css" rel="stylesheet">
-<script src="libs/crosstalk-1.1.1/js/crosstalk.min.js"></script><script src="libs/kePrint-0.0.1/kePrint.js"></script><link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet">
-<script src="libs/plotly-binding-4.9.3/plotly.js"></script><script src="libs/typedarray-0.1/typedarray.min.js"></script><link href="libs/plotly-htmlwidgets-css-1.57.1/plotly-htmlwidgets.css" rel="stylesheet">
+<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.2"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/header-attrs-2.8/header-attrs.js"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.2.5.1/tabs.js"></script><script src="libs/bs3compat-0.2.5.1/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="libs/kePrint-0.0.1/kePrint.js"></script><link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet">
+<script src="libs/htmlwidgets-1.5.3/htmlwidgets.js"></script><script src="libs/plotly-binding-4.9.4/plotly.js"></script><script src="libs/typedarray-0.1/typedarray.min.js"></script><link href="libs/crosstalk-1.1.1/css/crosstalk.css" rel="stylesheet">
+<script src="libs/crosstalk-1.1.1/js/crosstalk.min.js"></script><link href="libs/plotly-htmlwidgets-css-1.57.1/plotly-htmlwidgets.css" rel="stylesheet">
 <script src="libs/plotly-main-1.57.1/plotly-latest.min.js"></script><script type="text/x-mathjax-config">
-  const popovers = document.querySelectorAll('a.footnote-ref[data-toggle="popover"]');
-  for (let popover of popovers){
-    const div = document.createElement('div');
-    div.setAttribute('style', 'position: absolute; top: 0, left:0; width:0, height:0, overflow: hidden; visibility: hidden;');
-    div.innerHTML = popover.getAttribute('data-content');
-    
-    // Will this work with TeX on its own line?
-    var has_math = div.querySelector("span.math");
-    if (has_math) {
-      document.body.appendChild(div);
-    	MathJax.Hub.Queue(["Typeset", MathJax.Hub, div]);
-    	MathJax.Hub.Queue(function(){
-        popover.setAttribute('data-content', div.innerHTML);
-    	})
+    const popovers = document.querySelectorAll('a.footnote-ref[data-toggle="popover"]');
+    for (let popover of popovers){
+      const div = document.createElement('div');
+      div.setAttribute('style', 'position: absolute; top: 0, left:0; width:0, height:0, overflow: hidden; visibility: hidden;');
+      div.innerHTML = popover.getAttribute('data-content');
+      
+      // Will this work with TeX on its own line?
+      var has_math = div.querySelector("span.math");
+      if (has_math) {
+        document.body.appendChild(div);
+      	MathJax.Hub.Queue(["Typeset", MathJax.Hub, div]);
+      	MathJax.Hub.Queue(function(){
+          popover.setAttribute('data-content', div.innerHTML);
+      	})
+      }
     }
-  }
-  </script><script src="https://cdn.jsdelivr.net/autocomplete.js/0/autocomplete.jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/mark.js@8.11.1/dist/mark.min.js"></script><!-- CSS --><link rel="stylesheet" href="css/CalcZ-style.css">
+    </script><script src="https://cdn.jsdelivr.net/autocomplete.js/0/autocomplete.jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/mark.js@8.11.1/dist/mark.min.js"></script><!-- CSS --><link rel="stylesheet" href="css/CalcZ-style.css">
 </head>
 <body data-spy="scroll" data-target="#toc">
 
@@ -55,28 +52,30 @@
       <nav aria-label="Table of contents"><h2>Table of contents</h2>
         <ul class="book-toc list-unstyled">
 <li><a class="" href="index.html">Welcome to calculus</a></li>
-<li><a class="" href="calcz-project-development-plan.html">CalcZ Project Development Plan</a></li>
 <li class="book-part">Block 1: Functions and quantity</li>
 <li><a class="" href="outline-of-block-1.html">Outline of Block 1</a></li>
 <li><a class="" href="change.html"><span class="header-section-number">1</span> Change</a></li>
 <li><a class="" href="structure-of-a-function.html"><span class="header-section-number">2</span> Structure of a function</a></li>
-<li><a class="" href="fun-describing.html"><span class="header-section-number">3</span> Describing functions</a></li>
-<li><a class="" href="fun-notation.html"><span class="header-section-number">4</span> Notation for functions</a></li>
-<li><a class="" href="graphs-and-graphics.html"><span class="header-section-number">5</span> Graphics &amp; function graphs</a></li>
-<li><a class="" href="params-intro.html"><span class="header-section-number">6</span> Parameters for functions</a></li>
-<li><a class="" href="process-of-modeling.html"><span class="header-section-number">7</span> Process of modeling</a></li>
-<li><a class="" href="fun-slopes.html"><span class="header-section-number">8</span> Slope function</a></li>
-<li><a class="" href="fun-assembling.html"><span class="header-section-number">9</span> Assembling functions</a></li>
+<li><a class="" href="naked-intro.html"><span class="header-section-number">3</span> Naked modeling functions</a></li>
+<li><a class="" href="fun-describing.html"><span class="header-section-number">4</span> Describing functions</a></li>
+<li><a class="" href="fun-notation.html"><span class="header-section-number">5</span> Notation for functions</a></li>
+<li><a class="" href="graphs-and-graphics.html"><span class="header-section-number">6</span> Graphics &amp; function graphs</a></li>
+<li><a class="" href="params-intro.html"><span class="header-section-number">7</span> Parameters for functions</a></li>
+<li><a class="" href="process-of-modeling.html"><span class="header-section-number">8</span> Process of modeling</a></li>
+<li><a class="" href="fun-slopes.html"><span class="header-section-number">9</span> Slope function</a></li>
+<li><a class="" href="function-inverses-and-solving.html"><span class="header-section-number">10</span> Function inverses and “solving”</a></li>
+<li><a class="" href="fun-assembling.html"><span class="header-section-number">11</span> Assembling functions</a></li>
+<li><a class="" href="fun-multiple-inputs.html"><span class="header-section-number">12</span> Functions with multiple inputs</a></li>
+<li><a class="" href="fun-piecewise.html"><span class="header-section-number">13</span> Piecewise functions</a></li>
+<li><a class="" href="magnitudes.html"><span class="header-section-number">14</span> Magnitudes</a></li>
+<li><a class="" href="dimensions.html"><span class="header-section-number">15</span> Dimensions</a></li>
 <li class="book-part">Block 2: Differentiation</li>
 <li><a class="" href="outline-of-block-2.html">Outline of Block 2</a></li>
-<li><a class="" href="change-relationships.html"><span class="header-section-number">10</span> Change relationships</a></li>
-<li><a class="active" href="h-and-derivatives.html"><span class="header-section-number">11</span> h and derivatives</a></li>
-<li><a class="" href="optim-and-shape.html"><span class="header-section-number">12</span> Optimization</a></li>
-<li><a class="" href="cont-and-smooth.html"><span class="header-section-number">13</span> Continuity and smoothness</a></li>
-<li><a class="" href="derivatives-of-composed-functions.html"><span class="header-section-number">14</span> Derivatives of composed functions</a></li>
-<li><a class="" href="approximating-functions.html"><span class="header-section-number">15</span> Approximating functions</a></li>
-<li><a class="" href="partial-change.html"><span class="header-section-number">16</span> Partial change</a></li>
-<li><a class="" href="approximation-around-a-point.html"><span class="header-section-number">17</span> Approximation around a point</a></li>
+<li><a class="" href="change-relationships.html"><span class="header-section-number">16</span> Change relationships</a></li>
+<li><a class="active" href="h-and-derivatives.html"><span class="header-section-number">17</span> h and derivatives</a></li>
+<li><a class="" href="optim-and-shape.html"><span class="header-section-number">18</span> Optimization</a></li>
+<li><a class="" href="cont-and-smooth.html"><span class="header-section-number">19</span> Continuity and smoothness</a></li>
+<li><a class="" href="prod-comp-rules.html"><span class="header-section-number">20</span> Differentiation by algebra</a></li>
 </ul>
 
         <div class="book-extra">
@@ -84,9 +83,9 @@
         </div>
       </nav>
 </div>
-  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="h-and-derivatives" class="section level1">
+  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="h-and-derivatives" class="section level1" number="17">
 <h1>
-<span class="header-section-number">11</span> h and derivatives<a class="anchor" aria-label="anchor" href="#h-and-derivatives"><i class="fas fa-link"></i></a>
+<span class="header-section-number">17</span> h and derivatives<a class="anchor" aria-label="anchor" href="#h-and-derivatives"><i class="fas fa-link"></i></a>
 </h1>
 <p>We already established, by numerical experiment, the result of differentiating the naked modelings functions. To summarize,</p>
 <div class="inline-table"><table class="table table-sm">
@@ -147,34 +146,34 @@
 </table></div>
 <p>A mathematician might prefer to replace the word “established” in the first sentence of this table with a weaker word “motivated” or “proposed.” This is entirely fair. Indeed, let’s do another experiment that will cause us to wonder just how solid are the conclusions presented in the table above.</p>
 <p>Recall that we can easily define the slope function for any <span class="math inline">\(f(x)\)</span>, for example the slope function of <span class="math inline">\(\sin(x)\)</span>:</p>
-<div class="sourceCode" id="cb65"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb131"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">Dsin</span> <span class="op">&lt;-</span> <span class="fu">makeFun</span><span class="op">(</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Trig.html">sin</a></span><span class="op">(</span><span class="va">x</span><span class="op">+</span><span class="va">h</span><span class="op">)</span> <span class="op">-</span> <span class="fu"><a href="https://rdrr.io/r/base/Trig.html">sin</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span><span class="op">/</span><span class="va">h</span>  <span class="op">~</span> <span class="va">x</span><span class="op">)</span></code></pre></div>
 <p>In justifying the entry for <span class="math inline">\(\sin()\)</span> in the table, we plotted <code>Dsin()</code> using small <code>h</code>, for instance, <code>h=0.000001</code>. It would be comforting to continue the experiment with even smaller <code>h</code>. Doing so, we discover a problem.</p>
-<div class="figure">
+<div class="figure" style="text-align: center">
 <span id="fig:Dsin-small-h"></span>
-<img src="CalcZ-notes_files/figure-html/Dsin-small-h-1.png" alt="Graphing the slope function of $\sin(x)$ for small enough $h$ produces a result inconsistent with the table for the naked modeling functions. Instead of producing a $\cos(x)$, we get a ragged function." width="672"><p class="caption">
-Figure 11.1: Graphing the slope function of <span class="math inline">\(\sin(x)\)</span> for small enough <span class="math inline">\(h\)</span> produces a result inconsistent with the table for the naked modeling functions. Instead of producing a <span class="math inline">\(\cos(x)\)</span>, we get a ragged function.
+<img src="CalcZ-notes_files/figure-html/Dsin-small-h-1.png" alt="Graphing the slope function of $\sin(x)$ for small enough $h$ produces a result inconsistent with the table for the naked modeling functions. Instead of producing a $\cos(x)$, we get a ragged function." width="90%"><p class="caption">
+Figure 17.1: Graphing the slope function of <span class="math inline">\(\sin(x)\)</span> for small enough <span class="math inline">\(h\)</span> produces a result inconsistent with the table for the naked modeling functions. Instead of producing a <span class="math inline">\(\cos(x)\)</span>, we get a ragged function.
 </p>
 </div>
 <p>Things get even worse for smaller <span class="math inline">\(h\)</span> still, as you can confirm for yourself using a computing sandbox.</p>
 <p>It turns out that the reason for this behavior is the way in which computer arithmetic has been engineered. To demonstrate the non-mathematical behavior of computer arithmetic, consider what happens when we add and subtract using 1 and a number that is small compared to 1.</p>
-<div class="sourceCode" id="cb66"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb132"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/options.html">options</a></span><span class="op">(</span>digits<span class="op">=</span><span class="fl">20</span><span class="op">)</span>
 <span class="fl">0.000000000000000000000001</span></code></pre></div>
 <pre><code>## [1] 9.999999999999999237e-25</code></pre>
-<div class="sourceCode" id="cb68"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb134"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fl">1</span> <span class="op">+</span> <span class="fl">0.000000000000000000000001</span></code></pre></div>
 <pre><code>## [1] 1</code></pre>
-<div class="sourceCode" id="cb70"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb136"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fl">1</span> <span class="op">-</span> <span class="fl">0.000000000000000000000001</span></code></pre></div>
 <pre><code>## [1] 1</code></pre>
-<div class="sourceCode" id="cb72"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb138"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fl">1</span> <span class="op">+</span> <span class="fl">0.000000000000000000000001</span> <span class="op">-</span> <span class="fl">1</span></code></pre></div>
 <pre><code>## [1] 0</code></pre>
 <p>Using technical computing successfully at a professional level requires some understanding of the ways in which computer arithmetic differs from mathematical arithmetic, And the R/mosaic <code><a href="https://rdrr.io/r/stats/deriv.html">D()</a></code> operator has been constructed with these considerations in mind. But our purpose here is not to push the computer beyond it’s arithmetic limits but to demonstrate that the differentiation table for the naked modeling functions is correct.</p>
-<div id="the-h-framework" class="section level2">
+<div id="the-h-framework" class="section level2" number="17.1">
 <h2>
-<span class="header-section-number">11.1</span> The <span class="math inline">\(h\)</span> framework<a class="anchor" aria-label="anchor" href="#the-h-framework"><i class="fas fa-link"></i></a>
+<span class="header-section-number">17.1</span> The <span class="math inline">\(h\)</span> framework<a class="anchor" aria-label="anchor" href="#the-h-framework"><i class="fas fa-link"></i></a>
 </h2>
 <p>In the end, all of the work we’re going to do with <span class="math inline">\(h\)</span> will have a simple result: confirming the facts presented in the differentiation table. In a court of law, that confirmation could be established by appeal to established authority. For instance, look in any calculus textbook and you’ll see the same facts as in the table. (And if you find an exception, you can be sure it’s a typographical error!)</p>
 <p>For most people, mathematical proof is not much different from appealing to established authority. Not everyone is skilled at following the deductive steps of a proof and almost everyone has been tricked into accepting a step that is not logically valid. And everyone makes mistakes.</p>
@@ -190,9 +189,9 @@ The above steps are completely justified for any <span class="math inline">\(h\)
 Again, we have a formula which is correct for any <span class="math inline">\(h\)</span> whatsoever, so long as <span class="math inline">\(h\)</span> is not zero. Unfortunately, <span class="math inline">\(h\)</span> is still present in the formula. In differentiating <span class="math inline">\(x^2\)</span> we want to make <span class="math inline">\(h\)</span> go away.</p>
 <p>I like to think of <span class="math inline">\(h\)</span> as a kind of <em>tire iron</em>, a small tool used to stretch the bead of a bicycle tire in order to pull it over the wheel rim.</p>
 <div class="figure" style="text-align: center">
-<span id="fig:unnamed-chunk-95"></span>
+<span id="fig:unnamed-chunk-147"></span>
 <img src="www/tire-iron.png" alt="A tire iron in use" width="30%"><p class="caption">
-Figure 11.2: A tire iron in use
+Figure 17.2: A tire iron in use
 </p>
 </div>
 <p>Once the tire iron has done its job, its removed and you would never know that it was ever there (except that the tire is now successfully mounted on the wheel).</p>
@@ -226,9 +225,9 @@ Another privilege for the users of <span class="math inline">\(\lim_{h\rightarro
 <p>In the last step, an <span class="math inline">\(h\)</span> appears. But we are entitled to take the result of the derivation, <span class="math inline">\(2 x + h\)</span>, and replace the <span class="math inline">\(h\)</span> by zero. Doing so doesn’t entail any illegitimate operation such as dividing by zero.</p>
 <p>At it’s most basic, you’re entitled to state <span class="math display">\[\lim_{h\rightarrow 0} h = 0\]</span> which, to be honest, looks like nothing more than common sense.</p>
 </div>
-<div id="approximations-to-naked-modeling-functions" class="section level2">
+<div id="approximations-to-naked-modeling-functions" class="section level2" number="17.2">
 <h2>
-<span class="header-section-number">11.2</span> Approximations to naked modeling functions<a class="anchor" aria-label="anchor" href="#approximations-to-naked-modeling-functions"><i class="fas fa-link"></i></a>
+<span class="header-section-number">17.2</span> Approximations to naked modeling functions<a class="anchor" aria-label="anchor" href="#approximations-to-naked-modeling-functions"><i class="fas fa-link"></i></a>
 </h2>
 <p>Let’s take a close look at two of our naked modeling functions: <span class="math inline">\(e^x\)</span> and <span class="math inline">\(\sin(x)\)</span>. By “close” I mean very near to <span class="math inline">\(x=0\)</span>. You already know that <span class="math inline">\(e^0 = 1\)</span> and <span class="math inline">\(\sin(0) = 0\)</span>. But consider “very small” <span class="math inline">\(x\)</span>, in the spirit of <span class="math inline">\(\lim_{x\rightarrow 0}\)</span>.</p>
 <p>The fundamental approximations are these:</p>
@@ -238,10 +237,10 @@ Another privilege for the users of <span class="math inline">\(\lim_{h\rightarro
 \ \\
 \cos(x) \approx 1 - x^2\]</span></p>
 <p>Figure @ref(fig:small-x-naked} shows the naked functions along with the approximations. We’re interested in “small” <span class="math inline">\(x\)</span>. The left panel shows the functions for <span class="math inline">\(-1 \leq x \leq 1\)</span> and the right panel zooms in for small <span class="math inline">\(x\)</span>, taking “small” in an arbitrary but everyday sense of, say, less than 0.01.</p>
-<div class="figure">
+<div class="figure" style="text-align: center">
 <span id="fig:small-x-naked"></span>
 <img src="CalcZ-notes_files/figure-html/small-x-naked-1.png" alt="Comparing the naked modeling functions exp(x), sin(x), and cos(x) to their simple approximations for small x. The functions are drawn as a broad gray line; the approximations are a thin blue line." width="50%"><img src="CalcZ-notes_files/figure-html/small-x-naked-2.png" alt="Comparing the naked modeling functions exp(x), sin(x), and cos(x) to their simple approximations for small x. The functions are drawn as a broad gray line; the approximations are a thin blue line." width="50%"><img src="CalcZ-notes_files/figure-html/small-x-naked-3.png" alt="Comparing the naked modeling functions exp(x), sin(x), and cos(x) to their simple approximations for small x. The functions are drawn as a broad gray line; the approximations are a thin blue line." width="50%"><img src="CalcZ-notes_files/figure-html/small-x-naked-4.png" alt="Comparing the naked modeling functions exp(x), sin(x), and cos(x) to their simple approximations for small x. The functions are drawn as a broad gray line; the approximations are a thin blue line." width="50%"><img src="CalcZ-notes_files/figure-html/small-x-naked-5.png" alt="Comparing the naked modeling functions exp(x), sin(x), and cos(x) to their simple approximations for small x. The functions are drawn as a broad gray line; the approximations are a thin blue line." width="50%"><img src="CalcZ-notes_files/figure-html/small-x-naked-6.png" alt="Comparing the naked modeling functions exp(x), sin(x), and cos(x) to their simple approximations for small x. The functions are drawn as a broad gray line; the approximations are a thin blue line." width="50%"><p class="caption">
-Figure 11.3: Comparing the naked modeling functions exp(x), sin(x), and cos(x) to their simple approximations for small x. The functions are drawn as a broad gray line; the approximations are a thin blue line.
+Figure 17.3: Comparing the naked modeling functions exp(x), sin(x), and cos(x) to their simple approximations for small x. The functions are drawn as a broad gray line; the approximations are a thin blue line.
 </p>
 </div>
 <p>Near <span class="math inline">\(x=0\)</span>, the graph of the approximation is dead on center of the corresponding naked modeling function.</p>
@@ -272,13 +271,12 @@ In practice, however, we perform differentiation whenever possible not with the 
 </div>
 
 <div class="exercise">
-<span id="exr:unnamed-chunk-96" class="exercise"><strong>Exercise 11.1  (low-low-rates)  </strong></span>
+<span id="exr:unnamed-chunk-148" class="exercise"><strong>Exercise 17.1  (low-low-rates)  </strong></span>
 </div>
-
 <details><p>Suppose you want to borrow <span class="math inline">\(L=\)</span> $10,000 to buy a car. You’ll have to make equal monthly payments <span class="math inline">\(P\)</span> for five years (60 months) to pay off the loan. At an interest rate of <span class="math inline">\(r\)</span> per month, your payment will be: <span class="math display">\[P(L, r) = L r \frac{(1+r)^{60}}{(1+r)^{60} - 1}\]</span></p>
 <p>For example, if the interest rate is 0.005 per month (roughly 6% = 0.06 per year), your monthly payment would be</p>
 <p>::: {.scaffolding}</p>
-<div class="sourceCode" id="cb74"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb140"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">Payment</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">L</span>, <span class="va">r</span>, <span class="va">m</span><span class="op">=</span><span class="fl">60</span><span class="op">)</span> <span class="op">{</span>
   <span class="va">L</span><span class="op">*</span><span class="va">r</span><span class="op">*</span><span class="op">(</span><span class="op">(</span><span class="fl">1</span><span class="op">+</span><span class="va">r</span><span class="op">)</span><span class="op">^</span><span class="va">m</span><span class="op">)</span> <span class="op">/</span> <span class="op">(</span><span class="op">(</span><span class="fl">1</span><span class="op">+</span><span class="va">r</span><span class="op">)</span><span class="op">^</span><span class="va">m</span> <span class="op">-</span> <span class="fl">1</span><span class="op">)</span>
 <span class="op">}</span>
@@ -287,11 +285,8 @@ In practice, however, we perform differentiation whenever possible not with the 
 <pre><code>
 You are a good negotiator and are trying to talk the car dealer down to a zero-percent loan. The dealer plugs $r=0$  into the mortgage calculator. His response to you: "Sorry, but our system can't handle zero-percent loans."
 
-::: {.etude-question}
 
-**Essay question Q-76**: Explain what about the output of the calculator supports the dealer's response.
-
-:::
+**Essay question tmp-24**: Explain what about the output of the calculator supports the dealer's response.
 
 You press the point. "Excuse me, Sir, but I'm in Math 141Z. That `NaN` appearing  on your screen is the result  of  a division by  zero  in the formula. But there's no reason to do that division. At zero percent interest, the monthly payment will  simply be the amount borrowed divided by the number of months of the loan, so  $10,000 divided by 60, giving a monthly payment of $166.6666... ." 
 
@@ -307,49 +302,29 @@ Dealer: "OK, let's see. ... Yes, the payment amount is $169.22. That'll work."
 
 You: "We're making progress. But my sense of mathematical honor insists that we find  an interest rate that gives $166.67,  as close as we can practically get to the exact  answer of $166.6666... ."
 
-::: {.etude-question}
+**Question A**  Work through  the sequence $r = 0.005$,  $r = 0.0005$, $r  = 0.00005$, making $r$ smaller and smaller. Is there a non-zero $r$ that brings the payment to the agreed-upon goal of $166.67? If so, what's the largest $r$ that will bring you there. 
 
-**Q-77**: Work through  the sequence $r = 0.005$,  $r = 0.0005$, $r  = 0.00005$, making $r$ smaller and smaller. Is there a non-zero $r$ that brings the payment to the agreed-upon goal of $166.67? If so, what's the largest $r$ that will bring you there.
-
-
-#. 5e-04 []
-
-#. 5e-05 []
-
-#. 5e-06 []
-
-#. 0.0000005  (+) []
-
-#. 5e-08 []
-
-#. 5e-09 []
-
-#. 5e-10 []
-
-#. no such $r$ []
-
-:::
+i. 5e-04&lt;span class='mcanswer'&gt; ☹︎  &lt;/span&gt;     
+ii. 5e-05&lt;span class='mcanswer'&gt; ☹︎  &lt;/span&gt;     
+iii. 5e-06&lt;span class='mcanswer'&gt; ☹︎  &lt;/span&gt;     
+iv. 0.0000005&lt;span class='mcanswer'&gt; ✓  &lt;/span&gt;     
+v. 5e-08&lt;span class='mcanswer'&gt; ☹︎  &lt;/span&gt;     
+vi. 5e-09&lt;span class='mcanswer'&gt; ☹︎  &lt;/span&gt;     
+vii. 5e-10&lt;span class='mcanswer'&gt; ☹︎  &lt;/span&gt;     
+viii. no such $r$&lt;span class='mcanswer'&gt; ☹︎  &lt;/span&gt;
 
 Later in the day, you tell  the story to your roommate, who is a computer science major. She says that you were lucky. "Computer arithmetic isn't exactly the same as mathematical arithmetic. Computer calculations with very small numbers sometimes give different results than you would expect mathematically. I bet if  you tried an even smaller $r$, you would have gotten different answers or even just nonsense."
 
-::: {.etude-question}
+**Question B**  Work through smaller and smaller $r$ in the mortgage calculator. What happens as you continue the sequence from the  previous question, adding in  more zeros before the 5? 
 
-**Q-78**: Work through smaller and smaller $r$ in the mortgage calculator. What happens as you continue the sequence from the  previous question, adding in  more zeros before the 5?
-
-
-#. The  result steadily gets closer  to  166.6666.... []
-
-#. At first, the result gets closer to 166.6666, but then as $r$ gets smaller the result stays at the same answer. []
-
-#. The result falls below 166.666 and stays there. []
-
-#. The computer output shows a result of infinity.  (+) [Surprising, huh? These sorts of problems do arise. In the 1991 Gulf war, one Iraqi missile got through the Patriot missile  defense system due to a problem like this. There are special mathematical/programming techniques to help avoid these situations, but the Patriot system was not designed with  them. [News story here](https://www.nytimes.com/1991/06/06/world/us-details-flaw-in-patriot-missile.html).]
-
-:::
+i. The  result steadily gets closer  to  166.6666....&lt;span class='mcanswer'&gt; ☹︎  &lt;/span&gt;     
+ii. At first, the result gets closer to 166.6666, but then as $r$ gets smaller the result stays at the same answer.&lt;span class='mcanswer'&gt; ☹︎  &lt;/span&gt;     
+iii. The result falls below 166.666 and stays there.&lt;span class='mcanswer'&gt; ☹︎  &lt;/span&gt;     
+iv. The computer output shows a result of infinity.&lt;span class='mcanswer'&gt; ✓ Surprising, huh? These sorts of problems do arise. In the 1991 Gulf war, one Iraqi missile got through the Patriot missile  defense system due to a problem like this. There are special mathematical/programming techniques to help avoid these situations, but the Patriot system was not designed with  them. [News story here](https://www.nytimes.com/1991/06/06/world/us-details-flaw-in-patriot-missile.html). &lt;/span&gt;
 &lt;/details&gt;
 
-\BeginKnitrBlock{exercise}\iffalse{-91-115-105-110-103-117-108-97-114-105-116-121-45-110-117-109-101-114-105-99-115-93-}\fi{}&lt;div class="exercise"&gt;&lt;span class="exercise" id="exr:unnamed-chunk-97"&gt;&lt;strong&gt;(\#exr:unnamed-chunk-97)  \iffalse (singularity-numerics) \fi{} &lt;/strong&gt;&lt;/span&gt;&lt;/div&gt;\EndKnitrBlock{exercise}
-&lt;details&gt;
+\BeginKnitrBlock{exercise}\iffalse{-91-115-105-110-103-117-108-97-114-105-116-121-45-110-117-109-101-114-105-99-115-93-}\fi{}&lt;div class="exercise"&gt;&lt;span class="exercise" id="exr:unnamed-chunk-149"&gt;&lt;strong&gt;(\#exr:unnamed-chunk-149)  \iffalse (singularity-numerics) \fi{} &lt;/strong&gt;&lt;/span&gt;&lt;/div&gt;\EndKnitrBlock{exercise}
+&lt;details&gt; 
 
 
 
@@ -373,10 +348,10 @@ x_sequence</code></pre>
 ##  [7] 2.9999999000000001637 2.9999999900000000608 2.9999999989999999173
 ## [10] 2.9999999998999999917 2.9999999999899999992 2.9999999999989999111
 ## [13] 2.9999999999999000799 2.9999999999999897859 2.9999999999999991118</code></pre>
-<div class="sourceCode" id="cb78"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb144"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">f</span><span class="op">(</span><span class="va">x_sequence</span><span class="op">)</span></code></pre></div>
 <pre><code>##  [1] 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1</code></pre>
-<div class="sourceCode" id="cb80"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb146"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">g</span><span class="op">(</span><span class="va">x_sequence</span><span class="op">)</span></code></pre></div>
 <pre><code>##  [1] -3.9999999999999955591e+00 -4.9000000000001065814e+01
 ##  [3] -4.9900000000005508127e+02 -4.9989999999894480425e+03
@@ -386,50 +361,67 @@ x_sequence</code></pre>
 ## [11] -4.9999995861981788635e+10 -4.9995555365913500977e+11
 ## [13] -5.0039995859662177734e+12 -4.8952169862721781250e+13
 ## [15] -5.6294995342131100000e+14</code></pre>
-<div class="etude-question">
-<p><strong>Essay question Q-79</strong>: Explain what the <code><a href="https://rdrr.io/r/base/options.html">options(digits=20)</a></code> statement is doing. You can do some experiments by changing the 20 to something much smaller.</p>
-</div>
-<div class="etude-question">
-<p><strong>Q-80</strong>: Which of these statements is true about the successive values in <code>x_sequence</code>?</p>
-<ol>
-<li><p>It approaches 3 from below. (+) []</p></li>
-<li><p>It approaches 3 from above. []</p></li>
-<li><p>It oscillates, getting nearer and farther from 3. []</p></li>
+<p><strong>Essay question tmp-25</strong>: Explain what the <code><a href="https://rdrr.io/r/base/options.html">options(digits=20)</a></code> statement is doing. You can do some experiments by changing the 20 to something much smaller.</p>
+<p><strong>Question A</strong> Which of these statements is true about the successive values in <code>x_sequence</code>?</p>
+<ol style="list-style-type: lower-roman">
+<li>It approaches 3 from below.<span class="mcanswer"> ✓ </span><br>
+</li>
+<li>It approaches 3 from above.<span class="mcanswer"> ☹︎ </span><br>
+</li>
+<li>It oscillates, getting nearer and farther from 3.<span class="mcanswer"> ☹︎ </span>
+</li>
 </ol>
-</div>
-<div class="etude-question">
-<p><strong>Q-81</strong>: Which of these statements is true about the successive values in <code>f(x_sequence)</code>?</p>
-<ol>
-<li><p>It approaches 1 from below. []</p></li>
-<li><p>It approaches 1 from above. []</p></li>
-<li><p>Its value is constant at 1. (+) []</p></li>
+<p><strong>Question B</strong> Which of these statements is true about the successive values in <code>f(x_sequence)</code>?</p>
+<ol style="list-style-type: lower-roman">
+<li>It approaches 1 from below.<span class="mcanswer"> ☹︎ </span><br>
+</li>
+<li>It approaches 1 from above.<span class="mcanswer"> ☹︎ </span><br>
+</li>
+<li>Its value is constant at 1.<span class="mcanswer"> ✓ </span>
+</li>
 </ol>
-</div>
-<div class="etude-question">
-<p><strong>Essay question Q-82</strong>: Explain what about the output of the function <span class="math inline">\(g()\)</span> qualifies it for being numerically ‘naughty’ near <span class="math inline">\(x=3\)</span>.</p>
-</div>
+<strong>Essay question tmp-26</strong>: Explain what about the output of the function <span class="math inline">\(g()\)</span> qualifies it for being numerically ‘naughty’ near <span class="math inline">\(x=3\)</span>.
 </details><div class="exercise">
-<span id="exr:unnamed-chunk-98" class="exercise"><strong>Exercise 11.2  (NaN-numerics)  </strong></span>
+<span id="exr:unnamed-chunk-150" class="exercise"><strong>Exercise 17.2  (NaN-numerics)  </strong></span>
 </div>
-
 <details><p>It’s simple enough to say to an elementary-school pupil that “division by zero is an error.” But what is a computer to do when, for whatever reason, it divides by an amount that is zero generated by a not-erroneous early computation? In many computer languages (including R) the programmer can arrange that a unacceptable situation causes an error message to be “thrown.” This generally causes the program to stop. See this account of the <a href="https://en.wikipedia.org/wiki/USS_Yorktown_(CG-48)">USS Yorktown</a> (under “Smart ship testbed”) for an example of why stopping the program is not always an acceptable practice.</p>
 <p>Modern computer arithmetic systems, implemented in hardware, take a different approach to division by zero. Rather than an error, divide-by-zero calculations return a definite value called “not a number” and printed as <code>NaN</code>. Rather than stopping the program, calculations can continue on. Any calculation involving <code>NaN</code>, such as <code>3 +  NaN</code> or <code>NaN/NaN</code> produces a <code>NaN</code>. This clever design allows the system-level programmer to determine where and whether a division by zero needs to be dealt with.</p>
-<div class="etude-question">
-<p><strong>Q-83</strong>: Warm up: Using the sandbox, determine which one of these arithmetic expressions <strong>does not</strong> produce <code>NaN</code> as the output.</p>
-<ol>
-<li><p><code>1/0</code> []</p></li>
-<li><p><code>0/0</code> []</p></li>
-<li><p><code>0*NaN</code> []</p></li>
-<li><p><code>NaN/NaN</code> []</p></li>
-<li><p><code>5e20 + NaN*1e-50</code> []</p></li>
-<li><p><code>NaN - NaN</code> []</p></li>
-<li><p><code>NaN * Inf</code> []</p></li>
-<li><p><code><a href="https://rdrr.io/r/base/Trig.html">sin(NaN)</a></code> []</p></li>
-<li><p><code><a href="https://rdrr.io/r/base/MathFun.html">sqrt(NaN)</a></code> []</p></li>
-<li><p><code>Inf/Inf</code> []</p></li>
-<li><p><code>1/Inf</code> (+) []</p></li>
+<p><strong>Question A</strong> Warm up: Using the sandbox, determine which one of these arithmetic expressions <strong>does not</strong> produce <code>NaN</code> as the output.</p>
+<ol style="list-style-type: lower-roman">
+<li>
+<code>1/0</code><span class="mcanswer"> ☹︎ </span><br>
+</li>
+<li>
+<code>0/0</code><span class="mcanswer"> ☹︎ </span><br>
+</li>
+<li>
+<code>0*NaN</code><span class="mcanswer"> ☹︎ </span><br>
+</li>
+<li>
+<code>NaN/NaN</code><span class="mcanswer"> ☹︎ </span><br>
+</li>
+<li>
+<code>5e20 + NaN*1e-50</code><span class="mcanswer"> ☹︎ </span><br>
+</li>
+<li>
+<code>NaN - NaN</code><span class="mcanswer"> ☹︎ </span><br>
+</li>
+<li>
+<code>NaN * Inf</code><span class="mcanswer"> ☹︎ </span><br>
+</li>
+<li>
+<code><a href="https://rdrr.io/r/base/Trig.html">sin(NaN)</a></code><span class="mcanswer"> ☹︎ </span><br>
+</li>
+<li>
+<code><a href="https://rdrr.io/r/base/MathFun.html">sqrt(NaN)</a></code><span class="mcanswer"> ☹︎ </span><br>
+</li>
+<li>
+<code>Inf/Inf</code><span class="mcanswer"> ☹︎ </span><br>
+</li>
+<li>
+<code>1/Inf</code><span class="mcanswer"> ✓ </span>
+</li>
 </ol>
-</div>
 <p>The <code>NaN</code> strategy is effective in plotting. Programs such as <code>slice_plot()</code> simply ignore points whose value is <code>NaN</code>. As a result, the shape of the graph is determined by those points nearby, not at, the singularity. The overall effect is that the graph clearly indicates whether the singularity is removable without the user having to do any juggling with <code>NaN</code>.</p>
 <p>For each of the following functions of <span class="math inline">\(x\)</span>, use the following procedure:</p>
 <ol style="list-style-type: decimal">
@@ -440,61 +432,46 @@ x_sequence</code></pre>
 <p>Example: <span class="math inline">\(f(x) \equiv \frac{x^2 + 2x}{x^3 + 4x}\)</span> at <span class="math inline">\(x^\star = 0\)</span>. The sandbox code has been set up for steps (1) and (2). You’ll have to do step (3) by hand, using algebra. Notice that <code>f(xstar)</code> returns <code>NaN</code>, indicating that there is a singularity at <code>xstar</code>. The graph, however, is perfectly smooth and has a value of 0.5 at <code>xstar</code>. So the limit <span class="math inline">\(\lim_{x\rightarrow 0} f(x) = 0.5\)</span>. Using algebra, we can rewrite <span class="math inline">\(f(x)\)</span></p>
 <p><span class="math display">\[f(x) = \frac{x^2 +  2x}{x^3 + 4x} = \frac{x}{x} \frac{x + 2}{x^2 + 4}.\]</span> Eliminating the <span class="math inline">\(\frac{x}{x}\)</span>, the remainder of the expression evaluates to 1/2 at <span class="math inline">\(x=0\)</span> without any problematic division by zero. This agrees perfectly with the graph.</p>
 <div class="scaffolding">
-<div class="sourceCode" id="cb82"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb148"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">f</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span><span class="op">(</span><span class="va">x</span><span class="op">^</span><span class="fl">2</span> <span class="op">+</span> <span class="fl">2</span><span class="op">*</span><span class="va">x</span><span class="op">)</span> <span class="op">/</span> <span class="op">(</span><span class="va">x</span><span class="op">^</span><span class="fl">3</span> <span class="op">+</span> <span class="fl">4</span><span class="op">*</span><span class="va">x</span><span class="op">)</span><span class="op">}</span>
 <span class="va">xstar</span> <span class="op">&lt;-</span> <span class="fl">0</span>
 <span class="fu">f</span><span class="op">(</span><span class="va">xstar</span><span class="op">)</span>
 
 <span class="fu">slice_plot</span><span class="op">(</span><span class="fu">f</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">~</span>  <span class="va">x</span>, <span class="fu">domain</span><span class="op">(</span>x <span class="op">=</span>  <span class="va">xstar</span> <span class="op">+</span> <span class="fl">0.001</span><span class="op">*</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">1</span>,  <span class="fl">1</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<div class="inline-figure"><img src="CalcZ-notes_files/figure-html/unnamed-chunk-159-1.png" width="672"></div>
+<div class="inline-figure"><img src="CalcZ-notes_files/figure-html/unnamed-chunk-276-1.png" width="90%" style="display: block; margin: auto;"></div>
 </div>
-<div class="etude-question">
-<p><strong>Q-84</strong>: 1) True or false: <span class="math display">\[f(x)\equiv \frac{x^2 + 2x}{x^3 - 4x}\]</span> behaves nicely near <span class="math inline">\(x^{\star} = 0\)</span>.</p>
-<ol>
-<li><p>TRUE (+) []</p></li>
-<li><p>FALSE []</p></li>
-</ol>
+<p><strong>Question B</strong> 1) True or false: <span class="math display">\[f(x)\equiv \frac{x^2 + 2x}{x^3 - 4x}\]</span> behaves nicely near <span class="math inline">\(x^{\star} = 0\)</span>.</p>
+<p>    TRUE<span class="mcanswer"> ✓ </span>       FALSE<span class="mcanswer"> ☹︎ </span></p>
+<p><strong>Question C</strong> 2) True or false: <span class="math display">\[f(x)\equiv \frac{x^2 + 2x}{x^3 - 4x}\]</span> behaves nicely near <span class="math inline">\(x^{\star} = -2\)</span>.</p>
+<p>    TRUE<span class="mcanswer"> ✓ </span>       FALSE<span class="mcanswer"> ☹︎ </span></p>
+<p><strong>Question D</strong> 3) True or false: <span class="math display">\[f(x)\equiv \frac{x^2 + 2x}{x^3 - 4x}\]</span> behaves nicely near <span class="math inline">\(x^{\star} = 2\)</span>.</p>
+<p>    TRUE<span class="mcanswer"> ☹︎ </span>       FALSE<span class="mcanswer"> ✓ </span></p>
+<p><strong>Question E</strong> 4) True or false: <span class="math display">\[f(x)\equiv \frac{x^2 + x}{x + \sqrt{x + 3}}\]</span> behaves nicely near <span class="math inline">\(x^{\star} = -2\)</span>.</p>
+<p>    TRUE<span class="mcanswer"> ✓ </span>       FALSE<span class="mcanswer"> ☹︎ </span></p>
+<p><strong>Question F</strong> 5) True or false: <span class="math display">\[f(x)\equiv x \log(x)\]</span> behaves nicely when approaching <span class="math inline">\(x^{\star} = 0\)</span> from above.</p>
+<p>    TRUE<span class="mcanswer"> ✓ </span>       FALSE<span class="mcanswer"> ☹︎ </span></p>
+</details><div class="todo">
+<p>In the limits section or an exercise, ask about <span class="math inline">\(x^0\)</span>? Is that the same as 1? What about when <span class="math inline">\(x=0\)</span>. Zero raised to any positive power is 0. But any positive number raised to 0 is 1. So two ways of thinking about it give different answers.</p>
+<p>The computer handles the question with ease:</p>
+<div class="sourceCode" id="cb149"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fl">0</span><span class="op">^</span><span class="fl">0</span></code></pre></div>
+<pre><code>## [1] 1</code></pre>
+<p>But computer results don’t always agree with mathematical results.</p>
+<p>In this case, mathematicians looking at the question through the lens of limits, agree with the computer when looking at the function <span class="math inline">\(g(x) \equiv x^0\)</span>. But they disagree if the function is <span class="math inline">\(h(x) \equiv 0^x\)</span> or <span class="math inline">\(f(x) \equiv x^x\)</span>. These three functions are not the same when it comes to limits.</p>
+<p>Remember that <span class="math inline">\(\lim_{x\rightarrow 0}\)</span> is not about replacing <span class="math inline">\(x\)</span> with zero, it is about a process of examining the result for non-zero <span class="math inline">\(x\)</span> as <span class="math inline">\(x\)</span> approaches zero. In “zero raised to any positive power” we’re talking about <span class="math inline">\(0^{\lim_{x\rightarrow 0}}\)</span>, which is not the same as <span class="math inline">\(\lim_{x\rightarrow 0} \left[x^x\right]\)</span>. Similarly, <span class="math inline">\(\left[\lim_{x\rightarrow 0}\right]^0\)</span> is different from</p>
 </div>
-<div class="etude-question">
-<p><strong>Q-85</strong>: 2) True or false: <span class="math display">\[f(x)\equiv \frac{x^2 + 2x}{x^3 - 4x}\]</span> behaves nicely near <span class="math inline">\(x^{\star} = -2\)</span>.</p>
-<ol>
-<li><p>TRUE (+) []</p></li>
-<li><p>FALSE []</p></li>
-</ol>
-</div>
-<div class="etude-question">
-<p><strong>Q-86</strong>: 3) True or false: <span class="math display">\[f(x)\equiv \frac{x^2 + 2x}{x^3 - 4x}\]</span> behaves nicely near <span class="math inline">\(x^{\star} = 2\)</span>.</p>
-<ol>
-<li><p>TRUE []</p></li>
-<li><p>FALSE (+) []</p></li>
-</ol>
-</div>
-<div class="etude-question">
-<p><strong>Q-87</strong>: 4) True or false: <span class="math display">\[f(x)\equiv \frac{x^2 + x}{x + \sqrt{x + 3}}\]</span> behaves nicely near <span class="math inline">\(x^{\star} = -2\)</span>.</p>
-<ol>
-<li><p>TRUE (+) []</p></li>
-<li><p>FALSE []</p></li>
-</ol>
-</div>
-<div class="etude-question">
-<p><strong>Q-88</strong>: 5) True or false: <span class="math display">\[f(x)\equiv x \log(x)\]</span> behaves nicely when approaching <span class="math inline">\(x^{\star} = 0\)</span> from above.</p>
-<ol>
-<li><p>TRUE (+) []</p></li>
-<li><p>FALSE []</p></li>
-</ol>
-</div>
-</details>
+
 </div>
 </div>
   <div class="chapter-nav">
-<div class="prev"><a href="change-relationships.html"><span class="header-section-number">10</span> Change relationships</a></div>
-<div class="next"><a href="optim-and-shape.html"><span class="header-section-number">12</span> Optimization</a></div>
+<div class="prev"><a href="change-relationships.html"><span class="header-section-number">16</span> Change relationships</a></div>
+<div class="next"><a href="optim-and-shape.html"><span class="header-section-number">18</span> Optimization</a></div>
 </div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
     <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
       <ul class="nav navbar-nav">
-<li><a class="nav-link" href="#h-and-derivatives"><span class="header-section-number">11</span> h and derivatives</a></li>
-<li><a class="nav-link" href="#the-h-framework"><span class="header-section-number">11.1</span> The \(h\) framework</a></li>
-<li><a class="nav-link" href="#approximations-to-naked-modeling-functions"><span class="header-section-number">11.2</span> Approximations to naked modeling functions</a></li>
+<li><a class="nav-link" href="#h-and-derivatives"><span class="header-section-number">17</span> h and derivatives</a></li>
+<li><a class="nav-link" href="#the-h-framework"><span class="header-section-number">17.1</span> The \(h\) framework</a></li>
+<li><a class="nav-link" href="#approximations-to-naked-modeling-functions"><span class="header-section-number">17.2</span> Approximations to naked modeling functions</a></li>
 </ul>
 
       <div class="book-extra">
@@ -512,7 +489,7 @@ x_sequence</code></pre>
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>CalcZ Student Notes</strong>" was written by Daniel Kaplan. It was last built on 2021-06-09.</p>
+    <p>"<strong>CalcZ Student Notes</strong>" was written by Daniel Kaplan. It was last built on 2021-06-15.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

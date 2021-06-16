@@ -4,35 +4,32 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>Chapter 12 Optimization | CalcZ Student Notes</title>
+<title>Chapter 18 Optimization | CalcZ Student Notes</title>
 <meta name="author" content="Daniel Kaplan">
-<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.2"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="libs/bootstrap-4.5.3/bootstrap.min.css" rel="stylesheet">
-<script src="libs/bootstrap-4.5.3/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.2.4/tabs.js"></script><script src="libs/bs3compat-0.2.4/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
-<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script><script src="libs/htmlwidgets-1.5.3/htmlwidgets.js"></script><link href="libs/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet">
-<script src="libs/datatables-binding-0.12/datatables.js"></script><link href="libs/dt-core-1.10.20/css/jquery.dataTables.min.css" rel="stylesheet">
-<link href="libs/dt-core-1.10.20/css/jquery.dataTables.extra.css" rel="stylesheet">
-<script src="libs/dt-core-1.10.20/js/jquery.dataTables.min.js"></script><link href="libs/crosstalk-1.1.1/css/crosstalk.css" rel="stylesheet">
-<script src="libs/crosstalk-1.1.1/js/crosstalk.min.js"></script><script src="libs/kePrint-0.0.1/kePrint.js"></script><link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet">
-<script src="libs/plotly-binding-4.9.3/plotly.js"></script><script src="libs/typedarray-0.1/typedarray.min.js"></script><link href="libs/plotly-htmlwidgets-css-1.57.1/plotly-htmlwidgets.css" rel="stylesheet">
+<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.2"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/header-attrs-2.8/header-attrs.js"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.2.5.1/tabs.js"></script><script src="libs/bs3compat-0.2.5.1/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="libs/kePrint-0.0.1/kePrint.js"></script><link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet">
+<script src="libs/htmlwidgets-1.5.3/htmlwidgets.js"></script><script src="libs/plotly-binding-4.9.4/plotly.js"></script><script src="libs/typedarray-0.1/typedarray.min.js"></script><link href="libs/crosstalk-1.1.1/css/crosstalk.css" rel="stylesheet">
+<script src="libs/crosstalk-1.1.1/js/crosstalk.min.js"></script><link href="libs/plotly-htmlwidgets-css-1.57.1/plotly-htmlwidgets.css" rel="stylesheet">
 <script src="libs/plotly-main-1.57.1/plotly-latest.min.js"></script><script type="text/x-mathjax-config">
-  const popovers = document.querySelectorAll('a.footnote-ref[data-toggle="popover"]');
-  for (let popover of popovers){
-    const div = document.createElement('div');
-    div.setAttribute('style', 'position: absolute; top: 0, left:0; width:0, height:0, overflow: hidden; visibility: hidden;');
-    div.innerHTML = popover.getAttribute('data-content');
-    
-    // Will this work with TeX on its own line?
-    var has_math = div.querySelector("span.math");
-    if (has_math) {
-      document.body.appendChild(div);
-    	MathJax.Hub.Queue(["Typeset", MathJax.Hub, div]);
-    	MathJax.Hub.Queue(function(){
-        popover.setAttribute('data-content', div.innerHTML);
-    	})
+    const popovers = document.querySelectorAll('a.footnote-ref[data-toggle="popover"]');
+    for (let popover of popovers){
+      const div = document.createElement('div');
+      div.setAttribute('style', 'position: absolute; top: 0, left:0; width:0, height:0, overflow: hidden; visibility: hidden;');
+      div.innerHTML = popover.getAttribute('data-content');
+      
+      // Will this work with TeX on its own line?
+      var has_math = div.querySelector("span.math");
+      if (has_math) {
+        document.body.appendChild(div);
+      	MathJax.Hub.Queue(["Typeset", MathJax.Hub, div]);
+      	MathJax.Hub.Queue(function(){
+          popover.setAttribute('data-content', div.innerHTML);
+      	})
+      }
     }
-  }
-  </script><script src="https://cdn.jsdelivr.net/autocomplete.js/0/autocomplete.jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/mark.js@8.11.1/dist/mark.min.js"></script><!-- CSS --><link rel="stylesheet" href="css/CalcZ-style.css">
+    </script><script src="https://cdn.jsdelivr.net/autocomplete.js/0/autocomplete.jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/mark.js@8.11.1/dist/mark.min.js"></script><!-- CSS --><link rel="stylesheet" href="css/CalcZ-style.css">
 </head>
 <body data-spy="scroll" data-target="#toc">
 
@@ -55,28 +52,30 @@
       <nav aria-label="Table of contents"><h2>Table of contents</h2>
         <ul class="book-toc list-unstyled">
 <li><a class="" href="index.html">Welcome to calculus</a></li>
-<li><a class="" href="calcz-project-development-plan.html">CalcZ Project Development Plan</a></li>
 <li class="book-part">Block 1: Functions and quantity</li>
 <li><a class="" href="outline-of-block-1.html">Outline of Block 1</a></li>
 <li><a class="" href="change.html"><span class="header-section-number">1</span> Change</a></li>
 <li><a class="" href="structure-of-a-function.html"><span class="header-section-number">2</span> Structure of a function</a></li>
-<li><a class="" href="fun-describing.html"><span class="header-section-number">3</span> Describing functions</a></li>
-<li><a class="" href="fun-notation.html"><span class="header-section-number">4</span> Notation for functions</a></li>
-<li><a class="" href="graphs-and-graphics.html"><span class="header-section-number">5</span> Graphics &amp; function graphs</a></li>
-<li><a class="" href="params-intro.html"><span class="header-section-number">6</span> Parameters for functions</a></li>
-<li><a class="" href="process-of-modeling.html"><span class="header-section-number">7</span> Process of modeling</a></li>
-<li><a class="" href="fun-slopes.html"><span class="header-section-number">8</span> Slope function</a></li>
-<li><a class="" href="fun-assembling.html"><span class="header-section-number">9</span> Assembling functions</a></li>
+<li><a class="" href="naked-intro.html"><span class="header-section-number">3</span> Naked modeling functions</a></li>
+<li><a class="" href="fun-describing.html"><span class="header-section-number">4</span> Describing functions</a></li>
+<li><a class="" href="fun-notation.html"><span class="header-section-number">5</span> Notation for functions</a></li>
+<li><a class="" href="graphs-and-graphics.html"><span class="header-section-number">6</span> Graphics &amp; function graphs</a></li>
+<li><a class="" href="params-intro.html"><span class="header-section-number">7</span> Parameters for functions</a></li>
+<li><a class="" href="process-of-modeling.html"><span class="header-section-number">8</span> Process of modeling</a></li>
+<li><a class="" href="fun-slopes.html"><span class="header-section-number">9</span> Slope function</a></li>
+<li><a class="" href="function-inverses-and-solving.html"><span class="header-section-number">10</span> Function inverses and “solving”</a></li>
+<li><a class="" href="fun-assembling.html"><span class="header-section-number">11</span> Assembling functions</a></li>
+<li><a class="" href="fun-multiple-inputs.html"><span class="header-section-number">12</span> Functions with multiple inputs</a></li>
+<li><a class="" href="fun-piecewise.html"><span class="header-section-number">13</span> Piecewise functions</a></li>
+<li><a class="" href="magnitudes.html"><span class="header-section-number">14</span> Magnitudes</a></li>
+<li><a class="" href="dimensions.html"><span class="header-section-number">15</span> Dimensions</a></li>
 <li class="book-part">Block 2: Differentiation</li>
 <li><a class="" href="outline-of-block-2.html">Outline of Block 2</a></li>
-<li><a class="" href="change-relationships.html"><span class="header-section-number">10</span> Change relationships</a></li>
-<li><a class="" href="h-and-derivatives.html"><span class="header-section-number">11</span> h and derivatives</a></li>
-<li><a class="active" href="optim-and-shape.html"><span class="header-section-number">12</span> Optimization</a></li>
-<li><a class="" href="cont-and-smooth.html"><span class="header-section-number">13</span> Continuity and smoothness</a></li>
-<li><a class="" href="derivatives-of-composed-functions.html"><span class="header-section-number">14</span> Derivatives of composed functions</a></li>
-<li><a class="" href="approximating-functions.html"><span class="header-section-number">15</span> Approximating functions</a></li>
-<li><a class="" href="partial-change.html"><span class="header-section-number">16</span> Partial change</a></li>
-<li><a class="" href="approximation-around-a-point.html"><span class="header-section-number">17</span> Approximation around a point</a></li>
+<li><a class="" href="change-relationships.html"><span class="header-section-number">16</span> Change relationships</a></li>
+<li><a class="" href="h-and-derivatives.html"><span class="header-section-number">17</span> h and derivatives</a></li>
+<li><a class="active" href="optim-and-shape.html"><span class="header-section-number">18</span> Optimization</a></li>
+<li><a class="" href="cont-and-smooth.html"><span class="header-section-number">19</span> Continuity and smoothness</a></li>
+<li><a class="" href="prod-comp-rules.html"><span class="header-section-number">20</span> Differentiation by algebra</a></li>
 </ul>
 
         <div class="book-extra">
@@ -84,9 +83,9 @@
         </div>
       </nav>
 </div>
-  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="optim-and-shape" class="section level1">
+  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="optim-and-shape" class="section level1" number="18">
 <h1>
-<span class="header-section-number">12</span> Optimization<a class="anchor" aria-label="anchor" href="#optim-and-shape"><i class="fas fa-link"></i></a>
+<span class="header-section-number">18</span> Optimization<a class="anchor" aria-label="anchor" href="#optim-and-shape"><i class="fas fa-link"></i></a>
 </h1>
 <p>To “optimize” means to make something as good as possible with the available resources. Optimization problems are common in science, logistics, industry, and any other area where one seeks the best solution to a problem. Some everyday examples:</p>
 <ul>
@@ -94,9 +93,9 @@
 <li>When to harvest trees being grown for lumber. Harvest too soon and you might be losing out on the prime growing years. Wait too long and trees will have settled in to slow growth, if any.</li>
 <li>Walking up too steep a slope is tiring and slows you down; that’s why hiking trails have switchbacks. When the switchbacks are too shallow, it takes a long time to cover the distance. What’s the most efficient angle to enable hikers to get up the hill in the shortest time.</li>
 </ul>
-<div id="structure-of-the-problem" class="section level2">
+<div id="structure-of-the-problem" class="section level2" number="18.1">
 <h2>
-<span class="header-section-number">12.1</span> Structure of the problem<a class="anchor" aria-label="anchor" href="#structure-of-the-problem"><i class="fas fa-link"></i></a>
+<span class="header-section-number">18.1</span> Structure of the problem<a class="anchor" aria-label="anchor" href="#structure-of-the-problem"><i class="fas fa-link"></i></a>
 </h2>
 <p>In an optimization problem, there is one or more input quantity whose value you have to choose. The amount of salt; the years to wait from planting to harvesting a tree; the angle of the trail with respect to the slope. We’ll call this the <strong><em>decision quantity</em></strong>.</p>
 <p>Similarly, there is one or more output quantity that you value and want to make as good as possible. The taste of the stew; the income produced by selling the lumber; the time it takes to walk up the hill. The output quantity is called the <strong><em>objective</em></strong>.</p>
@@ -121,14 +120,14 @@
 Our objective function is hdist(), and we seek to find the argmax. The input <span class="math inline">\(v_0\)</span> is (we have assumed) fixed, so the decision quantity is the angle <span class="math inline">\(\theta\)</span>.</p>
 <p>The best choice of <span class="math inline">\(\theta\)</span> will make the quantity <span class="math inline">\(\cos(\theta)\sin(\theta)\)</span> as large as possible. So in finding the argmax, we don’t need to be concerned with <span class="math inline">\(v_0\)</span> or <span class="math inline">\(g\)</span>.</p>
 <p>Finding the argmax can be accomplished simply by plotting the function <span class="math inline">\(\cos(\theta)\sin(\theta)\)</span>. We’ll implement the function so that the input is in units of <em>degrees</em>.</p>
-<div class="sourceCode" id="cb83"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb151"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">f</span> <span class="op">&lt;-</span> <span class="fu">makeFun</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Trig.html">cos</a></span><span class="op">(</span><span class="va">pi</span><span class="op">*</span><span class="va">theta</span><span class="op">/</span><span class="fl">180</span><span class="op">)</span><span class="op">*</span><span class="fu"><a href="https://rdrr.io/r/base/Trig.html">sin</a></span><span class="op">(</span><span class="va">pi</span><span class="op">*</span><span class="va">theta</span><span class="op">/</span><span class="fl">180</span><span class="op">)</span> <span class="op">~</span> <span class="va">theta</span><span class="op">)</span>
 <span class="fu">slice_plot</span><span class="op">(</span><span class="fu">f</span><span class="op">(</span><span class="va">theta</span><span class="op">)</span> <span class="op">~</span> <span class="va">theta</span>, <span class="fu">domain</span><span class="op">(</span>theta<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">90</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
 <span class="fu">slice_plot</span><span class="op">(</span><span class="fu">f</span><span class="op">(</span><span class="va">theta</span><span class="op">)</span> <span class="op">~</span> <span class="va">theta</span>, <span class="fu">domain</span><span class="op">(</span>theta <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">40</span>, <span class="fl">50</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<div class="figure">
+<div class="figure" style="text-align: center">
 <span id="fig:ball-theta"></span>
-<img src="CalcZ-notes_files/figure-html/ball-theta-1.png" alt="The distance travelled by a ball launched at an angle of $\theta$$, according to the simple model is duration of flight and distance travelled." width="672"><img src="CalcZ-notes_files/figure-html/ball-theta-2.png" alt="The distance travelled by a ball launched at an angle of $\theta$$, according to the simple model is duration of flight and distance travelled." width="672"><p class="caption">
-Figure 12.1: The distance travelled by a ball launched at an angle of <span class="math inline">\(\theta\)</span>$, according to the simple model is duration of flight and distance travelled.
+<img src="CalcZ-notes_files/figure-html/ball-theta-1.png" alt="The distance travelled by a ball launched at an angle of $\theta$$, according to the simple model is duration of flight and distance travelled." width="90%"><img src="CalcZ-notes_files/figure-html/ball-theta-2.png" alt="The distance travelled by a ball launched at an angle of $\theta$$, according to the simple model is duration of flight and distance travelled." width="90%"><p class="caption">
+Figure 18.1: The distance travelled by a ball launched at an angle of <span class="math inline">\(\theta\)</span>$, according to the simple model is duration of flight and distance travelled.
 </p>
 </div>
 <p>From the graph, especially the zoomed-in version, you can read off the argmax as <span class="math inline">\(\theta = 45^\circ\)</span>.</p>
@@ -137,35 +136,33 @@ Figure 12.1: The distance travelled by a ball launched at an angle of <span clas
 <p>Review Exercise: What is the dimension of <span class="math inline">\(v_0^2 / g\)</span>?</p>
 </div>
 </div>
-<div id="interpreting-the-argmax" class="section level2">
+<div id="interpreting-the-argmax" class="section level2" number="18.2">
 <h2>
-<span class="header-section-number">12.2</span> Interpreting the argmax<a class="anchor" aria-label="anchor" href="#interpreting-the-argmax"><i class="fas fa-link"></i></a>
+<span class="header-section-number">18.2</span> Interpreting the argmax<a class="anchor" aria-label="anchor" href="#interpreting-the-argmax"><i class="fas fa-link"></i></a>
 </h2>
 <p>The graphical solution given to the slingshot problem is entirely satisfactory. Whether that solution will win the contest depends of course on whether the model we built for the objective function is correct. There are potentially important things we have left out, such as air resistence.</p>
 <p>Solving the optimization problem has prepared us to go out in the field and test the result. Perhaps we’ll find that the real-world optimum angle is somewhat steeper or shallower than <span class="math inline">\(\theta = 45^\circ\)</span>.</p>
-<p>Besides the argmax, another important quantity to read from the graph in Figure <a href="optim-and-shape.html#fig:ball-theta">12.1</a> is the <strong><em>precision</em></strong> of the argmax. In strict mathematical terms, the argmax is exactly 45 degrees. But in practical terms, it may not matter so much to the outcome if we are a little away from <span class="math inline">\(45^\circ\)</span>. For example, according to the model, any angle in the range <span class="math inline">\(40^\circ &lt; \theta &lt; 50^\circ\)</span> would produce an output that is within 1% of the distance reached at the argmax.</p>
+<p>Besides the argmax, another important quantity to read from the graph in Figure <a href="optim-and-shape.html#fig:ball-theta">18.1</a> is the <strong><em>precision</em></strong> of the argmax. In strict mathematical terms, the argmax is exactly 45 degrees. But in practical terms, it may not matter so much to the outcome if we are a little away from <span class="math inline">\(45^\circ\)</span>. For example, according to the model, any angle in the range <span class="math inline">\(40^\circ &lt; \theta &lt; 50^\circ\)</span> would produce an output that is within 1% of the distance reached at the argmax.</p>
 <p>Contests are won or lost by margins of less than 1%, so you should not casually deviate from the argmax. On the other hand, <span class="math inline">\(45^\circ\)</span> is the argmax of the <em>model</em>. Reality may deviate from the model. For instance, suppose that air resistance or wind might might have an effect of about 1% on the distance. You can expect that such factors might change the optimal angle by as much or more than <span class="math inline">\(\pm 5^\circ\)</span>.</p>
 </div>
-<div id="derivatives-and-optimization" class="section level2">
+<div id="derivatives-and-optimization" class="section level2" number="18.3">
 <h2>
-<span class="header-section-number">12.3</span> Derivatives and optimization<a class="anchor" aria-label="anchor" href="#derivatives-and-optimization"><i class="fas fa-link"></i></a>
+<span class="header-section-number">18.3</span> Derivatives and optimization<a class="anchor" aria-label="anchor" href="#derivatives-and-optimization"><i class="fas fa-link"></i></a>
 </h2>
 <p>We’re now going to reframe the search for the argmax and it’s interpretation in terms of derivatives of the objective function with respect to the decision quantity (<span class="math inline">\(\theta\)</span> in the slingshot problem). For a function of one variable, this will not be an improvement from the look-at-the-graph technique to find the argmax. A genuine reason to use derivatives is to set us up in the future to solve problems with more than one variable, where it is hard to draw or interpret a graph. Also, describing functions in the language of derivatives can help us think more clearly about aspects of the problem, such as the precision of the argmax.</p>
-<p>With a graph such as Figure <a href="optim-and-shape.html#fig:ball-theta">12.1</a>, it’s easy to find the argmax; common sense carries the day. So it won’t be obvious at first why we are going to take the following approach:</p>
+<p>With a graph such as Figure <a href="optim-and-shape.html#fig:ball-theta">18.1</a>, it’s easy to find the argmax; common sense carries the day. So it won’t be obvious at first why we are going to take the following approach:</p>
 <p>Let’s denote an argmax of the objective function <span class="math inline">\(f(x)\)</span> by <span class="math inline">\(x^\star\)</span>.
-Let’s look at the derivative <span class="math inline">\(\partial_x f(x)\)</span> in the neighborhood of <span class="math inline">\(x^\star\)</span>. Referring to Figure <a href="optim-and-shape.html#fig:ball-theta">12.1</a>, where <span class="math inline">\(x^\star = 45^\circ\)</span>, you may be able to see that <span class="math inline">\(\partial_x f(x^\star)\)</span> is zero; the line tangent to the function’s graph at <span class="math inline">\(x^\star\)</span> is flat.</p>
+Let’s look at the derivative <span class="math inline">\(\partial_x f(x)\)</span> in the neighborhood of <span class="math inline">\(x^\star\)</span>. Referring to Figure <a href="optim-and-shape.html#fig:ball-theta">18.1</a>, where <span class="math inline">\(x^\star = 45^\circ\)</span>, you may be able to see that <span class="math inline">\(\partial_x f(x^\star)\)</span> is zero; the line tangent to the function’s graph at <span class="math inline">\(x^\star\)</span> is flat.</p>
 <p>Seen another way, the slope of <span class="math inline">\(f(x)\)</span> to the left of <span class="math inline">\(x^\star\)</span> is positive; moving a tiny bit to the right (that is, increasing <span class="math inline">\(x\)</span> by a very small amount, leads to an increase in the output <span class="math inline">\(f(x)\)</span>. Intuitively, as you approach the peak of a hill, you are walking uphill.) Just to the right of <span class="math inline">\(x^\star\)</span>, the slope of <span class="math inline">\(f(x)\)</span> is negative; as you reach the top of a hill and continue on, you will be going downhill. So the derivative function is positive on one side of <span class="math inline">\(x^\star\)</span> and negative on the other, suggesting that it crosses zero at the argmax.</p>
 <p>Inputs <span class="math inline">\(x^\star\)</span> such that <span class="math inline">\(\partial_x f(x^\star) = 0\)</span> are called <strong><em>critical points</em></strong>. Why not call them simply argmaxes? Because a the slope will also be zero at an argmin. And it’s even possible to have the slope be zero at a point that’s neither an argmin or an argmax.</p>
-<div class="etude-question">
-<p><strong>Q-89</strong>: Consider the function <span class="math inline">\(f(x) \equiv x^3\)</span>. Confirm that the value of the derivative <span class="math inline">\(\partial_x f(x = 0)\)</span> and so <span class="math inline">\(x^\star = 0\)</span> is a critical point. Which sort of critical point is <span class="math inline">\(x^\star=0\)</span>? (Hint: Draw the graph of <span class="math inline">\(f(x)\)</span> near <span class="math inline">\(x=0\)</span> to see what’s going on.)</p>
+<p><strong>Question tmp-27</strong>: Consider the function <span class="math inline">\(f(x) \equiv x^3\)</span>. Confirm that the value of the derivative <span class="math inline">\(\partial_x f(x = 0)\)</span> and so <span class="math inline">\(x^\star = 0\)</span> is a critical point. Which sort of critical point is <span class="math inline">\(x^\star=0\)</span>? (Hint: Draw the graph of <span class="math inline">\(f(x)\)</span> near <span class="math inline">\(x=0\)</span> to see what’s going on.)</p>
 <ol>
 <li><p>An argmax [But <span class="math inline">\(f(0) &lt; f(x &gt; 0)\)</span>, so <span class="math inline">\(x^\star=0\)</span> can’t be an argmax.]</p></li>
 <li><p>An argmin [But <span class="math inline">\(f(x &lt; 0) &lt; f(0)\)</span>, so <span class="math inline">\(x^\star=0\)</span> can’t be an argmin.]</p></li>
 <li><p>Neither (+) []</p></li>
 </ol>
-</div>
 <p>At this point, we know that values <span class="math inline">\(x^\star\)</span> that give <span class="math inline">\(\partial_x f(x^\star) = 0\)</span> are “critical points,” but we haven’t said how to figure out whether a given critical point is an argmax, an argmin, or neither. This is where the behavior of <span class="math inline">\(\partial_x f(x)\)</span> <em>near</em> x=x^$ is important. If <span class="math inline">\(x^\star\)</span> is an argmax, then <span class="math inline">\(\partial_x f(x)\)</span> will be positive to the left of <span class="math inline">\(x^\star\)</span> and negative to the right of <span class="math inline">\(x^\star\)</span>; walk up the hill to get to <span class="math inline">\(x^\star\)</span>, at the top the hill is flat, and just past the top the hill has a negative slope.</p>
-<p>For an argmin, changing <span class="math inline">\(x\)</span> from less than <span class="math inline">\(x^\star\)</span> to greater than <span class="math inline">\(x\star\)</span>; you will be walking down into the valley, then level at the very bottom <span class="math inline">\(x=x^\star\)</span>, then back up the other side of the valley after you pass <span class="math inline">\(x=x^\star\)</span>. Figure <a href="optim-and-shape.html#fig:d2-hill">12.2</a> shows the situation.</p>
+<p>For an argmin, changing <span class="math inline">\(x\)</span> from less than <span class="math inline">\(x^\star\)</span> to greater than <span class="math inline">\(x\star\)</span>; you will be walking down into the valley, then level at the very bottom <span class="math inline">\(x=x^\star\)</span>, then back up the other side of the valley after you pass <span class="math inline">\(x=x^\star\)</span>. Figure <a href="optim-and-shape.html#fig:d2-hill">18.2</a> shows the situation.</p>
 <pre><code>## Warning: geom_vline(): Ignoring `mapping` because `xintercept` was provided.
 
 ## Warning: geom_vline(): Ignoring `mapping` because `xintercept` was provided.
@@ -173,13 +170,13 @@ Let’s look at the derivative <span class="math inline">\(\partial_x f(x)\)</sp
 ## Warning: geom_vline(): Ignoring `mapping` because `xintercept` was provided.
 
 ## Warning: geom_vline(): Ignoring `mapping` because `xintercept` was provided.</code></pre>
-<div class="figure">
+<div class="figure" style="text-align: center">
 <span id="fig:d2-hill"></span>
 <img src="CalcZ-notes_files/figure-html/d2-hill-1.png" alt="Top row: An objective function near an argmax (left) and an argmin (right). Bottom row: The derivative of the objective function" width="50%"><img src="CalcZ-notes_files/figure-html/d2-hill-2.png" alt="Top row: An objective function near an argmax (left) and an argmin (right). Bottom row: The derivative of the objective function" width="50%"><img src="CalcZ-notes_files/figure-html/d2-hill-3.png" alt="Top row: An objective function near an argmax (left) and an argmin (right). Bottom row: The derivative of the objective function" width="50%"><img src="CalcZ-notes_files/figure-html/d2-hill-4.png" alt="Top row: An objective function near an argmax (left) and an argmin (right). Bottom row: The derivative of the objective function" width="50%"><p class="caption">
-Figure 12.2: Top row: An objective function near an argmax (left) and an argmin (right). Bottom row: The derivative of the objective function
+Figure 18.2: Top row: An objective function near an argmax (left) and an argmin (right). Bottom row: The derivative of the objective function
 </p>
 </div>
-<p>The bottom row of graphs in Figure <a href="optim-and-shape.html#fig:d2-hill">12.2</a> shows the derivative of the objective function <span class="math inline">\(f(x)\)</span>, that is, <span class="math inline">\(\partial_x f(x)\)</span>. You can see that for the argmax of <span class="math inline">\(f(x)\)</span>, the derivative <span class="math inline">\(\partial_x f(x)\)</span> is positive to the left and negative to the right. Similarly, near the argmin of <span class="math inline">\(f(x)\)</span>, the derivative <span class="math inline">\(\partial_x f(x)\)</span> is negative to the left and positive to the right.</p>
+<p>The bottom row of graphs in Figure <a href="optim-and-shape.html#fig:d2-hill">18.2</a> shows the derivative of the objective function <span class="math inline">\(f(x)\)</span>, that is, <span class="math inline">\(\partial_x f(x)\)</span>. You can see that for the argmax of <span class="math inline">\(f(x)\)</span>, the derivative <span class="math inline">\(\partial_x f(x)\)</span> is positive to the left and negative to the right. Similarly, near the argmin of <span class="math inline">\(f(x)\)</span>, the derivative <span class="math inline">\(\partial_x f(x)\)</span> is negative to the left and positive to the right.</p>
 <p>Stated another way, the derivative <span class="math inline">\(\partial_x f(x)\)</span> has a positive slope near an argmin and a negative slope near an argmax.</p>
 <p>Just as we differentiate <span class="math inline">\(f(x)\)</span> to find it’s slope, so to find the slope of the function <span class="math inline">\(\partial_x f(x)\)</span> we can differentiate it. The result is called the <strong><em>second derivative</em></strong>. We could write it <span class="math inline">\(\partial_x \left[\partial_x f(x)\right]\)</span>, but for brevity we write it <span class="math inline">\(\partial_{xx} f(x)\)</span>.</p>
 <p>The second derivative of the objective function <span class="math inline">\(f(x)\)</span> at a critical point <span class="math inline">\(x^\star\)</span> is what tells us whether the critical point is an argmax, an argmin, or neither.
@@ -188,14 +185,12 @@ Critical point <span class="math inline">\(x^\star\)</span> | <span class="math 
 argmax | 0 | negative
 argmin | 0 | positive
 neither| 0 | 0</p>
-<div class="etude-question">
-<p><strong>Q-90</strong>: Returning to the function <span class="math inline">\(f(x) \equiv x^3\)</span>, find the value of the second-derivative <span class="math inline">\(\partial_{xx} f(x^\star)\)</span> evaluated at the critical point <span class="math inline">\(x = x^\star = 0\)</span>. Which of these is <span class="math inline">\(\partial_{xx} f( x=0\)</span>?</p>
+<p><strong>Question tmp-28</strong>: Returning to the function <span class="math inline">\(f(x) \equiv x^3\)</span>, find the value of the second-derivative <span class="math inline">\(\partial_{xx} f(x^\star)\)</span> evaluated at the critical point <span class="math inline">\(x = x^\star = 0\)</span>. Which of these is <span class="math inline">\(\partial_{xx} f( x=0\)</span>?</p>
 <ol>
 <li><p>Negative [But you established in the previous exercise that the critical point <span class="math inline">\(x^\star=0\)</span> is neither an argmin nor wan argmax.]</p></li>
 <li><p>Positive [But you established in the previous exercise that the critical point <span class="math inline">\(x^\star=0\)</span> is neither an argmin nor wan argmax.]</p></li>
 <li><p>Zero (+) []</p></li>
 </ol>
-</div>
 <div class="why">
 <p>When we differentiate a function <span class="math inline">\(f(x)\)</span>, we produce a new function that we can call anything we like. To help readers follow the thread of the story, it’s nice to name the new function <span class="math inline">\(\partial_x f(x)\)</span>. That signals clearly to the reader the origins of the new function with respect to the original function <span class="math inline">\(f(x)\)</span>.</p>
 <p>In words, <span class="math inline">\(\partial_x f(x)\)</span> is often called the <strong><em>derivative</em></strong> of <span class="math inline">\(f(x)\)</span> (with respect to x). To “derive” is a very general term and could mean just about any way of creating something new from something old. In calculus, “derivative” always means “created by differentiation.” Perhaps it would have been better if history had led us to call <span class="math inline">\(\partial_x f(x)\)</span> by the name “differentiated <span class="math inline">\(f(x)\)</span>” or “the differential function of <span class="math inline">\(f(x)\)</span>.”</p>
@@ -212,12 +207,44 @@ neither| 0 | 0</p>
 </div>
 
 <div class="exercise">
-<span id="exr:unnamed-chunk-100" class="exercise"><strong>Exercise 12.1  (tree-loves-fish)  </strong></span>
+<span id="exr:concavity" class="exercise"><strong>Exercise 18.1  (02/concavity)  </strong></span>
 </div>
-
+<details><p>The graph shows three different functions labeled (A), (B), and (C).</p>
+<p><img src="CalcZ-notes_files/figure-html/daily-digital-02-C1-1.png" width="32%" style="display: block; margin: auto;"><img src="CalcZ-notes_files/figure-html/daily-digital-02-C1-2.png" width="32%" style="display: block; margin: auto;"><img src="CalcZ-notes_files/figure-html/daily-digital-02-C1-3.png" width="32%" style="display: block; margin: auto;"></p>
+<p><strong>Question A</strong> Function (A) is</p>
+<p>    concave down<span class="mcanswer"> ✓ </span>       non-concave<span class="mcanswer"> ☹︎ </span>       concave up<span class="mcanswer"> ☹︎ </span></p>
+<p><strong>Question B</strong> Function (B) is</p>
+<p>    concave down<span class="mcanswer"> ☹︎ </span>       non-concave<span class="mcanswer"> ☹︎ </span>       concave up<span class="mcanswer"> ✓ </span></p>
+<p><strong>Question C</strong> Function (C) is</p>
+<p>    concave down<span class="mcanswer"> ☹︎ </span>       non-concave<span class="mcanswer"> ✓ </span>       concave up<span class="mcanswer"> ☹︎ </span></p>
+<p><strong>Question D</strong> The <strong>negative</strong> of function (A) is</p>
+<p>    concave down<span class="mcanswer"> ☹︎ </span>       non-concave<span class="mcanswer"> ☹︎ </span>       concave up<span class="mcanswer"> ✓ </span></p>
+<p>The graph shows a function <span class="math inline">\(\mbox{wave}(t) \equiv \sin(2 \pi t/4)\)</span> and labels four input values <span class="math inline">\(t\)</span>.</p>
+<div class="inline-figure"><img src="CalcZ-notes_files/figure-html/daily-digital-02-C2-1.png" width="90%" style="display: block; margin: auto;"></div>
+<p><strong>Question E</strong> For what values of the input <span class="math inline">\(t\)</span> is the function concave up?</p>
+<ol style="list-style-type: lower-roman">
+<li>
+<span class="math inline">\(t = A\)</span> and <span class="math inline">\(t=D\)</span><span class="mcanswer"> ☹︎ </span><br>
+</li>
+<li>
+<span class="math inline">\(t = A\)</span> and <span class="math inline">\(t=C\)</span><span class="mcanswer"> ☹︎ </span><br>
+</li>
+<li>
+<span class="math inline">\(t = C\)</span> and <span class="math inline">\(t = D\)</span><span class="mcanswer"> ✓ </span><br>
+</li>
+<li>none of the above<span class="mcanswer"> ☹︎ </span>
+</li>
+</ol>
+<p><strong>Question F</strong> For what values of the input <span class="math inline">\(t\)</span> is the function non-concave?</p>
+<p>    <span class="math inline">\(t = A\)</span><span class="mcanswer"> ✓ </span>       <span class="math inline">\(t=B\)</span><span class="mcanswer"> ☹︎ </span>       <span class="math inline">\(t=C\)</span><span class="mcanswer"> ☹︎ </span>       none of the above<span class="mcanswer"> ☹︎ </span></p>
+<p><strong>Question G</strong> Where is the function steepest?</p>
+    <span class="math inline">\(t = A\)</span><span class="mcanswer"> ✓ </span>       <span class="math inline">\(t=B\)</span><span class="mcanswer"> ☹︎ </span>       <span class="math inline">\(t=C\)</span><span class="mcanswer"> ☹︎ </span>       <span class="math inline">\(t=D\)</span><span class="mcanswer"> ☹︎ </span>
+</details><div class="exercise">
+<span id="exr:unnamed-chunk-153" class="exercise"><strong>Exercise 18.2  (tree-loves-fish)  </strong></span>
+</div>
 <details><p>Here is a smooth function marked at a few points. Your task is, at each point, to estimate the value of the derivative, the sign of the second derivative, and the radius of the circle that would nicely match the function in a small region around each point. (Remember, we’re asking for the <em>radius</em> of the circle, which is half the <em>diameter</em>.)</p>
 <p>To simplify things, here is a table giving seven different combinations of the quantities you are to estimate. Some of them correctly match one of the labeled points, some do not. All you need to do is choose which is the correct set of quantities for each labeled point.</p>
-<div class="inline-figure"><img src="CalcZ-notes_files/figure-html/unnamed-chunk-161-1.png" width="672"></div>
+<div class="inline-figure"><img src="CalcZ-notes_files/figure-html/unnamed-chunk-279-1.png" width="90%" style="display: block; margin: auto;"></div>
 <table class="table table-sm">
 <colgroup>
 <col width="13%">
@@ -281,67 +308,20 @@ neither| 0 | 0</p>
 </tr>
 </tbody>
 </table>
-<div class="etude-question">
-<p><strong>Q-91</strong>: Which row from the table best matches the function at point A?</p>
-<ol>
-<li><p>i []</p></li>
-<li><p>ii []</p></li>
-<li><p>iii []</p></li>
-<li><p>iv []</p></li>
-<li><p>v []</p></li>
-<li><p>vi []</p></li>
-<li><p>vii (+) []</p></li>
-</ol>
+<p><strong>Question A</strong> Which row from the table best matches the function at point A?</p>
+<p>    i<span class="mcanswer"> ☹︎ </span>       ii<span class="mcanswer"> ☹︎ </span>       iii<span class="mcanswer"> ☹︎ </span>       iv<span class="mcanswer"> ☹︎ </span>       v<span class="mcanswer"> ☹︎ </span>       vi<span class="mcanswer"> ☹︎ </span>       vii<span class="mcanswer"> ✓ </span></p>
+<p><strong>Question B</strong> Which row from the table best matches the function at point B?</p>
+<p>    i<span class="mcanswer"> ☹︎ </span>       ii<span class="mcanswer"> ✓ </span>       iii<span class="mcanswer"> ☹︎ </span>       iv<span class="mcanswer"> ☹︎ </span>       v<span class="mcanswer"> ☹︎ </span>       vi<span class="mcanswer"> ☹︎ </span>       vii<span class="mcanswer"> ☹︎ </span></p>
+<p><strong>Question C</strong> Which row from the table best matches the function at point C?</p>
+<p>    i<span class="mcanswer"> ☹︎ </span>       ii<span class="mcanswer"> ☹︎ </span>       iii<span class="mcanswer"> ☹︎ </span>       iv<span class="mcanswer"> ✓ </span>       v<span class="mcanswer"> ☹︎ </span>       vi<span class="mcanswer"> ☹︎ </span>       vii<span class="mcanswer"> ☹︎ </span></p>
+<p><strong>Question D</strong> Which row from the table best matches the function at point D?</p>
+<p>    i<span class="mcanswer"> ✓ </span>       ii<span class="mcanswer"> ☹︎ </span>       iii<span class="mcanswer"> ☹︎ </span>       iv<span class="mcanswer"> ☹︎ </span>       v<span class="mcanswer"> ☹︎ </span>       vi<span class="mcanswer"> ☹︎ </span>       vii<span class="mcanswer"> ☹︎ </span></p>
+<p><strong>Question E</strong> Which row from the table best matches the function at point E?</p>
+    i<span class="mcanswer"> ☹︎ </span>       ii<span class="mcanswer"> ☹︎ </span>       iii<span class="mcanswer"> ☹︎ </span>       iv<span class="mcanswer"> ☹︎ </span>       v<span class="mcanswer"> ☹︎ </span>       vi<span class="mcanswer"> ✓ </span>       vii<span class="mcanswer"> ☹︎ </span>
+</details><div class="todo">
+<p>Pick up on the Lorenz curve <code>{.intheworld}</code> in block 1. Compute the concavity of a lorenz function, showing that it’s everywhere positive. Then examine the concavity of a composition of lorenz functions to determine if that is necessarily everywhere positive.</p>
 </div>
-<div class="etude-question">
-<p><strong>Q-92</strong>: Which row from the table best matches the function at point B?</p>
-<ol>
-<li><p>i []</p></li>
-<li><p>ii (+) []</p></li>
-<li><p>iii []</p></li>
-<li><p>iv []</p></li>
-<li><p>v []</p></li>
-<li><p>vi []</p></li>
-<li><p>vii []</p></li>
-</ol>
-</div>
-<div class="etude-question">
-<p><strong>Q-93</strong>: Which row from the table best matches the function at point C?</p>
-<ol>
-<li><p>i []</p></li>
-<li><p>ii []</p></li>
-<li><p>iii []</p></li>
-<li><p>iv (+) []</p></li>
-<li><p>v []</p></li>
-<li><p>vi []</p></li>
-<li><p>vii []</p></li>
-</ol>
-</div>
-<div class="etude-question">
-<p><strong>Q-94</strong>: Which row from the table best matches the function at point D?</p>
-<ol>
-<li><p>i (+) []</p></li>
-<li><p>ii []</p></li>
-<li><p>iii []</p></li>
-<li><p>iv []</p></li>
-<li><p>v []</p></li>
-<li><p>vi []</p></li>
-<li><p>vii []</p></li>
-</ol>
-</div>
-<div class="etude-question">
-<p><strong>Q-95</strong>: Which row from the table best matches the function at point E?</p>
-<ol>
-<li><p>i []</p></li>
-<li><p>ii []</p></li>
-<li><p>iii []</p></li>
-<li><p>iv []</p></li>
-<li><p>v []</p></li>
-<li><p>vi (+) []</p></li>
-<li><p>vii []</p></li>
-</ol>
-</div>
-</details><div class="workedexample">
+<div class="workedexample">
 <p>What’s the critical point?</p>
 <p>You’re familiar with the quadratic polynomial: <span class="math display">\[g(x) = a_0 + a_1 x + a_2 x^2\]</span>
 The graph of a quadratic polynomial is a <strong><em>parabola</em></strong>, which might be concave up or concave down. As you know, a parabola has only one critical point, which might be an argmin or an argmax.</p>
@@ -354,9 +334,9 @@ The above is an equation, not a definition. It says that whatever <span class="m
 <p>Exercises involving computing derivatives</p>
 </div>
 </div>
-<div id="approximations-around-xstar" class="section level2">
+<div id="approximations-around-xstar" class="section level2" number="18.4">
 <h2>
-<span class="header-section-number">12.4</span> Approximations around <span class="math inline">\(x^\star\)</span><a class="anchor" aria-label="anchor" href="#approximations-around-xstar"><i class="fas fa-link"></i></a>
+<span class="header-section-number">18.4</span> Approximations around <span class="math inline">\(x^\star\)</span><a class="anchor" aria-label="anchor" href="#approximations-around-xstar"><i class="fas fa-link"></i></a>
 </h2>
 <p>Starting with just the naked modeling functions (e.g. <span class="math inline">\(e^t\)</span>), you have a small but rich set of mathematical operations that enables you to make a huge variety of functions to suit a big range of modeling needs:</p>
 <ul>
@@ -402,43 +382,43 @@ This same style applies when the function has a name like <span class="math inli
 <pre><code>## Warning: geom_vline(): Ignoring `mapping` because `xintercept` was provided.
 
 ## Warning: geom_vline(): Ignoring `mapping` because `xintercept` was provided.</code></pre>
-<p><img src="CalcZ-notes_files/figure-html/ds-g-1.png" width="672">
+<p><img src="CalcZ-notes_files/figure-html/ds-g-1.png" width="90%" style="display: block; margin: auto;">
 We haven’t given you a formula for <span class="math inline">\(g(x)\)</span>, but you can see that it isn’t any of the basic modeling functions but something more complicated. We’re going to construct a first-order and second-order approximation to <span class="math inline">\(g(x)\)</span> in a neighborhood <span class="math inline">\(x_0 = -1\)</span> as marked by the blue shaded area.</p>
 <p>Note that <span class="math inline">\(x_0\)</span> is not an argmin of <span class="math inline">\(g(x)\)</span>. You can see that the argmin is a little to the right of <span class="math inline">\(x_0\)</span>.</p>
 <p>The “facts” about <span class="math inline">\(g(x)\)</span> that are needed to construct the approximations, beyond the specification of the location of the neighborhood <span class="math inline">\(x_0\)</span>, are the values <span class="math inline">\(g(x_0)\)</span>, <span class="math inline">\(\partial_x g(x_0)\)</span>, and <span class="math inline">\(\partial_{xx} g(x_0)\)</span>. These are:</p>
-<div class="sourceCode" id="cb86"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb154"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">x0</span> <span class="op">&lt;-</span> <span class="op">-</span><span class="fl">1</span>
 <span class="fu">g</span><span class="op">(</span><span class="va">x0</span><span class="op">)</span></code></pre></div>
 <pre><code>## [1] -23.992419550105168469</code></pre>
-<div class="sourceCode" id="cb88"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb156"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">dx_g</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/deriv.html">D</a></span><span class="op">(</span><span class="fu">g</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">~</span> <span class="va">x</span><span class="op">)</span>
 <span class="va">dxx_g</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/deriv.html">D</a></span><span class="op">(</span><span class="fu">g</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">~</span> <span class="va">x</span> <span class="op">+</span> <span class="va">x</span><span class="op">)</span>
 <span class="fu">dx_g</span><span class="op">(</span><span class="va">x0</span><span class="op">)</span></code></pre></div>
 <pre><code>## [1] -2.349320000760712901</code></pre>
-<div class="sourceCode" id="cb90"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb158"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">dxx_g</span><span class="op">(</span><span class="va">x0</span><span class="op">)</span></code></pre></div>
 <pre><code>## [1] 7.8076908494040253572</code></pre>
 <p>With these facts, we can construct the first- and second-order approximations:</p>
-<div class="sourceCode" id="cb92"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb160"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">tilde1_g</span> <span class="op">&lt;-</span> <span class="fu">makeFun</span><span class="op">(</span><span class="op">-</span><span class="fl">23.992</span> <span class="op">-</span> <span class="fl">2.3493</span><span class="op">*</span><span class="op">(</span><span class="va">x</span><span class="op">-</span><span class="va">x0</span><span class="op">)</span> <span class="op">~</span> <span class="va">x</span><span class="op">)</span>
 <span class="va">tilde2_g</span> <span class="op">&lt;-</span> <span class="fu">makeFun</span><span class="op">(</span><span class="fu">tilde1_g</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">+</span> <span class="op">(</span><span class="fl">7.8077</span><span class="op">/</span><span class="fl">2</span><span class="op">)</span> <span class="op">*</span> <span class="op">(</span><span class="va">x</span><span class="op">-</span><span class="va">x0</span><span class="op">)</span><span class="op">^</span><span class="fl">2</span> <span class="op">~</span> <span class="va">x</span><span class="op">)</span></code></pre></div>
-<p>Figure <a href="optim-and-shape.html#fig:ds-g2">12.3</a> shows <span class="math inline">\(\widetilde{g_1}(x)\)</span> and <span class="math inline">\(\widetilde{g_2}(x)\)</span>, zooming in around <span class="math inline">\(x_0 = -1\)</span>.</p>
+<p>Figure <a href="optim-and-shape.html#fig:ds-g2">18.3</a> shows <span class="math inline">\(\widetilde{g_1}(x)\)</span> and <span class="math inline">\(\widetilde{g_2}(x)\)</span>, zooming in around <span class="math inline">\(x_0 = -1\)</span>.</p>
 <pre><code>## Warning: geom_vline(): Ignoring `mapping` because `xintercept` was provided.
 
 ## Warning: geom_vline(): Ignoring `mapping` because `xintercept` was provided.</code></pre>
-<div class="figure">
+<div class="figure" style="text-align: center">
 <span id="fig:ds-g2"></span>
-<img src="CalcZ-notes_files/figure-html/ds-g2-1.png" alt="The first-order (green) and second-order (red) approximations to $g(x)$ near $x_0=-1$." width="672"><p class="caption">
-Figure 12.3: The first-order (green) and second-order (red) approximations to <span class="math inline">\(g(x)\)</span> near <span class="math inline">\(x_0=-1\)</span>.
+<img src="CalcZ-notes_files/figure-html/ds-g2-1.png" alt="The first-order (green) and second-order (red) approximations to $g(x)$ near $x_0=-1$." width="90%"><p class="caption">
+Figure 18.3: The first-order (green) and second-order (red) approximations to <span class="math inline">\(g(x)\)</span> near <span class="math inline">\(x_0=-1\)</span>.
 </p>
 </div>
 <p>You can see that <span class="math inline">\(\widetilde{g_2}(x)\)</span> is a good approximation to <span class="math inline">\(g(x)\)</span>. In particular, the argmin of <span class="math inline">\(\widetilde{g_2}(x)\)</span> is close to the that of <span class="math inline">\(g(x)\)</span>.</p>
 <p>In a previous example, we showed that the argmin of the parabolic function <span class="math inline">\(a_0 + a_1 x + a_2 x^2\)</span> is <span class="math inline">\(x^\star = -\frac{a_1}{2 a_2}\)</span>. Using that formula, the argmin of <span class="math inline">\(\widetilde{g_2}(x)\)</span> is -2.3493/(7.8077/2) = -0.602.</p>
 </div>
 </div>
-<div id="solving-computationally" class="section level2">
+<div id="solving-computationally" class="section level2" number="18.5">
 <h2>
-<span class="header-section-number">12.5</span> Solving computationally<a class="anchor" aria-label="anchor" href="#solving-computationally"><i class="fas fa-link"></i></a>
+<span class="header-section-number">18.5</span> Solving computationally<a class="anchor" aria-label="anchor" href="#solving-computationally"><i class="fas fa-link"></i></a>
 </h2>
 <div class="todo">
 <p>How to find the zeros of the derivative of a function and how to evaluate the second derivative at those zeros to find out what kind of critical point it is.</p>
@@ -454,17 +434,17 @@ Figure 12.3: The first-order (green) and second-order (red) approximations to <s
 </div>
 </div>
   <div class="chapter-nav">
-<div class="prev"><a href="h-and-derivatives.html"><span class="header-section-number">11</span> h and derivatives</a></div>
-<div class="next"><a href="cont-and-smooth.html"><span class="header-section-number">13</span> Continuity and smoothness</a></div>
+<div class="prev"><a href="h-and-derivatives.html"><span class="header-section-number">17</span> h and derivatives</a></div>
+<div class="next"><a href="cont-and-smooth.html"><span class="header-section-number">19</span> Continuity and smoothness</a></div>
 </div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
     <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
       <ul class="nav navbar-nav">
-<li><a class="nav-link" href="#optim-and-shape"><span class="header-section-number">12</span> Optimization</a></li>
-<li><a class="nav-link" href="#structure-of-the-problem"><span class="header-section-number">12.1</span> Structure of the problem</a></li>
-<li><a class="nav-link" href="#interpreting-the-argmax"><span class="header-section-number">12.2</span> Interpreting the argmax</a></li>
-<li><a class="nav-link" href="#derivatives-and-optimization"><span class="header-section-number">12.3</span> Derivatives and optimization</a></li>
-<li><a class="nav-link" href="#approximations-around-xstar"><span class="header-section-number">12.4</span> Approximations around \(x^\star\)</a></li>
-<li><a class="nav-link" href="#solving-computationally"><span class="header-section-number">12.5</span> Solving computationally</a></li>
+<li><a class="nav-link" href="#optim-and-shape"><span class="header-section-number">18</span> Optimization</a></li>
+<li><a class="nav-link" href="#structure-of-the-problem"><span class="header-section-number">18.1</span> Structure of the problem</a></li>
+<li><a class="nav-link" href="#interpreting-the-argmax"><span class="header-section-number">18.2</span> Interpreting the argmax</a></li>
+<li><a class="nav-link" href="#derivatives-and-optimization"><span class="header-section-number">18.3</span> Derivatives and optimization</a></li>
+<li><a class="nav-link" href="#approximations-around-xstar"><span class="header-section-number">18.4</span> Approximations around \(x^\star\)</a></li>
+<li><a class="nav-link" href="#solving-computationally"><span class="header-section-number">18.5</span> Solving computationally</a></li>
 </ul>
 
       <div class="book-extra">
@@ -482,7 +462,7 @@ Figure 12.3: The first-order (green) and second-order (red) approximations to <s
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>CalcZ Student Notes</strong>" was written by Daniel Kaplan. It was last built on 2021-06-09.</p>
+    <p>"<strong>CalcZ Student Notes</strong>" was written by Daniel Kaplan. It was last built on 2021-06-15.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">
