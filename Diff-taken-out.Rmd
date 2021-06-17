@@ -112,3 +112,64 @@ gf_point(LL ~ k, data=Quakes)
 gf_point(LL ~ prob, data = Quakes)
 gf_point(prob ~ k, data = Quakes)
 ```
+
+
+
+
+## Differencing
+
+Our basic tool for showing difference and slope is a remarkably simple operator that takes a function as input. For a function with one input, the operator ${\cal D}()$ is defined as 
+$${\cal D}(f) \equiv \frac{f(x + 0.1) - f(x)}{0.1}$$
+Notice that the ${\cal D}()$ operator returns a **function**. The output is a linear combination of the input function $f()$ and a shifted version of $f()$.
+
+For a function with two inputs, there are two versions of ${\cal D}$:
+$${\cal D}_x(f) \equiv \frac{f(x+0.1, y) - f(x, y)}{0.1}$$
+
+$${\cal D}_y(f) \equiv \frac{f(x, y+0.1) - f(x, y)}{0.1}$$
+
+
+::: {.workedexample}
+Suppose that $f(x)\equiv x^2$. What is the function ${\cal D}(f)$?
+
+$$
+{\cal D}(f) \equiv \frac{f(x+0.1) - f(x)}{0.1}\\ =
+10\left((x+0.1)^2 - x^2\right)\\
+=10 x^2 + 2x + 0.1 - 10x^2\\ = 2 x + 0.1$$
+:::
+
+::: {.workedexample}
+Suppose that $f(x) \equiv 2 x + y$. Find the function ${\cal D_x(f)}$.
+
+The linear combination will be 
+$$\frac{1}{0.1}\left(\left[2 (x + 0.1) + y\right] - \left[2 x + y\right]\right) =\\ \\
+20 x + 2 + 10y - \left[20 x - 10y\right] = 2$$
+:::
+
+```{r}
+f <- makeFun(2 *x * y ~ x + y)
+D(f(x, y) ~ x)
+```
+
+Figure \@ref(fig:three-rates) shows the fitted rate of change and average rate of change in the interval $10 \leq t \leq 125$ as well as the instantaneous rate of change at $t_0 = 50$. They are different from one another.
+
+```{r three-rates,  echo=FALSE, warning=FALSE, fig.cap="Comparing the average rate of change (red) over the interval $10 \\leq t \\leq 125$, the instantaneous rate of change at $x_0 =25$, and the fitted linear model (orange). The exponential model is shown in gray."}
+set.seed(101)
+Stans_data <- CoolingWater %>% sample_n(20)
+gf_point(temp ~ time, data = Stans_data, color="orange") %>%
+  gf_lm(color="orange") %>%
+  slice_plot(water(time) ~ time, domain(time=c(0, 200)), color="gray", size=2, alpha = 0.5) %>%
+  slice_plot(tangent(time) ~ time, color = "sienna", 
+             domain(time=c(0,80)))  %>%
+   gf_point(y ~ t, data = Pts, color="red", alpha=0.25, size=4, inherit=FALSE) %>%
+  gf_line(y ~ t, data = Pts, color="red") %>%
+  gf_point(25 ~ t, data = Pts, color="blue", alpha=0.25, size=4) %>%
+  gf_point(y ~ t, data=Pt,
+           color="sienna", alpha = 0.25, size=4) %>%
+  gf_point(25 ~ t, data = Pt, color="tomato", alpha=0.25, size=4) %>%
+  gf_segment(25 + y ~ t+t, data=Pt, color="tomato", linetype=2) %>%
+  gf_segment(25 + y ~ t+t, data=Pts, color="blue", linetype=2) %>%
+  gf_lims(y=c(25, NA)) %>%
+  I()
+```
+
+

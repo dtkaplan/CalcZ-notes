@@ -1,3 +1,179 @@
+# Re-organize this!
+
+
+
+## Using h
+
+In working with differentiation, we introduced a quantity $h$ and then ignored it, saying that it doesn't really matter so long as it is "small." A reasonable person might wonder what "small" really means, and why we needed to introduce $h$ in the first place if we were eventually going to ignore it. 
+
+One reason is that "small" and "zero," although related, are different. For example, refering to the slope functions `Dsin()` and `Dsigma()` that we created in an early example in this chapter, we see that setting $h$ to zero does not get us where we need to be:
+
+```{r}
+Dsin(t=1, h=0)
+Dsigma(t=0, h=0)
+```
+
+In `NaN`, you can hear the echo of your fourth-grade teacher reminding you that it is illegal to divide by zero.
+
+Think of $h$ as the solvent in paint. You don't want the solvent once the paint is on the wall; wet paint is a nuisance. But getting the paint from the can to the wall absolutely needs the solvent. 
+
+We used the solvent $h$ earlier in the chapter in the numerical experiments that led us to the derivatives of the naked modeling functions, for instance $\partial_x e^x = e^x$ or $\partial_x \sin(x) = \cos(x)$.  Eventually, we'll construct an $h$-free theory of differentiation, reducing the process to a set of algebraic rules in which $h$ never appears. With this as our goal, let's continue using $h$ for a while to find some additional useful facts about derivatives.
+
+***Linear combination*** is one of the ways in which we make new functions from existing functions. As you recall, linear combination involves ***scaling*** a function and ***adding*** the scaled functions. We can easily use $h$ to show what is the result of differentiating a linear combination of functions. We'll use $f(x)$ and $g(x)$ as the names that could stand for any function whatsoever. And we'll let $b$ be the name of a scalar. First, let's figure out what is $\partial_x\, b f(x)$, Going back to writing $\partial_x$ in terms of a slope function:
+$$\partial_x\, b\,f(x) = \frac{b\, f(x + h) - b\,f(x)}{h}\\
+\ \\
+= b \frac{f(x+h) - f(x)}{h} = b\, \partial_x f(x)$$
+In other words, if we know the derivative $\partial_x\, f(x)$, we can easily find the derivative of any scaled version of $f()$.
+
+Now consider the derivative of the sum of two functions, $f(x)$ and $g(x)$:
+$$\partial_x\, \left[f(x) + g(x)\right] =\\
+\ \\
+=\frac{\left[f(x + h) + g(x + h)\right] - \left[f(x) + g(x)\right]}{h} = \\
+\ \\
+= \frac{\left[f(x+h) -f(x)\right] + \left[g(x+h) - g(x)\right]}{h}\\
+\ \\
+= \frac{\left[f(x+h) -f(x)\right]}{h} + \frac{\left[g(x+h) - g(x)\right]}{h}\\
+\ \\
+= \partial_x\, f(x) + \partial_x\, g(x)$$
+
+Using these two rules together, we can differentiate any linear combination of functions in terms of the differentiated functions themselves:
+
+$$\partial_x\ \left[\strut a_1 g_1(x) + a_2 g_2(x) + a_3 g_3(x) + \cdots\right] =\ \ \ \ \ \ \ \ \ \ \\
+\ \\
+\ \ \ \ \ \ \ \ \ a_1 \partial_x\, g_1(x) + a_2 \partial_x\, g_2(x) + a_3 \partial_x\, g_3(x) + \cdots$$
+
+
+
+Because of the way that $\partial_x$ can be "passed through" a linear combination, mathematicians say that differentiation is a ***linear operator***. Consider this new fact about differentiation as a down payment on what will eventually become a complete theory telling us how to differentiate a ***product of two functions*** or the ***composition of two functions***. 
+
+```{exercise}
+Simple drill on this
+```
+
+```{exercise}
+See tree harvesting in `Diffs/tree-harvest.Rmd`
+```
+
+
+
+## Slopes and increments.
+
+The mathematical tools of Newton's days are the basis of today's conventional high-school curriculum.^[Perhaps this says something about how well education has kept up with technology.] We have today completely different tools based on the ability to do arithmetic and function evaluation very quickly with computers. We're going to use these new tools to explore the problem of relating the slope-function operator ${\cal D}_t$ to the differential operator $\partial_t$. We have the great advantage of being able to look backwards and so can focus on the functions that experience reveals have been the most widely useful: the basic modeling functions. 
+
+Our goal in this section is to discover what are the slope functions of our naked modeling functions. Recall that the slope-function operator can be written as a ratio of rise-over-run:
+$${\cal D}_t x(t) \equiv \frac{x(t+h) - x(t)}{h}$$ where $h$ is the length of the "run." We'll start with two of the basic modeling functions that have considerable "personality": the sinusoid (`sin()`) and the sigmoid (`pnorm()`).
+
+```{r sign-sig, echo=FALSE, out.width="50%", fig.show = "hold", fig.cap="The naked sinusoid and sigmoidal functions. A vertical blue line has been added to mark the input $t=0$", warning=FALSE, message=FALSE}
+slice_plot(sin(t) ~ t, domain(t=c(-5, 2*pi))) %>%
+  gf_labs(title="Sinusoid") %>%
+  gf_vline(xintercept=0, color="blue", alpha=0.5)
+slice_plot(pnorm(t) ~ t, domain(t=c(-5, 2*pi))) %>%
+  gf_labs(title="Sigmoid") %>%
+  gf_vline(xintercept=0, color="blue", alpha=0.5)
+```
+We'll use the computer to construct the slope functions for the sinusoid and sigmoid, which we'll call `Dsin()` and `Dsigma()` respectively.
+```{r}
+Dsin   <- makeFun((  sin(t+h) -   sin(t))/h ~ t, h=0.1)
+Dsigma <- makeFun((pnorm(t+h) - pnorm(t))/h ~ t, h=0.1)
+```
+
+In the tilde expression handed to `makeFun()`, we've identified `t` as the name of the input and given a "small" default value to the `h` parameter. But R recognizes that both `Dsin()` and `Dsigma()` are functions of two variables, `t` and `h`, as you can see in the parenthesized argument list for the functions.
+```{r}
+Dsin
+Dsigma
+```
+This is a nuisance, since when using the slope functions we will need always to think about `h`, a number that we'd like to describe simply as "small," but for which we always need to provide a numerical value. A surprisingly important question in the development of calculus is, "What can we do to avoid the nuisance?" To find out, let's look at `Dsin()` and `Dsigma()` for a range of values of `h`, as in Figure \@ref(fig:sin-sig-many-h).
+
+```{r sin-sig-many-h, echo=FALSE, fig.show = "hold", fig.cap="The slope functions of the sinusoid and sigmoid. Each curve shows the slope function for a particular numerical choice of `h`. Both panels show $h=2, 1, 0.5, 0.1, 0.01, 0.001, 0.0001, 0.00001, 0.000001$.", warning=FALSE, message=FALSE}
+rain <- rev(hcl.colors(12)[-(1:3)])
+slice_plot(Dsin(t, h=1) ~ t, domain(t=c(-5, 2*pi)), color=rain[1], label_text="h=1", label_x=0.56) %>%
+  slice_plot(Dsin(t, h=2) ~ t, alpha = 1, label_text="h=2", label_x=.58, color=rain[1]) %>%
+  slice_plot(Dsin(t, h=0.5) ~ t, alpha = 1, label_text="h=0.5", label_x=.54, color=rain[3]) %>%
+  slice_plot(Dsin(t, h=0.1) ~ t, alpha = 1, label_text="h=0.1", label_x=.53, color=rain[4]) %>%
+  slice_plot(Dsin(t, h=0.01) ~ t, alpha = 1, label_text="h=0.01", label_x=.51, color=rain[5]) %>%
+  slice_plot(Dsin(t, h=0.001) ~ t, alpha = 1, color=rain[6], label_text="h=0.001", label_x=.5) %>%
+  slice_plot(Dsin(t, h=0.0001) ~ t, alpha = 1, color=rain[7], label_text="h=0.0001", label_x=.49) %>%
+  slice_plot(Dsin(t, h=0.00001) ~ t, alpha = 1, color=rain[8], label_text="h=0.00001", label_x=.48) %>%
+  slice_plot(Dsin(t, h=0.000001) ~ t, alpha = 1, color=rain[9], label_text="h=0.000001", label_x=.44) %>%
+  gf_labs(title="Slope functions of sinusoid") %>%
+  gf_vline(xintercept=0, color="blue", alpha=0.5)
+slice_plot(Dsigma(t, h=1) ~ t, domain(t=c(-5, 2*pi)), label_text="h=1", label_x=.28, color= rain[2]) %>%
+  slice_plot(Dsigma(t, h=2) ~ t, alpha = 1, label_text="h=2", label_x=.24, color=rain[1]) %>%
+  slice_plot(Dsigma(t, h=0.5) ~ t, alpha = 1, label_text="h=0.5", label_x=.54, color=rain[3]) %>%
+  slice_plot(Dsigma(t, h=0.1) ~ t, alpha = 1, label_text="h=0.1", label_x=.53, color=rain[4]) %>%
+  slice_plot(Dsigma(t, h=0.01) ~ t, alpha = 1, label_text="h=0.01", label_x=.51, color=rain[5]) %>%
+  slice_plot(Dsigma(t, h=0.001) ~ t, alpha = 1, color=rain[6], label_text="h=0.001", label_x=.5) %>%
+  slice_plot(Dsigma(t, h=0.0001) ~ t, alpha = 1, color=rain[7], label_text="h=0.0001", label_x=.49) %>%
+  slice_plot(Dsigma(t, h=0.00001) ~ t, alpha = 1, color=rain[8], label_text="h=0.00001", label_x=.48) %>%
+  slice_plot(Dsigma(t, h=0.000001) ~ t, alpha = 1, color=rain[9], label_text="h=0.000001", label_x=.44) %>%
+  gf_labs(title="Slope functions of sigmoid") %>%
+  gf_vline(xintercept=0, color="blue", alpha=0.5)
+```
+
+Some observations from this numerical experiment:
+
+1. As $h$ gets very small, the slope function doesn't depend on the exact value of $h$.
+
+    This will provide a way for us, eventually, to discard $h$ so that the slope function will not need an $h$ argument.
+    
+2. For small $h$, we have ${\cal D}_t \sin(t) = \sin(t + \pi/2) = \cos(t)$. That is, taking the slope function of a sinusoid gives another sinusoid, shifted left by $\pi/2$ from the original. Or, in plain words, for small $h$H the cosine is the slope function of the sine.
+3. For small $h$, we have ${\cal D}_t \text{pnorm}(t) = \text{dnorm(t)}$. That is, for small $h$ the hump function is the slope function of the sigmoid function.
+
+You can confirm these last two statements by comparison with the original functions, especially the alignment of the peaks of the slope functions with respect to the peak of the sinusoid and the half-way point of the sigmoid.
+
+Now consider the slope functions of the logarithm and exponential functions.
+
+```{r log-exp-many-h, echo=FALSE, fig.show = "hold", fig.cap="The slope functions of the logarithm and exponential.", warning=FALSE, message=FALSE}
+rain <- rev(hcl.colors(12)[-(1:3)])
+Dlog <- makeFun((log(x+h) - log(x))/h ~ x)
+Dexp <- makeFun((exp(x+h) - exp(x))/h ~ x)
+slice_plot(Dlog(t, h=1) ~ t, domain(t=c(0.01, 2)), color=rain[2], label_text="h=1", label_x=0.8) %>%
+  slice_plot(Dlog(t, h=2) ~ t, domain(t=c(0.01, 2)), alpha = 1, label_text="h=2", label_x=.90, color=rain[1]) %>%
+  slice_plot(Dlog(t, h=0.5) ~ t, domain(t=c(0.02, 2)), alpha = 1, label_text="h=0.5", label_x=.7, color=rain[3]) %>%
+  slice_plot(Dlog(t, h=0.1) ~ t, alpha = 1, label_text="h=0.1", label_x=.6, color=rain[4]) %>%
+  slice_plot(Dlog(t, h=0.01) ~ t, alpha = 1, label_text="h=0.01", label_x=.5, color=rain[5]) %>%
+  slice_plot(Dlog(t, h=0.001) ~ t, domain(t=c(0.05, 2)), alpha = 1, color=rain[6], label_text="h=0.001", label_x=.4) %>%
+  slice_plot(Dlog(t, h=0.0001) ~ t, domain(t=c(0.1, 2)), alpha = 1, color=rain[7], label_text="h=0.0001", label_x=.3) %>%
+  slice_plot(Dlog(t, h=0.00001) ~ t, domain(t=c(0.125, 2)), alpha = 1, color=rain[8], label_text="h=0.00001", label_x=.2) %>%
+  slice_plot(Dlog(t, h=0.000001) ~ t, domain(t=c(0.125, 2)),alpha = 1, color=rain[9], label_text="h=0.000001", label_x=.1) %>%
+  gf_labs(title="Slope functions of logarithm") %>%
+  gf_vline(xintercept=0, color="blue", alpha=0.5) %>%
+  gf_lims(y=c(0,8))
+slice_plot(Dexp(t, h=1) ~ t, domain(t=c(-2, 2)), label_text="h=1", label_x=.4, color= rain[2]) %>%
+  slice_plot(Dexp(t, h=2) ~ t, alpha = 1, label_text="h=2", label_x=.3, color=rain[1]) %>%
+  slice_plot(Dexp(t, h=0.5) ~ t, alpha = 1, label_text="h=0.5", label_x=.5, color=rain[3]) %>%
+  slice_plot(Dexp(t, h=0.1) ~ t, alpha = 1, label_text="h=0.1", label_x=.55, color=rain[4]) %>%
+  slice_plot(Dexp(t, h=0.01) ~ t, alpha = 1, label_text="h=0.01", label_x=.6, color=rain[5]) %>%
+  slice_plot(Dexp(t, h=0.001) ~ t, alpha = 1, color=rain[6], label_text="h=0.001", label_x=.65) %>%
+  slice_plot(Dexp(t, h=0.0001) ~ t, alpha = 1, color=rain[7], label_text="h=0.0001", label_x=.75) %>%
+  slice_plot(Dexp(t, h=0.00001) ~ t, alpha = 1, color=rain[8], label_text="h=0.00001", label_x=.85) %>%
+  slice_plot(Dexp(t, h=0.000001) ~ t, alpha = 1, color=rain[9], label_text="h=0.000001", label_x=.9) %>%
+  gf_labs(title="Slope functions of exponential") %>%
+  gf_vline(xintercept=0, color="blue", alpha=0.5) %>%
+  gf_lims(y=c(0,8))
+```
+These numerical experiments with the logarithm and exponential functions are more evidence that, as $h$ gets small, the slope function doesn't depend on $h$. And, we find that:
+
+- For small $h$, the slope function of the logarithm is a power-law function: ${\cal D}_t \ln(t) = \frac{1}{t}$.
+- For small $h$, the slope function of the exponential is the exponential itself: ${\cal D}_t e^x = e^x$.
+
+You can confirm these by evaluating the slope function of the exponential at $t=0$ and $t=1$, and the slope function of the logarithm at $t= 2, 1, 1/2, 1/4, 1/8.$
+
+Such numerical experiments on the other naked modeling functions reveal a pattern: the slope function of the naked modeling functions tend to be similar to themselves or other naked modeling functions.
+
+```{r child="D-naked-functions.Rmd"}
+```
+
+
+
+With this list of experimentally determined slope functions (for small $h$) we're ready to start using slope functions without having to use constructions like $f(t+h) - f(t)$. We can simply look up the slope function in a table.
+
+
+
+
+
+
+
 # h and derivatives {#h-and-derivatives}
 
 We already established, by numerical experiment, the result of differentiating the naked modelings functions. To summarize,

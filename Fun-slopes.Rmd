@@ -101,19 +101,19 @@ water <- makeFun(60.7*exp(-0.019*t) + 25.93 ~ t)
 ```{r water-average, echo=FALSE, fig.cap="The exponential function that was previously matched to the cooling-water data. The slope of the straight line connecting two points on the function graph is the average rate of change during the interval."}
 
 Pts <- tibble::tibble(
-  x = c(10,125),
-  y = water(x),
-  baselabel = c("t0", "t1"),
-  flabel = c("f(t0)", "f(t1)")
+  t = c(10,125),
+  y = water(t),
+  baselabel = c("t[0]", "t[1]"),
+  flabel = c("f(t[0])", "f(t[1])")
 )
 slice_plot(water(t) ~ t, domain(t = c(0,200))) %>%
-  gf_point(y ~ x, data = Pts, color="red", alpha=0.25, size=4) %>%
-  gf_line(y ~ x, data = Pts, color="red") %>%
-  gf_point(0 ~ x, data = Pts, color="blue", alpha=0.25, size=4) %>%
+  gf_point(y ~ t, data = Pts, color="red", alpha=0.25, size=4) %>%
+  gf_line(y ~ t, data = Pts, color="red") %>%
+  gf_point(0 ~ t, data = Pts, color="blue", alpha=0.25, size=4) %>%
   gf_lims(y=c(0,90)) %>%
-  gf_segment(0 + y ~ x + x, data=Pts, color="blue", linetype=2) %>%
-  gf_text(0 ~ x, data = Pts, label = ~baselabel, color="blue", nudge_x=7) %>%
-  gf_text(y ~ x, data = Pts, label = ~flabel, color="red", nudge_y=7, nudge_x=2)
+  gf_segment(0 + y ~ t+t, data=Pts, color="blue", linetype=2) %>%
+  gf_text(0 ~ t, data = Pts, label = ~baselabel, color="blue", nudge_x=7, parse=TRUE) %>%
+  gf_text(y ~ t, data = Pts, label = ~flabel, color="red", nudge_y=7, nudge_x=2, parse=TRUE)
 ```
 
 During the interval $[t_0, t_1]$ the rate at which the water cools is higher at first and lower at the end. The ***average*** rate of change is a single number that summarizes the whole interval.
@@ -145,101 +145,13 @@ For all except straight-line models, the average rate of change depends on the i
 
 
 
-## Instantaneous rate of change
 
-The water is cooling continuously. Sometimes we'll be interested in the rate of change at a given instant $t_0$. If we choose a very small interval, say $[t_0, t_0 + 0.1]$, we'll get a good approximation to this ***instantaneous rate of change***.
-$$\text{instantaneous rate of change} = \frac{f(t_0 + 0.1) - f(t_0)}{0.1}$$
 
-On a graph, the instantaneous rate of change is the slope of the tangent line to a point, as shown in Figure \@ref(fig:tangent-line-exp).
-
-```{r tangent-line-exp, echo=FALSE, fig.cap="Instantaneous rate of change is the slope of the line tangent to a the curve at a single point."}
-Pt <- tibble::tibble(
-  x = 25,
-  y = water(x),
-  baselabel="x0",
-  flabel = "f(x0)"
-)
-tangent <- makeFun(-0.71722*(t-25) + 63.7 ~ t)
-slice_plot(water(t) ~ t, domain(t=c(0, 200))) %>%
-  gf_point(y ~ x, data=Pt, 
-           color="sienna", alpha = 0.25, size=4) %>%
-  gf_point(25 ~ x, data=Pt, 
-           color="tomato", alpha = 0.25, size=4) %>%
-  slice_plot(tangent(t) ~ t, color = "sienna", 
-             domain(t=c(0,80))) %>%
-  gf_text(y ~ x, data = Pt, label = ~ flabel, 
-          nudge_x = 10, color="sienna") %>%
-  gf_text(25 ~ x, data = Pt, label = ~ baselabel, 
-          nudge_x = 10, color="tomato") %>%
-  gf_segment(25 + y ~ x + x, data=Pt, color="tomato", linetype=2)
-```
 
 In Block 2, we'll see that a good way to define an instantaneous rate of change at $t_0$ is as the average rate of change over the interval $t_0 \leq t \leq t_1$ with the proviso that the interval length $t_1 - t_0$ goes as closely as it can to zero.
 
-Figure \@ref(fig:three-rates) shows the fitted rate of change and average rate of change in the interval $10 \leq t \leq 125$ as well as the instantaneous rate of change at $t_0 = 50$. They are different from one another.
 
-```{r three-rates,  echo=FALSE, warning=FALSE, fig.cap="Comparing the average rate of change (red) over the interval $10 \\leq t \\leq 125$, the instantaneous rate of change at $x_0 =25$, and the fitted linear model (orange). The exponential model is shown in gray."}
-set.seed(101)
-Stans_data <- CoolingWater %>% sample_n(20)
-gf_point(temp ~ time, data = Stans_data, color="orange") %>%
-  gf_lm(color="orange") %>%
-  slice_plot(water(time) ~ time, domain(time=c(0, 200)), color="gray", size=2, alpha = 0.5) %>%
-  slice_plot(tangent(time) ~ time, color = "sienna", 
-             domain(time=c(0,80)))  %>%
-   gf_point(y ~ x, data = Pts, color="red", alpha=0.25, size=4, inherit=FALSE) %>%
-  gf_line(y ~ x, data = Pts, color="red") %>%
-  gf_point(25 ~ x, data = Pts, color="blue", alpha=0.25, size=4) %>%
-  gf_point(y ~ x, data=Pt,
-           color="sienna", alpha = 0.25, size=4) %>%
-  gf_point(25 ~ x, data = Pt, color="tomato", alpha=0.25, size=4) %>%
-  gf_segment(25 + y ~ x + x, data=Pt, color="tomato", linetype=2) %>%
-  gf_segment(25 + y ~ x + x, data=Pts, color="blue", linetype=2) %>%
-  gf_lims(y=c(25, NA)) %>%
-  I()
-```
-
-## The slope function
-
-We have a way to estimate the instantaneous rate of change of a function at a given input $t_0$:
-$$\text{instantaneous_rate_of_change} \equiv \frac{f(t_0 + 0.1) - f(t_0)}{0.1}$$
-Now we'll let notation do some work for us and re-write the above as the instantaneous-rate-of-change function, which we'll call the ***slope*** function.
-$$\text{slope}(t) \equiv \frac{f(t + 0.1) - f(t)}{0.1}$$
-We've merely made it clear that $\text{slope}(t)$ is a function and written the formula in terms of the input $t$ rather than a fixed number $t_0$. Of course, the "instantaneous rate of change at $t_0$" is simply $\text{slope}(t)$.
-
-Let's look at the slope function that corresponds to some of our naked modeling functions: $e^x$, $\sin(x)$, $x^{-1}$ and $\ln(x)$. Recall that the input to the naked functions is always a number. The output is a number as well. Thus we can display the function and the corresponding slope function on the same coordinate frame. (This will not be true when the input is a quantity and the output is another quantity.)
-
-
-```{r compare-naked-slopes, echo=FALSE, out.width="50%", fig.show="hold", fig.cap="Comparing the naked modeling function (blue) to it's slope function (red)"}
-slice_plot(sin(x) ~ x, domain(x=c(-10,10)), color="blue") %>%
-  slice_plot(cos(x) ~ x, color="red", alpha=0.25, size=2) %>%
-  gf_labs(title="Sinusoid")
-slice_plot(exp(x) ~ x, domain(x=c(-2,2)), color="blue") %>%
-  slice_plot(exp(x) ~ x, color="red", alpha=0.25, size=2) %>%
-  gf_labs(title="Exponential function")
-slice_plot(log(x) ~ x, domain(x=c(0.1,5)), color="blue") %>%
-  slice_plot(1/x ~ x, color="red", alpha=0.25, size=2) %>%
-  gf_labs(title="Logarithm function")
-slice_plot(1/x ~ x, domain(x=c(0.1,5)), color="blue") %>%
-  slice_plot(-1/x^2 ~ x, color="red", alpha=0.25, size=2) %>%
-  gf_labs(title="Power law function (with p=-1)")
-```
-
-```{exercise, name="slope-web-1"}
-```
-<details>`r MC_counter$reset()` `r knitr::knit_child("Exercises/Fun/slope-web-1.Rmd")`</details>
-
-
-::: {.why}
-We defined the "slope function" as
-$$\text{slope}(t) \equiv \frac{f(t + 0.1) - f(t)}{0.1}$$
-
-The 0.1 in the definition of the slope function is definitely a kluge.  0.1 minutes may be small when it comes to cooling water, but it might not be small in other contexts. We'll fix that in Block 2 when we define the ***derivative operator*** which replaces 0.1 with something that small in every context.
-:::
-
-
-
-## To be turned into exercises
-
+::: {.intheworld}
 "Slope" is a natural metaphor when thinking of a function as a graph. But a more general way to describe the concept is the ***rate of change*** of the output with respect to the input. The change in the output from one end of the interval  is $f(x_1) - f(x_0)$, the change in the input is $x_1 - x_0$. If the input is time (in hours), and the output is the position of a car (in miles), then the rate of change is *miles-per-hour*: the car's velocity.
 
 For a straight-line function---think of a car driving at constant speed on a highway---it doesn't matter what you choose for $x_1$ and $x_0$ (so long as they are not identical). But for other functions, the choice does matter.
@@ -292,49 +204,107 @@ Run is $t_C - t_B = 0.54-0.40=0.14$.
 The average rate of change during the interval is $5.4/0.14 = 38.6 $ miles/hour.
 :::
 
-::: {.workedexample latex-data=""}
-The graph shows a simplified model of the amount of usable wood that can be harvested from a typical tree in a managed forest of Ponderosa Pine. (You can see some actual forestry research models [here](https://www.fs.fed.us/rm/pubs/rmrs_gtr292/1992_milner.pdf).)
+```{exercise, name="lion-find-bowl"}
+```
+<details>`r MC_counter$reset()` `r knitr::knit_child("Exercises/Fun/lion-find-bowl.Rmd")`</details>
 
-```{r aver-tree, echo=FALSE}
-tree_volume <- makeFun(1000*pnorm(year, mean=15, sd=10)^3 ~ year)
-# do the deriv numerically to avoid bug in derivative 
-# of normal function.
-tree_growth <- numD(tree_volume(year) ~ year)
-slice_plot(tree_volume(year) ~ year, domain(year = c(0, 50))) %>%
-  gf_labs(y = "Usable wood product (board-feet)",
-          x = "Year after planting")
+
+## Instantaneous rate of change {#instantaneous-rate-of-change}
+
+The water is cooling continuously. Sometimes we'll be interested in the rate of change at a given instant $t_0$. It's straightforward to make out what the instantaneous rate of change will be on a graph: the slope of the line tangent to the curve at $t_0$, as in Figure \@ref(fig:tangent-line-exp). 
+
+```{r tangent-line-exp, echo=FALSE, fig.cap="A line tangent to a the curve at a single point. The slope of this line is the instantaneous rate of change."}
+Pt <- tibble::tibble(
+  t = 25,
+  y = water(t),
+  baselabel="t[0]",
+  flabel = "f(t[0])"
+)
+tangent <- makeFun(-0.71722*(t-25) + 63.7 ~ t)
+slice_plot(water(t) ~ t, domain(t=c(0, 65)), size=3, alpha=.25) %>%
+  gf_point(y ~ t, data=Pt, 
+           color="sienna", alpha = 0.25, size=4) %>%
+  gf_point(25 ~ t, data=Pt, 
+           color="tomato", alpha = 0.25, size=4) %>%
+  slice_plot(tangent(t) ~ t, color = "sienna", 
+             domain(t=c(0,65))) %>%
+  gf_text(y ~ t, data = Pt, label = ~ flabel, 
+          nudge_x = 3, color="sienna", parse=TRUE) %>%
+  gf_text(25 ~ t, data = Pt, label = ~ baselabel, 
+          nudge_x = 3, color="tomato", parse=TRUE) %>%
+  gf_segment(25 + y ~ t+t, data=Pt, color="tomato", linetype=2)
+```
+It's convenient to be able to find the slope of such a tangent line using just the definition $f(t)$, rather than having to draw a graph and eyeball the tangent. For now, let's approximate the slope of tangent line by the average rate of change over a small run from  $t_0$ to $t_0 + 0.1$:
+$$\text{slope of}\ f(t) \ \text{at}\ t_0 \approx\frac{f(t_0 + 0.1) - f(t_0)}{0.1} = \frac{\text{amount of rise}}{\text{length of run}}$$
+The $\approx$ symbol means "is approximately." For now, I want to put off the question of what "approximately" means. In modeling, whether the 0.1 gives a good enough approximation will depend on the function $f()$ and the context in which the slope is needed. For instance, in drawing Figure \@ref(fig:tangent-line-exp) I needed to find the tangent line. Using 0.1 is entirely satisfactory in this setting but it might not be in other settings.
+
+The notation "slope of $f(t)$ at $t_0$" is long-winded and awkward. If we were looking at the "value of $f(t)$ at $t_0$ we have at hand a much more concise notation: $f(t_0)$. But it doesn't work to write "slope of $f(t_0)$" because $f(t_0)$ is a **quantity** and not a **function**. Instead, let's make a concise notation for "slope of $f(t)$." Following tradition, we'll write ${\cal D}f(t)$. The name of this "slope of $f(t)$" function is ${\cal D}f()$: a two-letter name. When we want to say, "the (approximate) slope of the tangent line to $f(t)$ at $t_0$, we can write simply: $${\cal D}f(t_0)$$
+meaning, evaluate the "slope function of f()" at $t_0$.
+
+To formalize this, we'll define the ***slope function of f()*** as 
+$${\cal D}f(t) \equiv \frac{f(t + 0.1) - f(t)}{0.1}$$
+Let's look at the slope functions that correspond to some of naked modeling functions: $e^x$, $\sin(x)$, $x^{-1}$ and $\ln(x)$. We can define them easily enough in R:
+
+```{r}
+Dexp <- makeFun((exp(t+0.1) - exp(t))/0.1 ~ t)
+Dsin <- makeFun((sin(t+0.1) - sin(t))/0.1 ~ t)
+Dxm1 <- makeFun(((1/(t+0.1)) - (1/t))/0.1 ~ t)
+Dlog <- makeFun((log(t+0.1) - log(t))/0.1 ~ t)
 ```
 
-You are writing a business plan for a proposed pine forest. Among other things, you have to forecast the revenue that will be generated and when you will have salable product.
 
-They say that "time is money." Every year you wait before harvest is another year that you don't have the money. On the other hand, every year that you wait means more wood at the end. How to decide when to harvest? 
-
-The tree continues to grow until year 50, when it seems to have reached an equilibrium: perhaps growth goes to zero, or rot balances what growth there is. There's no point waiting until after year 50. 
-
-At year 25, the tree is growing as fast as it ever will. You'll get about 600 board-feet of lumber. Should you harvest at year 25? No! That the tree is growing so fast means that you will have a lot more wood at year 26, 27, and so on. The time to harvest is when the growth is getting smaller, so that it's not worth waiting an extra year.
-
-The quantity of interest is the average rate of growth from seedling to harvest. Harvesting at year 25 will give a total change of 600 board feet over 25 years, giving an average rate of change of $600 \div 25 = 24 \mbox{board-feet-per-year}$. But if you wait until year 35, you'll have about 900 board feet, giving an average rate of change of $900 \div 35 = 25.7 \mbox{board-feet-per-year}$. 
-:::
-
-We've been presenting the average rate of change as a **number**: $$\frac{f(t_B) - f(t_A)}{t_B - t_A}$$
-
-But it's helpful to think of it as a **function** that takes two inputs, which we can call $t_A$ and $t_B$:
-$$\text{ave_rate_of_change}(t_A, t_B) \equiv \frac{f(t_B) - f(t_A)}{t_B - t_A}$$
-This is a very subtle maneuver. The formula is exactly the same, but by writing the quantities $t_A$ and $t_B$ as inputs (by putting them in parentheses on the left side), we turn the formula into a function.
-
-Sometimes the average-rate-of-change function presents the information in a clear way.
-
-::: {.workedexample latex-data=""}
-Back to the forest ... Here's a graph of the average-rate-of change function. The function has two inputs, but botany dictates that we can only be growing word from the time the seedling is planted. So we'll set $t_A = 0$ and look at the corresponding *slice* of the function:
-
-```{r echo=FALSE}
-slice_plot(tree_volume(year)/year ~ year, domain(year = c(1, 50))) %>%
-  gf_labs(y = "Annual growth (board-feet)",
-          x = "Year after planting")
+```{r compare-naked-slopes, echo=FALSE, out.width="50%", fig.show="hold", fig.cap="Comparing the naked modeling function (blue) to it's slope function (red)",warning=FALSE}
+slice_plot(sin(x) ~ x, domain(x=c(-10,10)), color="blue") %>%
+  slice_plot(Dsin(x) ~ x, color="red", alpha=0.25, size=2) %>%
+  gf_labs(title="Sinusoid")
+slice_plot(exp(x) ~ x, domain(x=c(-2,2)), color="blue") %>%
+  slice_plot(Dexp(x) ~ x, color="red", alpha=0.25, size=2) %>%
+  gf_labs(title="Exponential function")
+slice_plot(log(x) ~ x, domain(x=c(0.1,5)), color="blue") %>%
+  slice_plot(Dlog(x) ~ x, color="red", alpha=0.25, size=2) %>%
+  gf_labs(title="Logarithm function") %>%
+  gf_lims(y=c(-2.5, 7.5))
+slice_plot(1/x ~ x, domain(x=c(0.1,5)), color="blue", npts=500) %>%
+  slice_plot(Dxm1(x) ~ x, color="red", alpha=0.25, size=2) %>%
+  gf_labs(title="Power law function (with p=-1)") %>%
+  gf_lims(y=c(-2.5, 7.5))
 ```
-The graph makes it clear that the maximum average growth from planting to harvest will occur at about year 32.
+
+```{exercise, name="slope-web-1"}
+```
+<details>`r MC_counter$reset()` `r knitr::knit_child("Exercises/Fun/slope-web-1.Rmd")`</details>
+
+
+::: {.why}
+Why did you plot both the function and the slope function in the same graphics frame?
+
+Excellent question! In general, it is illegitimate to plot a function and it's slope function on the same vertical axis. The reason is the units of the two functions will be different. For instance, the output of a function position(t) might have units of "miles," while the output of the slope function of position (that is, ${\cal D}$position(t) would have units such as miles-per-hour.)  So, as a general rule, never plot a function and its corresponding slope function on the same scale. 
+
+An exception is for the naked modeling functions. These always take a number as input and produce a number as output. The slope function of a naked modeling function also produces a number as output. 
+
+This exception is not a good excuse for indulging a bad practice. Perhaps you'll forgive me if I point out that I wanted to emphasize the point by demonstrating it.
 :::
 
+::: {.takenote}
+I've been writing the slope function of $f(t)$ as ${\cal D}f(t)$. That works for this chapter, which deals with functions of only one variable. But in general modeling functions have more than one variable, for instance $g(x, t)$. To work with slope functions with more than one variable, we need to extend the notation a little. We will place a small subscript after ${\cal D}$ to indicate which variable we are changing. Thus, there will be two slope functions for $g(x,t)$:
+$$\require{color}{\cal D}_{\color{blue}x} g(x, t) \equiv \frac{g({\color{blue}x + 0.1}, t) - g(x, t)}{0.1}\\
+\text{and}\\
+{\cal D}_{\color{red}t} g(x, t) \equiv \frac{g(x, {\color{red}t + 0.1}) - g(x, t)}{0.1}$$
+The input referred to in the subscript following ${\cal D}$ is called the ***with-respect-to input***.
+:::
+
+```{exercise, name="tree-harvesting"}
+This exercise is misplaced and unfinished.
+```
+
+<details>`r MC_counter$reset()` `r knitr::knit_child("Exercises/Diff/tree-harvesting.Rmd")`</details>
 
 
+```{exercise, name="slope-functions"}
+Calculate the slope function of the naked sigmoidal function. What is its value at x=0. Do some other functions as well.
+
+Also, some where we change the 0.1 to something smaller.
+
+Maybe a "What is small?" `{.intheworld}`
+```
 

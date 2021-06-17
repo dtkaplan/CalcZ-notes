@@ -1,0 +1,79 @@
+# Computing derivatives
+
+To differentiate a function $g(x)$ means simply to produce the corresponding function $\partial_t g(x)$. This is often called "finding the derivative," language that resonates with the high-school algebra task of "finding $x$." Rather than conjuring an image of search high and low for the derivative, it's more realistic to say, "compute the derivative."
+
+In this chapter we'll introduce two ways of computing a derivative. For simplicity we will write $x$ for the with-respect-to-variable, although in practice you might be using $t$ or $z$ or something else.
+
+* Symbolic differentiation, which uses a set of re-writing rules
+* Finite-differencing, which is based directly on the differencing operator ${\cal D_x}$
+
+In the days when functions were always presented using formulas, symbolic differentiation was usually the only method taught. Nowadays, when functions are just as likely to be described using data and an algorithm, finite-differencing provides the practical approach.
+
+## A function from a function
+
+Recall that the goal of differentiation is to make a function out of an already known function. We'll call the already known function $g(x)$. In Chapter \ref(change-relationships) we've outlined the properties that the new function should have and gave a nice naming convention, $\partial_x g(x)$ that shows where the new function comes from. In this section we'll put that aside and focus on the question of what it means to "make a function."
+
+When mathematics is done with paper and pencil, "making a function" is a matter of writing a formula, such as $x^2 \sin(x) + 3$ and sometimes giving a name to the formula, e.g. $h(x) \equiv x^2 \sin(x) + 3$. We are essentially writing something down that will make sense when viewed by another person trained in the conventions of mathematical notation.
+
+For a computer, on the other hand, a function is a definite kind of thing. We  "make a function" by creating that kind of thing and, usually, giving it a name. We use (or "evaluate") a function by using a definite syntax, which in R involves the use of parentheses, for instance *name*`(`*input*`)`.
+
+The computer language itself provides specific means to define a new function. In R/mosaic, you first construct a tilde expression naming the function inputs (right side of the tilde) and specifying the algorithm of that function (left side of the tilde), as with this formula:
+```{r}
+f_description <- x^2 * sin(x) + 3 ~ x
+```
+
+On its own, `f_description` cannot be used like a function because it was constructed as something else: a tilde expression. Trying to use `f_description` in the way one uses a function produces an error.
+```{r error=TRUE}
+f_description(2)
+```
+
+In between the tilde expression and the function to be made is software that translates from tilde-expressions into functions:
+```{r}
+f <- makeFun(f_description)
+```
+
+The new creation, `f()` can now be used like any other function, e.g.
+```{r}
+f(2)
+```
+
+Down deep inside, `makeFun()` uses a more basic function-creation syntax which looks like this
+```{r}
+function(x) {x^2 * sin(x) + 3}
+```
+
+You can see all the same information that was in the tilde description, just arranged differently.
+
+Almost every computer language provides something like `function`. There workings are advanced technology and essentially impossible to describe in much the same way as the workings of a transistor or a COVID vaccine are known only to specialists.
+
+In the same spirit as `makeFun()`, which translates a tilde-expression into the corresponding function, in R/mosaic you have `D()` which takes a tilde expression and translates it into the derivative of the function described. For example:
+```{r}
+D(f_description)
+```
+
+## Finite differencing
+
+Example: Write myD() that takes a function as an input.
+
+```{r}
+myD <- function(f, h=0.1) {
+  # create the new function with function(x){}
+  function(x) {
+    (f(x+h) - f(x))/h
+  }
+}
+```
+
+## Re-writing
+
+Search for $x$
+If the first part is + the find the deriv of each side.
+
+If the first part doesn't have an x, then a*deriv(right)
+
+```{r}
+ex <- quote(a*x + b*sin(x))
+ex[[3]]
+```
+
+
