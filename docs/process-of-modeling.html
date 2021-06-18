@@ -1,92 +1,344 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="" xml:lang="">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>Chapter 8 Process of modeling | CalcZ Student Notes</title>
-<meta name="author" content="Daniel Kaplan">
-<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.2"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/header-attrs-2.8/header-attrs.js"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
-<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.2.5.1/tabs.js"></script><script src="libs/bs3compat-0.2.5.1/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
-<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="libs/kePrint-0.0.1/kePrint.js"></script><link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet">
-<script src="libs/htmlwidgets-1.5.3/htmlwidgets.js"></script><script src="libs/plotly-binding-4.9.4/plotly.js"></script><script src="libs/typedarray-0.1/typedarray.min.js"></script><link href="libs/crosstalk-1.1.1/css/crosstalk.css" rel="stylesheet">
-<script src="libs/crosstalk-1.1.1/js/crosstalk.min.js"></script><link href="libs/plotly-htmlwidgets-css-1.57.1/plotly-htmlwidgets.css" rel="stylesheet">
-<script src="libs/plotly-main-1.57.1/plotly-latest.min.js"></script><script type="text/x-mathjax-config">
-    const popovers = document.querySelectorAll('a.footnote-ref[data-toggle="popover"]');
-    for (let popover of popovers){
-      const div = document.createElement('div');
-      div.setAttribute('style', 'position: absolute; top: 0, left:0; width:0, height:0, overflow: hidden; visibility: hidden;');
-      div.innerHTML = popover.getAttribute('data-content');
-      
-      // Will this work with TeX on its own line?
-      var has_math = div.querySelector("span.math");
-      if (has_math) {
-        document.body.appendChild(div);
-      	MathJax.Hub.Queue(["Typeset", MathJax.Hub, div]);
-      	MathJax.Hub.Queue(function(){
-          popover.setAttribute('data-content', div.innerHTML);
-      	})
-      }
-    }
-    </script><script src="https://cdn.jsdelivr.net/autocomplete.js/0/autocomplete.jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/mark.js@8.11.1/dist/mark.min.js"></script><!-- CSS --><link rel="stylesheet" href="css/CalcZ-style.css">
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 8 Process of modeling | CalcZ Student Notes</title>
+  <meta name="description" content="Textbook for Math 141Z/142Z for 2021-2022" />
+  <meta name="generator" content="bookdown 0.22 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 8 Process of modeling | CalcZ Student Notes" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="Textbook for Math 141Z/142Z for 2021-2022" />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 8 Process of modeling | CalcZ Student Notes" />
+  
+  <meta name="twitter:description" content="Textbook for Math 141Z/142Z for 2021-2022" />
+  
+
+<meta name="author" content="Daniel Kaplan" />
+
+
+<meta name="date" content="2021-06-18" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="params-intro.html"/>
+<link rel="next" href="fun-slopes.html"/>
+<script src="libs/header-attrs-2.8/header-attrs.js"></script>
+<script src="libs/jquery-3.5.1/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+<script src="libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
+<script src="libs/htmlwidgets-1.5.3/htmlwidgets.js"></script>
+<script src="libs/plotly-binding-4.9.4/plotly.js"></script>
+<script src="libs/typedarray-0.1/typedarray.min.js"></script>
+<link href="libs/crosstalk-1.1.1/css/crosstalk.css" rel="stylesheet" />
+<script src="libs/crosstalk-1.1.1/js/crosstalk.min.js"></script>
+<link href="libs/plotly-htmlwidgets-css-1.57.1/plotly-htmlwidgets.css" rel="stylesheet" />
+<script src="libs/plotly-main-1.57.1/plotly-latest.min.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<link rel="stylesheet" href="css/CalcZ-style.css" type="text/css" />
 </head>
-<body data-spy="scroll" data-target="#toc">
 
-<div class="container-fluid">
-<div class="row">
-  <header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
+<body>
 
-    <div class="d-flex align-items-start justify-content-between">
-      <h1>
-        <a href="index.html" title="">CalcZ Student Notes</a>
-      </h1>
-      <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
-    </div>
 
-    <div id="main-nav" class="collapse-lg">
-      <form role="search">
-        <input id="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
-</form>
 
-      <nav aria-label="Table of contents"><h2>Table of contents</h2>
-        <ul class="book-toc list-unstyled">
-<li><a class="" href="index.html">Welcome to calculus</a></li>
-<li class="book-part">Block 1: Functions and quantity</li>
-<li><a class="" href="outline-of-block-1.html">Outline of Block 1</a></li>
-<li><a class="" href="change.html"><span class="header-section-number">1</span> Change</a></li>
-<li><a class="" href="structure-of-a-function.html"><span class="header-section-number">2</span> Structure of a function</a></li>
-<li><a class="" href="naked-intro.html"><span class="header-section-number">3</span> Naked modeling functions</a></li>
-<li><a class="" href="fun-describing.html"><span class="header-section-number">4</span> Describing functions</a></li>
-<li><a class="" href="fun-notation.html"><span class="header-section-number">5</span> Notation for functions</a></li>
-<li><a class="" href="graphs-and-graphics.html"><span class="header-section-number">6</span> Graphics &amp; function graphs</a></li>
-<li><a class="" href="params-intro.html"><span class="header-section-number">7</span> Parameters for functions</a></li>
-<li><a class="active" href="process-of-modeling.html"><span class="header-section-number">8</span> Process of modeling</a></li>
-<li><a class="" href="fun-slopes.html"><span class="header-section-number">9</span> Slope function</a></li>
-<li><a class="" href="function-inverses-and-solving.html"><span class="header-section-number">10</span> Function inverses and “solving”</a></li>
-<li><a class="" href="fun-assembling.html"><span class="header-section-number">11</span> Assembling functions</a></li>
-<li><a class="" href="fun-multiple-inputs.html"><span class="header-section-number">12</span> Functions with multiple inputs</a></li>
-<li><a class="" href="fun-piecewise.html"><span class="header-section-number">13</span> Piecewise functions</a></li>
-<li><a class="" href="magnitudes.html"><span class="header-section-number">14</span> Magnitudes</a></li>
-<li><a class="" href="dimensions.html"><span class="header-section-number">15</span> Dimensions</a></li>
-<li class="book-part">Block 2: Differentiation</li>
-<li><a class="" href="outline-of-block-2.html">Outline of Block 2</a></li>
-<li><a class="" href="change-relationships.html"><span class="header-section-number">16</span> Change relationships</a></li>
-<li><a class="" href="h-and-derivatives.html"><span class="header-section-number">17</span> h and derivatives</a></li>
-<li><a class="" href="optim-and-shape.html"><span class="header-section-number">18</span> Optimization</a></li>
-<li><a class="" href="cont-and-smooth.html"><span class="header-section-number">19</span> Continuity and smoothness</a></li>
-<li><a class="" href="prod-comp-rules.html"><span class="header-section-number">20</span> Differentiation by algebra</a></li>
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><strong><a href="./">CalcZ</a></strong></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Welcome to calculus</a>
+<ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#computing-and-apps"><i class="fa fa-check"></i>Computing and apps</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#exercises-and-feedback"><i class="fa fa-check"></i>Exercises and feedback</a></li>
+</ul></li>
+<li class="part"><span><b>I Block 1: Functions and quantity</b></span></li>
+<li class="chapter" data-level="" data-path="outline-of-block-1.html"><a href="outline-of-block-1.html"><i class="fa fa-check"></i>Outline of Block 1</a></li>
+<li class="chapter" data-level="1" data-path="change.html"><a href="change.html"><i class="fa fa-check"></i><b>1</b> Change</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="change.html"><a href="change.html#quantity-vs-number"><i class="fa fa-check"></i><b>1.1</b> Quantity vs number</a></li>
+<li class="chapter" data-level="1.2" data-path="change.html"><a href="change.html#functions"><i class="fa fa-check"></i><b>1.2</b> Functions</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="structure-of-a-function.html"><a href="structure-of-a-function.html"><i class="fa fa-check"></i><b>2</b> Structure of a function</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="structure-of-a-function.html"><a href="structure-of-a-function.html#inputs-to-output"><i class="fa fa-check"></i><b>2.1</b> Inputs to output</a></li>
+<li class="chapter" data-level="2.2" data-path="structure-of-a-function.html"><a href="structure-of-a-function.html#a-bureaucratic-analogy"><i class="fa fa-check"></i><b>2.2</b> A bureaucratic analogy</a></li>
+<li class="chapter" data-level="2.3" data-path="structure-of-a-function.html"><a href="structure-of-a-function.html#domain-input-space"><i class="fa fa-check"></i><b>2.3</b> Domain: input space</a></li>
+<li class="chapter" data-level="2.4" data-path="structure-of-a-function.html"><a href="structure-of-a-function.html#range-output-space"><i class="fa fa-check"></i><b>2.4</b> Range: output space</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="naked-intro.html"><a href="naked-intro.html"><i class="fa fa-check"></i><b>3</b> Naked modeling functions</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="naked-intro.html"><a href="naked-intro.html#the-list"><i class="fa fa-check"></i><b>3.1</b> The list</a></li>
+<li class="chapter" data-level="3.2" data-path="naked-intro.html"><a href="naked-intro.html#function-shapes"><i class="fa fa-check"></i><b>3.2</b> Function shapes</a></li>
+<li class="chapter" data-level="3.3" data-path="naked-intro.html"><a href="naked-intro.html#the-power-law-family"><i class="fa fa-check"></i><b>3.3</b> The power-law family</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="fun-describing.html"><a href="fun-describing.html"><i class="fa fa-check"></i><b>4</b> Describing functions</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="fun-describing.html"><a href="fun-describing.html#computer-commands"><i class="fa fa-check"></i><b>4.1</b> Computer commands</a></li>
+<li class="chapter" data-level="4.2" data-path="fun-describing.html"><a href="fun-describing.html#tables-of-inputs-and-outputs"><i class="fa fa-check"></i><b>4.2</b> Tables of inputs and outputs</a></li>
+<li class="chapter" data-level="4.3" data-path="fun-describing.html"><a href="fun-describing.html#word-descriptions"><i class="fa fa-check"></i><b>4.3</b> Word descriptions</a></li>
+<li class="chapter" data-level="4.4" data-path="fun-describing.html"><a href="fun-describing.html#computer-function-names"><i class="fa fa-check"></i><b>4.4</b> Computer function names</a></li>
+<li class="chapter" data-level="4.5" data-path="fun-describing.html"><a href="fun-describing.html#mathematical-notation"><i class="fa fa-check"></i><b>4.5</b> Mathematical notation</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="fun-notation.html"><a href="fun-notation.html"><i class="fa fa-check"></i><b>5</b> Notation for functions</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="fun-notation.html"><a href="fun-notation.html#a-notation-for-computing"><i class="fa fa-check"></i><b>5.1</b> A notation for computing</a></li>
+<li class="chapter" data-level="5.2" data-path="fun-notation.html"><a href="fun-notation.html#objects-and-actions"><i class="fa fa-check"></i><b>5.2</b> Objects and actions</a></li>
+<li class="chapter" data-level="5.3" data-path="fun-notation.html"><a href="fun-notation.html#algorithms"><i class="fa fa-check"></i><b>5.3</b> Formulas and algorithms</a></li>
+<li class="chapter" data-level="5.4" data-path="fun-notation.html"><a href="fun-notation.html#algorithms-without-formulas"><i class="fa fa-check"></i><b>5.4</b> Algorithms without formulas</a></li>
+<li class="chapter" data-level="5.5" data-path="fun-notation.html"><a href="fun-notation.html#computer-notation"><i class="fa fa-check"></i><b>5.5</b> Computer notation</a></li>
+<li class="chapter" data-level="5.6" data-path="fun-notation.html"><a href="fun-notation.html#calcz-naming-conventions"><i class="fa fa-check"></i><b>5.6</b> CalcZ naming conventions</a></li>
+<li class="chapter" data-level="5.7" data-path="fun-notation.html"><a href="fun-notation.html#functions-in-r"><i class="fa fa-check"></i><b>5.7</b> Functions in R</a></li>
+<li class="chapter" data-level="5.8" data-path="fun-notation.html"><a href="fun-notation.html#foursigns"><i class="fa fa-check"></i><b>5.8</b> <span class="math inline">\(=\)</span>, <span class="math inline">\(\equiv\)</span>, <span class="math inline">\(\rightarrow\)</span>, <code>&lt;-</code></a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="graphs-and-graphics.html"><a href="graphs-and-graphics.html"><i class="fa fa-check"></i><b>6</b> Graphics &amp; function graphs</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="graphs-and-graphics.html"><a href="graphs-and-graphics.html#the-graphics-frame"><i class="fa fa-check"></i><b>6.1</b> The graphics frame</a></li>
+<li class="chapter" data-level="6.2" data-path="graphs-and-graphics.html"><a href="graphs-and-graphics.html#data-graphics-the-point-plot"><i class="fa fa-check"></i><b>6.2</b> Data graphics: the point plot</a></li>
+<li class="chapter" data-level="6.3" data-path="graphs-and-graphics.html"><a href="graphs-and-graphics.html#graphics-layers"><i class="fa fa-check"></i><b>6.3</b> Graphics layers</a></li>
+<li class="chapter" data-level="6.4" data-path="graphs-and-graphics.html"><a href="graphs-and-graphics.html#data-and-functions"><i class="fa fa-check"></i><b>6.4</b> Data and functions</a></li>
+<li class="chapter" data-level="6.5" data-path="graphs-and-graphics.html"><a href="graphs-and-graphics.html#inputs-to-output-1"><i class="fa fa-check"></i><b>6.5</b> Inputs to output</a></li>
+<li class="chapter" data-level="6.6" data-path="graphs-and-graphics.html"><a href="graphs-and-graphics.html#outputs-to-inputs"><i class="fa fa-check"></i><b>6.6</b> Outputs to inputs</a></li>
+<li class="chapter" data-level="6.7" data-path="graphs-and-graphics.html"><a href="graphs-and-graphics.html#graphs-of-functions-with-two-inputs"><i class="fa fa-check"></i><b>6.7</b> Graphs of functions with two inputs</a></li>
+<li class="chapter" data-level="6.8" data-path="graphs-and-graphics.html"><a href="graphs-and-graphics.html#contour-plots"><i class="fa fa-check"></i><b>6.8</b> Contour plots</a></li>
+<li class="chapter" data-level="6.9" data-path="graphs-and-graphics.html"><a href="graphs-and-graphics.html#slice-plots"><i class="fa fa-check"></i><b>6.9</b> Slice plots</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="params-intro.html"><a href="params-intro.html"><i class="fa fa-check"></i><b>7</b> Parameters for functions</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="params-intro.html"><a href="params-intro.html#parallel-scales"><i class="fa fa-check"></i><b>7.1</b> Parallel scales</a></li>
+<li class="chapter" data-level="7.2" data-path="params-intro.html"><a href="params-intro.html#scale-the-output"><i class="fa fa-check"></i><b>7.2</b> Scale the output</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="process-of-modeling.html"><a href="process-of-modeling.html"><i class="fa fa-check"></i><b>8</b> Process of modeling</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="process-of-modeling.html"><a href="process-of-modeling.html#variations-from-scaling"><i class="fa fa-check"></i><b>8.1</b> Variations from scaling</a></li>
+<li class="chapter" data-level="8.2" data-path="process-of-modeling.html"><a href="process-of-modeling.html#fit-exponential"><i class="fa fa-check"></i><b>8.2</b> Curve fitting an exponential function</a></li>
+<li class="chapter" data-level="8.3" data-path="process-of-modeling.html"><a href="process-of-modeling.html#fit-periodic"><i class="fa fa-check"></i><b>8.3</b> Curve fitting a periodic function</a></li>
+<li class="chapter" data-level="8.4" data-path="process-of-modeling.html"><a href="process-of-modeling.html#curve-fitting-a-power-law-function"><i class="fa fa-check"></i><b>8.4</b> Curve fitting a power-law function</a></li>
+<li class="chapter" data-level="8.5" data-path="process-of-modeling.html"><a href="process-of-modeling.html#hump-and-sigmoid-functions"><i class="fa fa-check"></i><b>8.5</b> Hump and sigmoid functions</a></li>
+<li class="chapter" data-level="8.6" data-path="process-of-modeling.html"><a href="process-of-modeling.html#modeling-cycle"><i class="fa fa-check"></i><b>8.6</b> The modeling cycle</a>
+<ul>
+<li class="chapter" data-level="8.6.1" data-path="process-of-modeling.html"><a href="process-of-modeling.html#example-cooling-water"><i class="fa fa-check"></i><b>8.6.1</b> Example: Cooling water</a></li>
+<li class="chapter" data-level="8.6.2" data-path="process-of-modeling.html"><a href="process-of-modeling.html#example-the-tides"><i class="fa fa-check"></i><b>8.6.2</b> Example: The tides</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="fun-slopes.html"><a href="fun-slopes.html"><i class="fa fa-check"></i><b>9</b> Slope function</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="fun-slopes.html"><a href="fun-slopes.html#change-and-slope"><i class="fa fa-check"></i><b>9.1</b> Change and slope</a></li>
+<li class="chapter" data-level="9.2" data-path="fun-slopes.html"><a href="fun-slopes.html#continuous-change"><i class="fa fa-check"></i><b>9.2</b> Continuous change</a></li>
+<li class="chapter" data-level="9.3" data-path="fun-slopes.html"><a href="fun-slopes.html#slope"><i class="fa fa-check"></i><b>9.3</b> Slope</a></li>
+<li class="chapter" data-level="9.4" data-path="fun-slopes.html"><a href="fun-slopes.html#the-fitted-line"><i class="fa fa-check"></i><b>9.4</b> The fitted line</a></li>
+<li class="chapter" data-level="9.5" data-path="fun-slopes.html"><a href="fun-slopes.html#average-rate-of-change"><i class="fa fa-check"></i><b>9.5</b> Average rate of change</a></li>
+<li class="chapter" data-level="9.6" data-path="fun-slopes.html"><a href="fun-slopes.html#instantaneous-rate-of-change"><i class="fa fa-check"></i><b>9.6</b> Instantaneous rate of change</a></li>
+<li class="chapter" data-level="9.7" data-path="fun-slopes.html"><a href="fun-slopes.html#the-slope-function"><i class="fa fa-check"></i><b>9.7</b> The slope function</a></li>
+<li class="chapter" data-level="9.8" data-path="fun-slopes.html"><a href="fun-slopes.html#to-be-turned-into-exercises"><i class="fa fa-check"></i><b>9.8</b> To be turned into exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="function-inverses-and-solving.html"><a href="function-inverses-and-solving.html"><i class="fa fa-check"></i><b>10</b> Function inverses and “solving”</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="function-inverses-and-solving.html"><a href="function-inverses-and-solving.html#function-inverses"><i class="fa fa-check"></i><b>10.1</b> Function inverses</a></li>
+<li class="chapter" data-level="10.2" data-path="function-inverses-and-solving.html"><a href="function-inverses-and-solving.html#exercises"><i class="fa fa-check"></i><b>10.2</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="fun-assembling.html"><a href="fun-assembling.html"><i class="fa fa-check"></i><b>11</b> Assembling functions</a>
+<ul>
+<li class="chapter" data-level="11.1" data-path="fun-assembling.html"><a href="fun-assembling.html#linear-combination"><i class="fa fa-check"></i><b>11.1</b> Linear combination</a></li>
+<li class="chapter" data-level="11.2" data-path="fun-assembling.html"><a href="fun-assembling.html#function-composition"><i class="fa fa-check"></i><b>11.2</b> Function composition</a></li>
+<li class="chapter" data-level="11.3" data-path="fun-assembling.html"><a href="fun-assembling.html#modeling-polynomial-1"><i class="fa fa-check"></i><b>11.3</b> The modeling polynomial</a></li>
+<li class="chapter" data-level="11.4" data-path="fun-assembling.html"><a href="fun-assembling.html#tukeys-ladder-optional"><i class="fa fa-check"></i><b>11.4</b> Tukey’s ladder (optional)</a></li>
+<li class="chapter" data-level="11.5" data-path="fun-assembling.html"><a href="fun-assembling.html#function-multiplication"><i class="fa fa-check"></i><b>11.5</b> Function multiplication</a></li>
+<li class="chapter" data-level="11.6" data-path="fun-assembling.html"><a href="fun-assembling.html#all-together-now"><i class="fa fa-check"></i><b>11.6</b> All together now!</a></li>
+<li class="chapter" data-level="11.7" data-path="fun-assembling.html"><a href="fun-assembling.html#exercises-1"><i class="fa fa-check"></i><b>11.7</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="fun-multiple-inputs.html"><a href="fun-multiple-inputs.html"><i class="fa fa-check"></i><b>12</b> Functions with multiple inputs</a>
+<ul>
+<li class="chapter" data-level="12.1" data-path="fun-multiple-inputs.html"><a href="fun-multiple-inputs.html#fx-times-gt"><i class="fa fa-check"></i><b>12.1</b> f(x) times g(t)</a></li>
+<li class="chapter" data-level="12.2" data-path="fun-multiple-inputs.html"><a href="fun-multiple-inputs.html#two-variable-modeling-polynomial"><i class="fa fa-check"></i><b>12.2</b> Two-variable modeling polynomial</a></li>
+<li class="chapter" data-level="12.3" data-path="fun-multiple-inputs.html"><a href="fun-multiple-inputs.html#function-composition-not"><i class="fa fa-check"></i><b>12.3</b> Function composition (not!)</a></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="fun-piecewise.html"><a href="fun-piecewise.html"><i class="fa fa-check"></i><b>13</b> Piecewise functions</a>
+<ul>
+<li class="chapter" data-level="13.1" data-path="fun-piecewise.html"><a href="fun-piecewise.html#piecewise-functions"><i class="fa fa-check"></i><b>13.1</b> Piecewise functions</a></li>
+</ul></li>
+<li class="chapter" data-level="14" data-path="magnitudes.html"><a href="magnitudes.html"><i class="fa fa-check"></i><b>14</b> Magnitudes</a>
+<ul>
+<li class="chapter" data-level="14.1" data-path="magnitudes.html"><a href="magnitudes.html#counting-digits"><i class="fa fa-check"></i><b>14.1</b> Counting digits</a></li>
+<li class="chapter" data-level="14.2" data-path="magnitudes.html"><a href="magnitudes.html#using-digit-to-understand-magnitude"><i class="fa fa-check"></i><b>14.2</b> Using digit() to understand magnitude</a></li>
+<li class="chapter" data-level="14.3" data-path="magnitudes.html"><a href="magnitudes.html#quantity-and-magnitude"><i class="fa fa-check"></i><b>14.3</b> Quantity and magnitude</a></li>
+<li class="chapter" data-level="14.4" data-path="magnitudes.html"><a href="magnitudes.html#composing-ln"><i class="fa fa-check"></i><b>14.4</b> Composing <span class="math inline">\(\ln()\)</span></a></li>
+<li class="chapter" data-level="14.5" data-path="magnitudes.html"><a href="magnitudes.html#magnitude-graphics"><i class="fa fa-check"></i><b>14.5</b> Magnitude graphics</a></li>
+<li class="chapter" data-level="14.6" data-path="magnitudes.html"><a href="magnitudes.html#magnitude-scales"><i class="fa fa-check"></i><b>14.6</b> Magnitude scales</a></li>
+<li class="chapter" data-level="14.7" data-path="magnitudes.html"><a href="magnitudes.html#fractional-digits"><i class="fa fa-check"></i><b>14.7</b> Fractional digits (optional)</a></li>
+</ul></li>
+<li class="chapter" data-level="15" data-path="dimensions.html"><a href="dimensions.html"><i class="fa fa-check"></i><b>15</b> Dimensions</a>
+<ul>
+<li class="chapter" data-level="15.1" data-path="dimensions.html"><a href="dimensions.html#mathematics-of-quantity"><i class="fa fa-check"></i><b>15.1</b> Mathematics of quantity</a></li>
+<li class="chapter" data-level="15.2" data-path="dimensions.html"><a href="dimensions.html#compound-dimensions"><i class="fa fa-check"></i><b>15.2</b> Compound dimensions</a></li>
+<li class="chapter" data-level="15.3" data-path="dimensions.html"><a href="dimensions.html#arithmetic-with-dimensions"><i class="fa fa-check"></i><b>15.3</b> Arithmetic with dimensions</a></li>
+<li class="chapter" data-level="15.4" data-path="dimensions.html"><a href="dimensions.html#example-dimensional-analysis"><i class="fa fa-check"></i><b>15.4</b> Example: Dimensional analysis</a></li>
+<li class="chapter" data-level="15.5" data-path="dimensions.html"><a href="dimensions.html#conversion-flavors-of-1"><i class="fa fa-check"></i><b>15.5</b> Conversion: Flavors of 1</a></li>
+<li class="chapter" data-level="15.6" data-path="dimensions.html"><a href="dimensions.html#dimensions-and-linear-combinations"><i class="fa fa-check"></i><b>15.6</b> Dimensions and linear combinations</a></li>
+</ul></li>
+<li class="part"><span><b>II Block 2: Differentiation</b></span></li>
+<li class="chapter" data-level="" data-path="outline-of-block-2.html"><a href="outline-of-block-2.html"><i class="fa fa-check"></i>Outline of Block 2</a></li>
+<li class="chapter" data-level="16" data-path="change-relationships.html"><a href="change-relationships.html"><i class="fa fa-check"></i><b>16</b> Change relationships</a>
+<ul>
+<li class="chapter" data-level="16.1" data-path="change-relationships.html"><a href="change-relationships.html#slopes-and-increments."><i class="fa fa-check"></i><b>16.1</b> Slopes and increments.</a></li>
+<li class="chapter" data-level="16.2" data-path="change-relationships.html"><a href="change-relationships.html#slopes-and-motion"><i class="fa fa-check"></i><b>16.2</b> Slopes and motion</a></li>
+<li class="chapter" data-level="16.3" data-path="change-relationships.html"><a href="change-relationships.html#differentiation"><i class="fa fa-check"></i><b>16.3</b> Differentiation</a></li>
+<li class="chapter" data-level="16.4" data-path="change-relationships.html"><a href="change-relationships.html#dimension-of-derivatives"><i class="fa fa-check"></i><b>16.4</b> Dimension of derivatives</a></li>
+<li class="chapter" data-level="16.5" data-path="change-relationships.html"><a href="change-relationships.html#using-h"><i class="fa fa-check"></i><b>16.5</b> Using h</a></li>
+<li class="chapter" data-level="16.6" data-path="change-relationships.html"><a href="change-relationships.html#differencing"><i class="fa fa-check"></i><b>16.6</b> Differencing</a></li>
+<li class="chapter" data-level="16.7" data-path="change-relationships.html"><a href="change-relationships.html#instantaneous-rate-of-change-1"><i class="fa fa-check"></i><b>16.7</b> Instantaneous rate of change</a></li>
+</ul></li>
+<li class="chapter" data-level="17" data-path="h-and-derivatives.html"><a href="h-and-derivatives.html"><i class="fa fa-check"></i><b>17</b> h and derivatives</a>
+<ul>
+<li class="chapter" data-level="17.1" data-path="h-and-derivatives.html"><a href="h-and-derivatives.html#the-h-framework"><i class="fa fa-check"></i><b>17.1</b> The <span class="math inline">\(h\)</span> framework</a></li>
+<li class="chapter" data-level="17.2" data-path="h-and-derivatives.html"><a href="h-and-derivatives.html#approximations-to-naked-modeling-functions"><i class="fa fa-check"></i><b>17.2</b> Approximations to naked modeling functions</a></li>
+</ul></li>
+<li class="chapter" data-level="18" data-path="optim-and-shape.html"><a href="optim-and-shape.html"><i class="fa fa-check"></i><b>18</b> Optimization</a>
+<ul>
+<li class="chapter" data-level="18.1" data-path="optim-and-shape.html"><a href="optim-and-shape.html#structure-of-the-problem"><i class="fa fa-check"></i><b>18.1</b> Structure of the problem</a></li>
+<li class="chapter" data-level="18.2" data-path="optim-and-shape.html"><a href="optim-and-shape.html#interpreting-the-argmax"><i class="fa fa-check"></i><b>18.2</b> Interpreting the argmax</a></li>
+<li class="chapter" data-level="18.3" data-path="optim-and-shape.html"><a href="optim-and-shape.html#derivatives-and-optimization"><i class="fa fa-check"></i><b>18.3</b> Derivatives and optimization</a></li>
+<li class="chapter" data-level="18.4" data-path="optim-and-shape.html"><a href="optim-and-shape.html#approximations-around-xstar"><i class="fa fa-check"></i><b>18.4</b> Approximations around <span class="math inline">\(x^\star\)</span></a></li>
+<li class="chapter" data-level="18.5" data-path="optim-and-shape.html"><a href="optim-and-shape.html#solving-computationally"><i class="fa fa-check"></i><b>18.5</b> Solving computationally</a></li>
+</ul></li>
+<li class="chapter" data-level="19" data-path="cont-and-smooth.html"><a href="cont-and-smooth.html"><i class="fa fa-check"></i><b>19</b> Continuity and smoothness</a>
+<ul>
+<li class="chapter" data-level="19.1" data-path="cont-and-smooth.html"><a href="cont-and-smooth.html#continuity"><i class="fa fa-check"></i><b>19.1</b> Continuity</a></li>
+<li class="chapter" data-level="19.2" data-path="cont-and-smooth.html"><a href="cont-and-smooth.html#smoothness"><i class="fa fa-check"></i><b>19.2</b> Smoothness</a></li>
+<li class="chapter" data-level="19.3" data-path="cont-and-smooth.html"><a href="cont-and-smooth.html#doesnt-exist"><i class="fa fa-check"></i><b>19.3</b> Doesn’t exist?</a></li>
+<li class="chapter" data-level="19.4" data-path="cont-and-smooth.html"><a href="cont-and-smooth.html#piecewise-functions-1"><i class="fa fa-check"></i><b>19.4</b> Piecewise functions</a></li>
+<li class="chapter" data-level="19.5" data-path="cont-and-smooth.html"><a href="cont-and-smooth.html#continuity-1"><i class="fa fa-check"></i><b>19.5</b> Continuity</a></li>
+<li class="chapter" data-level="19.6" data-path="cont-and-smooth.html"><a href="cont-and-smooth.html#differentiability"><i class="fa fa-check"></i><b>19.6</b> Differentiability</a></li>
+</ul></li>
+<li class="chapter" data-level="20" data-path="prod-comp-rules.html"><a href="prod-comp-rules.html"><i class="fa fa-check"></i><b>20</b> Differentiation by algebra</a>
+<ul>
+<li class="chapter" data-level="20.1" data-path="prod-comp-rules.html"><a href="prod-comp-rules.html#memorizing-derivatives"><i class="fa fa-check"></i><b>20.1</b> Memorizing derivatives</a></li>
+<li class="chapter" data-level="20.2" data-path="prod-comp-rules.html"><a href="prod-comp-rules.html#exponentials-and-logarithms-optional"><i class="fa fa-check"></i><b>20.2</b> Exponentials and logarithms (optional)</a></li>
+<li class="chapter" data-level="20.3" data-path="prod-comp-rules.html"><a href="prod-comp-rules.html#combining-functions"><i class="fa fa-check"></i><b>20.3</b> Combining functions</a></li>
+<li class="chapter" data-level="20.4" data-path="prod-comp-rules.html"><a href="prod-comp-rules.html#composition-of-functions"><i class="fa fa-check"></i><b>20.4</b> Composition of functions</a></li>
+<li class="chapter" data-level="20.5" data-path="prod-comp-rules.html"><a href="prod-comp-rules.html#product-of-functions"><i class="fa fa-check"></i><b>20.5</b> Product of functions</a></li>
+<li class="chapter" data-level="20.6" data-path="prod-comp-rules.html"><a href="prod-comp-rules.html#checking-your-work"><i class="fa fa-check"></i><b>20.6</b> Checking your work</a></li>
+<li class="chapter" data-level="20.7" data-path="prod-comp-rules.html"><a href="prod-comp-rules.html#working-with-algebraic-derivatives"><i class="fa fa-check"></i><b>20.7</b> Working with algebraic derivatives</a></li>
+<li class="chapter" data-level="20.8" data-path="prod-comp-rules.html"><a href="prod-comp-rules.html#tree-harvesting"><i class="fa fa-check"></i><b>20.8</b> Tree harvesting</a></li>
+</ul></li>
 </ul>
 
-        <div class="book-extra">
-          <p><a id="book-repo" href="https://github.com/dtkaplan/CalcZ-notes">View book source <i class="fab fa-github"></i></a></p>
-        </div>
       </nav>
-</div>
-  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="process-of-modeling" class="section level1" number="8">
-<h1>
-<span class="header-section-number">8</span> Process of modeling<a class="anchor" aria-label="anchor" href="#process-of-modeling"><i class="fas fa-link"></i></a>
-</h1>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">CalcZ Student Notes</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="process-of-modeling" class="section level1" number="8">
+<h1><span class="header-section-number">Chapter 8</span> Process of modeling</h1>
 <p>Seen very abstractly, a mathematical model, as we are using the term, is a set of <strong><em>functions</em></strong> that represent the relationships between inputs and outputs.</p>
 <p>At the most simple level, building a model can be a short process:</p>
 <ol style="list-style-type: decimal">
@@ -96,17 +348,13 @@
 </ol>
 <p>It’s important to distinguish between two basic types of model:</p>
 <ol style="list-style-type: decimal">
-<li>
-<strong><em>Empirical models</em></strong> which are rooted in <strong><em>observation</em></strong> and <strong><em>data</em></strong>.</li>
-<li>
-<strong><em>Mechanistic models</em></strong> such as those created by applying fundamental laws of physics, chemistry, and such.</li>
+<li><strong><em>Empirical models</em></strong> which are rooted in <strong><em>observation</em></strong> and <strong><em>data</em></strong>.</li>
+<li><strong><em>Mechanistic models</em></strong> such as those created by applying fundamental laws of physics, chemistry, and such.</li>
 </ol>
 <p>We are going to put off mechanistic models for a while, for two reasons. First, the “fundamental laws of physics, chemistry, and such” are often expressed with the concepts and methods of calculus. We are heading there, but at this point you don’t yet know the core concepts and methods of calculus. Second, most students don’t make a careful study of the “fundamental laws of physics, chemistry, and such” until <em>after</em> they have studied calculus. So examples of mechanistic models will be a bit hollow at this point.</p>
 <p>The process of constructing a model that is a good match for data is called <strong><em>curve fitting</em></strong>, or, more generally, <strong><em>fitting a model</em></strong>.</p>
 <div id="variations-from-scaling" class="section level2" number="8.1">
-<h2>
-<span class="header-section-number">8.1</span> Variations from scaling<a class="anchor" aria-label="anchor" href="#variations-from-scaling"><i class="fas fa-link"></i></a>
-</h2>
+<h2><span class="header-section-number">8.1</span> Variations from scaling</h2>
 <p>A good place to start building a model is to pick one of the basic modeling functions. This works surprisingly often. To remind you, here are our seven basic modeling functions:</p>
 <ul>
 <li>straight-line</li>
@@ -120,20 +368,16 @@
 <p>It helps in making the selection to have ready to mind the basic shape of each of these function families. To review, revisit Section <a href="naked-intro.html#function-shapes">3.2</a>.</p>
 <p>Remember also that, in general, we scale the inputs and scale the output. This means that in choose a model family, we don’t have to worry at first about the numbers on the axes. (Of course, those numbers will be critically important later on in the process!) The scaling does, however, allow us to consider some variations on the shapes of the modeling functions. In particular, the <strong><em>input scaling</em></strong> lets us flip the shape right-for-left. And the <strong><em>output scaling</em></strong> lets us flip the shape top-for-bottom.</p>
 <ul>
-<li>
-<span class="math inline">\(f(t)\)</span>, basic shape</li>
-<li>
-<span class="math inline">\(f(-t)\)</span>, flipped right-for-left</li>
-<li>
-<span class="math inline">\(-f(t)\)</span>, flipped top-for-bottom</li>
-<li>
-<span class="math inline">\(-f(-t)\)</span>, flipped both top-for-bottom and right-for-left</li>
+<li><span class="math inline">\(f(t)\)</span>, basic shape</li>
+<li><span class="math inline">\(f(-t)\)</span>, flipped right-for-left</li>
+<li><span class="math inline">\(-f(t)\)</span>, flipped top-for-bottom</li>
+<li><span class="math inline">\(-f(-t)\)</span>, flipped both top-for-bottom and right-for-left</li>
 </ul>
 <p>For functions such as the sinusoid, flipping is not much use, since the flipped sinusoid curve is still a sinusoid. Similarly, a right-for-left flipped hump function has the same shape as the original. For the straight-line function, flipping of either sort accomplishes the same thing: changing the sign of the slope.</p>
 <p>For the exponential function, the two possible types of flipping—right-for-left and top-for-bottom—produce four different curves, all of which are exponential, shown in Figure <a href="process-of-modeling.html#fig:four-variations">8.1</a>.</p>
-<div class="figure" style="text-align: center">
-<span id="fig:four-variations"></span>
-<img src="CalcZ-notes_files/figure-html/four-variations-1.png" alt="Four variations of the exponential functions." width="50%"><img src="CalcZ-notes_files/figure-html/four-variations-2.png" alt="Four variations of the exponential functions." width="50%"><img src="CalcZ-notes_files/figure-html/four-variations-3.png" alt="Four variations of the exponential functions." width="50%"><img src="CalcZ-notes_files/figure-html/four-variations-4.png" alt="Four variations of the exponential functions." width="50%"><p class="caption">
+<div class="figure" style="text-align: center"><span id="fig:four-variations"></span>
+<img src="CalcZ-notes_files/figure-html/four-variations-1.png" alt="Four variations of the exponential functions." width="50%" /><img src="CalcZ-notes_files/figure-html/four-variations-2.png" alt="Four variations of the exponential functions." width="50%" /><img src="CalcZ-notes_files/figure-html/four-variations-3.png" alt="Four variations of the exponential functions." width="50%" /><img src="CalcZ-notes_files/figure-html/four-variations-4.png" alt="Four variations of the exponential functions." width="50%" />
+<p class="caption">
 Figure 8.1: Four variations of the exponential functions.
 </p>
 </div>
@@ -141,20 +385,20 @@ Figure 8.1: Four variations of the exponential functions.
 <div class="exercise">
 <span id="exr:unnamed-chunk-51" class="exercise"><strong>Exercise 8.1  (exponential-bases)  </strong></span>
 </div>
-<details><p>These three expressions</p>
+<details>
+<p>These three expressions</p>
 <p><span class="math display">\[e^{kt}\ \ \ \ \ 10^{t/d} \  \ \ \ \  2^{t/h}\]</span></p>
 <p>produce the same value if <span class="math inline">\(k\)</span>, <span class="math inline">\(d\)</span> and <span class="math inline">\(h\)</span> have corresponding numerical values.</p>
 <div class="scaffolding">
 <p>The scaffolding has an expression for plotting out <span class="math inline">\(2^{t/h}\)</span> for <span class="math inline">\(-4 \leq t \leq 12\)</span> where <span class="math inline">\(h = 4\)</span>. It also plots out <span class="math inline">\(e^{kt}\)</span> and <span class="math inline">\(10^{t/d}\)</span></p>
-<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">fa</span> <span class="op">&lt;-</span> <span class="fu">makeFun</span><span class="op">(</span><span class="fl">2</span><span class="op">^</span><span class="op">(</span><span class="va">t</span><span class="op">/</span><span class="va">h</span><span class="op">)</span> <span class="op">~</span> <span class="va">t</span>, h <span class="op">=</span> <span class="fl">4</span><span class="op">)</span>
-<span class="va">fb</span> <span class="op">&lt;-</span> <span class="fu">makeFun</span><span class="op">(</span><span class="fl">10</span><span class="op">^</span><span class="op">(</span><span class="va">t</span><span class="op">/</span><span class="va">d</span><span class="op">)</span> <span class="op">~</span> <span class="va">t</span>, d <span class="op">=</span> <span class="fl">10</span><span class="op">)</span>
-<span class="va">fc</span> <span class="op">&lt;-</span> <span class="fu">makeFun</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html">exp</a></span><span class="op">(</span><span class="va">k</span><span class="op">*</span><span class="va">t</span><span class="op">)</span>  <span class="op">~</span> <span class="va">t</span>, k <span class="op">=</span> <span class="fl">0.1</span><span class="op">)</span>
-
-<span class="fu">slice_plot</span><span class="op">(</span><span class="fu">fa</span><span class="op">(</span><span class="va">t</span><span class="op">)</span> <span class="op">~</span> <span class="va">t</span>, <span class="fu">domain</span><span class="op">(</span>t <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">4</span>, <span class="fl">12</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu">slice_plot</span><span class="op">(</span><span class="fu">fb</span><span class="op">(</span><span class="va">t</span><span class="op">)</span> <span class="op">~</span> <span class="va">t</span>, color<span class="op">=</span><span class="st">"blue"</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu">slice_plot</span><span class="op">(</span><span class="fu">fc</span><span class="op">(</span><span class="va">t</span><span class="op">)</span> <span class="op">~</span> <span class="va">t</span>, color  <span class="op">=</span> <span class="st">"red"</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu">gf_lims</span><span class="op">(</span>y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">8</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="process-of-modeling.html#cb31-1" aria-hidden="true" tabindex="-1"></a>fa <span class="ot">&lt;-</span> <span class="fu">makeFun</span>(<span class="dv">2</span><span class="sc">^</span>(t<span class="sc">/</span>h) <span class="sc">~</span> t, <span class="at">h =</span> <span class="dv">4</span>)</span>
+<span id="cb31-2"><a href="process-of-modeling.html#cb31-2" aria-hidden="true" tabindex="-1"></a>fb <span class="ot">&lt;-</span> <span class="fu">makeFun</span>(<span class="dv">10</span><span class="sc">^</span>(t<span class="sc">/</span>d) <span class="sc">~</span> t, <span class="at">d =</span> <span class="dv">10</span>)</span>
+<span id="cb31-3"><a href="process-of-modeling.html#cb31-3" aria-hidden="true" tabindex="-1"></a>fc <span class="ot">&lt;-</span> <span class="fu">makeFun</span>(<span class="fu">exp</span>(k<span class="sc">*</span>t)  <span class="sc">~</span> t, <span class="at">k =</span> <span class="fl">0.1</span>)</span>
+<span id="cb31-4"><a href="process-of-modeling.html#cb31-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-5"><a href="process-of-modeling.html#cb31-5" aria-hidden="true" tabindex="-1"></a><span class="fu">slice_plot</span>(<span class="fu">fa</span>(t) <span class="sc">~</span> t, <span class="fu">domain</span>(<span class="at">t =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">4</span>, <span class="dv">12</span>))) <span class="sc">%&gt;%</span></span>
+<span id="cb31-6"><a href="process-of-modeling.html#cb31-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice_plot</span>(<span class="fu">fb</span>(t) <span class="sc">~</span> t, <span class="at">color=</span><span class="st">&quot;blue&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb31-7"><a href="process-of-modeling.html#cb31-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice_plot</span>(<span class="fu">fc</span>(t) <span class="sc">~</span> t, <span class="at">color  =</span> <span class="st">&quot;red&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb31-8"><a href="process-of-modeling.html#cb31-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gf_lims</span>(<span class="at">y =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">8</span>))</span></code></pre></div>
 </div>
 <p>Your task is to modify the values of <code>d</code> and <code>k</code> such that all three curves lie on top of one another. (Leave <code>h</code> at the value 4.) You can find the appropriate values of <code>d</code> and <code>k</code> to accomplish this by any means you like, say, by using the algebra of exponents or by using trial and error. (Trial and error is a perfectly valid strategy regardless of what your high-school math teachers might have said about “guess and check.” The trick is to make each new guess systematically based on your previous ones and observation of how those previous ones performed.)</p>
 <p>After you have found values of <code>k</code> and <code>d</code> that are suited to the task …</p>
@@ -163,9 +407,7 @@ Figure 8.1: Four variations of the exponential functions.
 </details>
 </div>
 <div id="fit-exponential" class="section level2" number="8.2">
-<h2>
-<span class="header-section-number">8.2</span> Curve fitting an exponential function<a class="anchor" aria-label="anchor" href="#fit-exponential"><i class="fas fa-link"></i></a>
-</h2>
+<h2><span class="header-section-number">8.2</span> Curve fitting an exponential function</h2>
 <p>The exponential function is particularly useful when the quantity we want to model shows <strong><em>constant proportional increase</em></strong>. Many quantities in everyday life are this way. For instance, an increase in salary is typically presented in a format like “a 3% increase.” The population growth of a country is often presented as “percent per year.” Inflation in the price of goods is similarly described in percent per year. Interest on money in a bank savings account is also described as percent per year. But if you have the bad fortune to owe money to a loan shark, the proportional increase might be described as “percent per month” or “percent per week.”</p>
 <p>When you know the “percent increase per time” of a quantity whose initial value is <span class="math inline">\(A\)</span>, the exponential function is easy to write down: <span class="math display">\[f(t) = A (1+r)^t\]</span>
 The number <span class="math inline">\(r\)</span> is often called the <strong><em>interest rate</em></strong> or <strong><em>discount rate</em></strong> and is given in <strong>percent</strong>.</p>
@@ -178,9 +420,9 @@ The number <span class="math inline">\(r\)</span> is often called the <strong><e
 </div>
 <p>Exponential functions also describe <strong><em>decrease</em></strong> or <strong><em>decay</em></strong>. Just replace <span class="math inline">\(t\)</span> with <span class="math inline">\(-t\)</span>. That is, a movie of a decreasing quantity is just the movie of an increasing quantity played backwards in time!</p>
 <p>Figure <a href="process-of-modeling.html#fig:Fun-4-intro-1">8.2</a> shows some data collected by Prof. Stan Wagon to support his making a detailed mechanistic model of an everyday phenomenon: <a href="https://www.researchgate.net/profile/Gianluca_Argentini/post/Is_analogy_reasoning_between_heat_transfert_and_electriocity_allows_to_apply_the_electricity_laws_about_resistance_to_thermal_resistances/attachment/59d6573379197b80779ada64/AS%3A533325451403264%401504166104259/download/Stan+WAGON+How+quickly+does+water+cool.pdf">The cooling of a mug of hot beverage to room temperature</a>. The mug started at room temperature, which was measured at 26 degrees C. At time 0 he poured in boiling water from a kettle and measured the temperature of the water over the next few hours.</p>
-<div class="figure" style="text-align: center">
-<span id="fig:Fun-4-intro-1"></span>
-<img src="CalcZ-notes_files/figure-html/Fun-4-intro-1-1.png" alt="Stan's data" width="90%"><p class="caption">
+<div class="figure" style="text-align: center"><span id="fig:Fun-4-intro-1"></span>
+<img src="CalcZ-notes_files/figure-html/Fun-4-intro-1-1.png" alt="Stan's data" width="90%" />
+<p class="caption">
 Figure 8.2: Stan’s data
 </p>
 </div>
@@ -198,15 +440,15 @@ Figure 8.2: Stan’s data
 <li>Scan forward or backward in time to find a point in the data that’s vertically half way from the original point toward the baseline. Call the input at that point <span class="math inline">\(t_{1/2}\)</span>. The difference between these, <span class="math inline">\(t_1 - t_{1/2}\)</span> is called the <strong><em>half-life</em></strong> or <strong><em>halving-time</em></strong> if it’s negative and the <strong><em>doubling time</em></strong> if it’s positive.</li>
 <li>The parameter <span class="math inline">\(k\)</span> is <span class="math inline">\(0.693 / (t_1 - t_{1/2})\)</span>. Double check the sign of <span class="math inline">\(k\)</span> to make sure it’s consistent with what you saw in Step 1. (Incidently, <span class="math inline">\(0.693 = \ln(2)\)</span>. The 2 is the same as the 2 in doubling or halving.)</li>
 </ol>
-<p><strong>Step 4</strong> Now that you have numerical values for the baseline <span class="math inline">\(A\)</span> and the parameter <span class="math inline">\(k\)</span>, calculating the value of <span class="math inline">\(B\)</span> is straightforward.<br>
+<p><strong>Step 4</strong> Now that you have numerical values for the baseline <span class="math inline">\(A\)</span> and the parameter <span class="math inline">\(k\)</span>, calculating the value of <span class="math inline">\(B\)</span> is straightforward.<br />
 i. Pick a <span class="math inline">\(t_0\)</span> that’s reasonably well represented in your data. Find the vertical coordinate represented by the data near that <span class="math inline">\(t_0\)</span>. Call that <span class="math inline">\({\cal D}\)</span>.
 ii. Solve with respect to <span class="math inline">\(B\)</span> the equation <span class="math inline">\(A + B e^{k t_0} = {\cal D}\)</span>. Things are particularly easy if you can use <span class="math inline">\(t_0 = 0\)</span>. Then you just straight off calculate <span class="math inline">\(B = {\cal D} - A\)</span>.</p>
 <p><strong>Step 5</strong> Plot the function <span class="math inline">\(A + B e^{k t}\)</span> using the values for <span class="math inline">\(A\)</span>, <span class="math inline">\(B\)</span>, and <span class="math inline">\(t\)</span> that you just found. If you are not satisfied, tweak the parameters a bit until you are.</p>
 <p><strong>Exponential curve fitting applied to the water-cooling data</strong></p>
 <p>Let’s illustrate the general process on the water-cooling data, redrawn in Figure <a href="process-of-modeling.html#fig:Fun-4-a-2-1">8.3</a>.</p>
-<div class="figure" style="text-align: center">
-<span id="fig:Fun-4-a-2-1"></span>
-<img src="CalcZ-notes_files/figure-html/Fun-4-a-2-1-1.png" alt="The cooling-water data, repeated here for convenience." width="90%"><p class="caption">
+<div class="figure" style="text-align: center"><span id="fig:Fun-4-a-2-1"></span>
+<img src="CalcZ-notes_files/figure-html/Fun-4-a-2-1-1.png" alt="The cooling-water data, repeated here for convenience." width="90%" />
+<p class="caption">
 Figure 8.3: The cooling-water data, repeated here for convenience.
 </p>
 </div>
@@ -222,13 +464,12 @@ Figure 8.3: The cooling-water data, repeated here for convenience.
 <p>Step 4.</p>
 <ol style="list-style-type: lower-roman">
 <li>We know <span class="math inline">\(A \approx 25\)</span> and <span class="math inline">\(k \approx -0.0277\)</span>. We also now that for <span class="math inline">\(t=15\)</span> the function output is about <span class="math inline">\({\cal D} = 80^\circ\)</span>.</li>
-<li>This means <span class="math inline">\(25^\circ + B e^{- 0.0277 \times 15} \approx 80^\circ = 25 + 0.66 B\)</span>. Solving for <span class="math inline">\(B\)</span> gives <span class="math inline">\(B = (80 - 25)/0.66 = 83.3\)</span>
-</li>
+<li>This means <span class="math inline">\(25^\circ + B e^{- 0.0277 \times 15} \approx 80^\circ = 25 + 0.66 B\)</span>. Solving for <span class="math inline">\(B\)</span> gives <span class="math inline">\(B = (80 - 25)/0.66 = 83.3\)</span></li>
 </ol>
 <p>Step 5. Graph the function over the data.</p>
-<div class="figure" style="text-align: center">
-<span id="fig:Fun-4-a-2-2"></span>
-<img src="CalcZ-notes_files/figure-html/Fun-4-a-2-2-1.png" alt="An exponential function that roughly aligns with the data." width="90%"><p class="caption">
+<div class="figure" style="text-align: center"><span id="fig:Fun-4-a-2-2"></span>
+<img src="CalcZ-notes_files/figure-html/Fun-4-a-2-2-1.png" alt="An exponential function that roughly aligns with the data." width="90%" />
+<p class="caption">
 Figure 8.4: An exponential function that roughly aligns with the data.
 </p>
 </div>
@@ -236,24 +477,19 @@ Figure 8.4: An exponential function that roughly aligns with the data.
 <div class="exercise">
 <span id="exr:unnamed-chunk-52" class="exercise"><strong>Exercise 8.2  (chicken-choose-vase)  </strong></span>
 </div>
-<details><p>The Bargain Basement store wants to sell its goods quickly. Consequently, they reduce each product’s price <span class="math inline">\(P\)</span> by 5% per day.</p>
+<details>
+<p>The Bargain Basement store wants to sell its goods quickly. Consequently, they reduce each product’s price <span class="math inline">\(P\)</span> by 5% per day.</p>
 <p><strong>Question A</strong> If a jacket costs $80 today, how much will it cost in <span class="math inline">\(t\)</span> days?</p>
 <ol style="list-style-type: lower-roman">
-<li>
-<span class="math inline">\(P = 80 - 5t\)</span><span class="mcanswer"> ☹︎ Remember, 5 percent is exactly the same as 0.05 </span><br>
+<li><span class="math inline">\(P = 80 - 5t\)</span><span class="mcanswer"> ☹︎ Remember, 5 percent is exactly the same as 0.05 </span><br />
 </li>
-<li>
-<span class="math inline">\(P = 80 - 4t\)</span><span class="mcanswer"> ☹︎ Remember, 4 percent is exactly the same as 0.04 </span><br>
+<li><span class="math inline">\(P = 80 - 4t\)</span><span class="mcanswer"> ☹︎ Remember, 4 percent is exactly the same as 0.04 </span><br />
 </li>
-<li>
-<span class="math inline">\(P = 80 - 0.05t\)</span><span class="mcanswer"> ☹︎ This would be a decrease in price by 5 cents every day. </span><br>
+<li><span class="math inline">\(P = 80 - 0.05t\)</span><span class="mcanswer"> ☹︎ This would be a decrease in price by 5 cents every day. </span><br />
 </li>
-<li>
-<span class="math inline">\(P = 80 (0.05)^t\)</span><span class="mcanswer"> ☹︎ Each day’s price would be only 5% that of the previous day’s price. </span><br>
+<li><span class="math inline">\(P = 80 (0.05)^t\)</span><span class="mcanswer"> ☹︎ Each day’s price would be only 5% that of the previous day’s price. </span><br />
 </li>
-<li>
-<span class="math inline">\(P = 80 (0.95)^t\)</span><span class="mcanswer"> ✓ </span>
-</li>
+<li><span class="math inline">\(P = 80 (0.95)^t\)</span><span class="mcanswer"> ✓ </span></li>
 </ol>
 <p>You’ll need to open a sandbox for the next question.</p>
 <div class="scaffolding">
@@ -261,10 +497,13 @@ Figure 8.4: An exponential function that roughly aligns with the data.
 </div>
 <p><strong>Question B</strong> You decided that you like the $80 jacket, but you have a budget of only $60. How long should you wait before coming back to the Bargain Basement store.?</p>
 <p>    3 days<span class="mcanswer"> ☹︎ On day 3 the price will be <span class="math inline">\(0.95 imes 0.95 imes 0.95 imes 80\)</span>. That’s above your budget. </span>       4 days<span class="mcanswer"> ☹︎ On day 4 the price will be <span class="math inline">\(80 \times 0.95^4\)</span>= $65.16. Too much! </span>       5 days<span class="mcanswer"> ☹︎ On day 5 the price will be <span class="math inline">\(80 \times 0.95^5\)</span>= $61.90. Close, but still higher than your budget. </span>       6 days<span class="mcanswer"> ✓ </span></p>
-</details><div class="exercise">
+</details>
+
+<div class="exercise">
 <span id="exr:unnamed-chunk-53" class="exercise"><strong>Exercise 8.3  (cow-type-kayak-new)  </strong></span>
 </div>
-<details><p>The Wikipedia entry on “Common Misconceptions” used to contain this item:</p>
+<details>
+<p>The Wikipedia entry on “Common Misconceptions” used to contain this item:</p>
 <blockquote>
 <p><em>Some cooks believe that food items cooked with wine or liquor will be non-alcoholic, because alcohol’s low boiling point causes it to evaporate quickly when heated. However, a study found that some of the alcohol remains: 25% after 1 hour of baking or simmering, and 10% after 2 hours.</em></p>
 </blockquote>
@@ -273,14 +512,13 @@ Figure 8.4: An exponential function that roughly aligns with the data.
 <p>    10%<span class="mcanswer"> ☹︎ That’s what the study is reported to have found, but that’s not consistent with an exponential process that decays to 25% after one hour </span>       25%<span class="mcanswer"> ☹︎ Exponentials decay to zero eventually, so don’t expect things to stay still after one hour. </span>       25% of 25%<span class="mcanswer"> ✓ We know that 75% is eliminated over 1 hour, leaving 25%. The continuing exponential process will, over the next hour eliminate 75% of the amount at the start of that hour. So after hour 2 we’ll have 25% of the amount we had at hour 1, which was 25% of the original amount. </span>       75%<span class="mcanswer"> ☹︎ That’s how much was eliminated in the first hour, not how much remains after 2 hours. </span>       75% of 75%<span class="mcanswer"> ☹︎ In an exponential process, at any moment the rate of decay (e.g. 75% per hour) is a constant proportion of the amount that is still there. After one hour, there is 25% of the alcohol remaining. That will decay at a rate of 75% per hour. Over the next hour, we’ll lose 75% of the original 25%, giving us 25% of the original amount. </span></p>
 <p><strong>Question B</strong> B) What is the half-life of an exponential process that decays to 25% after one hour?</p>
 <ol style="list-style-type: lower-roman">
-<li>15 minutes<span class="mcanswer"> ☹︎ This provides time for four halvings in one hour, which would leave <span class="math inline">\(\frac{1}{2} \times \frac{1}{2} \times \frac{1}{2} \times \frac{1}{2} = 1/16\)</span> of the original not 1/4. </span><br>
+<li>15 minutes<span class="mcanswer"> ☹︎ This provides time for four halvings in one hour, which would leave <span class="math inline">\(\frac{1}{2} \times \frac{1}{2} \times \frac{1}{2} \times \frac{1}{2} = 1/16\)</span> of the original not 1/4. </span><br />
 </li>
-<li>30 minutes<span class="mcanswer"> ✓ This gives time for two halvings in one hour, bringing us to 25% as observed. </span><br>
+<li>30 minutes<span class="mcanswer"> ✓ This gives time for two halvings in one hour, bringing us to 25% as observed. </span><br />
 </li>
-<li>45 minutes<span class="mcanswer"> ☹︎ Two halvings bring us down to 25%. At this rate, it would take 90 minutes to get down to 25%, not 60 minutes as observed. </span><br>
+<li>45 minutes<span class="mcanswer"> ☹︎ Two halvings bring us down to 25%. At this rate, it would take 90 minutes to get down to 25%, not 60 minutes as observed. </span><br />
 </li>
-<li>none of the above<span class="mcanswer"> ☹︎ </span>
-</li>
+<li>none of the above<span class="mcanswer"> ☹︎ </span></li>
 </ol>
 <p>Let’s change pace and think about the “10% after 2 hours” observation. First, recall that the amount left after <span class="math inline">\(n\)</span> halvings is
 <span class="math inline">\(\mbox{amount_left}(n) \equiv \frac{1}{2}^n\)</span>
@@ -288,15 +526,14 @@ This is an exponential function with base 1/2.</p>
 <p>You’re going to carry out a <strong><em>guess-and-check</em></strong> procedure to find a zero of the function <span class="math inline">\(\text{amount_left}(n) - 0.10\)</span> that is, you’ll find what <span class="math inline">\(n\)</span> will generate the stated output value (e.g. 10%).
 Open a sandbox and copy over the scaffolding, which include the definition of the <code>amount_left()</code> function. and a “guess” for the input. Change the guess until you get the output 10%.</p>
 <div class="scaffolding">
-<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">amount_left</span> <span class="op">&lt;-</span> <span class="fu">makeFun</span><span class="op">(</span><span class="op">(</span><span class="fl">1</span><span class="op">/</span><span class="fl">2</span><span class="op">)</span><span class="op">^</span><span class="va">n</span> <span class="op">~</span> <span class="va">n</span><span class="op">)</span>
-<span class="fu">amount_left</span><span class="op">(</span><span class="fl">0</span><span class="op">)</span></code></pre></div>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="process-of-modeling.html#cb32-1" aria-hidden="true" tabindex="-1"></a>amount_left <span class="ot">&lt;-</span> <span class="fu">makeFun</span>((<span class="dv">1</span><span class="sc">/</span><span class="dv">2</span>)<span class="sc">^</span>n <span class="sc">~</span> n)</span>
+<span id="cb32-2"><a href="process-of-modeling.html#cb32-2" aria-hidden="true" tabindex="-1"></a><span class="fu">amount_left</span>(<span class="dv">0</span>)</span></code></pre></div>
 <pre><code>## [1] 1</code></pre>
 </div>
 <p><strong>Question C</strong> C) Use <code>amount_left()</code> to figure out how many halvings it takes to bring something down to 10% of the original amount.</p>
 <p>    2.58<span class="mcanswer"> ☹︎ </span>       3.32<span class="mcanswer"> ✓ </span>       3.62<span class="mcanswer"> ☹︎ </span>       3.94<span class="mcanswer"> ☹︎ </span>       4.12<span class="mcanswer"> ☹︎ </span></p>
 <p>Another way to find the input <span class="math inline">\(n\)</span> that generates an output of 10% is to construct the <strong><em>inverse function</em></strong> to <span class="math inline">\(\text{amount_left}()\)</span>.</p>
-<p>The computer already provides you with inverse functions for <span class="math inline">\(2^n\)</span> and <span class="math inline">\(e^n\)</span> and <span class="math inline">\(10^n\)</span>. Their names are <code><a href="https://rdrr.io/r/base/Log.html">log2()</a></code>, <code><a href="https://rdrr.io/r/base/Log.html">log()</a></code>, and <code><a href="https://rdrr.io/r/base/Log.html">log10()</a></code> repectively. Using <code><a href="https://rdrr.io/r/base/Log.html">log2()</a></code>, write a function named <code>log_half()</code> that gives the inverse function to <span class="math inline">\((1/2)^n\)</span>. Remember, the input to the inverse function corresponds to 10%; the output to the <span class="math inline">\(n\)</span>.</p>
+<p>The computer already provides you with inverse functions for <span class="math inline">\(2^n\)</span> and <span class="math inline">\(e^n\)</span> and <span class="math inline">\(10^n\)</span>. Their names are <code>log2()</code>, <code>log()</code>, and <code>log10()</code> repectively. Using <code>log2()</code>, write a function named <code>log_half()</code> that gives the inverse function to <span class="math inline">\((1/2)^n\)</span>. Remember, the input to the inverse function corresponds to 10%; the output to the <span class="math inline">\(n\)</span>.</p>
 <div class="scaffolding">
 <div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="process-of-modeling.html#cb34-1" aria-hidden="true" tabindex="-1"></a>log_half <span class="ot">&lt;-</span> <span class="fu">makeFun</span>( <span class="fu">log2</span>(...your stuff here ...) <span class="sc">~</span> x)</span></code></pre></div>
 </div>
@@ -305,62 +542,61 @@ Open a sandbox and copy over the scaffolding, which include the definition of th
 <p>Suppose you compromise between the half-life needed to reach 25% after one hour and the half-life needed to reach 10% after two hours. Use, say, 33 minutes as the compromise half life. Using the sandbox below, calculate how much would be left after 1 hour for this compromise half life, and how much left after 2 hours.</p>
 <p><strong>Question E</strong> How much is left after 1 hour and after 2 hours when the half life is 33 minutes?</p>
 <ol style="list-style-type: lower-roman">
-<li>28% and 8%<span class="mcanswer"> ✓ </span><br>
+<li>28% and 8%<span class="mcanswer"> ✓ </span><br />
 </li>
-<li>31% and 4%<span class="mcanswer"> ☹︎ </span><br>
+<li>31% and 4%<span class="mcanswer"> ☹︎ </span><br />
 </li>
-<li>30% and 9%<span class="mcanswer"> ☹︎ </span><br>
+<li>30% and 9%<span class="mcanswer"> ☹︎ </span><br />
 </li>
-<li>27% and 9%<span class="mcanswer"> ☹︎ </span>
-</li>
-</ol></details><div class="exercise">
+<li>27% and 9%<span class="mcanswer"> ☹︎ </span></li>
+</ol>
+</details>
+
+<div class="exercise">
 <span id="exr:unnamed-chunk-54" class="exercise"><strong>Exercise 8.4  (maple-hit-saucer)  </strong></span>
 </div>
-<details><p>You have likely heard the phrase “exponential growth” used to describe the COVID-19 pandemic. Let’s explore this idea using actual data.</p>
+<details>
+<p>You have likely heard the phrase “exponential growth” used to describe the COVID-19 pandemic. Let’s explore this idea using actual data.</p>
 <p>The <a href="https://covid19datahub.io/">COVID-19 Data Hub</a> is a collaborative effort of universities, government agencies, and NGOs to provide up-to-date information about the pandemic. We’re going to use the data about the US at the whole-country level. (There’s also data at state and county levels.)</p>
 <p>Perhaps the simplest display is to show the number of cumulative cases (the <code>confirmed</code> variable) and deaths as a function of time. You can see the documentation for the dataset at the <a href="https://covid19datahub.io/">COVID-19 Data Hub</a></p>
 <p>Open a sandbox and make the plot.</p>
 <div class="scaffolding">
 <p>We’re going to plot confirmed cases in blue and deaths in red.</p>
-<div class="sourceCode" id="cb35"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">gf_point</span><span class="op">(</span><span class="va">confirmed</span> <span class="op">~</span> <span class="va">date</span>, data <span class="op">=</span> <span class="va">Covid_US</span>, color <span class="op">=</span> <span class="st">"blue"</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu">gf_point</span><span class="op">(</span><span class="va">deaths</span> <span class="op">~</span> <span class="va">date</span>, color <span class="op">=</span> <span class="st">"red"</span><span class="op">)</span></code></pre></div>
-<div class="inline-figure"><img src="CalcZ-notes_files/figure-html/unnamed-chunk-186-1.png" width="90%" style="display: block; margin: auto;"></div>
+<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="process-of-modeling.html#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_point</span>(confirmed <span class="sc">~</span> date, <span class="at">data =</span> Covid_US, <span class="at">color =</span> <span class="st">&quot;blue&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb35-2"><a href="process-of-modeling.html#cb35-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gf_point</span>(deaths <span class="sc">~</span> date, <span class="at">color =</span> <span class="st">&quot;red&quot;</span>)</span></code></pre></div>
+<p><img src="CalcZ-notes_files/figure-html/unnamed-chunk-186-1.png" width="90%" style="display: block; margin: auto;" /></p>
 </div>
 <p><strong>Question A</strong> As of mid July, about how many confirmed cases were there? (Note that the labeled tick marks refer to the beginning of the month, so the point labeled <code>Feb</code> is February 1.)</p>
 <ol style="list-style-type: lower-roman">
-<li>about 300,000<span class="mcanswer"> ☹︎ The number 1e6 means 1,000,000, that is, six zeros following the one. </span><br>
+<li>about 300,000<span class="mcanswer"> ☹︎ The number 1e6 means 1,000,000, that is, six zeros following the one. </span><br />
 </li>
-<li>about 350,000<span class="mcanswer"> ☹︎ The number 1e6 means 1,000,000, that is, six zeros following the one. </span><br>
+<li>about 350,000<span class="mcanswer"> ☹︎ The number 1e6 means 1,000,000, that is, six zeros following the one. </span><br />
 </li>
-<li>about 400,000<span class="mcanswer"> ☹︎ The number 1e6 means 1,000,000, that is, six zeros following the one. </span><br>
+<li>about 400,000<span class="mcanswer"> ☹︎ The number 1e6 means 1,000,000, that is, six zeros following the one. </span><br />
 </li>
-<li>about 3,000,000<span class="mcanswer"> ☹︎ Mid July is the tick mark <em>after</em> the one labelled <code>Jul</code>. </span><br>
+<li>about 3,000,000<span class="mcanswer"> ☹︎ Mid July is the tick mark <em>after</em> the one labelled <code>Jul</code>. </span><br />
 </li>
-<li>about 3,500,000<span class="mcanswer"> ✓ </span><br>
+<li>about 3,500,000<span class="mcanswer"> ✓ </span><br />
 </li>
-<li>about 4,000,000<span class="mcanswer"> ☹︎ Mid July is the tick mark <em>after</em> the one labelled <code>Jul</code>. </span>
-</li>
+<li>about 4,000,000<span class="mcanswer"> ☹︎ Mid July is the tick mark <em>after</em> the one labelled <code>Jul</code>. </span></li>
 </ol>
 <p>We’re going to do something to make the graph more informative. (At least, more informative if you understand about logarithms and exponentials!)</p>
 <p>Here’s the same graphic as above, but taking the <em>logarithm</em> of the number of cases (that is, <code>confirmed</code>) and of the number of deaths. Since we’re taking the logarithm of only the y-variable, this is called a “semi-log” plot.</p>
 <div class="scaffolding">
-<div class="sourceCode" id="cb36"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">gf_point</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html">log</a></span><span class="op">(</span><span class="va">confirmed</span><span class="op">)</span> <span class="op">~</span> <span class="va">date</span>, data <span class="op">=</span> <span class="va">Covid_US</span>, color <span class="op">=</span> <span class="st">"blue"</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu">gf_point</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html">log</a></span><span class="op">(</span><span class="va">deaths</span><span class="op">)</span> <span class="op">~</span> <span class="va">date</span>, color <span class="op">=</span> <span class="st">"red"</span><span class="op">)</span> </code></pre></div>
-<div class="inline-figure"><img src="CalcZ-notes_files/figure-html/unnamed-chunk-187-1.png" width="90%" style="display: block; margin: auto;"></div>
+<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="process-of-modeling.html#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_point</span>(<span class="fu">log</span>(confirmed) <span class="sc">~</span> date, <span class="at">data =</span> Covid_US, <span class="at">color =</span> <span class="st">&quot;blue&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb36-2"><a href="process-of-modeling.html#cb36-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gf_point</span>(<span class="fu">log</span>(deaths) <span class="sc">~</span> date, <span class="at">color =</span> <span class="st">&quot;red&quot;</span>) </span></code></pre></div>
+<p><img src="CalcZ-notes_files/figure-html/unnamed-chunk-187-1.png" width="90%" style="display: block; margin: auto;" /></p>
 </div>
 <p>Up through the beginning of March in the US, it is thought that most US cases were in people travelling into the US from hot spots such as China and Italy and the US, as opposed to contagion between people within the US. (Such contagion is called “community spread.”) So let’s focus on the data from the start of March onward.</p>
 <p>Exponential growth appears as a straight-line pattern on a semi-log plot. Obviously, the overall pattern of the curves is not a straight line. The explanation for this is that the exponential growth rate changes over time, perhaps due to public health measures (like business closing, masks, etc.)</p>
 <p>The first (official) US death from Covid-19 was recorded was recorded on Feb. 29, 2020. Five more deaths occurred two days later, bringing the cumulative number to 6.</p>
 <p><strong>Question B</strong> The red data points for Feb 29/March 1 show up at zero on the vertical scale. The red data point for March 2 is at around 2 on the vertical scale. Is this consistent with the facts stated above?</p>
 <ol style="list-style-type: lower-roman">
-<li>No. The data contradict the facts.<span class="mcanswer"> ☹︎ Think about what it means to be 0 on the vertical scale. </span><br>
+<li>No. The data contradict the facts.<span class="mcanswer"> ☹︎ Think about what it means to be 0 on the vertical scale. </span><br />
 </li>
-<li>Yes. The vertical scale is in log units, so 0 corresponds to 1 death, since <span class="math inline">\(\ln 1 = 0\)</span>.<span class="mcanswer"> ✓ </span><br>
+<li>Yes. The vertical scale is in log units, so 0 corresponds to 1 death, since <span class="math inline">\(\ln 1 = 0\)</span>.<span class="mcanswer"> ✓ </span><br />
 </li>
-<li>No. The vertical scale doesn’t mean anything.<span class="mcanswer"> ☹︎ You can see from the plotting command what the quantity on the vertical axis is: <code><a href="https://rdrr.io/r/base/Log.html">log(confirmed)</a></code> for the blue dots and <code><a href="https://rdrr.io/r/base/Log.html">log(deaths)</a></code> for the red. </span>
-</li>
+<li>No. The vertical scale doesn’t mean anything.<span class="mcanswer"> ☹︎ You can see from the plotting command what the quantity on the vertical axis is: <code>log(confirmed)</code> for the blue dots and <code>log(deaths)</code> for the red. </span></li>
 </ol>
 <p>One of the purposes of making a semi-log plot is to enable you to compare very large numbers with very small numbers on the same graph. For instance, in the semi-log plot, you can easily see when the first death occurred, a fact that is invisible in the plot of the raw counts (the first plot in this exercise).</p>
 <p>Another feature of semi-log plots is that they preserve proportionality. Look at the plot of raw counts and note that the curve for the number of deaths is much shallower than the curve for the number of (confirmed) cases. Yet on the semi-log plot, the two curves are practically parallel.</p>
@@ -368,54 +604,48 @@ Open a sandbox and copy over the scaffolding, which include the definition of th
 Calculate what the proportion between deaths and cases was in the month of May. Here’s a mathematical hint: <span class="math inline">\(\ln \frac{a}{b} == \ln a - \ln b\)</span>. We are interested in <span class="math inline">\(\frac{a}{b}\)</span>.</p>
 <p><strong>Question C</strong> What is the proportion of deaths to cases during the month of May?</p>
 <ol style="list-style-type: lower-roman">
-<li>about 0.2%<span class="mcanswer"> ☹︎ Remember, it’s the natural logarithm that’s being plotted, so the inverse function is <code><a href="https://rdrr.io/r/base/Log.html">exp()</a></code>. </span><br>
+<li>about 0.2%<span class="mcanswer"> ☹︎ Remember, it’s the natural logarithm that’s being plotted, so the inverse function is <code>exp()</code>. </span><br />
 </li>
-<li>about 1%<span class="mcanswer"> ☹︎ This would correspond to a (vertical) difference between the curves of about 4.6 log units. Is it really that big? </span><br>
+<li>about 1%<span class="mcanswer"> ☹︎ This would correspond to a (vertical) difference between the curves of about 4.6 log units. Is it really that big? </span><br />
 </li>
-<li>about 2%<span class="mcanswer"> ☹︎ This would correspond to a (vertical) difference between the curves of about 4 log units. Is it really that big? </span><br>
+<li>about 2%<span class="mcanswer"> ☹︎ This would correspond to a (vertical) difference between the curves of about 4 log units. Is it really that big? </span><br />
 </li>
-<li>about 6%<span class="mcanswer"> ✓ Good. You calculated <code><a href="https://rdrr.io/r/base/Log.html">exp(log(deaths) - log(cases))</a></code> which gives an answer around 0.06, or 6%. </span><br>
+<li>about 6%<span class="mcanswer"> ✓ Good. You calculated <code>exp(log(deaths) - log(cases))</code> which gives an answer around 0.06, or 6%. </span><br />
 </li>
-<li>about 25%<span class="mcanswer"> ☹︎ I’m not really sure what could lead you to this answer. You’re making a mistake that I didn’t anticipate. </span><br>
+<li>about 25%<span class="mcanswer"> ☹︎ I’m not really sure what could lead you to this answer. You’re making a mistake that I didn’t anticipate. </span><br />
 </li>
-<li>more than 50%<span class="mcanswer"> ☹︎ It’s true that in May log(deaths) is about 12, and log(cases) is about 14, and 12/14 is indeed greater than 50%. But, on a log scale, the proportion relates to the difference between logs, not the ratio. </span>
-</li>
+<li>more than 50%<span class="mcanswer"> ☹︎ It’s true that in May log(deaths) is about 12, and log(cases) is about 14, and 12/14 is indeed greater than 50%. But, on a log scale, the proportion relates to the difference between logs, not the ratio. </span></li>
 </ol>
 <p>In many applications, people use semi-log plots to see whether a pattern is exponential or to compare very small and very large numbers. Often, people find it easier if the vertical scale is written in the original units rather than the log units. To accomplish both, the vertical scale can be ruled with raw units spaced logarithmically, like this:</p>
 <div class="scaffolding">
-<div class="sourceCode" id="cb37"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">gf_point</span><span class="op">(</span><span class="va">confirmed</span> <span class="op">~</span> <span class="va">date</span>, data <span class="op">=</span> <span class="va">Covid_US</span>, color <span class="op">=</span> <span class="st">"blue"</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu">gf_point</span><span class="op">(</span><span class="va">deaths</span> <span class="op">~</span> <span class="va">date</span>, color <span class="op">=</span> <span class="st">"red"</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu">gf_refine</span><span class="op">(</span><span class="fu">scale_y_log10</span><span class="op">(</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="process-of-modeling.html#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_point</span>(confirmed <span class="sc">~</span> date, <span class="at">data =</span> Covid_US, <span class="at">color =</span> <span class="st">&quot;blue&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb37-2"><a href="process-of-modeling.html#cb37-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gf_point</span>(deaths <span class="sc">~</span> date, <span class="at">color =</span> <span class="st">&quot;red&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb37-3"><a href="process-of-modeling.html#cb37-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gf_refine</span>(<span class="fu">scale_y_log10</span>())</span></code></pre></div>
 <pre><code>## Warning: Transformation introduced infinite values in continuous y-axis
 
 ## Warning: Transformation introduced infinite values in continuous y-axis</code></pre>
-<div class="inline-figure"><img src="CalcZ-notes_files/figure-html/unnamed-chunk-188-1.png" width="90%" style="display: block; margin: auto;"></div>
+<p><img src="CalcZ-notes_files/figure-html/unnamed-chunk-188-1.png" width="90%" style="display: block; margin: auto;" /></p>
 </div>
 <p>The <strong>labels</strong> on the vertical axis show the raw numbers, while the <strong>position</strong> shows the logarithm of those numbers.</p>
 <p>The next question has to do with the meaning of the interval between grid lines on the vertical axis. Note that on the <em>horizontal</em> axis, the spacing between adjacent grid lines is half a month.</p>
 <p><strong>Question D</strong> What is the numerical spacing (in terms of raw counts) between adjacent grid lines on the vertical axis?</p>
 <ol style="list-style-type: lower-roman">
-<li>
-<span class="math inline">\(10^1\)</span><span class="mcanswer"> ☹︎ If this were true, moving up from the lowest label (<code>1e+01</code>, that is, 10) the next grid line would be at 20, then 30, then 40. </span><br>
+<li><span class="math inline">\(10^1\)</span><span class="mcanswer"> ☹︎ If this were true, moving up from the lowest label (<code>1e+01</code>, that is, 10) the next grid line would be at 20, then 30, then 40. </span><br />
 </li>
-<li>
-<span class="math inline">\(10^2\)</span><span class="mcanswer"> ☹︎ If this were true, moving up from the lowest label (<code>1e+01</code>) the next grid line would be at 110, then 210, then 310. </span><br>
+<li><span class="math inline">\(10^2\)</span><span class="mcanswer"> ☹︎ If this were true, moving up from the lowest label (<code>1e+01</code>) the next grid line would be at 110, then 210, then 310. </span><br />
 </li>
-<li>A factor of 10.<span class="mcanswer"> ✓ Right. Every time you move up by one grid line, the raw number increases ten-fold, so 10, 100, 1000, 10,000, and so on. The phrase <code>a factor of 10</code> means to multiply by 10, not to add 10. </span><br>
+<li>A factor of 10.<span class="mcanswer"> ✓ Right. Every time you move up by one grid line, the raw number increases ten-fold, so 10, 100, 1000, 10,000, and so on. The phrase <code>a factor of 10</code> means to multiply by 10, not to add 10. </span><br />
 </li>
-<li>A factor of 100.<span class="mcanswer"> ☹︎ You’re thinking along the right lines, but this is the difference between every second grid line, not adjacent grid lines. </span>
-</li>
-</ol></details>
+<li>A factor of 100.<span class="mcanswer"> ☹︎ You’re thinking along the right lines, but this is the difference between every second grid line, not adjacent grid lines. </span></li>
+</ol>
+</details>
 </div>
 <div id="fit-periodic" class="section level2" number="8.3">
-<h2>
-<span class="header-section-number">8.3</span> Curve fitting a periodic function<a class="anchor" aria-label="anchor" href="#fit-periodic"><i class="fas fa-link"></i></a>
-</h2>
+<h2><span class="header-section-number">8.3</span> Curve fitting a periodic function</h2>
 <p>Figure <a href="process-of-modeling.html#fig:Fun-4-a-3-1">8.5</a> shows the tide level in <a href="https://www.google.com/maps/place/Providence,+RI/@41.8071,-71.4012,14z/data=!4m5!3m4!1s0x89e444e0437e735d:0x69df7c4d48b3b627!8m2!3d41.8071!4d-71.4012">Providence, Rhode Island</a>, starting at midnight on April 1, 2020 and recorded every minute for four and a half days. (These data were collected by the US National Oceanic and Atmospheric Administration. <a href="https://tidesandcurrents.noaa.gov/api/datagetter?begin_date=20200401%2010:00&amp;end_date=20200405%201:59&amp;station=8454000&amp;product=one_minute_water_level&amp;datum=mllw&amp;units=metric&amp;time_zone=gmt&amp;application=web_services&amp;format=csv">Link</a>)</p>
-<div class="figure" style="text-align: center">
-<span id="fig:Fun-4-a-3-1"></span>
-<img src="CalcZ-notes_files/figure-html/Fun-4-a-3-1-1.png" alt="About four days of tide-level data from Providence, Rhode Island" width="90%"><p class="caption">
+<div class="figure" style="text-align: center"><span id="fig:Fun-4-a-3-1"></span>
+<img src="CalcZ-notes_files/figure-html/Fun-4-a-3-1-1.png" alt="About four days of tide-level data from Providence, Rhode Island" width="90%" />
+<p class="caption">
 Figure 8.5: About four days of tide-level data from Providence, Rhode Island
 </p>
 </div>
@@ -425,9 +655,9 @@ Figure 8.5: About four days of tide-level data from Providence, Rhode Island
 <p><strong>Step 1</strong>: Choose a sensible value to represent the low point repeatedly reached. 0.5 m seems appropriate here, but obviously the exact position of the trough of each cycle varies over the 4.5 day duration of the data. Similarly, the peak is near 1.6 m. Parameter <span class="math inline">\(A\)</span> is the mean of the peak and trough values: <span class="math inline">\(\frac{1.6 + 0.5}{2} = 1.05\)</span> m here. Parameter <span class="math inline">\(B\)</span> is half the difference between the peak and trough values: <span class="math inline">\(\frac{1.6 - 0.5}{2} = 0.55\)</span>. Parameter <span class="math inline">\(A\)</span> is called the <strong><em>baseline</em></strong> of the sinusoid. Paramter <span class="math inline">\(B\)</span> is the <strong><em>amplitude</em></strong>. (Note that by convention, the amplitude is always <em>half</em> the high-to-low range of the sinusoid.)</p>
 <p><strong>Step 2</strong>: Estimate the period <span class="math inline">\(P\)</span> of the sinusoid. This can be done with a ruler: the horizontal duration of a complete cycle. I like to use the time between peaks, but the time between troughs would work just as well. Another good choice is the time between positive sloping crossings of the baseline. (But be careful. The time between <em>successive</em> baseline crossings, one positive sloping and the other negative, give just <em>half</em> the period.)</p>
 <p>On the scale of the above plot, it’s hard to read off the time of the first peak. So, zoom in until it becomes more obvious.</p>
-<div class="figure" style="text-align: center">
-<span id="fig:Fun-4-a-3-2"></span>
-<img src="CalcZ-notes_files/figure-html/Fun-4-a-3-2-1.png" alt="Zooming in on the start of the data (left) and on the last part of the data (right)." width="50%"><img src="CalcZ-notes_files/figure-html/Fun-4-a-3-2-2.png" alt="Zooming in on the start of the data (left) and on the last part of the data (right)." width="50%"><p class="caption">
+<div class="figure" style="text-align: center"><span id="fig:Fun-4-a-3-2"></span>
+<img src="CalcZ-notes_files/figure-html/Fun-4-a-3-2-1.png" alt="Zooming in on the start of the data (left) and on the last part of the data (right)." width="50%" /><img src="CalcZ-notes_files/figure-html/Fun-4-a-3-2-2.png" alt="Zooming in on the start of the data (left) and on the last part of the data (right)." width="50%" />
+<p class="caption">
 Figure 8.6: Zooming in on the start of the data (left) and on the last part of the data (right).
 </p>
 </div>
@@ -436,9 +666,9 @@ Figure 8.6: Zooming in on the start of the data (left) and on the last part of t
 <p><span class="math display">\[\require{color}
 {\color{green}\mbox{tide}(t) \equiv 1.05 + 0.55 \sin(2\pi t/11)}\]</span></p>
 <p>Figure <a href="process-of-modeling.html#fig:Fun-4-a-3-3">8.7</a> shows this model in <span class="math inline">\(\color{green}\mbox{green}\)</span>.</p>
-<div class="figure" style="text-align: center">
-<span id="fig:Fun-4-a-3-3"></span>
-<img src="CalcZ-notes_files/figure-html/Fun-4-a-3-3-1.png" alt="The sinusoid fails to align with the timing of peaks and troughs." width="50%"><img src="CalcZ-notes_files/figure-html/Fun-4-a-3-3-2.png" alt="The sinusoid fails to align with the timing of peaks and troughs." width="50%"><p class="caption">
+<div class="figure" style="text-align: center"><span id="fig:Fun-4-a-3-3"></span>
+<img src="CalcZ-notes_files/figure-html/Fun-4-a-3-3-1.png" alt="The sinusoid fails to align with the timing of peaks and troughs." width="50%" /><img src="CalcZ-notes_files/figure-html/Fun-4-a-3-3-2.png" alt="The sinusoid fails to align with the timing of peaks and troughs." width="50%" />
+<p class="caption">
 Figure 8.7: The sinusoid fails to align with the timing of peaks and troughs.
 </p>
 </div>
@@ -446,69 +676,67 @@ Figure 8.7: The sinusoid fails to align with the timing of peaks and troughs.
 <div class="exercise">
 <span id="exr:unnamed-chunk-55" class="exercise"><strong>Exercise 8.5  (lamb-talk-gloves)  </strong></span>
 </div>
-<details><p>A person breathes in and out every three seconds. The volume <span class="math inline">\(V\)</span> of air in the person’s lungs varies between a minimum of <span class="math inline">\(2\)</span> liters and a maximum of <span class="math inline">\(4\)</span> liters. Assume time <span class="math inline">\(t\)</span> is measured in seconds.</p>
+<details>
+<p>A person breathes in and out every three seconds. The volume <span class="math inline">\(V\)</span> of air in the person’s lungs varies between a minimum of <span class="math inline">\(2\)</span> liters and a maximum of <span class="math inline">\(4\)</span> liters. Assume time <span class="math inline">\(t\)</span> is measured in seconds.</p>
 <p>Remember that a full cycle of the sine wave <span class="math inline">\(\sin(x)\)</span> involves <span class="math inline">\(x\)</span> going from its starting value to that value <strong>plus</strong> <span class="math inline">\(2 \pi\)</span>.</p>
 <p><strong>Question A</strong> Which of the following is the most appropriate of these models for <span class="math inline">\(V(t)\)</span>?</p>
 <ol style="list-style-type: lower-roman">
-<li>
-<span class="math inline">\(V(t) \equiv 2 + 2 \sin \left( \frac{\pi}{3} t \right)\)</span><span class="mcanswer"> ☹︎ This varies between a minimum of 0 and a maximum of 2. </span><br>
+<li><span class="math inline">\(V(t) \equiv 2 + 2 \sin \left( \frac{\pi}{3} t \right)\)</span><span class="mcanswer"> ☹︎ This varies between a minimum of 0 and a maximum of 2. </span><br />
 </li>
-<li>
-<span class="math inline">\(V(t) \equiv 3 + \sin \left( \frac{2\pi}{3} t \right)\)</span><span class="mcanswer"> ✓ Good. In this class, we generally write the sine function like <span class="math inline">\(\sin(2 \pi t/P)\)</span> which means that the overall argument to the sine function will go from 0 to <span class="math inline">\(2 \pi\)</span> when <span class="math inline">\(t\)</span> goes from 0 to <span class="math inline">\(P\)</span>. </span><br>
+<li><span class="math inline">\(V(t) \equiv 3 + \sin \left( \frac{2\pi}{3} t \right)\)</span><span class="mcanswer"> ✓ Good. In this class, we generally write the sine function like <span class="math inline">\(\sin(2 \pi t/P)\)</span> which means that the overall argument to the sine function will go from 0 to <span class="math inline">\(2 \pi\)</span> when <span class="math inline">\(t\)</span> goes from 0 to <span class="math inline">\(P\)</span>. </span><br />
 </li>
-<li>
-<span class="math inline">\(V(t) \equiv 2 + 2 \sin \left( \frac{2\pi}{3} t \right)\)</span><span class="mcanswer"> ☹︎ This varies between a minimum of 0 and a maximum of 2. </span><br>
+<li><span class="math inline">\(V(t) \equiv 2 + 2 \sin \left( \frac{2\pi}{3} t \right)\)</span><span class="mcanswer"> ☹︎ This varies between a minimum of 0 and a maximum of 2. </span><br />
 </li>
-<li>
-<span class="math inline">\(V(t) \equiv 3 + \sin \left( \frac{\pi}{3} t \right)\)</span><span class="mcanswer"> ☹︎ Right amplitude and baseline: the minimum will be 2 liters and the maximum 4 liters. But the period is wrong. Going from <span class="math inline">\(t=0\)</span> to <span class="math inline">\(t=3\)</span> should produce a full cycle of the sine function. But here the argument would go only from 0 to $ 3 = <span class="math inline">\(\pi\)</span>. After 3 seconds, only half a cycle has been completed. </span>
-</li>
+<li><span class="math inline">\(V(t) \equiv 3 + \sin \left( \frac{\pi}{3} t \right)\)</span><span class="mcanswer"> ☹︎ Right amplitude and baseline: the minimum will be 2 liters and the maximum 4 liters. But the period is wrong. Going from <span class="math inline">\(t=0\)</span> to <span class="math inline">\(t=3\)</span> should produce a full cycle of the sine function. But here the argument would go only from 0 to $ 3 = <span class="math inline">\(\pi\)</span>. After 3 seconds, only half a cycle has been completed. </span></li>
 </ol>
 <p><strong>Question B</strong> Given a respiratory period of 3 seconds/breath, what is the respiratory <strong>frequency</strong> in units of breaths/minute?</p>
 <ol style="list-style-type: lower-roman">
-<li>20 breaths/minute<span class="mcanswer"> ✓ Right. Each breath takes 1/20th of a minute, which is 3 seconds, the period specified in the question. </span><br>
+<li>20 breaths/minute<span class="mcanswer"> ✓ Right. Each breath takes 1/20th of a minute, which is 3 seconds, the period specified in the question. </span><br />
 </li>
-<li>3 breaths/minute<span class="mcanswer"> ☹︎ If this were true, each breath would take 20 seconds to complete. </span><br>
+<li>3 breaths/minute<span class="mcanswer"> ☹︎ If this were true, each breath would take 20 seconds to complete. </span><br />
 </li>
-<li>1/3 breath per minute<span class="mcanswer"> ☹︎ With breaths completed every three seconds, 1/3 of a breath is completed each second. But the problem asked for breaths per minute. </span><br>
+<li>1/3 breath per minute<span class="mcanswer"> ☹︎ With breaths completed every three seconds, 1/3 of a breath is completed each second. But the problem asked for breaths per minute. </span><br />
 </li>
-<li>20 seconds per breath<span class="mcanswer"> ☹︎ The <em>period</em> is in the units of seconds per breath, but the <em>frequency</em> will have units of breaths per second. Frequency is the reciprocal of period (and vice versa). </span>
-</li>
+<li>20 seconds per breath<span class="mcanswer"> ☹︎ The <em>period</em> is in the units of seconds per breath, but the <em>frequency</em> will have units of breaths per second. Frequency is the reciprocal of period (and vice versa). </span></li>
 </ol>
 <p>A respiratory cycle can be divided into two parts: inspiration and expiration. Please do an experiment. Using a clock or watch, breath with a total period of 3 seconds/breath, that is, complete one breath every three seconds. Once you have practiced this and can do it without forcing either phase of breathing, make a rough estimate of what fraction of the cycle is inspiration and what fraction is expiration. (The “correct/incorrect” answers here are right for most people. Your natural respiration might be different.)</p>
 <p><strong>Question C</strong> Which is true?</p>
 <ol style="list-style-type: lower-roman">
-<li>Inspiration lasts longer than expiration<span class="mcanswer"> ✓ </span><br>
+<li>Inspiration lasts longer than expiration<span class="mcanswer"> ✓ </span><br />
 </li>
-<li>Expiration lasts longer than inspiration<span class="mcanswer"> ☹︎ Maybe it is for you, but not for most people. Try breathing in while counting 1-2-3 then exhaling while counting 1-2-3-4-5-6. Likely, that’s not a very natural pattern for you. </span><br>
+<li>Expiration lasts longer than inspiration<span class="mcanswer"> ☹︎ Maybe it is for you, but not for most people. Try breathing in while counting 1-2-3 then exhaling while counting 1-2-3-4-5-6. Likely, that’s not a very natural pattern for you. </span><br />
 </li>
-<li>Inspiration and expiration each consume about the same fraction of the complete cycle.<span class="mcanswer"> ☹︎ People can do this consciously by counting 1-2-3 for inspiration and another 1-2-3 for expiration. This usually feels forced and unnatural. </span>
-</li>
-</ol></details><div class="exercise">
+<li>Inspiration and expiration each consume about the same fraction of the complete cycle.<span class="mcanswer"> ☹︎ People can do this consciously by counting 1-2-3 for inspiration and another 1-2-3 for expiration. This usually feels forced and unnatural. </span></li>
+</ol>
+</details>
+
+<div class="exercise">
 <span id="exr:unnamed-chunk-56" class="exercise"><strong>Exercise 8.6  (spirometer)  </strong></span>
 </div>
-<details><p>The graph below shows a recording from a “spirometer,” an instrument for recording respiration. Like many old instruments, the trace from this spirometer is made by a pen at the end of a swinging arm with paper moving steadily beneath it. The arm is not exactly aligned with the horizontal axis. Nonetheless, you should be able to estimate an appropriate amplitude and period for the trace. (dm<span class="math inline">\(^3\)</span> is cubic-decimeters: a tenth of a meter cubed. This is the same as a liter.)</p>
-<div class="inline-figure"><img src="Exercises/Fun/www/spirometer.jpg" width="75%" style="display: block; margin: auto;"></div>
+<details>
+<p>The graph below shows a recording from a “spirometer,” an instrument for recording respiration. Like many old instruments, the trace from this spirometer is made by a pen at the end of a swinging arm with paper moving steadily beneath it. The arm is not exactly aligned with the horizontal axis. Nonetheless, you should be able to estimate an appropriate amplitude and period for the trace. (dm<span class="math inline">\(^3\)</span> is cubic-decimeters: a tenth of a meter cubed. This is the same as a liter.)</p>
+<p><img src="Exercises/Fun/www/spirometer.jpg" width="75%" style="display: block; margin: auto;" /></p>
 <p><strong>Question A</strong> What are appropriate estimates for the period and amplitude of the respiration trace?</p>
 <ol style="list-style-type: lower-roman">
-<li>About <span class="math inline">\(\pm 1\)</span> liter and 3 seconds.<span class="mcanswer"> ☹︎ If this were true, over the 120 seconds of the recording you would expect to see 40 cycles of respiration. </span><br>
+<li>About <span class="math inline">\(\pm 1\)</span> liter and 3 seconds.<span class="mcanswer"> ☹︎ If this were true, over the 120 seconds of the recording you would expect to see 40 cycles of respiration. </span><br />
 </li>
-<li>About <span class="math inline">\(\pm 1\)</span> liter and 5 seconds.<span class="mcanswer"> ✓ </span><br>
+<li>About <span class="math inline">\(\pm 1\)</span> liter and 5 seconds.<span class="mcanswer"> ✓ </span><br />
 </li>
-<li>About <span class="math inline">\(\pm 1\)</span> liter and 7.5 seconds.<span class="mcanswer"> ☹︎ If this were true, you would expect to see about 16 cycles of respiration over 120 seconds of recording. </span>
-</li>
-</ol></details>
+<li>About <span class="math inline">\(\pm 1\)</span> liter and 7.5 seconds.<span class="mcanswer"> ☹︎ If this were true, you would expect to see about 16 cycles of respiration over 120 seconds of recording. </span></li>
+</ol>
+</details>
 </div>
 <div id="curve-fitting-a-power-law-function" class="section level2" number="8.4">
-<h2>
-<span class="header-section-number">8.4</span> Curve fitting a power-law function<a class="anchor" aria-label="anchor" href="#curve-fitting-a-power-law-function"><i class="fas fa-link"></i></a>
-</h2>
+<h2><span class="header-section-number">8.4</span> Curve fitting a power-law function</h2>
 <p>You have been using power-law functions from early in your math and science education. Some examples:</p>
-<div class="inline-table"><table class="table table-sm">
-<thead><tr class="header">
+<table>
+<thead>
+<tr class="header">
 <th>Setting</th>
 <th>Function formula</th>
 <th>exponent</th>
-</tr></thead>
+</tr>
+</thead>
 <tbody>
 <tr class="odd">
 <td>Circumference of a circle</td>
@@ -556,19 +784,17 @@ Figure 8.7: The sinusoid fails to align with the timing of peaks and troughs.
 <td>0.75</td>
 </tr>
 </tbody>
-</table></div>
+</table>
 <p>The reason why power-law functions have their important role in science have to do with the logic of physical quantities such as length, mass, time, area, volume, force, power, and so on. We’ll discuss this at length later in the course and the principles will appear throughout calculus.</p>
 <p>As for finding the power law <span class="math inline">\(f(x) \equiv A x^p\)</span> that provides a good match to data, we’ll need some additional tools to be introduced in Chapter <a href="magnitudes.html#magnitudes">14</a>.</p>
 </div>
 <div id="hump-and-sigmoid-functions" class="section level2" number="8.5">
-<h2>
-<span class="header-section-number">8.5</span> Hump and sigmoid functions<a class="anchor" aria-label="anchor" href="#hump-and-sigmoid-functions"><i class="fas fa-link"></i></a>
-</h2>
+<h2><span class="header-section-number">8.5</span> Hump and sigmoid functions</h2>
 <p>Our last two basic modeling functions express an important idea in modeling: <strong><em>localness</em></strong>. To put this in concrete terms, imagine creating a function to depict the elevation above sea level of a long road as a function of distance in miles, <span class="math inline">\(x\)</span>, from the start of the road. If the road were level at 1200 feet elevation, a sensible model would be <span class="math inline">\(\mbox{elevation}(x) = 1200 \text{ft}\)</span>. If the road were gently sloping, a better model would be <span class="math inline">\(\mbox{elevation}(x) = 1200 + 3 x\)</span>.</p>
 <p>Now let’s add a bump to the road. A bump is a local feature, often only a few feet wide. Or, perhaps the road is crossing a mountain range. That’s also a local feature, but unlike a bump in the road a mountain range extends for many miles.</p>
 <p>The basic modeling function suited to represent bumps in the road, or potholes, or mountain ranges is called a <strong><em>hump function</em></strong>.</p>
 <p>A hump function has two parameters: the location of the hump, which we’ll call the <strong><em>center</em></strong> parameter, and the sideways extent of the hump, which we’ll call the <strong><em>spread</em></strong>. Figure <a href="#fig:Fun-3C-1"><strong>??</strong></a> shows a few hump functions with different parameters.</p>
-<p><img src="CalcZ-notes_files/figure-html/Fun-3C-1-1.png" width="90%" style="display: block; margin: auto;"><img src="CalcZ-notes_files/figure-html/Fun-3C-1-2.png" width="90%" style="display: block; margin: auto;"><img src="CalcZ-notes_files/figure-html/Fun-3C-1-3.png" width="90%" style="display: block; margin: auto;"></p>
+<p><img src="CalcZ-notes_files/figure-html/Fun-3C-1-1.png" width="90%" style="display: block; margin: auto;" /><img src="CalcZ-notes_files/figure-html/Fun-3C-1-2.png" width="90%" style="display: block; margin: auto;" /><img src="CalcZ-notes_files/figure-html/Fun-3C-1-3.png" width="90%" style="display: block; margin: auto;" /></p>
 <p>It’s easy to read off the <strong><em>center</em></strong> parameter from a graph of a hump. It’s the location of the top of the hump. (We mentioned before that a mathematical word for “the location of the top” is <strong><em>argmax</em></strong>; the value for the input of the function that produces the maximum output.)</p>
 <p>The <strong><em>spread</em></strong> parameter is also pretty straightforward, but you first have to become familiar with an unusual feature of the hump function. The output of the hump function <em>far from the center</em> is practically zero. But it is not exactly zero. You can see from the graphs that the hump function has long flanks which approach zero output more or less in the manner of an exponential function. This means that we can’t measure the spread of the hump function by the distance between the zeros on either side of the peak. Instead, we need a <strong><em>convention</em></strong> that will allow us to be precise in quantifying what is admittedly a vague concept of width.</p>
 <p>A simple convention is that the spread is the “half-width at half-height.” Come down half-way from the peak of the hump. Panel (c) of Figure <a href="#fig:Fun-3C-1"><strong>??</strong></a> marks that elevation with a thin, red, horizontal line. Along that line, measure the width of the hump, as marked by the thick red line in Panel (c). The <strong><em>spread</em></strong> parameter is half the width of the hump measured in this way.</p>
@@ -576,11 +802,11 @@ Figure 8.7: The sinusoid fails to align with the timing of peaks and troughs.
 <p>Another seeming oddity about the hump function is the value of the maximum. It would have seemed natural to define this as 1, so-called “unit height.” The way it actually works is different: the maximum height is set so that the <strong><em>area</em></strong> under the hump function is 1.</p>
 <p>This business with the area will make more sense when you’ve learned some calculus tools, specifically “differentation” and “integration.” For now though …</p>
 <p>Consider another road feature, a local <strong><em>change</em></strong> from one elevation to another as you might accomplish with a ramp. The basic modeling function corresponding to a <strong><em>local change</em></strong> from one level to another is the <strong><em>sigmoid</em></strong> function. Figure <a href="#fig:Fun-3C-2"><strong>??</strong></a> shows three sigmoid functions.</p>
-<p><img src="CalcZ-notes_files/figure-html/Fun-3C-2-1.png" width="90%" style="display: block; margin: auto;"><img src="CalcZ-notes_files/figure-html/Fun-3C-2-2.png" width="90%" style="display: block; margin: auto;"><img src="CalcZ-notes_files/figure-html/Fun-3C-2-3.png" width="90%" style="display: block; margin: auto;">
+<p><img src="CalcZ-notes_files/figure-html/Fun-3C-2-1.png" width="90%" style="display: block; margin: auto;" /><img src="CalcZ-notes_files/figure-html/Fun-3C-2-2.png" width="90%" style="display: block; margin: auto;" /><img src="CalcZ-notes_files/figure-html/Fun-3C-2-3.png" width="90%" style="display: block; margin: auto;" />
 The name “sigmoid” comes from vague resemblance of the graph to the letter S (which is “sigma” in Greek: ς).</p>
 <p>The parameters of the sigmoid function are the same as for the hump function: <strong><em>center</em></strong> and <strong><em>width</em></strong>. The center is easy to estimate from a graph. It’s the value of the input that produces an output of 0.5, half-way between the max and min of the sigmoid. As with the hump function, the <strong><em>width</em></strong> is measured according to a convention. The width is the <strong><em>change in input</em></strong> needed to go from an output of 0.5 to an output of 0.8413. This use of 0.8413 must seem loony at first exposure, but there is a reason. We’ll need more calculus tools before it can make sense.</p>
 <p>Hump functions and sigmoid functions with the same center and width parameters have a very close relationship. The <strong><em>slope</em></strong> of the sigmoid function is the corresponding <strong><em>hump</em></strong> function. Figures <a href="#fig:Fun-3C-1"><strong>??</strong></a> and <a href="#fig:Fun-3C-2"><strong>??</strong></a> show corresponding hump and sigmoid functions. To the very far left, the sigmoid function is effectively flat: a slope near zero. Moving toward the center the sigmoid has a gentle slope: a low number. In the center, the sigmoid is steepest: a higher number. Then the slope of the sigmoid becomes gentle again before gradually falling off to zero. Near zero, then low, then higher, then low again, then falling off to zero: that’s also the description of a hump function!</p>
-<p>In R, the name of the sigmoid function is <code><a href="https://rdrr.io/r/stats/Normal.html">pnorm()</a></code>. The hump is <code><a href="https://rdrr.io/r/stats/Normal.html">dnorm()</a></code>. The parameters that specify center and spread are named <code>mean</code> and <code>sd</code>. The word “mean” accurately conveys the idea of “center.” It would be nice to be able to say that <code>sd</code> comes from <code>s</code>prea<code>d</code>, but in fact <code>sd</code> is short for <strong><em>standard deviation</em></strong>, a old-fashioned term familiar to students of statistics.</p>
+<p>In R, the name of the sigmoid function is <code>pnorm()</code>. The hump is <code>dnorm()</code>. The parameters that specify center and spread are named <code>mean</code> and <code>sd</code>. The word “mean” accurately conveys the idea of “center.” It would be nice to be able to say that <code>sd</code> comes from <code>s</code>prea<code>d</code>, but in fact <code>sd</code> is short for <strong><em>standard deviation</em></strong>, a old-fashioned term familiar to students of statistics.</p>
 <div class="why">
 <p>“Standard deviation” is off-putting to many people and it really should be replaced with something less weird, perhaps <strong><em>typical spread</em></strong>. The “standard” can be interpreted as “widely used convention.” What about “deviation?” The hump function first appeared two-hundred years ago as part of a theory of measurement error. In the context of “error,” “deviation” might have made sense. But the theory of measurement error long ago became a more general theory of <strong><em>variation</em></strong>. Errors are just one source of variation.</p>
 </div>
@@ -588,84 +814,89 @@ The name “sigmoid” comes from vague resemblance of the graph to the letter S
 <div class="exercise">
 <span id="exr:unnamed-chunk-57" class="exercise"><strong>Exercise 8.7  (hump-intro)  </strong></span>
 </div>
-<details><p>The hump function that we mainly use in CalcZ is implemented in R with <code><a href="https://rdrr.io/r/stats/Normal.html">dnorm(x, mean, sd)</a></code>. The input called <code>mean</code> corresponds to the <em>center</em> of the hump. The input called <code>sd</code> gives the <em>width</em> of the hump.</p>
+<details>
+<p>The hump function that we mainly use in CalcZ is implemented in R with <code>dnorm(x, mean, sd)</code>. The input called <code>mean</code> corresponds to the <em>center</em> of the hump. The input called <code>sd</code> gives the <em>width</em> of the hump.</p>
 <div class="scaffolding">
-<p>In a sandbox, make a slice plot of <code><a href="https://rdrr.io/r/stats/Normal.html">dnorm(x, mean=0, sd=1)</a></code>. By varying the value of <code>width</code>, figure out how you could read that value directly from the graph.</p>
-<div class="sourceCode" id="cb39"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">slice_plot</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">dnorm</a></span><span class="op">(</span><span class="va">x</span>, mean<span class="op">=</span><span class="fl">0</span>, sd<span class="op">=</span><span class="fl">1</span><span class="op">)</span> <span class="op">~</span> <span class="va">x</span>,
-           <span class="fu">domain</span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">4</span>, <span class="fl">4</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<p>In a sandbox, make a slice plot of <code>dnorm(x, mean=0, sd=1)</code>. By varying the value of <code>width</code>, figure out how you could read that value directly from the graph.</p>
+<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="process-of-modeling.html#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="fu">slice_plot</span>(<span class="fu">dnorm</span>(x, <span class="at">mean=</span><span class="dv">0</span>, <span class="at">sd=</span><span class="dv">1</span>) <span class="sc">~</span> x,</span>
+<span id="cb39-2"><a href="process-of-modeling.html#cb39-2" aria-hidden="true" tabindex="-1"></a>           <span class="fu">domain</span>(<span class="at">x =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">4</span>, <span class="dv">4</span>)))</span></code></pre></div>
 </div>
 <p>In the plot below, one of the double-headed arrows represents the <code>width</code> parameter. The others are misleading.</p>
-<div class="inline-figure"><img src="CalcZ-notes_files/figure-html/unnamed-chunk-193-1.png" width="90%" style="display: block; margin: auto;"></div>
+<p><img src="CalcZ-notes_files/figure-html/unnamed-chunk-193-1.png" width="90%" style="display: block; margin: auto;" /></p>
 <p><strong>Question A</strong> Which arrow shows correctly the <code>width</code> parameter of the hump function in the graph with arrows?</p>
 <p>    top<span class="mcanswer"> ✓ </span>       middle<span class="mcanswer"> ☹︎ </span>       bottom<span class="mcanswer"> ☹︎ </span>       none of them<span class="mcanswer"> ☹︎ </span></p>
 <p><strong>Question B</strong> What is the value of <code>center</code> in the graph with arrows?</p>
     -2<span class="mcanswer"> ☹︎ The <code>center</code> parameter is the argmax of the function. </span>       -1<span class="mcanswer"> ☹︎ The <code>center</code> parameter is the argmax of the function. </span>       -0.5<span class="mcanswer"> ☹︎ The <code>center</code> parameter is the argmax of the function. </span>       0<span class="mcanswer"> ☹︎ The <code>center</code> parameter is the argmax of the function. </span>       0.5<span class="mcanswer"> ✓ </span>       1<span class="mcanswer"> ☹︎ The <code>center</code> parameter is the argmax of the function. </span>       2<span class="mcanswer"> ☹︎ The <code>center</code> parameter is the argmax of the function. </span>
-</details><div class="exercise">
+</details>
+
+<div class="exercise">
 <span id="exr:unnamed-chunk-58" class="exercise"><strong>Exercise 8.8  (sigmoid-intro)  </strong></span>
 </div>
-<details><p>Hump functions and sigmoidal functions come in pairs. For every possible sigmoid, there is a corresponding hump that gives, for each value of the input, the slope of the sigmoid.</p>
+<details>
+<p>Hump functions and sigmoidal functions come in pairs. For every possible sigmoid, there is a corresponding hump that gives, for each value of the input, the slope of the sigmoid.</p>
 <p>Each of the following graphs shows a sigmoid and a hump function. The two might or might not correspond to one another. That is, the output of the hump might be the slope of the sigmoid, or the hump might correspond to some other sigmoid. Remember, you’re comparing the <em>output</em> of the hump to the <em>slope</em> of the sigmoid.</p>
 <p>For each graph, say whether the hump and the sigmoid correspond to one another. If not, choose one of the reasons why not.</p>
-<div class="inline-figure"><img src="CalcZ-notes_files/figure-html/unnamed-chunk-195-1.png" width="90%" style="display: block; margin: auto;"></div>
+<p><img src="CalcZ-notes_files/figure-html/unnamed-chunk-195-1.png" width="90%" style="display: block; margin: auto;" /></p>
 <p><strong>Question A</strong> Graph (A)</p>
 <ol style="list-style-type: lower-roman">
-<li>The hump and sigmoid correspond.<span class="mcanswer"> ✓ </span><br>
+<li>The hump and sigmoid correspond.<span class="mcanswer"> ✓ </span><br />
 </li>
-<li>The peak of the hump does not occur at the same value of <span class="math inline">\(x\)</span> at which the sigmoid is steepest.<span class="mcanswer"> ☹︎ For what <span class="math inline">\(x\)</span> is the sigmoid the steepest? For what <span class="math inline">\(x\)</span> is the hump the highest? </span><br>
+<li>The peak of the hump does not occur at the same value of <span class="math inline">\(x\)</span> at which the sigmoid is steepest.<span class="mcanswer"> ☹︎ For what <span class="math inline">\(x\)</span> is the sigmoid the steepest? For what <span class="math inline">\(x\)</span> is the hump the highest? </span><br />
 </li>
-<li>The numerical value of the output of the hump function is, for all <span class="math inline">\(x\)</span>, much larger than the numerical value of the <em>slope</em> of the sigmoid.<span class="mcanswer"> ☹︎ Did you calculate the numerical value of the slope of the sigmoid? </span>
-</li>
+<li>The numerical value of the output of the hump function is, for all <span class="math inline">\(x\)</span>, much larger than the numerical value of the <em>slope</em> of the sigmoid.<span class="mcanswer"> ☹︎ Did you calculate the numerical value of the slope of the sigmoid? </span></li>
 </ol>
-<div class="inline-figure"><img src="CalcZ-notes_files/figure-html/unnamed-chunk-196-1.png" width="90%" style="display: block; margin: auto;"></div>
+<p><img src="CalcZ-notes_files/figure-html/unnamed-chunk-196-1.png" width="90%" style="display: block; margin: auto;" /></p>
 <p><strong>Question B</strong> Graph (B)</p>
 <ol style="list-style-type: lower-roman">
-<li>The hump and sigmoid correspond.<span class="mcanswer"> ☹︎ </span><br>
+<li>The hump and sigmoid correspond.<span class="mcanswer"> ☹︎ </span><br />
 </li>
-<li>The peak of the hump does not occur at the same value of <span class="math inline">\(x\)</span> at which the sigmoid is steepest.<span class="mcanswer"> ✓ The hump peaks at about <span class="math inline">\(x=2\)</span> while the steepest part of the sigmoid is at about <span class="math inline">\(x=4\)</span> </span><br>
+<li>The peak of the hump does not occur at the same value of <span class="math inline">\(x\)</span> at which the sigmoid is steepest.<span class="mcanswer"> ✓ The hump peaks at about <span class="math inline">\(x=2\)</span> while the steepest part of the sigmoid is at about <span class="math inline">\(x=4\)</span> </span><br />
 </li>
-<li>The numerical value of the output of the hump function is much larger than the numerical value of the <em>slope</em> of the sigmoid.<span class="mcanswer"> ☹︎ Did you calculate the numerical value of the slope of the sigmoid? </span>
-</li>
+<li>The numerical value of the output of the hump function is much larger than the numerical value of the <em>slope</em> of the sigmoid.<span class="mcanswer"> ☹︎ Did you calculate the numerical value of the slope of the sigmoid? </span></li>
 </ol>
-<div class="inline-figure"><img src="CalcZ-notes_files/figure-html/unnamed-chunk-197-1.png" width="90%" style="display: block; margin: auto;"></div>
+<p><img src="CalcZ-notes_files/figure-html/unnamed-chunk-197-1.png" width="90%" style="display: block; margin: auto;" /></p>
 <p><strong>Question C</strong> Graph (C)</p>
 <ol style="list-style-type: lower-roman">
-<li>The hump and sigmoid correspond.<span class="mcanswer"> ✓ </span><br>
+<li>The hump and sigmoid correspond.<span class="mcanswer"> ✓ </span><br />
 </li>
-<li>The peak of the hump does not occur at the same value of <span class="math inline">\(x\)</span> at which the sigmoid is steepest.<span class="mcanswer"> ☹︎ For what <span class="math inline">\(x\)</span> is the sigmoid the steepest? For what <span class="math inline">\(x\)</span> is the hump the highest? </span><br>
+<li>The peak of the hump does not occur at the same value of <span class="math inline">\(x\)</span> at which the sigmoid is steepest.<span class="mcanswer"> ☹︎ For what <span class="math inline">\(x\)</span> is the sigmoid the steepest? For what <span class="math inline">\(x\)</span> is the hump the highest? </span><br />
 </li>
-<li>The numerical value of the output of the hump function is, for all <span class="math inline">\(x\)</span>, much larger than the numerical value of the <em>slope</em> of the sigmoid.<span class="mcanswer"> ☹︎ Did you calculate the numerical value of the slope of the sigmoid? </span>
-</li>
+<li>The numerical value of the output of the hump function is, for all <span class="math inline">\(x\)</span>, much larger than the numerical value of the <em>slope</em> of the sigmoid.<span class="mcanswer"> ☹︎ Did you calculate the numerical value of the slope of the sigmoid? </span></li>
 </ol>
 <p>In the graph <em>D</em>, there are several hump functions shown, only one of which corresponds to the sigmoid.</p>
-<div class="inline-figure"><img src="CalcZ-notes_files/figure-html/unnamed-chunk-198-1.png" width="90%" style="display: block; margin: auto;"></div>
+<p><img src="CalcZ-notes_files/figure-html/unnamed-chunk-198-1.png" width="90%" style="display: block; margin: auto;" /></p>
 <p><strong>Question D</strong> Which hump corresponds to the sigmoid?</p>
     A<span class="mcanswer"> ☹︎ The value of the hump output is much larger than the slope of the sigmoid. </span>       B<span class="mcanswer"> ✓ Right! The hump is centered on the steepest part of the sigmoid and falls to zero where the sigmoid levels out. </span>       C<span class="mcanswer"> ☹︎ The hump is too narrow. </span>       D<span class="mcanswer"> ☹︎ The hump is too broad and shifted to the left. </span>
-</details><div class="exercise">
+</details>
+
+<div class="exercise">
 <span id="exr:unnamed-chunk-59" class="exercise"><strong>Exercise 8.9  (sigmoid-bath)  </strong></span>
 </div>
-<details><p>Have in mind a hump function and a sigmoid function that form a corresponding pair.</p>
-<div class="inline-figure"><img src="CalcZ-notes_files/figure-html/unnamed-chunk-200-1.png" width="50%" style="display: block; margin: auto;"></div>
+<details>
+<p>Have in mind a hump function and a sigmoid function that form a corresponding pair.</p>
+<p><img src="CalcZ-notes_files/figure-html/unnamed-chunk-200-1.png" width="50%" style="display: block; margin: auto;" /></p>
 <p><strong>Question A</strong> Which of these stories is consistent with the relationship between a hump and its corresponding sigmoid?</p>
 <ol style="list-style-type: lower-roman">
-<li>The hump is the amount of water in a bathtub while the sigmoid is the time you spend in the bath.<span class="mcanswer"> ☹︎ </span><br>
+<li>The hump is the amount of water in a bathtub while the sigmoid is the time you spend in the bath.<span class="mcanswer"> ☹︎ </span><br />
 </li>
-<li>The hump is the amount of water in the bathtub while the sigmoid is the rate at which water flows from the tap.<span class="mcanswer"> ☹︎ You turn the tap on and off after a while. That’s not what the sigmoid looks like. </span><br>
+<li>The hump is the amount of water in the bathtub while the sigmoid is the rate at which water flows from the tap.<span class="mcanswer"> ☹︎ You turn the tap on and off after a while. That’s not what the sigmoid looks like. </span><br />
 </li>
-<li>The hump is the rate at which water flows from the tap and the sigmoid is the amount of water in the bathtub.<span class="mcanswer"> ✓ </span><br>
+<li>The hump is the rate at which water flows from the tap and the sigmoid is the amount of water in the bathtub.<span class="mcanswer"> ✓ </span><br />
 </li>
-<li>The hump indicates the amount the drain is open and the sigmoid is the amount of water in the bathtub.<span class="mcanswer"> ☹︎ Shouldn’t the amount of water go down when the drain is open? </span>
-</li>
-</ol></details><div class="exercise">
+<li>The hump indicates the amount the drain is open and the sigmoid is the amount of water in the bathtub.<span class="mcanswer"> ☹︎ Shouldn’t the amount of water go down when the drain is open? </span></li>
+</ol>
+</details>
+
+<div class="exercise">
 <span id="exr:unnamed-chunk-60" class="exercise"><strong>Exercise 8.10  (ebola-sigmoid)  </strong></span>
 </div>
-<details><p>A data frame named <code>EbolaSierraLeone</code><a class="footnote-ref" tabindex="0" data-toggle="popover" data-content="&lt;p&gt;From the &lt;code&gt;{MMAC}&lt;/code&gt; R package&lt;/p&gt;"><sup>11</sup></a> records the cumulative number of Ebola cases in Sierra Leone from May 1, 2014 to December 16, 2015.</p>
+<details>
+<p>A data frame named <code>EbolaSierraLeone</code><a href="#fn11" class="footnote-ref" id="fnref11"><sup>11</sup></a> records the cumulative number of Ebola cases in Sierra Leone from May 1, 2014 to December 16, 2015.</p>
 <p>Let’s find how well a sigmoidal function models the data.</p>
-<div class="sourceCode" id="cb40"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">gf_point</span><span class="op">(</span><span class="va">Cases</span> <span class="op">~</span> <span class="va">Day</span>, data <span class="op">=</span> <span class="fu">MMAC</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/MMAC/man/EbolaSierraLeone.html">EbolaSierraLeone</a></span><span class="op">)</span></code></pre></div>
-<div class="inline-figure"><img src="CalcZ-notes_files/figure-html/unnamed-chunk-202-1.png" width="90%" style="display: block; margin: auto;"></div>
+<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="process-of-modeling.html#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_point</span>(Cases <span class="sc">~</span> Day, <span class="at">data =</span> MMAC<span class="sc">::</span>EbolaSierraLeone)</span></code></pre></div>
+<p><img src="CalcZ-notes_files/figure-html/unnamed-chunk-202-1.png" width="90%" style="display: block; margin: auto;" /></p>
 <p>It’s straightforward to estimate the values of the parameters from data that have a sigmoidal form. To walk you through the process, the next plot shows simulated data from a genuine sigmoid function.</p>
-<div class="inline-figure"><img src="CalcZ-notes_files/figure-html/unnamed-chunk-203-1.png" width="90%" style="display: block; margin: auto;"></div>
+<p><img src="CalcZ-notes_files/figure-html/unnamed-chunk-203-1.png" width="90%" style="display: block; margin: auto;" /></p>
 <ol style="list-style-type: decimal">
 <li><p>Sketch in a S-shaped curve that smoothly follows the data.</p></li>
 <li><p>Find the top plateau of the S-curve. This is indicated by the red line in the graph above. The parameter <code>A</code> is simply the height of the plateau, in this case <span class="math inline">\(y \approx 15\)</span>.</p></li>
@@ -673,38 +904,35 @@ The name “sigmoid” comes from vague resemblance of the graph to the letter S
 <li><p>From the center of the S-shaped curve, follow the curve upward about 2/3 of the way to the plateau. In the diagram, that point is marked with a green line at <span class="math inline">\(t \approx 7\)</span>. The <code>width</code> is the distance along the horizontal axis from the blue centerline to the green line. Here, that’s <span class="math inline">\(7 - 5\)</span> giving 2 as the <code>width</code>.</p></li>
 <li><p>You might also want to trace the S-curve <em>downward</em> from the centerline about 2/3 of the way to zero. That’s indicated by the left green line. In the standard sigmoid, the two green lines will be equally spaced around the centerline. Of course the data may not be in the shape of the standard sigmoid, so you might find the two green lines are not equally spaced from the center.</p></li>
 </ol>
-<hr>
+<hr />
 <p><em>Put aside for the moment that the Ebola data doesn’t look exactly like the standard sigmoid function. Follow the above procedure, nevertheless.</em></p>
 <p><strong>Question A</strong> Where is the top plateau?</p>
 <ol style="list-style-type: lower-roman">
-<li>About Day 600.<span class="mcanswer"> ☹︎ Measure the height of the plateau, not where it starts horizontally. </span><br>
+<li>About Day 600.<span class="mcanswer"> ☹︎ Measure the height of the plateau, not where it starts horizontally. </span><br />
 </li>
-<li>About 14,000 cases<span class="mcanswer"> ✓ </span><br>
+<li>About 14,000 cases<span class="mcanswer"> ✓ </span><br />
 </li>
-<li>About 20,000 cases<span class="mcanswer"> ☹︎ Read the vertical axis markings more carefully. </span><br>
+<li>About 20,000 cases<span class="mcanswer"> ☹︎ Read the vertical axis markings more carefully. </span><br />
 </li>
-<li>None of the above<span class="mcanswer"> ☹︎ One of the above answers is pretty good. </span>
-</li>
+<li>None of the above<span class="mcanswer"> ☹︎ One of the above answers is pretty good. </span></li>
 </ol>
 <p><strong>Question B</strong> Where is the centerline?</p>
 <ol style="list-style-type: lower-roman">
-<li>Near Day 200<span class="mcanswer"> ✓ </span><br>
+<li>Near Day 200<span class="mcanswer"> ✓ </span><br />
 </li>
-<li>Near Day 300<span class="mcanswer"> ☹︎ That’s the center of the vertical scale, not the day at which the curve reaches half-way to the eventual plateau. </span><br>
+<li>Near Day 300<span class="mcanswer"> ☹︎ That’s the center of the vertical scale, not the day at which the curve reaches half-way to the eventual plateau. </span><br />
 </li>
-<li>At about 7000 cases<span class="mcanswer"> ☹︎ That’s half-way up to the plateau, but the answer you want is the day at which the curve reaches that point. </span>
-</li>
+<li>At about 7000 cases<span class="mcanswer"> ☹︎ That’s half-way up to the plateau, but the answer you want is the day at which the curve reaches that point. </span></li>
 </ol>
 <p><strong>Question C</strong> Now to find the <code>width</code> parameter. The curve looks more classically sigmoidal to the left of the centerline than to the right, so follow the curve <em>downward</em> as in Step 4 of the algorithm to find the parameters. What’s a good estimate for <code>width</code>?</p>
 <ol style="list-style-type: lower-roman">
-<li>About 50 days<span class="mcanswer"> ✓ </span><br>
+<li>About 50 days<span class="mcanswer"> ✓ </span><br />
 </li>
-<li>About 100 days<span class="mcanswer"> ☹︎ Too wide! </span><br>
+<li>About 100 days<span class="mcanswer"> ☹︎ Too wide! </span><br />
 </li>
-<li>About 10 days<span class="mcanswer"> ☹︎ Too small </span><br>
+<li>About 10 days<span class="mcanswer"> ☹︎ Too small </span><br />
 </li>
-<li>About 2500 cases<span class="mcanswer"> ☹︎ The width is measured along the horizontal axis, not the vertical </span>
-</li>
+<li>About 2500 cases<span class="mcanswer"> ☹︎ The width is measured along the horizontal axis, not the vertical </span></li>
 </ol>
 <p>Open a sandbox and use the following commands to plot the Ebola data along with the sigmoid that you matched to the data by eye. The commands also generate and plot a more “refined” estimate found with <code>fitModel()</code> starting with your by-eye parameters. (Note: You’ll need to fill in the blanks at the start of the scaffolding with your by-eye parameters before running the code.)</p>
 <div class="scaffolding">
@@ -725,8 +953,8 @@ The name “sigmoid” comes from vague resemblance of the graph to the letter S
 <span id="cb41-15"><a href="process-of-modeling.html#cb41-15" aria-hidden="true" tabindex="-1"></a>                              <span class="at">width=</span>width_estimate))</span>
 <span id="cb41-16"><a href="process-of-modeling.html#cb41-16" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb41-17"><a href="process-of-modeling.html#cb41-17" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_point</span>(Cases  <span class="sc">~</span> Day, <span class="at">data =</span> MMAC<span class="sc">::</span>EbolaSierraLeone)  <span class="sc">%&gt;%</span></span>
-<span id="cb41-18"><a href="process-of-modeling.html#cb41-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice_plot</span>(<span class="fu">guessed_fun</span>(Day) <span class="sc">~</span> Day, <span class="at">color=</span><span class="st">"red"</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb41-19"><a href="process-of-modeling.html#cb41-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice_plot</span>(<span class="fu">refined_fun</span>(Day) <span class="sc">~</span> Day, <span class="at">color=</span><span class="st">"blue"</span>)</span></code></pre></div>
+<span id="cb41-18"><a href="process-of-modeling.html#cb41-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice_plot</span>(<span class="fu">guessed_fun</span>(Day) <span class="sc">~</span> Day, <span class="at">color=</span><span class="st">&quot;red&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb41-19"><a href="process-of-modeling.html#cb41-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice_plot</span>(<span class="fu">refined_fun</span>(Day) <span class="sc">~</span> Day, <span class="at">color=</span><span class="st">&quot;blue&quot;</span>)</span></code></pre></div>
 </div>
 <p>I can’t predict what you see in your graph, since it depends on what starting estimates you used for <code>A</code>, <code>center</code> and <code>width</code>.</p>
 <p><strong>Essay question tmp-3</strong>: Write down the estimates you made by eye for <code>A</code>, <code>center</code> and <code>width</code>. Then explain in words any major systematic deviations of the ‘refined’ model from the data.</p>
@@ -735,48 +963,42 @@ The name “sigmoid” comes from vague resemblance of the graph to the letter S
 <li>A model is built for a purpose. There’s no statement in the exercise about what the purpose is.</li>
 <li>The data themselves are a good enough representation of the historical pattern. There’s no need to adorn them with a fitted curve.</li>
 <li>The mathematical processes that would justify the expectation that a sigmoid curve could be useful are based on the idea that the underlying mechanism for the phenomenon is unchanging. For an epidemic, that mechanism is contagion. By saying the “mechanism is unchanging,” we mean that person-to-person transmission of the Ebola virus happens in the same way at the beginning of the epidemic as it does in the middle and in the end. But strong public health interventions were introduced to control the epidemic. That’s a change in mechanism.</li>
-</ol></details>
+</ol>
+</details>
 </div>
 <div id="modeling-cycle" class="section level2" number="8.6">
-<h2>
-<span class="header-section-number">8.6</span> The modeling cycle<a class="anchor" aria-label="anchor" href="#modeling-cycle"><i class="fas fa-link"></i></a>
-</h2>
+<h2><span class="header-section-number">8.6</span> The modeling cycle</h2>
 <p>Effective modelers treat models with skepticism. They look for ways in which models failure to capture salient features of the real world. They have an eye out for deviations between what their models show and what they believe they know about the system being modeled. They consider ways in which the models might not serve the purpose for which they were developed.</p>
 <p>When modelers spot a failure or deviation or lack of proper utility, they might discard the model but more often they make a series of small adjustments, tuning up the model until is successfully serves the purposes for which it is intended.</p>
 <p>Thus, modeling is a cyclic process of creating a model, assessing the model, and revising the model. The process comes to a sort of preliminary end when the model serves its purposes. But even then, models are often revised to check whether the results are sensitive to some factor that was not included or to check whether some component that was deemed essential really is so.</p>
 <div id="example-cooling-water" class="section level3" number="8.6.1">
-<h3>
-<span class="header-section-number">8.6.1</span> Example: Cooling water<a class="anchor" aria-label="anchor" href="#example-cooling-water"><i class="fas fa-link"></i></a>
-</h3>
+<h3><span class="header-section-number">8.6.1</span> Example: Cooling water</h3>
 <p>Looking back on the exponential fitted to the cooling water data in Section <a href="process-of-modeling.html#fit-exponential">8.2</a>, it looks like our original estimate of the half-life is a bit too small; the data doesn’t seem to decay at the rate implied by <span class="math inline">\(k = -0.0277\)</span>. Perhaps we should try a somewhat slower decay, say <span class="math inline">\(k = -0.2\)</span> and see if that improves things.</p>
 <div class="scaffolding">
 <p>In the cooling water example, we’re using only a subset of the data collected by Prof. Wagon. The next commands re-create that subset so that you can work with it. They also plot the data and an exponential model.</p>
-<div class="sourceCode" id="cb42"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># reconstruct the sample</span>
-<span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">101</span><span class="op">)</span>
-<span class="va">Stans_data</span> <span class="op">&lt;-</span> <span class="va">CoolingWater</span> <span class="op">%&gt;%</span> <span class="fu">sample_n</span><span class="op">(</span><span class="fl">20</span><span class="op">)</span>
-<span class="co"># Plot the sample and overlay a model</span>
-<span class="fu">gf_point</span><span class="op">(</span><span class="va">temp</span> <span class="op">~</span> <span class="va">time</span>, data<span class="op">=</span><span class="va">Stans_data</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu">gf_lims</span><span class="op">(</span>y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">20</span>, <span class="cn">NA</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu">slice_plot</span><span class="op">(</span><span class="fl">25</span> <span class="op">+</span> <span class="fl">83.3</span><span class="op">*</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html">exp</a></span><span class="op">(</span><span class="op">-</span><span class="fl">.0277</span><span class="op">*</span><span class="va">time</span><span class="op">)</span> <span class="op">~</span> <span class="va">time</span>, color<span class="op">=</span><span class="st">"blue"</span><span class="op">)</span></code></pre></div>
-<div class="inline-figure"><img src="CalcZ-notes_files/figure-html/unnamed-chunk-61-1.png" width="90%" style="display: block; margin: auto;"></div>
+<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="process-of-modeling.html#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="co"># reconstruct the sample</span></span>
+<span id="cb42-2"><a href="process-of-modeling.html#cb42-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">101</span>)</span>
+<span id="cb42-3"><a href="process-of-modeling.html#cb42-3" aria-hidden="true" tabindex="-1"></a>Stans_data <span class="ot">&lt;-</span> CoolingWater <span class="sc">%&gt;%</span> <span class="fu">sample_n</span>(<span class="dv">20</span>)</span>
+<span id="cb42-4"><a href="process-of-modeling.html#cb42-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the sample and overlay a model</span></span>
+<span id="cb42-5"><a href="process-of-modeling.html#cb42-5" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_point</span>(temp <span class="sc">~</span> time, <span class="at">data=</span>Stans_data) <span class="sc">%&gt;%</span></span>
+<span id="cb42-6"><a href="process-of-modeling.html#cb42-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gf_lims</span>(<span class="at">y =</span> <span class="fu">c</span>(<span class="dv">20</span>, <span class="cn">NA</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb42-7"><a href="process-of-modeling.html#cb42-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice_plot</span>(<span class="dv">25</span> <span class="sc">+</span> <span class="fl">83.3</span><span class="sc">*</span><span class="fu">exp</span>(<span class="sc">-</span>.<span class="dv">0277</span><span class="sc">*</span>time) <span class="sc">~</span> time, <span class="at">color=</span><span class="st">&quot;blue&quot;</span>)</span></code></pre></div>
+<p><img src="CalcZ-notes_files/figure-html/unnamed-chunk-61-1.png" width="90%" style="display: block; margin: auto;" /></p>
 <p>See if <span class="math inline">\(k=-0.02\)</span> provides a better fit to the model. (You can add another <code>slice_plot()</code> to be able to compare the original and <span class="math inline">\(k=-0.02\)</span> models.)</p>
 </div>
 <p>Later in CalcZ, we’ll study <strong><em>optimization</em></strong>. There are optimization techniques for directing the computer to refine the parameters to best match the data. Just to illustrate, here’s what we get:</p>
-<div class="sourceCode" id="cb43"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">refined_params</span> <span class="op">&lt;-</span> 
-  <span class="fu">fitModel</span><span class="op">(</span><span class="va">temp</span> <span class="op">~</span> <span class="va">A</span> <span class="op">+</span> <span class="va">B</span><span class="op">*</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html">exp</a></span><span class="op">(</span><span class="va">k</span><span class="op">*</span><span class="va">time</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">Stans_data</span>, 
-           start <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>A <span class="op">=</span> <span class="fl">25</span>, B <span class="op">=</span> <span class="fl">83.3</span>, k <span class="op">=</span> <span class="op">-</span><span class="fl">0.0277</span><span class="op">)</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/stats/coef.html">coef</a></span><span class="op">(</span><span class="va">refined_params</span><span class="op">)</span></code></pre></div>
+<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="process-of-modeling.html#cb43-1" aria-hidden="true" tabindex="-1"></a>refined_params <span class="ot">&lt;-</span> </span>
+<span id="cb43-2"><a href="process-of-modeling.html#cb43-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fitModel</span>(temp <span class="sc">~</span> A <span class="sc">+</span> B<span class="sc">*</span><span class="fu">exp</span>(k<span class="sc">*</span>time), <span class="at">data =</span> Stans_data, </span>
+<span id="cb43-3"><a href="process-of-modeling.html#cb43-3" aria-hidden="true" tabindex="-1"></a>           <span class="at">start =</span> <span class="fu">list</span>(<span class="at">A =</span> <span class="dv">25</span>, <span class="at">B =</span> <span class="fl">83.3</span>, <span class="at">k =</span> <span class="sc">-</span><span class="fl">0.0277</span>))</span>
+<span id="cb43-4"><a href="process-of-modeling.html#cb43-4" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(refined_params)</span></code></pre></div>
 <pre><code>##           A           B           k 
 ## 25.92628463 60.69255269 -0.01892572</code></pre>
-<div class="sourceCode" id="cb45"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">new_f</span> <span class="op">&lt;-</span> <span class="fu">makeFun</span><span class="op">(</span><span class="va">refined_params</span><span class="op">)</span>
-<span class="fu">gf_point</span><span class="op">(</span><span class="va">temp</span> <span class="op">~</span> <span class="va">time</span>, data <span class="op">=</span> <span class="va">Stans_data</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu">slice_plot</span><span class="op">(</span><span class="fu">new_f</span><span class="op">(</span><span class="va">time</span><span class="op">)</span> <span class="op">~</span> <span class="va">time</span>, color<span class="op">=</span><span class="st">"blue"</span><span class="op">)</span></code></pre></div>
-<div class="figure" style="text-align: center">
-<span id="fig:Fun-4-a-2-3"></span>
-<img src="CalcZ-notes_files/figure-html/Fun-4-a-2-3-1.png" alt="Polishing the fit using the rough model as a starting point." width="90%"><p class="caption">
+<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb45-1"><a href="process-of-modeling.html#cb45-1" aria-hidden="true" tabindex="-1"></a>new_f <span class="ot">&lt;-</span> <span class="fu">makeFun</span>(refined_params)</span>
+<span id="cb45-2"><a href="process-of-modeling.html#cb45-2" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_point</span>(temp <span class="sc">~</span> time, <span class="at">data =</span> Stans_data) <span class="sc">%&gt;%</span></span>
+<span id="cb45-3"><a href="process-of-modeling.html#cb45-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice_plot</span>(<span class="fu">new_f</span>(time) <span class="sc">~</span> time, <span class="at">color=</span><span class="st">&quot;blue&quot;</span>)</span></code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:Fun-4-a-2-3"></span>
+<img src="CalcZ-notes_files/figure-html/Fun-4-a-2-3-1.png" alt="Polishing the fit using the rough model as a starting point." width="90%" />
+<p class="caption">
 Figure 8.8: Polishing the fit using the rough model as a starting point.
 </p>
 </div>
@@ -785,9 +1007,9 @@ Figure 8.8: Polishing the fit using the rough model as a starting point.
 <p>Looking at the results of the second round, the experienced modeler can see some disturbing discrepancies. First, the estimated baseline appears to be too high. Related, the initial decay of the model function doesn’t seem to be fast enough and the decay of the model function for large <span class="math inline">\(t\)</span> appears to be too slow. Prof. Stan Wagon noticed this. He used additional data to fill in the gaps for small <span class="math inline">\(t\)</span> and refined his model further by changing the basis functions in the linear combination. He hypothesized that there are at least two different cooling processes. First, the newly poured water raises the temperature of the mug itself. Since the water and mug are in direct contact, this is a fast process. Then, the complete water/mug unit comes slowly into equilibrium with the room temperature.</p>
 <p>The newly refined model was a even better match to the data. But nothing’s perfect and Prof. Wagon saw an opportunity for additional refinement based on the idea that there is a third physical mechanism of cooling: evaporation from the surface of the hot water. Prof. Wagon’s additional circuits of the modeling cycle were appropriate to his purpose, which was to develop a detailed understanding of the process of cooling. For other purposes, such as demonstrating the appropriateness of an exponential process or interpolating between the data points, earlier cycles might have sufficed.</p>
 <p>Here’s a graph of the model Prof. Wagon constructed to match the data.</p>
-<div class="figure" style="text-align: center">
-<span id="fig:Fun-4-a-2-4"></span>
-<img src="www/Wagon-water-fit.png" alt="A model that combines three exponentials provides an excellent fit." width="70%"><p class="caption">
+<div class="figure" style="text-align: center"><span id="fig:Fun-4-a-2-4"></span>
+<img src="www/Wagon-water-fit.png" alt="A model that combines three exponentials provides an excellent fit." width="70%" />
+<p class="caption">
 Figure 8.9: A model that combines three exponentials provides an excellent fit.
 </p>
 </div>
@@ -798,39 +1020,36 @@ Figure 8.9: A model that combines three exponentials provides an excellent fit.
 <p>The modeling cycle can go round and round!</p>
 </div>
 <div id="example-the-tides" class="section level3" number="8.6.2">
-<h3>
-<span class="header-section-number">8.6.2</span> Example: The tides<a class="anchor" aria-label="anchor" href="#example-the-tides"><i class="fas fa-link"></i></a>
-</h3>
+<h3><span class="header-section-number">8.6.2</span> Example: The tides</h3>
 <p><strong>Step 4</strong>: Evaluate and refine. The green model would make poor predictions. The model says “high tide” when the data say otherwise. What’s missing is the <strong><em>phase</em></strong> of the sinusoid. A model that incorporates the phase is</p>
 <p><span class="math display">\[{\color{blue}\mbox{tide}(t) \equiv 1.05 + 0.55 \sin(2\pi (t - t_0)/11)}\]</span></p>
 <p>The new parameter, <span class="math inline">\(t_0\)</span>, should be set to be the time of a positive-going crossing of the baseline. There’s such a crossing at about time = 17. Happily, changing the phase does not itself necessitate re-estimating the other parameters: baseline, amplitude, period. This model, incorporating the phase, has been graphed in <span class="math inline">\(\color{blue}\mbox{blue}\)</span>.</p>
-<div class="figure" style="text-align: center">
-<span id="fig:Fun-4-a-3-4"></span>
-<img src="CalcZ-notes_files/figure-html/Fun-4-a-3-4-1.png" alt="Shifting the **phase** of the sinusoid gives the flexibility needed to align the peaks and troughs of the model with the data. Performing this alignment for one peak makes it clear that the period is wrong." width="50%"><img src="CalcZ-notes_files/figure-html/Fun-4-a-3-4-2.png" alt="Shifting the **phase** of the sinusoid gives the flexibility needed to align the peaks and troughs of the model with the data. Performing this alignment for one peak makes it clear that the period is wrong." width="50%"><p class="caption">
+<div class="figure" style="text-align: center"><span id="fig:Fun-4-a-3-4"></span>
+<img src="CalcZ-notes_files/figure-html/Fun-4-a-3-4-1.png" alt="Shifting the **phase** of the sinusoid gives the flexibility needed to align the peaks and troughs of the model with the data. Performing this alignment for one peak makes it clear that the period is wrong." width="50%" /><img src="CalcZ-notes_files/figure-html/Fun-4-a-3-4-2.png" alt="Shifting the **phase** of the sinusoid gives the flexibility needed to align the peaks and troughs of the model with the data. Performing this alignment for one peak makes it clear that the period is wrong." width="50%" />
+<p class="caption">
 Figure 8.10: Shifting the <strong>phase</strong> of the sinusoid gives the flexibility needed to align the peaks and troughs of the model with the data. Performing this alignment for one peak makes it clear that the period is wrong.
 </p>
 </div>
 <p>For some modeling purposes, such as prediction of future tides, the phase information is impossible. For others, say, description of the amplitude of the tides, not. But getting the phase roughly right can help point out other problems. For instance, having the blue sinusoid for comparison makes it clear that the estimated period of 11 hours is too short. Maybe 13 hours would be better. Better still, since at <span class="math inline">\(t=t_0 = 17\)</span> the model is a close match to the data, let’s use that as the estimate of the start of a cycle. But then, let’s move much further along in the data to find another baseline crossing. To judge from the right panel, there is a baseline crossing at <span class="math inline">\(t=103\)</span>. The difference between these two times is <span class="math inline">\(103 - 17 = 86\)</span> hours. Of course, the period is not 86 hours. Looking back at the whole set of data we can see 7 complete cycles between <span class="math inline">\(t=17\)</span> and <span class="math inline">\(t=103\)</span>. So our new estimate of the period is <span class="math inline">\(86/7 = 12.3\)</span> hours.</p>
 <p>With this refinement the model is
 <span class="math display">\[{\color{violet}\mbox{tide}(t) \equiv 1.05 + 0.55 \sin(2\pi (t - 17)/12.3)}\]</span></p>
-<div class="figure" style="text-align: center">
-<span id="fig:Fun-4-a-3-5"></span>
-<img src="CalcZ-notes_files/figure-html/Fun-4-a-3-5-1.png" alt="With the phase about right, a better estimate can be made of the period: 12.3 hours." width="90%"><p class="caption">
+<div class="figure" style="text-align: center"><span id="fig:Fun-4-a-3-5"></span>
+<img src="CalcZ-notes_files/figure-html/Fun-4-a-3-5-1.png" alt="With the phase about right, a better estimate can be made of the period: 12.3 hours." width="90%" />
+<p class="caption">
 Figure 8.11: With the phase about right, a better estimate can be made of the period: 12.3 hours.
 </p>
 </div>
 <p>That’s a pretty good match to the data! We might call it quits at that. First, let’s polish up the parameter estimates, letting the computer do the tedious work of trying little tweaks to see if it can improve the fit.</p>
-<div class="sourceCode" id="cb46"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">tide_mod</span> <span class="op">&lt;-</span> 
-  <span class="fu">fitModel</span><span class="op">(</span><span class="va">level</span> <span class="op">~</span> <span class="va">A</span> <span class="op">+</span> <span class="va">B</span><span class="op">*</span><span class="fu"><a href="https://rdrr.io/r/base/Trig.html">sin</a></span><span class="op">(</span><span class="fl">2</span><span class="op">*</span><span class="va">pi</span><span class="op">*</span><span class="op">(</span><span class="va">hour</span><span class="op">-</span><span class="va">hzero</span><span class="op">)</span><span class="op">/</span><span class="va">P</span><span class="op">)</span>,
-  data <span class="op">=</span> <span class="va">RI_tide</span>,
-  start<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>A<span class="op">=</span><span class="fl">1.05</span>, B<span class="op">=</span><span class="fl">0.55</span>, hzero<span class="op">=</span><span class="fl">17</span>, P<span class="op">=</span><span class="fl">12.3</span><span class="op">)</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/stats/coef.html">coef</a></span><span class="op">(</span><span class="va">tide_mod</span><span class="op">)</span></code></pre></div>
+<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb46-1"><a href="process-of-modeling.html#cb46-1" aria-hidden="true" tabindex="-1"></a>tide_mod <span class="ot">&lt;-</span> </span>
+<span id="cb46-2"><a href="process-of-modeling.html#cb46-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fitModel</span>(level <span class="sc">~</span> A <span class="sc">+</span> B<span class="sc">*</span><span class="fu">sin</span>(<span class="dv">2</span><span class="sc">*</span>pi<span class="sc">*</span>(hour<span class="sc">-</span>hzero)<span class="sc">/</span>P),</span>
+<span id="cb46-3"><a href="process-of-modeling.html#cb46-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> RI_tide,</span>
+<span id="cb46-4"><a href="process-of-modeling.html#cb46-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">start=</span><span class="fu">list</span>(<span class="at">A=</span><span class="fl">1.05</span>, <span class="at">B=</span><span class="fl">0.55</span>, <span class="at">hzero=</span><span class="dv">17</span>, <span class="at">P=</span><span class="fl">12.3</span>))</span>
+<span id="cb46-5"><a href="process-of-modeling.html#cb46-5" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(tide_mod)</span></code></pre></div>
 <pre><code>##          A          B      hzero          P 
 ##  1.0220540  0.4998367 15.3899905 12.5593556</code></pre>
-<div class="figure" style="text-align: center">
-<span id="fig:Fun-4-a-3-6"></span>
-<img src="CalcZ-notes_files/figure-html/Fun-4-a-3-6-1.png" alt="Polishing the parameters of the sinusoid" width="90%"><p class="caption">
+<div class="figure" style="text-align: center"><span id="fig:Fun-4-a-3-6"></span>
+<img src="CalcZ-notes_files/figure-html/Fun-4-a-3-6-1.png" alt="Polishing the parameters of the sinusoid" width="90%" />
+<p class="caption">
 Figure 8.12: Polishing the parameters of the sinusoid
 </p>
 </div>
@@ -844,35 +1063,32 @@ Figure 8.12: Polishing the parameters of the sinusoid
 <div class="exercise">
 <span id="exr:daylength" class="exercise"><strong>Exercise 6.2  (sunset-in-LA)  </strong></span>
 </div>
-<details><p>The data frame <code>SunsetLA</code> records the number of minutes after 4 pm until the sun sets in Los Angeles, CA over a 4-year interval from January 2010 (month 1) through December 2013 (month 48).</p>
+<details>
+<p>The data frame <code>SunsetLA</code> records the number of minutes after 4 pm until the sun sets in Los Angeles, CA over a 4-year interval from January 2010 (month 1) through December 2013 (month 48).</p>
 <!-- (All times are already adjusted for daylight savings time. The book doesn't tell us whether the value for each month is an average over all days or for a particular day of the month.) -->
 <p>Open a sandbox and make a plot of sunset time versus month.</p>
 <div class="scaffolding">
-<div class="sourceCode" id="cb48"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">gf_point</span><span class="op">(</span><span class="va">Minutes</span> <span class="op">~</span> <span class="va">Month</span>, data <span class="op">=</span> <span class="va">SunsetLA</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu">gf_line</span><span class="op">(</span><span class="op">)</span></code></pre></div>
-<div class="inline-figure"><img src="CalcZ-notes_files/figure-html/unnamed-chunk-206-1.png" width="90%" style="display: block; margin: auto;"></div>
+<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb48-1"><a href="process-of-modeling.html#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_point</span>(Minutes <span class="sc">~</span> Month, <span class="at">data =</span> SunsetLA) <span class="sc">%&gt;%</span></span>
+<span id="cb48-2"><a href="process-of-modeling.html#cb48-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gf_line</span>()</span></code></pre></div>
+<p><img src="CalcZ-notes_files/figure-html/unnamed-chunk-206-1.png" width="90%" style="display: block; margin: auto;" /></p>
 <p>We’re using both <code>gf_point()</code> and <code>gf_line()</code>. With data that oscillates up and down, connecting the data points with lines makes it easier to see the pattern.</p>
 </div>
 <p><strong>Question A</strong> What is the range of the number of minutes until sunset over the whole 4-year period?</p>
 <ol style="list-style-type: lower-roman">
-<li>40 to 190 minutes<span class="mcanswer"> ✓ </span><br>
+<li>40 to 190 minutes<span class="mcanswer"> ✓ </span><br />
 </li>
-<li>120 minutes<span class="mcanswer"> ☹︎ A range is an interval spanned by <em>two</em> numbers. </span><br>
+<li>120 minutes<span class="mcanswer"> ☹︎ A range is an interval spanned by <em>two</em> numbers. </span><br />
 </li>
-<li>40 to 180 minutes<span class="mcanswer"> ☹︎ The largest values are half a tick mark up from 180. Tick marks are spaced by 20 minutes. </span><br>
+<li>40 to 180 minutes<span class="mcanswer"> ☹︎ The largest values are half a tick mark up from 180. Tick marks are spaced by 20 minutes. </span><br />
 </li>
-<li>0 to 48 months<span class="mcanswer"> ☹︎ That’s the <em>domain</em>. The <em>range</em> is along the vertical axis. </span>
-</li>
+<li>0 to 48 months<span class="mcanswer"> ☹︎ That’s the <em>domain</em>. The <em>range</em> is along the vertical axis. </span></li>
 </ol>
 <p><strong>Question B</strong> The data fall nicely on a sine-shaped curve. What is the period of that sine?</p>
 <p>    6 months<span class="mcanswer"> ☹︎ Look at the number of months from one peak to another. </span>       11 months<span class="mcanswer"> ☹︎ Look more carefully. And remember that the change in length of day is an <em>annual</em> phenomenon. </span>       12 months<span class="mcanswer"> ✓ </span>       12 minutes<span class="mcanswer"> ☹︎ Period refers to an interval on the <em>domain</em> of the function, not the range. </span></p>
 <p>The function <span class="math display">\[\mbox{sunset}(\mbox{Month}) \equiv A  \sin(2 \pi\, \mbox{Month} / 12) + C\]</span> is a <em>linear combination</em> of two functions:</p>
 <ol style="list-style-type: decimal">
-<li>The constant function <code>one(Month)</code>
-</li>
-<li>The sine function <code><a href="https://rdrr.io/r/base/Trig.html">sin(2*pi*Month/12)</a></code>
-</li>
+<li>The constant function <code>one(Month)</code></li>
+<li>The sine function <code>sin(2*pi*Month/12)</code></li>
 </ol>
 <p>The two functions are scaled by <span class="math inline">\(C\)</span> and <span class="math inline">\(A\)</span>, respectively.</p>
 <p>You can estimate <span class="math inline">\(C\)</span> by the mid-point of the range (in minutes) of the data. You can estimate <span class="math inline">\(A\)</span> as half the length of the range (that is, half the max minus the min.)</p>
@@ -889,12 +1105,11 @@ Figure 8.12: Polishing the parameters of the sinusoid
 </div>
 <p><strong>Question C</strong> Your <code>sunset()</code> function should be a pretty good match to the data except for one thing. What is that thing?</p>
 <ol style="list-style-type: lower-roman">
-<li>The <code>sunset()</code> function has a completely different range than the data.<span class="mcanswer"> ☹︎ This won’t be the case if you have estimated <span class="math inline">\(C\)</span> and <span class="math inline">\(A\)</span> correctly. </span><br>
+<li>The <code>sunset()</code> function has a completely different range than the data.<span class="mcanswer"> ☹︎ This won’t be the case if you have estimated <span class="math inline">\(C\)</span> and <span class="math inline">\(A\)</span> correctly. </span><br />
 </li>
-<li>The period of the <code>sunset()</code> function doesn’t match the data.<span class="mcanswer"> ☹︎ Did you use <code><a href="https://rdrr.io/r/base/Trig.html">sin(2*pi*Month/12)</a></code>? If so, the period should be right. </span><br>
+<li>The period of the <code>sunset()</code> function doesn’t match the data.<span class="mcanswer"> ☹︎ Did you use <code>sin(2*pi*Month/12)</code>? If so, the period should be right. </span><br />
 </li>
-<li>There is a horizontal time shift between <code>sunset()</code> and the data.<span class="mcanswer"> ✓ </span>
-</li>
+<li>There is a horizontal time shift between <code>sunset()</code> and the data.<span class="mcanswer"> ✓ </span></li>
 </ol>
 <p>We’re going to fix the problem with <code>sunset()</code> by defining a <em>time offset</em> to use as a reference. For a sine function, a suitable time offset is the value along the horizontal axis when the phenomenon being modeled crosses <span class="math inline">\(C\)</span> with a positive slope. There are 4 such points along the horizontal axis readily identifiable in the data. (They may not be at an integer value of <code>Month</code>.)</p>
 <p><strong>Question D</strong> Which of these is a suitable value for the time offset?</p>
@@ -920,61 +1135,72 @@ Figure 8.12: Polishing the parameters of the sinusoid
 <span id="cb50-15"><a href="process-of-modeling.html#cb50-15" aria-hidden="true" tabindex="-1"></a>                      <span class="at">offset =</span> rough_offset) )</span>
 <span id="cb50-16"><a href="process-of-modeling.html#cb50-16" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb50-17"><a href="process-of-modeling.html#cb50-17" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_point</span>(Minutes <span class="sc">~</span> Month, <span class="at">data =</span> SunsetLA) <span class="sc">%&gt;%</span></span>
-<span id="cb50-18"><a href="process-of-modeling.html#cb50-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gf_line</span>(<span class="at">color  =</span> <span class="st">"blue"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb50-18"><a href="process-of-modeling.html#cb50-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gf_line</span>(<span class="at">color  =</span> <span class="st">&quot;blue&quot;</span>) <span class="sc">%&gt;%</span></span>
 <span id="cb50-19"><a href="process-of-modeling.html#cb50-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice_plot</span>(<span class="fu">tuned_fun</span>(Month) <span class="sc">~</span> Month) <span class="sc">%&gt;%</span></span>
-<span id="cb50-20"><a href="process-of-modeling.html#cb50-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice_plot</span>(<span class="fu">guessed_fun</span>(Month) <span class="sc">~</span> Month,  <span class="at">color =</span> <span class="st">"red"</span>)</span></code></pre></div>
+<span id="cb50-20"><a href="process-of-modeling.html#cb50-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice_plot</span>(<span class="fu">guessed_fun</span>(Month) <span class="sc">~</span> Month,  <span class="at">color =</span> <span class="st">&quot;red&quot;</span>)</span></code></pre></div>
 </div>
 <p>Perhaps you were expecting the tuned sine function to match the data exactly. It does not. One reason for this is that the Earth’s orbit around the Sun is not exactly circular. The sine function is only a <em>model</em> of the phenomenon, good for some purposes and not for others. For a more complete explanation, see <a href="https://en.wikipedia.org/wiki/Sunrise_equation">this article on Wikipedia</a>.</p>
 (<em>Thomas Swalm</em> contributed to this exercise.)
 </details>
-</div>
-</div>
-</div>
-
-  <div class="chapter-nav">
-<div class="prev"><a href="params-intro.html"><span class="header-section-number">7</span> Parameters for functions</a></div>
-<div class="next"><a href="fun-slopes.html"><span class="header-section-number">9</span> Slope function</a></div>
-</div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
-    <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
-      <ul class="nav navbar-nav">
-<li><a class="nav-link" href="#process-of-modeling"><span class="header-section-number">8</span> Process of modeling</a></li>
-<li><a class="nav-link" href="#variations-from-scaling"><span class="header-section-number">8.1</span> Variations from scaling</a></li>
-<li><a class="nav-link" href="#fit-exponential"><span class="header-section-number">8.2</span> Curve fitting an exponential function</a></li>
-<li><a class="nav-link" href="#fit-periodic"><span class="header-section-number">8.3</span> Curve fitting a periodic function</a></li>
-<li><a class="nav-link" href="#curve-fitting-a-power-law-function"><span class="header-section-number">8.4</span> Curve fitting a power-law function</a></li>
-<li><a class="nav-link" href="#hump-and-sigmoid-functions"><span class="header-section-number">8.5</span> Hump and sigmoid functions</a></li>
-<li>
-<a class="nav-link" href="#modeling-cycle"><span class="header-section-number">8.6</span> The modeling cycle</a><ul class="nav navbar-nav">
-<li><a class="nav-link" href="#example-cooling-water"><span class="header-section-number">8.6.1</span> Example: Cooling water</a></li>
-<li><a class="nav-link" href="#example-the-tides"><span class="header-section-number">8.6.2</span> Example: The tides</a></li>
-</ul>
-</li>
-</ul>
-
-      <div class="book-extra">
-        <ul class="list-unstyled">
-<li><a id="book-source" href="https://github.com/dtkaplan/CalcZ-notes/blob/master/Fun-modeling.Rmd">View source <i class="fab fa-github"></i></a></li>
-          <li><a id="book-edit" href="https://github.com/dtkaplan/CalcZ-notes/edit/master/Fun-modeling.Rmd">Edit this page <i class="fab fa-github"></i></a></li>
-        </ul>
-</div>
-    </nav>
-</div>
 
 </div>
-</div> <!-- .container -->
+</div>
+</div>
+<div class="footnotes">
+<hr />
+<ol start="11">
+<li id="fn11"><p>From the <code>{MMAC}</code> R package<a href="process-of-modeling.html#fnref11" class="footnote-back">↩︎</a></p></li>
+</ol>
+</div>
+            </section>
 
-<footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
-
-  <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>CalcZ Student Notes</strong>" was written by Daniel Kaplan. It was last built on 2021-06-15.</p>
+          </div>
+        </div>
+      </div>
+<a href="params-intro.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="fun-slopes.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
   </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": false,
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/dtkaplan/CalcZ-notes/edit/shared/Fun-modeling.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"toc": {
+"collapse": "section"
+}
+});
+});
+</script>
 
-  <div class="col-12 col-md-6 mt-3">
-    <p>This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
-  </div>
-
-</div></div>
-</footer><!-- dynamically load mathjax for compatibility with self-contained --><script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
   (function () {
     var script = document.createElement("script");
     script.type = "text/javascript";
@@ -988,4 +1214,5 @@ Figure 8.12: Polishing the parameters of the sinusoid
   })();
 </script>
 </body>
+
 </html>

@@ -1,109 +1,358 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="" xml:lang="">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>Chapter 2 Structure of a function | CalcZ Student Notes</title>
-<meta name="author" content="Daniel Kaplan">
-<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.2"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/header-attrs-2.8/header-attrs.js"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
-<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.2.5.1/tabs.js"></script><script src="libs/bs3compat-0.2.5.1/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
-<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="libs/kePrint-0.0.1/kePrint.js"></script><link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet">
-<script src="libs/htmlwidgets-1.5.3/htmlwidgets.js"></script><script src="libs/plotly-binding-4.9.4/plotly.js"></script><script src="libs/typedarray-0.1/typedarray.min.js"></script><link href="libs/crosstalk-1.1.1/css/crosstalk.css" rel="stylesheet">
-<script src="libs/crosstalk-1.1.1/js/crosstalk.min.js"></script><link href="libs/plotly-htmlwidgets-css-1.57.1/plotly-htmlwidgets.css" rel="stylesheet">
-<script src="libs/plotly-main-1.57.1/plotly-latest.min.js"></script><script type="text/x-mathjax-config">
-    const popovers = document.querySelectorAll('a.footnote-ref[data-toggle="popover"]');
-    for (let popover of popovers){
-      const div = document.createElement('div');
-      div.setAttribute('style', 'position: absolute; top: 0, left:0; width:0, height:0, overflow: hidden; visibility: hidden;');
-      div.innerHTML = popover.getAttribute('data-content');
-      
-      // Will this work with TeX on its own line?
-      var has_math = div.querySelector("span.math");
-      if (has_math) {
-        document.body.appendChild(div);
-      	MathJax.Hub.Queue(["Typeset", MathJax.Hub, div]);
-      	MathJax.Hub.Queue(function(){
-          popover.setAttribute('data-content', div.innerHTML);
-      	})
-      }
-    }
-    </script><script src="https://cdn.jsdelivr.net/autocomplete.js/0/autocomplete.jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/mark.js@8.11.1/dist/mark.min.js"></script><!-- CSS --><link rel="stylesheet" href="css/CalcZ-style.css">
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 2 Structure of a function | CalcZ Student Notes</title>
+  <meta name="description" content="Textbook for Math 141Z/142Z for 2021-2022" />
+  <meta name="generator" content="bookdown 0.22 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 2 Structure of a function | CalcZ Student Notes" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="Textbook for Math 141Z/142Z for 2021-2022" />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 2 Structure of a function | CalcZ Student Notes" />
+  
+  <meta name="twitter:description" content="Textbook for Math 141Z/142Z for 2021-2022" />
+  
+
+<meta name="author" content="Daniel Kaplan" />
+
+
+<meta name="date" content="2021-06-18" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="change.html"/>
+<link rel="next" href="naked-intro.html"/>
+<script src="libs/header-attrs-2.8/header-attrs.js"></script>
+<script src="libs/jquery-3.5.1/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+<script src="libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
+<script src="libs/htmlwidgets-1.5.3/htmlwidgets.js"></script>
+<script src="libs/plotly-binding-4.9.4/plotly.js"></script>
+<script src="libs/typedarray-0.1/typedarray.min.js"></script>
+<link href="libs/crosstalk-1.1.1/css/crosstalk.css" rel="stylesheet" />
+<script src="libs/crosstalk-1.1.1/js/crosstalk.min.js"></script>
+<link href="libs/plotly-htmlwidgets-css-1.57.1/plotly-htmlwidgets.css" rel="stylesheet" />
+<script src="libs/plotly-main-1.57.1/plotly-latest.min.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<link rel="stylesheet" href="css/CalcZ-style.css" type="text/css" />
 </head>
-<body data-spy="scroll" data-target="#toc">
 
-<div class="container-fluid">
-<div class="row">
-  <header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
+<body>
 
-    <div class="d-flex align-items-start justify-content-between">
-      <h1>
-        <a href="index.html" title="">CalcZ Student Notes</a>
-      </h1>
-      <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
-    </div>
 
-    <div id="main-nav" class="collapse-lg">
-      <form role="search">
-        <input id="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
-</form>
 
-      <nav aria-label="Table of contents"><h2>Table of contents</h2>
-        <ul class="book-toc list-unstyled">
-<li><a class="" href="index.html">Welcome to calculus</a></li>
-<li class="book-part">Block 1: Functions and quantity</li>
-<li><a class="" href="outline-of-block-1.html">Outline of Block 1</a></li>
-<li><a class="" href="change.html"><span class="header-section-number">1</span> Change</a></li>
-<li><a class="active" href="structure-of-a-function.html"><span class="header-section-number">2</span> Structure of a function</a></li>
-<li><a class="" href="naked-intro.html"><span class="header-section-number">3</span> Naked modeling functions</a></li>
-<li><a class="" href="fun-describing.html"><span class="header-section-number">4</span> Describing functions</a></li>
-<li><a class="" href="fun-notation.html"><span class="header-section-number">5</span> Notation for functions</a></li>
-<li><a class="" href="graphs-and-graphics.html"><span class="header-section-number">6</span> Graphics &amp; function graphs</a></li>
-<li><a class="" href="params-intro.html"><span class="header-section-number">7</span> Parameters for functions</a></li>
-<li><a class="" href="process-of-modeling.html"><span class="header-section-number">8</span> Process of modeling</a></li>
-<li><a class="" href="fun-slopes.html"><span class="header-section-number">9</span> Slope function</a></li>
-<li><a class="" href="function-inverses-and-solving.html"><span class="header-section-number">10</span> Function inverses and “solving”</a></li>
-<li><a class="" href="fun-assembling.html"><span class="header-section-number">11</span> Assembling functions</a></li>
-<li><a class="" href="fun-multiple-inputs.html"><span class="header-section-number">12</span> Functions with multiple inputs</a></li>
-<li><a class="" href="fun-piecewise.html"><span class="header-section-number">13</span> Piecewise functions</a></li>
-<li><a class="" href="magnitudes.html"><span class="header-section-number">14</span> Magnitudes</a></li>
-<li><a class="" href="dimensions.html"><span class="header-section-number">15</span> Dimensions</a></li>
-<li class="book-part">Block 2: Differentiation</li>
-<li><a class="" href="outline-of-block-2.html">Outline of Block 2</a></li>
-<li><a class="" href="change-relationships.html"><span class="header-section-number">16</span> Change relationships</a></li>
-<li><a class="" href="h-and-derivatives.html"><span class="header-section-number">17</span> h and derivatives</a></li>
-<li><a class="" href="optim-and-shape.html"><span class="header-section-number">18</span> Optimization</a></li>
-<li><a class="" href="cont-and-smooth.html"><span class="header-section-number">19</span> Continuity and smoothness</a></li>
-<li><a class="" href="prod-comp-rules.html"><span class="header-section-number">20</span> Differentiation by algebra</a></li>
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><strong><a href="./">CalcZ</a></strong></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Welcome to calculus</a>
+<ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#computing-and-apps"><i class="fa fa-check"></i>Computing and apps</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#exercises-and-feedback"><i class="fa fa-check"></i>Exercises and feedback</a></li>
+</ul></li>
+<li class="part"><span><b>I Block 1: Functions and quantity</b></span></li>
+<li class="chapter" data-level="" data-path="outline-of-block-1.html"><a href="outline-of-block-1.html"><i class="fa fa-check"></i>Outline of Block 1</a></li>
+<li class="chapter" data-level="1" data-path="change.html"><a href="change.html"><i class="fa fa-check"></i><b>1</b> Change</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="change.html"><a href="change.html#quantity-vs-number"><i class="fa fa-check"></i><b>1.1</b> Quantity vs number</a></li>
+<li class="chapter" data-level="1.2" data-path="change.html"><a href="change.html#functions"><i class="fa fa-check"></i><b>1.2</b> Functions</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="structure-of-a-function.html"><a href="structure-of-a-function.html"><i class="fa fa-check"></i><b>2</b> Structure of a function</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="structure-of-a-function.html"><a href="structure-of-a-function.html#inputs-to-output"><i class="fa fa-check"></i><b>2.1</b> Inputs to output</a></li>
+<li class="chapter" data-level="2.2" data-path="structure-of-a-function.html"><a href="structure-of-a-function.html#a-bureaucratic-analogy"><i class="fa fa-check"></i><b>2.2</b> A bureaucratic analogy</a></li>
+<li class="chapter" data-level="2.3" data-path="structure-of-a-function.html"><a href="structure-of-a-function.html#domain-input-space"><i class="fa fa-check"></i><b>2.3</b> Domain: input space</a></li>
+<li class="chapter" data-level="2.4" data-path="structure-of-a-function.html"><a href="structure-of-a-function.html#range-output-space"><i class="fa fa-check"></i><b>2.4</b> Range: output space</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="naked-intro.html"><a href="naked-intro.html"><i class="fa fa-check"></i><b>3</b> Naked modeling functions</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="naked-intro.html"><a href="naked-intro.html#the-list"><i class="fa fa-check"></i><b>3.1</b> The list</a></li>
+<li class="chapter" data-level="3.2" data-path="naked-intro.html"><a href="naked-intro.html#function-shapes"><i class="fa fa-check"></i><b>3.2</b> Function shapes</a></li>
+<li class="chapter" data-level="3.3" data-path="naked-intro.html"><a href="naked-intro.html#the-power-law-family"><i class="fa fa-check"></i><b>3.3</b> The power-law family</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="fun-describing.html"><a href="fun-describing.html"><i class="fa fa-check"></i><b>4</b> Describing functions</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="fun-describing.html"><a href="fun-describing.html#computer-commands"><i class="fa fa-check"></i><b>4.1</b> Computer commands</a></li>
+<li class="chapter" data-level="4.2" data-path="fun-describing.html"><a href="fun-describing.html#tables-of-inputs-and-outputs"><i class="fa fa-check"></i><b>4.2</b> Tables of inputs and outputs</a></li>
+<li class="chapter" data-level="4.3" data-path="fun-describing.html"><a href="fun-describing.html#word-descriptions"><i class="fa fa-check"></i><b>4.3</b> Word descriptions</a></li>
+<li class="chapter" data-level="4.4" data-path="fun-describing.html"><a href="fun-describing.html#computer-function-names"><i class="fa fa-check"></i><b>4.4</b> Computer function names</a></li>
+<li class="chapter" data-level="4.5" data-path="fun-describing.html"><a href="fun-describing.html#mathematical-notation"><i class="fa fa-check"></i><b>4.5</b> Mathematical notation</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="fun-notation.html"><a href="fun-notation.html"><i class="fa fa-check"></i><b>5</b> Notation for functions</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="fun-notation.html"><a href="fun-notation.html#a-notation-for-computing"><i class="fa fa-check"></i><b>5.1</b> A notation for computing</a></li>
+<li class="chapter" data-level="5.2" data-path="fun-notation.html"><a href="fun-notation.html#objects-and-actions"><i class="fa fa-check"></i><b>5.2</b> Objects and actions</a></li>
+<li class="chapter" data-level="5.3" data-path="fun-notation.html"><a href="fun-notation.html#algorithms"><i class="fa fa-check"></i><b>5.3</b> Formulas and algorithms</a></li>
+<li class="chapter" data-level="5.4" data-path="fun-notation.html"><a href="fun-notation.html#algorithms-without-formulas"><i class="fa fa-check"></i><b>5.4</b> Algorithms without formulas</a></li>
+<li class="chapter" data-level="5.5" data-path="fun-notation.html"><a href="fun-notation.html#computer-notation"><i class="fa fa-check"></i><b>5.5</b> Computer notation</a></li>
+<li class="chapter" data-level="5.6" data-path="fun-notation.html"><a href="fun-notation.html#calcz-naming-conventions"><i class="fa fa-check"></i><b>5.6</b> CalcZ naming conventions</a></li>
+<li class="chapter" data-level="5.7" data-path="fun-notation.html"><a href="fun-notation.html#functions-in-r"><i class="fa fa-check"></i><b>5.7</b> Functions in R</a></li>
+<li class="chapter" data-level="5.8" data-path="fun-notation.html"><a href="fun-notation.html#foursigns"><i class="fa fa-check"></i><b>5.8</b> <span class="math inline">\(=\)</span>, <span class="math inline">\(\equiv\)</span>, <span class="math inline">\(\rightarrow\)</span>, <code>&lt;-</code></a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="graphs-and-graphics.html"><a href="graphs-and-graphics.html"><i class="fa fa-check"></i><b>6</b> Graphics &amp; function graphs</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="graphs-and-graphics.html"><a href="graphs-and-graphics.html#the-graphics-frame"><i class="fa fa-check"></i><b>6.1</b> The graphics frame</a></li>
+<li class="chapter" data-level="6.2" data-path="graphs-and-graphics.html"><a href="graphs-and-graphics.html#data-graphics-the-point-plot"><i class="fa fa-check"></i><b>6.2</b> Data graphics: the point plot</a></li>
+<li class="chapter" data-level="6.3" data-path="graphs-and-graphics.html"><a href="graphs-and-graphics.html#graphics-layers"><i class="fa fa-check"></i><b>6.3</b> Graphics layers</a></li>
+<li class="chapter" data-level="6.4" data-path="graphs-and-graphics.html"><a href="graphs-and-graphics.html#data-and-functions"><i class="fa fa-check"></i><b>6.4</b> Data and functions</a></li>
+<li class="chapter" data-level="6.5" data-path="graphs-and-graphics.html"><a href="graphs-and-graphics.html#inputs-to-output-1"><i class="fa fa-check"></i><b>6.5</b> Inputs to output</a></li>
+<li class="chapter" data-level="6.6" data-path="graphs-and-graphics.html"><a href="graphs-and-graphics.html#outputs-to-inputs"><i class="fa fa-check"></i><b>6.6</b> Outputs to inputs</a></li>
+<li class="chapter" data-level="6.7" data-path="graphs-and-graphics.html"><a href="graphs-and-graphics.html#graphs-of-functions-with-two-inputs"><i class="fa fa-check"></i><b>6.7</b> Graphs of functions with two inputs</a></li>
+<li class="chapter" data-level="6.8" data-path="graphs-and-graphics.html"><a href="graphs-and-graphics.html#contour-plots"><i class="fa fa-check"></i><b>6.8</b> Contour plots</a></li>
+<li class="chapter" data-level="6.9" data-path="graphs-and-graphics.html"><a href="graphs-and-graphics.html#slice-plots"><i class="fa fa-check"></i><b>6.9</b> Slice plots</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="params-intro.html"><a href="params-intro.html"><i class="fa fa-check"></i><b>7</b> Parameters for functions</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="params-intro.html"><a href="params-intro.html#parallel-scales"><i class="fa fa-check"></i><b>7.1</b> Parallel scales</a></li>
+<li class="chapter" data-level="7.2" data-path="params-intro.html"><a href="params-intro.html#scale-the-output"><i class="fa fa-check"></i><b>7.2</b> Scale the output</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="process-of-modeling.html"><a href="process-of-modeling.html"><i class="fa fa-check"></i><b>8</b> Process of modeling</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="process-of-modeling.html"><a href="process-of-modeling.html#variations-from-scaling"><i class="fa fa-check"></i><b>8.1</b> Variations from scaling</a></li>
+<li class="chapter" data-level="8.2" data-path="process-of-modeling.html"><a href="process-of-modeling.html#fit-exponential"><i class="fa fa-check"></i><b>8.2</b> Curve fitting an exponential function</a></li>
+<li class="chapter" data-level="8.3" data-path="process-of-modeling.html"><a href="process-of-modeling.html#fit-periodic"><i class="fa fa-check"></i><b>8.3</b> Curve fitting a periodic function</a></li>
+<li class="chapter" data-level="8.4" data-path="process-of-modeling.html"><a href="process-of-modeling.html#curve-fitting-a-power-law-function"><i class="fa fa-check"></i><b>8.4</b> Curve fitting a power-law function</a></li>
+<li class="chapter" data-level="8.5" data-path="process-of-modeling.html"><a href="process-of-modeling.html#hump-and-sigmoid-functions"><i class="fa fa-check"></i><b>8.5</b> Hump and sigmoid functions</a></li>
+<li class="chapter" data-level="8.6" data-path="process-of-modeling.html"><a href="process-of-modeling.html#modeling-cycle"><i class="fa fa-check"></i><b>8.6</b> The modeling cycle</a>
+<ul>
+<li class="chapter" data-level="8.6.1" data-path="process-of-modeling.html"><a href="process-of-modeling.html#example-cooling-water"><i class="fa fa-check"></i><b>8.6.1</b> Example: Cooling water</a></li>
+<li class="chapter" data-level="8.6.2" data-path="process-of-modeling.html"><a href="process-of-modeling.html#example-the-tides"><i class="fa fa-check"></i><b>8.6.2</b> Example: The tides</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="fun-slopes.html"><a href="fun-slopes.html"><i class="fa fa-check"></i><b>9</b> Slope function</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="fun-slopes.html"><a href="fun-slopes.html#change-and-slope"><i class="fa fa-check"></i><b>9.1</b> Change and slope</a></li>
+<li class="chapter" data-level="9.2" data-path="fun-slopes.html"><a href="fun-slopes.html#continuous-change"><i class="fa fa-check"></i><b>9.2</b> Continuous change</a></li>
+<li class="chapter" data-level="9.3" data-path="fun-slopes.html"><a href="fun-slopes.html#slope"><i class="fa fa-check"></i><b>9.3</b> Slope</a></li>
+<li class="chapter" data-level="9.4" data-path="fun-slopes.html"><a href="fun-slopes.html#the-fitted-line"><i class="fa fa-check"></i><b>9.4</b> The fitted line</a></li>
+<li class="chapter" data-level="9.5" data-path="fun-slopes.html"><a href="fun-slopes.html#average-rate-of-change"><i class="fa fa-check"></i><b>9.5</b> Average rate of change</a></li>
+<li class="chapter" data-level="9.6" data-path="fun-slopes.html"><a href="fun-slopes.html#instantaneous-rate-of-change"><i class="fa fa-check"></i><b>9.6</b> Instantaneous rate of change</a></li>
+<li class="chapter" data-level="9.7" data-path="fun-slopes.html"><a href="fun-slopes.html#the-slope-function"><i class="fa fa-check"></i><b>9.7</b> The slope function</a></li>
+<li class="chapter" data-level="9.8" data-path="fun-slopes.html"><a href="fun-slopes.html#to-be-turned-into-exercises"><i class="fa fa-check"></i><b>9.8</b> To be turned into exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="function-inverses-and-solving.html"><a href="function-inverses-and-solving.html"><i class="fa fa-check"></i><b>10</b> Function inverses and “solving”</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="function-inverses-and-solving.html"><a href="function-inverses-and-solving.html#function-inverses"><i class="fa fa-check"></i><b>10.1</b> Function inverses</a></li>
+<li class="chapter" data-level="10.2" data-path="function-inverses-and-solving.html"><a href="function-inverses-and-solving.html#exercises"><i class="fa fa-check"></i><b>10.2</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="fun-assembling.html"><a href="fun-assembling.html"><i class="fa fa-check"></i><b>11</b> Assembling functions</a>
+<ul>
+<li class="chapter" data-level="11.1" data-path="fun-assembling.html"><a href="fun-assembling.html#linear-combination"><i class="fa fa-check"></i><b>11.1</b> Linear combination</a></li>
+<li class="chapter" data-level="11.2" data-path="fun-assembling.html"><a href="fun-assembling.html#function-composition"><i class="fa fa-check"></i><b>11.2</b> Function composition</a></li>
+<li class="chapter" data-level="11.3" data-path="fun-assembling.html"><a href="fun-assembling.html#modeling-polynomial-1"><i class="fa fa-check"></i><b>11.3</b> The modeling polynomial</a></li>
+<li class="chapter" data-level="11.4" data-path="fun-assembling.html"><a href="fun-assembling.html#tukeys-ladder-optional"><i class="fa fa-check"></i><b>11.4</b> Tukey’s ladder (optional)</a></li>
+<li class="chapter" data-level="11.5" data-path="fun-assembling.html"><a href="fun-assembling.html#function-multiplication"><i class="fa fa-check"></i><b>11.5</b> Function multiplication</a></li>
+<li class="chapter" data-level="11.6" data-path="fun-assembling.html"><a href="fun-assembling.html#all-together-now"><i class="fa fa-check"></i><b>11.6</b> All together now!</a></li>
+<li class="chapter" data-level="11.7" data-path="fun-assembling.html"><a href="fun-assembling.html#exercises-1"><i class="fa fa-check"></i><b>11.7</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="fun-multiple-inputs.html"><a href="fun-multiple-inputs.html"><i class="fa fa-check"></i><b>12</b> Functions with multiple inputs</a>
+<ul>
+<li class="chapter" data-level="12.1" data-path="fun-multiple-inputs.html"><a href="fun-multiple-inputs.html#fx-times-gt"><i class="fa fa-check"></i><b>12.1</b> f(x) times g(t)</a></li>
+<li class="chapter" data-level="12.2" data-path="fun-multiple-inputs.html"><a href="fun-multiple-inputs.html#two-variable-modeling-polynomial"><i class="fa fa-check"></i><b>12.2</b> Two-variable modeling polynomial</a></li>
+<li class="chapter" data-level="12.3" data-path="fun-multiple-inputs.html"><a href="fun-multiple-inputs.html#function-composition-not"><i class="fa fa-check"></i><b>12.3</b> Function composition (not!)</a></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="fun-piecewise.html"><a href="fun-piecewise.html"><i class="fa fa-check"></i><b>13</b> Piecewise functions</a>
+<ul>
+<li class="chapter" data-level="13.1" data-path="fun-piecewise.html"><a href="fun-piecewise.html#piecewise-functions"><i class="fa fa-check"></i><b>13.1</b> Piecewise functions</a></li>
+</ul></li>
+<li class="chapter" data-level="14" data-path="magnitudes.html"><a href="magnitudes.html"><i class="fa fa-check"></i><b>14</b> Magnitudes</a>
+<ul>
+<li class="chapter" data-level="14.1" data-path="magnitudes.html"><a href="magnitudes.html#counting-digits"><i class="fa fa-check"></i><b>14.1</b> Counting digits</a></li>
+<li class="chapter" data-level="14.2" data-path="magnitudes.html"><a href="magnitudes.html#using-digit-to-understand-magnitude"><i class="fa fa-check"></i><b>14.2</b> Using digit() to understand magnitude</a></li>
+<li class="chapter" data-level="14.3" data-path="magnitudes.html"><a href="magnitudes.html#quantity-and-magnitude"><i class="fa fa-check"></i><b>14.3</b> Quantity and magnitude</a></li>
+<li class="chapter" data-level="14.4" data-path="magnitudes.html"><a href="magnitudes.html#composing-ln"><i class="fa fa-check"></i><b>14.4</b> Composing <span class="math inline">\(\ln()\)</span></a></li>
+<li class="chapter" data-level="14.5" data-path="magnitudes.html"><a href="magnitudes.html#magnitude-graphics"><i class="fa fa-check"></i><b>14.5</b> Magnitude graphics</a></li>
+<li class="chapter" data-level="14.6" data-path="magnitudes.html"><a href="magnitudes.html#magnitude-scales"><i class="fa fa-check"></i><b>14.6</b> Magnitude scales</a></li>
+<li class="chapter" data-level="14.7" data-path="magnitudes.html"><a href="magnitudes.html#fractional-digits"><i class="fa fa-check"></i><b>14.7</b> Fractional digits (optional)</a></li>
+</ul></li>
+<li class="chapter" data-level="15" data-path="dimensions.html"><a href="dimensions.html"><i class="fa fa-check"></i><b>15</b> Dimensions</a>
+<ul>
+<li class="chapter" data-level="15.1" data-path="dimensions.html"><a href="dimensions.html#mathematics-of-quantity"><i class="fa fa-check"></i><b>15.1</b> Mathematics of quantity</a></li>
+<li class="chapter" data-level="15.2" data-path="dimensions.html"><a href="dimensions.html#compound-dimensions"><i class="fa fa-check"></i><b>15.2</b> Compound dimensions</a></li>
+<li class="chapter" data-level="15.3" data-path="dimensions.html"><a href="dimensions.html#arithmetic-with-dimensions"><i class="fa fa-check"></i><b>15.3</b> Arithmetic with dimensions</a></li>
+<li class="chapter" data-level="15.4" data-path="dimensions.html"><a href="dimensions.html#example-dimensional-analysis"><i class="fa fa-check"></i><b>15.4</b> Example: Dimensional analysis</a></li>
+<li class="chapter" data-level="15.5" data-path="dimensions.html"><a href="dimensions.html#conversion-flavors-of-1"><i class="fa fa-check"></i><b>15.5</b> Conversion: Flavors of 1</a></li>
+<li class="chapter" data-level="15.6" data-path="dimensions.html"><a href="dimensions.html#dimensions-and-linear-combinations"><i class="fa fa-check"></i><b>15.6</b> Dimensions and linear combinations</a></li>
+</ul></li>
+<li class="part"><span><b>II Block 2: Differentiation</b></span></li>
+<li class="chapter" data-level="" data-path="outline-of-block-2.html"><a href="outline-of-block-2.html"><i class="fa fa-check"></i>Outline of Block 2</a></li>
+<li class="chapter" data-level="16" data-path="change-relationships.html"><a href="change-relationships.html"><i class="fa fa-check"></i><b>16</b> Change relationships</a>
+<ul>
+<li class="chapter" data-level="16.1" data-path="change-relationships.html"><a href="change-relationships.html#slopes-and-increments."><i class="fa fa-check"></i><b>16.1</b> Slopes and increments.</a></li>
+<li class="chapter" data-level="16.2" data-path="change-relationships.html"><a href="change-relationships.html#slopes-and-motion"><i class="fa fa-check"></i><b>16.2</b> Slopes and motion</a></li>
+<li class="chapter" data-level="16.3" data-path="change-relationships.html"><a href="change-relationships.html#differentiation"><i class="fa fa-check"></i><b>16.3</b> Differentiation</a></li>
+<li class="chapter" data-level="16.4" data-path="change-relationships.html"><a href="change-relationships.html#dimension-of-derivatives"><i class="fa fa-check"></i><b>16.4</b> Dimension of derivatives</a></li>
+<li class="chapter" data-level="16.5" data-path="change-relationships.html"><a href="change-relationships.html#using-h"><i class="fa fa-check"></i><b>16.5</b> Using h</a></li>
+<li class="chapter" data-level="16.6" data-path="change-relationships.html"><a href="change-relationships.html#differencing"><i class="fa fa-check"></i><b>16.6</b> Differencing</a></li>
+<li class="chapter" data-level="16.7" data-path="change-relationships.html"><a href="change-relationships.html#instantaneous-rate-of-change-1"><i class="fa fa-check"></i><b>16.7</b> Instantaneous rate of change</a></li>
+</ul></li>
+<li class="chapter" data-level="17" data-path="h-and-derivatives.html"><a href="h-and-derivatives.html"><i class="fa fa-check"></i><b>17</b> h and derivatives</a>
+<ul>
+<li class="chapter" data-level="17.1" data-path="h-and-derivatives.html"><a href="h-and-derivatives.html#the-h-framework"><i class="fa fa-check"></i><b>17.1</b> The <span class="math inline">\(h\)</span> framework</a></li>
+<li class="chapter" data-level="17.2" data-path="h-and-derivatives.html"><a href="h-and-derivatives.html#approximations-to-naked-modeling-functions"><i class="fa fa-check"></i><b>17.2</b> Approximations to naked modeling functions</a></li>
+</ul></li>
+<li class="chapter" data-level="18" data-path="optim-and-shape.html"><a href="optim-and-shape.html"><i class="fa fa-check"></i><b>18</b> Optimization</a>
+<ul>
+<li class="chapter" data-level="18.1" data-path="optim-and-shape.html"><a href="optim-and-shape.html#structure-of-the-problem"><i class="fa fa-check"></i><b>18.1</b> Structure of the problem</a></li>
+<li class="chapter" data-level="18.2" data-path="optim-and-shape.html"><a href="optim-and-shape.html#interpreting-the-argmax"><i class="fa fa-check"></i><b>18.2</b> Interpreting the argmax</a></li>
+<li class="chapter" data-level="18.3" data-path="optim-and-shape.html"><a href="optim-and-shape.html#derivatives-and-optimization"><i class="fa fa-check"></i><b>18.3</b> Derivatives and optimization</a></li>
+<li class="chapter" data-level="18.4" data-path="optim-and-shape.html"><a href="optim-and-shape.html#approximations-around-xstar"><i class="fa fa-check"></i><b>18.4</b> Approximations around <span class="math inline">\(x^\star\)</span></a></li>
+<li class="chapter" data-level="18.5" data-path="optim-and-shape.html"><a href="optim-and-shape.html#solving-computationally"><i class="fa fa-check"></i><b>18.5</b> Solving computationally</a></li>
+</ul></li>
+<li class="chapter" data-level="19" data-path="cont-and-smooth.html"><a href="cont-and-smooth.html"><i class="fa fa-check"></i><b>19</b> Continuity and smoothness</a>
+<ul>
+<li class="chapter" data-level="19.1" data-path="cont-and-smooth.html"><a href="cont-and-smooth.html#continuity"><i class="fa fa-check"></i><b>19.1</b> Continuity</a></li>
+<li class="chapter" data-level="19.2" data-path="cont-and-smooth.html"><a href="cont-and-smooth.html#smoothness"><i class="fa fa-check"></i><b>19.2</b> Smoothness</a></li>
+<li class="chapter" data-level="19.3" data-path="cont-and-smooth.html"><a href="cont-and-smooth.html#doesnt-exist"><i class="fa fa-check"></i><b>19.3</b> Doesn’t exist?</a></li>
+<li class="chapter" data-level="19.4" data-path="cont-and-smooth.html"><a href="cont-and-smooth.html#piecewise-functions-1"><i class="fa fa-check"></i><b>19.4</b> Piecewise functions</a></li>
+<li class="chapter" data-level="19.5" data-path="cont-and-smooth.html"><a href="cont-and-smooth.html#continuity-1"><i class="fa fa-check"></i><b>19.5</b> Continuity</a></li>
+<li class="chapter" data-level="19.6" data-path="cont-and-smooth.html"><a href="cont-and-smooth.html#differentiability"><i class="fa fa-check"></i><b>19.6</b> Differentiability</a></li>
+</ul></li>
+<li class="chapter" data-level="20" data-path="prod-comp-rules.html"><a href="prod-comp-rules.html"><i class="fa fa-check"></i><b>20</b> Differentiation by algebra</a>
+<ul>
+<li class="chapter" data-level="20.1" data-path="prod-comp-rules.html"><a href="prod-comp-rules.html#memorizing-derivatives"><i class="fa fa-check"></i><b>20.1</b> Memorizing derivatives</a></li>
+<li class="chapter" data-level="20.2" data-path="prod-comp-rules.html"><a href="prod-comp-rules.html#exponentials-and-logarithms-optional"><i class="fa fa-check"></i><b>20.2</b> Exponentials and logarithms (optional)</a></li>
+<li class="chapter" data-level="20.3" data-path="prod-comp-rules.html"><a href="prod-comp-rules.html#combining-functions"><i class="fa fa-check"></i><b>20.3</b> Combining functions</a></li>
+<li class="chapter" data-level="20.4" data-path="prod-comp-rules.html"><a href="prod-comp-rules.html#composition-of-functions"><i class="fa fa-check"></i><b>20.4</b> Composition of functions</a></li>
+<li class="chapter" data-level="20.5" data-path="prod-comp-rules.html"><a href="prod-comp-rules.html#product-of-functions"><i class="fa fa-check"></i><b>20.5</b> Product of functions</a></li>
+<li class="chapter" data-level="20.6" data-path="prod-comp-rules.html"><a href="prod-comp-rules.html#checking-your-work"><i class="fa fa-check"></i><b>20.6</b> Checking your work</a></li>
+<li class="chapter" data-level="20.7" data-path="prod-comp-rules.html"><a href="prod-comp-rules.html#working-with-algebraic-derivatives"><i class="fa fa-check"></i><b>20.7</b> Working with algebraic derivatives</a></li>
+<li class="chapter" data-level="20.8" data-path="prod-comp-rules.html"><a href="prod-comp-rules.html#tree-harvesting"><i class="fa fa-check"></i><b>20.8</b> Tree harvesting</a></li>
+</ul></li>
 </ul>
 
-        <div class="book-extra">
-          <p><a id="book-repo" href="https://github.com/dtkaplan/CalcZ-notes">View book source <i class="fab fa-github"></i></a></p>
-        </div>
       </nav>
-</div>
-  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="structure-of-a-function" class="section level1" number="2">
-<h1>
-<span class="header-section-number">2</span> Structure of a function<a class="anchor" aria-label="anchor" href="#structure-of-a-function"><i class="fas fa-link"></i></a>
-</h1>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">CalcZ Student Notes</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="structure-of-a-function" class="section level1" number="2">
+<h1><span class="header-section-number">Chapter 2</span> Structure of a function</h1>
 <div class="objectives">
 <ol>
-<li>
-<strong>[F-10]</strong> <em>Recognize that functions are a way of representing (storing) what we know and be able to use properly the basic nomenclature of functions).</em>
-</li>
+<li><strong>[F-10]</strong> <em>Recognize that functions are a way of representing (storing) what we know and be able to use properly the basic nomenclature of functions).</em></li>
 </ol>
 </div>
 <p>You’re used to mathematical functions being stated as <strong><em>formulas</em></strong>, expressions composed of addition, multiplication, square roots, and so on. The expression <span class="math inline">\(m x + b\)</span> uses a multiplication and an addition. <span class="math inline">\(\sqrt{\strut 1 - x^2}\)</span> uses exponentiation (<span class="math inline">\(x^2\)</span>), subtraction and square root.</p>
 <p>There’s nothing in the mathematical concept of “function” that requires a formula. And computer functions in general are not based on an algebraic formula. The word used to describe the internals of a computer function is <strong><em>algorithm</em></strong>, which is a generalization of “formula” that includes many non-arithmetic operations such as looping and branching.</p>
 <div id="inputs-to-output" class="section level2" number="2.1">
-<h2>
-<span class="header-section-number">2.1</span> Inputs to output<a class="anchor" aria-label="anchor" href="#inputs-to-output"><i class="fas fa-link"></i></a>
-</h2>
+<h2><span class="header-section-number">2.1</span> Inputs to output</h2>
 <p>We will be using formulas extensively, but best if you can visualize functions generally as something that’s not necessarily a formula. This section gives another perspective on how to describe and think about a function. But remember, functions <strong><em>take inputs</em></strong> and <strong><em>return the corresponding output</em></strong>. Any arrangement that accomplishes this is a function, even if arithmetic is nowhere in sight.</p>
 <p>A simple and useful framework for organizing what we know is the <strong><em>table</em></strong>, generally set up as an array of rows and columns. For instance, here is a table about a range of internal combustion engines of various sizes:</p>
-<div class="inline-table"><table class="table" style="margin-left: auto; margin-right: auto;">
-<thead><tr>
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
 <th style="text-align:left;">
 Engine
 </th>
@@ -122,7 +371,8 @@ bore
 <th style="text-align:right;">
 stroke
 </th>
-</tr></thead>
+</tr>
+</thead>
 <tbody>
 <tr>
 <td style="text-align:left;">
@@ -285,7 +535,7 @@ Cooper-Bessemer V-250
 </td>
 </tr>
 </tbody>
-</table></div>
+</table>
 <p>Each row of the table reports on one, specific engine. Each column is one attribute of the of an engine. Using such tables can be easy. For example, if asked to report how fast the engine named “Enya 60-4C” spins, you would go down to the Enya 60-4C row and over to the “RPM” column and read off the answer: 11,800 revolutions per minute (RPM).</p>
 <p>A table like this describes the general relationships between engine attributes. For instance, we might want to understand the relationship (if any) between RPM and engine mass, or relate the diameter (that is, “bore”) and depth (that is, “stroke”) of the cylinders to the power generated by the engine. Any single entry in the table doesn’t tell us about such general relationships; we need to consider the rows and columns as a whole.</p>
 <p>If you examined the relationship between engine power (<code>BHP</code>) and bore, stroke, and RPM, you will find that (as a rule) the larger the bore, stroke, and RPM, the more powerful the engine. That’s a <strong><em>qualitative</em></strong> description of the relationship. Most educated people are able to understand such a quantitative description. Even if they don’t know exactly what “power” means, they have some rough conception of it.</p>
@@ -298,9 +548,7 @@ Cooper-Bessemer V-250
 </ul>
 </div>
 <div id="a-bureaucratic-analogy" class="section level2" number="2.2">
-<h2>
-<span class="header-section-number">2.2</span> A bureaucratic analogy<a class="anchor" aria-label="anchor" href="#a-bureaucratic-analogy"><i class="fas fa-link"></i></a>
-</h2>
+<h2><span class="header-section-number">2.2</span> A bureaucratic analogy</h2>
 <p>You’ll have many opportunities to work with functions defined by formulas. Here, I want to emphasize that functions are really just a way of storing a correspondence of inputs to outputs and that formulas need have nothing to do with it except as one way of describing the pattern. Instead of a formula, imagine a long corridor with a sequence of offices, each identified by a room number. The input to the function is the room number. To <strong><em>evaluate</em></strong> the function for that input, you knock on the appropriate door and, in response, you’ll receive a piece of paper with a number to take away with you. That number is the output of the function.</p>
 <p>This will sound at first too simple to be true, but … In a mathematical function each office gives out exactly the same number every time someone knocks on the door. Obviously, being a worker in such an office is highly tedious and requires no special skill. Every time someone knocks on the worker’s door, he or she writes down the <em>same</em> number on a piece of paper and hands it to the person knocking. What that person will do with the number is of absolutely no concern to the office worker.</p>
 <p>The utility of such functions depends on the artistry and insight of the person who creates them: the <strong><em>modeler</em></strong>. An important point of this course is to teach you some of that artistry. Hopefully you will learn through that artistry to translate your insight to the creation of functions that are useful in your own work. But even if you just use functions created by others, knowing how functions are built will be helpful in using them properly.</p>
@@ -319,123 +567,120 @@ Cooper-Bessemer V-250
 </div>
 </div>
 <div id="domain-input-space" class="section level2" number="2.3">
-<h2>
-<span class="header-section-number">2.3</span> Domain: input space<a class="anchor" aria-label="anchor" href="#domain-input-space"><i class="fas fa-link"></i></a>
-</h2>
+<h2><span class="header-section-number">2.3</span> Domain: input space</h2>
 <p>As you know, there is a powerful way of thinking about numbers in terms of <strong><em>space</em></strong> and <strong><em>geometry</em></strong>. For instance, a single number corresponds to a point on a line: the so-called <strong><em>number line</em></strong>. A pair of inputs, say, (x, y) corresponds to a point in a plane, often called the <strong><em>Cartesian coordinate plane</em></strong>. Three numbers corresponds to a point in space, perhaps organized into (x, y, z) of a Cartesian space. There are higher-dimensional spaces, but usually special training is needed to become comfortable with them. If you are having this discomfort, you might prefer to work with the office metaphor. Just for fun, here’s how you can think of a 10-dimensional space: 10 numbers, one telling you which planet, the next specifying the continent on that planet, and so on for country, state, city, street, building, floor, corridor, door.</p>
 <p>The set of inputs with which the function can be evaluated is called the <strong><em>domain</em></strong> of the function. Sometimes we describe the domain as a space, e.g. the number line, the plane, and so on. Sometimes domains including more restrictions. For instance, a particular input might only meaningfully be positive, with no offices corresponding to negative values for that input. Or, an input might be restricted to be in the interval 0 to 1. Sometimes in calculus, the domain excludes an isolated point. For instance, there may be no office at the door marked 0 but the neighboring doors open into working offices.</p>
 </div>
 <div id="range-output-space" class="section level2" number="2.4">
-<h2>
-<span class="header-section-number">2.4</span> Range: output space<a class="anchor" aria-label="anchor" href="#range-output-space"><i class="fas fa-link"></i></a>
-</h2>
+<h2><span class="header-section-number">2.4</span> Range: output space</h2>
 <p>The <strong><em>range</em></strong> of a function is the set of all the <em>outputs</em> that can be produced. Since at this stage we’re working only with functions that return a single number as output, it’s common to describe the range as all or part of the number line. For instance, some functions only have positive outputs. Other functions’ outputs are always in the interval 0 to 1. (This is the case, for instance, when the function returns a probability as the output.)</p>
 
 <div class="exercise">
 <span id="exr:unnamed-chunk-9" class="exercise"><strong>Exercise 2.1  (range-domain)  </strong></span>
 </div>
-<details><p>Consider this graph of a function <span class="math inline">\(g(x)\)</span>:</p>
-<div class="inline-figure"><img src="CalcZ-notes_files/figure-html/unnamed-chunk-168-1.png" width="90%" style="display: block; margin: auto;"></div>
+<details>
+<p>Consider this graph of a function <span class="math inline">\(g(x)\)</span>:</p>
+<p><img src="CalcZ-notes_files/figure-html/unnamed-chunk-168-1.png" width="90%" style="display: block; margin: auto;" /></p>
 <p><strong>Question A</strong> What is the <strong>domain</strong> of <span class="math inline">\(g(x)\)</span>?</p>
 <ol style="list-style-type: lower-roman">
-<li>
-<span class="math inline">\(-\infty &lt; x &lt; \infty\)</span><span class="mcanswer"> ☹︎ </span><br>
+<li><span class="math inline">\(-\infty &lt; x &lt; \infty\)</span><span class="mcanswer"> ☹︎ </span><br />
 </li>
-<li>
-<span class="math inline">\(-3 \leq x \leq 2\)</span><span class="mcanswer"> ✓ </span><br>
+<li><span class="math inline">\(-3 \leq x \leq 2\)</span><span class="mcanswer"> ✓ </span><br />
 </li>
-<li>
-<span class="math inline">\(-4 \leq x \leq 4\)</span><span class="mcanswer"> ☹︎ This might be called the “graphics” domain, yet the function graph doesn’t extend over that whole interval. </span><br>
+<li><span class="math inline">\(-4 \leq x \leq 4\)</span><span class="mcanswer"> ☹︎ This might be called the “graphics” domain, yet the function graph doesn’t extend over that whole interval. </span><br />
 </li>
-<li>$-10 g(x) <span class="mcanswer"> ☹︎ This is the vertical extent of the <strong>graphics frame</strong>. </span><br>
+<li>$-10 g(x) <span class="mcanswer"> ☹︎ This is the vertical extent of the <strong>graphics frame</strong>. </span><br />
 </li>
-<li>
-<span class="math inline">\(-1 \leq g(x) \leq 33\)</span><span class="mcanswer"> ☹︎ The <strong>domain</strong> refers to the horizontal axis. </span>
-</li>
+<li><span class="math inline">\(-1 \leq g(x) \leq 33\)</span><span class="mcanswer"> ☹︎ The <strong>domain</strong> refers to the horizontal axis. </span></li>
 </ol>
 <p><strong>Question B</strong> What is the <strong>range</strong> of <span class="math inline">\(g(x)\)</span>?</p>
 <ol style="list-style-type: lower-roman">
-<li>
-<span class="math inline">\(-\infty &lt; x &lt; \infty\)</span><span class="mcanswer"> ☹︎ The <strong>range</strong> refers output of the function. <span class="math inline">\(x\)</span> is the input. </span><br>
+<li><span class="math inline">\(-\infty &lt; x &lt; \infty\)</span><span class="mcanswer"> ☹︎ The <strong>range</strong> refers output of the function. <span class="math inline">\(x\)</span> is the input. </span><br />
 </li>
-<li>
-<span class="math inline">\(-3 \leq x \leq 2\)</span><span class="mcanswer"> ☹︎ The <strong>range</strong> refers output of the function. <span class="math inline">\(x\)</span> is the input. </span><br>
+<li><span class="math inline">\(-3 \leq x \leq 2\)</span><span class="mcanswer"> ☹︎ The <strong>range</strong> refers output of the function. <span class="math inline">\(x\)</span> is the input. </span><br />
 </li>
-<li>
-<span class="math inline">\(-4 \leq y \leq 4\)</span><span class="mcanswer"> ☹︎ You’re used to calling the function output <span class="math inline">\(y\)</span>, but that’s a bad habit. Break it! </span><br>
+<li><span class="math inline">\(-4 \leq y \leq 4\)</span><span class="mcanswer"> ☹︎ You’re used to calling the function output <span class="math inline">\(y\)</span>, but that’s a bad habit. Break it! </span><br />
 </li>
-<li>$-10 g(x) <span class="mcanswer"> ☹︎ This is the vertical extent of the <strong>graphics frame</strong>. </span><br>
+<li>$-10 g(x) <span class="mcanswer"> ☹︎ This is the vertical extent of the <strong>graphics frame</strong>. </span><br />
 </li>
-<li>
-<span class="math inline">\(-1 \leq g(x) \leq 33\)</span><span class="mcanswer"> ✓ </span>
-</li>
-</ol></details><div class="intheworld">
+<li><span class="math inline">\(-1 \leq g(x) \leq 33\)</span><span class="mcanswer"> ✓ </span>
+</details></li>
+</ol>
+<div class="intheworld">
 <p><strong>Weather forecasting by numerical process</strong></p>
 <p><em><a href="https://archive.org/details/weatherpredictio00richrich/page/184/mode/2up?view=theater">Weather forecasting by numerical process</a></em> is a highly influential book, from 1922, by <a href="https://en.wikipedia.org/wiki/Lewis_Fry_Richardson">Lewis Fry Richardson</a>. He envisioned a calculation for a weather forecast as a kind of function. The domain for the forecast is the latitude and longitude of a point on the globe, rather than the rectilinear organization of corridor.</p>
 <p>One fantastic illustration of the idea shows a building constructed in the form of an inside-out globe. At each of many points on the globe, there is a business. (You can see this most clearly in the foreground, which shows several boxes of workers.)</p>
-<div class="figure" style="text-align: center">
-<span id="fig:unnamed-chunk-10"></span>
-<img src="www/Richardson-globe.jpg" alt="An artist's depiction of the organization of calculations for weather forecasting by Richardson's system. [Source](https://www.cabinetmagazine.org/issues/27/foer.php)" width="70%"><p class="caption">
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-10"></span>
+<img src="www/Richardson-globe.jpg" alt="An artist's depiction of the organization of calculations for weather forecasting by Richardson's system. [Source](https://www.cabinetmagazine.org/issues/27/foer.php)" width="70%" />
+<p class="caption">
 Figure 2.1: An artist’s depiction of the organization of calculations for weather forecasting by Richardson’s system. <a href="https://www.cabinetmagazine.org/issues/27/foer.php">Source</a>
 </p>
 </div>
 <p>Each business might work this way: In each business there is a person who will report the current air pressure at that point on the globe, another person who reports the temperature, another reporting humidity, and so on. To compute the predicted weather for the next day, the business has a staff assigned to visit the neighboring businesses to find out the pressure, temperature, humidity, etc. Still other staffers take the collected output from the neighbors and carry out the arithmetic to translate those outputs into the forecast for tomorrow. For instance, knowing the pressure at neighboring points enables the direction of wind to be calculated, thus the humidity and temperature of air coming in to and out of the region the business handles. In today’s numerical weather prediction models, the globe is divided very finely by latitude, longitude, and altitude, and software handles both the storage of present conditions and the calculation from that of the future a few minutes later. Repeating the process using the forecast enables a prediction to be made for a few minutes after that, and so on.</p>
 <p>Some of the most important concepts in calculus relate to the process of collecting outputs from neighboring points and combining them: for instance finding the difference or the sum. To illustrate, here is the first set of equations from Richardson’s <em>Weather forecasting …</em> written in the notation of calculus:</p>
-<div class="inline-figure"><img src="www/Richardson-equations.png" width="70%" style="display: block; margin: auto;"></div>
+<p><img src="www/Richardson-equations.png" width="70%" style="display: block; margin: auto;" /></p>
 <p>You can hardly be expected at this point to understand the calculations described by these equations, which involve the physics of air flow, the coriolis force, etc. but it’s worth pointing out some of the notation:</p>
 <ul>
 <li>The equations are about the momentum of a column of air at a particular latitude (<span class="math inline">\(\phi\)</span>) and longitude.</li>
-<li>
-<span class="math inline">\(M_E\)</span> and <span class="math inline">\(M_N\)</span> are east-west and north-south components of that momentum.</li>
-<li>
-<span class="math inline">\(\partial M_E /\partial t\)</span> is the amount the east-west momentum will change in the next small interval of time (<span class="math inline">\(\partial t\)</span>).</li>
-<li>
-<span class="math inline">\(p_G\)</span> is the air pressure at ground level from that column of air.</li>
-<li>
-<span class="math inline">\(\partial p_G / \partial n\)</span> is about the difference between air pressure in the column of air and the columns to the north and south.</li>
+<li><span class="math inline">\(M_E\)</span> and <span class="math inline">\(M_N\)</span> are east-west and north-south components of that momentum.</li>
+<li><span class="math inline">\(\partial M_E /\partial t\)</span> is the amount the east-west momentum will change in the next small interval of time (<span class="math inline">\(\partial t\)</span>).</li>
+<li><span class="math inline">\(p_G\)</span> is the air pressure at ground level from that column of air.</li>
+<li><span class="math inline">\(\partial p_G / \partial n\)</span> is about the difference between air pressure in the column of air and the columns to the north and south.</li>
 </ul>
 <p>Calculus provides both the notation for describing the physics of climate and the means to translate this physics into arithmetic calculation.</p>
 </div>
 
 </div>
 </div>
-  <div class="chapter-nav">
-<div class="prev"><a href="change.html"><span class="header-section-number">1</span> Change</a></div>
-<div class="next"><a href="naked-intro.html"><span class="header-section-number">3</span> Naked modeling functions</a></div>
-</div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
-    <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
-      <ul class="nav navbar-nav">
-<li><a class="nav-link" href="#structure-of-a-function"><span class="header-section-number">2</span> Structure of a function</a></li>
-<li><a class="nav-link" href="#inputs-to-output"><span class="header-section-number">2.1</span> Inputs to output</a></li>
-<li><a class="nav-link" href="#a-bureaucratic-analogy"><span class="header-section-number">2.2</span> A bureaucratic analogy</a></li>
-<li><a class="nav-link" href="#domain-input-space"><span class="header-section-number">2.3</span> Domain: input space</a></li>
-<li><a class="nav-link" href="#range-output-space"><span class="header-section-number">2.4</span> Range: output space</a></li>
-</ul>
+            </section>
 
-      <div class="book-extra">
-        <ul class="list-unstyled">
-<li><a id="book-source" href="https://github.com/dtkaplan/CalcZ-notes/blob/master/Fun-structure.Rmd">View source <i class="fab fa-github"></i></a></li>
-          <li><a id="book-edit" href="https://github.com/dtkaplan/CalcZ-notes/edit/master/Fun-structure.Rmd">Edit this page <i class="fab fa-github"></i></a></li>
-        </ul>
-</div>
-    </nav>
-</div>
-
-</div>
-</div> <!-- .container -->
-
-<footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
-
-  <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>CalcZ Student Notes</strong>" was written by Daniel Kaplan. It was last built on 2021-06-15.</p>
+          </div>
+        </div>
+      </div>
+<a href="change.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="naked-intro.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
   </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": false,
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/dtkaplan/CalcZ-notes/edit/shared/Fun-structure.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"toc": {
+"collapse": "section"
+}
+});
+});
+</script>
 
-  <div class="col-12 col-md-6 mt-3">
-    <p>This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
-  </div>
-
-</div></div>
-</footer><!-- dynamically load mathjax for compatibility with self-contained --><script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
   (function () {
     var script = document.createElement("script");
     script.type = "text/javascript";
@@ -449,4 +694,5 @@ Figure 2.1: An artist’s depiction of the organization of calculations for weat
   })();
 </script>
 </body>
+
 </html>
