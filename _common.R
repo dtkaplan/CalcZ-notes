@@ -103,3 +103,7 @@ askMC <- function (prompt = "The question prompt", ..., id = NULL, right_one = N
                 "**Question ", MC_counter$get(), "**  ",
                 out, answers))
 }
+
+sandbox_link <- function() {
+  "[SANDBOX](https://maa-statprep.shinyapps.io/CalcZ-Sandbox/)"
+}

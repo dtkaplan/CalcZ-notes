@@ -1,6 +1,6 @@
 # Computing derivatives
 
-To differentiate a function $g(x)$ means simply to produce the corresponding function $\partial_t g(x)$. This is often called "finding the derivative," language that resonates with the high-school algebra task of "finding $x$." Rather than conjuring an image of search high and low for the derivative, it's more realistic to say, "compute the derivative."
+To differentiate a function $g(x)$ means simply to produce the corresponding function $\partial_t g(x)$. This is often called "finding the derivative," language that resonates with the high-school algebra task of "finding $x$." Rather than conjuring an image of search high and low for a missing function, it's more realistic to say, "compute the derivative."
 
 In this chapter we'll introduce two ways of computing a derivative. For simplicity we will write $x$ for the with-respect-to-variable, although in practice you might be using $t$ or $z$ or something else.
 
@@ -27,7 +27,7 @@ On its own, `f_description` cannot be used like a function because it was constr
 f_description(2)
 ```
 
-In between the tilde expression and the function to be made is software that translates from tilde-expressions into functions:
+In between the tilde expression and the final result---a function---is software that translates from tilde-expressions into functions:
 ```{r}
 f <- makeFun(f_description)
 ```
@@ -51,34 +51,269 @@ In the same spirit as `makeFun()`, which translates a tilde-expression into the 
 D(f_description)
 ```
 
+```{exercise name="tilde-function.Rmd"}
+```
+<details>`r MC_counter$reset()` `r knitr::knit_child("Exercises/Diff/tilde-function.Rmd")`</details>
+
+
 ## Finite differencing
 
-Example: Write myD() that takes a function as an input.
+You can use the definition of the slope function $${\cal D}_x f(x) = \frac{f(x+0.1) - f(x)}{0.1}$$
+to create an approximation to the derivative of any function. Like this:
 
 ```{r}
-myD <- function(f, h=0.1) {
-  # create the new function with function(x){}
-  function(x) {
-    (f(x+h) - f(x))/h
-  }
+g <- makeFun(sin(2*x)*(pnorm(x/3)-0.5) ~ x)
+dg <- makeFun((g(x+0.1) - g(x))/0.1 ~ x)
+```
+
+Whenever you calculate a derivative function, you should check against mistakes or other sources of error. For instance, whenever the derivative is zero, the original function should have an instantaneous slope of zero. Figure \@ref(fig:check-dg) shows a suitable plot for supporting this sort of check.
+```{r check-dg, fig.cap="A check that zero-crossings (blue) of the derivative function (red) correspond to inputs where the original function is flat (black)." }
+zeros_of_dg <- findZeros(dg(x) ~ x, xlim=c(-5,5))
+slice_plot(g(x) ~ x, domain(x=c(-5,5)), npts=500) %>%
+  slice_plot(dg(x) ~ x, color="red", npts=500) %>%
+  gf_hline(yintercept = ~ 0, color = "orange", size=2, alpha=0.2) %>%
+  gf_vline(xintercept = ~ x, data=zeros_of_dg, color="blue")
+```
+
+Look very closely at Figure \@ref(fig:check-dg), particularly at the places where the blue vertical markers cross the function $g(x)$ (black). They should cross exactly at the flat zone, but they are a little shifted to the left. That's the sense in which the finite-difference approach gives an approximation. This left-shift stems from the use of 0.1 in the definition of the zero function. Use a smaller value, say 0.01 or 0.001, and you won't be able to see the shift at all.
+
+::: {.takenote}
+In modeling work, there's nothing wrong with an approximation so long as it is good enough for your purposes. We picked the value 0.1 for our definition of the slope function because it works very well with the naked modeling functions. Here, "very well" means you can't easily see in the graph any deviation compared the the exact derivative.
+
+When a calculation can be done exactly (without outrageous effort) it certainly makes sense to use the exact method. However:
+
+1. It's useful to have an easy, approximate method always at hand. This lets you check the results of other methods against the possibility of some blunder or mis-conception. The slope function approach to differentiation is certainly easy, and if you think the approximation isn't good enough, then instead of 0.1 use something smaller. (Chapter \@ref(evanescent-h) discusses how small is **too** small.)
+2. The computer makes it practical to employ the slope function as a useful approximation to the derivative. There are many other mathematical methods that the computer has made feasible, for instance the methods of ***machine learning***. These methods create functions that sometimes cannot be handled by the traditional ("exact") methods of differentiation. 
+:::
+
+```{exercise name=check-h}
+Put this in Chapter \@ref(evanescent-h).
+
+An exercise given a function $g(x)$ for which 0.1 isn't good enough. Vary $h$ by factors of 10 until a change by 10 doesn't make any discernable difference.
+```
+
+## The slope-function operator
+
+Take a look at the statement we used to construct the slope function of `g()`:
+```r
+dg <- makeFun((g(x+0.1) - g(x))/0.1 ~ x)
+```
+
+There's almost nothing about this statement that has anything to do with the specifics of how we defined `g()`; we could have used any $g()$. The "almost" in the previous sentence is about the choice of 0.1, which isn't guaranteed to be small enough.
+
+It would be convenient to have an ***operator*** that automates the process of constructing a slope function. This is a programming task and in that sense beyond the scope of this course. Still, it's a good idea to get in the habit of reading programming code. So here goes ... creating a `slopeFun()` operator:
+
+1. Remember the `function(){}` syntax for creating an operator. (If I were speaking to experienced programmers, I would have said "function" instead of "operator." )
+2. We're going to use a ***tilde expression*** as the input to `slopeFun()`. This is how the other R/mosaic operators work. That will be easier to the user and will also give us access to those other operators if we need them in writing `slopeFun()`.
+3. The object returned by the `slopeFun()` operator will be, of course, a ***function***. We've been using `makeFun()` to make our mathematical functions, so expect to see that in the code for `slopeFun()`.
+4. There's that nuisance about using 0.1 and whether that is small enough. So let's use an `h` argument that we can change when needed.
+
+```{r}
+slopeFun <- function(tilde, h=0.1) { #two arguments, one with a default value
+   g <- makeFun(tilde)  # Turn the tilde expression into a function
+   
+   makeFun((g(x + h) - g(x))/h ~ x, h=h) # just like before, with h instead of 0.1
 }
 ```
 
-## Re-writing
+Figure \@ref(fig:slope-quick-check) shows the results of a quick check of whether the function works and whether `h=0.1` is small enough.
 
-Search for $x$
-If the first part is + the find the deriv of each side.
+```{r slope-quick-check, fig.cap="Checking whether the homemade `slopeFun()` operator works."}
+dx_sin <- slopeFun(sin(x) ~ x)
+slice_plot(dx_sin(x, h = 0.00000000001) ~ x, domain(x=c(-5,5)), size=2) %>%
+  slice_plot(dx_sin(x, h=0.001) ~ x, color="red")
+```
 
-If the first part doesn't have an x, then a*deriv(right)
+::: {.scaffolding}
+You can decide for yourself whether the red and black curves in Figure \@ref(fig:slope-quick-check) are similar enough for your purposes. Even better, do some exploring yourself in a `r sandbox_link()`. You'll have to copy and paste into your sandbox both the code defining `slopeFun()` and the graphics statements. Start by replacing `dx_sin(x, h=0.1)` by `dx_sin(x, h=0.0001)`
+
+```{exercise name="h-too-small"}
+```
+<details>`r MC_counter$reset()` `r knitr::knit_child("Exercises/Diff/h-too-small.Rmd")`</details>
+
+
+
+
+In practice, you won't need to use `slopeFun()`. You'll use `D()` instead, which gives the "exact" results whenever it can.
+
+## Symbolic differentiation
+
+Symbolic differentiation is the process of taking a formula and translating it to a new formula according to certain patterns or ***rules***. What's nice about symbolic differentiation is that you never have to worry about 0.1 or `h` as in the slope function. 
+
+As it happens, just a handful of rules will cover almost all common situations. Generations of calculus students have learned this handful of rules, and you are going to learn them too. Just as some people are able to do arithmetic in their head and others aren't, some people are good at identifying the appropriate pattern in a formula and translating it according to the corresponding rule. And some people aren't. But even if you don't end up being good at symbolic differentiation, you can still make complete and successful use of derivatives, just as you can effectively use arithmetic even without being able to find square roots in your head.
+
+Symbolic differentiation is a **mechanical** process. Some people are good at working like a machine. And some people aren't. It helps to be very organized and to have a really good short-term memory. Come to think of it ... this is where computers shine. So let's start with how to use the computer for differentiation. Then we can talk about the rules that the computer is using.
+
+I'm going to assume that you are comfortable with using `makeFun()` in the R/mosaic software. 
+
+> **To compute derivatives, use `D()` instead of `makeFun()`. Everything else is exactly the same. 
+
+For example, this is a typical use of `makeFun()`:
+```{r}
+f <- makeFun(a*x^2 + b*x + c ~ x, a=2, b=4, c=-3)
+```
+We're calling the newly created function `f()` and we can use it in the ordinary ways:
+```{r}
+f(2)    #evaluate it at a specific input
+g <- makeFun(f(x)*sin(x) ~ x) # Build a new function with it
+slice_plot(f(x) ~ x, domain(x=c(-3,3))) # Plot it
+findZeros(f(x) ~ x)  # Find the zero crossings
+```
+Same with `D()`:
 
 ```{r}
-ex <- quote(a*x + b*sin(x))
-ex[[3]]
-hasx <- function(ex) "x" %in% all.vars(ex)
-plainx <- function(ex) "x" %in% all.vars(ex[[1]])
-plainx(quote(3+x))
-length(expression(3+x))
-hasx(ex)
+dx_f <- D(a*x^2 + b*x + c ~ x, a=2, b=4, c=-3)
+```
+We're calling the derivative of `f()` by the name `dx_f()`. We could, as usual, have used any name, but it's nice to have a convention that makes it easier to keep track of things.
+```{r}
+dx_f(2)    #evaluate it at a specific input
+g <- makeFun(dx_f(x)*sin(x) ~ x) # Build a new function with it
+slice_plot(dx_f(x) ~ x, domain(x=c(-3,3))) # Plot it
+findZeros(dx_f(x) ~ x)  # Find the zero crossings
+```
+::: {.tip}
+As a matter of good computing style ... 
+
+Since we had already defined `f()`, in computing its derivative a good practice is to use `f()` itself rather than copying over the tilde formula for use in `D()`. The function created by `D()` will inherit all the same default parameters used in `f()`.
+
+```{r}
+D(f(x) ~ x)
+```
+
+Notice: No $h$!
+
+:::
+
+## Symbolic differentiation rules
+
+Each rule consists of a pair of patterns that can be organized into two columns of a table. If the formula matches a pattern on the left, then re-write it into the pattern on the right.
+
+First, we need a way to denote the patterns involved in differentiation and to relate them to the way we write formulas. We already have most of what's needed in the patterns of the basic modeling functions and in the patterns of linear combination, function composition, and function multiplication. 
+
+Let's start with the straight-line function and it's derivative. Here's the first line of our pattern table, which we'll write using $x$ as the ***with-respect-to input***.
+
+pattern name  | Original       |  Derivative w.r.t. $x$
+--------------|----------------|-------------
+straight-line | $a x + b$      | $a$
+
+There are many forms that are equivalent to the straight-line formula, for instance $3 x + 2$ or $4(x-6)$ or $a(x-x_0)$, $b + x a$, $(4 + 1)x - 7$. Whenever you encounter such a form, re-arrange it into $a x + b$.
+
+
+* **Example 1**: Re-arrange $7-(4+1)x$ as $a x + b$.    
+    
+    Use arithmetic reduction to simplify to $7-5x$ then put it in the standard order, getting $a=-5$ and $b=7$. The derivative is therefore $-5$.
+
+* **Example 2**: Re-arrange $3(x-2)$ as $a x + b$.
+
+    Distribute the multiplication by 3 to get $3x - 6$. This has $a=3$ and $b=-6$. There derivative is therefore $3$.
+
+* **Example 3**: Re-arrange $m (x - x_0)$ as $a x + b$.
+
+    Distribute the multiplication by $m$ to get $mx - m x_0$. Recognizing that $m x_0$ does not involve the input $x$, get $a=m$ and $b= -m x_0$. The derivative is therefore $p$.
+
+* **Example 4**: Re-arrange $3 x + 4 - 2 x +1$ as $ax + b$. 
+
+    Bring together the terms involving $x$ and use arithmetic to simplify. Similarly, bring together the terms not involving $x$ and use arithmetic to simplify. 
+$$3 x + 4 - 2x + 1 = (3 x - 2 x) + (4 + 1) =  1 x + 5$$ so $a=1$ and $b=5$. The derivative is therefore $1$.
+
+* **Example 5**: Re-arrange $-x$ as $ax + b$. 
+
+    We have to be inventive and recognize that $-x$ has the format $-1 x + 0$. So $a=-1$ and $b=0$. There derivative is therefore $-1$. 
+
+* **Example 6**: Re-arrange $2 x_0$ as $ax + b$. Being inventive in the same way to recognize $a = 0$ and $b=2 x_0$. The derivative is therefore 0.
+
+* **Example 7**: Re-arrange $\frac{2 \pi}{P} (x-x_0)$ as $a x + b$. 
+
+What's potentially confusing here is complicated looking $\frac{2 \pi}{P}$. You can see that this doesn't involve the input $x$ in any way. For the moment, let's replace $\frac{2 \pi}{P}$ with something simpler: $c$. Then the formula is $c(x-x_0)$ which is in the form of Example 3. The derivative of that is simply $c$. And $c$ really stands for $\frac{2 \pi}{P}$ in the original, so the derivative of the original is $\frac{2 \pi}{P}$
+
+Counter Example: Re-arrange $c x^2$ into $a x + b$. There's no way! $c x^2$ is a different kind of pattern. There's not yet a row in the pattern table to tell us how to handle $x^2$.
+
+The straight-line rule is implemented as `axb_rule()`. You give `axb_rule()` the formula (in R notation). The result is the derivative according to that rule. Importantly, if the rule does not apply, then the result is `FALSE`:
+
+```{r}
+sum_rule((a+b)*x + c*x^2)
+```
+
+
+
+## Re-writing the basic modeling functions
+
+We're going to extend the pattern table to include the basic modeling functions. Recall that every basic modeling function is a composition of a naked modeling function with an $ax + b$ scaling function.
+
+pattern name  | Original             |  Derivative w.r.t. $x$
+--------------|----------------------|-------------
+straight-line | $a x + b$            | $a$
+exponential   | $\exp(a x + b)$      | $a \exp(ax + b)$
+sinusoid      | $\sin(a x + b)$      | $a \cos(ax + b)$
+power-law     | $\text{pow}(ax+b,p)$ | $a\,p\, \text{pow}(a x + b, p\!\!-\!\!1)$
+logarithm     | $\log(a x + b)$      | $a\, \text{pow}(ax + b, -1)$
+sigmoid       | $\text{pnorm}(a x + b, mn, sd)$ | $a\, \text{dnorm}(a x + b, mn, sd)$
+
+::: {.why}
+
+I wrote most of the basic modeling functions in their traditional mathematical notation except for $e^x$ and $x^p$. In the table, I wrote those as $\exp(x)$ and $\text{power}(x, p)$. This is similar in form to $\text{pnorm}(x, mn, sd)$ and $\text{dnorm}(x, mn, sd)$.
+
+The reason to use the $\exp()$ and $\text{pow}()$ notation is to make it easier to see the commonality of the patterns. Each of the rows of the table, except the first, has the form $f(a x + b)$ or $f(a x + b, p)$ or $f(a x + b, mn, sd)$. Only the first argument to $f()$ involves an $x$-expression. If there are additional arguments, they never involve $x$. In other words, $p$, $mn$, and $sd$ are ***constants***.
+
+If you prefer the traditional notation, the relevant rows of the pattern table are:
+
+pattern name  | Original             |  Derivative w.r.t. $x$
+--------------|----------------------|-------------
+exponential   | $e^{a x + b}$      | $a e^{ax + b}$
+power-law     | $(ax+b)^p$ | $p\, a\, (ax + b)^{p-1}$
+
+:::
+
+
+In Chapters XX, XXX, and XXXX we'll give the re-writing rules for linear combination of functions, function composition, and function multiplication. 
+
+
+```{exercise}
+Drill on these forms
+```
+
+```{exercise}
+Move this to the chapter on assembling functions. Drill on spotting linear combinations, f(g(x)) is composition, $\sin(x^2)$ is composition, ...
+```
+
+## Pattern recognition
+
+ To demonstrate this, and to show why computers can be "taught" to do symbolic differentiation, we'll have you practice with an R function that identifies the two kinds of patterns in our pattern table.
+
+```{r echo=FALSE}
+
+```
+
+The first question when symbolically differentiating a function is whether the formula for the function is of the form $ax + b$. Our function for this is `axb_rule()`. The output of this function will be `FALSE` if the formula is not of that form. But if there is a match, `axb_rule()` will give you the formula for the derivative.
+
+```{r}
+axb_rule(a*x + b)
+axb_rule(2*x)
+axb_rule(x)
+axb_rule(-x)
+axb_rule(1/x)
+axb_rule(x^2)
+```
+The function `bmf_rule()` identifies if the formula is one of the basic modeling functions.
+
+```{r}
+bmf_rule(a*x + b)
+bmf_rule(sin(x))
+bmf_rule(sin(3*x + 2))
+bmf_rule(sqrt(x))
+bmf_rule(sqrt(a*x + b))
+bmf_rule(sqrt(x^2))
+bmf_rule(sin(sqrt(x)))
+bmf_rule(x^3)
+bmf_rule((a*x + b)^4)
+bmf_rule((a *x^2)^ 4)
+bmf_rule(pnorm(x, mn, sd))
+```
+```{exercise}
+```
+Explain why the result is zero and not simply `a`.
+```{r}
+bmf_rule(ax + b)
 ```
 
 
