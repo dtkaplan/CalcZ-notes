@@ -74,6 +74,11 @@ If the first part doesn't have an x, then a*deriv(right)
 ```{r}
 ex <- quote(a*x + b*sin(x))
 ex[[3]]
+hasx <- function(ex) "x" %in% all.vars(ex)
+plainx <- function(ex) "x" %in% all.vars(ex[[1]])
+plainx(quote(3+x))
+length(expression(3+x))
+hasx(ex)
 ```
 
 
