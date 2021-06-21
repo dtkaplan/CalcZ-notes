@@ -138,11 +138,125 @@ In practice, you won't need to use `slopeFun()`. You'll use `D()` instead, which
 
 ## Symbolic differentiation
 
-Symbolic differentiation is the process of taking a formula and translating it to a new formula according to certain patterns or ***rules***. What's nice about symbolic differentiation is that you never have to worry about 0.1 or `h` as in the slope function. 
+Symbolic differentiation is the process of taking a formula and translating it to a new formula according to certain patterns or ***rules***. Each rule is ultimately derived from the definition of the slope function, but in use, the statement of each rule looks nothing like the slope function. This is potentially confusing, since it's easy to forget when using the rules where they come from. 
 
-As it happens, just a handful of rules will cover almost all common situations. Generations of calculus students have learned this handful of rules, and you are going to learn them too. Just as some people are able to do arithmetic in their head and others aren't, some people are good at identifying the appropriate pattern in a formula and translating it according to the corresponding rule. And some people aren't. But even if you don't end up being good at symbolic differentiation, you can still make complete and successful use of derivatives, just as you can effectively use arithmetic even without being able to find square roots in your head.
+Symbolic differentiation is a **mechanical** process. Some people are good at working like a machine. And some people aren't. It helps to be very organized and to have a really good short-term memory. For decades, computers have been programmed to calculate symbolic differentiation. What's required is the systematic and reliable application of a small set of rules. Computer's excel at this.
 
-Symbolic differentiation is a **mechanical** process. Some people are good at working like a machine. And some people aren't. It helps to be very organized and to have a really good short-term memory. Come to think of it ... this is where computers shine. So let's start with how to use the computer for differentiation. Then we can talk about the rules that the computer is using.
+A set of about a dozen rules will handle all the formulas we'll encounter in this ook or that are commonly used for modeling. In this chapter, we're going to derive only a handful of the rules---those related to the straight-line function. Then we will introduce, without motivation, the rules for the naked and basic modeling functions. In Chapter \@ref(evanescent-h) we'll motivate the rules for the naked modeling functions. In Chapters XXX we'll develop the three rules that correspond to the three forms of creating new functions out of old: linear combinations (the ***sum*** rule), function multiplication (the ***product rule***) and function composition (the ***chain rule***).
+
+Recall that for a function $f(x)$, the derivative $\partial_x f(x)$ corresponds to the ***instantaneous slope*** of $f(x)$. There is a small set of functions for which the instantaneous slope is the same for all $x$. These are the straight-line function $g(x) \equiv a x + b$ and the constant function $h(x) \equiv b$. 
+
+The rule for the straight-line function is
+$$\partial_x \left[a x + b\right] = a$$
+The rule for the constant function is 
+$$ \partial_x \left[b\right] =0$$ There are two special cases of the straight-line function which are really just a restatement of the above two rules but which are worth emphasizing:
+$$\partial_x \left[a x\right] = a \ \ \ \text{and}\ \ \ 
+\partial_x \left[x\right] = 1$$
+
+Note that the right-hand side of all these differentiation rules based on the straight-line function **does not involve $x$**. This amounts to saying that the derivative function for the straight-line function does not vary with $x$. Equivalently, you can say that the derivative function for the straight-line function is a constant function.
+
+The ***with-respect-to input***---the input whose name is given as a subscript to $\partial$  is the key to these patterns. Whenever $\partial_x$ is applied to any formula that **does not contain** $x$, the derivative is zero. You see that in $\partial_x\left[ b \right] = 0$. Similarly $\partial_x \left[ b \right]=0$ and even very complicated things not involving $x$ have derivatives that are zero, for instance: 
+$$\partial_x \left[\sin\left(2\pi \sqrt{\cos(y^2 + 5 e^z)}\right)\right] = 0$$
+For notation, let's refer to any formula that does not involve the with-respect-to input as $$\text{Anything without x dependence:}\ \ \require{cancel}\xcancel{\strut\mathbf x}$$
+
+* No $x$ rule: $\ \partial_x \left[a\right] = 0\ \ \text{where}\ \ a = \xcancel{\strut\mathbf x}$
+
+* Simple x rule: $\partial_x \left[x\right] = 1$
+
+* Scaling $x$ rule: $\partial_x \left[ a x\right] = a\ \ \text{where}\ \ a =  \xcancel{\strut\mathbf x}$
+
+
+```{exercise, name="basic rules"}
+A few drill problems on the above three rules.
+```
+
+```{exercise, name="other than x"}
+A few drill problems on the above three rules but with other variables
+```
+
+## Symbolic derivatives of modeling functions
+
+For a human training to be a symbolic differentiator, it's best simply to memorize the patterns for derivatives of the other naked modeling functions. They are:
+
+$f(x)$      | $\partial_x f(x)$
+------------|------------------
+$e^x$       | $e^x$
+$\sin(x)$   | $\cos(x)$
+$\ln(x)$    | $1/x$
+$x^p$       | $p\, x^{p-1}$
+sigmoid, that is, pnorm(x)    | hump, that is, dnorm(x)
+hump, that is dnorm(x)        | $-x \text{dnorm}(x)$
+
+Note that some of the naked modeling functions have derivatives which are simply naked modeling functions
+
+Name $f(x)$|           $f(x)$  | $\partial f(x)$ | name $\partial_x f(x)$
+:---------:|:----------------:|:----------------:|:------:
+exponential| $e^x$              | $e^x$          | exponential
+logarithm  | $\ln(x)$           | $1/x$          | power-law
+sigmoid    | $\text{pnorm(x)}$ |$\text{dnorm(x)}$| hump
+
+
+Another couple of naked modeling functions involve division or division by $x$ and multiplication by a scalar. (The second one, $\partial_x \text{hump}(x)$, was not in the original short list)
+
+Name $f(x)$|           $f(x)$  | $\partial f(x)$ | name $\partial_x f(x)$
+:---------:|:----------------:|:----------------:|:------:
+power-law  |    $x^p$  | $\frac{p}{x} x^p = px^{p-1}$  | power-law
+hump       | $\text{dnorm(x)}$  | $- x\, \text{dnorm(x)}$| "hiccough"
+
+Traditionally, the derivative of the sinusoid is presented as a pair of kissing cousins:
+
+Name $f(x)$|           $f(x)$  | $\partial f(x)$ | name $\partial_x f(x)$
+:---------:|:----------------:|:----------------:|:------:
+sinusoid   | $\sin(x)$  | $\cos(x) = \sin(x+\pi/2)$ | sinusoid
+sinusoid   | $\cos(x)$  | $-\sin(x) = \cos(x + \pi/2) =  \sin(x+\pi)$ | sinusoid
+
+::: {.takenote}
+Memorizing the derivatives of the short list of naked modeling functions will make it much easier to follow the rest of the section. Do that now.
+:::
+
+Recall that the ***basic modeling functions*** are just the naked functions with clothes on the input. The clothing is can be a simple a scaling function, such as $a\, x$ or $k\, x$  or $\frac{2\pi}{P} x$. As well, the clothing can involve both a scaling and a ***shift***, for instance $a x + b$ or $a (x-x_0)$
+Let's give a name to the clothing function and recognize the several varients:
+
+Variations of clothing$(x)$ |    | $\partial_x \text{clothing}(x)$
+-----------------------|---------|
+$ax$  | scaling | $a$
+$kx$  | scaling | $k$
+$\frac{2\pi}{P} x$ | scaling | $\frac{2\pi}{P}$
+$ax + b$ | scaling and shift | $a$
+$a(x-x_0)$ shift and scale   | $a$
+$\frac{x - \text{mn}}{\text{sd}}$ | shift and scale | $\frac{1}{\text{sd}}$}
+
+
+Every basic modeling function is a composition of the corresponding naked function with the clothing function:
+
+naked    | clothed   | typically written
+---------|-----------|------------------
+`exp(x)` | `exp(clothing(x))` | $e^{kx}$
+`sin(x)` | `sin(clothing(x))` | $\sin\left(\frac{2\pi}{P} x\right)$
+`pnorm(x)` | `pnorm(clothing(x))` | `pnorm(x, mn, sd)`
+`dnorm(x)` | `dnorm(clothing(x))` | `dnorm(x, mn, sd)`
+
+To differentiate the basic modeling functions, follow exactly the same rules as for the naked modeling functions, but instead of $x$, write the clothed form of $x$. And then, multiply the whole thing by the derivative with respect to $x$ of the clothing function.
+
+$$\partial_x \left[ f(\text{clothing}(x))\right] = [\partial_x]\left(\strut\text{clothing}(x)\right) \times 
+\partial_x \text{clothing}(x)$$
+
+Some examples:
+
+$f(x)$    |   $\partial_x f(x)$
+----------|----------------------
+$e^{kx}$  | $k \times e^{kx}$
+$\sin\left(\frac{2\pi}{P} x\right)$ | $\frac{2 \pi}{P} \times \cos\left(\frac{2\pi}{P} x\right)$
+$\text{pnorm}(x, \text{mn}, \text{sd})$ | $\frac{1}{\text{sd}} \times \text{dnorm}(x, \text{mn}, \text{sd})$
+
+
+<!--
+
+MOVE TO LATER ON
+
+
+
+Come to think of it ... this is where computers shine. So let's start with how to use the computer for differentiation. Then we can talk about the rules that the computer is using.
 
 I'm going to assume that you are comfortable with using `makeFun()` in the R/mosaic software. 
 
@@ -316,4 +430,5 @@ Explain why the result is zero and not simply `a`.
 bmf_rule(ax + b)
 ```
 
+-->
 
