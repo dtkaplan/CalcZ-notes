@@ -1,4 +1,233 @@
-# Approximating functions
+# Local approximations
+$$\newcommand{\line}{\text{line}}
+\newcommand{\hump}{\text{hump}}
+\newcommand{\sigmoid}{\text{sigmoid}}
+\newcommand{\recip}{\text{recip}}
+\newcommand{\diff}[1]{{\cal D}_#1}
+$$
+
+## Digression, revision of basic functions
+
+Fundamental model of change: $\line(x) \equiv ax + b$ but it's also good to think about this as scale-and-shift: $\line(x) \equiv a(x-x_0)$, which is the same thing so long as $x_0 = -b/a$.
+
+Naked modeling functions
+
+Name | math notation | computer notation
+-----|---------------|------------------
+exponential | $e^x$     | `exp(x)`
+logarithm   | $\ln(x)$  | `log(x)`
+sinusoid    | $\sin(x)$ | `sin(x)`
+square | $x^2$  | `x^2`
+proportional | $x$   | `x`
+reciprocal | $1/x$ or $x^{-1}$   | `1/x` or `x^-1`
+hump     |              |  `dnorm(x)`
+sigmoid  |              |  `pnorm(x)`
+
+Taken together, functions like $x^{-1}$, $x^2$, and the most general $x^p$ are the power-law family of functions.
+
+***Basic modeling functions*** are the naked modeling functions but with the $x$ replaced by $\line(x)$
+
+## For diff intro
+
+***Differencing operator*** $\diff{x}$ turns a function into its slope function
+$$\diff{x} f(x) \equiv \frac{f(x+h) - f(x)}{h}$$
+
+Let's look at one where we already know the result: The straight line function $\line(x) \equiv a x + b$ has a slope function that is constant: $\diff{x}\line(x) = a$
+
+$$\diff{x}\line(x) = \frac{a (x+h) + b - (a x + b)}{h} = \frac{ah}{h} = a$$
+Notice that $h$ doesn't enter into it.
+
+That's not true for the square function:
+
+$$\diff{x}x^2 = \frac{(x+h)^2 - x^2}{h} = \frac{(x^2 + 2 x h + h^2) - x^2}{h} = \frac{2 x h + h^2}{h} = 2x + h$$
+
+Another example:
+
+$$\diff{x}e^x = \frac{e^{x+h} - e^x}{h} = e^x \left[\frac{e^h - 1}{h}\right]$$
+[Under taylor series, show that $\frac{e^h - 1}{h} \rightarrow 0$.]
+
+The ***differencing*** operator is the basis for another operator called ***differentiation***, denoted $\partial_x$. The distinction is all about $h$. In differentiation, $h$ is taken to be as small in magnitude as possible. It's tempting to think of this as $h = 0$, but that would imply dividing by zero in the differencing operator. Being cautious about this, we write that differentiation is differencing with $h \rightarrow 0$, or
+
+$$\partial_x f(x) \equiv \lim_{h\rightarrow 0} \frac{f(x+h) - f(x)}{h}$$
+The distinction between $h=0$ and $h \rightarrow 0$ can be seen by computing $\frac{e^h - 1}{h}$ for smaller and smaller $h$:
+```{r}
+f <- makeFun((exp(h) -1)/h ~ h)
+f(0.1)
+f(0.01)
+f(0.001)
+f(0.0001)
+f(0.0000001)
+f(0.0000000001)
+f(0)
+```
+ 
+[In Taylor series, show that $\partial_x \log(x) = 1/x$ is self consistent]            
+
+Another example is the reciprocal function, written equivalently as $1/x$ or $x^{-1}$
+
+$$\diff{x} x^{-1} = \frac{1/(x+h) - 1/x}{h} = \frac{x - x+h}{x(x+h)h} = -\frac{h}{x(x+h)h} -\frac{1}{x^2 + hx}$$
+For $x \neq 0$, there is no divide-by-zero problem, so we can just set $h=0$ in the last formula.
+
+```{r}
+g <- makeFun(1/(x^2 + h*x) ~ h, x=10)
+g(0.1)
+g(0.01)
+g(0.001)
+g(0.0001)
+g(0.0000001)
+g(0.0000000001)
+g(0)
+```
+
+Here's the table of derivatives of the naked modeling functions:
+
+Name | $f(x)$ | $\partial_x f(x)$   | demonstrated already
+-----|---------------|------------------
+exponential | $e^x$     | $e^x$ | yes
+logarithm   | $\ln(x)$  | $1/x$  | not yet
+sinusoid    | $\sin(x)$ | $\cos(x)$ | not yet
+square | $x^2$  | $2x$ | yes
+proportional | $x$   | $1$ | yes
+reciprocal | $1/x$ or $x^{-1}$   | $-1/x^2$ | yes
+hump     |  $\dnorm(x)$           |  $-x \dnorm(x)$ | not yet
+sigmoid  |  $\pnorm(x)$            |  $\dnorm(x)$ | not yet
+
+Notice that the derivatives of the naked modeling functions tend to be other naked modeling functions, sometimes scaled with a $2$ or $-1$. The derivative of the hump function is the product of two naked modeling functions.
+
+## Information from derivatives
+
+The second derivative quantifies the concavity: mostly we're interested in whether it is up or down, that is, negative or positive.
+
+We're very good at eyeballing slope and concavity, that is, the derivative and the sign of the 2nd derivative. We're also pretty good at eyeballing the ***radius of curvature***.  This can be calculated from the first and second derivatives. The radius of curvature operator is $${\cal K} f(x) \equiv \frac{\left|\partial_{xx} f(x)\right|}{\left|1 + \left(\strut\partial_x f(x)\right)^2\right|^{3/2}}$$
+
+```{exercise, name="curvature-dimension"}
+Show that the dimension of the curvature is the same as $x$.
+```
+
+
+## Eight simple shapes
+
+In many modeling situations with a single input, you can get very close to a good modeling function $f(x)$ by selecting one of eight simple shapes. I've sketched these out and annotated them with their properties and examples of function forms that have that shape.
+
+Straight-line functions
+
+sloping upward  | sloping downward
+-------------------------|---------------------------
+![](www/flat-up.png)     | ![](www/flat-down.png)
+not concave, slopes up, monotonic  | not concave, slopes down, monotonic
+$a x + b$   | $b - ax$
+
+
+shallow then steep 
+
+concave down | concave up
+-------------|-------------
+![](www/shallow-then-steep.png) | ![](www/shallow-then-steep-up.png)
+monotonic      | monotonic
+$a - b e^{kx}$ | $a + b e^{kx}$
+
+steep then shallow
+
+concave down | concave up
+-------------|-------------
+![](steep-then-shallow.png) | ![](www/steep-then-shallow.png)
+monotonic     | monotonic
+$\ln(x)$ | $e^{-kx}$
+$-1/x$   | $1/x$
+
+
+local extremum
+
+maximum  | minimum   
+---------|----------
+![](www/maximum.png) | ![](www/minimum.png)
+not monotonic  | not monotonic
+$a x^2$ | $-a x^2$
+$\hump(x)$ $-\hump(x)$
+
+To choose among these shapes, consider your modeling context:
+
+- is the relationship positive (slopes up) or negative (slopes down)
+- is the relationship monotonic or not
+- is the relationship concave up, concave down, or neither
+
+For instance, in micro-economic theory there are ***production functions*** that describe how much of a good is produced at any given price, and ***demand functions*** that describe how much of the good will be purchased as a function of price. 
+
+As a rule, production increases with price and demand decreases with price. In the short term, production functions tend to be concave down, since it's hard to squeeze increased production out of existing facilities. In the long term, production functions can be concave up as new businesses are established to meet demand. 
+
+For demand in the short term, functions will be concave up when there is some group of consumers who have no other choice than to buy the product. An example is the consumption of gasoline versus price: it's hard in the short term to find another way to get to work. In the long term, consumption functions can be concave down as consumers find alternatives to the high-priced good. For example, high prices for gasoline may, in the long term, prompt a switch to more efficient cars, hybrids, or electric vehicles. This will push demand down steeply.
+
+Cooling water or radio-activity as functions of time concave up and steep-then-shallow. The incidence of an out-of-control epidemic versus time is concave up, but shallow-then-steep. As the epidemic is brought under control, the decline is steep-then-shallow and concave up. Over the whole course of an epidemic, there is a maximum incidence. And experience shows that epidemics can have a phase where incidence reaches a local minimum: a decline as people practice social distancing followed by an increase as people become complacent.
+
+How many minutes can you run as a function of speed? Concave down and shallow-then-steep; you wear out faster if you run at high speed. How far can you walk as a function of time? Steep-then-shallow and concave down; you're pace slows as you get tired?   How much fuel is consumed by an aircraft as a function of distance? For long flights the function is concave up and shallow-then-steep; fuel use increases with distance, but the amount of fuel you have to carry also increases with distance and heavy aircraft use more fuel per mile. How does the stew taste as a function of saltiness. The taste improves as the amount of salt increases ... up to a point after which it's downhill.
+
+All these are examples of scenarios where the modeler knows about the derivative and concavity of the relationship being modeled. It's often the case that your knowledge of the system comes in this form. 
+
+As you see, there are often multiple basic modeling functions that can be used to construct a model that follows the appropriate slope and curvature pattern. But there is one function, the low-order polynomial, that can be used for any of the eight shapes. That general-purpose modeling function is
+
+$$f(x) = a_0 + a_1 x + a_2 x^2$$ Implementing one simple shape or another is just a matter of choosing appropriate values for the scalars $a_0$, $a_1$, and $a_2$. For instance, to implement the straight-line function set $a_2 = 0$, getting $f(x) = a_0 + a_1 x$. The other six shapes all have $a_2 \neq 0$. 
+
+It's easier to see how to achieve each of the curved shapes by writing the function as a quadratic function of a scaled/shifted input, plus a constant.
+$$f(x) = a(x-x_0)^2 + c$$ You may recognize that this is the formula for a parabola which faces upward or downward depending on the sign of $a$. The argmax or argmin of the parabola is at $x=x_0$.  Obviously this formulation can give the shapes with a maximum or a minimum.
+
+It can also achieve the other shapes, at least locally. Suppose you want a shallow-then-steep shape that's concave down. You're interested in a finite domain of $x$, say in $x_a \leq x \leq x_b$. To achieve the shape, select $a_2 < 0$ and $x_b < x_0$. 
+
+FIGURE SHOWING THE OTHER FOUR SHAPES AS PARTS OF THE maximum and minimum.
+
+
+
+
+
+
+
+
+
+
+## Derivatives of the basic modeling functions
+
+Do this in the chapter after introducing linear approximations and the derivative.
+
+The ***basic modeling functions*** clothe the bar $x$  the ***naked modeling functions*** with $\line(x)$ 
+
+$$\diff{x}f(\line(x)) = \frac{f(\line(x + h)) - f()}
+
+Recall the central importance of linear functions in describing relationships between inputs and outputs.  To illustrate, imagine that there are two inputs of interest to the modeler, denoted $x$ and $y$. The  linear function of these inputs has the form:
+
+$$f(x, y, z) \equiv a x + b y + c$$
+where $a$, $b$, and $c$ are constants.
+
+The partial derivative of $f()$ with respect to each of the inputs is the corresponding constant: 
+$$\partial_x f(x, y, z) = a\ \ \ \ \ \  \partial_y f(x, y, z) = b$$
+
+When facing a modeling problem, it's nice to have a framework that provides a checklist approach: 
+
+1. What is the output quantity and what input quantities are thought to have an important connection to the output? 
+2. For each input in (1), what is a 
+
+An important  framework for simple models involves 
+A function form often employed in models is the ***low-order polynomial***. In the usual situation, there is region of the domain which is of particular interest, with $x_0$ being a point in that region. The approximating polynomial starts out as $$p(x) \equiv \frac{1}{2} a [x-x_0]^2 + b [x - x_0] + c$$
+
+
+1. $f(x) = c$, the constant function, which is appropriate when the output of $f()$ doesn't depend on the input. 
+2. $f(x) = b x + c$,  the straight-line function, which is the simplest form where the output depends on the input.
+3. $f(x) = \frac{1}{2}a x^2 + b x + c$, the quadratic function, which is an appropriate form when there is some input $x$ at which the output is a local maximum or minimum.
+
+
+In many modeling situations, the construction of a model function can be reduced to a short series of questions:
+
+1. What is the approximate output when the input is fixed  neighborhood of interest?
+2. Does the output increase monotonically or is there a maximum or minimum?
+3. 
+
+```{r}
+slice_plot((x+1)^0.5 ~ x, domain(x=c(0,1))) %>% 
+  slice_plot(2*log(x+1) ~ x, color="red") %>%
+  slice_plot(.2*exp(x+1) ~ x, color="green") %>%
+  slice_plot(2*exp(-(x+1)) ~ x, color="orange") %>%
+  slice_plot(1/(x+2) ~ x, color="blue")
+```
+
+2 1.5, 1, .5, log(), -.5, 
 
 ::: {.objectives}
 ```{r echo=FALSE, results="asis"}

@@ -112,20 +112,12 @@ These numerical experiments with the logarithm and exponential functions are mor
 
 You can confirm these by evaluating the slope function of the exponential at $t=0$ and $t=1$, and the slope function of the logarithm at $t= 2, 1, 1/2, 1/4, 1/8.$
 
-Such numerical experiments on the other naked modeling functions reveal a pattern: the slope function of the naked modeling functions tend to be similar to themselves or other naked modeling functions.
-
-```{r child="D-naked-functions.Rmd"}
-```
+Such numerical experiments on the other naked modeling functions reveal the patterns presented in Chapter \@ref(computing-derivs)
 
 
+## Role of h
 
-With this list of experimentally determined slope functions (for small $h$) we're ready to start using slope functions without having to use constructions like $f(t+h) - f(t)$. We can simply look up the slope function in a table.
-
-
-
-## Using h
-
-In working with differentiation, we introduced a quantity $h$ and then ignored it, saying that it doesn't really matter so long as it is "small." A reasonable person might wonder what "small" really means, and why we needed to introduce $h$ in the first place if we were eventually going to ignore it. 
+In motivating differentiation of the naked modeling functions, we introduced a quantity $h$ and then ignored it, saying that it doesn't really matter so long as it is "small." A reasonable person might wonder what "small" really means, and why we needed to introduce $h$ in the first place if we were eventually going to ignore it. 
 
 One reason is that "small" and "zero," although related, are different. For example, refering to the slope functions `Dsin()` and `Dsigma()` that we created in an early example in this chapter, we see that setting $h$ to zero does not get us where we need to be:
 
@@ -136,7 +128,7 @@ Dsigma(t=0, h=0)
 
 In `NaN`, you can hear the echo of your fourth-grade teacher reminding you that it is illegal to divide by zero.
 
-Think of $h$ as the solvent in paint. You don't want the solvent once the paint is on the wall; wet paint is a nuisance. But getting the paint from the can to the wall absolutely needs the solvent. 
+Think of evanescent $h$ as the vapor in the definition of "evanescent": "tending to vanish like vapor." This vapor is the solvent in paint. You don't want the solvent once the paint is on the wall; wet paint is a nuisance. But getting the paint from the can to the wall absolutely needs the solvent. 
 
 We used the solvent $h$ earlier in the chapter in the numerical experiments that led us to the derivatives of the naked modeling functions, for instance $\partial_x e^x = e^x$ or $\partial_x \sin(x) = \cos(x)$.  Eventually, we'll construct an $h$-free theory of differentiation, reducing the process to a set of algebraic rules in which $h$ never appears. With this as our goal, let's continue using $h$ for a while to find some additional useful facts about derivatives.
 
@@ -204,7 +196,7 @@ Dsin <- makeFun((sin(x+h) - sin(x))/h  ~ x)
 In justifying the entry for $\sin()$ in the table, we plotted `Dsin()` using small `h`, for instance, `h=0.000001`. It would be comforting to continue the experiment with even smaller `h`. Doing so, we discover a problem.
 
 
-```{r Dsin-small-h, echo=FALSE, fig.cap="Graphing the slope function of $\\sin(x)$ for small enough $h$ produces a result inconsistent with the table for the naked modeling functions. Instead of producing a $\\cos(x)$, we get a ragged function."}
+```{r Dsin-small-h, echo=FALSE, fig.cap="Graphing the computer's slope function of $\\sin(x)$ for small enough $h$ produces a result inconsistent with the table for the naked modeling functions. Instead of producing a $\\cos(x)$, we get a ragged function."}
 slice_plot(Dsin(t, h=0.000000000000001) ~ t, domain(t=c(-5,2*pi)))
 ```
 Things get even worse for smaller $h$ still, as you can confirm for yourself using a computing sandbox.
@@ -330,7 +322,7 @@ slice_plot(cos(x) ~ x, domain(x=c(-0.01, 0.01)), size=2, alpha = 0.25) %>%
 
 Near $x=0$, the graph of the approximation is dead on center of the corresponding naked modeling function.
 
-The approximations will break down for very small $x$ because none of the approximations involve dividing by $x$. And remember that the approximations are only good when $x$ is small!
+The approximations will not break down for very small $x$ because none of the approximations involve dividing by $x$. And remember that the approximations are only good when $x$ is small!
 
 Consider the result of differentiating $e^x$. The slope function is
 
