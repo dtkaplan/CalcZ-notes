@@ -1,16 +1,17 @@
 # Evanescent h {#evanescent-h}
 
 Our goal in this chapter is to motivate the differentiation rules presented in Chapter \@ref(computing-derivs) for the naked modeling functions.  Recall that the slope-function operator can be written as a ratio of rise-over-run:
-$${\cal D}_t f(t) \equiv \frac{f(t+h) - f(t)}{h}$$ where $h$ is the length of the "run." The idea of the ***instantaneous slope function*** is to make $h$ as small as possible. In the very early days of calculus, the vanishing $h$ was described as "evanescent." (Dictionary definition: "tending to vanish like vapor."^[[Source](https://www.merriam-webster.com/dictionary/evanescent)]) Another good image of $h$ becoming as small as possible comes from the same University of Oxford mathematician whose poem *The Jabberwocky* we considered earlier. In *Alice in Wonderland*, Dodgson introduced the character of the Cheshire Cat.
+$${\cal D}_t f(t) \equiv \frac{f(t+h) - f(t)}{h}$$ where $h$ is the length of the "run." The idea of the ***instantaneous slope function*** is to make $h$ as small as possible. 
+
+In the very early days of calculus, the vanishing $h$ was described as "evanescent." (Dictionary definition: "tending to vanish like vapor."^[[Source](https://www.merriam-webster.com/dictionary/evanescent)]) Another good image of $h$ becoming as small as possible comes from the same University of Oxford mathematician whose poem *The Jabberwocky* we considered earlier. In *Alice in Wonderland*, Dodgson introduced the character of the Cheshire Cat.
 
 ```{r cheshire-cat, echo=FALSE, fig.cap="Vanishing $h$ in the form of the Chesire Cat from *Alice in Wonderland*."}
 knitr::include_graphics(normalizePath("images/cheshire-cat.jpeg"))
 ```
 
-
 > *"All right," said the Cat; and this time it vanished quite slowly, beginning with the end of the tail, and ending with the grin, which remained some time after the rest of it had gone.*
     
-> *"Well! I've often seen a cat without a grin," thought Alice; "but a grin without a cat! It's the most curious thing I ever saw in my life!"
+> *"Well! I've often seen a cat without a grin," thought Alice; "but a grin without a cat! It's the most curious thing I ever saw in my life!"*
 
 
 
@@ -74,6 +75,18 @@ Some observations from this numerical experiment:
 
 You can confirm these last two statements by comparison with the original functions, especially the alignment of the peaks of the slope functions with respect to the peak of the sinusoid and the half-way point of the sigmoid.
 
+::: {.why}
+Here you use $t$ as the name of the input and $\partial_t$ as the notation for differentiation. Previously in this block you used $x$ as the input name and $\partial_x$ for differentiation. Are they the same?
+
+Mathematically, the name of the input makes no difference whatsoever. We could call it $x$ or $t$ or $y$ or Josephina. What's important is that the name be used consistently on the left and right sides of $\equiv$, and that the derivative symbol $\partial$ has a subscript that identifies ***the with-respect-to*** input. All these are the same statement mathematically:
+
+$$\partial_x\, x = 1\ \ \ \ \partial_t\, t = 1\ \ \ \ \partial_y\, y = 1\ \ \ \ \partial_\text{Josephina} \text{Josephina} = 1$$
+Admittedly, the last one is hard to read.
+
+When we look at derivatives of functions of multiple variables we will need to be thoughtful about our choice of the with-respect-to input. But we want you to get used to seeing different input names used for differentiation.
+
+:::
+
 Now consider the slope functions of the logarithm and exponential functions.
 
 ```{r log-exp-many-h, echo=FALSE, fig.show = "hold", fig.cap="The slope functions of the logarithm and exponential.", warning=FALSE, message=FALSE}
@@ -132,6 +145,8 @@ Think of evanescent $h$ as the vapor in the definition of "evanescent": "tending
 
 We used the solvent $h$ earlier in the chapter in the numerical experiments that led us to the derivatives of the naked modeling functions, for instance $\partial_x e^x = e^x$ or $\partial_x \sin(x) = \cos(x)$.  Eventually, we'll construct an $h$-free theory of differentiation, reducing the process to a set of algebraic rules in which $h$ never appears. With this as our goal, let's continue using $h$ for a while to find some additional useful facts about derivatives.
 
+## Derivatives of linear combinations
+
 ***Linear combination*** is one of the ways in which we make new functions from existing functions. As you recall, linear combination involves ***scaling*** a function and ***adding*** the scaled functions. We can easily use $h$ to show what is the result of differentiating a linear combination of functions. We'll use $f(x)$ and $g(x)$ as the names that could stand for any function whatsoever. And we'll let $b$ be the name of a scalar. First, let's figure out what is $\partial_x\, b f(x)$, Going back to writing $\partial_x$ in terms of a slope function:
 $$\partial_x\, b\,f(x) = \frac{b\, f(x + h) - b\,f(x)}{h}\\
 \ \\
@@ -159,107 +174,9 @@ $$\partial_x\ \left[\strut a_1 g_1(x) + a_2 g_2(x) + a_3 g_3(x) + \cdots\right] 
 
 Because of the way that $\partial_x$ can be "passed through" a linear combination, mathematicians say that differentiation is a ***linear operator***. Consider this new fact about differentiation as a down payment on what will eventually become a complete theory telling us how to differentiate a ***product of two functions*** or the ***composition of two functions***. 
 
-```{exercise}
-Simple drill on this
-```
-
-```{exercise}
-See tree harvesting in `Diffs/tree-harvest.Rmd`
-```
 
 
-
-## Slopes and increments.
-
-The mathematical tools of Newton's days are the basis of today's conventional high-school curriculum.^[Perhaps this says something about how well education has kept up with technology.] We have today completely different tools based on the ability to do arithmetic and function evaluation very quickly with computers. We're going to use these new tools to explore the problem of relating the slope-function operator ${\cal D}_t$ to the differential operator $\partial_t$. We have the great advantage of being able to look backwards and so can focus on the functions that experience reveals have been the most widely useful: the basic modeling functions. 
-
-Our goal in this section is to discover what are the slope functions of our naked modeling functions.
-
-
-
-
-
-
-# h and derivatives {#h-and-derivatives}
-
-We already established, by numerical experiment, the result of differentiating the naked modelings functions. To summarize,
-
-```{r child="D-naked-functions.Rmd"}
-```
-
-A mathematician might prefer to replace the word "established" in the first sentence of this table with a weaker word "motivated" or "proposed." This is entirely fair. Indeed, let's do another experiment that will cause us to wonder just how solid are the conclusions presented in the table above.
-
-Recall that we can easily define the slope function for any $f(x)$, for example the slope function of $\sin(x)$:
-```{r}
-Dsin <- makeFun((sin(x+h) - sin(x))/h  ~ x)
-```
-In justifying the entry for $\sin()$ in the table, we plotted `Dsin()` using small `h`, for instance, `h=0.000001`. It would be comforting to continue the experiment with even smaller `h`. Doing so, we discover a problem.
-
-
-```{r Dsin-small-h, echo=FALSE, fig.cap="Graphing the computer's slope function of $\\sin(x)$ for small enough $h$ produces a result inconsistent with the table for the naked modeling functions. Instead of producing a $\\cos(x)$, we get a ragged function."}
-slice_plot(Dsin(t, h=0.000000000000001) ~ t, domain(t=c(-5,2*pi)))
-```
-Things get even worse for smaller $h$ still, as you can confirm for yourself using a computing sandbox.
-
-It turns out that the reason for this behavior is the way in which computer arithmetic has been engineered. To demonstrate the non-mathematical behavior of computer arithmetic, consider what happens when we add and subtract using 1 and a number that is small compared to 1.
-
-```{r}
-options(digits=20)
-0.000000000000000000000001
-1 + 0.000000000000000000000001
-1 - 0.000000000000000000000001
-1 + 0.000000000000000000000001 - 1
-```
-
-Using technical computing successfully at a professional level requires some understanding of the ways in which computer arithmetic differs from mathematical arithmetic, And the R/mosaic `D()` operator has been constructed with these considerations in mind. But our purpose here is not to push the computer beyond it's arithmetic limits but to demonstrate that the differentiation table for the naked modeling functions is correct.
-
-## The $h$ framework
-
-In the end, all of the work we're going to do with $h$ will have a simple result: confirming the facts presented in the differentiation table. In a court of law, that confirmation could be established by appeal to established authority. For instance, look in any calculus textbook and you'll see the same facts as in the table. (And if you find an exception, you can be sure it's a typographical error!)
-
-For most people, mathematical proof is not much different from appealing to established authority. Not everyone is skilled at following the deductive steps of a proof and almost everyone has been tricked into accepting a step that is not logically valid. And everyone makes mistakes. 
-
-For the benefit of such people, rather than proving the facts in the differentiation table, we're going to reconstruct, hopefully in a fun way, the  framework developed by the mathematics community over roughly two centuries that enabled mathematicians to satisfy themselves that the methods used by the pioneers could be justified beyond doubt.
-
-The basic problem, which everyone always agreed on, is that it's not proper to set $h$ to zero. The dispute is about how to handle $h$ in such a way that it can be held non-zero and yet give results where $h$ has evaporated as if it were never there. 
-
-To illustrate how this can be done, consider the algebra of the slope function for $g(x) \equiv x$:
-
-$${\cal D}_x g(x) \equiv \frac{g(x+h) - g(x)}{h} = \frac{(x+h) - x}{h} = \frac{h}{h} = 1$$ 
-The above steps are completely justified for any $h$ whatsoever, so long as $h \neq 0$. So we have a formula ${\cal D}_x\, x = 1$ which will be correct no matter whether $h$ is big or small.
-
-
-
-In contrast, consider the slope function of $f(x) \equiv x^2$:
-$${\cal D}_x f(x) \equiv \frac{f(x+h) - f(x)}{h} = \frac{(x+h)^2 -x^2}{h} = \\
-\ \\
-= \frac{x^2 + 2hx + h^2 - x^2}{h} = \frac{2 h x + h^2}{h} = 2 x + h$$
-Again, we have a formula which is correct for any $h$ whatsoever, so long as $h$ is not zero. Unfortunately, $h$ is still present in the formula. In differentiating $x^2$ we want to make $h$ go away.
-
-
-I like to think of $h$ as a kind of *tire iron*, a small tool used to stretch the bead of a bicycle tire in order to pull it over the wheel rim. 
-
-```{r echo=FALSE, out.width="30%", fig.cap="A tire iron in use", fig.align="center"}
-knitr::include_graphics("www/tire-iron.png")
-```
-
-Once the tire iron has done its job, its removed and you would never know that it was ever there (except that the tire is now successfully mounted on the wheel).
-
-But this is calculus, not bicycle mechanics. How do we know that removing the tire iron isn't damaging the mathematical wheel? 
-
-Still in the spirit of having fun, let's try a more serious metaphor... imagining $h$ is actually a central character in a calculus play. The character $h$ is in the middle of the story but *never appears in the play*, like the missing character Godot in the famous play *[Waiting for Godot](https://en.wikipedia.org/wiki/Waiting_for_Godot#Godot)*. 
-
-We said that $h$ in the slope function ${\cal D}_x x^2 = 2 x + h$, so long as $h$ is small, plays both a central role and has hardly any effect. An economizing director re-writes the play to take $h$ out of it, setting $h=0$ in the formula $2 x + h$: a non-speaking, offstage role.
-
-We've already seen using legitimate algebra that $${\cal D}_x g(x) = 2 x + h$$ Re-writing by replacing $h$ with 0 streamlines the play, turning ${\cal D}_x x^2 = 2x +h$ from a dialog involving both $x$ and $h$ into a monologue with $h$ absent: $$\partial_x x^2 = 2 x$$ Simple.
-
-And yet ... the director gets a letter from the Bit Players Union. 
-
-> *We observe that you have eliminated the role of $h$ in the final production version of $\partial_x g(x)$. This is a violation of Union regulations. Recall that the basis for $\partial_x g(x)$ is the slope function ${\cal D}_x g(x)$. The slope function is defined as a ratio: $${\cal D}_x g(x) \equiv \frac{g(x+h) - g(x)}{h}$$ Eliminating $h$ entirely by replacing her with zero is a **division by zero error** forbidden by Article 3.16§B¶2 of the Unified Laws of Arithmetic. We ask that you comply with this Article by re-instating the role of $h$ in all evaluations of ${\cal D} g(x)$.*
-
-Reading this, the director calls her lawyer. Is there a loophole for removing $h$ without breaking the mathematical prohibition on dividing by zero? 
-
-::: {.forinstructor latex-data=""}
+::: {.intheworld}
 In 1734, famous philosopher [George Berkeley](https://en.wikipedia.org/wiki/George_Berkeley) (1685-1753) published a long-titled book: *The Analyst: A Discourse Addressed to an Infidel Mathematician: Wherein It Is Examined Whether the Object, Principles, and Inferences of the Modern Analysis Are More Distinctly Conceived, or More Evidently Deduced, Than Religious Mysteries and Points of Faith*. In *The Analyst*, Berkeley took issue with the arguments of that time that it is legitimate to divide by $h$ when, ultimately, $h$ will be replaced by zero. Calling $h$ an "evanescent increment," he asked, 
 
 > *"And what are these same evanescent Increments? They are neither finite Quantities nor Quantities infinitely small, nor yet nothing. May we not call them the ghosts of departed quantities?"*
@@ -271,115 +188,55 @@ Interesting, Berkeley believed that the ghost of $h$ yielded correct results. Hi
 Berkeley was saying that calculus had not yet been put on a solid logical foundation. It was to be more than a century after Berkeley's death until this work was accomplished. Once accomplished, the results that had been claimed true all along were confirmed.
 :::
 
-The loophole involves a bit of legalistic cover, something like a corporation. As you may know, a corporation is a legal structure that makes if feasible for people to invest without being subject to unlimited liability. You bought stock in a company that later accidentally caused a catastrophe? The company will go out of business and your stock will be worthless. But you are legally obliged to fix the damage: you liability is limited. Such companies identify themselves as such with the legal suffix "Inc." and they are beholden to the state in certain ways, such as the requirement to pay taxes on profits.
 
-In calculus, the equivalent of "Inc" is $\lim_{h \rightarrow 0}$. By prepending this to a calculation, you are allowed to carry out arithmetic operations such as dividing by $h$ without concern about liability for dividing by zero. You can perform any algebraic operations so long as they are legitimate when $h \neq 0$. For instance, it is taken as entirely correct to say:
-
-$$\lim_{h\rightarrow 0}\frac{h}{h} = 1$$
-Another privilege for the users of $\lim_{h\rightarrow 0}$ is that, at the end of the algebraic derivation, they are entitled to replace $h$ with zero so long as no divide by zero is required. The endpoint of the above is 1, where $h$ doesn't even appear. But consider
-$$\lim_{h \rightarrow 0} \frac{(x + h)^2 - x^2}{h} = \\
-\ \\
-= \lim{h \rightarrow 0} 2 x + h$$
-
-In the last step, an $h$ appears. But we are entitled to take the result of the derivation, $2 x + h$, and replace the $h$ by zero. Doing so doesn't entail any illegitimate operation such as dividing by zero.
-
-At it's most basic, you're entitled to state $$\lim_{h\rightarrow 0} h = 0$$ which, to be honest, looks like nothing more than common sense.
-
-## Approximations to naked modeling functions
-
-Let's take a close look at two of our naked modeling functions: $e^x$ and $\sin(x)$. By "close" I mean very near to $x=0$. You already know that $e^0 = 1$ and $\sin(0) = 0$. But consider "very small" $x$, in the spirit of $\lim_{x\rightarrow 0}$. 
-
-The fundamental approximations are these:
-
-$$e^x \approx 1 + x\\
-\ \\
-\sin(x) \approx x\\
-\ \\
-\cos(x) \approx 1 - x^2$$
-
-Figure \@ref(fig:small-x-naked} shows the naked functions along with the approximations. We're interested in "small" $x$. The left panel shows the functions for $-1 \leq x \leq 1$ and the right panel zooms in for small $x$, taking "small" in an arbitrary but everyday sense of, say, less than 0.01.
-
-```{r small-x-naked, echo=FALSE, fig.show="hold", out.width="50%", fig.cap="Comparing the naked modeling functions exp(x), sin(x), and cos(x) to their simple approximations for small x. The functions are drawn as a broad gray line; the approximations are a thin blue line."}
-options(digits=5)
-slice_plot(exp(x) ~ x, domain(x=c(-1, 1)), size=3, alpha=0.25) %>%
-  slice_plot(1 + x ~ x, color="blue") %>%
-  gf_labs(title = "Exponential")
-slice_plot(exp(x) ~ x, domain(x=c(-0.01, 0.01)), size=3, alpha = 0.25) %>%
-  slice_plot(1+x ~ x, color = "blue")
-
-slice_plot(sin(x) ~ x, domain(x=c(-1, 1)), size=3, alpha = 0.25) %>%
-  slice_plot(x ~ x, color="blue") %>%
-  gf_labs(title = "Sin")
-slice_plot(sin(x) ~ x, domain(x=c(-0.01, 0.01)), size=3, alpha = 0.25) %>%
-  slice_plot(x ~ x, color = "blue")
-  
-slice_plot(cos(x) ~ x, domain(x=c(-1, 1)), size=3, alpha=0.25) %>%
-  slice_plot(1 - x^2 ~ x) %>%
-  gf_labs(title = "Cos")
-slice_plot(cos(x) ~ x, domain(x=c(-0.01, 0.01)), size=2, alpha = 0.25) %>%
-  slice_plot(1 - x^2 ~ x, color = "blue")
+```{exercise}
+See tree harvesting in `Diffs/tree-harvest.Rmd`
 ```
 
-Near $x=0$, the graph of the approximation is dead on center of the corresponding naked modeling function.
+```{exercise}
+Show that the derivative of `dnorm(x)` is `- x *dnorm(x)` by using the differencing operator with small $h$.
+```
 
-The approximations will not break down for very small $x$ because none of the approximations involve dividing by $x$. And remember that the approximations are only good when $x$ is small!
+## Derivatives of the basic modeling functions
 
-Consider the result of differentiating $e^x$. The slope function is
+The basic modeling functions are the same as the naked modeling functions, but with bare $x$ replaced by $\line(x)$. By convention, there are different ways of writing $\line(x)$ for the different naked functions, for instance:
 
-$${\cal D}_x e^x \equiv \frac{e^{x+h} - e^x}{h} = e^x \left[\frac{e^h - 1}{h}\right]$$
-Let's examine $\frac{e^h - 1}{h}$ for very small $h$. This is where we will use the approximation for $e^x$, but we'll write it with $h$ as the argument: $e^h \approx 1 + h$. Plugging this in to the bracketed quantity, we have $$\lim_{h \rightarrow 0}\frac{e^h - 1}{h} = \lim_{h\rightarrow 0}\frac{1 + h - 1}{h} = 1$$ Overall, this means $$\partial_x e^x = \lim_{h\rightarrow 0}{\cal D}_x e^x = e^x$$
-
-Now to demonstrate that $\partial_x \sin(x) = \cos(x)$ a fact that is often used in calculus. Only calculus teachers need to know how to perform this demonstration, so the following is just FYI:.
-
-The demonstration builds on a formula for the sine of the sum of two quantities:
-
-$$\sin(x + h) = \sin(x)\cos(h) + \cos(x)\sin(h)$$
-
-With this, we can simplify the slope function of $\sin$:
-$${\cal D}_x \sin(x) \equiv \frac{\sin(x+h) - \sin(x)}{h} =\\
+$$\text{Naked}  \ \ \ \longrightarrow\ \ \ \text{Basic}\\
 \ \\
-= \frac{1}{h} \left[\strut\sin(x)\cos(h) + \cos(x)\sin(h) - \sin(x) \right]\\
-\ \\
-= \frac{1}{h} \left[\strut \sin(x) \left[\cos(h) -1\right] + \cos(x)\sin(h)\right]$$
-Plugging in the approximations $\sin(h) = h$ and $\cos(h) = 1 - h^2$ we get
-$${\cal D}_x \sin(x) = \frac{1}{h} \left[\strut\sin(x)(- h^2)  +\cos(x)h\right] = \\
-\ \\
-= \cos(x) - h \sin(x)$$
-With the division by $h$ safely removed, we cn now apply the limit:
-$$\partial_x \sin(x) = \lim_{h\rightarrow 0} \left[\strut \cos(x) - h \sin(x)\right] = \cos(x) - \sin(x) \left[\lim_{h\rightarrow 0}h\right] = \cos(x)$$
+
+\sin(x)\ \ \ \longrightarrow\ \ \ \sin\left(\strut2 \pi (x-x_0)/P\right)\\
+\exp(x)\ \ \ \longrightarrow\ \ \ \exp(k x)\\
+x^2 \ \ \ \longrightarrow\ \ \ (mx + b)^2\\
+1/x \ \ \ \longrightarrow\ \ \ 1/(mx + b)\\
+\ln(x) \ \ \ \longrightarrow\ \ \ \ln(a x + b)\\
+$$
+
+The general rule for the derivatives of the basic modeling functions is $$\partial f(\line(x)) = \partial_x \line(x) \times [\partial_x f]\left(\strut\line(x)\right)$$
+
+To illustrate:
+
+- $\partial_x e^{kx} = k\, e^{kx}$
+- $\partial_x \sin(2\pi (x-x_0)/P) = \frac{2\pi}{P}  \sin(2\pi (x-x_0)/P)$
+- $\partial_x (mx + b)^2 = m\, 2 (m x + b) = 2 m^2 x + m^2 b$
+- $\partial_x \frac{1}{mx + b} = - \frac{m}{(mx + b)^2}$
+- $\partial_x \ln(a x + b) = a/(ax+b)$ 
+- $\partial_x \text(dnorm)(x, mn, sd) =  - \frac{x}{sd} \text(dnorm)(x, mn, sd)$
 
 ::: {.takenote}
-We write the differentiation operator (with respect to input $x$) as $\partial_x$. We wrote the slope-function operator (again, with respect to $x$) as ${\cal D}_x$. 
+The notation for the basic hump and sigmoidal functions has two equivalent formulations:
 
-The slope-function operator ${\cal D}_x$ is only a stepping stone on the path toward the real destination: differentiation. We're defining differentiation as a limit:
+- hump: $\dnorm\left(\frac{x-mn}{sd}\right)$ or $\dnorm(x, mn, sd)$
+- sigmoid: $\pnorm\left(\frac{x-mn}{sd}\right)$ or $\pnorm(x, mn, sd)$
 
-$$\partial_x\, f(x) \equiv \lim_{h\rightarrow 0} {\cal D}_x\, f(x)$$
-In practice, however, we perform differentiation whenever possible not with the limit definition, but with the *consequences* of the limit definition, such as $\partial_x e^x = e^x$ or $\partial_x \sin(x) = \cos(x)$. Sometimes these consequences are called the ***rules of differentiation***. These rules are important particularly for carrying out differentiation using paper and pencil, but if a computer is available, the rules have been mastered for you by software. Since such software is widely available, we're going to step away from them for a bit. The next chapters present some of the uses for differentiation and contexts in which differentiation is used in constructing new modeling functions. 
+The derivative of the sigmoid can be written in either of two equivalent ways:
+
+i. $\partial_x \pnorm\left(\frac{x-mn}{sd}\right) = \frac{1}{sd}\, \pnorm\left(\frac{x-mn}{sd}\right)$
+ii. $\partial_x \pnorm(x, mn, sd) = \dnorm(x, mn, sd)$
+
+It's very easy to get confused by this.
+
 :::
 
-```{exercise, name="low-low-rates"}
+```{exercise}
+Check the "general rule" numerically. Divide the finite-difference derivative by the "theoretical" derivative and show that they are 1.
 ```
-<details>`r MC_counter$reset()` `r knitr::knit_child("Exercises/Diff/low-low-rates.Rmd")`</details>
-
-```{exercise, name="singularity-numerics"}
-```
-<details>`r MC_counter$reset()` `r knitr::knit_child("Exercises/Diff/singularity-numerics.Rmd")`</details>
-
-```{exercise, name="NaN-numerics"}
-```
-<details>`r MC_counter$reset()` `r knitr::knit_child("Exercises/Diff/NaN-numerics.Rmd")`</details>
-
-::: {.todo}
-In the limits section or an exercise, ask about $x^0$? Is that the same as 1? What about when $x=0$. Zero raised to any positive power is 0. But any positive number raised to 0 is 1. So two ways of thinking about it give different answers.
-
-The computer handles the question with ease:
-
-```{r}
-0^0
-```
-But computer results don't always agree with mathematical results.
-
-In this case, mathematicians looking at the question through the lens of limits, agree with the computer when looking at the function $g(x) \equiv x^0$. But they disagree if the function is $h(x) \equiv 0^x$ or $f(x) \equiv x^x$.  These three functions are not the same when it comes to limits.
-
-Remember that $\lim_{x\rightarrow 0}$ is not about replacing $x$ with zero, it is about a process of examining the result for non-zero $x$ as $x$ approaches zero. In "zero raised to any positive power" we're talking about $0^{\lim_{x\rightarrow 0}}$, which is not the same as $\lim_{x\rightarrow 0} \left[x^x\right]$.  Similarly, $\left[\lim_{x\rightarrow 0}\right]^0$ is different from
-:::

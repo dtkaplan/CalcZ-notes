@@ -138,297 +138,111 @@ In practice, you won't need to use `slopeFun()`. You'll use `D()` instead, which
 
 ## Symbolic differentiation
 
-Symbolic differentiation is the process of taking a formula and translating it to a new formula according to certain patterns or ***rules***. Each rule is ultimately derived from the definition of the slope function, but in use, the statement of each rule looks nothing like the slope function. This is potentially confusing, since it's easy to forget when using the rules where they come from. 
+Symbolic differentiation is the process of taking a formula and translating it to a new formula according to certain patterns or ***rules***. Each rule is ultimately derived from the definition of the slope function and the differencing operator.
 
-Symbolic differentiation is a **mechanical** process. Some people are good at working like a machine. And some people aren't. It helps to be very organized and to have a really good short-term memory. For decades, computers have been programmed to calculate symbolic differentiation. What's required is the systematic and reliable application of a small set of rules. Computer's excel at this.
+As you recall, the ***differencing operator*** $\diff{x}$ turns a function into its slope function
+$$\diff{x} f(x) \equiv \frac{f(x+h) - f(x)}{h}$$
 
-A set of about a dozen rules will handle all the formulas we'll encounter in this ook or that are commonly used for modeling. In this chapter, we're going to derive only a handful of the rules---those related to the straight-line function. Then we will introduce, without motivation, the rules for the naked and basic modeling functions. In Chapter \@ref(evanescent-h) we'll motivate the rules for the naked modeling functions. In Chapters XXX we'll develop the three rules that correspond to the three forms of creating new functions out of old: linear combinations (the ***sum*** rule), function multiplication (the ***product rule***) and function composition (the ***chain rule***).
-
-Recall that for a function $f(x)$, the derivative $\partial_x f(x)$ corresponds to the ***instantaneous slope*** of $f(x)$. There is a small set of functions for which the instantaneous slope is the same for all $x$. These are the straight-line function $g(x) \equiv a x + b$ and the constant function $h(x) \equiv b$. 
-
-The rule for the straight-line function is
-$$\partial_x \left[a x + b\right] = a$$
-The rule for the constant function is 
-$$ \partial_x \left[b\right] =0$$ There are two special cases of the straight-line function which are really just a restatement of the above two rules but which are worth emphasizing:
-$$\partial_x \left[a x\right] = a \ \ \ \text{and}\ \ \ 
-\partial_x \left[x\right] = 1$$
-
-Note that the right-hand side of all these differentiation rules based on the straight-line function **does not involve $x$**. This amounts to saying that the derivative function for the straight-line function does not vary with $x$. Equivalently, you can say that the derivative function for the straight-line function is a constant function.
-
-The ***with-respect-to input***---the input whose name is given as a subscript to $\partial$  is the key to these patterns. Whenever $\partial_x$ is applied to any formula that **does not contain** $x$, the derivative is zero. You see that in $\partial_x\left[ b \right] = 0$. Similarly $\partial_x \left[ b \right]=0$ and even very complicated things not involving $x$ have derivatives that are zero, for instance: 
-$$\partial_x \left[\sin\left(2\pi \sqrt{\cos(y^2 + 5 e^z)}\right)\right] = 0$$
-For notation, let's refer to any formula that does not involve the with-respect-to input as $$\text{Anything without x dependence:}\ \ \require{cancel}\xcancel{\strut\mathbf x}$$
-
-* No $x$ rule: $\ \partial_x \left[a\right] = 0\ \ \text{where}\ \ a = \xcancel{\strut\mathbf x}$
-
-* Simple x rule: $\partial_x \left[x\right] = 1$
-
-* Scaling $x$ rule: $\partial_x \left[ a x\right] = a\ \ \text{where}\ \ a =  \xcancel{\strut\mathbf x}$
+Let's look at one where we already know the result: The straight line function $\line(x) \equiv a x + b$ has a slope function that is constant: $\diff{x}\line(x) = a$
 
 
-```{exercise, name="basic rules"}
-A few drill problems on the above three rules.
-```
+$$\diff{x}\line(x) = \frac{a (x+h) + b - (a x + b)}{h} = \frac{ah}{h} = a$$
+The derivative is the slope function with $h$ made as small as possible. It's tempting to think of this as $h = 0$, but that would imply dividing by zero in the differencing operator. Being cautious about this, we write that differentiation is differencing with $h \rightarrow 0$, or
 
-```{exercise, name="other than x"}
-A few drill problems on the above three rules but with other variables
-```
+$$\partial_x \line(x) \equiv \lim_{h\rightarrow 0} \frac{\line(x+h) - 
+\line(x)}{h} = \lim_{h\rightarrow 0$ \frac{a h}{h} = a$$
+This derivation is unarguably correct for any non-zero $h$. 
 
-## Symbolic derivatives of modeling functions
+This short derivation gives us a basic differentiation rule which we can divide into 3 special cases. 
 
-For a human training to be a symbolic differentiator, it's best simply to memorize the patterns for derivatives of the other naked modeling functions. They are:
-
-$f(x)$      | $\partial_x f(x)$
-------------|------------------
-$e^x$       | $e^x$
-$\sin(x)$   | $\cos(x)$
-$\ln(x)$    | $1/x$
-$x^p$       | $p\, x^{p-1}$
-sigmoid, that is, pnorm(x)    | hump, that is, dnorm(x)
-hump, that is dnorm(x)        | $-x \text{dnorm}(x)$
-
-Note that some of the naked modeling functions have derivatives which are simply naked modeling functions
-
-Name $f(x)$|           $f(x)$  | $\partial f(x)$ | name $\partial_x f(x)$
-:---------:|:----------------:|:----------------:|:------:
-exponential| $e^x$              | $e^x$          | exponential
-logarithm  | $\ln(x)$           | $1/x$          | power-law
-sigmoid    | $\text{pnorm(x)}$ |$\text{dnorm(x)}$| hump
-
-
-Another couple of naked modeling functions involve division or division by $x$ and multiplication by a scalar. (The second one, $\partial_x \text{hump}(x)$, was not in the original short list)
-
-Name $f(x)$|           $f(x)$  | $\partial f(x)$ | name $\partial_x f(x)$
-:---------:|:----------------:|:----------------:|:------:
-power-law  |    $x^p$  | $\frac{p}{x} x^p = px^{p-1}$  | power-law
-hump       | $\text{dnorm(x)}$  | $- x\, \text{dnorm(x)}$| "hiccough"
-
-Traditionally, the derivative of the sinusoid is presented as a pair of kissing cousins:
-
-Name $f(x)$|           $f(x)$  | $\partial f(x)$ | name $\partial_x f(x)$
-:---------:|:----------------:|:----------------:|:------:
-sinusoid   | $\sin(x)$  | $\cos(x) = \sin(x+\pi/2)$ | sinusoid
-sinusoid   | $\cos(x)$  | $-\sin(x) = \cos(x + \pi/2) =  \sin(x+\pi)$ | sinusoid
-
-::: {.takenote}
-Memorizing the derivatives of the short list of naked modeling functions will make it much easier to follow the rest of the section. Do that now.
-:::
-
-Recall that the ***basic modeling functions*** are just the naked functions with clothes on the input. The clothing is can be a simple a scaling function, such as $a\, x$ or $k\, x$  or $\frac{2\pi}{P} x$. As well, the clothing can involve both a scaling and a ***shift***, for instance $a x + b$ or $a (x-x_0)$
-Let's give a name to the clothing function and recognize the several varients:
-
-Variations of clothing$(x)$ |    | $\partial_x \text{clothing}(x)$
------------------------|---------|
-$ax$  | scaling | $a$
-$kx$  | scaling | $k$
-$\frac{2\pi}{P} x$ | scaling | $\frac{2\pi}{P}$
-$ax + b$ | scaling and shift | $a$
-$a(x-x_0)$ shift and scale   | $a$
-$\frac{x - \text{mn}}{\text{sd}}$ | shift and scale | $\frac{1}{\text{sd}}$}
-
-
-Every basic modeling function is a composition of the corresponding naked function with the clothing function:
-
-naked    | clothed   | typically written
----------|-----------|------------------
-`exp(x)` | `exp(clothing(x))` | $e^{kx}$
-`sin(x)` | `sin(clothing(x))` | $\sin\left(\frac{2\pi}{P} x\right)$
-`pnorm(x)` | `pnorm(clothing(x))` | `pnorm(x, mn, sd)`
-`dnorm(x)` | `dnorm(clothing(x))` | `dnorm(x, mn, sd)`
-
-To differentiate the basic modeling functions, follow exactly the same rules as for the naked modeling functions, but instead of $x$, write the clothed form of $x$. And then, multiply the whole thing by the derivative with respect to $x$ of the clothing function.
-
-$$\partial_x \left[ f(\text{clothing}(x))\right] = [\partial_x]\left(\strut\text{clothing}(x)\right) \times 
-\partial_x \text{clothing}(x)$$
-
-Some examples:
-
-$f(x)$    |   $\partial_x f(x)$
-----------|----------------------
-$e^{kx}$  | $k \times e^{kx}$
-$\sin\left(\frac{2\pi}{P} x\right)$ | $\frac{2 \pi}{P} \times \cos\left(\frac{2\pi}{P} x\right)$
-$\text{pnorm}(x, \text{mn}, \text{sd})$ | $\frac{1}{\text{sd}} \times \text{dnorm}(x, \text{mn}, \text{sd})$
-
-
-<!--
-
-MOVE TO LATER ON
-
-
-
-Come to think of it ... this is where computers shine. So let's start with how to use the computer for differentiation. Then we can talk about the rules that the computer is using.
-
-I'm going to assume that you are comfortable with using `makeFun()` in the R/mosaic software. 
-
-> **To compute derivatives, use `D()` instead of `makeFun()`. Everything else is exactly the same. 
-
-For example, this is a typical use of `makeFun()`:
-```{r}
-f <- makeFun(a*x^2 + b*x + c ~ x, a=2, b=4, c=-3)
-```
-We're calling the newly created function `f()` and we can use it in the ordinary ways:
-```{r}
-f(2)    #evaluate it at a specific input
-g <- makeFun(f(x)*sin(x) ~ x) # Build a new function with it
-slice_plot(f(x) ~ x, domain(x=c(-3,3))) # Plot it
-findZeros(f(x) ~ x)  # Find the zero crossings
-```
-Same with `D()`:
-
-```{r}
-dx_f <- D(a*x^2 + b*x + c ~ x, a=2, b=4, c=-3)
-```
-We're calling the derivative of `f()` by the name `dx_f()`. We could, as usual, have used any name, but it's nice to have a convention that makes it easier to keep track of things.
-```{r}
-dx_f(2)    #evaluate it at a specific input
-g <- makeFun(dx_f(x)*sin(x) ~ x) # Build a new function with it
-slice_plot(dx_f(x) ~ x, domain(x=c(-3,3))) # Plot it
-findZeros(dx_f(x) ~ x)  # Find the zero crossings
-```
-::: {.tip}
-As a matter of good computing style ... 
-
-Since we had already defined `f()`, in computing its derivative a good practice is to use `f()` itself rather than copying over the tilde formula for use in `D()`. The function created by `D()` will inherit all the same default parameters used in `f()`.
-
-```{r}
-D(f(x) ~ x)
-```
-
-Notice: No $h$!
-
-:::
-
-## Symbolic differentiation rules
-
-Each rule consists of a pair of patterns that can be organized into two columns of a table. If the formula matches a pattern on the left, then re-write it into the pattern on the right.
-
-First, we need a way to denote the patterns involved in differentiation and to relate them to the way we write formulas. We already have most of what's needed in the patterns of the basic modeling functions and in the patterns of linear combination, function composition, and function multiplication. 
-
-Let's start with the straight-line function and it's derivative. Here's the first line of our pattern table, which we'll write using $x$ as the ***with-respect-to input***.
-
-pattern name  | Original       |  Derivative w.r.t. $x$
---------------|----------------|-------------
-straight-line | $a x + b$      | $a$
-
-There are many forms that are equivalent to the straight-line formula, for instance $3 x + 2$ or $4(x-6)$ or $a(x-x_0)$, $b + x a$, $(4 + 1)x - 7$. Whenever you encounter such a form, re-arrange it into $a x + b$.
-
-
-* **Example 1**: Re-arrange $7-(4+1)x$ as $a x + b$.    
+- **Line rule**: $\partial_x ax + b = a$
+    i. $\partial_x ax = a$
+    ii. $\partial_x b = 0$
+    iii. $\partial_x x = 1$
     
-    Use arithmetic reduction to simplify to $7-5x$ then put it in the standard order, getting $a=-5$ and $b=7$. The derivative is therefore $-5$.
+Remember that $\partial_x f(x)$ for any $f(x)$ is always a function. The functions associated with the line rule are all ***constant functions***, meaning the output doesn't depend on the input.
 
-* **Example 2**: Re-arrange $3(x-2)$ as $a x + b$.
+Only for the $\line()$ function and its three special cases is the derivative a constant function. And $\line()$ is the only function for which the $h$ in the differencing operator disappears on its own. For instance, consider $g(x) \equiv x^2$: 
 
-    Distribute the multiplication by 3 to get $3x - 6$. This has $a=3$ and $b=-6$. There derivative is therefore $3$.
+$$\partial_x [x^2] = \lim_{h\rightarrow 0}\frac{(x+h)^2 - x^2}{h} = \lim_{h\rightarrow 0}\frac{(x^2 + 2 x h + h^2) - x^2}{h} = \lim_{h\rightarrow 0}\frac{2 x h + h^2}{h} = \lim_{h\rightarrow 0} [2x + h]$$
+It's accepted that the limit of a sum is the sum of the limits. Also, the limit of something not involving $h$ is just that thing: for instance $\lim_{h\rightarrow 0}2x = 2x$.
 
-* **Example 3**: Re-arrange $m (x - x_0)$ as $a x + b$.
-
-    Distribute the multiplication by $m$ to get $mx - m x_0$. Recognizing that $m x_0$ does not involve the input $x$, get $a=m$ and $b= -m x_0$. The derivative is therefore $p$.
-
-* **Example 4**: Re-arrange $3 x + 4 - 2 x +1$ as $ax + b$. 
-
-    Bring together the terms involving $x$ and use arithmetic to simplify. Similarly, bring together the terms not involving $x$ and use arithmetic to simplify. 
-$$3 x + 4 - 2x + 1 = (3 x - 2 x) + (4 + 1) =  1 x + 5$$ so $a=1$ and $b=5$. The derivative is therefore $1$.
-
-* **Example 5**: Re-arrange $-x$ as $ax + b$. 
-
-    We have to be inventive and recognize that $-x$ has the format $-1 x + 0$. So $a=-1$ and $b=0$. There derivative is therefore $-1$. 
-
-* **Example 6**: Re-arrange $2 x_0$ as $ax + b$. Being inventive in the same way to recognize $a = 0$ and $b=2 x_0$. The derivative is therefore 0.
-
-* **Example 7**: Re-arrange $\frac{2 \pi}{P} (x-x_0)$ as $a x + b$. 
-
-What's potentially confusing here is complicated looking $\frac{2 \pi}{P}$. You can see that this doesn't involve the input $x$ in any way. For the moment, let's replace $\frac{2 \pi}{P}$ with something simpler: $c$. Then the formula is $c(x-x_0)$ which is in the form of Example 3. The derivative of that is simply $c$. And $c$ really stands for $\frac{2 \pi}{P}$ in the original, so the derivative of the original is $\frac{2 \pi}{P}$
-
-Counter Example: Re-arrange $c x^2$ into $a x + b$. There's no way! $c x^2$ is a different kind of pattern. There's not yet a row in the pattern table to tell us how to handle $x^2$.
-
-The straight-line rule is implemented as `axb_rule()`. You give `axb_rule()` the formula (in R notation). The result is the derivative according to that rule. Importantly, if the rule does not apply, then the result is `FALSE`:
-
-```{r}
-sum_rule((a+b)*x + c*x^2)
-```
+$$\partial_x [x^2] = 2x + \lim_{h\rightarrow 0}h = 2x$$
 
 
+We'll write this as another differentiation rule.
 
-## Re-writing the basic modeling functions
+- **Quadratic rule**: $\partial_x [x^2] = 2x$
 
-We're going to extend the pattern table to include the basic modeling functions. Recall that every basic modeling function is a composition of a naked modeling function with an $ax + b$ scaling function.
-
-pattern name  | Original             |  Derivative w.r.t. $x$
---------------|----------------------|-------------
-straight-line | $a x + b$            | $a$
-exponential   | $\exp(a x + b)$      | $a \exp(ax + b)$
-sinusoid      | $\sin(a x + b)$      | $a \cos(ax + b)$
-power-law     | $\text{pow}(ax+b,p)$ | $a\,p\, \text{pow}(a x + b, p\!\!-\!\!1)$
-logarithm     | $\log(a x + b)$      | $a\, \text{pow}(ax + b, -1)$
-sigmoid       | $\text{pnorm}(a x + b, mn, sd)$ | $a\, \text{dnorm}(a x + b, mn, sd)$
-
-::: {.why}
-
-I wrote most of the basic modeling functions in their traditional mathematical notation except for $e^x$ and $x^p$. In the table, I wrote those as $\exp(x)$ and $\text{power}(x, p)$. This is similar in form to $\text{pnorm}(x, mn, sd)$ and $\text{dnorm}(x, mn, sd)$.
-
-The reason to use the $\exp()$ and $\text{pow}()$ notation is to make it easier to see the commonality of the patterns. Each of the rows of the table, except the first, has the form $f(a x + b)$ or $f(a x + b, p)$ or $f(a x + b, mn, sd)$. Only the first argument to $f()$ involves an $x$-expression. If there are additional arguments, they never involve $x$. In other words, $p$, $mn$, and $sd$ are ***constants***.
-
-If you prefer the traditional notation, the relevant rows of the pattern table are:
-
-pattern name  | Original             |  Derivative w.r.t. $x$
---------------|----------------------|-------------
-exponential   | $e^{a x + b}$      | $a e^{ax + b}$
-power-law     | $(ax+b)^p$ | $p\, a\, (ax + b)^{p-1}$
-
+::: {.todo}
+[When introducing product rule ...] point out that $\partial_x x^2 \neq (\partial_x x)(\partial_x x) = 1$
 :::
 
 
-In Chapters XX, XXX, and XXXX we'll give the re-writing rules for linear combination of functions, function composition, and function multiplication. 
 
+Let's take on $h(x) \equiv e^x$:
 
-```{exercise}
-Drill on these forms
+$$\partial_x e^x = \lim_{h\rightarrow 0}\frac{e^{x+h} - e^x}{h} = e^x \lim_{h\rightarrow 0}\left[\frac{e^h - 1}{h}\right]$$
+At a glance, it can be hard to know what to make of $\lim_{h\rightarrow 0} (e^h-1)/h$. Setting $h=0$ in the denominator is perfectly legitimate and gives $e^0 - 1 = 0$. But that still leaves the $h$ in the numerator. Still, for any non-zero $h$, the division is legitimate, so let's see what happens as $h \longarrow 0$:
+```{r}
+f <- makeFun((exp(h) - 1)/h ~ h)
+f(0.1)
+f(0.01)
+f(0.001)
+f(0.0001)
+f(0.0000001)
+f(0.0000000001)
 ```
 
-```{exercise}
-Move this to the chapter on assembling functions. Drill on spotting linear combinations, f(g(x)) is composition, $\sin(x^2)$ is composition, ...
+Setting $h$ exactly to zero, however, won't work: it produces `NaN`.
+```{r}
+f(0)
 ```
 
-## Pattern recognition
+Since $\lim_{h\rightarrow 0} (e^h-1)/h = 1$, we have
 
- To demonstrate this, and to show why computers can be "taught" to do symbolic differentiation, we'll have you practice with an R function that identifies the two kinds of patterns in our pattern table.
+* **Exponentiation rule**: $\partial_x e^x = e^x$
 
-```{r echo=FALSE}
+::: {.todo}
+[Under taylor series, show that $\frac{e^h - 1}{h} \rightarrow 0$.]
+:::
 
-```
+Still another example: the reciprocal function, written equivalently as $1/x$ or $x^{-1}$
 
-The first question when symbolically differentiating a function is whether the formula for the function is of the form $ax + b$. Our function for this is `axb_rule()`. The output of this function will be `FALSE` if the formula is not of that form. But if there is a match, `axb_rule()` will give you the formula for the derivative.
+$$\partial x^{-1} = \lim_{h\rightarrow 0}\frac{1/(x+h) - 1/x}{h} = \lim_{h\rightarrow 0}\frac{x - x+h}{x(x+h)h} = -\lim_{h\rightarrow 0}\frac{h}{x(x+h)h} = -\lim_{h\rightarrow 0}\frac{1}{x^2 + hx}$$
+So long as $x \neq 0$, there is no divide-by-zero problem, but let's see what the computer thinks:
 
 ```{r}
-axb_rule(a*x + b)
-axb_rule(2*x)
-axb_rule(x)
-axb_rule(-x)
-axb_rule(1/x)
-axb_rule(x^2)
-```
-The function `bmf_rule()` identifies if the formula is one of the basic modeling functions.
-
-```{r}
-bmf_rule(a*x + b)
-bmf_rule(sin(x))
-bmf_rule(sin(3*x + 2))
-bmf_rule(sqrt(x))
-bmf_rule(sqrt(a*x + b))
-bmf_rule(sqrt(x^2))
-bmf_rule(sin(sqrt(x)))
-bmf_rule(x^3)
-bmf_rule((a*x + b)^4)
-bmf_rule((a *x^2)^ 4)
-bmf_rule(pnorm(x, mn, sd))
-```
-```{exercise}
-```
-Explain why the result is zero and not simply `a`.
-```{r}
-bmf_rule(ax + b)
+g <- makeFun(-1/(x^2 + h*x) ~ h, x=10)
+g(0.1)
+g(0.01)
+g(0.001)
+g(0.0001)
+g(0.0000001)
+g(0.0000000001)
+g(0)
 ```
 
--->
+Setting $h$ to zero in the last expression gives another differentiation rule:
 
+* **Reciprocal rule**: $\partial_x \frac{1}{x} = -\frac{1}{x^2}$
+
+We'll save for later the derivation of the derivatives of the other naked modeling functions, but note that the hump function is **defined** to be the derivative of the sigmoidal function.
+
+Name | $f(x)$ | $\partial_x f(x)$   | demonstrated already
+-----|---------------|------------------
+exponential | $e^x$     | $e^x$ | yes
+logarithm   | $\ln(x)$  | $1/x$  | not yet
+sinusoid    | $\sin(x)$ | $\cos(x)$ | not yet
+square | $x^2$  | $2x$ | yes
+proportional | $x$   | $1$ | yes
+reciprocal | $1/x$ or $x^{-1}$   | $-1/x^2$ | yes
+hump     |  $\dnorm(x)$           |  $-x \dnorm(x)$ | not yet
+sigmoid  |  $\pnorm(x)$            |  $\dnorm(x)$ | by definition
+
+::: {.todo}
+When doing the basic modeling functions, show that the derivative of the cosine is -sin. Use $\partial_x sin(x) = sin(x + \pi/2)$ and apply the scaling rule to that.
+
+Also, derive $\partial_x x^p = \partial_x e^{p\ln(x)} = e^{p\ln(x)} \times \frac{p}{x} = \frac{p}{x} x^p = p\, x^{p-1}$
+
+ 
