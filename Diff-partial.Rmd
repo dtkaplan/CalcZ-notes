@@ -1,5 +1,114 @@
 # Partial change
 
+This is a good time to point out something we have been doing all along, but which has likely been such a persistent component of your mathematics education that you may not have realized that it is a construction.
+
+We have two ways by which we represent functions:
+
+1. As a ***computational algorithm*** for generating the output from an input(s), typically involving arithmetic and the such. 
+2. As a geometrical entity, specifically the graph of a function which can be a ***curve*** or, for functions of two inputs, a ***surface***.
+
+These two modes are sometimes intertwained, as when we use the name "line" to refer to a computational object: $\line(x) \equiv a x + b$.
+
+Unfortunately for functions of two inputs, a ***surface*** is hard to present in the formats that are most easily at hand: a piece of paper, a printed page, a computer screen. That's because a curved surface is naturally a 3-dimensional object, while paper and screens provide two-dimensional images. Consequently, the graphics mode we prefer for presenting functions of two variables is the contour plot, which is not a single geometrical object but a set of many objects: contours, labels, colored tiles. 
+
+We've been doing calculus on functions of one variable because it is so easy to exploit both the computational mode and the graphical mode. And it might fairly be taken as a basic organizing theme of calculus that 
+
+> a line segment can be as good an approximation to a curve as you choose to make it. 
+
+When figuring out the derivative function $\partial_x f(x)$ from a graph of $f(x)$, we find the tangent to the graph at each of many input values, record the slope of the line (and throw away the intercept) and then write down the series of slopes as a function of the input, typically by representing the slope by position along the vertical axis and the corresponding input by position along the horizontal axis. Figure \@ref(fig:segment-deriv) shows the process.
+
+```{r segment-deriv, echo=FALSE, fig.cap="The **slope** of the function $f(x)$ at any given input becomes the **value** of the derivative at that input.", fig.show="hold", warning=FALSE}
+f <- rfun(~ x, seed=977)
+df <- D(f(x) ~ x)
+dom = c(-3, 3)
+touches = seq(dom[1] + 0.3, dom[2] - 0.3, by = 0.25)
+Pts <- tibble(x = touches, y = f(x), dy = df(x), 
+              label=LETTERS[1:length(x)],
+              slope = df(x), slopeval = signif(slope,2),
+              slope_color = ifelse(slope < 0, "red", "blue"),
+              color = rainbow(length(x), start=0.6)) 
+Segments <- Pts %>%
+  mutate(xend = lag(x), y = dy, yend=lag(y))
+graph_with_tangents(f, domain=dom, 
+                    touches = touches,
+                    offsets=rep(1, length(touches))) %>%
+  gf_text(y-1 ~ x, data=Pts, color=~slope_color, label=~ slopeval) %>%
+  gf_labs(y="f(x)", title="(A) Graph of function f(x)")
+
+gf_point(dy ~ x, data = Pts, color = ~ color) %>%
+  gf_refine(scale_color_identity()) %>%
+  gf_segment(dy + yend ~ x + xend, data = Segments, color = ~ color) %>%
+  gf_lims(x = c(-3,3)) %>%
+  gf_text(dy ~ I(x+0.2), data=Segments, color=~slope_color, label=~ slopeval) %>%
+  gf_text(dy ~ -3, data=Segments, color=~slope_color, label=~ slopeval) %>%
+  gf_labs(y="Slope of f(x)", title="(B) Graph of derivative of f(x)") %>%
+  gf_text(I(dy+1) ~ x, data = Segments, color=~ color, label=~label)
+```
+
+Consider the top panel (A). At the input $x=0$---the point labeled "L"---the value of the function is $f(0) \approx 25$. This is practically the same as the value at "K." The slope of the short line segment labeled "L" is $\partial_x f(0) = -3.4$ Now look at the same input in the bottom panel (B). This shows $\partial_x f(x)$ on the vertical axis. The slope of $f()$ at $x=0$ was negative, even though $f(0)\approx 25$.On the graph of $\partial_x f()$, the position of "L" is in negative territory. And it's quite different from the position of its neighbor "K".
+
+## Calculus on two inputs
+
+To think about derivatives of functions of two inputs, we need to have some way to approximate the surface at each point with a small linear form that is tangent to the surface at that point. 
+
+An applet written by Alfredo Sánchez Alberca lets you visualize the ***tangent plane*** to a surface. (Instructions: Check "tangent plane" then rotate the view. Move the (x,y) coordinate of the point to see how the tangent plane differs from place to place.)
+
+<a href="https://www.geogebra.org/m/wTh7KKd3" target="_blank"><img src="www/geogebra-tangent-app.png" width="50%"></a>
+
+The tangent plane is infinite in extent. Let's use the word ***facet*** to refer to a little patch of the tangent plane centered at the point of contact. The facet is flat. (It's part of a plane!) 
+
+```{r echo=FALSE}
+g <- rfun(~ x + y, seed=382)
+Pts <- tibble::tribble(
+  ~ x, ~ y, ~ label,
+  -1, 1, "A",
+  1.5, 1.2, "B",
+  -1.7, -1.7, "C"
+)
+P <- contour_plot(g(x, y) ~ x + y, domain(x=c(-3,3), y=c(-3,3))) %>%
+  gf_text(y ~ x, data = Pts, color="red", label=~label) %>%
+  gf_refine(coord_fixed())
+dx <- D(g(x, y) ~ x)
+dy <- D(g(x, y) ~ y)
+xA <- -1
+yA <- 1
+gA <- function(x, y) {g(xA, yA) + dx(xA, yA)*(x-xA) + dy(xA,yA)*(y-yA)}
+PA <- contour_plot(gA(x, y) ~ x + y, domain(x=c(xA-.1, xA+.1), y=yA +c(-.1, .1))) %>%
+  gf_text(y ~ x, data = Pts %>% filter(label=="A"), label=~label, color="red", size=12)%>%
+  gf_refine(coord_fixed())
+
+xB <- 1.5
+yB <- 1.2
+gB <- function(x, y) {g(xB, yB) + dx(xB, yB)*(x-xB) + dy(xB,yB)*(y-yB)}
+PB<-   contour_plot(gB(x, y) ~ x + y, domain(x=c(xB-.1, xB+.1), y=c(yB-.1, yB+.1))) %>%
+  gf_text(y ~ x, data = Pts %>% filter(label=="B"), label=~label, color="red", size=12)%>%
+  gf_refine(coord_fixed())
+
+xC <- -1.7
+yC <- -1.7
+gC<- function(x, y) {g(xC, yC) + dx(xC, yC)*(x-xC) + dy(xC,yC)*(y-yC)}
+PC <- contour_plot(gC(x, y) ~ x + y, domain(x=c(xC-.1, xC+.1), y=c(yC-.1, yC+.1))) %>%
+  gf_text(y ~ x, data = Pts %>% filter(label=="C"), label=~label, color="red", size=12)%>%
+  gf_refine(coord_fixed())
+```
+
+```{r whole-plot, echo=FALSE, fig.cap="A function of 2 inputs with 3 specific inputs marked A, B, and C"}
+P
+```
+
+```{r facet-plot, echo=FALSE, out.width="33%", fig.show="hold", fig.cap="The facets around the points are linear functions, each aligned with the contours near that point in Figure \\@ref(fig:whole-plot)"}
+PC
+PA
+PB
+```
+
+Each of the contour plots shown in Figure \@ref(fig:facet-plot) represents one facet. Since a facet is part of a plane, the contours within each facet are parallel. The steepness of the plane is indicated by the spacing between contours, the orientation of the plane by the orientation of the straight-line contours.
+
+NOW RELATE THIS TO PARTIAL DERIVATIVES. Maybe just graph plane functions and show they always follow the same pattern. Show that the coefficient is the partial derivative, and there are two coefficients.
+
+Then examples for nonlinear functions.
+
+
 ::: {.objectives}
 ```{r echo=FALSE, results="asis"}
 state_objective("Deriv-4a", "Understand that there are many different slopes at any point of a non-constant function of 2 or more variables.")
