@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 3 Naked modeling functions | CalcZ Student Notes</title>
+  <meta name="description" content="Textbook for Math 141Z/142Z for 2021-2022" />
+  <meta name="generator" content="bookdown 0.22 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 3 Naked modeling functions | CalcZ Student Notes" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="Textbook for Math 141Z/142Z for 2021-2022" />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 3 Naked modeling functions | CalcZ Student Notes" />
+  
+  <meta name="twitter:description" content="Textbook for Math 141Z/142Z for 2021-2022" />
+  
+
+<meta name="author" content="Daniel Kaplan" />
+
+
+<meta name="date" content="2021-06-24" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="structure-of-a-function.html"/>
+<link rel="next" href="fun-describing.html"/>
+<script src="libs/header-attrs-2.8/header-attrs.js"></script>
+<script src="libs/jquery-3.5.1/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+<script src="libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
+<script src="libs/htmlwidgets-1.5.3/htmlwidgets.js"></script>
+<script src="libs/plotly-binding-4.9.4/plotly.js"></script>
+<script src="libs/typedarray-0.1/typedarray.min.js"></script>
+<link href="libs/crosstalk-1.1.1/css/crosstalk.css" rel="stylesheet" />
+<script src="libs/crosstalk-1.1.1/js/crosstalk.min.js"></script>
+<link href="libs/plotly-htmlwidgets-css-1.57.1/plotly-htmlwidgets.css" rel="stylesheet" />
+<script src="libs/plotly-main-1.57.1/plotly-latest.min.js"></script>
+<span class="math inline">
+\(\newcommand{\line}{\text{line}}
+\newcommand{\hump}{\text{hump}}
+\newcommand{\sigmoid}{\text{sigmoid}}
+\newcommand{\recip}{\text{recip}}
+\newcommand{\diff}[1]{{\cal D}_#1}\)
+</span>
+
+
+<!-- see https://www.homepages.ucl.ac.uk/~ucahmto/elearning/2019/09/14/bookdown.html-->
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<link rel="stylesheet" href="css/CalcZ-style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><strong><a href="./">CalcZ</a></strong></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Welcome to calculus</a>
+<ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#computing-and-apps"><i class="fa fa-check"></i>Computing and apps</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#exercises-and-feedback"><i class="fa fa-check"></i>Exercises and feedback</a></li>
+</ul></li>
+<li class="part"><span><b>I Block 1: Functions and quantity</b></span></li>
+<li class="chapter" data-level="" data-path="outline-of-block-1.html"><a href="outline-of-block-1.html"><i class="fa fa-check"></i>Outline of Block 1</a></li>
+<li class="chapter" data-level="1" data-path="change.html"><a href="change.html"><i class="fa fa-check"></i><b>1</b> Change</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="change.html"><a href="change.html#quantity-vs-number"><i class="fa fa-check"></i><b>1.1</b> Quantity vs number</a></li>
+<li class="chapter" data-level="1.2" data-path="change.html"><a href="change.html#functions"><i class="fa fa-check"></i><b>1.2</b> Functions</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="structure-of-a-function.html"><a href="structure-of-a-function.html"><i class="fa fa-check"></i><b>2</b> Structure of a function</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="structure-of-a-function.html"><a href="structure-of-a-function.html#inputs-to-output"><i class="fa fa-check"></i><b>2.1</b> Inputs to output</a></li>
+<li class="chapter" data-level="2.2" data-path="structure-of-a-function.html"><a href="structure-of-a-function.html#a-bureaucratic-analogy"><i class="fa fa-check"></i><b>2.2</b> A bureaucratic analogy</a></li>
+<li class="chapter" data-level="2.3" data-path="structure-of-a-function.html"><a href="structure-of-a-function.html#domain-input-space"><i class="fa fa-check"></i><b>2.3</b> Domain: input space</a></li>
+<li class="chapter" data-level="2.4" data-path="structure-of-a-function.html"><a href="structure-of-a-function.html#range-output-space"><i class="fa fa-check"></i><b>2.4</b> Range: output space</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="naked-intro.html"><a href="naked-intro.html"><i class="fa fa-check"></i><b>3</b> Naked modeling functions</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="naked-intro.html"><a href="naked-intro.html#the-list"><i class="fa fa-check"></i><b>3.1</b> The list</a></li>
+<li class="chapter" data-level="3.2" data-path="naked-intro.html"><a href="naked-intro.html#function-shapes"><i class="fa fa-check"></i><b>3.2</b> Function shapes</a></li>
+<li class="chapter" data-level="3.3" data-path="naked-intro.html"><a href="naked-intro.html#the-power-law-family"><i class="fa fa-check"></i><b>3.3</b> The power-law family</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="fun-describing.html"><a href="fun-describing.html"><i class="fa fa-check"></i><b>4</b> Describing functions</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="fun-describing.html"><a href="fun-describing.html#computer-commands"><i class="fa fa-check"></i><b>4.1</b> Computer commands</a></li>
+<li class="chapter" data-level="4.2" data-path="fun-describing.html"><a href="fun-describing.html#tables-of-inputs-and-outputs"><i class="fa fa-check"></i><b>4.2</b> Tables of inputs and outputs</a></li>
+<li class="chapter" data-level="4.3" data-path="fun-describing.html"><a href="fun-describing.html#word-descriptions"><i class="fa fa-check"></i><b>4.3</b> Word descriptions</a></li>
+<li class="chapter" data-level="4.4" data-path="fun-describing.html"><a href="fun-describing.html#computer-function-names"><i class="fa fa-check"></i><b>4.4</b> Computer function names</a></li>
+<li class="chapter" data-level="4.5" data-path="fun-describing.html"><a href="fun-describing.html#mathematical-notation"><i class="fa fa-check"></i><b>4.5</b> Mathematical notation</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="fun-notation.html"><a href="fun-notation.html"><i class="fa fa-check"></i><b>5</b> Notation for functions</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="fun-notation.html"><a href="fun-notation.html#a-notation-for-computing"><i class="fa fa-check"></i><b>5.1</b> A notation for computing</a></li>
+<li class="chapter" data-level="5.2" data-path="fun-notation.html"><a href="fun-notation.html#objects-and-actions"><i class="fa fa-check"></i><b>5.2</b> Objects and actions</a></li>
+<li class="chapter" data-level="5.3" data-path="fun-notation.html"><a href="fun-notation.html#algorithms"><i class="fa fa-check"></i><b>5.3</b> Formulas and algorithms</a></li>
+<li class="chapter" data-level="5.4" data-path="fun-notation.html"><a href="fun-notation.html#algorithms-without-formulas"><i class="fa fa-check"></i><b>5.4</b> Algorithms without formulas</a></li>
+<li class="chapter" data-level="5.5" data-path="fun-notation.html"><a href="fun-notation.html#computer-notation"><i class="fa fa-check"></i><b>5.5</b> Computer notation</a></li>
+<li class="chapter" data-level="5.6" data-path="fun-notation.html"><a href="fun-notation.html#calcz-naming-conventions"><i class="fa fa-check"></i><b>5.6</b> CalcZ naming conventions</a></li>
+<li class="chapter" data-level="5.7" data-path="fun-notation.html"><a href="fun-notation.html#functions-in-r"><i class="fa fa-check"></i><b>5.7</b> Functions in R</a></li>
+<li class="chapter" data-level="5.8" data-path="fun-notation.html"><a href="fun-notation.html#foursigns"><i class="fa fa-check"></i><b>5.8</b> <span class="math inline">\(=\)</span>, <span class="math inline">\(\equiv\)</span>, <span class="math inline">\(\rightarrow\)</span>, <code>&lt;-</code></a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="graphs-and-graphics.html"><a href="graphs-and-graphics.html"><i class="fa fa-check"></i><b>6</b> Graphics &amp; function graphs</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="graphs-and-graphics.html"><a href="graphs-and-graphics.html#the-graphics-frame"><i class="fa fa-check"></i><b>6.1</b> The graphics frame</a></li>
+<li class="chapter" data-level="6.2" data-path="graphs-and-graphics.html"><a href="graphs-and-graphics.html#data-graphics-the-point-plot"><i class="fa fa-check"></i><b>6.2</b> Data graphics: the point plot</a></li>
+<li class="chapter" data-level="6.3" data-path="graphs-and-graphics.html"><a href="graphs-and-graphics.html#graphics-layers"><i class="fa fa-check"></i><b>6.3</b> Graphics layers</a></li>
+<li class="chapter" data-level="6.4" data-path="graphs-and-graphics.html"><a href="graphs-and-graphics.html#data-and-functions"><i class="fa fa-check"></i><b>6.4</b> Data and functions</a></li>
+<li class="chapter" data-level="6.5" data-path="graphs-and-graphics.html"><a href="graphs-and-graphics.html#inputs-to-output-1"><i class="fa fa-check"></i><b>6.5</b> Inputs to output</a></li>
+<li class="chapter" data-level="6.6" data-path="graphs-and-graphics.html"><a href="graphs-and-graphics.html#outputs-to-inputs"><i class="fa fa-check"></i><b>6.6</b> Outputs to inputs</a></li>
+<li class="chapter" data-level="6.7" data-path="graphs-and-graphics.html"><a href="graphs-and-graphics.html#graphs-of-functions-with-two-inputs"><i class="fa fa-check"></i><b>6.7</b> Graphs of functions with two inputs</a></li>
+<li class="chapter" data-level="6.8" data-path="graphs-and-graphics.html"><a href="graphs-and-graphics.html#contour-plots"><i class="fa fa-check"></i><b>6.8</b> Contour plots</a></li>
+<li class="chapter" data-level="6.9" data-path="graphs-and-graphics.html"><a href="graphs-and-graphics.html#slice-plots"><i class="fa fa-check"></i><b>6.9</b> Slice plots</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="params-intro.html"><a href="params-intro.html"><i class="fa fa-check"></i><b>7</b> Parameters for functions</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="params-intro.html"><a href="params-intro.html#parallel-scales"><i class="fa fa-check"></i><b>7.1</b> Parallel scales</a></li>
+<li class="chapter" data-level="7.2" data-path="params-intro.html"><a href="params-intro.html#scale-the-output"><i class="fa fa-check"></i><b>7.2</b> Scale the output</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="process-of-modeling.html"><a href="process-of-modeling.html"><i class="fa fa-check"></i><b>8</b> Process of modeling</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="process-of-modeling.html"><a href="process-of-modeling.html#variations-from-scaling"><i class="fa fa-check"></i><b>8.1</b> Variations from scaling</a></li>
+<li class="chapter" data-level="8.2" data-path="process-of-modeling.html"><a href="process-of-modeling.html#fit-exponential"><i class="fa fa-check"></i><b>8.2</b> Curve fitting an exponential function</a></li>
+<li class="chapter" data-level="8.3" data-path="process-of-modeling.html"><a href="process-of-modeling.html#fit-periodic"><i class="fa fa-check"></i><b>8.3</b> Curve fitting a periodic function</a></li>
+<li class="chapter" data-level="8.4" data-path="process-of-modeling.html"><a href="process-of-modeling.html#curve-fitting-a-power-law-function"><i class="fa fa-check"></i><b>8.4</b> Curve fitting a power-law function</a></li>
+<li class="chapter" data-level="8.5" data-path="process-of-modeling.html"><a href="process-of-modeling.html#hump-and-sigmoid-functions"><i class="fa fa-check"></i><b>8.5</b> Hump and sigmoid functions</a></li>
+<li class="chapter" data-level="8.6" data-path="process-of-modeling.html"><a href="process-of-modeling.html#modeling-cycle"><i class="fa fa-check"></i><b>8.6</b> The modeling cycle</a>
+<ul>
+<li class="chapter" data-level="8.6.1" data-path="process-of-modeling.html"><a href="process-of-modeling.html#example-cooling-water"><i class="fa fa-check"></i><b>8.6.1</b> Example: Cooling water</a></li>
+<li class="chapter" data-level="8.6.2" data-path="process-of-modeling.html"><a href="process-of-modeling.html#example-the-tides"><i class="fa fa-check"></i><b>8.6.2</b> Example: The tides</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="fun-slopes.html"><a href="fun-slopes.html"><i class="fa fa-check"></i><b>9</b> Slope function</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="fun-slopes.html"><a href="fun-slopes.html#change-and-slope"><i class="fa fa-check"></i><b>9.1</b> Change and slope</a></li>
+<li class="chapter" data-level="9.2" data-path="fun-slopes.html"><a href="fun-slopes.html#continuous-change"><i class="fa fa-check"></i><b>9.2</b> Continuous change</a></li>
+<li class="chapter" data-level="9.3" data-path="fun-slopes.html"><a href="fun-slopes.html#slope"><i class="fa fa-check"></i><b>9.3</b> Slope</a></li>
+<li class="chapter" data-level="9.4" data-path="fun-slopes.html"><a href="fun-slopes.html#the-fitted-line"><i class="fa fa-check"></i><b>9.4</b> The fitted line</a></li>
+<li class="chapter" data-level="9.5" data-path="fun-slopes.html"><a href="fun-slopes.html#average-rate-of-change"><i class="fa fa-check"></i><b>9.5</b> Average rate of change</a></li>
+<li class="chapter" data-level="9.6" data-path="fun-slopes.html"><a href="fun-slopes.html#instantaneous-rate-of-change"><i class="fa fa-check"></i><b>9.6</b> Instantaneous rate of change</a></li>
+</ul></li>
+<li class="chapter" data-level="14" data-path="magnitudes.html"><a href="magnitudes.html"><i class="fa fa-check"></i><b>14</b> Magnitudes</a>
+<ul>
+<li class="chapter" data-level="14.1" data-path="magnitudes.html"><a href="magnitudes.html#counting-digits"><i class="fa fa-check"></i><b>14.1</b> Counting digits</a></li>
+<li class="chapter" data-level="14.2" data-path="magnitudes.html"><a href="magnitudes.html#using-digit-to-understand-magnitude"><i class="fa fa-check"></i><b>14.2</b> Using digit() to understand magnitude</a></li>
+<li class="chapter" data-level="14.3" data-path="magnitudes.html"><a href="magnitudes.html#quantity-and-magnitude"><i class="fa fa-check"></i><b>14.3</b> Quantity and magnitude</a></li>
+<li class="chapter" data-level="14.4" data-path="magnitudes.html"><a href="magnitudes.html#composing-ln"><i class="fa fa-check"></i><b>14.4</b> Composing <span class="math inline">\(\ln()\)</span></a></li>
+<li class="chapter" data-level="14.5" data-path="magnitudes.html"><a href="magnitudes.html#magnitude-graphics"><i class="fa fa-check"></i><b>14.5</b> Magnitude graphics</a></li>
+<li class="chapter" data-level="14.6" data-path="magnitudes.html"><a href="magnitudes.html#magnitude-scales"><i class="fa fa-check"></i><b>14.6</b> Magnitude scales</a></li>
+<li class="chapter" data-level="14.7" data-path="magnitudes.html"><a href="magnitudes.html#fractional-digits"><i class="fa fa-check"></i><b>14.7</b> Fractional digits (optional)</a></li>
+</ul></li>
+<li class="chapter" data-level="15" data-path="dimensions.html"><a href="dimensions.html"><i class="fa fa-check"></i><b>15</b> Dimensions</a>
+<ul>
+<li class="chapter" data-level="15.1" data-path="dimensions.html"><a href="dimensions.html#mathematics-of-quantity"><i class="fa fa-check"></i><b>15.1</b> Mathematics of quantity</a></li>
+<li class="chapter" data-level="15.2" data-path="dimensions.html"><a href="dimensions.html#compound-dimensions"><i class="fa fa-check"></i><b>15.2</b> Compound dimensions</a></li>
+<li class="chapter" data-level="15.3" data-path="dimensions.html"><a href="dimensions.html#arithmetic-with-dimensions"><i class="fa fa-check"></i><b>15.3</b> Arithmetic with dimensions</a></li>
+<li class="chapter" data-level="15.4" data-path="dimensions.html"><a href="dimensions.html#example-dimensional-analysis"><i class="fa fa-check"></i><b>15.4</b> Example: Dimensional analysis</a></li>
+<li class="chapter" data-level="15.5" data-path="dimensions.html"><a href="dimensions.html#conversion-flavors-of-1"><i class="fa fa-check"></i><b>15.5</b> Conversion: Flavors of 1</a></li>
+<li class="chapter" data-level="15.6" data-path="dimensions.html"><a href="dimensions.html#dimensions-and-linear-combinations"><i class="fa fa-check"></i><b>15.6</b> Dimensions and linear combinations</a></li>
+</ul></li>
+<li class="part"><span><b>II Block 2: Differentiation</b></span></li>
+<li class="chapter" data-level="" data-path="outline-of-block-2.html"><a href="outline-of-block-2.html"><i class="fa fa-check"></i>Outline of Block 2</a></li>
+<li class="chapter" data-level="16" data-path="change-relationships.html"><a href="change-relationships.html"><i class="fa fa-check"></i><b>16</b> Change relationships</a>
+<ul>
+<li class="chapter" data-level="16.1" data-path="change-relationships.html"><a href="change-relationships.html#slopes-and-motion"><i class="fa fa-check"></i><b>16.1</b> Slopes and motion</a></li>
+<li class="chapter" data-level="16.2" data-path="change-relationships.html"><a href="change-relationships.html#differentiation"><i class="fa fa-check"></i><b>16.2</b> Differentiation</a></li>
+<li class="chapter" data-level="16.3" data-path="change-relationships.html"><a href="change-relationships.html#notations-for-differentiation"><i class="fa fa-check"></i><b>16.3</b> Notations for differentiation</a></li>
+<li class="chapter" data-level="16.4" data-path="change-relationships.html"><a href="change-relationships.html#dimension-of-derivatives"><i class="fa fa-check"></i><b>16.4</b> Dimension of derivatives</a></li>
+</ul></li>
+<li class="chapter" data-level="17" data-path="computing-derivs.html"><a href="computing-derivs.html"><i class="fa fa-check"></i><b>17</b> Computing derivatives</a>
+<ul>
+<li class="chapter" data-level="17.1" data-path="computing-derivs.html"><a href="computing-derivs.html#a-function-from-a-function"><i class="fa fa-check"></i><b>17.1</b> A function from a function</a></li>
+<li class="chapter" data-level="17.2" data-path="computing-derivs.html"><a href="computing-derivs.html#finite-differencing"><i class="fa fa-check"></i><b>17.2</b> Finite differencing</a></li>
+<li class="chapter" data-level="17.3" data-path="computing-derivs.html"><a href="computing-derivs.html#the-slope-function-operator"><i class="fa fa-check"></i><b>17.3</b> The slope-function operator</a></li>
+<li class="chapter" data-level="17.4" data-path="computing-derivs.html"><a href="computing-derivs.html#symbolic-differentiation"><i class="fa fa-check"></i><b>17.4</b> Symbolic differentiation</a></li>
+</ul></li>
+<li class="chapter" data-level="18" data-path="convexity-and-curvature.html"><a href="convexity-and-curvature.html"><i class="fa fa-check"></i><b>18</b> Convexity and curvature</a>
+<ul>
+<li class="chapter" data-level="18.1" data-path="convexity-and-curvature.html"><a href="convexity-and-curvature.html#concavity"><i class="fa fa-check"></i><b>18.1</b> Concavity</a></li>
+<li class="chapter" data-level="18.2" data-path="convexity-and-curvature.html"><a href="convexity-and-curvature.html#curvature"><i class="fa fa-check"></i><b>18.2</b> Curvature</a></li>
+</ul></li>
+<li class="chapter" data-level="19" data-path="cont-and-smooth.html"><a href="cont-and-smooth.html"><i class="fa fa-check"></i><b>19</b> Continuity and smoothness</a>
+<ul>
+<li class="chapter" data-level="19.1" data-path="cont-and-smooth.html"><a href="cont-and-smooth.html#continuity"><i class="fa fa-check"></i><b>19.1</b> Continuity</a></li>
+<li class="chapter" data-level="19.2" data-path="cont-and-smooth.html"><a href="cont-and-smooth.html#smoothness"><i class="fa fa-check"></i><b>19.2</b> Smoothness</a></li>
+<li class="chapter" data-level="19.3" data-path="cont-and-smooth.html"><a href="cont-and-smooth.html#doesnt-exist"><i class="fa fa-check"></i><b>19.3</b> Doesn’t exist?</a></li>
+<li class="chapter" data-level="19.4" data-path="cont-and-smooth.html"><a href="cont-and-smooth.html#piecewise-functions-1"><i class="fa fa-check"></i><b>19.4</b> Piecewise functions</a></li>
+<li class="chapter" data-level="19.5" data-path="cont-and-smooth.html"><a href="cont-and-smooth.html#continuity-1"><i class="fa fa-check"></i><b>19.5</b> Continuity</a></li>
+<li class="chapter" data-level="19.6" data-path="cont-and-smooth.html"><a href="cont-and-smooth.html#differentiability"><i class="fa fa-check"></i><b>19.6</b> Differentiability</a></li>
+</ul></li>
+<li class="chapter" data-level="20" data-path="evanescent-h.html"><a href="evanescent-h.html"><i class="fa fa-check"></i><b>20</b> Evanescent h</a>
+<ul>
+<li class="chapter" data-level="20.1" data-path="evanescent-h.html"><a href="evanescent-h.html#role-of-h"><i class="fa fa-check"></i><b>20.1</b> Role of h</a></li>
+<li class="chapter" data-level="20.2" data-path="evanescent-h.html"><a href="evanescent-h.html#derivatives-of-linear-combinations"><i class="fa fa-check"></i><b>20.2</b> Derivatives of linear combinations</a></li>
+<li class="chapter" data-level="20.3" data-path="evanescent-h.html"><a href="evanescent-h.html#derivatives-of-the-basic-modeling-functions"><i class="fa fa-check"></i><b>20.3</b> Derivatives of the basic modeling functions</a></li>
+</ul></li>
+<li class="chapter" data-level="21" data-path="prod-comp-rules.html"><a href="prod-comp-rules.html"><i class="fa fa-check"></i><b>21</b> Differentiation of assembled functions</a>
+<ul>
+<li class="chapter" data-level="21.1" data-path="prod-comp-rules.html"><a href="prod-comp-rules.html#step-1-identify-f-and-g"><i class="fa fa-check"></i><b>21.1</b> Step 1: Identify f() and g()</a></li>
+<li class="chapter" data-level="21.2" data-path="prod-comp-rules.html"><a href="prod-comp-rules.html#step-2-find-f-and-g"><i class="fa fa-check"></i><b>21.2</b> Step 2: Find f’() and g’()</a></li>
+<li class="chapter" data-level="21.3" data-path="prod-comp-rules.html"><a href="prod-comp-rules.html#product-rule"><i class="fa fa-check"></i><b>21.3</b> Product rule</a></li>
+<li class="chapter" data-level="21.4" data-path="prod-comp-rules.html"><a href="prod-comp-rules.html#composition-chain-rule"><i class="fa fa-check"></i><b>21.4</b> Composition (“chain”) rule</a></li>
+<li class="chapter" data-level="21.5" data-path="prod-comp-rules.html"><a href="prod-comp-rules.html#step-3-apply-the-relevant-rule"><i class="fa fa-check"></i><b>21.5</b> Step 3: Apply the relevant rule</a></li>
+<li class="chapter" data-level="21.6" data-path="prod-comp-rules.html"><a href="prod-comp-rules.html#exponentials-and-logarithms-optional"><i class="fa fa-check"></i><b>21.6</b> Exponentials and logarithms (optional)</a></li>
+<li class="chapter" data-level="21.7" data-path="prod-comp-rules.html"><a href="prod-comp-rules.html#checking-your-work"><i class="fa fa-check"></i><b>21.7</b> Checking your work</a></li>
+</ul></li>
+<li class="chapter" data-level="22" data-path="optim-and-shape.html"><a href="optim-and-shape.html"><i class="fa fa-check"></i><b>22</b> Optimization</a>
+<ul>
+<li class="chapter" data-level="22.1" data-path="optim-and-shape.html"><a href="optim-and-shape.html#structure-of-the-problem"><i class="fa fa-check"></i><b>22.1</b> Structure of the problem</a></li>
+<li class="chapter" data-level="22.2" data-path="optim-and-shape.html"><a href="optim-and-shape.html#interpreting-the-argmax"><i class="fa fa-check"></i><b>22.2</b> Interpreting the argmax</a></li>
+<li class="chapter" data-level="22.3" data-path="optim-and-shape.html"><a href="optim-and-shape.html#derivatives-and-optimization"><i class="fa fa-check"></i><b>22.3</b> Derivatives and optimization</a></li>
+<li class="chapter" data-level="22.4" data-path="optim-and-shape.html"><a href="optim-and-shape.html#tree-harvesting"><i class="fa fa-check"></i><b>22.4</b> Tree harvesting</a></li>
+</ul></li>
+<li class="chapter" data-level="23" data-path="partial-change.html"><a href="partial-change.html"><i class="fa fa-check"></i><b>23</b> Partial change</a>
+<ul>
+<li class="chapter" data-level="23.1" data-path="partial-change.html"><a href="partial-change.html#calculus-on-two-inputs"><i class="fa fa-check"></i><b>23.1</b> Calculus on two inputs</a></li>
+<li class="chapter" data-level="23.2" data-path="partial-change.html"><a href="partial-change.html#all-other-things-being-equal"><i class="fa fa-check"></i><b>23.2</b> All other things being equal …</a></li>
+<li class="chapter" data-level="23.3" data-path="partial-change.html"><a href="partial-change.html#gradient-vector"><i class="fa fa-check"></i><b>23.3</b> Gradient vector</a></li>
+<li class="chapter" data-level="23.4" data-path="partial-change.html"><a href="partial-change.html#gradient-vector-1"><i class="fa fa-check"></i><b>23.4</b> Gradient vector</a></li>
+</ul></li>
+<li class="chapter" data-level="24" data-path="local-approximations.html"><a href="local-approximations.html"><i class="fa fa-check"></i><b>24</b> Local approximations</a>
+<ul>
+<li class="chapter" data-level="24.1" data-path="local-approximations.html"><a href="local-approximations.html#eight-simple-shapes"><i class="fa fa-check"></i><b>24.1</b> Eight simple shapes</a></li>
+<li class="chapter" data-level="24.2" data-path="local-approximations.html"><a href="local-approximations.html#low-order-polynomial"><i class="fa fa-check"></i><b>24.2</b> Low-order polynomial</a></li>
+<li class="chapter" data-level="24.3" data-path="local-approximations.html"><a href="local-approximations.html#the-low-order-polynomial-with-two-inputs"><i class="fa fa-check"></i><b>24.3</b> The low-order polynomial with two inputs</a></li>
+<li class="chapter" data-level="24.4" data-path="local-approximations.html"><a href="local-approximations.html#derivatives-of-polynomials"><i class="fa fa-check"></i><b>24.4</b> Derivatives of polynomials</a></li>
+<li class="chapter" data-level="24.5" data-path="local-approximations.html"><a href="local-approximations.html#approximations-around-xstar"><i class="fa fa-check"></i><b>24.5</b> Approximations around <span class="math inline">\(x^\star\)</span></a></li>
+<li class="chapter" data-level="24.6" data-path="local-approximations.html"><a href="local-approximations.html#solving-computationally"><i class="fa fa-check"></i><b>24.6</b> Solving computationally</a></li>
+<li class="chapter" data-level="24.7" data-path="local-approximations.html"><a href="local-approximations.html#from-an-earlier-draft"><i class="fa fa-check"></i><b>24.7</b> From an earlier draft</a></li>
+</ul></li>
+<li class="chapter" data-level="25" data-path="approximation-around-a-point.html"><a href="approximation-around-a-point.html"><i class="fa fa-check"></i><b>25</b> Approximation around a point</a></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">CalcZ Student Notes</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="naked-intro" class="section level1" number="3">
+<h1><span class="header-section-number">Chapter 3</span> Naked modeling functions</h1>
+<p>Experience allows us to make a short list of mathematical functions that provide a large majority of the tools for representing the real world as a mathematical object. Think of this list as different actors, each of whom is skilled in portraying an archetypical character: hero, outlaw, lover, fool, comic. A play brings together different characters, costumes them, builds on dialog.</p>
+<p>A mathematical modeler is a kind of playwright. She combines mathematical character types to tell a story about relationships. But there is only a handful of archetypical mathematical functions, the analog of the character actors in drama and comedy. We are calling these the <strong><em>naked modeling functions</em></strong>. In writing a mathematical model, you will clothe the actors to suit the era and location and assemble them together in harmony or discord.</p>
+<div id="the-list" class="section level2" number="3.1">
+<h2><span class="header-section-number">3.1</span> The list</h2>
+<p>Here is a list of our basic, unadorned functions, the naked model function,</p>
+<ul>
+<li>Exponential <span class="math inline">\(e^x\)</span></li>
+<li>Logarithm <span class="math inline">\(\ln(x)\)</span></li>
+<li>Power-law <span class="math inline">\(x^p\)</span></li>
+<li>Sinusoid <span class="math inline">\(\sin(x)\)</span></li>
+<li>Straight-line <span class="math inline">\(m x + b\)</span></li>
+<li>Hump <span class="math inline">\(\text{dnorm}(x)\)</span></li>
+<li>Sigmoid <span class="math inline">\(\text{pnorm}(x)\)</span></li>
+</ul>
+<p>We’ve written these here in a traditional notation so that you can see the connections to the math you’ve already studied. We’ve used <span class="math inline">\(x\)</span> to stand for the single input to these functions just because that’s traditional.</p>
+<p>It’s good to refer to the functions by their word name—exponential, logarithm, power-law, sinusoid, straight-line, etc. This helps to avoid the source of common confusion. For example, the mathematical expressions <span class="math inline">\(e^x\)</span> and <span class="math inline">\(x^e\)</span> are easily confused, but they are notation for <strong><em>utterly different patterns</em></strong>. You won’t so easily mistake “exponential” and “power-law.”</p>
+<div class="takenote">
+<p>One important point to make here is that our list of naked modeling functions is very short. You should memorize the names and be able easily to associate each name with the traditional notation.</p>
+<p>Over the next several chapters, we will introduce several features of functions. Some of our basic modeling functions have these features, some don’t. These features include:</p>
+<ul>
+<li>monotonicity up or down</li>
+<li>concavity up or down</li>
+<li>horizontal asymptotes</li>
+<li>vertical asymptotes</li>
+<li>periodicity</li>
+</ul>
+<p>By the end of Block 1, you should be able to list all seven basic modeling functions and say which of these features are relevant to each.</p>
+</div>
+<p>You will also use and see the computer names for these functions. The names can differ somewhat from one computer language to another, but the names in the language we will use, R, are easily recognized by programmers who use any other language.</p>
+<p>For ease of reference, here’s a table</p>
+<table>
+<thead>
+<tr class="header">
+<th>Name</th>
+<th>Traditional notation</th>
+<th>R expression</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Exponential</td>
+<td><span class="math inline">\(e^x\)</span></td>
+<td><code>exp(x)</code></td>
+</tr>
+<tr class="even">
+<td>Logarithm</td>
+<td><span class="math inline">\(\ln(x)\)</span></td>
+<td><code>log(x)</code></td>
+</tr>
+<tr class="odd">
+<td>Power law</td>
+<td><span class="math inline">\(x^p\)</span></td>
+<td><code>x^p</code></td>
+</tr>
+<tr class="even">
+<td>Sinusoid</td>
+<td><span class="math inline">\(\sin(x)\)</span></td>
+<td><code>sin(x)</code></td>
+</tr>
+<tr class="odd">
+<td>Straight-line</td>
+<td><span class="math inline">\(m x + b\)</span></td>
+<td><code>m*x+b</code></td>
+</tr>
+<tr class="even">
+<td>Hump</td>
+<td></td>
+<td><code>dnorm(x)</code></td>
+</tr>
+<tr class="odd">
+<td>Sigmoid</td>
+<td></td>
+<td><code>pnorm(x)</code></td>
+</tr>
+</tbody>
+</table>
+<p>We’ve left out the traditional notation for the hump and sigmoid because there isn’t a standard one. Surprisingly, there is no specific name in R for the Power law or Straight-Line functions, but it’s easy to implement them when needed using the code above.</p>
+<p>You noticed that the section heading is “The naked modeling functions.” We mean “naked” in a metaphorical sense, and chose the metaphor to make it easy to remember. Think of this list of seven functions as the celebrities of the world of calculus. Unlike human celebrities who appear and wane over the years, and marry and divorce each other frequently, these celebrities have been with us for generations and maintain intimate connections with one another that reflect the nature of mathematics rather than the fads and fancies of celebrities. (Mastering calculus is largely a matter of becoming familiar with the mathematical connections. You’ll see these in due time.)</p>
+<p>These (basic) celebrity functions appear in many mathematical settings, just as a human celebrity strives to maintain a public image. The human celebrity is a human organism and that organism is naturally naked. In public appearance, however, the celebrity always is clothed in one way or another. (OK … Rarely some of them appear unclothed and the same is true in mathematics.) In other words, in order to interact with the world at large, the celebrities need attire.</p>
+<p>Similarly, the mathematical functions that appear in real-world applications—as opposed to most math textbooks—always wear clothes, they are adorned with what we call <strong><em>parameters</em></strong>. Parameters help them deal with the units and dimension of quantities. And just as there are standard elements of clothing: shirt, skirt, trousers, … there are standard ways of clothing the naked modeling function. The process of decorating basic modeling functions is called the <strong><em>parameterization</em></strong> of the function, and there are often multiple ways of paremeterizing the same function.</p>
+<p>Once we dress the naked functions—that is, <em>parameterize</em> them—they will become the superheroes of calculus. We’ll call this league of superheroes the <strong><em>basic modeling functions</em></strong>..</p>
+<div class="forinstructor">
+<p>To be consistent, <span class="math inline">\(mx + b\)</span> is not really naked. The naked equivalent is simply <span class="math inline">\(x\)</span>. Almost always, the way we will clothe functions is to replace the naked <span class="math inline">\(x\)</span> with <span class="math inline">\(mx + b\)</span></p>
+</div>
+</div>
+<div id="function-shapes" class="section level2" number="3.2">
+<h2><span class="header-section-number">3.2</span> Function shapes</h2>
+<p>You are going to be building models by selecting an appropriate function or by putting functions together in various ways. This might remind you of Lego blocks. As you know, these come in different shapes: <span class="math inline">\(6\times 2\)</span>, <span class="math inline">\(4\times 2\)</span>, <span class="math inline">\(2\times 2\)</span>, and so on. Similarly, each of the naked modeling function has a distinctively shaped graph. Knowing the shapes by name will help you when you need to build a model.</p>
+<pre><code>## Warning: Removed 6 row(s) containing missing values (geom_path).</code></pre>
+<pre><code>## Warning in log(x): NaNs produced</code></pre>
+<pre><code>## Warning: Removed 50 row(s) containing missing values (geom_path).</code></pre>
+<p><img src="CalcZ-notes_files/figure-html/unnamed-chunk-13-1.png" width="50%" style="display: block; margin: auto;" /><img src="CalcZ-notes_files/figure-html/unnamed-chunk-13-2.png" width="50%" style="display: block; margin: auto;" /><img src="CalcZ-notes_files/figure-html/unnamed-chunk-13-3.png" width="50%" style="display: block; margin: auto;" /><img src="CalcZ-notes_files/figure-html/unnamed-chunk-13-4.png" width="50%" style="display: block; margin: auto;" /><img src="CalcZ-notes_files/figure-html/unnamed-chunk-13-5.png" width="50%" style="display: block; margin: auto;" />
+I didn’t include a graph of the straight-line function, since you already know what that looks like. Instead, I’ll plot two more basic functions, the <strong><em>identity function</em></strong> and the <strong><em>constant function</em></strong>. As you’ll see later, every straight-line function is a “linear combination” of these two.</p>
+<p><img src="CalcZ-notes_files/figure-html/unnamed-chunk-14-1.png" width="50%" style="display: block; margin: auto;" /><img src="CalcZ-notes_files/figure-html/unnamed-chunk-14-2.png" width="50%" style="display: block; margin: auto;" /></p>
+<p>It’s tempting to deny that the constant function is a function. After all, the output <strong>does not depend</strong> on the input. Still, this situation arises frequently in modeling: you start out supposing that one quantity depends on another but it turns out that it does not. Since functions are our way of representing relationships, it’s helpful to have a function for the situation of “no relationship.” The constant function does the job.</p>
+</div>
+<div id="the-power-law-family" class="section level2" number="3.3">
+<h2><span class="header-section-number">3.3</span> The power-law family</h2>
+<p>The power-law “function” is really a set of differently shaped functions. We lump them together under the name “power-law” because they are strongly related, especially when it comes to the calculus operations you will be learning to use.</p>
+<p>Even within the power-law family, it’s helpful to consider different but overlapping groups:</p>
+<ol style="list-style-type: decimal">
+<li>The <strong><em>monomials</em></strong>: <span class="math inline">\(m_0(x) \equiv x^0\)</span>, <span class="math inline">\(m_1(x) \equiv x^1\)</span>, <span class="math inline">\(m_2(x) \equiv x^2\)</span>, <span class="math inline">\(\ldots\)</span>. Of course, <span class="math inline">\(m_0()\)</span> is exactly the same as the constant function, and <span class="math inline">\(m_1(x)\)</span> is the same as the identity function. As for the rest, they have just two general shapes: both arms up (for even powers); one arm up and the other down (for odd powers.)</li>
+</ol>
+<p><img src="CalcZ-notes_files/figure-html/monomial-graphs-1.png" width="25%" style="display: block; margin: auto;" /><img src="CalcZ-notes_files/figure-html/monomial-graphs-2.png" width="25%" style="display: block; margin: auto;" /><img src="CalcZ-notes_files/figure-html/monomial-graphs-3.png" width="25%" style="display: block; margin: auto;" /><img src="CalcZ-notes_files/figure-html/monomial-graphs-4.png" width="25%" style="display: block; margin: auto;" />
+2. The <strong><em>negative powers</em></strong>, e.g. <span class="math inline">\(f(x) \equiv x^{-1}\)</span>, <span class="math inline">\(g(x) \equiv x^{-2}\)</span>, <span class="math inline">\(h(x) \equiv x^{-1.5}\)</span></p>
+<p><img src="CalcZ-notes_files/figure-html/negative-graphs-1.png" width="33%" style="display: block; margin: auto;" /><img src="CalcZ-notes_files/figure-html/negative-graphs-2.png" width="33%" style="display: block; margin: auto;" /><img src="CalcZ-notes_files/figure-html/negative-graphs-3.png" width="33%" style="display: block; margin: auto;" /></p>
+<ol start="3" style="list-style-type: decimal">
+<li>The <strong>non-integer powers</strong>, e.g. <span class="math inline">\(f(x) = \sqrt{x}\)</span>, <span class="math inline">\(g(x) = x^\pi\)</span>, and so on.</li>
+</ol>
+<p><img src="CalcZ-notes_files/figure-html/non-integer-graphs-1.png" width="25%" style="display: block; margin: auto;" /><img src="CalcZ-notes_files/figure-html/non-integer-graphs-2.png" width="25%" style="display: block; margin: auto;" /></p>
+
+<div class="exercise">
+<span id="exr:unnamed-chunk-15" class="exercise"><strong>Exercise 3.1  (naked-descriptions)  </strong></span>
+</div>
+<details>
+<p>Answer these questions about the naked-modeling functions. You can refer to the graphs in Figures <a href="#fig:monomial-graphs"><strong>??</strong></a> through <a href="#fig:non-integer-graphs"><strong>??</strong></a>.</p>
+<p><strong>Question A</strong> Which of these best describes the concavity of the hump function?</p>
+<ol style="list-style-type: lower-roman">
+<li>It’s not concave.<span class="mcanswer"> ☹︎ If it curves, it’s either concave up or down. </span><br />
+</li>
+<li>It’s concave down.<span class="mcanswer"> ☹︎ In some places, but not in others. </span><br />
+</li>
+<li>It’s concave down in the center and concave up on both flanks.<span class="mcanswer"> ✓ </span><br />
+</li>
+<li>It’s concave down on the left and concave up on the right<span class="mcanswer"> ☹︎ Look again </span></li>
+</ol>
+<p><strong>Question B</strong> Which of these best describes the concavity of the sigmoid function?</p>
+<ol style="list-style-type: lower-roman">
+<li><p>It’s not concave.<span class="mcanswer"> ☹︎ If it curves, it’s either concave up or down. </span><br />
+</p></li>
+<li><p>It’s concave down.<span class="mcanswer"> ☹︎ In some places, but not in others. </span><br />
+</p></li>
+<li><p>It’s concave down on the left and concave up on the right.<span class="mcanswer"> ☹︎ Look again </span><br />
+</p></li>
+<li><p>It’s concave up on the left and concave down on the right.<span class="mcanswer"> ✓ Look again </span>
+<strong>Question C</strong> Which of these best describes the concavity of the second-order monomial <span class="math inline">\(m_2(x) \equiv x^2\)</span>?</p></li>
+<li><p>It’s not concave.<span class="mcanswer"> ☹︎ If it curves, it’s either concave up or down. </span><br />
+</p></li>
+<li><p>It’s concave down.<span class="mcanswer"> ☹︎ Is it a smile or a frown? </span><br />
+</p></li>
+<li><p>It’s concave down on the left and concave up on the right.<span class="mcanswer"> ☹︎ Look again </span><br />
+</p></li>
+<li><p>It’s concave up everywhere in its domain.<span class="mcanswer"> ✓ Look again </span></p>
+</details></li>
+</ol>
+<div class="todo">
+<p>We need questions about asymptotes.</p>
+</div>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="structure-of-a-function.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="fun-describing.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": false,
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/dtkaplan/CalcZ-notes/edit/shared/Fun-naked.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"toc": {
+"collapse": "section"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
