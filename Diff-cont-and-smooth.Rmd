@@ -67,7 +67,7 @@ You cannot tell from the plot that the second derivative is discontinuous. But i
 
 Recall the logical path that led us to the idea of the derivative of a function. We started with the ***differencing operator***, which takes as input a function and a "small" value of $h$:
 $${\cal D}_x f(x) \equiv \frac{f(x+h) - f(x)}{h}$$
-Then, in Figures \@ref(fig:sin-sig-many-h) and \@ref(fig:log-exp-many-h) we reported on experiments with some naked modeling functions that, once $h$ is small enough, the graph of ${\cal D}_x f(x)$ does not depend on $h$. And so we defined a function $\partial_x f(x)$ where $h$ doesn't play a role, writing $\lim_{h\rightarrow 0}$ to remember the ancestors, now departed from the scene:
+Then, through algebraic manipulation and numerical experiments we found that, once $h$ is small enough, the graph of ${\cal D}_x f(x)$ does not depend on $h$. And so we defined a function $\partial_x f(x)$ where $h$ doesn't play a role, writing $\lim_{h\rightarrow 0}$ to remember the ancestors, now departed from the scene:
 $$\partial_x f(x) \equiv \lim_{h\rightarrow 0} \frac{f(x+h) - f(x)}{h}$$
 Conveniently, we found that the derivatives of the naked modeling functions can be written in terms of the naked modeling functions *without making any reference to $h$*. 
 
@@ -85,7 +85,7 @@ slice_plot(DH01(x) ~ x, domain(x=c(-0.02, 0.02)), npts=500,
   slice_plot(DH0001(x) ~ x,
            color="blue", npts=500, alpha=0.5) 
 ```
-Differencing the Heaviside function produces very different functions depending on the value of $h$. Since there is no convergence as $h$ gets smaller, it's fair to say that the Heaviside function does not have a derivative. Perhaps a more useful way to think of it is that the "derivative" of the Heaviside function is unaccountably large as $h\rightarrow 0$. 
+Differencing the Heaviside function produces very different functions depending on the value of $h$. Since there is no convergence as $h$ gets smaller, it's fair to say that the Heaviside function does not have a derivative. Perhaps a more useful way to think of it is that the "derivative" of the Heaviside function at $x=0$ is unaccountably large as $h\rightarrow 0$. 
 
 We know that when a function has a large derivative, a small difference in the input will make a large difference in the output. This brings us back to the definition of ***discontinuous*** at the start of the chapter. So I like to think of the "derivative" of the Heaviside function as discontinuous.
 

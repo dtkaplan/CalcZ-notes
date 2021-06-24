@@ -1,8 +1,8 @@
 # Change relationships
 
-The questions that started it all had to do with motion. There were words to describe speed: fast and slow. There were words to describe force: strong and weak, heavy and light. And there were words to describe location: far and near, long and short. But what were the relationships among these things? And how did time fit in, an intangible quantity that had aspects of location (long and short) and of speed (quick and slow)?
+The questions that started it all had to do with motion. There were words to describe speed: fast and slow. There were words to describe force: strong and weak, heavy and light. And there were words to describe location and distance: far and near, long and short, here and there. But what were the relationships among these things? And how did time fit in, an intangible quantity that had aspects of location (long and short) and of speed (quick and slow)?
 
-Galileo (1564-1642) started the ball rolling. As the son of a musician and music theorist, he had a sense of musical time, a steady beat of intervals. As a student of medicine in Pisa, he noted that swinging pendulums kept reliable time, regardless of the amplitude of their swing. After accidentally attending a lecture on geometry, he turned to mathematics and natural philosophy. Inventing the telescope, his observations put him on a collision course with the accepted classical truth about the nature of the planets. Seeking to understand gravity, he built an apparatus that enabled him to measure accurately the position in time of a ball rolling down a straight ramp. The belled gates he set up to mark the ball's passage were spaced arithmetically in musical time: 1, 2, 3, 4, .... But the distance between the gates was geometric: 1, 4, 9, 16, .... Thus he established a mathematical relationship between increments in time and increments in position. Time advanced as 1, 1, 1, 1, ... and position as 1, 3, 5, 7, .... He observed that the ***second*** increments of position, the increments of the increments 1, 3, 5, 7, ..., were themselves evenly spaced: 2, 2, 2, ....
+Galileo (1564-1642) started the ball rolling. As the son of a musician and music theorist, he had a sense of musical time, a steady beat of intervals. When a student of medicine in Pisa, he noted that swinging pendulums kept reliable time, regardless of the amplitude of their swing. After accidentally attending a lecture on geometry, he turned to mathematics and natural philosophy. Inventing the telescope, his observations put him on a collision course with the accepted classical truth about the nature of the planets. Seeking to understand gravity, he built an apparatus that enabled him to measure accurately the position in time of a ball rolling down a straight ramp. The belled gates he set up to mark the ball's passage were spaced arithmetically in musical time: 1, 2, 3, 4, .... But the distance between the gates was geometric: 1, 4, 9, 16, .... Thus he established a mathematical relationship between increments in time and increments in position. Time advanced as 1, 1, 1, 1, ... and position as 1, 3, 5, 7, .... He observed that the ***second*** increments of position, the increments of the increments 1, 3, 5, 7, ..., were themselves evenly spaced: 2, 2, 2, ....
 
 Putting these observations in tabular form, and adding columns for the 
 
@@ -17,13 +17,16 @@ $t$ | $x(t)$ | first increment | second increment
 3   | 9      | 7        | 
 4   | 16     |          |
 
-Galileo had neither the mathematics nor the equipment to measure motion continuously in time. So what might be obvious to us now, that position is a function of time $x(t)$, would have had little practical significance to him. But we discover in his first increments of $x$ something very much like our ***slope function***. 
+
+Galileo had neither the mathematics nor the equipment to measure motion continuously in time. So what might be obvious to us now, that position is a function of time $x(t)$, would have had little practical significance to him. But we discover in his first increments of $x$ something very much like the ***slope function*** in Chapter \@ref(slope-function). 
 
 $${\cal D}_t\, x(t) \equiv \frac{x(t + 1) - x(t)}{1}$$
 From his data, he observed that ${\cal D}_t\, x(t)$ increases linearly in $t$: $${\cal D}_t x(t) = 2 t + 1$$
 
 Calculating the second increments of $x$ is done by the "slope function of the slope function," which we can call ${\cal D}_{tt}$:
 $${\cal D}_{tt} x \equiv {\cal D}_t \left[{\cal D}_t x(t)\right] = 2(t+1) + 1 - (2 t + 1) = 2$$
+## Continuous time
+
 
 Newton considered the problem for continuous time rather than Galileo's discrete time. He reframed the slope function from the big increments of the slope operator ${\cal D}_t$ to imagined vanishingly small increments of a operator that we shall denote $\partial_t$ and call ***differentiation***.
 
@@ -44,332 +47,15 @@ Over the next three centuries, calculus evolved from a set of techniques for des
 
 
 
-## Slopes and increments.
-
-The mathematical tools of Newton's day are the basis of today's conventional high-school curriculum.^[Perhaps this says something about how well education has kept up with technology.] We have today completely different tools based on the ability to do arithmetic and function evaluation very quickly with computers. We're going to use these new tools to explore the problem of relating the slope-function operator ${\cal D}_t$ to the differential operator $\partial_t$. We have the great advantage of being able to look backwards and so can focus on the functions that experience reveals have been the most widely useful: the basic modeling functions. 
-
-Our goal in this section is to discover what are the slope functions of our basic modeling functions. Recall that the slope-function operator can be written as a ratio of rise-over-run:
-$${\cal D}_t x(t) \equiv \frac{x(t+h) - x(t)}{h}$$ where $h$ is the length of the "run." We'll start with two of the basic modeling functions that have considerable "personality": the sinusoid (`sin()`) and the sigmoid (`pnorm()`).
-
-```{r sign-sig, echo=FALSE, out.width="50%", fig.show = "hold", fig.cap="The naked sinusoid and sigmoidal functions. A vertical blue line has been added to mark the input $t=0$", warning=FALSE, message=FALSE}
-slice_plot(sin(t) ~ t, domain(t=c(-5, 2*pi))) %>%
-  gf_labs(title="Sinusoid") %>%
-  gf_vline(xintercept=0, color="blue", alpha=0.5)
-slice_plot(pnorm(t) ~ t, domain(t=c(-5, 2*pi))) %>%
-  gf_labs(title="Sigmoid") %>%
-  gf_vline(xintercept=0, color="blue", alpha=0.5)
-```
-We'll use the computer to construct the slope functions for the sinusoid and sigmoid, which we'll call `Dsin()` and `Dsigma()` respectively.
-```{r}
-Dsin   <- makeFun((  sin(t+h) -   sin(t))/h ~ t, h=0.1)
-Dsigma <- makeFun((pnorm(t+h) - pnorm(t))/h ~ t, h=0.1)
-```
-
-In the tilde expression handed to `makeFun()`, we've identified `t` as the name of the input and given a "small" default value to the `h` parameter. But R recognizes that both `Dsin()` and `Dsigma()` are functions of two variables, `t` and `h`, as you can see in the parenthesized argument list for the functions.
-```{r}
-Dsin
-Dsigma
-```
-This is a nuisance, since when using the slope functions we will need always to think about `h`, a number that we'd like to describe simply as "small," but for which we always need to provide a numerical value. Let's look at `Dsin()` and `Dsigma()` for a range of values of `h`, as in Figure \@ref(fig:sin-sig-many-h).
-
-```{r sin-sig-many-h, echo=FALSE, out.width="50%", fig.show = "hold", fig.cap="The slope functions of the sinusoid and sigmoid. Each curve shows the slope function for a particular numerical choice of `h`. Both panels show $h=2, 1, 0.5, 0.1, 0.01, 0.001, 0.0001, 0.00001, 0.000001$.", warning=FALSE, message=FALSE}
-rain <- rev(hcl.colors(12)[-(1:3)])
-slice_plot(Dsin(t, h=1) ~ t, domain(t=c(-5, 2*pi)), color=rain[1], label_text="h=1", label_x=0.56) %>%
-  slice_plot(Dsin(t, h=2) ~ t, alpha = 1, label_text="h=2", label_x=.58, color=rain[1]) %>%
-  slice_plot(Dsin(t, h=0.5) ~ t, alpha = 1, label_text="h=0.5", label_x=.54, color=rain[3]) %>%
-  slice_plot(Dsin(t, h=0.1) ~ t, alpha = 1, label_text="h=0.1", label_x=.53, color=rain[4]) %>%
-  slice_plot(Dsin(t, h=0.01) ~ t, alpha = 1, label_text="h=0.01", label_x=.51, color=rain[5]) %>%
-  slice_plot(Dsin(t, h=0.001) ~ t, alpha = 1, color=rain[6], label_text="h=0.001", label_x=.5) %>%
-  slice_plot(Dsin(t, h=0.0001) ~ t, alpha = 1, color=rain[7], label_text="h=0.0001", label_x=.49) %>%
-  slice_plot(Dsin(t, h=0.00001) ~ t, alpha = 1, color=rain[8], label_text="h=0.00001", label_x=.48) %>%
-  slice_plot(Dsin(t, h=0.000001) ~ t, alpha = 1, color=rain[9], label_text="h=0.000001", label_x=.44) %>%
-  gf_labs(title="Slope functions of sinusoid") %>%
-  gf_vline(xintercept=0, color="blue", alpha=0.5)
-slice_plot(Dsigma(t, h=1) ~ t, domain(t=c(-5, 2*pi)), label_text="h=1", label_x=.28, color= rain[2]) %>%
-  slice_plot(Dsigma(t, h=2) ~ t, alpha = 1, label_text="h=2", label_x=.24, color=rain[1]) %>%
-  slice_plot(Dsigma(t, h=0.5) ~ t, alpha = 1, label_text="h=0.5", label_x=.54, color=rain[3]) %>%
-  slice_plot(Dsigma(t, h=0.1) ~ t, alpha = 1, label_text="h=0.1", label_x=.53, color=rain[4]) %>%
-  slice_plot(Dsigma(t, h=0.01) ~ t, alpha = 1, label_text="h=0.01", label_x=.51, color=rain[5]) %>%
-  slice_plot(Dsigma(t, h=0.001) ~ t, alpha = 1, color=rain[6], label_text="h=0.001", label_x=.5) %>%
-  slice_plot(Dsigma(t, h=0.0001) ~ t, alpha = 1, color=rain[7], label_text="h=0.0001", label_x=.49) %>%
-  slice_plot(Dsigma(t, h=0.00001) ~ t, alpha = 1, color=rain[8], label_text="h=0.00001", label_x=.48) %>%
-  slice_plot(Dsigma(t, h=0.000001) ~ t, alpha = 1, color=rain[9], label_text="h=0.000001", label_x=.44) %>%
-  gf_labs(title="Slope functions of sigmoid") %>%
-  gf_vline(xintercept=0, color="blue", alpha=0.5)
-```
-
-Some observations from this numerical experiment:
-
-1. As $h$ gets very small, the slope function doesn't depend on the exact value of $h$.
-
-    This will provide a way for us, eventually, to discard $h$ so that the slope function will not need an $h$ argument.
-    
-2. For small $h$, we have ${\cal D}_t \sin(t) = \sin(t + \pi/2) = \cos(t)$. That is, taking the slope function of a sinusoid gives another sinusoid, shifted left by $\pi/2$ from the original. Or, in plain words, the cosine is the slope function of the sine.
-3. For small $h$, we have ${\cal D}_t \text{pnorm}(t) = \text{dnorm(t)}$. That is, the hump function is the slope function of the sigmoid function.
-
-You can confirm these last two statements by comparison with the original functions, especially the alignment of the peaks of the slope functions with respect to the peak of the sinusoid and the half-way point of the sigmoid.
-
-Now consider the slope functions of the logarithm and exponential functions.
-
-```{r log-exp-many-h, echo=FALSE, out.width="50%", fig.show = "hold", fig.cap="The slope functions of the logarithm and exponential.", warning=FALSE, message=FALSE}
-rain <- rev(hcl.colors(12)[-(1:3)])
-Dlog <- makeFun((log(x+h) - log(x))/h ~ x)
-Dexp <- makeFun((exp(x+h) - exp(x))/h ~ x)
-slice_plot(Dlog(t, h=1) ~ t, domain(t=c(0.01, 2)), color=rain[2], label_text="h=1", label_x=0.8) %>%
-  slice_plot(Dlog(t, h=2) ~ t, domain(t=c(0.01, 2)), alpha = 1, label_text="h=2", label_x=.90, color=rain[1]) %>%
-  slice_plot(Dlog(t, h=0.5) ~ t, domain(t=c(0.02, 2)), alpha = 1, label_text="h=0.5", label_x=.7, color=rain[3]) %>%
-  slice_plot(Dlog(t, h=0.1) ~ t, alpha = 1, label_text="h=0.1", label_x=.6, color=rain[4]) %>%
-  slice_plot(Dlog(t, h=0.01) ~ t, alpha = 1, label_text="h=0.01", label_x=.5, color=rain[5]) %>%
-  slice_plot(Dlog(t, h=0.001) ~ t, domain(t=c(0.05, 2)), alpha = 1, color=rain[6], label_text="h=0.001", label_x=.4) %>%
-  slice_plot(Dlog(t, h=0.0001) ~ t, domain(t=c(0.1, 2)), alpha = 1, color=rain[7], label_text="h=0.0001", label_x=.3) %>%
-  slice_plot(Dlog(t, h=0.00001) ~ t, domain(t=c(0.125, 2)), alpha = 1, color=rain[8], label_text="h=0.00001", label_x=.2) %>%
-  slice_plot(Dlog(t, h=0.000001) ~ t, domain(t=c(0.125, 2)),alpha = 1, color=rain[9], label_text="h=0.000001", label_x=.1) %>%
-  gf_labs(title="Slope functions of logarithm") %>%
-  gf_vline(xintercept=0, color="blue", alpha=0.5) %>%
-  gf_lims(y=c(0,8))
-slice_plot(Dexp(t, h=1) ~ t, domain(t=c(-2, 2)), label_text="h=1", label_x=.4, color= rain[2]) %>%
-  slice_plot(Dexp(t, h=2) ~ t, alpha = 1, label_text="h=2", label_x=.3, color=rain[1]) %>%
-  slice_plot(Dexp(t, h=0.5) ~ t, alpha = 1, label_text="h=0.5", label_x=.5, color=rain[3]) %>%
-  slice_plot(Dexp(t, h=0.1) ~ t, alpha = 1, label_text="h=0.1", label_x=.55, color=rain[4]) %>%
-  slice_plot(Dexp(t, h=0.01) ~ t, alpha = 1, label_text="h=0.01", label_x=.6, color=rain[5]) %>%
-  slice_plot(Dexp(t, h=0.001) ~ t, alpha = 1, color=rain[6], label_text="h=0.001", label_x=.65) %>%
-  slice_plot(Dexp(t, h=0.0001) ~ t, alpha = 1, color=rain[7], label_text="h=0.0001", label_x=.75) %>%
-  slice_plot(Dexp(t, h=0.00001) ~ t, alpha = 1, color=rain[8], label_text="h=0.00001", label_x=.85) %>%
-  slice_plot(Dexp(t, h=0.000001) ~ t, alpha = 1, color=rain[9], label_text="h=0.000001", label_x=.9) %>%
-  gf_labs(title="Slope functions of exponential") %>%
-  gf_vline(xintercept=0, color="blue", alpha=0.5) %>%
-  gf_lims(y=c(0,8))
-```
-These numerical experiments with the logarithm and exponential functions are more evidence that, as $h$ gets small, the slope function doesn't depend on $x$. And, we find that:
-
-- For small $h$, the slope function of the logarithm is a power-law function: ${\cal D}_t \ln(t) = \frac{1}{t}$.
-- For small $h$, the slope function of the exponential is the exponential itself: ${\cal D}_t e^x = e^x$.
-
-You can confirm these by evaluating the slope function of the exponential at $t=0$ and $t=1$, and the slope function of the logarithm at $t= 2, 1, 1/2, 1/4, 1/8.$
-
-Such numerical experiments on the other naked modeling functions reveal a pattern: the slope function of the naked modeling functions tend to be similar to other naked modeling functions.
-
-```{r child="D-naked-functions.Rmd"}
-```
-
-
-
-With this list of experimentally determined slope functions (for small $h$) we're ready to start using slope functions without having to use left-shift combinations like $f(t+h) - f(t)$.
-
-```{exercise, name="lion-find-bowl"}
-```
-<details>`r MC_counter$reset()` `r knitr::knit_child("Exercises/Fun/lion-find-bowl.Rmd")`</details>
 
 ## Slopes and motion
 
-Having worked out a theory of slope functions, Newton was ready to express the laws of motion in continuous time. He did this by expressing position as $x(t)$, and then familiar concepts velocity and force in terms of slope functions of position and the "quantity of matter," which we call "mass." 
+Chapter \@ref(instantaneous-rate-of-change) introduced the idea of a ***slope function***: a function $g(t)$ whose value at each instant gives the instantaneous rate of change of a partner function $f(t)$. To keep easier track of the relationship between the function and it's slope function, we use the ${\cal D}$ notation:
+$${\cal}D_t f(t)$$ is the slope function of $f(t)$ with respect to $t$. 
 
-- Velocity is the slope function of position: $v(t) \equiv {\cal D}_t x(t)$.
-- Net force is the slope function of velocity times mass: $F(t) \equiv m {\cal D}_t v(t)$
+To illustrate, imagine a graph of the position of a car along a road as in Figure \@ref(fig:stop-and-go2).  Over the course of an hour, the car traveled about 25 miles. In other words, the ***average*** speed is 25 miles/hour: the *slope* of the red line segment. Given the traffic, sometimes the car was stopped (time C), sometimes crawling (time D) and sometimes much faster than average (time B).  
 
-To take mass out of the formulation, we give a name specifically to the slope function of velocity; we call it ***acceleration***. 
-
-- Acceleration is the slope function of velocity: $a(t) \equiv {\cal D}_t v(t)$.
-
-With acceleration as a concept, we can define net force as mass times acceleration.
-
-::: {.why}
-We used **net force** as the quantity we related to mass and the slope function of velocity. There are different sources of forces which add up and can cancel out. Famously, Newton formulated the ***law of universal gravitation*** which ascribed the force between masses as proportional to the product of the two masses and inversely proportional to the square of the distance between them. But a mass on a table has no net force on it, since the table pushes back (push = force) on the mass to cancel out the force due to gravity. "Net force" takes such cancellation into account.
-:::
-
-## Differentiation
-
-***Differentiation*** is a process of transforming a function to produce another function. There are several traditional notations for differentiation of a function named $f()$, for instance:
-
-- Leibnitz: $\frac{df}{dx}$
-- Partial: $\frac{\partial f}{\partial x}$
-- Euler: $D_x f$
-- One-line: $\partial_x f$ (a hybrid of partial and Euler notation)
-- Newton (or "dot"): $\dot{f}$
-- Lagrange (or "prime"): $f'$
-
-In this book, we will mainly use the one-line notation, $\partial_x f$, but it means exactly the same as the Leibnitz and Partial notations, which are much more widely used in textbooks. 
-
-If you've studied calculus before, you have likely seen the $f'$ notation. This is admirably concise but is only viable in a narrow circumstance: functions that take a single input. What $f'$ leaves out is a means to specify a crucial aspect of differentiation, the **with-respect-to variable**. The general situation for differentiation involves functions of one or more variables, for example, $g(x, y, z)$. For such functions, you need to specify which is the with-respect-to variable. For instance, we can differentiate $g()$ three different ways, each way incrementing one or another of the three inputs:
-
-$$\partial_z g(x, y, z) \equiv \frac{g(x, y, z+h) - g(x, y, z)}{h}\\ 
-\ \\
-\partial_x g(x, y, z) \equiv \frac{g(x+h, y, z) - g(x, y, z)}{h}\\ 
-\ \\
-\partial_y g(x, y, z) \equiv \frac{g(x, y+h, z) - g(x, y, z)}{h}$$
-
-At this point in your studies, you haven't seen why you might choose to differentiate a function with respect to one variable or another. That will come in time. But we want to set you up with notation that won't narrow your options.
-
-Both the Leibnitz and Partial notations are explicit in identifying the function and the with-respect-to-variable. For example, using the Partial differentiation notation, the three ways of differentiating our example function $g(x, y, z)$ are labeled :
-
-$$\frac{\partial f}{\partial x},\ \ \ \frac{\partial f}{\partial y},\ \ \text{and}\ \ \frac{\partial f}{\partial z}$$
-
-Our R/mosaic computer differentiation is longer but explicit:
-```r
-D(g(x, y, z) ~ x)
-D(g(x, y, z) ~ y)
-D(g(x, y, z) ~ z)
-```
-Notice that the R/mosaic operator is named `D()` and that it is a function. It follows the same pattern as `makeFun()` or `slice_plot()` or `contour_plot()`: the first argument is a tilde expression, for instance `g(x, y, z) ~ x`, which identifies the mathematical function to work with (`g()`) and the name of the with-respect-to input to that function. The R/mosaic notation makes it clear that differentiation is an ***operation*** on a function. The `D()` operator takes a function as input and produces as output **another function**. We've seen similar behavior with, say, `slice_plot()`, which takes a function as input and produces graphics as output. Both `D()` and `slice_plot()` need to know the identity of the with-respect-to variable as well as the function to work with. What's why both pieces of input are packaged into a tilde expression.
-
-::: {.why}
-We're calling `D()` an ***operator*** rather than a ***function***. The reason is purely for communication with other people. There are so many "functions" in a calculus course that we thought it would be helpful to distinguish between the kinds of functions that take quantities as input and produce a quantity as output, and the functions that take a *function* as input and produce a *function* as output. Both sorts are called "functions" in R terminology. But a sentence like, "Differentiation is a function that takes a function as input and produces a function as output," true though it be, is dizzying.
-:::
-
-::: {.takenote}
-It is a fact of mathematical and scientific life that a variety of notations are used for differentiation. To some extent, this reflects historical precedence and, to be honest, nationalistic European politics of the 18th century. To make sense of mathematical writing in the many areas in which calculus is used, you have to recognize all of them for what they are. Your skill will be enhanced if you also memorize the names of the different styles. It's not all that different from the pattern in English of having multiple words for the same sort of object, for instance: car, automobile, junker, ride, wheels, crate, jalopy, limo, motor car, horseless carriage. 
-
-In the days when carriages where pulled by horses, the phrase "horseless carriage" made a useful distinction. Today, when horses are rarely seen on the road, it make sense to trim down the notation to its essentials: ~~horseless~~ **car**~~iage~~. Think of $\partial_x$ as this sort of minification.^[Yes, "minification" is a word!]   
-:::
-
-```{exercise, name="pine-lead-car"}
-```
-<details>`r MC_counter$reset()` `r knitr::knit_child("Exercises/Diff/pine-lead-car.Rmd")`</details>
-
-```{exercise, name="robin-row-boat"}
-```
-<details>`r MC_counter$reset()` `r knitr::knit_child("Exercises/Diff/robin-row-boat.Rmd")`</details>
-
-
-```{exercise, name="deer-pitch-saw"}
-```
-<details>`r MC_counter$reset()` `r knitr::knit_child("Exercises/Diff/deer-pitch-saw.Rmd")`</details>
-
-
-## Dimension of derivatives
-
-Recall that the differencing operator takes as input a function and returns as output another function that takes the same kind of input, but produces a different kind of output. 
-
-For instance, suppose the function `pressure()` takes an altitude as input (in km) and returns a pressure (kPA--air pressure at sea level is about 100 kiloPascal).
-
-The derivative function, let's call it `d_pressure()`, also takes an input in km, but produces an output in kPA per km: a rate.
-
-You can see this by examining the differencing operator itself:
-
-$${\cal D}_x f(x) \equiv \frac{f(x+h) - f(x)}{h}$$
-
-Remember the notation for dimensions. A quantity $x$ has dimensions denoted as $[x]$. (This is nothing more than saying, "Pronounce '$[x]$' as 'the dimensions of $x$'.")
-The input to $f()$ has dimension $[x]$. The output from $f()$ has dimension $[f(x)]$.
-
-What is the dimension of $h$? (We could write this question more simply, "What is $[h]$?) Since the operator adds $x + h$, it must be that $[h] = [x]$.
-
-What is the dimension of $f(x + h) - f(x)$? (Again, we could ask this more simply, "What is $[f(x+h) - f(x)]$?") Since we're subtracting two quantities, the two quantities must have the same dimension and the result is also that dimension. So $[f(x+h) - f(x)] = [f(x)]$.
-
-The output of the function $df(x)$ produced by $\mbox{Diff}(f)$ therefore has dimension $[f(x)] / [x]$.
-
-```{exercise, name="kitten-put-kayak"}
-```
-<details>`r MC_counter$reset()` `r knitr::knit_child("Exercises/Diff/kitten-put-kayak.Rmd")`</details>
-
-
-```{exercise, name="rat-take-fork"}
-```
-<details>`r MC_counter$reset()` `r knitr::knit_child("Exercises/Diff/rat-take-fork.Rmd")`</details>
-
-
-
-## Using h
-
-In working with differentiation, we introduced a quantity $h$ and then ignored it, saying that it doesn't really matter so long as it is "small." A reasonable person might wonder what "small" really means, and why we needed to introduce $h$ in the first place if we were eventually going to ignore it. 
-
-One reason is that "small" and "zero," although related, are different. For example, refering to the slope functions `Dsin()` and `Dsigma()` that we created in an early example in this chapter, we see that setting $h$ to zero does not get us where we need to be:
-
-```{r}
-Dsin(t=1, h=0)
-Dsigma(t=0, h=0)
-```
-
-In `NaN`, you can hear the echo of your fourth-grade teacher reminding you that it is illegal to divide by zero.
-
-Think of $h$ as the solvent in paint. You don't want the solvent once the paint is on the wall; wet paint is a nuisance. But getting the paint from the can to the wall absolutely needs the solvent. 
-
-We used the solvent $h$ earlier in the chapter in the numerical experiments that led us to the derivatives of the naked modeling functions, for instance $\partial_x e^x = e^x$ or $\partial_x \sin(x) = \cos(x)$.  Eventually, we'll construct an $h$-free theory of differentiation, reducing the process to a set of algebraic rules in which $h$ never appears. With this as our goal, let's continue using $h$ for a while to find some additional useful facts about derivatives.
-
-***Linear combination*** is one of the ways in which we make new functions from existing functions. As you recall, linear combination involves ***scaling*** a function and ***adding*** the scaled functions. We can easily use $h$ to show what is the result of differentiating a linear combination of functions. We'll use $f(x)$ and $g(x)$ as the names that could stand for any function whatsoever. And we'll let $b$ be the name of a scalar. First, let's figure out what is $\partial_x\, b f(x)$, Going back to writing $\partial_x$ in terms of a slope function:
-$$\partial_x\, b\,f(x) = \frac{b\, f(x + h) - b\,f(x)}{h}\\
-\ \\
-= b \frac{f(x+h) - f(x)}{h} = b\, \partial_x f(x)$$
-In other words, if we know the derivative $\partial_x\, f(x)$, we can easily find the derivative of any scaled version of $f()$.
-
-Now consider the derivative of the sum of two functions, $f(x)$ and $g(x)$:
-$$\partial_x\, \left[f(x) + g(x)\right] =\\
-\ \\
-=\frac{\left[f(x + h) + g(x + h)\right] - \left[f(x) + g(x)\right]}{h} = \\
-\ \\
-= \frac{\left[f(x+h) -f(x)\right] + \left[g(x+h) - g(x)\right]}{h}\\
-\ \\
-= \frac{\left[f(x+h) -f(x)\right]}{h} + \frac{\left[g(x+h) - g(x)\right]}{h}\\
-\ \\
-= \partial_x\, f(x) + \partial_x\, g(x)$$
-
-Using these two rules together, we can differentiate any linear combination of functions in terms of the differentiated functions themselves:
-
-$$\partial_x\ \left[\strut a_1 g_1(x) + a_2 g_2(x) + a_3 g_3(x) + \cdots\right] =\ \ \ \ \ \ \ \ \ \ \\
-\ \\
-\ \ \ \ \ \ \ \ \ a_1 \partial_x\, g_1(x) + a_2 \partial_x\, g_2(x) + a_3 \partial_x\, g_3(x) + \cdots$$
-
-
-
-Because of the way that $\partial_x$ can be "passed through" a linear combination, mathematicians say that differentiation is a ***linear operator***. Consider this new fact about differentiation as a down payment on what will eventually become a complete theory telling us how to differentiate a ***product of two functions*** or the ***composition of two functions***. 
-
-EXERCISES: Simple drill on this
-
-
-
-## Differencing
-
-Our basic tool for showing difference and slope is a remarkably simple operator that takes a function as input. For a function with one input, the operator ${\cal D}()$ is defined as 
-$${\cal D}(f) \equiv \frac{f(x + 0.1) - f(x)}{0.1}$$
-Notice that the ${\cal D}()$ operator returns a **function**. The output is a linear combination of the input function $f()$ and a shifted version of $f()$.
-
-For a function with two inputs, there are two versions of ${\cal D}$:
-$${\cal D}_x(f) \equiv \frac{f(x+0.1, y) - f(x, y)}{0.1}$$
-
-$${\cal D}_y(f) \equiv \frac{f(x, y+0.1) - f(x, y)}{0.1}$$
-
-
-::: {.workedexample}
-Suppose that $f(x)\equiv x^2$. What is the function ${\cal D}(f)$?
-
-$$
-{\cal D}(f) \equiv \frac{f(x+0.1) - f(x)}{0.1}\\ =
-10\left((x+0.1)^2 - x^2\right)\\
-=10 x^2 + 2x + 0.1 - 10x^2\\ = 2 x + 0.1$$
-:::
-
-::: {.workedexample}
-Suppose that $f(x) \equiv 2 x + y$. Find the function ${\cal D_x(f)}$.
-
-The linear combination will be 
-$$\frac{1}{0.1}\left(\left[2 (x + 0.1) + y\right] - \left[2 x + y\right]\right) =\\ \\
-20 x + 2 + 10y - \left[20 x - 10y\right] = 2$$
-:::
-
-```{r}
-f <- makeFun(2 *x * y ~ x + y)
-D(f(x, y) ~ x)
-```
-
-
-
-## Instantaneous rate of change
-
-::: {.objectives latex-data=""}
-```{r echo=FALSE, results="asis"}
-state_objective("Deriv-2b", "Distinguish the \"average rate of change\" from the \"instantaneous rate of change\".")
-```
-:::
-
-
-Imagine a graph of the position of a car along a road as in Figure \@ref{fig:stop-and-go2}. 
-
-::: {.todo}
-This graph appears in an exercise in Fun-slopes. What did I intend to prompt with this note. Perhaps a link to Fun-slopes.
-:::
-
-Over the course of an hour, the car travelled about 25 miles. In other words, the ***average*** speed is 25 miles/hour: the *slope* of the red line segment. Given the traffic, sometimes the car was stopped (time C), sometimes crawling (time D) and sometimes much faster than average (time B).  
-
-```{r stop-and-go2, echo=FALSE}
+```{r stop-and-go2, echo=FALSE, fig.cap="The position of an imagined car over an hour of time. (black) The red line shows what the position would have been if the car had travelled steadily at the average speed for the hour."}
 f <- rfun(~ t, seed=105, n=5)
 raw <- function(t) 
         f(t) - t - 30*dnorm(t, 0, 3) + 60*dnorm(t,7,1)
@@ -391,7 +77,7 @@ Intervals <- tibble::tribble(
 ) %>%
     mutate(y0=position(t0), y1=position(t1))
 slice_plot(position(t) ~ t, domain(t = c(0, 1)), size=2) %>%
-    gf_labs(y = "x(t): Position from start of trip (miles)",
+    gf_labs(y = "f(t): distance traveled (miles)",
             x = "Time since start (hours)") %>%
     gf_text(0 ~ t, data = Pts, label=~label, color="blue") %>%
     gf_segment(2 + y ~ t + t, data = Pts[-6,], color="blue") %>%
@@ -399,12 +85,19 @@ slice_plot(position(t) ~ t, domain(t = c(0, 1)), size=2) %>%
     gf_refine(scale_color_identity())
 ```
 
+Of course, when you're driving you are aware of the car's speed at any instant. You need only look at the speedometer to read off the value (in miles per hour). Speedometers don't show the average speed for the entire trip. The average speed is the slope of the red line in Figure \@ref(fig:stop-and-go2}, 25 miles in one hour, usually stated 25 miles-per-hour.
 
-The car's speedometer shows the speed at each moment---or ***instant***---of the trip. As you can see in Figure \@ref{fig:stop-and-go}, the speed varies and is sometimes less than the average speed, sometimes greater, and occasionally equal to the average speed over the trip. The general term for the kind of quantity presented by the speedometer is the ***instantaneous rate of change*** of the position function with respect to the input to that function. 
+In terms of Figure \@ref(fig:stop-and-go2}, the speedometer reading is the **slope** of $f(t)$ at the given instant. You can see from the Figure that at instant A the speed is very close to the average speed for the entire trip. At instant B the car is going faster; the slope is much steeper. On the other hand, at instant C the car is at a standstill; its position doesn't change at all.
 
-Figure \@ref{fig:instant-speed} shows the instantaneous rate of change of position with respect to time.
+The car's speedometer shows the speed at each moment---or ***instant***---of the trip. As you can see in Figure \@ref{fig:stop-and-go}, the speed varies and is sometimes less than the average speed, sometimes greater, and occasionally equal to the average speed over the trip. 
 
-```{r instant-speed, echo=FALSE}
+Although you can easily judge whether the instantaneous speed is faster or slower than the average speed, quantifying the speed requires some work: calculating the slope of the tangent line.
+
+Far easier to have this job done for us. The means to do so is to compute the slope function of $f()$, that is, ${\cal D}_tf()$. Figure \@ref(fig:instant-speed) shows ${\cal D}_tf()$ directly.
+
+You can read off the speed from the graph at any instant simply by reference to the vertical axis.
+
+```{r instant-speed, echo=FALSE, fig.cap="The ***instantaneous*** velocity of the car whose position vs time is shown in Figure \\@ref(fig:stop-and-go2)."}
 f <- rfun(~ t, seed=105, n=5)
 raw <- function(t) 
         f(t) - t - 30*dnorm(t, 0, 3) + 60*dnorm(t,7,1)
@@ -417,51 +110,138 @@ Pts <- tibble::tibble(
     label=c("", "A", "B", "C", "D", "")
 )
 slice_plot(speed(t) ~ t, domain(t=c(0,1)), npts=500) %>%
-    gf_labs(y = "Instantaneous rate of change (miles/hour)", 
+    gf_labs(y = "Instantaneous speed (miles/hour)", 
            x = "Time since start of trip.") %>%
     gf_text(2 ~ t, data = Pts, label=~label, color="blue") %>%
     gf_segment(5 + y ~ t + t, data = Pts[-1,], color="blue")
 ```
-The two graphs in Figures \@ref{fig:stop-and-go} and \@ref{fig:instant-speed} show exactly the same car trip. The presentation of the data in the different graphs makes it easy to see some things and hard to see others. For instance, figuring out when the car is at a stand-still is harder in the position-vs-time graph than in the speed-vs-time graph. This is very much in the spirit of the sand-furrows example at the start of this chapter: it's much easier to perceive the furrows because the lighting highlights areas sloping toward the sun as bright and areas sloping away from the sun as dark. In Figure \@ref{fig:instant-speed} we're not using light-and-dark for the display. Instead, we're showing the instantaneous speed using the vertical axis. 
+The two graphs in Figures \@ref(fig:stop-and-go) and \@ref(fig:instant-speed) show exactly the same car trip. The presentation of the data in the different graphs makes it easy to see some things and hard to see others. For instance, figuring out when the car is at a stand-still is harder in the position-vs-time graph than in the speed-vs-time graph.
 
-Recall that the interval between $t_B$ and $t_C$ had an ***average rate of change*** of about 39 miles-per-hour. Looking at the ***instantaneous rate of change*** tells the story differently: at time $t_B$ the car was accelerating to about 60 miles-per-hour. Then it gradually slowed, coming to a stop just before time $t_C$.
+Having worked out a theory of slope functions, Newton was ready to express the laws of motion in continuous time. He did this by denoting position as $x(t)$. The familiar concepts of velocity and force could then be defined in terms of slope functions of position and the "quantity of matter," which we call "mass." 
 
-Figure \@ref{fig:stop-and-go} shows the function $\mbox{position}(t)$. Figure \@ref{fig:instant-speed} shows a different function, $\mbox{speed}(t)$. Although the two functions are different, they are intimately related: $\mbox{speed}(t)$ is the ***instantaneous rate of change*** of $\mbox{position}(t)$. 
+- Velocity is the slope function of position: $v(t) \equiv {\cal D}_t x(t)$.
+- Net force is the slope function of velocity times mass: $F(t) \equiv m {\cal D}_t v(t)$
+
+To take mass out of the formulation, we give a name specifically to the slope function of velocity; we call it ***acceleration***. 
+
+- Acceleration is the slope function of velocity: $a(t) \equiv {\cal D}_t v(t)$.
+
+With acceleration as a concept, we can define net force as mass times acceleration. This is better known as ***Newton's Second Law of Motion***.
+
+::: {.why}
+We used **net force** as the quantity we related to mass and the slope function of velocity. There are different sources of forces which add up and can cancel out. Famously, Newton formulated the ***law of universal gravitation*** which ascribed the force between masses as proportional to the product of the two masses and inversely proportional to the square of the distance between them. But a mass on a table has no net force on it, since the table pushes back (push = force) on the mass to cancel out the force due to gravity. "Net force" takes such cancellation into account.
+:::
+
+## Differentiation
+
 
 Two central operations in calculus are:
 
-1. Given a function $f(t)$, find the function $g(t)$ giving the instantaneous rate of change of $f()$. This process of deriving $g(t)$ from $f(t)$ is called ***differentiation***.
-2. Given a function $g(t)$, find the $f(t)$ of which $g(t)$ is the instantaneous rate of change. This process of finding $f()$ given $g()$ is called ***anti-differentiation***.
+1. Given a function $f(t)$, find the function $\partial_t\,f(t)$ giving the instantaneous rate of change of $f()$. This process of deriving $\partial_t\, (t)$ from $f(t)$ is called ***differentiation***.
+2. Given a function $\partial_t\,(t)$, find the $f(t)$ of which $\partial_t\,f(t)$ is the instantaneous rate of change. This process of finding $f()$ given $\partial_t\,f()$ is called ***anti-differentiation***.
 
-::: {.workedexample latex-data=""}
 
-The context of the situation being modeled determines whether it's appropriate to look at an average rate of change or an instantaneous rate of change. Figure \@ref{fig:instant-tree} shows the instantaneous rate of change in the volume of wood.
+Notice that in (1) and (2) above we didn't use the ${\cal D}_t$ notation. It's time to switch away from that. What prompts the change is the nuisance of the constant 0.1 in the definition of the slope function:
+$${\cal D}_t f(t) \equiv \frac{f(t+0.1) - f(t)}{0.1}$$
 
-```{r echo=FALSE, eval=!exists("tree_growth")}
-# This is a redefinition from Fun-slopes.Rmd for when we do partial compilation.
-tree_volume <- makeFun(1000*pnorm(year, mean=15, sd=10)^3 ~ year)
-# do the deriv numerically to avoid bug in derivative 
-# of normal function.
-tree_growth <- numD(tree_volume(year) ~ year)
+Whereas the slope function ${\cal D}_t f(t)$ gives an approximation to the instantaneous rate of change, $\partial_t f(t)$ refers to the instantaneous rate of change **exactly**. 
+
+We'll come back to the relationship between ${\cal D}_t$ and $\partial_t$ in Chapter \@ref(evanescent-h). It's a subject of particular interest to mathematicians, hence a central part of traditional calculus texts (which are mostly written by mathematicians). For modeling and other applications of calculus, it is something of a side issue.
+
+As an intermediate step on the path between ${\cal D}_t$ and $\partial_t$, let's redefine the slope function to eliminate the 0.1 and replace it with a parameter $h$: $${\cal D}_x f(x) \equiv \frac{f(x+h) - f(x)}{h}$$
+This way of writing the slope function will enable us to consider how the slope function changes as $h$ gets smaller and smaller.
+
+
+## Notations for differentiation
+
+There are several traditional notations for differentiation of a function named $f()$. For instance:
+
+- Leibnitz: $\frac{df}{dx}$
+- Partial: $\frac{\partial f}{\partial x}$
+- Euler: $D_x f$
+- One-line: $\partial_x f$ (a hybrid of partial and Euler notation.)
+- Newton (or "dot"): $\dot{f}$
+- Lagrange (or "prime"): $f'$
+
+In this book, we will mainly use the one-line notation, $\partial_x f$, but it means exactly the same as the Leibnitz and Partial notations, which are much more widely used in textbooks. 
+
+If you've studied calculus before, you have likely seen the $f'$ notation. This is admirably concise but is only viable in a narrow circumstance: functions that take a single input. What $f'$ leaves out is a means to specify a crucial aspect of differentiation, the **with-respect-to variable**. The general situation for differentiation involves functions of one or more variables, for example, $g(x, y, z)$. For such functions, you need to specify which is the with-respect-to variable. For instance, we can differentiate $g()$ three different ways, each way incrementing one or another of the three inputs:
+
+$$\partial_z g(x, y, z) \equiv \frac{g(x, y, z+h) - g(x, y, z)}{h}\\ 
+\ \\
+\partial_x g(x, y, z) \equiv \frac{g(x+h, y, z) - g(x, y, z)}{h}\\ 
+\ \\
+\partial_y g(x, y, z) \equiv \frac{g(x, y+h, z) - g(x, y, z)}{h}$$
+
+At this point in your studies, you haven't seen why you might choose to differentiate a function with respect to one variable or another. That will come in time. But we want to set you up with notation that won't narrow your options.
+
+Both the Leibnitz and Partial notations are explicit in identifying the function and the with-respect-to-variable. For example, using the Partial differentiation notation, the three ways of differentiating our example function $g(x, y, z)$ are labeled :
+
+$$\frac{\partial f}{\partial x},\ \ \ \frac{\partial f}{\partial y},\ \ \text{and}\ \ \frac{\partial f}{\partial z}$$
+
+Our R/mosaic computer differentiation is longer but explicit:
+```r
+dx_g <- D(g(x, y, z) ~ x)
+dy_g <- D(g(x, y, z) ~ y)
+dz_g <- D(g(x, y, z) ~ z)
 ```
+The names being used here are arbitrary; you can use any names you like. What's nice about `dx_g` and the others is that it mimics the math notation $\partial_x g()$.
 
-```{r instant-tree, echo=FALSE}
-slice_plot(tree_growth(year) ~ year, domain(year=c(0,50)))
-```
-It's tempting to look to the year where the growth rate is highest as the optimal harvest year. This is a mistake. The volume of wood being harvested is the ***accumulated growth*** not the instantaneous growth. Even though the instantaneous growth is higher at year 23 than year 30, it's still pretty high at year 30 and waiting until then (or later) accumates those years of higher-than-average growth. That's why the ***average rate of growth*** is a better thing to look at to determine optimal harvest time. Still, is it the right thing to look at? 
+Notice that the R/mosaic operator for differentiation is named `D()` and that it is a function. It follows the same pattern as `makeFun()` or `slice_plot()` or `contour_plot()`: the first argument is a tilde expression, for instance `g(x, y, z) ~ x`, which identifies the mathematical function to work with (`g()`) and the name of the with-respect-to input to that function. The R/mosaic notation makes it clear that differentiation is an ***operation*** on a function. The `D()` operator takes a function as input and produces as output **another function**. We've seen similar behavior with, say, `slice_plot()`, which takes a function as input and produces graphics as output. Both `D()` and `slice_plot()` need to know the identity of the with-respect-to variable as well as the function to work with. What's why both pieces of input are packaged into a tilde expression.
 
-Between year 30 and 32, there is hardly any change in the value of the average-rate-of-change function. It's increasing a little, but is it really worthwhile to wait? One argument is that at year 29 you already have a valuable resource: wood that could be money in the bank. If the money were in the bank, you could invest it and earn more money *and* at the same time get a new seedling in the ground to start its growth. You're doing two things at once. Efficient!
-
-To know what is the best year for harvest from this point of view, you want to calculate the effective "interest rate" on the present amount of wood that you earn in the form of new wood. That interest rate is the ratio of the *instantaneous* rate of growth of new wood divided by the amount of existing wood. Figure \@ref{fig:tree-interest} shows this function:
-
-```{r tree-interest, echo=FALSE, warning=FALSE}
-slice_plot(100* tree_growth(year)/tree_volume(year) ~ year,
-           domain(year=c(0,50))) %>%
-  gf_labs(y = "Growth relative to volume (%/year)") %>%
-  gf_refine(scale_y_log10()) %>%
-  gf_hline(yintercept=5, color="blue")
-```
-Early in the tree's life, the growth is high compared to the volume of the tree. That's because the tree is small. As the years pass, the tree gets bigger. Even though the rate of growth increases through year 23, the accumulated volume increases even faster, so there is a fall in the rate of return. 
-
-The best time to harvest is when the annual "interest rate" paid by the growing tree falls to the level of the next best available investment. Suppose that investment would pay 10% per year. Then harvest the tree at year 24. If the next best investment paid only 5% (blue horizontal line), the harvest should be made at about year 29.
+::: {.why}
+We're calling `D()` an ***operator*** rather than a ***function***. The reason is purely for communication with other people. There are so many "functions" in a calculus course that we thought it would be helpful to distinguish between the kinds of functions that take quantities as input and produce a quantity as output, and the functions that take a *function* as input and produce a *function* as output. Both sorts are called "functions" in R terminology. But a sentence like, "Differentiation is a function that takes a function as input and produces a function as output," true though it be, is dizzying.
 :::
+
+::: {.intheworld}
+It is a fact of mathematical and scientific life that a variety of notations are used for differentiation. To some extent, this reflects historical precedence and, to be honest, nationalistic European politics of the 18th century. To make sense of mathematical writing in the many areas in which calculus is used, you have to recognize all of them for what they are. Your skill will be enhanced if you also memorize the names of the different styles. It's not all that different from the pattern in English of having multiple words for the same sort of object, for instance: car, automobile, junker, ride, wheels, crate, jalopy, limo, motor car, horseless carriage. 
+
+In the days when carriages where pulled by horses, the phrase "horseless carriage" made a useful distinction. Today, when horses are rarely seen on the road, it make sense to trim down the notation to its essentials: ~~horseless~~ **car**~~iage~~. Think of $\partial_x$ as this sort of minificat
+ion of older notations.^[Yes, "minification" is a word!]   
+:::
+
+```{exercise, name="pine-lead-car"}
+```
+<details>`r MC_counter$reset()` `r knitr::knit_child("Exercises/Diff/pine-lead-car.Rmd")`</details>
+
+```{exercise, name="robin-row-boat"}
+```
+<details>`r MC_counter$reset()` `r knitr::knit_child("Exercises/Diff/robin-row-boat.Rmd")`</details>
+
+
+```{exercise, name="deer-pitch-saw"}
+```
+<details>`r MC_counter$reset()` `r knitr::knit_child("Exercises/Diff/deer-pitch-saw.Rmd")`</details>
+
+
+## Dimension of derivatives
+
+Recall that the differencing operator takes as input a function and returns as output another function that takes the same kind of input, but produces a different kind of output. 
+
+For instance, suppose the function `pressure()` takes an altitude as input (in km) and returns as output a pressure (in kPa, "kiloPascal"^[Air pressure at sea level is about 100 kiloPascal.]).
+
+The derivative function, let's call it `d_pressure()`, also takes an input in km, but produces an output in kPA per km: a rate.
+
+You can see this by examining the differencing operator itself:
+
+$${\cal D}_x f(x) \equiv \frac{f(x+h) - f(x)}{h}$$
+
+Remember the notation for dimensions. A quantity $x$ has dimensions denoted as $[x]$. (This is nothing more than saying, "Pronounce '$[x]$' as 'the dimensions of $x$'.")
+The input to $f()$ has dimension $[x]$. The output from $f()$ has dimension $[f(x)]$.
+
+What is the dimension of $h$? (We could write this question more simply, "What is $[h]$?) Since the operator adds $x + h$, it must be that $[h] = [x]$. Otherwise, addition wouldn't be a viable operation to combine the two quantities.
+
+What is the dimension of $f(x + h) - f(x)$? (Again, we could ask this more simply, "What is $[f(x+h) - f(x)]$?") Since we're subtracting two quantities, the two quantities must have the same dimension and the result is also that dimension. So $[f(x+h) - f(x)] = [f(x)]$.
+
+The output of the function $df(x)$ produced by $\mbox{Diff}(f)$ therefore has dimension $[f(x)] / [x]$.
+
+```{exercise, name="kitten-put-kayak"}
+```
+<details>`r MC_counter$reset()` `r knitr::knit_child("Exercises/Diff/kitten-put-kayak.Rmd")`</details>
+
+
+```{exercise, name="rat-take-fork"}
+```
+<details>`r MC_counter$reset()` `r knitr::knit_child("Exercises/Diff/rat-take-fork.Rmd")`</details>
+
+

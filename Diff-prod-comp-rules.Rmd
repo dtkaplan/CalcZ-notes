@@ -1,69 +1,4 @@
-# Differentiation by algebra {#prod-comp-rules}
-
-## Memorizing derivatives
-
-Generations of calculus students have had to memorize the algebraic form  of some simple derivatives and *rules* for constructing the derivative of complicated algebraic expressions based on the simple forms.
-
-Often, courses in many fields that have calculus as a pre-requisite make use of these simple forms and rules. So it's helpful to commit the most common ones to memory. 
-
-**Naked modeling functions**
-
-* The derivative of a **constant function** is the zero function.
-    - $f(x) \equiv 7 \ \ \implies \ \ \partial_x f(x) \equiv 0$
-    - $g(x) \equiv a \ \ \implies \ \ \partial_x g(x) \equiv 0$
-    - $h(x,y) \equiv y \ \ \implies \ \ \partial_x h(x) \equiv 0$
-* The derivative of the **identity function** is the 1  function.
-    - $f(x) \equiv x \ \ \implies \ \ \partial_x f(x) \equiv 1$
-    - $g(t) \equiv t \ \ \implies \ \ \partial_t g(t) \equiv 1$
-    - BUT ... $h(x, t) \equiv t \ \ \implies \ \ \partial_x h(x, t) \equiv 0$. Make sure to pay attention to the "with respect to" argument,  that is, the subscript on the $\partial$.
-* The derivative of an **exponential function** is an exponential function. 
-    - $f(t) \equiv e^t \ \ \implies\ \ \partial_t f(t) = e^t$.
-    - BUT ... watch out that the with-respect-to argument matches the argument in the exponent, for instance, $f(x, t) \equiv e^t  \ \ \implies\ \ \partial_x f(x, t) = 0$.
-* Sinusoids have derivatives that are sinusoids.
-    - $f(x) \equiv \sin(x)\ \ \implies\  \ \partial_x  f(x) = \cos(x)$
-    - $f(x) \equiv \cos(x)\ \ \implies\  \ \partial_x  f(x) = -\sin(x)$. Note the minus sign!    
-    
-* The derivative of a **power-law function**  is a power-law  function.
-    - $f(x) \equiv x^2 \ \ \implies \ \ \partial_x f(x) \equiv 2  x$
-    - $f(x) \equiv x^3 \ \ \implies \ \ \partial_x f(x) \equiv 3  x^2$
-    - $f(x) \equiv x^{1/2}\ \ \implies \ \ \partial_x f(x) \equiv -\frac{1}{2} x^{-1/2}$
-    - $f(x) \equiv x^{1.43}\  \ \implies \ \ \ \partial_x f(x) \equiv 1.43 x^{0.43}$
-    - In general, the rule is $f(x) \equiv x^n  \ \ \implies \partial_x f(x) \equiv n x^{n-1}$ but  only when $n \neq 0$. When $n = 0$ the function would be $x^0 = 1$ which is simply a constant so the derivative is zero.
-* The derivative of the **natural logarithm function** $\ln(x)$  is  the reciprocal $1/x$.
-    - $f(x) \equiv \ln(x)\ \ \implies \  \ \partial_x f(x) \equiv x^{-1}$
-    
-**Basic modeling functions**
-
-Each of the basic modeling functions $f(x)$ is a naked function with a scaled input with the general form $f\left(A (x-x_0)\right)$. We'll call $A$ the ***scaling factor*** and $x_0$ the ***shift***. You differentiate the basic modeling functions in two steps:
-
-1. Identify the derivative of the naked modeling function $\partial_x f(x)$. Let's call this derivative $f'(x)$. For instance, when $f(x) \equiv e^x$, then $f'(x) = e^x$. Or, when $f(x) \equiv \ln(x)$, then $f'(x) = 1/x$.
-2. Replace the simple $x$ argument in (1) with the scaled input $A(x-x_0)$, then multiply by the scaling factor. The result will look like $A f'\!\left(A(x-x_0)\right)$
-The derivative $\partial f\left(A (x-x_0)\right) = 
-
-Naked function | Basic function | $\partial_x$ Basic function
----------------|----------------|-------------------
-$e^x$          | $e^{k(x-x_0)}$ | $k e^{k(x-x_0)}$
-$x^p$          | $\left(A(x-x_0)\right)^p$ | $A\, p\, \left(\strut A(x-x_0)\right)^{p-1}$
-$\ln(x)$       | $\ln\left(k (x-x_0)\right)$ | $\frac{k}{x-x_0}$
-$\sin(x)$      | $\sin\left(\frac{2\pi}{P}(x-x_0)\right)$ | $\frac{2\pi}{P}\cos\left(\frac{2\pi}{P}(x-x_0)\right)$
-
-At first glance, the pattern for $\sin()$ may seem different, but it's really not. When we write $\sin\left(\frac{2\pi}{P}(t-t_0)\right)$ the scaling factor is $\frac{2\pi}{P}$.
-
-
-## Exponentials and logarithms (optional)
-    
-    
- with the same base. The relationship is particularly simple when the base is $e$.
-    - $f(x) \equiv e^x\ \ \implies \partial_x f(x) \equiv e^x$
-    - $g(x) \equiv 2^x\ \ \implies \partial_x g(x) \equiv \ln(2)\cdot 2^x$
-    - $h(x) \equiv 10^x\ \ \implies \partial_x h(x) \equiv \ln(10)\cdot 10^x$
-    - Note that  $\ln()$ is the so-called "natural logarithm," which is the logarithm to the base $e \approx 2.71828182845905...$
-    
-
-    - $g(x) \equiv \log_{10}(x)\ \ \implies \  \ \partial_x g(x) \equiv [\ln(10) x]^{-1}  \approx  [2.30259  x]^{-1}$
-    - $h(x) \equiv \log_2(x)\ \ \implies \  \ \partial_x h(x) \equiv [\ln(2) x]^{-1}  \approx  [0.69315  x]^{-1}$
-    
-## Combining functions
+# Differentiation of assembled functions {#prod-comp-rules}
 
 In Chapter \@ref(fun-assembling) we introduced three major methods for putting two or more basic modeling functions together in order to make a new function.
 
@@ -71,99 +6,246 @@ i. Linear combinations: e.g. $a f(x) + b g(x)$
 i. Products: e.g. $f(x) g(x)$
 i. Composition:, e.g. $f(g(x))$ (which is usually a different function than $g(f(x))$.)
 
-In all three cases, you start with two functions $f(x)$ and $g(x)$. Whatever those functions be, you'll need to find their individual derivative. Normally, we write those derivatives as $\partial_x f(x)$ and $\partial_x g(x)$. But for seeing the patterns of the derivatives of the three cases, it helps to use a much more compact (though less general) notation: $\partial_x f(x) = f'(x)$ and similarly for $g'(x)$. With this notation, the derivatives of linear combinations, products, and compositions is a matter of applying a formula, traditionally called a ***rule***.
+We have already looked at differentiation of linear combinations. In this chapter, we'll examine products of functions and compositions of functions.
 
-i. Linear combinations
+## Step 1: Identify f() and g()
 
-$$\partial_x \left[\strut a f(x) + b g(x)\right] = a f'(x) + b g'(x)$$
-ii. Products: 
-$$\partial_x \left[\strut f(x) g(x)\right] = f'(x) g(x) + f(x) g'(x)$$
-iii. Composition:
-$$\partial_x \left[\strut f(g(x))\right] = f'(g(x)) g'(x)\\
-\ \\
-\partial_x \left[\strut g(f(x))\right] = g'(f(x)) f'(x)$$
+We will write the rules in terms of two function names, $f()$ and $g()$, which can stand for any functions whatsoever. It's rare to see the product or the composition written explicitly as $f(x)g(x)$ of $f(g(x))$. Instead, you are given something like $e^x \ln(x)$. The first step in differentiating the product or composition is to identify what are $f()$ and $g()$ individually. 
 
-The derivative of a linear combinations is particularly simple: the derivative of a linear combination of functions is the same linear combination of the derivatives of the functions, that is, if $$h(x) \equiv a f(x) + b g(x)\ \ \implies \ \ \partial_x h(x) = a \,\partial_x f(x) + b\, \partial_x g(x)$$
+In general, $f()$ and $g()$ might be complicated functions, themselves involving linear combinations, products, and composition. But to get started, we'll practice with cases where they are simple, naked modeling functions.
 
-::: {.workedexample}
-Consider the function $h(t) \equiv A e^{kt} + B$. This is a linear combination of two functions, which we can call $f(t) \equiv e^{kt}$ and $g(t) \equiv 1$.
 
-Of course, $f(t)$ and $g(t)$ are basic modeling functions so we have memorized their derivatives: $f'(t) = k e^{kt}$ and $g'(t) = 0$. 
+```{exercise name="decompose-drill1"}
+```
+For each of the following, say whether the function is a composition $f(g(x))$ or a product $f(x) g(x)$, or neither. Then identify $f()$. For a product, take $f()$ as the function on the left.
 
-Putting this together gives $$\partial_t h(t) = A\, k\, e^{kt} + B\times 0= A\, k\, e^{kt}$$
+- $h_1(x) \equiv \ln(x) e^x$
+
+```{r dedr1, echo=FALSE, results="markup"}
+askMC("What is $h_1(x)$?","+product+", "composition", "neither", random_answer_order=FALSE)
+```
+```{r dedr1b, echo=FALSE, results="markup"}
+askMC("In $h_1()$, which of these is $f(x)$?",
+      "$\\sin()$", "$\\cos()$", "$\\exp()$", "+$\\ln()$+", "$\\recip()$",
+      "$\\pnorm()$", "$\\dnorm()$", random_answer_order=FALSE)
+```
+
+- $h_2(x) \equiv \sin(x) \cos(x)$
+
+<details>
+```{r dedr2, echo=FALSE, results="markup"}
+askMC("What is $h_2(x)$?","+product+", "composition", "neither", random_answer_order=FALSE)
+```
+```{r dedr2b, echo=FALSE, results="markup"}
+askMC("In $h_2()$, which of these is $f(x)$?",
+      "+$\\sin()$+", "$\\cos()$", "$\\exp()$", "$\\ln()$", "$\\recip()$",
+      "$\\pnorm()$", "$\\dnorm()$", random_answer_order=FALSE)
+```
+</details>
+
+- $h_3(x) \equiv \sin(\cos(x))$
+
+<details>
+```{r dedr3, echo=FALSE, results="markup"}
+askMC("What is $h_3(x)$?","product", "+composition+", "neither", random_answer_order=FALSE)
+```
+```{r dedr3b, echo=FALSE, results="markup"}
+askMC("In $h_3()$, which of these is $f(x)$?",
+      "+$\\sin()$+", "$\\cos()$", "$\\exp()$", "$\\ln()$", "$\\recip()$",
+      "$\\pnorm()$", "$\\dnorm()$", random_answer_order=FALSE)
+```
+</details>
+
+- $h_4(x) \equiv e^{\ln(x)}$
+
+<details>
+```{r dedr4, echo=FALSE, results="markup"}
+askMC("What is $h_4(x)$?","product", "+composition+", "neither", random_answer_order=FALSE)
+```
+```{r dedr4b, echo=FALSE, results="markup"}
+askMC("In $h_4()$, which of these is $f(x)$?",
+      "$\\sin()$", "$\\cos()$", "+$\\exp()$+", "$\\ln()$", "$\\recip()$",
+      "$\\pnorm()$", "$\\dnorm()$", random_answer_order=FALSE)
+```
+</details>
+
+- $h_5(x) \equiv \sin(x) - \cos(x)$
+
+<details>
+```{r dedr5, echo=FALSE, results="markup"}
+askMC("What is $h_5(x)$?","product", "composition", "+neither+", random_answer_order=FALSE)
+```
+```{r dedr5b, echo=FALSE, results="markup"}
+askMC("In $h_5()$, which of these is $f(x)$?",
+      "+$\\sin()$+", "$\\cos()$", "$\\exp()$", "$\\ln()$", "$\\recip()$",
+      "$\\pnorm()$", "$\\dnorm()$", random_answer_order=FALSE)
+```
+</details>
+
+- $h_6(x) \equiv e^{x^2}$
+
+<details>
+```{r dedr6, echo=FALSE, results="markup"}
+askMC("What is $h_2(x)$?","product", "+composition+", "neither", random_answer_order=FALSE)
+```
+```{r dedr6b, echo=FALSE, results="markup"}
+askMC("In $h_6()$, which of these is $f(x)$?",
+      "$\\sin()$", "$\\cos()$", "+$\\exp()$+", "$\\ln()$", "$\\recip()$",
+      "$\\pnorm()$", "$\\dnorm()$", random_answer_order=FALSE)
+```
+</details>
+
+- $h_7(x) \equiv \pnorm(x^2)$
+
+<details>
+```{r dedr7, echo=FALSE, results="markup"}
+askMC("What is $h_7(x)$?","product", "+composition+", "neither", random_answer_order=FALSE)
+```
+```{r dedr7b, echo=FALSE, results="markup"}
+askMC("In $h_7()$, which of these is $f(x)$?",
+      "$\\sin()$", "$\\cos()$", "$\\exp()$", "$\\ln()$", "$\\recip()$",
+      "+$\\pnorm()$+", "$\\dnorm()$", random_answer_order=FALSE)
+```
+</details>
+
+- $h_8(x) \equiv \pnorm(x) \dnorm(x)$
+
+<details>
+```{r dedr8, echo=FALSE, results="markup"}
+askMC("What is $h_8(x)$?","+product+", "composition", "neither", random_answer_order=FALSE)
+```
+```{r dedr8b, echo=FALSE, results="markup"}
+askMC("In $h_8()$, which of these is $f(x)$?",
+      "$\\sin()$", "$\\cos()$", "$\\exp()$", "$\\ln()$", "$\\recip()$",
+      "+$\\pnorm()$+", "$\\dnorm()$", random_answer_order=FALSE)
+```
+</details>
+
+- $h_9(x) \equiv 1/\sin(x)$
+
+<details>
+```{r dedr9, echo=FALSE, results="markup"}
+askMC("What is $h_9(x)$?","product", "+composition+", "neither", random_answer_order=FALSE)
+```
+```{r dedr9b, echo=FALSE, results="markup"}
+askMC("In $h_9()$, which of these is $f(x)$?",
+      "$\\sin()$", "$\\cos()$", "$\\exp()$", "$\\ln()$", "+$\\recip()$+",
+      "$\\pnorm()$", "$\\dnorm()$", random_answer_order=FALSE)
+```
+</details>
+
+## Step 2: Find f'() and g'()
+
+For differentiating either products or compositions, you will need to identify both $f()$ and $g()$ (the first step) and then compute the derivatives $\partial_x f()$ and $\partial_x g()$. That is, you'll write down four functions.
+
+```{exercise, name="product-table"}
+```
+<details>
+For each of the $h_i()$ in the previous section, fill in a row of the following table. (The row for $h_1()$ is already entered.)
+
+Name    | $f()$    | $g()$    | $\partial_x f()$  | $\partial_x g()$ 
+--------|----------|----------|-------------------|-----------------------
+$h_1()$ | $\ln(x)$ | $e^x$ | $\recip$ (that is $1/x$) | $e^x$           
+$h_2()$ |          |          |                   |           
+$h_3()$ |          |          |                   |           
+$h_4()$ |          |          |                   |           
+$h_5()$ |          |          |                   |           
+$h_6()$ |          |          |                   |           
+$h_7()$ |          |          |                   |           
+$h_8()$ |          |          |                   |           
+$h_9()$ |          |          |                   |           
+</details>
+
+## Product rule
+
+Written in terms of the pronoun functions $f()$ and $g()$, the product rule is
+
+::: {.todo}
+Decide if colorizing the formulas, as in the following, is helpful and worthwhile.
 :::
 
-The derivative of a ***polynomial*** follows the linear combination rule. That's because polynomials are a linear combination of monomials, $x^0$, $x^1$, $x^2$, and so on.
+$$\partial_x \left[\strut \color{blue}{f(x)}\times \color{green}{g(x)}\right] = \color{blue}{[\partial_x f(x)]} \times \color{green}{g(x)}\ \  {\mathbf +}
+\ \ \color{green}{[\partial_x g(x)]} \times \color{blue}{f(x)}$$
+Some people find it easier to read the rule in Lagrange shorthand, where f and g stand for $f(x)$ and $g(x)$ respectivly, and f' ("f-prime") and g' ("g-prime") stand for $\partial f()$ and $\partial g()$.
 
-The consequence is that the derivative of a polynomial is another polynomial, with each term being reduced by one order.
+$$\text{Lagrange shorthand:}\ \   \partial[f \times g] = [f \times g]' = f'g + g'f$$
+Let's start with some very simple examples where we already know the answer:
 
-- $\partial_x x^0 = 0$
-- $\partial_x x^1 = x^0 = 1$
-- $\partial_x x^2 = 2 x^1 = 2x$
-- and so on.
+- $\partial [x \times x^2] = [\partial x] \times x^2 \ +\  [\partial x^2] \times x =1\times x^2 + 2x \times x = 3 x^2$
 
-Example:  $f(x) \equiv a + b x +  c  x^2\  \  \implies\ \ \partial_x f(x) \equiv b  + 2 c x$
+    Since $[x \times x^2] = x^3$, we could have figured out directly that the derivative is $3 x^2$
+    
+- $partial_x [e^x \times e^x] = [\partial_x e^x] \times e^x \ + \ [\partial_x e^x] \times e^x = 2 e^x e^x = 2 e^{2x}$
 
-## Composition of functions
-
-
-
-
-The chain rule, which considers the  derivative  of a function $h(x)$ which  is the *composition* of two functions: $h(x) \equiv f(g(x))$. 
-
-We'll call $f()$  the "exterior function" and  $g()$ the interior  function. When we write the exterior function on its own, we'll call  the input $y$.  The interior  function will be written in  the ordinary way. For example:
-
-Composition                     | Exterior function | Interior  function
-:------------------------------:|:-----------------:|:-----------------:
-$h(x) \equiv \sin(a x)$         | $\sin(y)$         | $y(x) \equiv  ax$
-$h(t) \equiv e^{k x}$           | $e^y$             | $y(x)  \equiv  kx$
-$h(x) \equiv \sqrt{1  + x^2}$   | $\sqrt{y}$        | $y(x) \equiv 1  + x^2$
-
-To apply the chain rule, follow these  steps:
-
-1. Identify the exterior function $f(y)$ and the interior function $y(x) \equiv g(x)$.
-2. Calculate the derivative of the interior function: $\partial_x y(x)$
-3. Calculate the derivative  of the exterior function with respect  to  $y$,  that  is,  $\partial_y f(y)$ 
-4. Write down $\partial_y f(y)$ but, everywhere that a $y$ appears, replace it with  $g(x)$.
-5. Multiply the expression in (4) by $\partial_x g(x)$.  The result is  the derivative  of the composition with respect to $x$.
-
-Example:  $\partial_x \sin(a x)$.
-
-1. The exterior function is $\sin(y)$ and the interior function is  $y(x) \equiv ax$
-2. Derivative  of interior  function:  $\partial_x y(x)  \equiv a$.
-3. Derivative  of exterior function:  $\partial_y \sin(y) \equiv \cos(y)$
-4. Replace $y$ in (3) with $y(x) \equiv ax$,  giving  $\cos(ax)$.
-5. Multiply the result in (4)  by  $\partial_x y(x)$,  giving the final  result $a \cos(ax)$.  
-
-Example: $\partial_x \sqrt{1 + x^2}$
-
-1. The exterior function is $\sqrt{y}$, the interior function is $y(x) \equiv 1 + x^2$.
-2. The derivative  of the  interior function  is $\partial_x  y(x)  \equiv 2 x$.
-3. The derivative of the exterior function  is  $-1/\sqrt{y}$
-4. Replace  $y$ in  (3) with the interior function, giving  $-1/\sqrt{1 + x^2}$
-5. Multiply the result in (4) by $\partial_x y(x)$, giving the final result $-2x/\sqrt{1 + x^2}$
+    Since $[e^x \times e^x] = e^{2x}$, one of our basic modeling functions, we could have figured out directly that the derivative is $2 e^{2x}$.
 
 
-::: {.workedexample}
+## Composition ("chain") rule
 
-We'll start with the familiar linear approximation for $f()$, namely
+Written in terms of functions $f()$ and $g()$, the rule for the composition $f(g(x))$ is
 
-$$f({\cal X} + {\cal H}) = f({\cal X}) + {\cal H}f'({\cal X})$$
-We have used funny symbols $\cal X$ and $\cal H$ here, but that doesn't make any fundamental difference. Since $\cal X$ can be any value whatsoever, let's make it the output of $g()$ for an input $x$: that is, ${\cal X} = g(x)$. If we were to increase the input to $x+h$, the output would change: $g(x+h) = g(x) + h g'(x)$. Since the output of $g()$ with input $x+h$ is ${\cal X} + {\cal H}$, that is, $g(x+h) = {\cal X} + {\cal H}$. Since we already know that ${\cal X} = g(x)$ we can solve for ${\cal H}$, namely
-$${\cal H} = h g'(x)$$
-With the definitions of ${\cal X}$ and ${\cal H}$ in terms of $g(x)$ and $h$, we find
-$$f(g(x+h)) = f(g(x)) + h g'(x) f'(g(x))$$ Re-arranging, we get $$\frac{f(g(x+h)) - f(g(x))}{h} = f'(g(x)) g'(x)$$ the formula for the chain rule.
-:::
+$$\partial_x \left[\strut \color{blue}{f\left(\right.}\strut \color{green}{g(x)}\color{blue}{\left.\right)}\right] = [\color{blue}{\partial_x f}](\color{green}{g(x)}) \times [\color{green}{\partial_xg(x)}]$$
+Or, using the Lagrange prime notation 
+$$\text{Lagrange shorthand:}\ \   \partial[f(g)] = f' (g) \times g'$$
+
+This is almost universally called the ***chain rule***, presumably because the result involves a chain of derivatives.
+
+Again, we'll practice with some simple examples where we already know the result:
+
+- $\partial [\exp\left(\ln(x)\right)] = [\partial \exp](\ln(x))  \times \partial_x \ln(x) = \exp\left(\ln(x)\right) \times 1/x$
+
+    Since $\exp\left(\ln(x)\right) = x$ we can simplify the above $$\partial [\exp\left(\ln(x)\right)] = \exp\left(\ln(x)\right) \times 1/x = x/x = 1$$ which is consistent with what we know about $\partial_x x$.
+
+- $\partial[ \recip(x^2)] = [\partial \recip](x^2) \times \partial_x x^2 = [\partial\, \recip](x^2) \times 2 x$  
+
+   Since $\partial_x \recip(x) = \partial_x [1/x] = \partial_x x^{-1} = -x^{-2} = - \frac{1}{x^2}$, we can simplify the above to 
+$\partial[ \recip(x^2)] = [\partial_x \recip](x^2) \times \partial_x x^2 =  - \frac{1}{(x^2)^2} \times 2 x = -2 \frac{x}{x^4} = -2 x^{-3}$  
 
 
+The derivatives of the basic modeling functions can be shown using the chain rule. Remember, that each of the basic modeling functions is the composition of a naked modeling function with $\line(x) \equiv ax + b$. 
+
+- $\partial_x [\sin(a x + b)] = [\partial \sin](a x + b) \times \partial_x [ax + b = \cos(ax + b) \times a$.
+
+## Step 3: Apply the relevant rule
+
+```{exercise, name="product-table-1"}
+Go back to the table in the previous section. For those rows involving a product of functions, add a column giving the derivative of the product according to the product rule.
+```
 
 
-## Product of functions
 
 
 ::: {.todo}
 See 141 DD 31 for drill problems
 :::
+
+
+
+
+## Exponentials and logarithms (optional)
+    
+The ***natural logarithm*** function, $\ln(x)$, is one of our basic modeling functions. The digit() function, introduced in Chapter \@ref(magnitudes) is different, the logarithm-base-10, written $\log_{10}(x)$ or `log10(x)`. Ten an integer, and a nice round number to boot. So in practice, it's "natural" to use $\log_10()$. The "natural" in the "natural logarithm" means something different.
+
+The base of the natural logarithm is the number called ***Euler's constant*** and written $e$. As a celebrity number, $e$ is right up there with $\pi$ and $-1$. Just as $\pi$ has a decimal expansion that is infinitely long, the familiar $\pi = 3.14159265358979...$, Euler's constant has an infinitely long decimal representation: $e = 2.71828182845905...$ 
+
+It's not obvious at first glance why $e = 2.71828182845905...$ should be called "natural" by mathematicians. The reason is not the number itself, but 
+
+1. the derivative $\partial_x \ln(x)$ which has a particularly simple form, namely, $1/x$.
+2. $\ln(x)$ is the inverse of $e^x$, which itself is the nicest of all derivatives $\partial_x e^x = e^x$.
+
+Let's look at the log-base-10 and it's computer-savvy cousin log-base-2. The very definition of logarithms means that both 10 and 2 can be written $$10 = e^{\ln(10)}\ \ \ \text{and}\ \ \ 2 = e^{\ln(2)}$$
+This implies that the base-10 and base-2 exponential functions can be written
+
+$$10^x = [e^{\ln(10)}]^x = e^{\ln(10)x} \ \ \ \text{and}\ \ \ 2^x = [e^{\ln(2)}]^x = e^{\ln(2) x}$$
+Calculating $\partial_x 10^x$ or $\partial_x 2^x$ is a matter of applying the chain rule:
+
+$$\partial_x [10^x] = \partial_x [e^{\ln(10)x}] = e^{\ln(10)x} \times \ln(10) = 2.30258509299405... \times 10^x\\ 
+\ \text{and}\\
+\partial_x [2^x] = \partial_x [e^{\ln(2)x}] = e^{\ln(2)x} \times \ln(2) = 0.693147180559945...\times 2^x$$
+Like $e^x$, the derivatives of $10^x$ and $2^x$ are proportional to themselves. For $e^x$ the constant of proportality is 1, a very natural number indeed. 
+    
+
+
 
 ## Checking your work
 
@@ -173,33 +255,6 @@ See 141 DD 31 for drill problems
 2. Apply the `antiD()` operator to your derivative and graphically confirm that there is a constant difference between the output of `antiD()` and the original function.
 :::
 
-## Working with algebraic derivatives
 
-::: {.todo}
-These need to be re-organized, with some of the content broken out into the chapter.
-:::
-
-
-```{exercise, name="optim-violet"}
-```
-<details>`r MC_counter$reset()` `r knitr::knit_child("Exercises/Diff/optim-violet.Rmd")`</details>
-
-```{exercise, name="optim-pink"}
-```
-<details>`r MC_counter$reset()` `r knitr::knit_child("Exercises/Diff/optim-pink.Rmd")`</details>
-
-
-```{exercise, name="optim-red"}
-```
-<details>`r MC_counter$reset()` `r knitr::knit_child("Exercises/Diff/optim-red.Rmd")`</details>
-
-```{exercise, name="optim-blue"}
-```
-<details>`r MC_counter$reset()` `r knitr::knit_child("Exercises/Diff/optim-blue.Rmd")`</details>
-
-```{exercise, name="optim-purple"}
-This is probably misplaced. and the `plot_lens()` function would have to be provided.
-```
-<details>`r MC_counter$reset()` `r knitr::knit_child("Exercises/Diff/optim-purple.Rmd")`</details>
 
 

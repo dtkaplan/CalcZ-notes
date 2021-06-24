@@ -187,123 +187,30 @@ The above is an equation, not a definition. It says that whatever $x^\star$ happ
 
 :::
 
+
+```{exercise, name="optim-violet"}
+```
+<details>`r MC_counter$reset()` `r knitr::knit_child("Exercises/Diff/optim-violet.Rmd")`</details>
+
+```{exercise, name="optim-pink"}
+```
+<details>`r MC_counter$reset()` `r knitr::knit_child("Exercises/Diff/optim-pink.Rmd")`</details>
+
+
+```{exercise, name="optim-red"}
+```
+<details>`r MC_counter$reset()` `r knitr::knit_child("Exercises/Diff/optim-red.Rmd")`</details>
+
+```{exercise, name="optim-blue"}
+```
+<details>`r MC_counter$reset()` `r knitr::knit_child("Exercises/Diff/optim-blue.Rmd")`</details>
+
+```{exercise, name="optim-purple"}
+This is probably misplaced. and the `plot_lens()` function would have to be provided.
+```
+<details>`r MC_counter$reset()` `r knitr::knit_child("Exercises/Diff/optim-purple.Rmd")`</details>
 ::: {.todo}
 Exercises involving computing derivatives
-:::
-
-## Approximations around $x^\star$
-
-Starting with just the naked modeling functions (e.g. $e^t$), you have a small but rich set of mathematical operations that enables you to make a huge variety of functions to suit a big range of modeling needs:
-
-- ***input scaling***, which turns the naked modeling functions into the more directly useful basic modeling functions.
-- ***linear combinations*** of functions, e.g. $A + B e^{-kt}$
-- ***compositions*** of functions, e.g. $e^{-kt^2}$ which you can recognize as the composition of an exponential with a power-law function.
-- ***products*** of functions, e.g., $\sin\left(\frac{2\pi}{P}x\right) e^{-kt}$
-
-Now we want to tame this profusion of possibilities and consider a way to construct stand-ins for any function, using a universal format that needs a minimum of information and can be used for many purposes ***in place of*** the original function. It's helpful to have a name for the stand-ins that reminds us of whom they are stand-ins for. If the original function is $f(x)$, we'll write the names of the stand-ins with a tilde, as in $\widetilde{\,f\ }(x)$. 
-
-The stand-in functions are intended to be much simpler than the original but useable as a substitute for the original. The catch is that the stand-in is warranteed to be a good substitute only ***within a small neighborhood*** of the domain of the origin.
-
-The information we need to construct the stand-ins is very limited. First, we need to specify where the warranteed neighborhood is. We'll tend to use $x_0$ as identifying the center of that neighborhood. We'll also need $f(x_0)$, the output of the original function when the input is $x_0$, and $\partial_x f(x_0)$ and $\partial_{xx} f(x_0)$. 
-
-::: {.takenote}
-This is a good time to remind you of the notation conventions that we are using to write about functions and evaluating functions. 
-
-A ***function*** with all its individual characteristics and idiosyncracies is written $f(x)$: the function name and the name of the input or inputs. The ***name of this function*** is $f()$. The name of the input to $f()$ is $x$, or whatever is the input name that was given in the parentheses following the name.
-
-Every function has a derivative function. We could call that derivative function anything we like, but it's sensible to give it a name that states explicitly where it comes from. We're using $\partial_x f(x)$ for this purpose. Similarly, the name we use for the second derivative is $\partial_{xx} f(x)$.
-
-Evaluating a function means to specify a particular value for the input. We use several ways of making it clear when we are talking about a particular value of the input, e.g.
-$$\mbox{function output:}\ \ \ f(x = 3)\ \ \ \text{or}\ \ f(3)\ \ \ \text{or}\ \ \left.f(x)\strut\right|_{x=3}$$
-The output of such an evaluated function is a quantity. 
-
-Sometimes we want to refer to the output for some particular input, but *we don't have that specific quantity pinned down yet*. Our preferred style for writing this is to use a name that is similar to an input name, but which has a subscript as in $x_0$, $x_1$, $x_i$, $x_\star$ or, occasionally, a superscript as in $x^\star$. The output of the function is then written like this:
-$$\mbox{function output:}\ \ \ f(x = x_0)\ \ \ \text{or}\ \ f(x_0)\ \ \ \text{or}\ \ \left.f(x)\strut\right|_{x=x_0}$$
-This same style applies when the function has a name like $\partial_x f()$ or $\partial_{xx} f()$, for instance
-
-$$\mbox{function output:}\ \ \ \partial_x f(x = x_0)\ \ \ \text{or}\ \ \partial_x f(x_0)\ \ \ \text{or}\ \ \left.\partial_x f(x)\strut\right|_{x=x_0}$$
-:::
-
-
-Here are two universal formats that can be used to construct a stand-in for *any* function near a particular input $x_0$. Since it's useful to have a name for the stand-in, we'll use a tilde on top of the original function name:
-
-- First-order approximation: $\widetilde{f_1}(x) \equiv f(x_0) + \partial_x f(x_0) (x-x_0)$
-- Second-order approximation: $\widetilde{f_2}(x) \equiv f(x_0) + \partial_x f(x_0) [x-x_0] + \frac{1}{2} \partial_{xx} f(x_0) [x - x_0]^2$
-
-Notice that the first two terms of $\widetilde{f_2}(x)$ are identical to $\widetilde{f_1}(x)$, so we could write the second-order approximation as
-$$\widetilde{f_2}(x) \equiv \widetilde{f_1}(x) +\frac{1}{2} \partial_{xx} f(x_0) [x-x_0]^2$$ 
-
-
-The first-order approximation $\widetilde{f_1}(x)$ is nothing more than the straight-line function whose graph is tangent to the graph of $f(x)$ at the input $x=x_0$.
-
-The second-order approximation is a quadratic polynomial. Being quadratic, its graph is the familiar parabola. The graph of $\widetilde{f_2}(x)$ is the parabola that is tangent to the graph of $f(x)$.
-
-::: {.workedexample}
-Consider the function $g(x)$ whose graph is shown in Figure \@ref(fig:ds-g).
-
-```{r ds-g, echo=FALSE}
-g <- rfun( ~ x, seed=973)
-slice_plot(g(x) ~ x, domain(x=c(-3, 3))) %>%
-  gf_labs(title="g(x) vs x") %>%
-  gf_vline(xintercept=-1, color="blue", alpha=0.1, size=20) %>%
-  gf_vline(xintercept=-1, color="blue") %>%
-  gf_text(-5 ~ -1.1, label="x0 = -1", color="blue", angle=90) %>%
-  gf_theme(theme_minimal)
-```
-We haven't given you a formula for $g(x)$, but you can see that it isn't any of the basic modeling functions but something more complicated. We're going to construct a first-order and second-order approximation to $g(x)$ in a neighborhood $x_0 = -1$ as marked by the blue shaded area. 
-
-Note that $x_0$ is not an argmin of $g(x)$. You can see that the argmin is a little to the right of $x_0$. 
-
-The "facts" about $g(x)$ that are needed to construct the approximations, beyond the specification of the location of the neighborhood $x_0$, are the values $g(x_0)$, $\partial_x g(x_0)$, and $\partial_{xx} g(x_0)$. These are:
-
-```{r}
-x0 <- -1
-g(x0)
-dx_g <- D(g(x) ~ x)
-dxx_g <- D(g(x) ~ x + x)
-dx_g(x0)
-dxx_g(x0)
-```
-With these facts, we can construct the first- and second-order approximations:
-```{r}
-tilde1_g <- makeFun(-23.992 - 2.3493*(x-x0) ~ x)
-tilde2_g <- makeFun(tilde1_g(x) + (7.8077/2) * (x-x0)^2 ~ x)
-```
-
-Figure \@ref(fig:ds-g2) shows $\widetilde{g_1}(x)$ and $\widetilde{g_2}(x)$, zooming in around $x_0 = -1$.
-
-```{r ds-g2, echo=FALSE, fig.cap="The first-order (green) and second-order (red) approximations to $g(x)$ near $x_0=-1$."}
-g <- rfun( ~ x, seed=973)
-slice_plot(tilde1_g(x) ~ x, domain(x=c(-2, 0)),
-             color="green", size=2, alpha=0.25) %>%
-  slice_plot(tilde2_g(x) ~ x, domain(x=c(-2, 0)),
-             color="red", size=2, alpha=0.25) %>%
-
-slice_plot(g(x) ~ x, domain(x=c(-2, 0))) %>%
-  
-  
-  gf_labs(title="g(x) vs x") %>%
-  gf_vline(xintercept=-1, color="blue", alpha=0.1, size=50) %>%
-  gf_vline(xintercept=-1, color="blue") %>%
-  gf_text(-20 ~ -1.05, label="x0 = -1", color="blue", angle=90) %>%
-  gf_theme(theme_minimal())
-```
-
-You can see that $\widetilde{g_2}(x)$ is a good approximation to $g(x)$. In particular, the argmin of $\widetilde{g_2}(x)$ is close to the that of $g(x)$. 
-
-In a previous example, we showed that the argmin of the parabolic function $a_0 + a_1 x + a_2 x^2$ is $x^\star = -\frac{a_1}{2 a_2}$. Using that formula, the argmin of $\widetilde{g_2}(x)$ is  -2.3493/(7.8077/2) = -0.602.
-:::
-
-## Solving computationally
-
-::: {.todo}
-How to find the zeros of the derivative of a function and how to evaluate the second derivative at those zeros to find out what kind of critical point it is.
-:::
-
-::: {.todo}
-The cubic bifurcation. Start with a cubic with an argmax followed by an argmin. Then move the parameter to see the two critical points coalesce into a single point then disappear.
-
-Or, maybe, "the problem with polynomials." Linear function always has 1 root and no critical points. Quadratic function always has one critical point (and subject to a constant may have two roots generically). But a cubic might have 1 or 3 solutions and the behavior depends on the constant. It might have one or three critical points.
 :::
 
 
