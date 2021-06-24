@@ -328,7 +328,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="24.6" data-path="local-approximations.html"><a href="local-approximations.html#solving-computationally"><i class="fa fa-check"></i><b>24.6</b> Solving computationally</a></li>
 <li class="chapter" data-level="24.7" data-path="local-approximations.html"><a href="local-approximations.html#from-an-earlier-draft"><i class="fa fa-check"></i><b>24.7</b> From an earlier draft</a></li>
 </ul></li>
-<li class="chapter" data-level="25" data-path="approximation-around-a-point.html"><a href="approximation-around-a-point.html"><i class="fa fa-check"></i><b>25</b> Approximation around a point</a></li>
+<li class="chapter" data-level="25" data-path="approximation-near-a-reference-input.html"><a href="approximation-near-a-reference-input.html"><i class="fa fa-check"></i><b>25</b> Approximation near a reference input</a>
+<ul>
+<li class="chapter" data-level="25.1" data-path="approximation-near-a-reference-input.html"><a href="approximation-near-a-reference-input.html#the-reference-point"><i class="fa fa-check"></i><b>25.1</b> The reference point</a></li>
+<li class="chapter" data-level="25.2" data-path="approximation-near-a-reference-input.html"><a href="approximation-near-a-reference-input.html#taylor-polynomials"><i class="fa fa-check"></i><b>25.2</b> Taylor polynomials</a></li>
+<li class="chapter" data-level="25.3" data-path="approximation-near-a-reference-input.html"><a href="approximation-near-a-reference-input.html#polynomials-and-data"><i class="fa fa-check"></i><b>25.3</b> Polynomials and data</a></li>
+</ul></li>
 </ul>
 
       </nav>
@@ -509,7 +514,7 @@ Calculating the difference in <code>digits()</code> between 1 and 1390:</p>
 <span id="cb101-4"><a href="magnitudes.html#cb101-4" aria-hidden="true" tabindex="-1"></a>     <span class="co"># scale_y_log10()</span></span>
 <span id="cb101-5"><a href="magnitudes.html#cb101-5" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
 <span id="cb101-6"><a href="magnitudes.html#cb101-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gf_lm</span>()</span></code></pre></div>
-<p><img src="CalcZ-notes_files/figure-html/unnamed-chunk-303-1.png" width="90%" style="display: block; margin: auto;" /></p>
+<p><img src="CalcZ-notes_files/figure-html/unnamed-chunk-304-1.png" width="90%" style="display: block; margin: auto;" /></p>
 </div>
 <p><strong>Question A</strong> <strong>(A)</strong> In the sandbox, plot pressure versus volume using linear, semi-log, and log-log axes. Based on the plot, and the straight-line function drawn, which of these is a good model of the relationship between pressure and volume?</p>
 <p>    linear<span class="mcanswer"> ☹︎ This would look like a straight line on linear axes. </span>       exponential<span class="mcanswer"> ☹︎ This would look like a straight line on semi-log axes. </span>       power-law<span class="mcanswer"> ✓ </span></p>
@@ -558,7 +563,7 @@ Calculating the difference in <code>digits()</code> between 1 and 1390:</p>
 <div class="scaffolding">
 <div class="sourceCode" id="cb103"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb103-1"><a href="magnitudes.html#cb103-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_point</span>(BHP <span class="sc">~</span> displacement, <span class="at">data =</span> Engines) <span class="sc">%&gt;%</span></span>
 <span id="cb103-2"><a href="magnitudes.html#cb103-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gf_refine</span>(<span class="fu">scale_x_log10</span>(), <span class="fu">scale_y_log10</span>())</span></code></pre></div>
-<p><img src="CalcZ-notes_files/figure-html/unnamed-chunk-306-1.png" width="90%" style="display: block; margin: auto;" /></p>
+<p><img src="CalcZ-notes_files/figure-html/unnamed-chunk-307-1.png" width="90%" style="display: block; margin: auto;" /></p>
 </div>
 <p>Based on the log-log plot of horsepower (<code>BHP</code>) versus engine displacement, answer these questions.</p>
 <p><strong>Question A</strong> How many engines have a displacement of 1 liter or less?</p>
@@ -596,7 +601,7 @@ Calculating the difference in <code>digits()</code> between 1 and 1390:</p>
 <div class="scaffolding">
 <div class="sourceCode" id="cb108"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb108-1"><a href="magnitudes.html#cb108-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_point</span>(BHP <span class="sc">~</span> displacement, <span class="at">data =</span> Engines) <span class="sc">%&gt;%</span></span>
 <span id="cb108-2"><a href="magnitudes.html#cb108-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gf_lims</span>(<span class="at">y  =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">30000</span>))</span></code></pre></div>
-<p><img src="CalcZ-notes_files/figure-html/unnamed-chunk-308-1.png" width="90%" style="display: block; margin: auto;" /></p>
+<p><img src="CalcZ-notes_files/figure-html/unnamed-chunk-309-1.png" width="90%" style="display: block; margin: auto;" /></p>
 </div>
 <p><strong>Question A</strong> Your study partner claims that the smallest engine in the data has a displacement of 2000 cc (that is, 2.0 liters) and 100 horsepower. Based only on the graph, is this claim plausible?</p>
 <ol style="list-style-type: lower-roman">
@@ -613,7 +618,7 @@ Calculating the difference in <code>digits()</code> between 1 and 1390:</p>
 <div class="scaffolding">
 <div class="sourceCode" id="cb109"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb109-1"><a href="magnitudes.html#cb109-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_point</span>(BHP <span class="sc">~</span> displacement, <span class="at">data =</span> Engines) <span class="sc">%&gt;%</span></span>
 <span id="cb109-2"><a href="magnitudes.html#cb109-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gf_refine</span>(<span class="fu">scale_x_log10</span>())</span></code></pre></div>
-<p><img src="CalcZ-notes_files/figure-html/unnamed-chunk-309-1.png" width="90%" style="display: block; margin: auto;" /></p>
+<p><img src="CalcZ-notes_files/figure-html/unnamed-chunk-310-1.png" width="90%" style="display: block; margin: auto;" /></p>
 </div>
 <p><strong>Question B</strong> Using just the graph, answer this question: The engines range over how many decades of displacement? (Remember, a decade is a factor of 10.)</p>
 <ol style="list-style-type: lower-roman">
@@ -629,7 +634,7 @@ Calculating the difference in <code>digits()</code> between 1 and 1390:</p>
 <p>In order to make a graph with log-log scales, we refine the graph with both <code>scale_y_log10()</code> and <code>scale_x_log10()</code>, as in the following …</p>
 <div class="sourceCode" id="cb110"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb110-1"><a href="magnitudes.html#cb110-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_point</span>(BHP <span class="sc">~</span> displacement, <span class="at">data =</span> Engines) <span class="sc">%&gt;%</span></span>
 <span id="cb110-2"><a href="magnitudes.html#cb110-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gf_refine</span>(<span class="fu">scale_x_log10</span>(), <span class="fu">scale_y_log10</span>())</span></code></pre></div>
-<p><img src="CalcZ-notes_files/figure-html/unnamed-chunk-310-1.png" width="90%" style="display: block; margin: auto;" /></p>
+<p><img src="CalcZ-notes_files/figure-html/unnamed-chunk-311-1.png" width="90%" style="display: block; margin: auto;" /></p>
 <p>Based on the log-log plot, answer these questions.</p>
 <p><strong>Question C</strong> How many engines have a displacement of 1 liter or less?</p>
 <p>    none<span class="mcanswer"> ☹︎ Perhaps you recognized that the left-most tick mark corresponds to a value of 1, and that no data points are 1 or smaller. But one liter corresponds to 1000 cc. </span>       7<span class="mcanswer"> ☹︎ This is the number of engines with displacement of 10 cc or smaller. But one liter corresponds to 1000 cc. </span>       14<span class="mcanswer"> ✓ Right. It’s the <span class="math inline">\(10^3\)</span> tick that marks 1 liter, since 1 liter is 1000 cc. </span>       25<span class="mcanswer"> ☹︎ That would be true if the cut-off were 10 liters. But it’s not. </span>       randomAnswerOrder<span class="mcanswer"> ☹︎ FALSE </span></p>
@@ -657,7 +662,7 @@ Calculating the difference in <code>digits()</code> between 1 and 1390:</p>
 <span id="exr:unnamed-chunk-116" class="exercise"><strong>Exercise 14.5  (fish-walk-green)  </strong></span>
 </div>
 <details>
-<p><img src="CalcZ-notes_files/figure-html/unnamed-chunk-312-1.png" width="90%" style="display: block; margin: auto;" /></p>
+<p><img src="CalcZ-notes_files/figure-html/unnamed-chunk-313-1.png" width="90%" style="display: block; margin: auto;" /></p>
 <p><strong>Question A</strong> Consider the axis scales shown above. Which kind of scale is the horizontal axis?</p>
 <ol style="list-style-type: lower-roman">
 <li>linear<span class="mcanswer"> ✓ You can see this because a given length along the axis corresponds to the same arithmetic difference regardless of where you are on the axis. the distance between 0 and 50 is exactly the same as the difference between 50 and 100, or the distance between 150 and 200. </span><br />

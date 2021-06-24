@@ -328,7 +328,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="24.6" data-path="local-approximations.html"><a href="local-approximations.html#solving-computationally"><i class="fa fa-check"></i><b>24.6</b> Solving computationally</a></li>
 <li class="chapter" data-level="24.7" data-path="local-approximations.html"><a href="local-approximations.html#from-an-earlier-draft"><i class="fa fa-check"></i><b>24.7</b> From an earlier draft</a></li>
 </ul></li>
-<li class="chapter" data-level="25" data-path="approximation-around-a-point.html"><a href="approximation-around-a-point.html"><i class="fa fa-check"></i><b>25</b> Approximation around a point</a></li>
+<li class="chapter" data-level="25" data-path="approximation-near-a-reference-input.html"><a href="approximation-near-a-reference-input.html"><i class="fa fa-check"></i><b>25</b> Approximation near a reference input</a>
+<ul>
+<li class="chapter" data-level="25.1" data-path="approximation-near-a-reference-input.html"><a href="approximation-near-a-reference-input.html#the-reference-point"><i class="fa fa-check"></i><b>25.1</b> The reference point</a></li>
+<li class="chapter" data-level="25.2" data-path="approximation-near-a-reference-input.html"><a href="approximation-near-a-reference-input.html#taylor-polynomials"><i class="fa fa-check"></i><b>25.2</b> Taylor polynomials</a></li>
+<li class="chapter" data-level="25.3" data-path="approximation-near-a-reference-input.html"><a href="approximation-near-a-reference-input.html#polynomials-and-data"><i class="fa fa-check"></i><b>25.3</b> Polynomials and data</a></li>
+</ul></li>
 </ul>
 
       </nav>
@@ -573,7 +578,7 @@ Open a sandbox and copy over the scaffolding, which include the definition of th
 <p>We’re going to plot confirmed cases in blue and deaths in red.</p>
 <div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="process-of-modeling.html#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_point</span>(confirmed <span class="sc">~</span> date, <span class="at">data =</span> Covid_US, <span class="at">color =</span> <span class="st">&quot;blue&quot;</span>) <span class="sc">%&gt;%</span></span>
 <span id="cb35-2"><a href="process-of-modeling.html#cb35-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gf_point</span>(deaths <span class="sc">~</span> date, <span class="at">color =</span> <span class="st">&quot;red&quot;</span>)</span></code></pre></div>
-<p><img src="CalcZ-notes_files/figure-html/unnamed-chunk-240-1.png" width="90%" style="display: block; margin: auto;" /></p>
+<p><img src="CalcZ-notes_files/figure-html/unnamed-chunk-241-1.png" width="90%" style="display: block; margin: auto;" /></p>
 </div>
 <p><strong>Question A</strong> As of mid July, about how many confirmed cases were there? (Note that the labeled tick marks refer to the beginning of the month, so the point labeled <code>Feb</code> is February 1.)</p>
 <ol style="list-style-type: lower-roman">
@@ -594,7 +599,7 @@ Open a sandbox and copy over the scaffolding, which include the definition of th
 <div class="scaffolding">
 <div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="process-of-modeling.html#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_point</span>(<span class="fu">log</span>(confirmed) <span class="sc">~</span> date, <span class="at">data =</span> Covid_US, <span class="at">color =</span> <span class="st">&quot;blue&quot;</span>) <span class="sc">%&gt;%</span></span>
 <span id="cb36-2"><a href="process-of-modeling.html#cb36-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gf_point</span>(<span class="fu">log</span>(deaths) <span class="sc">~</span> date, <span class="at">color =</span> <span class="st">&quot;red&quot;</span>) </span></code></pre></div>
-<p><img src="CalcZ-notes_files/figure-html/unnamed-chunk-241-1.png" width="90%" style="display: block; margin: auto;" /></p>
+<p><img src="CalcZ-notes_files/figure-html/unnamed-chunk-242-1.png" width="90%" style="display: block; margin: auto;" /></p>
 </div>
 <p>Up through the beginning of March in the US, it is thought that most US cases were in people travelling into the US from hot spots such as China and Italy and the US, as opposed to contagion between people within the US. (Such contagion is called “community spread.”) So let’s focus on the data from the start of March onward.</p>
 <p>Exponential growth appears as a straight-line pattern on a semi-log plot. Obviously, the overall pattern of the curves is not a straight line. The explanation for this is that the exponential growth rate changes over time, perhaps due to public health measures (like business closing, masks, etc.)</p>
@@ -633,7 +638,7 @@ Calculate what the proportion between deaths and cases was in the month of May. 
 <pre><code>## Warning: Transformation introduced infinite values in continuous y-axis
 
 ## Warning: Transformation introduced infinite values in continuous y-axis</code></pre>
-<p><img src="CalcZ-notes_files/figure-html/unnamed-chunk-242-1.png" width="90%" style="display: block; margin: auto;" /></p>
+<p><img src="CalcZ-notes_files/figure-html/unnamed-chunk-243-1.png" width="90%" style="display: block; margin: auto;" /></p>
 </div>
 <p>The <strong>labels</strong> on the vertical axis show the raw numbers, while the <strong>position</strong> shows the logarithm of those numbers.</p>
 <p>The next question has to do with the meaning of the interval between grid lines on the vertical axis. Note that on the <em>horizontal</em> axis, the spacing between adjacent grid lines is half a month.</p>
@@ -831,7 +836,7 @@ The name “sigmoid” comes from vague resemblance of the graph to the letter S
 <span id="cb39-2"><a href="process-of-modeling.html#cb39-2" aria-hidden="true" tabindex="-1"></a>           <span class="fu">domain</span>(<span class="at">x =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">4</span>, <span class="dv">4</span>)))</span></code></pre></div>
 </div>
 <p>In the plot below, one of the double-headed arrows represents the <code>width</code> parameter. The others are misleading.</p>
-<p><img src="CalcZ-notes_files/figure-html/unnamed-chunk-247-1.png" width="90%" style="display: block; margin: auto;" /></p>
+<p><img src="CalcZ-notes_files/figure-html/unnamed-chunk-248-1.png" width="90%" style="display: block; margin: auto;" /></p>
 <p><strong>Question A</strong> Which arrow shows correctly the <code>width</code> parameter of the hump function in the graph with arrows?</p>
 <p>    top<span class="mcanswer"> ✓ </span>       middle<span class="mcanswer"> ☹︎ </span>       bottom<span class="mcanswer"> ☹︎ </span>       none of them<span class="mcanswer"> ☹︎ </span></p>
 <p><strong>Question B</strong> What is the value of <code>center</code> in the graph with arrows?</p>
@@ -845,7 +850,7 @@ The name “sigmoid” comes from vague resemblance of the graph to the letter S
 <p>Hump functions and sigmoidal functions come in pairs. For every possible sigmoid, there is a corresponding hump that gives, for each value of the input, the slope of the sigmoid.</p>
 <p>Each of the following graphs shows a sigmoid and a hump function. The two might or might not correspond to one another. That is, the output of the hump might be the slope of the sigmoid, or the hump might correspond to some other sigmoid. Remember, you’re comparing the <em>output</em> of the hump to the <em>slope</em> of the sigmoid.</p>
 <p>For each graph, say whether the hump and the sigmoid correspond to one another. If not, choose one of the reasons why not.</p>
-<p><img src="CalcZ-notes_files/figure-html/unnamed-chunk-249-1.png" width="90%" style="display: block; margin: auto;" /></p>
+<p><img src="CalcZ-notes_files/figure-html/unnamed-chunk-250-1.png" width="90%" style="display: block; margin: auto;" /></p>
 <p><strong>Question A</strong> Graph (A)</p>
 <ol style="list-style-type: lower-roman">
 <li>The hump and sigmoid correspond.<span class="mcanswer"> ✓ </span><br />
@@ -854,7 +859,7 @@ The name “sigmoid” comes from vague resemblance of the graph to the letter S
 </li>
 <li>The numerical value of the output of the hump function is, for all <span class="math inline">\(x\)</span>, much larger than the numerical value of the <em>slope</em> of the sigmoid.<span class="mcanswer"> ☹︎ Did you calculate the numerical value of the slope of the sigmoid? </span></li>
 </ol>
-<p><img src="CalcZ-notes_files/figure-html/unnamed-chunk-250-1.png" width="90%" style="display: block; margin: auto;" /></p>
+<p><img src="CalcZ-notes_files/figure-html/unnamed-chunk-251-1.png" width="90%" style="display: block; margin: auto;" /></p>
 <p><strong>Question B</strong> Graph (B)</p>
 <ol style="list-style-type: lower-roman">
 <li>The hump and sigmoid correspond.<span class="mcanswer"> ☹︎ </span><br />
@@ -863,7 +868,7 @@ The name “sigmoid” comes from vague resemblance of the graph to the letter S
 </li>
 <li>The numerical value of the output of the hump function is much larger than the numerical value of the <em>slope</em> of the sigmoid.<span class="mcanswer"> ☹︎ Did you calculate the numerical value of the slope of the sigmoid? </span></li>
 </ol>
-<p><img src="CalcZ-notes_files/figure-html/unnamed-chunk-251-1.png" width="90%" style="display: block; margin: auto;" /></p>
+<p><img src="CalcZ-notes_files/figure-html/unnamed-chunk-252-1.png" width="90%" style="display: block; margin: auto;" /></p>
 <p><strong>Question C</strong> Graph (C)</p>
 <ol style="list-style-type: lower-roman">
 <li>The hump and sigmoid correspond.<span class="mcanswer"> ✓ </span><br />
@@ -873,7 +878,7 @@ The name “sigmoid” comes from vague resemblance of the graph to the letter S
 <li>The numerical value of the output of the hump function is, for all <span class="math inline">\(x\)</span>, much larger than the numerical value of the <em>slope</em> of the sigmoid.<span class="mcanswer"> ☹︎ Did you calculate the numerical value of the slope of the sigmoid? </span></li>
 </ol>
 <p>In the graph <em>D</em>, there are several hump functions shown, only one of which corresponds to the sigmoid.</p>
-<p><img src="CalcZ-notes_files/figure-html/unnamed-chunk-252-1.png" width="90%" style="display: block; margin: auto;" /></p>
+<p><img src="CalcZ-notes_files/figure-html/unnamed-chunk-253-1.png" width="90%" style="display: block; margin: auto;" /></p>
 <p><strong>Question D</strong> Which hump corresponds to the sigmoid?</p>
     A<span class="mcanswer"> ☹︎ The value of the hump output is much larger than the slope of the sigmoid. </span>       B<span class="mcanswer"> ✓ Right! The hump is centered on the steepest part of the sigmoid and falls to zero where the sigmoid levels out. </span>       C<span class="mcanswer"> ☹︎ The hump is too narrow. </span>       D<span class="mcanswer"> ☹︎ The hump is too broad and shifted to the left. </span>
 </details>
@@ -883,7 +888,7 @@ The name “sigmoid” comes from vague resemblance of the graph to the letter S
 </div>
 <details>
 <p>Have in mind a hump function and a sigmoid function that form a corresponding pair.</p>
-<p><img src="CalcZ-notes_files/figure-html/unnamed-chunk-254-1.png" width="50%" style="display: block; margin: auto;" /></p>
+<p><img src="CalcZ-notes_files/figure-html/unnamed-chunk-255-1.png" width="50%" style="display: block; margin: auto;" /></p>
 <p><strong>Question A</strong> Which of these stories is consistent with the relationship between a hump and its corresponding sigmoid?</p>
 <ol style="list-style-type: lower-roman">
 <li>The hump is the amount of water in a bathtub while the sigmoid is the time you spend in the bath.<span class="mcanswer"> ☹︎ </span><br />
@@ -903,9 +908,9 @@ The name “sigmoid” comes from vague resemblance of the graph to the letter S
 <p>A data frame named <code>EbolaSierraLeone</code><a href="#fn11" class="footnote-ref" id="fnref11"><sup>11</sup></a> records the cumulative number of Ebola cases in Sierra Leone from May 1, 2014 to December 16, 2015.</p>
 <p>Let’s find how well a sigmoidal function models the data.</p>
 <div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="process-of-modeling.html#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_point</span>(Cases <span class="sc">~</span> Day, <span class="at">data =</span> MMAC<span class="sc">::</span>EbolaSierraLeone)</span></code></pre></div>
-<p><img src="CalcZ-notes_files/figure-html/unnamed-chunk-256-1.png" width="90%" style="display: block; margin: auto;" /></p>
-<p>It’s straightforward to estimate the values of the parameters from data that have a sigmoidal form. To walk you through the process, the next plot shows simulated data from a genuine sigmoid function.</p>
 <p><img src="CalcZ-notes_files/figure-html/unnamed-chunk-257-1.png" width="90%" style="display: block; margin: auto;" /></p>
+<p>It’s straightforward to estimate the values of the parameters from data that have a sigmoidal form. To walk you through the process, the next plot shows simulated data from a genuine sigmoid function.</p>
+<p><img src="CalcZ-notes_files/figure-html/unnamed-chunk-258-1.png" width="90%" style="display: block; margin: auto;" /></p>
 <ol style="list-style-type: decimal">
 <li><p>Sketch in a S-shaped curve that smoothly follows the data.</p></li>
 <li><p>Find the top plateau of the S-curve. This is indicated by the red line in the graph above. The parameter <code>A</code> is simply the height of the plateau, in this case <span class="math inline">\(y \approx 15\)</span>.</p></li>
@@ -1079,7 +1084,7 @@ Figure 8.12: Polishing the parameters of the sinusoid
 <div class="scaffolding">
 <div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb48-1"><a href="process-of-modeling.html#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_point</span>(Minutes <span class="sc">~</span> Month, <span class="at">data =</span> SunsetLA) <span class="sc">%&gt;%</span></span>
 <span id="cb48-2"><a href="process-of-modeling.html#cb48-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gf_line</span>()</span></code></pre></div>
-<p><img src="CalcZ-notes_files/figure-html/unnamed-chunk-260-1.png" width="90%" style="display: block; margin: auto;" /></p>
+<p><img src="CalcZ-notes_files/figure-html/unnamed-chunk-261-1.png" width="90%" style="display: block; margin: auto;" /></p>
 <p>We’re using both <code>gf_point()</code> and <code>gf_line()</code>. With data that oscillates up and down, connecting the data points with lines makes it easier to see the pattern.</p>
 </div>
 <p><strong>Question A</strong> What is the range of the number of minutes until sunset over the whole 4-year period?</p>

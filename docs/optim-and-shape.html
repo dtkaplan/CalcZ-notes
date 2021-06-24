@@ -328,7 +328,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="24.6" data-path="local-approximations.html"><a href="local-approximations.html#solving-computationally"><i class="fa fa-check"></i><b>24.6</b> Solving computationally</a></li>
 <li class="chapter" data-level="24.7" data-path="local-approximations.html"><a href="local-approximations.html#from-an-earlier-draft"><i class="fa fa-check"></i><b>24.7</b> From an earlier draft</a></li>
 </ul></li>
-<li class="chapter" data-level="25" data-path="approximation-around-a-point.html"><a href="approximation-around-a-point.html"><i class="fa fa-check"></i><b>25</b> Approximation around a point</a></li>
+<li class="chapter" data-level="25" data-path="approximation-near-a-reference-input.html"><a href="approximation-near-a-reference-input.html"><i class="fa fa-check"></i><b>25</b> Approximation near a reference input</a>
+<ul>
+<li class="chapter" data-level="25.1" data-path="approximation-near-a-reference-input.html"><a href="approximation-near-a-reference-input.html#the-reference-point"><i class="fa fa-check"></i><b>25.1</b> The reference point</a></li>
+<li class="chapter" data-level="25.2" data-path="approximation-near-a-reference-input.html"><a href="approximation-near-a-reference-input.html#taylor-polynomials"><i class="fa fa-check"></i><b>25.2</b> Taylor polynomials</a></li>
+<li class="chapter" data-level="25.3" data-path="approximation-near-a-reference-input.html"><a href="approximation-near-a-reference-input.html#polynomials-and-data"><i class="fa fa-check"></i><b>25.3</b> Polynomials and data</a></li>
+</ul></li>
 </ul>
 
       </nav>
@@ -498,7 +503,7 @@ neither| 0 | 0</p>
 <details>
 <p>Here is a smooth function marked at a few points. Your task is, at each point, to estimate the value of the derivative, the sign of the second derivative, and the radius of the circle that would nicely match the function in a small region around each point. (Remember, we’re asking for the <em>radius</em> of the circle, which is half the <em>diameter</em>.)</p>
 <p>To simplify things, here is a table giving seven different combinations of the quantities you are to estimate. Some of them correctly match one of the labeled points, some do not. All you need to do is choose which is the correct set of quantities for each labeled point.</p>
-<p><img src="CalcZ-notes_files/figure-html/unnamed-chunk-336-1.png" width="90%" style="display: block; margin: auto;" /></p>
+<p><img src="CalcZ-notes_files/figure-html/unnamed-chunk-337-1.png" width="90%" style="display: block; margin: auto;" /></p>
 <table>
 <colgroup>
 <col width="13%" />
@@ -726,7 +731,7 @@ The above is an equation, not a definition. It says that whatever <span class="m
 <div class="sourceCode" id="cb176"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb176-1"><a href="optim-and-shape.html#cb176-1" aria-hidden="true" tabindex="-1"></a><span class="fu">slice_plot</span>(x<span class="sc">^</span><span class="dv">2</span> <span class="sc">*</span> <span class="fu">exp</span>(<span class="sc">-</span>x) <span class="sc">~</span> x, <span class="fu">domain</span>(<span class="at">x=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">5</span>))) <span class="sc">%&gt;%</span></span>
 <span id="cb176-2"><a href="optim-and-shape.html#cb176-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gf_label</span>(<span class="dv">2</span> <span class="sc">~</span> <span class="dv">3</span>, <span class="at">label=</span><span class="st">&quot;lion&quot;</span>) <span class="sc">%&gt;%</span></span>
 <span id="cb176-3"><a href="optim-and-shape.html#cb176-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gf_refine</span>(<span class="fu">coord_fixed</span>())</span></code></pre></div>
-<p><img src="CalcZ-notes_files/figure-html/unnamed-chunk-344-1.png" width="90%" style="display: block; margin: auto;" /></p>
+<p><img src="CalcZ-notes_files/figure-html/unnamed-chunk-345-1.png" width="90%" style="display: block; margin: auto;" /></p>
 <p>To find the argmin of the distance to the lion more precisely, implement the <span class="math inline">\(\text{lion_dist}(x)\)</span> function in the sandbox. Plot this out and look for the minimum. Alternatively, find <span class="math inline">\(\partial_x \text{lion_dist}(x)\)</span> and find the <span class="math inline">\(x\)</span> of the zero crossing.</p>
 <p><strong>Question A</strong> Using the sandbox above, find the argmin for which the graph of the function <span class="math inline">\(g(x) \equiv x^2 \exp(-x)\)</span> comes closest to the point <span class="math inline">\((3, 2)\)</span>? (Choose the best answer.)</p>
 <ol style="list-style-type: lower-roman">
@@ -869,7 +874,7 @@ Find the derivative <span class="math inline">\(\partial_x q(x)\)</span> and set
 <span id="cb177-2"><a href="optim-and-shape.html#cb177-2" aria-hidden="true" tabindex="-1"></a>dt_lumber <span class="ot">&lt;-</span> <span class="fu">D</span>(<span class="fu">lumber</span>(t) <span class="sc">~</span> t)</span>
 <span id="cb177-3"><a href="optim-and-shape.html#cb177-3" aria-hidden="true" tabindex="-1"></a>ave_growth_rate <span class="ot">&lt;-</span> <span class="fu">makeFun</span>( your_expression_here <span class="sc">~</span> t)</span>
 <span id="cb177-4"><a href="optim-and-shape.html#cb177-4" aria-hidden="true" tabindex="-1"></a><span class="fu">slice_plot</span>(<span class="fu">lumber</span>(t) <span class="sc">~</span> t, <span class="fu">domain</span>(<span class="at">t=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">100</span>)))</span></code></pre></div>
-<p><img src="CalcZ-notes_files/figure-html/unnamed-chunk-346-1.png" width="90%" style="display: block; margin: auto;" /></p>
+<p><img src="CalcZ-notes_files/figure-html/unnamed-chunk-347-1.png" width="90%" style="display: block; margin: auto;" /></p>
 </div>
 <p>Bob has heard that the time to harvest is when the tree is growing fastest.</p>
 <p><strong>Question C</strong> A) What is the value of <code>t</code> (in years) at which <span class="math inline">\(\partial_t\)</span> <code>lumber(t)</code> is largest?</p>
@@ -901,10 +906,10 @@ Find the derivative <span class="math inline">\(\partial_x q(x)\)</span> and set
 <span id="cb178-11"><a href="optim-and-shape.html#cb178-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Graph the objective function</span></span>
 <span id="cb178-12"><a href="optim-and-shape.html#cb178-12" aria-hidden="true" tabindex="-1"></a><span class="fu">contour_plot</span>(<span class="fu">transit_time</span>(x_in, x_out) <span class="sc">~</span> x_in <span class="sc">+</span> x_out, </span>
 <span id="cb178-13"><a href="optim-and-shape.html#cb178-13" aria-hidden="true" tabindex="-1"></a>             <span class="fu">domain</span>(<span class="at">x_in =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">40</span>,<span class="dv">40</span>), <span class="at">x_out =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">40</span>,<span class="dv">40</span>)), <span class="at">npts=</span><span class="dv">200</span>)</span></code></pre></div>
-<p><img src="CalcZ-notes_files/figure-html/unnamed-chunk-349-1.png" width="90%" style="display: block; margin: auto;" /></p>
+<p><img src="CalcZ-notes_files/figure-html/unnamed-chunk-350-1.png" width="90%" style="display: block; margin: auto;" /></p>
 <div class="sourceCode" id="cb179"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb179-1"><a href="optim-and-shape.html#cb179-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Insert argmax from contour plot</span></span>
 <span id="cb179-2"><a href="optim-and-shape.html#cb179-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_lens</span>(<span class="dv">10</span>, <span class="sc">-</span><span class="dv">5</span>, Lens_top, Lens_bottom)</span></code></pre></div>
-<p><img src="CalcZ-notes_files/figure-html/unnamed-chunk-349-2.png" width="90%" style="display: block; margin: auto;" /></p>
+<p><img src="CalcZ-notes_files/figure-html/unnamed-chunk-350-2.png" width="90%" style="display: block; margin: auto;" /></p>
 <p><strong>Question A</strong> When the index of refraction of the lens is 1.80, what are the optimal values for <span class="math inline">\(x_{in}\)</span> and <span class="math inline">\(x_{out}\)</span>? (Choose the best answer.)</p>
 <ol style="list-style-type: lower-roman">
 <li><span class="math inline">\(x_{in} = -22, \ x_{out} = -21\)</span><span class="mcanswer"> ✓ </span><br />

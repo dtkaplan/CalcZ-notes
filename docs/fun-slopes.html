@@ -328,7 +328,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="24.6" data-path="local-approximations.html"><a href="local-approximations.html#solving-computationally"><i class="fa fa-check"></i><b>24.6</b> Solving computationally</a></li>
 <li class="chapter" data-level="24.7" data-path="local-approximations.html"><a href="local-approximations.html#from-an-earlier-draft"><i class="fa fa-check"></i><b>24.7</b> From an earlier draft</a></li>
 </ul></li>
-<li class="chapter" data-level="25" data-path="approximation-around-a-point.html"><a href="approximation-around-a-point.html"><i class="fa fa-check"></i><b>25</b> Approximation around a point</a></li>
+<li class="chapter" data-level="25" data-path="approximation-near-a-reference-input.html"><a href="approximation-near-a-reference-input.html"><i class="fa fa-check"></i><b>25</b> Approximation near a reference input</a>
+<ul>
+<li class="chapter" data-level="25.1" data-path="approximation-near-a-reference-input.html"><a href="approximation-near-a-reference-input.html#the-reference-point"><i class="fa fa-check"></i><b>25.1</b> The reference point</a></li>
+<li class="chapter" data-level="25.2" data-path="approximation-near-a-reference-input.html"><a href="approximation-near-a-reference-input.html#taylor-polynomials"><i class="fa fa-check"></i><b>25.2</b> Taylor polynomials</a></li>
+<li class="chapter" data-level="25.3" data-path="approximation-near-a-reference-input.html"><a href="approximation-near-a-reference-input.html#polynomials-and-data"><i class="fa fa-check"></i><b>25.3</b> Polynomials and data</a></li>
+</ul></li>
 </ul>
 
       </nav>
@@ -475,12 +480,12 @@ Figure 9.2: The exponential function that was previously matched to the cooling-
 <li><p>Corresponding with the idea of the change in output being <span class="math inline">\(f(x=b) - f(x=a)\)</span> the change in the input value to a function is <span class="math inline">\(b - a\)</span>. This is often called the <em>run</em> in the value of the input.</p></li>
 </ul>
 <p>Each point on the graph of a function has Cartesian coordinates <span class="math inline">\((a, f(x=a))\)</span>. For example, the graph of the function <span class="math inline">\(f()\)</span> shown in Graph I includes points such as <span class="math inline">\((1.0, 4.0)\)</span>, and <span class="math inline">\((3.5, 3.0)\)</span>. The second coordinate is the output value when we provide the first coordinate as an input value. The nature of the <span class="math inline">\(f()\)</span> function (as defined by the graph) is such that <span class="math inline">\(f(x=1) \equiv 4\)</span> and <span class="math inline">\(f(x=3.5) \equiv 3\)</span>.</p>
-<p><img src="CalcZ-notes_files/figure-html/unnamed-chunk-264-1.png" width="90%" style="display: block; margin: auto;" /></p>
+<p><img src="CalcZ-notes_files/figure-html/unnamed-chunk-265-1.png" width="90%" style="display: block; margin: auto;" /></p>
 <p><strong>Question A</strong> True or false: In Graph I, the <em>rise</em> from a to b is positive.</p>
 <p>    TRUE<span class="mcanswer"> ☹︎ <span class="math inline">\(f(x=a) &gt; f(x=b)\)</span>, so the rise <span class="math inline">\(f(x=b) - f(x=a)\)</span> is <em>negative</em>. </span>       FALSE<span class="mcanswer"> ✓ </span></p>
 <p><strong>Question B</strong> True or false: In Graph I, the <em>run</em> from <span class="math inline">\(x=a\)</span> to <span class="math inline">\(x=b\)</span> is positive.</p>
 <p>    TRUE<span class="mcanswer"> ✓ </span>       FALSE<span class="mcanswer"> ☹︎ The <em>run</em> is about the relative positions of <span class="math inline">\(x=a\)</span> and <span class="math inline">\(x=b\)</span> on the x-axis. Since <span class="math inline">\(a &lt; b\)</span>, the run from <span class="math inline">\(x=a\)</span> to <span class="math inline">\(x=b\)</span> is positive. </span></p>
-<p><img src="CalcZ-notes_files/figure-html/unnamed-chunk-265-1.png" width="90%" style="display: block; margin: auto;" /></p>
+<p><img src="CalcZ-notes_files/figure-html/unnamed-chunk-266-1.png" width="90%" style="display: block; margin: auto;" /></p>
 <p><strong>Question C</strong> True or false: In Graph II, the <em>run</em> from a to b is positive.</p>
 <p>    TRUE<span class="mcanswer"> ✓ </span>       FALSE<span class="mcanswer"> ☹︎ The <em>run</em> is about the relative positions of a and b on the x-axis. Since a is to the left of b, the run from a to b is positive. </span></p>
 <p><strong>Question D</strong> True or false: In Graph II, the <em>rise</em> from a to b is positive.</p>
@@ -541,7 +546,7 @@ Figure 9.2: The exponential function that was previously matched to the cooling-
 </div>
 <details>
 <p>Consider the sinusoid function, graphed below.</p>
-<p><img src="CalcZ-notes_files/figure-html/unnamed-chunk-268-1.png" width="90%" style="display: block; margin: auto;" />
+<p><img src="CalcZ-notes_files/figure-html/unnamed-chunk-269-1.png" width="90%" style="display: block; margin: auto;" />
 <strong>Question A</strong> What is the average rate of change over the interval <span class="math inline">\(0 &lt; x &lt; \frac{1}{2}\)</span>? (Choose the closest value.)</p>
 <p>    0<span class="mcanswer"> ☹︎ For this to be true, the function output would need to be the same at the two endpoints of the interval. </span>       0.5<span class="mcanswer"> ☹︎ Did you forget to divide the rise by the run? </span>       1<span class="mcanswer"> ✓ Right. From the interval you have that the run is 1/2. The rise over that interval is from 0 to 1/2, so a rise of 1/2. </span></p>
 <p><strong>Question B</strong> What is the average rate of change over the interval <span class="math inline">\(0 &lt; x &lt; 6.25\)</span>? (Choose the closest value.)</p>
@@ -701,7 +706,7 @@ This is a very subtle maneuver. The formula is exactly the same, but by writing 
 <p>Sometimes the average-rate-of-change function presents the information in a clear way.</p>
 <div class="workedexample" latex-data="">
 <p>Back to the forest … Here’s a graph of the average-rate-of change function. The function has two inputs, but botany dictates that we can only be growing word from the time the seedling is planted. So we’ll set <span class="math inline">\(t_A = 0\)</span> and look at the corresponding <em>slice</em> of the function:</p>
-<p><img src="CalcZ-notes_files/figure-html/unnamed-chunk-272-1.png" width="90%" style="display: block; margin: auto;" />
+<p><img src="CalcZ-notes_files/figure-html/unnamed-chunk-273-1.png" width="90%" style="display: block; margin: auto;" />
 The graph makes it clear that the maximum average growth from planting to harvest will occur at about year 32.</p>
 <p><strong>ANOTHER ELABORATION</strong></p>
 <p>The context of the situation being modeled determines whether it’s appropriate to look at an average rate of change or an instantaneous rate of change. Figure <a href="#fig:instant-tree"><strong>??</strong></a> shows the instantaneous rate of change in the volume of wood.</p>

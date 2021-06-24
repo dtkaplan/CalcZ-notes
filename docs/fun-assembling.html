@@ -328,7 +328,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="24.6" data-path="local-approximations.html"><a href="local-approximations.html#solving-computationally"><i class="fa fa-check"></i><b>24.6</b> Solving computationally</a></li>
 <li class="chapter" data-level="24.7" data-path="local-approximations.html"><a href="local-approximations.html#from-an-earlier-draft"><i class="fa fa-check"></i><b>24.7</b> From an earlier draft</a></li>
 </ul></li>
-<li class="chapter" data-level="25" data-path="approximation-around-a-point.html"><a href="approximation-around-a-point.html"><i class="fa fa-check"></i><b>25</b> Approximation around a point</a></li>
+<li class="chapter" data-level="25" data-path="approximation-near-a-reference-input.html"><a href="approximation-near-a-reference-input.html"><i class="fa fa-check"></i><b>25</b> Approximation near a reference input</a>
+<ul>
+<li class="chapter" data-level="25.1" data-path="approximation-near-a-reference-input.html"><a href="approximation-near-a-reference-input.html#the-reference-point"><i class="fa fa-check"></i><b>25.1</b> The reference point</a></li>
+<li class="chapter" data-level="25.2" data-path="approximation-near-a-reference-input.html"><a href="approximation-near-a-reference-input.html#taylor-polynomials"><i class="fa fa-check"></i><b>25.2</b> Taylor polynomials</a></li>
+<li class="chapter" data-level="25.3" data-path="approximation-near-a-reference-input.html"><a href="approximation-near-a-reference-input.html#polynomials-and-data"><i class="fa fa-check"></i><b>25.3</b> Polynomials and data</a></li>
+</ul></li>
 </ul>
 
       </nav>
@@ -382,9 +387,9 @@ Each of the functions is being scaled by a quantity—3, 5, and -2 in this examp
 </div>
 <details>
 <p>The graph shows two hump functions, hump1(t) and hump2(t)</p>
-<p><img src="CalcZ-notes_files/figure-html/unnamed-chunk-277-1.png" width="90%" style="display: block; margin: auto;" /></p>
-<p>A linear combination of the hump functions is shown in Graph (A).</p>
 <p><img src="CalcZ-notes_files/figure-html/unnamed-chunk-278-1.png" width="90%" style="display: block; margin: auto;" /></p>
+<p>A linear combination of the hump functions is shown in Graph (A).</p>
+<p><img src="CalcZ-notes_files/figure-html/unnamed-chunk-279-1.png" width="90%" style="display: block; margin: auto;" /></p>
 <p><strong>Question A</strong> What is the linear combination of hump1(t) and hump2(t) shown in Graph (A)?</p>
 <ol style="list-style-type: lower-roman">
 <li>0.5*hump1(t) + hump2(t)<span class="mcanswer"> ✓ </span><br />
@@ -394,7 +399,7 @@ Each of the functions is being scaled by a quantity—3, 5, and -2 in this examp
 <li>hump1(t) + 2<em>hump2(t)<span class='mcanswer'> ☹︎ Since hump2(t) has a maximum value of 20, 2</em>hump2(t) would reach a value of 40. That isn’t what’s shown in the graph. </span></li>
 </ol>
 <p>Another linear combination of the hump functions is shown in Graph (B).</p>
-<p><img src="CalcZ-notes_files/figure-html/unnamed-chunk-279-1.png" width="90%" style="display: block; margin: auto;" /></p>
+<p><img src="CalcZ-notes_files/figure-html/unnamed-chunk-280-1.png" width="90%" style="display: block; margin: auto;" /></p>
 <p><strong>Question B</strong> Which linear combination of hump1(t) and hump2(t) is shown in Graph (B)?</p>
 <ol style="list-style-type: lower-roman">
 <li>hump1(t) - 2*hump2(t)<span class="mcanswer"> ✓ </span><br />
@@ -579,7 +584,7 @@ Figure 11.2: Lorenz curves <span class="math inline">\(L_b(p)\)</span> (blue) an
 <p>Could you do this calculation in your head? Perhaps you could carry around a card with a graph for looking up the answer:</p>
 <div class="sourceCode" id="cb62"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb62-1"><a href="fun-assembling.html#cb62-1" aria-hidden="true" tabindex="-1"></a>doubling_time <span class="ot">&lt;-</span> <span class="fu">makeFun</span>(<span class="fu">log</span>(<span class="dv">2</span>) <span class="sc">/</span> <span class="fu">log</span>(<span class="dv">1</span> <span class="sc">+</span> r<span class="sc">/</span><span class="dv">100</span>) <span class="sc">~</span> r)</span>
 <span id="cb62-2"><a href="fun-assembling.html#cb62-2" aria-hidden="true" tabindex="-1"></a><span class="fu">slice_plot</span>(<span class="fu">doubling_time</span>(r) <span class="sc">~</span> r, <span class="fu">domain</span>(<span class="at">r =</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">30</span>))) </span></code></pre></div>
-<p><img src="CalcZ-notes_files/figure-html/unnamed-chunk-281-1.png" width="90%" style="display: block; margin: auto;" />
+<p><img src="CalcZ-notes_files/figure-html/unnamed-chunk-282-1.png" width="90%" style="display: block; margin: auto;" />
 It’s hard to be very precise in reading off values from such a graph. Instead, maybe we can simplify the formula.</p>
 <p>Clearly, a straight-line calculation is not going to match the doubling-time curve well. How about a quadratic approximation? Let’s make one centered on <span class="math inline">\(r = 5\)</span>. The formula, as for all quadratic approximations will be <span class="math display">\[n(r) \approx a + b (r - r_0) + c (r-r_0)^2/2\]</span></p>
 <p>When centering on <span class="math inline">\(r_0=5\)</span> the value of <span class="math inline">\(a\)</span> will be <code>doubling_time(5)</code>, the value of <span class="math inline">\(b\)</span> will be <code>dr_doubling_time(5)</code>, and the value of <span class="math inline">\(c\)</span> will be <code>drr_doubling_time(5)</code>.</p>
@@ -708,7 +713,7 @@ slice_plot(temp(day) ~ day, domain(day=c(90, 180)),  npt=1000) %>%
   gf_labs(y = "Temperature  (F)", x = "Day of year")
 ```
 
-<img src="CalcZ-notes_files/figure-html/unnamed-chunk-283-1.png" width="90%" style="display: block; margin: auto;" />
+<img src="CalcZ-notes_files/figure-html/unnamed-chunk-284-1.png" width="90%" style="display: block; margin: auto;" />
 
 You can see in the graph the slow seasonal change in  temperature represented by a sine  function with a period of 365 days, as well as the relatively rapid hour-by-hour variation over the course of 24 hours. There are two different mechanisms at  work, 1) the annual orbit of the Earth around the Sun  which creates the seasons,  2) the daily rotation of the Earth around its axis. Each mechanism is approximated by a simple function. The  overall  pattern can be represented by  a sum of functions.
 
@@ -716,7 +721,7 @@ We are going to use this strategy of modeling complex phenomena as a  sum of two
 
 **Problem 1** Epidemics are often modeled as a series of "waves." Each wave involves different  people. Let's imagine two epidemic waves, one passing through the "blue" population  and a smaller one through  the "red" population, like this:
 
-<img src="CalcZ-notes_files/figure-html/unnamed-chunk-284-1.png" width="90%" style="display: block; margin: auto;" />
+<img src="CalcZ-notes_files/figure-html/unnamed-chunk-285-1.png" width="90%" style="display: block; margin: auto;" />
 
 
 
@@ -725,7 +730,7 @@ We are going to use this strategy of modeling complex phenomena as a  sum of two
     A<span class='mcanswer'> ☹︎ The cumulative number of cases can't possibly go down! </span>       B<span class='mcanswer'> ☹︎ The cumulative number of cases can't possibly go down! </span>       C<span class='mcanswer'> ☹︎ You can't see the separate waves in (C) even though the rise in the blue wave is clearly distinct in  time from the rise in  the red wave.  </span>       D<span class='mcanswer'> ✓ Yes. Each wave adds another layer to the cumulative number of cases </span>
 
 
-<img src="CalcZ-notes_files/figure-html/unnamed-chunk-285-1.png" width="90%" style="display: block; margin: auto;" />
+<img src="CalcZ-notes_files/figure-html/unnamed-chunk-286-1.png" width="90%" style="display: block; margin: auto;" />
 
 Each of the functions shown in the above graph is a "linear combination" of the red function and the blue function. The real total cumulative cases is "wave1(t)"  plus "wave2(t)". The other functions are made up and are irrelevant to the real epidemic. Still, we can ask what arithmetic combination of "wave1(t)" and "wave2(t)"  was used to create the made-up function.
 
@@ -743,16 +748,16 @@ iii. 1000 + wave1(t) - wave2(t)<span class='mcanswer'> ☹︎ This  linear combi
 <details>
 <p>It’s very common in communications systems to have a signal that is a sine-wave <em>carrier</em> that is <em>modulated</em> by another function. That is, the carrier is <em>multiplied</em> by the other function: <code>waveform(t) = modulator(t)</code> <span class="math inline">\(\times\)</span> <code>carrier(t)</code>.</p>
 <p>Here are four examples in each of which a sine with a period of about 2 units is modulated by another function, one of the modeling functions we have studied.</p>
-<p><img src="CalcZ-notes_files/figure-html/unnamed-chunk-287-1.png" width="90%" style="display: block; margin: auto;" /></p>
+<p><img src="CalcZ-notes_files/figure-html/unnamed-chunk-288-1.png" width="90%" style="display: block; margin: auto;" /></p>
 <p><strong>Question A</strong> (A) Of what sort is the function that is modulating the carrier?</p>
 <p>    exponential<span class="mcanswer"> ✓ </span>       hump<span class="mcanswer"> ☹︎ </span>       sigmoid<span class="mcanswer"> ☹︎ </span>       sine<span class="mcanswer"> ☹︎ </span></p>
-<p><img src="CalcZ-notes_files/figure-html/unnamed-chunk-288-1.png" width="90%" style="display: block; margin: auto;" />
+<p><img src="CalcZ-notes_files/figure-html/unnamed-chunk-289-1.png" width="90%" style="display: block; margin: auto;" />
 <strong>Question B</strong> (B) Of what sort is the function that is modulating the carrier?</p>
 <p>    exponential<span class="mcanswer"> ☹︎ </span>       hump<span class="mcanswer"> ✓ </span>       sigmoid<span class="mcanswer"> ☹︎ </span>       sine<span class="mcanswer"> ☹︎ </span></p>
-<p><img src="CalcZ-notes_files/figure-html/unnamed-chunk-289-1.png" width="90%" style="display: block; margin: auto;" /></p>
+<p><img src="CalcZ-notes_files/figure-html/unnamed-chunk-290-1.png" width="90%" style="display: block; margin: auto;" /></p>
 <p><strong>Question C</strong> (C) Of what sort is the function that is modulating the carrier?</p>
 <p>    exponential<span class="mcanswer"> ☹︎ </span>       hump<span class="mcanswer"> ☹︎ </span>       sigmoid<span class="mcanswer"> ✓ </span>       sine<span class="mcanswer"> ☹︎ </span></p>
-<p><img src="CalcZ-notes_files/figure-html/unnamed-chunk-290-1.png" width="90%" style="display: block; margin: auto;" />
+<p><img src="CalcZ-notes_files/figure-html/unnamed-chunk-291-1.png" width="90%" style="display: block; margin: auto;" />
 <strong>Question D</strong> (D) Of what sort is the function that is modulating the carrier?</p>
     exponential<span class="mcanswer"> ☹︎ </span>       hump<span class="mcanswer"> ☹︎ </span>       sigmoid<span class="mcanswer"> ☹︎ </span>       sine<span class="mcanswer"> ✓ </span>
 </details>
@@ -769,7 +774,7 @@ iii. 1000 + wave1(t) - wave2(t)<span class='mcanswer'> ☹︎ This  linear combi
 <div class="sourceCode" id="cb63"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb63-1"><a href="fun-assembling.html#cb63-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_point</span>(LifeExpectancy <span class="sc">~</span> Physicians,</span>
 <span id="cb63-2"><a href="fun-assembling.html#cb63-2" aria-hidden="true" tabindex="-1"></a>         <span class="at">data =</span> LifeExpectancyPhysicians) <span class="sc">%&gt;%</span></span>
 <span id="cb63-3"><a href="fun-assembling.html#cb63-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gf_refine</span>()</span></code></pre></div>
-<p><img src="CalcZ-notes_files/figure-html/unnamed-chunk-292-1.png" width="90%" style="display: block; margin: auto;" /></p>
+<p><img src="CalcZ-notes_files/figure-html/unnamed-chunk-293-1.png" width="90%" style="display: block; margin: auto;" /></p>
 </div>
 <p>Using <code>fitModel()</code>, your instructor found the following model of life-expectancy (which we’ll call L, in years) as a function of physicians-per-1000 people. (We’ll call this “doctor-density” for short, so D.)</p>
 <p>The instructor’s model is:</p>
