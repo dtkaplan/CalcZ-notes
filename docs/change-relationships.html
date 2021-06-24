@@ -24,7 +24,7 @@
 <meta name="author" content="Daniel Kaplan" />
 
 
-<meta name="date" content="2021-06-18" />
+<meta name="date" content="2021-06-24" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -32,7 +32,7 @@
   
   
 <link rel="prev" href="outline-of-block-2.html"/>
-<link rel="next" href="h-and-derivatives.html"/>
+<link rel="next" href="computing-derivs.html"/>
 <script src="libs/header-attrs-2.8/header-attrs.js"></script>
 <script src="libs/jquery-3.5.1/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -62,6 +62,16 @@
 <script src="libs/crosstalk-1.1.1/js/crosstalk.min.js"></script>
 <link href="libs/plotly-htmlwidgets-css-1.57.1/plotly-htmlwidgets.css" rel="stylesheet" />
 <script src="libs/plotly-main-1.57.1/plotly-latest.min.js"></script>
+<span class="math inline">
+\(\newcommand{\line}{\text{line}}
+\newcommand{\hump}{\text{hump}}
+\newcommand{\sigmoid}{\text{sigmoid}}
+\newcommand{\recip}{\text{recip}}
+\newcommand{\diff}[1]{{\cal D}_#1}\)
+</span>
+
+
+<!-- see https://www.homepages.ucl.ac.uk/~ucahmto/elearning/2019/09/14/bookdown.html-->
 
 
 <style type="text/css">
@@ -228,33 +238,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="9.4" data-path="fun-slopes.html"><a href="fun-slopes.html#the-fitted-line"><i class="fa fa-check"></i><b>9.4</b> The fitted line</a></li>
 <li class="chapter" data-level="9.5" data-path="fun-slopes.html"><a href="fun-slopes.html#average-rate-of-change"><i class="fa fa-check"></i><b>9.5</b> Average rate of change</a></li>
 <li class="chapter" data-level="9.6" data-path="fun-slopes.html"><a href="fun-slopes.html#instantaneous-rate-of-change"><i class="fa fa-check"></i><b>9.6</b> Instantaneous rate of change</a></li>
-<li class="chapter" data-level="9.7" data-path="fun-slopes.html"><a href="fun-slopes.html#the-slope-function"><i class="fa fa-check"></i><b>9.7</b> The slope function</a></li>
-<li class="chapter" data-level="9.8" data-path="fun-slopes.html"><a href="fun-slopes.html#to-be-turned-into-exercises"><i class="fa fa-check"></i><b>9.8</b> To be turned into exercises</a></li>
-</ul></li>
-<li class="chapter" data-level="10" data-path="function-inverses-and-solving.html"><a href="function-inverses-and-solving.html"><i class="fa fa-check"></i><b>10</b> Function inverses and “solving”</a>
-<ul>
-<li class="chapter" data-level="10.1" data-path="function-inverses-and-solving.html"><a href="function-inverses-and-solving.html#function-inverses"><i class="fa fa-check"></i><b>10.1</b> Function inverses</a></li>
-<li class="chapter" data-level="10.2" data-path="function-inverses-and-solving.html"><a href="function-inverses-and-solving.html#exercises"><i class="fa fa-check"></i><b>10.2</b> Exercises</a></li>
-</ul></li>
-<li class="chapter" data-level="11" data-path="fun-assembling.html"><a href="fun-assembling.html"><i class="fa fa-check"></i><b>11</b> Assembling functions</a>
-<ul>
-<li class="chapter" data-level="11.1" data-path="fun-assembling.html"><a href="fun-assembling.html#linear-combination"><i class="fa fa-check"></i><b>11.1</b> Linear combination</a></li>
-<li class="chapter" data-level="11.2" data-path="fun-assembling.html"><a href="fun-assembling.html#function-composition"><i class="fa fa-check"></i><b>11.2</b> Function composition</a></li>
-<li class="chapter" data-level="11.3" data-path="fun-assembling.html"><a href="fun-assembling.html#modeling-polynomial-1"><i class="fa fa-check"></i><b>11.3</b> The modeling polynomial</a></li>
-<li class="chapter" data-level="11.4" data-path="fun-assembling.html"><a href="fun-assembling.html#tukeys-ladder-optional"><i class="fa fa-check"></i><b>11.4</b> Tukey’s ladder (optional)</a></li>
-<li class="chapter" data-level="11.5" data-path="fun-assembling.html"><a href="fun-assembling.html#function-multiplication"><i class="fa fa-check"></i><b>11.5</b> Function multiplication</a></li>
-<li class="chapter" data-level="11.6" data-path="fun-assembling.html"><a href="fun-assembling.html#all-together-now"><i class="fa fa-check"></i><b>11.6</b> All together now!</a></li>
-<li class="chapter" data-level="11.7" data-path="fun-assembling.html"><a href="fun-assembling.html#exercises-1"><i class="fa fa-check"></i><b>11.7</b> Exercises</a></li>
-</ul></li>
-<li class="chapter" data-level="12" data-path="fun-multiple-inputs.html"><a href="fun-multiple-inputs.html"><i class="fa fa-check"></i><b>12</b> Functions with multiple inputs</a>
-<ul>
-<li class="chapter" data-level="12.1" data-path="fun-multiple-inputs.html"><a href="fun-multiple-inputs.html#fx-times-gt"><i class="fa fa-check"></i><b>12.1</b> f(x) times g(t)</a></li>
-<li class="chapter" data-level="12.2" data-path="fun-multiple-inputs.html"><a href="fun-multiple-inputs.html#two-variable-modeling-polynomial"><i class="fa fa-check"></i><b>12.2</b> Two-variable modeling polynomial</a></li>
-<li class="chapter" data-level="12.3" data-path="fun-multiple-inputs.html"><a href="fun-multiple-inputs.html#function-composition-not"><i class="fa fa-check"></i><b>12.3</b> Function composition (not!)</a></li>
-</ul></li>
-<li class="chapter" data-level="13" data-path="fun-piecewise.html"><a href="fun-piecewise.html"><i class="fa fa-check"></i><b>13</b> Piecewise functions</a>
-<ul>
-<li class="chapter" data-level="13.1" data-path="fun-piecewise.html"><a href="fun-piecewise.html#piecewise-functions"><i class="fa fa-check"></i><b>13.1</b> Piecewise functions</a></li>
 </ul></li>
 <li class="chapter" data-level="14" data-path="magnitudes.html"><a href="magnitudes.html"><i class="fa fa-check"></i><b>14</b> Magnitudes</a>
 <ul>
@@ -279,26 +262,22 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="outline-of-block-2.html"><a href="outline-of-block-2.html"><i class="fa fa-check"></i>Outline of Block 2</a></li>
 <li class="chapter" data-level="16" data-path="change-relationships.html"><a href="change-relationships.html"><i class="fa fa-check"></i><b>16</b> Change relationships</a>
 <ul>
-<li class="chapter" data-level="16.1" data-path="change-relationships.html"><a href="change-relationships.html#slopes-and-increments."><i class="fa fa-check"></i><b>16.1</b> Slopes and increments.</a></li>
-<li class="chapter" data-level="16.2" data-path="change-relationships.html"><a href="change-relationships.html#slopes-and-motion"><i class="fa fa-check"></i><b>16.2</b> Slopes and motion</a></li>
-<li class="chapter" data-level="16.3" data-path="change-relationships.html"><a href="change-relationships.html#differentiation"><i class="fa fa-check"></i><b>16.3</b> Differentiation</a></li>
+<li class="chapter" data-level="16.1" data-path="change-relationships.html"><a href="change-relationships.html#slopes-and-motion"><i class="fa fa-check"></i><b>16.1</b> Slopes and motion</a></li>
+<li class="chapter" data-level="16.2" data-path="change-relationships.html"><a href="change-relationships.html#differentiation"><i class="fa fa-check"></i><b>16.2</b> Differentiation</a></li>
+<li class="chapter" data-level="16.3" data-path="change-relationships.html"><a href="change-relationships.html#notations-for-differentiation"><i class="fa fa-check"></i><b>16.3</b> Notations for differentiation</a></li>
 <li class="chapter" data-level="16.4" data-path="change-relationships.html"><a href="change-relationships.html#dimension-of-derivatives"><i class="fa fa-check"></i><b>16.4</b> Dimension of derivatives</a></li>
-<li class="chapter" data-level="16.5" data-path="change-relationships.html"><a href="change-relationships.html#using-h"><i class="fa fa-check"></i><b>16.5</b> Using h</a></li>
-<li class="chapter" data-level="16.6" data-path="change-relationships.html"><a href="change-relationships.html#differencing"><i class="fa fa-check"></i><b>16.6</b> Differencing</a></li>
-<li class="chapter" data-level="16.7" data-path="change-relationships.html"><a href="change-relationships.html#instantaneous-rate-of-change-1"><i class="fa fa-check"></i><b>16.7</b> Instantaneous rate of change</a></li>
 </ul></li>
-<li class="chapter" data-level="17" data-path="h-and-derivatives.html"><a href="h-and-derivatives.html"><i class="fa fa-check"></i><b>17</b> h and derivatives</a>
+<li class="chapter" data-level="17" data-path="computing-derivs.html"><a href="computing-derivs.html"><i class="fa fa-check"></i><b>17</b> Computing derivatives</a>
 <ul>
-<li class="chapter" data-level="17.1" data-path="h-and-derivatives.html"><a href="h-and-derivatives.html#the-h-framework"><i class="fa fa-check"></i><b>17.1</b> The <span class="math inline">\(h\)</span> framework</a></li>
-<li class="chapter" data-level="17.2" data-path="h-and-derivatives.html"><a href="h-and-derivatives.html#approximations-to-naked-modeling-functions"><i class="fa fa-check"></i><b>17.2</b> Approximations to naked modeling functions</a></li>
+<li class="chapter" data-level="17.1" data-path="computing-derivs.html"><a href="computing-derivs.html#a-function-from-a-function"><i class="fa fa-check"></i><b>17.1</b> A function from a function</a></li>
+<li class="chapter" data-level="17.2" data-path="computing-derivs.html"><a href="computing-derivs.html#finite-differencing"><i class="fa fa-check"></i><b>17.2</b> Finite differencing</a></li>
+<li class="chapter" data-level="17.3" data-path="computing-derivs.html"><a href="computing-derivs.html#the-slope-function-operator"><i class="fa fa-check"></i><b>17.3</b> The slope-function operator</a></li>
+<li class="chapter" data-level="17.4" data-path="computing-derivs.html"><a href="computing-derivs.html#symbolic-differentiation"><i class="fa fa-check"></i><b>17.4</b> Symbolic differentiation</a></li>
 </ul></li>
-<li class="chapter" data-level="18" data-path="optim-and-shape.html"><a href="optim-and-shape.html"><i class="fa fa-check"></i><b>18</b> Optimization</a>
+<li class="chapter" data-level="18" data-path="convexity-and-curvature.html"><a href="convexity-and-curvature.html"><i class="fa fa-check"></i><b>18</b> Convexity and curvature</a>
 <ul>
-<li class="chapter" data-level="18.1" data-path="optim-and-shape.html"><a href="optim-and-shape.html#structure-of-the-problem"><i class="fa fa-check"></i><b>18.1</b> Structure of the problem</a></li>
-<li class="chapter" data-level="18.2" data-path="optim-and-shape.html"><a href="optim-and-shape.html#interpreting-the-argmax"><i class="fa fa-check"></i><b>18.2</b> Interpreting the argmax</a></li>
-<li class="chapter" data-level="18.3" data-path="optim-and-shape.html"><a href="optim-and-shape.html#derivatives-and-optimization"><i class="fa fa-check"></i><b>18.3</b> Derivatives and optimization</a></li>
-<li class="chapter" data-level="18.4" data-path="optim-and-shape.html"><a href="optim-and-shape.html#approximations-around-xstar"><i class="fa fa-check"></i><b>18.4</b> Approximations around <span class="math inline">\(x^\star\)</span></a></li>
-<li class="chapter" data-level="18.5" data-path="optim-and-shape.html"><a href="optim-and-shape.html#solving-computationally"><i class="fa fa-check"></i><b>18.5</b> Solving computationally</a></li>
+<li class="chapter" data-level="18.1" data-path="convexity-and-curvature.html"><a href="convexity-and-curvature.html#concavity"><i class="fa fa-check"></i><b>18.1</b> Concavity</a></li>
+<li class="chapter" data-level="18.2" data-path="convexity-and-curvature.html"><a href="convexity-and-curvature.html#curvature"><i class="fa fa-check"></i><b>18.2</b> Curvature</a></li>
 </ul></li>
 <li class="chapter" data-level="19" data-path="cont-and-smooth.html"><a href="cont-and-smooth.html"><i class="fa fa-check"></i><b>19</b> Continuity and smoothness</a>
 <ul>
@@ -309,17 +288,47 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="19.5" data-path="cont-and-smooth.html"><a href="cont-and-smooth.html#continuity-1"><i class="fa fa-check"></i><b>19.5</b> Continuity</a></li>
 <li class="chapter" data-level="19.6" data-path="cont-and-smooth.html"><a href="cont-and-smooth.html#differentiability"><i class="fa fa-check"></i><b>19.6</b> Differentiability</a></li>
 </ul></li>
-<li class="chapter" data-level="20" data-path="prod-comp-rules.html"><a href="prod-comp-rules.html"><i class="fa fa-check"></i><b>20</b> Differentiation by algebra</a>
+<li class="chapter" data-level="20" data-path="evanescent-h.html"><a href="evanescent-h.html"><i class="fa fa-check"></i><b>20</b> Evanescent h</a>
 <ul>
-<li class="chapter" data-level="20.1" data-path="prod-comp-rules.html"><a href="prod-comp-rules.html#memorizing-derivatives"><i class="fa fa-check"></i><b>20.1</b> Memorizing derivatives</a></li>
-<li class="chapter" data-level="20.2" data-path="prod-comp-rules.html"><a href="prod-comp-rules.html#exponentials-and-logarithms-optional"><i class="fa fa-check"></i><b>20.2</b> Exponentials and logarithms (optional)</a></li>
-<li class="chapter" data-level="20.3" data-path="prod-comp-rules.html"><a href="prod-comp-rules.html#combining-functions"><i class="fa fa-check"></i><b>20.3</b> Combining functions</a></li>
-<li class="chapter" data-level="20.4" data-path="prod-comp-rules.html"><a href="prod-comp-rules.html#composition-of-functions"><i class="fa fa-check"></i><b>20.4</b> Composition of functions</a></li>
-<li class="chapter" data-level="20.5" data-path="prod-comp-rules.html"><a href="prod-comp-rules.html#product-of-functions"><i class="fa fa-check"></i><b>20.5</b> Product of functions</a></li>
-<li class="chapter" data-level="20.6" data-path="prod-comp-rules.html"><a href="prod-comp-rules.html#checking-your-work"><i class="fa fa-check"></i><b>20.6</b> Checking your work</a></li>
-<li class="chapter" data-level="20.7" data-path="prod-comp-rules.html"><a href="prod-comp-rules.html#working-with-algebraic-derivatives"><i class="fa fa-check"></i><b>20.7</b> Working with algebraic derivatives</a></li>
-<li class="chapter" data-level="20.8" data-path="prod-comp-rules.html"><a href="prod-comp-rules.html#tree-harvesting"><i class="fa fa-check"></i><b>20.8</b> Tree harvesting</a></li>
+<li class="chapter" data-level="20.1" data-path="evanescent-h.html"><a href="evanescent-h.html#role-of-h"><i class="fa fa-check"></i><b>20.1</b> Role of h</a></li>
+<li class="chapter" data-level="20.2" data-path="evanescent-h.html"><a href="evanescent-h.html#derivatives-of-linear-combinations"><i class="fa fa-check"></i><b>20.2</b> Derivatives of linear combinations</a></li>
+<li class="chapter" data-level="20.3" data-path="evanescent-h.html"><a href="evanescent-h.html#derivatives-of-the-basic-modeling-functions"><i class="fa fa-check"></i><b>20.3</b> Derivatives of the basic modeling functions</a></li>
 </ul></li>
+<li class="chapter" data-level="21" data-path="prod-comp-rules.html"><a href="prod-comp-rules.html"><i class="fa fa-check"></i><b>21</b> Differentiation of assembled functions</a>
+<ul>
+<li class="chapter" data-level="21.1" data-path="prod-comp-rules.html"><a href="prod-comp-rules.html#step-1-identify-f-and-g"><i class="fa fa-check"></i><b>21.1</b> Step 1: Identify f() and g()</a></li>
+<li class="chapter" data-level="21.2" data-path="prod-comp-rules.html"><a href="prod-comp-rules.html#step-2-find-f-and-g"><i class="fa fa-check"></i><b>21.2</b> Step 2: Find f’() and g’()</a></li>
+<li class="chapter" data-level="21.3" data-path="prod-comp-rules.html"><a href="prod-comp-rules.html#product-rule"><i class="fa fa-check"></i><b>21.3</b> Product rule</a></li>
+<li class="chapter" data-level="21.4" data-path="prod-comp-rules.html"><a href="prod-comp-rules.html#composition-chain-rule"><i class="fa fa-check"></i><b>21.4</b> Composition (“chain”) rule</a></li>
+<li class="chapter" data-level="21.5" data-path="prod-comp-rules.html"><a href="prod-comp-rules.html#step-3-apply-the-relevant-rule"><i class="fa fa-check"></i><b>21.5</b> Step 3: Apply the relevant rule</a></li>
+<li class="chapter" data-level="21.6" data-path="prod-comp-rules.html"><a href="prod-comp-rules.html#exponentials-and-logarithms-optional"><i class="fa fa-check"></i><b>21.6</b> Exponentials and logarithms (optional)</a></li>
+<li class="chapter" data-level="21.7" data-path="prod-comp-rules.html"><a href="prod-comp-rules.html#checking-your-work"><i class="fa fa-check"></i><b>21.7</b> Checking your work</a></li>
+</ul></li>
+<li class="chapter" data-level="22" data-path="optim-and-shape.html"><a href="optim-and-shape.html"><i class="fa fa-check"></i><b>22</b> Optimization</a>
+<ul>
+<li class="chapter" data-level="22.1" data-path="optim-and-shape.html"><a href="optim-and-shape.html#structure-of-the-problem"><i class="fa fa-check"></i><b>22.1</b> Structure of the problem</a></li>
+<li class="chapter" data-level="22.2" data-path="optim-and-shape.html"><a href="optim-and-shape.html#interpreting-the-argmax"><i class="fa fa-check"></i><b>22.2</b> Interpreting the argmax</a></li>
+<li class="chapter" data-level="22.3" data-path="optim-and-shape.html"><a href="optim-and-shape.html#derivatives-and-optimization"><i class="fa fa-check"></i><b>22.3</b> Derivatives and optimization</a></li>
+<li class="chapter" data-level="22.4" data-path="optim-and-shape.html"><a href="optim-and-shape.html#tree-harvesting"><i class="fa fa-check"></i><b>22.4</b> Tree harvesting</a></li>
+</ul></li>
+<li class="chapter" data-level="23" data-path="partial-change.html"><a href="partial-change.html"><i class="fa fa-check"></i><b>23</b> Partial change</a>
+<ul>
+<li class="chapter" data-level="23.1" data-path="partial-change.html"><a href="partial-change.html#calculus-on-two-inputs"><i class="fa fa-check"></i><b>23.1</b> Calculus on two inputs</a></li>
+<li class="chapter" data-level="23.2" data-path="partial-change.html"><a href="partial-change.html#all-other-things-being-equal"><i class="fa fa-check"></i><b>23.2</b> All other things being equal …</a></li>
+<li class="chapter" data-level="23.3" data-path="partial-change.html"><a href="partial-change.html#gradient-vector"><i class="fa fa-check"></i><b>23.3</b> Gradient vector</a></li>
+<li class="chapter" data-level="23.4" data-path="partial-change.html"><a href="partial-change.html#gradient-vector-1"><i class="fa fa-check"></i><b>23.4</b> Gradient vector</a></li>
+</ul></li>
+<li class="chapter" data-level="24" data-path="local-approximations.html"><a href="local-approximations.html"><i class="fa fa-check"></i><b>24</b> Local approximations</a>
+<ul>
+<li class="chapter" data-level="24.1" data-path="local-approximations.html"><a href="local-approximations.html#eight-simple-shapes"><i class="fa fa-check"></i><b>24.1</b> Eight simple shapes</a></li>
+<li class="chapter" data-level="24.2" data-path="local-approximations.html"><a href="local-approximations.html#low-order-polynomial"><i class="fa fa-check"></i><b>24.2</b> Low-order polynomial</a></li>
+<li class="chapter" data-level="24.3" data-path="local-approximations.html"><a href="local-approximations.html#the-low-order-polynomial-with-two-inputs"><i class="fa fa-check"></i><b>24.3</b> The low-order polynomial with two inputs</a></li>
+<li class="chapter" data-level="24.4" data-path="local-approximations.html"><a href="local-approximations.html#derivatives-of-polynomials"><i class="fa fa-check"></i><b>24.4</b> Derivatives of polynomials</a></li>
+<li class="chapter" data-level="24.5" data-path="local-approximations.html"><a href="local-approximations.html#approximations-around-xstar"><i class="fa fa-check"></i><b>24.5</b> Approximations around <span class="math inline">\(x^\star\)</span></a></li>
+<li class="chapter" data-level="24.6" data-path="local-approximations.html"><a href="local-approximations.html#solving-computationally"><i class="fa fa-check"></i><b>24.6</b> Solving computationally</a></li>
+<li class="chapter" data-level="24.7" data-path="local-approximations.html"><a href="local-approximations.html#from-an-earlier-draft"><i class="fa fa-check"></i><b>24.7</b> From an earlier draft</a></li>
+</ul></li>
+<li class="chapter" data-level="25" data-path="approximation-around-a-point.html"><a href="approximation-around-a-point.html"><i class="fa fa-check"></i><b>25</b> Approximation around a point</a></li>
 </ul>
 
       </nav>
@@ -339,8 +348,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
             <section class="normal" id="section-">
 <div id="change-relationships" class="section level1" number="16">
 <h1><span class="header-section-number">Chapter 16</span> Change relationships</h1>
-<p>The questions that started it all had to do with motion. There were words to describe speed: fast and slow. There were words to describe force: strong and weak, heavy and light. And there were words to describe location: far and near, long and short. But what were the relationships among these things? And how did time fit in, an intangible quantity that had aspects of location (long and short) and of speed (quick and slow)?</p>
-<p>Galileo (1564-1642) started the ball rolling. As the son of a musician and music theorist, he had a sense of musical time, a steady beat of intervals. As a student of medicine in Pisa, he noted that swinging pendulums kept reliable time, regardless of the amplitude of their swing. After accidentally attending a lecture on geometry, he turned to mathematics and natural philosophy. Inventing the telescope, his observations put him on a collision course with the accepted classical truth about the nature of the planets. Seeking to understand gravity, he built an apparatus that enabled him to measure accurately the position in time of a ball rolling down a straight ramp. The belled gates he set up to mark the ball’s passage were spaced arithmetically in musical time: 1, 2, 3, 4, …. But the distance between the gates was geometric: 1, 4, 9, 16, …. Thus he established a mathematical relationship between increments in time and increments in position. Time advanced as 1, 1, 1, 1, … and position as 1, 3, 5, 7, …. He observed that the <strong><em>second</em></strong> increments of position, the increments of the increments 1, 3, 5, 7, …, were themselves evenly spaced: 2, 2, 2, ….</p>
+<p>The questions that started it all had to do with motion. There were words to describe speed: fast and slow. There were words to describe force: strong and weak, heavy and light. And there were words to describe location and distance: far and near, long and short, here and there. But what were the relationships among these things? And how did time fit in, an intangible quantity that had aspects of location (long and short) and of speed (quick and slow)?</p>
+<p>Galileo (1564-1642) started the ball rolling. As the son of a musician and music theorist, he had a sense of musical time, a steady beat of intervals. When a student of medicine in Pisa, he noted that swinging pendulums kept reliable time, regardless of the amplitude of their swing. After accidentally attending a lecture on geometry, he turned to mathematics and natural philosophy. Inventing the telescope, his observations put him on a collision course with the accepted classical truth about the nature of the planets. Seeking to understand gravity, he built an apparatus that enabled him to measure accurately the position in time of a ball rolling down a straight ramp. The belled gates he set up to mark the ball’s passage were spaced arithmetically in musical time: 1, 2, 3, 4, …. But the distance between the gates was geometric: 1, 4, 9, 16, …. Thus he established a mathematical relationship between increments in time and increments in position. Time advanced as 1, 1, 1, 1, … and position as 1, 3, 5, 7, …. He observed that the <strong><em>second</em></strong> increments of position, the increments of the increments 1, 3, 5, 7, …, were themselves evenly spaced: 2, 2, 2, ….</p>
 <p>Putting these observations in tabular form, and adding columns for the</p>
 <ul>
 <li>first increment <span class="math inline">\(y(t) \equiv x(t+1) - x(t)\)</span> and the</li>
@@ -388,11 +397,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </tr>
 </tbody>
 </table>
-<p>Galileo had neither the mathematics nor the equipment to measure motion continuously in time. So what might be obvious to us now, that position is a function of time <span class="math inline">\(x(t)\)</span>, would have had little practical significance to him. But we discover in his first increments of <span class="math inline">\(x\)</span> something very much like our <strong><em>slope function</em></strong>.</p>
+<p>Galileo had neither the mathematics nor the equipment to measure motion continuously in time. So what might be obvious to us now, that position is a function of time <span class="math inline">\(x(t)\)</span>, would have had little practical significance to him. But we discover in his first increments of <span class="math inline">\(x\)</span> something very much like the <strong><em>slope function</em></strong> in Chapter <a href="#slope-function"><strong>??</strong></a>.</p>
 <p><span class="math display">\[{\cal D}_t\, x(t) \equiv \frac{x(t + 1) - x(t)}{1}\]</span>
 From his data, he observed that <span class="math inline">\({\cal D}_t\, x(t)\)</span> increases linearly in <span class="math inline">\(t\)</span>: <span class="math display">\[{\cal D}_t x(t) = 2 t + 1\]</span></p>
 <p>Calculating the second increments of <span class="math inline">\(x\)</span> is done by the “slope function of the slope function,” which we can call <span class="math inline">\({\cal D}_{tt}\)</span>:
-<span class="math display">\[{\cal D}_{tt} x \equiv {\cal D}_t \left[{\cal D}_t x(t)\right] = 2(t+1) + 1 - (2 t + 1) = 2\]</span></p>
+<span class="math display">\[{\cal D}_{tt} x \equiv {\cal D}_t \left[{\cal D}_t x(t)\right] = 2(t+1) + 1 - (2 t + 1) = 2\]</span>
+## Continuous time</p>
 <p>Newton considered the problem for continuous time rather than Galileo’s discrete time. He reframed the slope function from the big increments of the slope operator <span class="math inline">\({\cal D}_t\)</span> to imagined vanishingly small increments of a operator that we shall denote <span class="math inline">\(\partial_t\)</span> and call <strong><em>differentiation</em></strong>.</p>
 <p>The kind of question for which Newton wanted to be able to calculate the answer was, “How to find the function <span class="math inline">\(x(t)\)</span> whose second increment, <span class="math inline">\(\partial_{tt} x(t) = 2\)</span>?” His approach, which he called the “method of fluxions,” became so important that its name became, simply, “Calculus.”</p>
 <p>Over the next three centuries, calculus evolved from a set of techniques for describing motion into the general-purpose mathematics of change. Applying calculus in the real world involves understanding change relationships between quantities. To give some examples:</p>
@@ -406,7 +416,7 @@ From his data, he observed that <span class="math inline">\({\cal D}_t\, x(t)\)<
 </ul>
 
 <div class="exercise">
-<span id="exr:unnamed-chunk-129" class="exercise"><strong>Exercise 16.1  (kid-mean-table)  </strong></span>
+<span id="exr:unnamed-chunk-132" class="exercise"><strong>Exercise 16.1  (kid-mean-table)  </strong></span>
 </div>
 <details>
 <p>Each question involves a pair of quantities that are a function of time and that might or might not be a quantity/rate-of-change pair. If they are, say which quantity is which. Feel free to look up a dictionary definition of words you are uncertain about.</p>
@@ -467,139 +477,31 @@ From his data, he observed that <span class="math inline">\({\cal D}_t\, x(t)\)<
 <li>They are not a rate of change pair.<span class="mcanswer"> ✓ Air resistence is a force, with dimension <span class="math inline">\(M L/T^2\)</span>. Velocity has dimension <span class="math inline">\(L/T\)</span>. The rate of change of velocity with respect to time is acceleration, which has dimension <span class="math inline">\(L/T^2\)</span>. </span></li>
 </ol>
 </details>
-<div id="slopes-and-increments." class="section level2" number="16.1">
-<h2><span class="header-section-number">16.1</span> Slopes and increments.</h2>
-<p>The mathematical tools of Newton’s day are the basis of today’s conventional high-school curriculum.<a href="#fn19" class="footnote-ref" id="fnref19"><sup>19</sup></a> We have today completely different tools based on the ability to do arithmetic and function evaluation very quickly with computers. We’re going to use these new tools to explore the problem of relating the slope-function operator <span class="math inline">\({\cal D}_t\)</span> to the differential operator <span class="math inline">\(\partial_t\)</span>. We have the great advantage of being able to look backwards and so can focus on the functions that experience reveals have been the most widely useful: the basic modeling functions.</p>
-<p>Our goal in this section is to discover what are the slope functions of our basic modeling functions. Recall that the slope-function operator can be written as a ratio of rise-over-run:
-<span class="math display">\[{\cal D}_t x(t) \equiv \frac{x(t+h) - x(t)}{h}\]</span> where <span class="math inline">\(h\)</span> is the length of the “run.” We’ll start with two of the basic modeling functions that have considerable “personality”: the sinusoid (<code>sin()</code>) and the sigmoid (<code>pnorm()</code>).</p>
-<div class="figure" style="text-align: center"><span id="fig:sign-sig"></span>
-<img src="CalcZ-notes_files/figure-html/sign-sig-1.png" alt="The naked sinusoid and sigmoidal functions. A vertical blue line has been added to mark the input $t=0$" width="50%" /><img src="CalcZ-notes_files/figure-html/sign-sig-2.png" alt="The naked sinusoid and sigmoidal functions. A vertical blue line has been added to mark the input $t=0$" width="50%" />
+<div id="slopes-and-motion" class="section level2" number="16.1">
+<h2><span class="header-section-number">16.1</span> Slopes and motion</h2>
+<p>Chapter <a href="fun-slopes.html#instantaneous-rate-of-change">9.6</a> introduced the idea of a <strong><em>slope function</em></strong>: a function <span class="math inline">\(g(t)\)</span> whose value at each instant gives the instantaneous rate of change of a partner function <span class="math inline">\(f(t)\)</span>. To keep easier track of the relationship between the function and it’s slope function, we use the <span class="math inline">\({\cal D}\)</span> notation:
+<span class="math display">\[{\cal}D_t f(t)\]</span> is the slope function of <span class="math inline">\(f(t)\)</span> with respect to <span class="math inline">\(t\)</span>.</p>
+<p>To illustrate, imagine a graph of the position of a car along a road as in Figure <a href="change-relationships.html#fig:stop-and-go2">16.1</a>. Over the course of an hour, the car traveled about 25 miles. In other words, the <strong><em>average</em></strong> speed is 25 miles/hour: the <em>slope</em> of the red line segment. Given the traffic, sometimes the car was stopped (time C), sometimes crawling (time D) and sometimes much faster than average (time B).</p>
+<div class="figure" style="text-align: center"><span id="fig:stop-and-go2"></span>
+<img src="CalcZ-notes_files/figure-html/stop-and-go2-1.png" alt="The position of an imagined car over an hour of time. (black) The red line shows what the position would have been if the car had travelled steadily at the average speed for the hour." width="90%" />
 <p class="caption">
-Figure 16.1: The naked sinusoid and sigmoidal functions. A vertical blue line has been added to mark the input <span class="math inline">\(t=0\)</span>
+Figure 16.1: The position of an imagined car over an hour of time. (black) The red line shows what the position would have been if the car had travelled steadily at the average speed for the hour.
 </p>
 </div>
-<p>We’ll use the computer to construct the slope functions for the sinusoid and sigmoid, which we’ll call <code>Dsin()</code> and <code>Dsigma()</code> respectively.</p>
-<div class="sourceCode" id="cb118"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb118-1"><a href="change-relationships.html#cb118-1" aria-hidden="true" tabindex="-1"></a>Dsin   <span class="ot">&lt;-</span> <span class="fu">makeFun</span>((  <span class="fu">sin</span>(t<span class="sc">+</span>h) <span class="sc">-</span>   <span class="fu">sin</span>(t))<span class="sc">/</span>h <span class="sc">~</span> t, <span class="at">h=</span><span class="fl">0.1</span>)</span>
-<span id="cb118-2"><a href="change-relationships.html#cb118-2" aria-hidden="true" tabindex="-1"></a>Dsigma <span class="ot">&lt;-</span> <span class="fu">makeFun</span>((<span class="fu">pnorm</span>(t<span class="sc">+</span>h) <span class="sc">-</span> <span class="fu">pnorm</span>(t))<span class="sc">/</span>h <span class="sc">~</span> t, <span class="at">h=</span><span class="fl">0.1</span>)</span></code></pre></div>
-<p>In the tilde expression handed to <code>makeFun()</code>, we’ve identified <code>t</code> as the name of the input and given a “small” default value to the <code>h</code> parameter. But R recognizes that both <code>Dsin()</code> and <code>Dsigma()</code> are functions of two variables, <code>t</code> and <code>h</code>, as you can see in the parenthesized argument list for the functions.</p>
-<div class="sourceCode" id="cb119"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb119-1"><a href="change-relationships.html#cb119-1" aria-hidden="true" tabindex="-1"></a>Dsin</span></code></pre></div>
-<pre><code>## function (t, h = 0.1) 
-## (sin(t + h) - sin(t))/h</code></pre>
-<div class="sourceCode" id="cb121"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb121-1"><a href="change-relationships.html#cb121-1" aria-hidden="true" tabindex="-1"></a>Dsigma</span></code></pre></div>
-<pre><code>## function (t, h = 0.1) 
-## (pnorm(t + h) - pnorm(t))/h</code></pre>
-<p>This is a nuisance, since when using the slope functions we will need always to think about <code>h</code>, a number that we’d like to describe simply as “small,” but for which we always need to provide a numerical value. Let’s look at <code>Dsin()</code> and <code>Dsigma()</code> for a range of values of <code>h</code>, as in Figure <a href="change-relationships.html#fig:sin-sig-many-h">16.2</a>.</p>
-<div class="figure" style="text-align: center"><span id="fig:sin-sig-many-h"></span>
-<img src="CalcZ-notes_files/figure-html/sin-sig-many-h-1.png" alt="The slope functions of the sinusoid and sigmoid. Each curve shows the slope function for a particular numerical choice of `h`. Both panels show $h=2, 1, 0.5, 0.1, 0.01, 0.001, 0.0001, 0.00001, 0.000001$." width="50%" /><img src="CalcZ-notes_files/figure-html/sin-sig-many-h-2.png" alt="The slope functions of the sinusoid and sigmoid. Each curve shows the slope function for a particular numerical choice of `h`. Both panels show $h=2, 1, 0.5, 0.1, 0.01, 0.001, 0.0001, 0.00001, 0.000001$." width="50%" />
+<p>Of course, when you’re driving you are aware of the car’s speed at any instant. You need only look at the speedometer to read off the value (in miles per hour). Speedometers don’t show the average speed for the entire trip. The average speed is the slope of the red line in Figure @ref(fig:stop-and-go2}, 25 miles in one hour, usually stated 25 miles-per-hour.</p>
+<p>In terms of Figure @ref(fig:stop-and-go2}, the speedometer reading is the <strong>slope</strong> of <span class="math inline">\(f(t)\)</span> at the given instant. You can see from the Figure that at instant A the speed is very close to the average speed for the entire trip. At instant B the car is going faster; the slope is much steeper. On the other hand, at instant C the car is at a standstill; its position doesn’t change at all.</p>
+<p>The car’s speedometer shows the speed at each moment—or <strong><em>instant</em></strong>—of the trip. As you can see in Figure @ref{fig:stop-and-go}, the speed varies and is sometimes less than the average speed, sometimes greater, and occasionally equal to the average speed over the trip.</p>
+<p>Although you can easily judge whether the instantaneous speed is faster or slower than the average speed, quantifying the speed requires some work: calculating the slope of the tangent line.</p>
+<p>Far easier to have this job done for us. The means to do so is to compute the slope function of <span class="math inline">\(f()\)</span>, that is, <span class="math inline">\({\cal D}_tf()\)</span>. Figure <a href="change-relationships.html#fig:instant-speed">16.2</a> shows <span class="math inline">\({\cal D}_tf()\)</span> directly.</p>
+<p>You can read off the speed from the graph at any instant simply by reference to the vertical axis.</p>
+<div class="figure" style="text-align: center"><span id="fig:instant-speed"></span>
+<img src="CalcZ-notes_files/figure-html/instant-speed-1.png" alt="The ***instantaneous*** velocity of the car whose position vs time is shown in Figure \@ref(fig:stop-and-go2)." width="90%" />
 <p class="caption">
-Figure 16.2: The slope functions of the sinusoid and sigmoid. Each curve shows the slope function for a particular numerical choice of <code>h</code>. Both panels show <span class="math inline">\(h=2, 1, 0.5, 0.1, 0.01, 0.001, 0.0001, 0.00001, 0.000001\)</span>.
+Figure 16.2: The <strong><em>instantaneous</em></strong> velocity of the car whose position vs time is shown in Figure <a href="change-relationships.html#fig:stop-and-go2">16.1</a>.
 </p>
 </div>
-<p>Some observations from this numerical experiment:</p>
-<ol style="list-style-type: decimal">
-<li><p>As <span class="math inline">\(h\)</span> gets very small, the slope function doesn’t depend on the exact value of <span class="math inline">\(h\)</span>.</p>
-<p>This will provide a way for us, eventually, to discard <span class="math inline">\(h\)</span> so that the slope function will not need an <span class="math inline">\(h\)</span> argument.</p></li>
-<li><p>For small <span class="math inline">\(h\)</span>, we have <span class="math inline">\({\cal D}_t \sin(t) = \sin(t + \pi/2) = \cos(t)\)</span>. That is, taking the slope function of a sinusoid gives another sinusoid, shifted left by <span class="math inline">\(\pi/2\)</span> from the original. Or, in plain words, the cosine is the slope function of the sine.</p></li>
-<li><p>For small <span class="math inline">\(h\)</span>, we have <span class="math inline">\({\cal D}_t \text{pnorm}(t) = \text{dnorm(t)}\)</span>. That is, the hump function is the slope function of the sigmoid function.</p></li>
-</ol>
-<p>You can confirm these last two statements by comparison with the original functions, especially the alignment of the peaks of the slope functions with respect to the peak of the sinusoid and the half-way point of the sigmoid.</p>
-<p>Now consider the slope functions of the logarithm and exponential functions.</p>
-<div class="figure" style="text-align: center"><span id="fig:log-exp-many-h"></span>
-<img src="CalcZ-notes_files/figure-html/log-exp-many-h-1.png" alt="The slope functions of the logarithm and exponential." width="50%" /><img src="CalcZ-notes_files/figure-html/log-exp-many-h-2.png" alt="The slope functions of the logarithm and exponential." width="50%" />
-<p class="caption">
-Figure 16.3: The slope functions of the logarithm and exponential.
-</p>
-</div>
-<p>These numerical experiments with the logarithm and exponential functions are more evidence that, as <span class="math inline">\(h\)</span> gets small, the slope function doesn’t depend on <span class="math inline">\(x\)</span>. And, we find that:</p>
-<ul>
-<li>For small <span class="math inline">\(h\)</span>, the slope function of the logarithm is a power-law function: <span class="math inline">\({\cal D}_t \ln(t) = \frac{1}{t}\)</span>.</li>
-<li>For small <span class="math inline">\(h\)</span>, the slope function of the exponential is the exponential itself: <span class="math inline">\({\cal D}_t e^x = e^x\)</span>.</li>
-</ul>
-<p>You can confirm these by evaluating the slope function of the exponential at <span class="math inline">\(t=0\)</span> and <span class="math inline">\(t=1\)</span>, and the slope function of the logarithm at <span class="math inline">\(t= 2, 1, 1/2, 1/4, 1/8.\)</span></p>
-<p>Such numerical experiments on the other naked modeling functions reveal a pattern: the slope function of the naked modeling functions tend to be similar to other naked modeling functions.</p>
-<table>
-<thead>
-<tr class="header">
-<th>name</th>
-<th><span class="math inline">\(f(t)\)</span></th>
-<th><span class="math inline">\({\cal D}_t f(t)\)</span> (for small <span class="math inline">\(h\)</span>)</th>
-<th>name of <span class="math inline">\({\cal D_t}f(t)\)</span></th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>constant fun</td>
-<td><span class="math inline">\(f(t) = 1\)</span></td>
-<td><span class="math inline">\({\cal D}_t f(t) = 0\)</span></td>
-<td>zero function</td>
-</tr>
-<tr class="even">
-<td>proportional</td>
-<td><span class="math inline">\(f(x) = x\)</span></td>
-<td><span class="math inline">\({\cal D}_t f(t) = 1\)</span></td>
-<td>constant</td>
-</tr>
-<tr class="odd">
-<td>exponential</td>
-<td><span class="math inline">\(e^t\)</span></td>
-<td><span class="math inline">\(e^t\)</span></td>
-<td>exponential</td>
-</tr>
-<tr class="even">
-<td>logarithm</td>
-<td><span class="math inline">\(\ln(t)\)</span></td>
-<td><span class="math inline">\(1/t\)</span></td>
-<td>reciprocal (power-law <span class="math inline">\(t^{-1}\)</span>)</td>
-</tr>
-<tr class="odd">
-<td>sinusoid</td>
-<td><span class="math inline">\(\sin(t)\)</span></td>
-<td><span class="math inline">\(\sin(x + \pi/2) = \cos(t)\)</span></td>
-<td>shifted sinusoid</td>
-</tr>
-<tr class="even">
-<td>power-law</td>
-<td><span class="math inline">\(t^p\)</span> with <span class="math inline">\(p\neq 0\)</span></td>
-<td><span class="math inline">\(p\,t^{p-1}\)</span></td>
-<td>power-law</td>
-</tr>
-<tr class="odd">
-<td>sigmoid</td>
-<td><span class="math inline">\(\text{pnorm}(t)\)</span></td>
-<td>$(t)</td>
-<td>hump</td>
-</tr>
-</tbody>
-</table>
-<p>With this list of experimentally determined slope functions (for small <span class="math inline">\(h\)</span>) we’re ready to start using slope functions without having to use left-shift combinations like <span class="math inline">\(f(t+h) - f(t)\)</span>.</p>
-
-<div class="exercise">
-<span id="exr:unnamed-chunk-133" class="exercise"><strong>Exercise 16.2  (lion-find-bowl)  </strong></span>
-</div>
-<details>
-<p>For each exercise, you are given a series of intervals that get smaller and smaller. Your job is to calculate the <em>average rate of change</em> of the function <span class="math inline">\(f(x) \equiv x^2\)</span> for each of the intervals. As the width of the intervals approach zero, our <em>average</em> rates of change become better approximations of the <em>instantaneous</em> rates of change. You should use the results you calculate to make an informed <em>estimate</em> of the <strong>instantaneous rate of change</strong>.</p>
-<div class="scaffolding">
-<div class="sourceCode" id="cb123"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb123-1"><a href="change-relationships.html#cb123-1" aria-hidden="true" tabindex="-1"></a>interval <span class="ot">&lt;-</span> <span class="fu">c</span>(__start__ , __end__ )</span>
-<span id="cb123-2"><a href="change-relationships.html#cb123-2" aria-hidden="true" tabindex="-1"></a>f <span class="ot">&lt;-</span> <span class="fu">makeFun</span>(x<span class="sc">^</span><span class="dv">2</span> <span class="sc">~</span> x)</span>
-<span id="cb123-3"><a href="change-relationships.html#cb123-3" aria-hidden="true" tabindex="-1"></a><span class="fu">diff</span>(<span class="fu">f</span>(interval)) <span class="sc">/</span> <span class="fu">diff</span>(interval)</span></code></pre></div>
-</div>
-<p>A. Use these three intervals to estimate the instantaneous rate of change <span class="math inline">\(\partial_x f(x=3)\)</span>
-- [3, 3.1]
-- [3, 3.01]
-- [3, 3.001]</p>
-<p>B. Use these three intervals to estimate the instantaneous rate of change <span class="math inline">\(\partial_x f(x=5)\)</span>
-- [4.9, 5]
-- [4.99, 5]
-- [4.999, 5]</p>
-<p>C. Use these three intervals to estimate the instantaneous rate of change <span class="math inline">\(\partial_x f(x=-2)\)</span>
-- [-2, -1.9]
-- [-2, -1.99]
-- [-2, -1.999]</p>
-</details>
-</div>
-<div id="slopes-and-motion" class="section level2" number="16.2">
-<h2><span class="header-section-number">16.2</span> Slopes and motion</h2>
-<p>Having worked out a theory of slope functions, Newton was ready to express the laws of motion in continuous time. He did this by expressing position as <span class="math inline">\(x(t)\)</span>, and then familiar concepts velocity and force in terms of slope functions of position and the “quantity of matter,” which we call “mass.”</p>
+<p>The two graphs in Figures <a href="#fig:stop-and-go"><strong>??</strong></a> and <a href="change-relationships.html#fig:instant-speed">16.2</a> show exactly the same car trip. The presentation of the data in the different graphs makes it easy to see some things and hard to see others. For instance, figuring out when the car is at a stand-still is harder in the position-vs-time graph than in the speed-vs-time graph.</p>
+<p>Having worked out a theory of slope functions, Newton was ready to express the laws of motion in continuous time. He did this by denoting position as <span class="math inline">\(x(t)\)</span>. The familiar concepts of velocity and force could then be defined in terms of slope functions of position and the “quantity of matter,” which we call “mass.”</p>
 <ul>
 <li>Velocity is the slope function of position: <span class="math inline">\(v(t) \equiv {\cal D}_t x(t)\)</span>.</li>
 <li>Net force is the slope function of velocity times mass: <span class="math inline">\(F(t) \equiv m {\cal D}_t v(t)\)</span></li>
@@ -608,19 +510,33 @@ Figure 16.3: The slope functions of the logarithm and exponential.
 <ul>
 <li>Acceleration is the slope function of velocity: <span class="math inline">\(a(t) \equiv {\cal D}_t v(t)\)</span>.</li>
 </ul>
-<p>With acceleration as a concept, we can define net force as mass times acceleration.</p>
+<p>With acceleration as a concept, we can define net force as mass times acceleration. This is better known as <strong><em>Newton’s Second Law of Motion</em></strong>.</p>
 <div class="why">
 <p>We used <strong>net force</strong> as the quantity we related to mass and the slope function of velocity. There are different sources of forces which add up and can cancel out. Famously, Newton formulated the <strong><em>law of universal gravitation</em></strong> which ascribed the force between masses as proportional to the product of the two masses and inversely proportional to the square of the distance between them. But a mass on a table has no net force on it, since the table pushes back (push = force) on the mass to cancel out the force due to gravity. “Net force” takes such cancellation into account.</p>
 </div>
 </div>
-<div id="differentiation" class="section level2" number="16.3">
-<h2><span class="header-section-number">16.3</span> Differentiation</h2>
-<p><strong><em>Differentiation</em></strong> is a process of transforming a function to produce another function. There are several traditional notations for differentiation of a function named <span class="math inline">\(f()\)</span>, for instance:</p>
+<div id="differentiation" class="section level2" number="16.2">
+<h2><span class="header-section-number">16.2</span> Differentiation</h2>
+<p>Two central operations in calculus are:</p>
+<ol style="list-style-type: decimal">
+<li>Given a function <span class="math inline">\(f(t)\)</span>, find the function <span class="math inline">\(\partial_t\,f(t)\)</span> giving the instantaneous rate of change of <span class="math inline">\(f()\)</span>. This process of deriving <span class="math inline">\(\partial_t\, (t)\)</span> from <span class="math inline">\(f(t)\)</span> is called <strong><em>differentiation</em></strong>.</li>
+<li>Given a function <span class="math inline">\(\partial_t\,(t)\)</span>, find the <span class="math inline">\(f(t)\)</span> of which <span class="math inline">\(\partial_t\,f(t)\)</span> is the instantaneous rate of change. This process of finding <span class="math inline">\(f()\)</span> given <span class="math inline">\(\partial_t\,f()\)</span> is called <strong><em>anti-differentiation</em></strong>.</li>
+</ol>
+<p>Notice that in (1) and (2) above we didn’t use the <span class="math inline">\({\cal D}_t\)</span> notation. It’s time to switch away from that. What prompts the change is the nuisance of the constant 0.1 in the definition of the slope function:
+<span class="math display">\[{\cal D}_t f(t) \equiv \frac{f(t+0.1) - f(t)}{0.1}\]</span></p>
+<p>Whereas the slope function <span class="math inline">\({\cal D}_t f(t)\)</span> gives an approximation to the instantaneous rate of change, <span class="math inline">\(\partial_t f(t)\)</span> refers to the instantaneous rate of change <strong>exactly</strong>.</p>
+<p>We’ll come back to the relationship between <span class="math inline">\({\cal D}_t\)</span> and <span class="math inline">\(\partial_t\)</span> in Chapter <a href="evanescent-h.html#evanescent-h">20</a>. It’s a subject of particular interest to mathematicians, hence a central part of traditional calculus texts (which are mostly written by mathematicians). For modeling and other applications of calculus, it is something of a side issue.</p>
+<p>As an intermediate step on the path between <span class="math inline">\({\cal D}_t\)</span> and <span class="math inline">\(\partial_t\)</span>, let’s redefine the slope function to eliminate the 0.1 and replace it with a parameter <span class="math inline">\(h\)</span>: <span class="math display">\[{\cal D}_x f(x) \equiv \frac{f(x+h) - f(x)}{h}\]</span>
+This way of writing the slope function will enable us to consider how the slope function changes as <span class="math inline">\(h\)</span> gets smaller and smaller.</p>
+</div>
+<div id="notations-for-differentiation" class="section level2" number="16.3">
+<h2><span class="header-section-number">16.3</span> Notations for differentiation</h2>
+<p>There are several traditional notations for differentiation of a function named <span class="math inline">\(f()\)</span>. For instance:</p>
 <ul>
 <li>Leibnitz: <span class="math inline">\(\frac{df}{dx}\)</span></li>
 <li>Partial: <span class="math inline">\(\frac{\partial f}{\partial x}\)</span></li>
 <li>Euler: <span class="math inline">\(D_x f\)</span></li>
-<li>One-line: <span class="math inline">\(\partial_x f\)</span> (a hybrid of partial and Euler notation)</li>
+<li>One-line: <span class="math inline">\(\partial_x f\)</span> (a hybrid of partial and Euler notation.)</li>
 <li>Newton (or “dot”): <span class="math inline">\(\dot{f}\)</span></li>
 <li>Lagrange (or “prime”): <span class="math inline">\(f&#39;\)</span></li>
 </ul>
@@ -635,25 +551,27 @@ Figure 16.3: The slope functions of the logarithm and exponential.
 <p>Both the Leibnitz and Partial notations are explicit in identifying the function and the with-respect-to-variable. For example, using the Partial differentiation notation, the three ways of differentiating our example function <span class="math inline">\(g(x, y, z)\)</span> are labeled :</p>
 <p><span class="math display">\[\frac{\partial f}{\partial x},\ \ \ \frac{\partial f}{\partial y},\ \ \text{and}\ \ \frac{\partial f}{\partial z}\]</span></p>
 <p>Our R/mosaic computer differentiation is longer but explicit:</p>
-<div class="sourceCode" id="cb124"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb124-1"><a href="change-relationships.html#cb124-1" aria-hidden="true" tabindex="-1"></a><span class="fu">D</span>(<span class="fu">g</span>(x, y, z) <span class="sc">~</span> x)</span>
-<span id="cb124-2"><a href="change-relationships.html#cb124-2" aria-hidden="true" tabindex="-1"></a><span class="fu">D</span>(<span class="fu">g</span>(x, y, z) <span class="sc">~</span> y)</span>
-<span id="cb124-3"><a href="change-relationships.html#cb124-3" aria-hidden="true" tabindex="-1"></a><span class="fu">D</span>(<span class="fu">g</span>(x, y, z) <span class="sc">~</span> z)</span></code></pre></div>
-<p>Notice that the R/mosaic operator is named <code>D()</code> and that it is a function. It follows the same pattern as <code>makeFun()</code> or <code>slice_plot()</code> or <code>contour_plot()</code>: the first argument is a tilde expression, for instance <code>g(x, y, z) ~ x</code>, which identifies the mathematical function to work with (<code>g()</code>) and the name of the with-respect-to input to that function. The R/mosaic notation makes it clear that differentiation is an <strong><em>operation</em></strong> on a function. The <code>D()</code> operator takes a function as input and produces as output <strong>another function</strong>. We’ve seen similar behavior with, say, <code>slice_plot()</code>, which takes a function as input and produces graphics as output. Both <code>D()</code> and <code>slice_plot()</code> need to know the identity of the with-respect-to variable as well as the function to work with. What’s why both pieces of input are packaged into a tilde expression.</p>
+<div class="sourceCode" id="cb120"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb120-1"><a href="change-relationships.html#cb120-1" aria-hidden="true" tabindex="-1"></a>dx_g <span class="ot">&lt;-</span> <span class="fu">D</span>(<span class="fu">g</span>(x, y, z) <span class="sc">~</span> x)</span>
+<span id="cb120-2"><a href="change-relationships.html#cb120-2" aria-hidden="true" tabindex="-1"></a>dy_g <span class="ot">&lt;-</span> <span class="fu">D</span>(<span class="fu">g</span>(x, y, z) <span class="sc">~</span> y)</span>
+<span id="cb120-3"><a href="change-relationships.html#cb120-3" aria-hidden="true" tabindex="-1"></a>dz_g <span class="ot">&lt;-</span> <span class="fu">D</span>(<span class="fu">g</span>(x, y, z) <span class="sc">~</span> z)</span></code></pre></div>
+<p>The names being used here are arbitrary; you can use any names you like. What’s nice about <code>dx_g</code> and the others is that it mimics the math notation <span class="math inline">\(\partial_x g()\)</span>.</p>
+<p>Notice that the R/mosaic operator for differentiation is named <code>D()</code> and that it is a function. It follows the same pattern as <code>makeFun()</code> or <code>slice_plot()</code> or <code>contour_plot()</code>: the first argument is a tilde expression, for instance <code>g(x, y, z) ~ x</code>, which identifies the mathematical function to work with (<code>g()</code>) and the name of the with-respect-to input to that function. The R/mosaic notation makes it clear that differentiation is an <strong><em>operation</em></strong> on a function. The <code>D()</code> operator takes a function as input and produces as output <strong>another function</strong>. We’ve seen similar behavior with, say, <code>slice_plot()</code>, which takes a function as input and produces graphics as output. Both <code>D()</code> and <code>slice_plot()</code> need to know the identity of the with-respect-to variable as well as the function to work with. What’s why both pieces of input are packaged into a tilde expression.</p>
 <div class="why">
 <p>We’re calling <code>D()</code> an <strong><em>operator</em></strong> rather than a <strong><em>function</em></strong>. The reason is purely for communication with other people. There are so many “functions” in a calculus course that we thought it would be helpful to distinguish between the kinds of functions that take quantities as input and produce a quantity as output, and the functions that take a <em>function</em> as input and produce a <em>function</em> as output. Both sorts are called “functions” in R terminology. But a sentence like, “Differentiation is a function that takes a function as input and produces a function as output,” true though it be, is dizzying.</p>
 </div>
-<div class="takenote">
+<div class="intheworld">
 <p>It is a fact of mathematical and scientific life that a variety of notations are used for differentiation. To some extent, this reflects historical precedence and, to be honest, nationalistic European politics of the 18th century. To make sense of mathematical writing in the many areas in which calculus is used, you have to recognize all of them for what they are. Your skill will be enhanced if you also memorize the names of the different styles. It’s not all that different from the pattern in English of having multiple words for the same sort of object, for instance: car, automobile, junker, ride, wheels, crate, jalopy, limo, motor car, horseless carriage.</p>
-<p>In the days when carriages where pulled by horses, the phrase “horseless carriage” made a useful distinction. Today, when horses are rarely seen on the road, it make sense to trim down the notation to its essentials: <del>horseless</del> <strong>car</strong><del>iage</del>. Think of <span class="math inline">\(\partial_x\)</span> as this sort of minification.<a href="#fn20" class="footnote-ref" id="fnref20"><sup>20</sup></a></p>
+<p>In the days when carriages where pulled by horses, the phrase “horseless carriage” made a useful distinction. Today, when horses are rarely seen on the road, it make sense to trim down the notation to its essentials: <del>horseless</del> <strong>car</strong><del>iage</del>. Think of <span class="math inline">\(\partial_x\)</span> as this sort of minificat
+ion of older notations.<a href="#fn19" class="footnote-ref" id="fnref19"><sup>19</sup></a></p>
 </div>
 
 <div class="exercise">
-<span id="exr:unnamed-chunk-134" class="exercise"><strong>Exercise 16.3  (pine-lead-car)  </strong></span>
+<span id="exr:unnamed-chunk-133" class="exercise"><strong>Exercise 16.2  (pine-lead-car)  </strong></span>
 </div>
 <details>
 <p>Recall that a function is <strong><em>monotonically increasing</em></strong> on a given domain when the function’s slope is positive everywhere in that domain. A <strong><em>monotonically decreasing</em></strong> function, similarly, as a negative slope everywhere in the domain. When the slope is zero, or positive in some places and negative in others, the function is neither monotonically increasing or decreasing.</p>
 <p>Each of the following graphs shows the derivative of some function <span class="math inline">\(f(x)\)</span>. (Note: the graph doesn’t show <span class="math inline">\(f()\)</span> but rather the function <span class="math inline">\(\partial_x f()\)</span> which is the derivative of <span class="math inline">\(f()\)</span>.) For each graph, say whether the function <span class="math inline">\(f()\)</span> is monotonically increasing, monotonically decreasing, or neither. (Note that the horizontal scale is the same in every graph, but the vertical scale can be different from one scale to another.)</p>
-<p><img src="CalcZ-notes_files/figure-html/unnamed-chunk-268-1.png" width="50%" style="display: block; margin: auto;" /><img src="CalcZ-notes_files/figure-html/unnamed-chunk-268-2.png" width="50%" style="display: block; margin: auto;" /><img src="CalcZ-notes_files/figure-html/unnamed-chunk-268-3.png" width="50%" style="display: block; margin: auto;" /><img src="CalcZ-notes_files/figure-html/unnamed-chunk-268-4.png" width="50%" style="display: block; margin: auto;" /><img src="CalcZ-notes_files/figure-html/unnamed-chunk-268-5.png" width="50%" style="display: block; margin: auto;" /><img src="CalcZ-notes_files/figure-html/unnamed-chunk-268-6.png" width="50%" style="display: block; margin: auto;" /></p>
+<p><img src="CalcZ-notes_files/figure-html/unnamed-chunk-325-1.png" width="50%" style="display: block; margin: auto;" /><img src="CalcZ-notes_files/figure-html/unnamed-chunk-325-2.png" width="50%" style="display: block; margin: auto;" /><img src="CalcZ-notes_files/figure-html/unnamed-chunk-325-3.png" width="50%" style="display: block; margin: auto;" /><img src="CalcZ-notes_files/figure-html/unnamed-chunk-325-4.png" width="50%" style="display: block; margin: auto;" /><img src="CalcZ-notes_files/figure-html/unnamed-chunk-325-5.png" width="50%" style="display: block; margin: auto;" /><img src="CalcZ-notes_files/figure-html/unnamed-chunk-325-6.png" width="50%" style="display: block; margin: auto;" /></p>
 <p><strong>Question A</strong> Function A is …</p>
 <ol style="list-style-type: lower-roman">
 <li>monotonically increasing<span class="mcanswer"> ✓ A monotonically increasing function has a function that is everywhere <span class="math inline">\(&gt; 0\)</span> </span><br />
@@ -721,11 +639,11 @@ Figure 16.3: The slope functions of the logarithm and exponential.
 </ol>
 
 <div class="exercise">
-<span id="exr:unnamed-chunk-135" class="exercise"><strong>Exercise 16.4  (robin-row-boat)  </strong></span>
+<span id="exr:unnamed-chunk-134" class="exercise"><strong>Exercise 16.3  (robin-row-boat)  </strong></span>
 </div>
 <details>
 <p>Here are graphs of various functions. The right column shows functions named <span class="math inline">\(f_1()\)</span>, <span class="math inline">\(f_2()\)</span>, and so on. The left column shows functions <span class="math inline">\(A()\)</span>, <span class="math inline">\(B()\)</span>, <span class="math inline">\(C()\)</span>, and so on. Most of the functions on the right are the derivative of some function on the left, and most of the functions on the left have their corresponding derivative on the right. Your task: Match the function on the left to it’s derivative on the right.</p>
-<p><img src="CalcZ-notes_files/figure-html/unnamed-chunk-270-1.png" width="50%" style="display: block; margin: auto;" /><img src="CalcZ-notes_files/figure-html/unnamed-chunk-270-2.png" width="50%" style="display: block; margin: auto;" /><img src="CalcZ-notes_files/figure-html/unnamed-chunk-270-3.png" width="50%" style="display: block; margin: auto;" /><img src="CalcZ-notes_files/figure-html/unnamed-chunk-270-4.png" width="50%" style="display: block; margin: auto;" /><img src="CalcZ-notes_files/figure-html/unnamed-chunk-270-5.png" width="50%" style="display: block; margin: auto;" /><img src="CalcZ-notes_files/figure-html/unnamed-chunk-270-6.png" width="50%" style="display: block; margin: auto;" /><img src="CalcZ-notes_files/figure-html/unnamed-chunk-270-7.png" width="50%" style="display: block; margin: auto;" /><img src="CalcZ-notes_files/figure-html/unnamed-chunk-270-8.png" width="50%" style="display: block; margin: auto;" /></p>
+<p><img src="CalcZ-notes_files/figure-html/unnamed-chunk-327-1.png" width="50%" style="display: block; margin: auto;" /><img src="CalcZ-notes_files/figure-html/unnamed-chunk-327-2.png" width="50%" style="display: block; margin: auto;" /><img src="CalcZ-notes_files/figure-html/unnamed-chunk-327-3.png" width="50%" style="display: block; margin: auto;" /><img src="CalcZ-notes_files/figure-html/unnamed-chunk-327-4.png" width="50%" style="display: block; margin: auto;" /><img src="CalcZ-notes_files/figure-html/unnamed-chunk-327-5.png" width="50%" style="display: block; margin: auto;" /><img src="CalcZ-notes_files/figure-html/unnamed-chunk-327-6.png" width="50%" style="display: block; margin: auto;" /><img src="CalcZ-notes_files/figure-html/unnamed-chunk-327-7.png" width="50%" style="display: block; margin: auto;" /><img src="CalcZ-notes_files/figure-html/unnamed-chunk-327-8.png" width="50%" style="display: block; margin: auto;" /></p>
 <p><strong>Question A</strong> The derivative of Function A() is which of the following:</p>
 <p>    f1()<span class="mcanswer"> ☹︎ </span>       f2()<span class="mcanswer"> ✓ </span>       f3()<span class="mcanswer"> ☹︎ </span>       f4()<span class="mcanswer"> ☹︎ </span>       not shown<span class="mcanswer"> ☹︎ </span></p>
 <p><strong>Question B</strong> The derivative of Function B() is which of the following:</p>
@@ -737,12 +655,12 @@ Figure 16.3: The slope functions of the logarithm and exponential.
 </details>
 
 <div class="exercise">
-<span id="exr:unnamed-chunk-136" class="exercise"><strong>Exercise 16.5  (deer-pitch-saw)  </strong></span>
+<span id="exr:unnamed-chunk-135" class="exercise"><strong>Exercise 16.4  (deer-pitch-saw)  </strong></span>
 </div>
 <details>
 <p>The left column of graphs shows functions A(), B(), C(), and D(). The right column shows functions dd1(), dd2(), and so on. Find which function (if any) in the right column corresponds to the 2nd derivative of a function in the left column.</p>
 <p>Remember the concepts of “concave up” (a smile!) and “concave down” (a frown). At those values of <span class="math inline">\(x\)</span> for which the 2nd derivative of a given function is positive, the given function will be concave up. When the 2nd derivative is negative, the given function will be concave down.</p>
-<p><img src="CalcZ-notes_files/figure-html/unnamed-chunk-272-1.png" width="50%" style="display: block; margin: auto;" /><img src="CalcZ-notes_files/figure-html/unnamed-chunk-272-2.png" width="50%" style="display: block; margin: auto;" /><img src="CalcZ-notes_files/figure-html/unnamed-chunk-272-3.png" width="50%" style="display: block; margin: auto;" /><img src="CalcZ-notes_files/figure-html/unnamed-chunk-272-4.png" width="50%" style="display: block; margin: auto;" /><img src="CalcZ-notes_files/figure-html/unnamed-chunk-272-5.png" width="50%" style="display: block; margin: auto;" /><img src="CalcZ-notes_files/figure-html/unnamed-chunk-272-6.png" width="50%" style="display: block; margin: auto;" /><img src="CalcZ-notes_files/figure-html/unnamed-chunk-272-7.png" width="50%" style="display: block; margin: auto;" /><img src="CalcZ-notes_files/figure-html/unnamed-chunk-272-8.png" width="50%" style="display: block; margin: auto;" /></p>
+<p><img src="CalcZ-notes_files/figure-html/unnamed-chunk-329-1.png" width="50%" style="display: block; margin: auto;" /><img src="CalcZ-notes_files/figure-html/unnamed-chunk-329-2.png" width="50%" style="display: block; margin: auto;" /><img src="CalcZ-notes_files/figure-html/unnamed-chunk-329-3.png" width="50%" style="display: block; margin: auto;" /><img src="CalcZ-notes_files/figure-html/unnamed-chunk-329-4.png" width="50%" style="display: block; margin: auto;" /><img src="CalcZ-notes_files/figure-html/unnamed-chunk-329-5.png" width="50%" style="display: block; margin: auto;" /><img src="CalcZ-notes_files/figure-html/unnamed-chunk-329-6.png" width="50%" style="display: block; margin: auto;" /><img src="CalcZ-notes_files/figure-html/unnamed-chunk-329-7.png" width="50%" style="display: block; margin: auto;" /><img src="CalcZ-notes_files/figure-html/unnamed-chunk-329-8.png" width="50%" style="display: block; margin: auto;" /></p>
 <p><strong>Question A</strong> The second derivative of Function A() is which of the following:</p>
 <p>    dd1()<span class="mcanswer"> ☹︎ </span>       dd2()<span class="mcanswer"> ☹︎ </span>       dd3()<span class="mcanswer"> ☹︎ </span>       dd4()<span class="mcanswer"> ✓ </span>       not shown<span class="mcanswer"> ☹︎ </span></p>
 <p><strong>Question B</strong> The second derivative of Function B() is which of the following:</p>
@@ -756,18 +674,18 @@ Figure 16.3: The slope functions of the logarithm and exponential.
 <div id="dimension-of-derivatives" class="section level2" number="16.4">
 <h2><span class="header-section-number">16.4</span> Dimension of derivatives</h2>
 <p>Recall that the differencing operator takes as input a function and returns as output another function that takes the same kind of input, but produces a different kind of output.</p>
-<p>For instance, suppose the function <code>pressure()</code> takes an altitude as input (in km) and returns a pressure (kPA–air pressure at sea level is about 100 kiloPascal).</p>
+<p>For instance, suppose the function <code>pressure()</code> takes an altitude as input (in km) and returns as output a pressure (in kPa, “kiloPascal”<a href="#fn20" class="footnote-ref" id="fnref20"><sup>20</sup></a>).</p>
 <p>The derivative function, let’s call it <code>d_pressure()</code>, also takes an input in km, but produces an output in kPA per km: a rate.</p>
 <p>You can see this by examining the differencing operator itself:</p>
 <p><span class="math display">\[{\cal D}_x f(x) \equiv \frac{f(x+h) - f(x)}{h}\]</span></p>
 <p>Remember the notation for dimensions. A quantity <span class="math inline">\(x\)</span> has dimensions denoted as <span class="math inline">\([x]\)</span>. (This is nothing more than saying, “Pronounce ‘<span class="math inline">\([x]\)</span>’ as ‘the dimensions of <span class="math inline">\(x\)</span>.’”)
 The input to <span class="math inline">\(f()\)</span> has dimension <span class="math inline">\([x]\)</span>. The output from <span class="math inline">\(f()\)</span> has dimension <span class="math inline">\([f(x)]\)</span>.</p>
-<p>What is the dimension of <span class="math inline">\(h\)</span>? (We could write this question more simply, "What is <span class="math inline">\([h]\)</span>?) Since the operator adds <span class="math inline">\(x + h\)</span>, it must be that <span class="math inline">\([h] = [x]\)</span>.</p>
+<p>What is the dimension of <span class="math inline">\(h\)</span>? (We could write this question more simply, "What is <span class="math inline">\([h]\)</span>?) Since the operator adds <span class="math inline">\(x + h\)</span>, it must be that <span class="math inline">\([h] = [x]\)</span>. Otherwise, addition wouldn’t be a viable operation to combine the two quantities.</p>
 <p>What is the dimension of <span class="math inline">\(f(x + h) - f(x)\)</span>? (Again, we could ask this more simply, “What is <span class="math inline">\([f(x+h) - f(x)]\)</span>?”) Since we’re subtracting two quantities, the two quantities must have the same dimension and the result is also that dimension. So <span class="math inline">\([f(x+h) - f(x)] = [f(x)]\)</span>.</p>
 <p>The output of the function <span class="math inline">\(df(x)\)</span> produced by <span class="math inline">\(\mbox{Diff}(f)\)</span> therefore has dimension <span class="math inline">\([f(x)] / [x]\)</span>.</p>
 
 <div class="exercise">
-<span id="exr:unnamed-chunk-137" class="exercise"><strong>Exercise 16.6  (kitten-put-kayak)  </strong></span>
+<span id="exr:unnamed-chunk-136" class="exercise"><strong>Exercise 16.5  (kitten-put-kayak)  </strong></span>
 </div>
 <details>
 <p>A. The given function is <span class="math inline">\(N(y)\)</span>, the population of the Netherlands in year <span class="math inline">\(y\)</span>.</p>
@@ -794,114 +712,20 @@ The input to <span class="math inline">\(f()\)</span> has dimension <span class=
 </details>
 
 <div class="exercise">
-<span id="exr:unnamed-chunk-138" class="exercise"><strong>Exercise 16.7  (rat-take-fork)  </strong></span>
+<span id="exr:unnamed-chunk-137" class="exercise"><strong>Exercise 16.6  (rat-take-fork)  </strong></span>
 </div>
 <details>
 <p><strong>Question A</strong> Tanks for bulk storage of natural gas are typically large cylinders with a cap that can more up and down. The volume of the tank is a function of the position of the cap. What is the dimension of the derivative of cylinder volume with respect to cap position?</p>
 <p>    <span class="math inline">\(L^2\)</span><span class="mcanswer"> ✓ </span>       <span class="math inline">\(L\)</span><span class="mcanswer"> ☹︎ </span>       <span class="math inline">\(L^3\)</span><span class="mcanswer"> ☹︎ </span>       <span class="math inline">\(L^3/T\)</span><span class="mcanswer"> ☹︎ </span>       <span class="math inline">\(T/L^3\)</span><span class="mcanswer"> ☹︎ </span></p>
 </details>
-</div>
-<div id="using-h" class="section level2" number="16.5">
-<h2><span class="header-section-number">16.5</span> Using h</h2>
-<p>In working with differentiation, we introduced a quantity <span class="math inline">\(h\)</span> and then ignored it, saying that it doesn’t really matter so long as it is “small.” A reasonable person might wonder what “small” really means, and why we needed to introduce <span class="math inline">\(h\)</span> in the first place if we were eventually going to ignore it.</p>
-<p>One reason is that “small” and “zero,” although related, are different. For example, refering to the slope functions <code>Dsin()</code> and <code>Dsigma()</code> that we created in an early example in this chapter, we see that setting <span class="math inline">\(h\)</span> to zero does not get us where we need to be:</p>
-<div class="sourceCode" id="cb125"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb125-1"><a href="change-relationships.html#cb125-1" aria-hidden="true" tabindex="-1"></a><span class="fu">Dsin</span>(<span class="at">t=</span><span class="dv">1</span>, <span class="at">h=</span><span class="dv">0</span>)</span></code></pre></div>
-<pre><code>## [1] NaN</code></pre>
-<div class="sourceCode" id="cb127"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb127-1"><a href="change-relationships.html#cb127-1" aria-hidden="true" tabindex="-1"></a><span class="fu">Dsigma</span>(<span class="at">t=</span><span class="dv">0</span>, <span class="at">h=</span><span class="dv">0</span>)</span></code></pre></div>
-<pre><code>## [1] NaN</code></pre>
-<p>In <code>NaN</code>, you can hear the echo of your fourth-grade teacher reminding you that it is illegal to divide by zero.</p>
-<p>Think of <span class="math inline">\(h\)</span> as the solvent in paint. You don’t want the solvent once the paint is on the wall; wet paint is a nuisance. But getting the paint from the can to the wall absolutely needs the solvent.</p>
-<p>We used the solvent <span class="math inline">\(h\)</span> earlier in the chapter in the numerical experiments that led us to the derivatives of the naked modeling functions, for instance <span class="math inline">\(\partial_x e^x = e^x\)</span> or <span class="math inline">\(\partial_x \sin(x) = \cos(x)\)</span>. Eventually, we’ll construct an <span class="math inline">\(h\)</span>-free theory of differentiation, reducing the process to a set of algebraic rules in which <span class="math inline">\(h\)</span> never appears. With this as our goal, let’s continue using <span class="math inline">\(h\)</span> for a while to find some additional useful facts about derivatives.</p>
-<p><strong><em>Linear combination</em></strong> is one of the ways in which we make new functions from existing functions. As you recall, linear combination involves <strong><em>scaling</em></strong> a function and <strong><em>adding</em></strong> the scaled functions. We can easily use <span class="math inline">\(h\)</span> to show what is the result of differentiating a linear combination of functions. We’ll use <span class="math inline">\(f(x)\)</span> and <span class="math inline">\(g(x)\)</span> as the names that could stand for any function whatsoever. And we’ll let <span class="math inline">\(b\)</span> be the name of a scalar. First, let’s figure out what is <span class="math inline">\(\partial_x\, b f(x)\)</span>, Going back to writing <span class="math inline">\(\partial_x\)</span> in terms of a slope function:
-<span class="math display">\[\partial_x\, b\,f(x) = \frac{b\, f(x + h) - b\,f(x)}{h}\\
-\ \\
-= b \frac{f(x+h) - f(x)}{h} = b\, \partial_x f(x)\]</span>
-In other words, if we know the derivative <span class="math inline">\(\partial_x\, f(x)\)</span>, we can easily find the derivative of any scaled version of <span class="math inline">\(f()\)</span>.</p>
-<p>Now consider the derivative of the sum of two functions, <span class="math inline">\(f(x)\)</span> and <span class="math inline">\(g(x)\)</span>:
-<span class="math display">\[\partial_x\, \left[f(x) + g(x)\right] =\\
-\ \\
-=\frac{\left[f(x + h) + g(x + h)\right] - \left[f(x) + g(x)\right]}{h} = \\
-\ \\
-= \frac{\left[f(x+h) -f(x)\right] + \left[g(x+h) - g(x)\right]}{h}\\
-\ \\
-= \frac{\left[f(x+h) -f(x)\right]}{h} + \frac{\left[g(x+h) - g(x)\right]}{h}\\
-\ \\
-= \partial_x\, f(x) + \partial_x\, g(x)\]</span></p>
-<p>Using these two rules together, we can differentiate any linear combination of functions in terms of the differentiated functions themselves:</p>
-<p><span class="math display">\[\partial_x\ \left[\strut a_1 g_1(x) + a_2 g_2(x) + a_3 g_3(x) + \cdots\right] =\ \ \ \ \ \ \ \ \ \ \\
-\ \\
-\ \ \ \ \ \ \ \ \ a_1 \partial_x\, g_1(x) + a_2 \partial_x\, g_2(x) + a_3 \partial_x\, g_3(x) + \cdots\]</span></p>
-<p>Because of the way that <span class="math inline">\(\partial_x\)</span> can be “passed through” a linear combination, mathematicians say that differentiation is a <strong><em>linear operator</em></strong>. Consider this new fact about differentiation as a down payment on what will eventually become a complete theory telling us how to differentiate a <strong><em>product of two functions</em></strong> or the <strong><em>composition of two functions</em></strong>.</p>
-<p>EXERCISES: Simple drill on this</p>
-</div>
-<div id="differencing" class="section level2" number="16.6">
-<h2><span class="header-section-number">16.6</span> Differencing</h2>
-<p>Our basic tool for showing difference and slope is a remarkably simple operator that takes a function as input. For a function with one input, the operator <span class="math inline">\({\cal D}()\)</span> is defined as
-<span class="math display">\[{\cal D}(f) \equiv \frac{f(x + 0.1) - f(x)}{0.1}\]</span>
-Notice that the <span class="math inline">\({\cal D}()\)</span> operator returns a <strong>function</strong>. The output is a linear combination of the input function <span class="math inline">\(f()\)</span> and a shifted version of <span class="math inline">\(f()\)</span>.</p>
-<p>For a function with two inputs, there are two versions of <span class="math inline">\({\cal D}\)</span>:
-<span class="math display">\[{\cal D}_x(f) \equiv \frac{f(x+0.1, y) - f(x, y)}{0.1}\]</span></p>
-<p><span class="math display">\[{\cal D}_y(f) \equiv \frac{f(x, y+0.1) - f(x, y)}{0.1}\]</span></p>
-<div class="workedexample">
-<p>Suppose that <span class="math inline">\(f(x)\equiv x^2\)</span>. What is the function <span class="math inline">\({\cal D}(f)\)</span>?</p>
-<p><span class="math display">\[
-{\cal D}(f) \equiv \frac{f(x+0.1) - f(x)}{0.1}\\ =
-10\left((x+0.1)^2 - x^2\right)\\
-=10 x^2 + 2x + 0.1 - 10x^2\\ = 2 x + 0.1\]</span></p>
-</div>
-<div class="workedexample">
-<p>Suppose that <span class="math inline">\(f(x) \equiv 2 x + y\)</span>. Find the function <span class="math inline">\({\cal D_x(f)}\)</span>.</p>
-<p>The linear combination will be
-<span class="math display">\[\frac{1}{0.1}\left(\left[2 (x + 0.1) + y\right] - \left[2 x + y\right]\right) =\\ \\
-20 x + 2 + 10y - \left[20 x - 10y\right] = 2\]</span></p>
-</div>
-<div class="sourceCode" id="cb129"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb129-1"><a href="change-relationships.html#cb129-1" aria-hidden="true" tabindex="-1"></a>f <span class="ot">&lt;-</span> <span class="fu">makeFun</span>(<span class="dv">2</span> <span class="sc">*</span>x <span class="sc">*</span> y <span class="sc">~</span> x <span class="sc">+</span> y)</span>
-<span id="cb129-2"><a href="change-relationships.html#cb129-2" aria-hidden="true" tabindex="-1"></a><span class="fu">D</span>(<span class="fu">f</span>(x, y) <span class="sc">~</span> x)</span></code></pre></div>
-<pre><code>## function (x, y) 
-## 2 * (y)</code></pre>
-</div>
-<div id="instantaneous-rate-of-change-1" class="section level2" number="16.7">
-<h2><span class="header-section-number">16.7</span> Instantaneous rate of change</h2>
-<div class="objectives" latex-data="">
-<ol>
-<li><strong>[Deriv-2b]</strong> <em>Distinguish the “average rate of change” from the “instantaneous rate of change.”</em></li>
-</ol>
-</div>
-<p>Imagine a graph of the position of a car along a road as in Figure @ref{fig:stop-and-go2}.</p>
-<div class="todo">
-<p>This graph appears in an exercise in Fun-slopes. What did I intend to prompt with this note. Perhaps a link to Fun-slopes.</p>
-</div>
-<p>Over the course of an hour, the car travelled about 25 miles. In other words, the <strong><em>average</em></strong> speed is 25 miles/hour: the <em>slope</em> of the red line segment. Given the traffic, sometimes the car was stopped (time C), sometimes crawling (time D) and sometimes much faster than average (time B).</p>
-<p><img src="CalcZ-notes_files/figure-html/stop-and-go2-1.png" width="90%" style="display: block; margin: auto;" /></p>
-<p>The car’s speedometer shows the speed at each moment—or <strong><em>instant</em></strong>—of the trip. As you can see in Figure @ref{fig:stop-and-go}, the speed varies and is sometimes less than the average speed, sometimes greater, and occasionally equal to the average speed over the trip. The general term for the kind of quantity presented by the speedometer is the <strong><em>instantaneous rate of change</em></strong> of the position function with respect to the input to that function.</p>
-<p>Figure @ref{fig:instant-speed} shows the instantaneous rate of change of position with respect to time.</p>
-<p><img src="CalcZ-notes_files/figure-html/instant-speed-1.png" width="90%" style="display: block; margin: auto;" />
-The two graphs in Figures @ref{fig:stop-and-go} and @ref{fig:instant-speed} show exactly the same car trip. The presentation of the data in the different graphs makes it easy to see some things and hard to see others. For instance, figuring out when the car is at a stand-still is harder in the position-vs-time graph than in the speed-vs-time graph. This is very much in the spirit of the sand-furrows example at the start of this chapter: it’s much easier to perceive the furrows because the lighting highlights areas sloping toward the sun as bright and areas sloping away from the sun as dark. In Figure @ref{fig:instant-speed} we’re not using light-and-dark for the display. Instead, we’re showing the instantaneous speed using the vertical axis.</p>
-<p>Recall that the interval between <span class="math inline">\(t_B\)</span> and <span class="math inline">\(t_C\)</span> had an <strong><em>average rate of change</em></strong> of about 39 miles-per-hour. Looking at the <strong><em>instantaneous rate of change</em></strong> tells the story differently: at time <span class="math inline">\(t_B\)</span> the car was accelerating to about 60 miles-per-hour. Then it gradually slowed, coming to a stop just before time <span class="math inline">\(t_C\)</span>.</p>
-<p>Figure @ref{fig:stop-and-go} shows the function <span class="math inline">\(\mbox{position}(t)\)</span>. Figure @ref{fig:instant-speed} shows a different function, <span class="math inline">\(\mbox{speed}(t)\)</span>. Although the two functions are different, they are intimately related: <span class="math inline">\(\mbox{speed}(t)\)</span> is the <strong><em>instantaneous rate of change</em></strong> of <span class="math inline">\(\mbox{position}(t)\)</span>.</p>
-<p>Two central operations in calculus are:</p>
-<ol style="list-style-type: decimal">
-<li>Given a function <span class="math inline">\(f(t)\)</span>, find the function <span class="math inline">\(g(t)\)</span> giving the instantaneous rate of change of <span class="math inline">\(f()\)</span>. This process of deriving <span class="math inline">\(g(t)\)</span> from <span class="math inline">\(f(t)\)</span> is called <strong><em>differentiation</em></strong>.</li>
-<li>Given a function <span class="math inline">\(g(t)\)</span>, find the <span class="math inline">\(f(t)\)</span> of which <span class="math inline">\(g(t)\)</span> is the instantaneous rate of change. This process of finding <span class="math inline">\(f()\)</span> given <span class="math inline">\(g()\)</span> is called <strong><em>anti-differentiation</em></strong>.</li>
-</ol>
-<div class="workedexample" latex-data="">
-<p>The context of the situation being modeled determines whether it’s appropriate to look at an average rate of change or an instantaneous rate of change. Figure @ref{fig:instant-tree} shows the instantaneous rate of change in the volume of wood.</p>
-<p><img src="CalcZ-notes_files/figure-html/instant-tree-1.png" width="90%" style="display: block; margin: auto;" />
-It’s tempting to look to the year where the growth rate is highest as the optimal harvest year. This is a mistake. The volume of wood being harvested is the <strong><em>accumulated growth</em></strong> not the instantaneous growth. Even though the instantaneous growth is higher at year 23 than year 30, it’s still pretty high at year 30 and waiting until then (or later) accumates those years of higher-than-average growth. That’s why the <strong><em>average rate of growth</em></strong> is a better thing to look at to determine optimal harvest time. Still, is it the right thing to look at?</p>
-<p>Between year 30 and 32, there is hardly any change in the value of the average-rate-of-change function. It’s increasing a little, but is it really worthwhile to wait? One argument is that at year 29 you already have a valuable resource: wood that could be money in the bank. If the money were in the bank, you could invest it and earn more money <em>and</em> at the same time get a new seedling in the ground to start its growth. You’re doing two things at once. Efficient!</p>
-<p>To know what is the best year for harvest from this point of view, you want to calculate the effective “interest rate” on the present amount of wood that you earn in the form of new wood. That interest rate is the ratio of the <em>instantaneous</em> rate of growth of new wood divided by the amount of existing wood. Figure @ref{fig:tree-interest} shows this function:</p>
-<p><img src="CalcZ-notes_files/figure-html/tree-interest-1.png" width="90%" style="display: block; margin: auto;" />
-Early in the tree’s life, the growth is high compared to the volume of the tree. That’s because the tree is small. As the years pass, the tree gets bigger. Even though the rate of growth increases through year 23, the accumulated volume increases even faster, so there is a fall in the rate of return.</p>
-<p>The best time to harvest is when the annual “interest rate” paid by the growing tree falls to the level of the next best available investment. Suppose that investment would pay 10% per year. Then harvest the tree at year 24. If the next best investment paid only 5% (blue horizontal line), the harvest should be made at about year 29.</p>
-</div>
 
 </div>
 </div>
 <div class="footnotes">
 <hr />
 <ol start="19">
-<li id="fn19"><p>Perhaps this says something about how well education has kept up with technology.<a href="change-relationships.html#fnref19" class="footnote-back">↩︎</a></p></li>
-<li id="fn20"><p>Yes, “minification” is a word!<a href="change-relationships.html#fnref20" class="footnote-back">↩︎</a></p></li>
+<li id="fn19"><p>Yes, “minification” is a word!<a href="change-relationships.html#fnref19" class="footnote-back">↩︎</a></p></li>
+<li id="fn20"><p>Air pressure at sea level is about 100 kiloPascal.<a href="change-relationships.html#fnref20" class="footnote-back">↩︎</a></p></li>
 </ol>
 </div>
             </section>
@@ -910,7 +734,7 @@ Early in the tree’s life, the growth is high compared to the volume of the tre
         </div>
       </div>
 <a href="outline-of-block-2.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="h-and-derivatives.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="computing-derivs.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
