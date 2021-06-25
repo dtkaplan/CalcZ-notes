@@ -1,4 +1,83 @@
-# (PART) Block 3: Accumulation and anti-differentiation {.unnumbered}
+# Change and accumulation 
+
+Consider this table of **population** versus **year**, which records the overall results of the every-10-year US Census since 1790
+
+```{r pop-table, echo=FALSE, message=FALSE, warning=FALSE, fig.cap="US Population as counted by the US Census Bureau: 1790-2020"}
+USPop <- readr::read_csv("www/census-totals.csv")
+DT::datatable(USPop %>% mutate(population=prettyNum(population, big.mark=",")))
+USPop <- USPop %>% 
+  mutate(population = population/1e6)
+```
+
+These are ***discrete-time*** data, but nobody would dispute that the population is a continuous function of time and that we are entitled to graph it as in Figure \@ref(fig:pop-graph).
+
+```{r pop-graph, echo=FALSE, fig.cap="US population since 1790. [Source](https://en.wikipedia.org/wiki/Demographic_history_of_the_United_States)"}
+popfun <- spliner(population ~ year, data = USPop)
+USPop <- USPop %>%
+  mutate(yearly_growth_rate = 100*((1+growth_rate/100)^(1/10) - 1))
+mod <- lm(population ~ poly(year, 2), data = USPop)
+modf <- makeFun(mod)
+gf_point(population ~ year, data = USPop) %>%
+  gf_line(population ~ year) %>%
+  gf_labs(y="Population (millions)") %>%
+  gf_lims(x = c(1790, 2100), y=c(0,500))
+```
+Many of the student readers of this book will have children who will be about 70 years old in the year 2100. Use Figure \@ref(fig:pop-growth) to make a prediction of the population in 2100.
+
+From the graph itself, you might just sketch out what you think is the trend. Or, more formally, and based on the ideas introduced in Block 1, you might seek an exponential or power-law function, fit it to the data, and extrapolate out to year 2100. The next figure does exactly that, but you'll have to click on "Show model prediction" to see the results.
+
+<details>
+<summary>Show model prediction</summary>
+```{r pop-prediction-bad, echo=FALSE, warning=FALSE, fig.cap="Predicted US population using an exponential function (red) and a power-law function (green)"}
+powermod <- fitModel(population ~ A * ((year-1750)/100)^b, data = USPop, start=list(b=2))
+expmod <- fitModel(population ~ A*exp(k*(year-1750)/100), data = USPop, start=list(k=0.2))
+fpower <- makeFun(powermod)
+fexp <- makeFun(expmod)
+growth_mod <- lm(yearly_growth_rate ~ year, data = USPop)
+growth_fun <- makeFun(growth_mod)
+accum <- tibble(year = 2021:2100,
+                pop = 331 * cumprod(1 + growth_fun(2021:2100)/100))
+
+gf_point(population ~ year, data = USPop) %>%
+  gf_labs(y="Population (millions)") %>%
+  gf_lims(x = c(1790, 2100), y=c(0,700)) %>%
+  slice_plot(fexp(year) ~ year, domain(year=c(1790, 2100)), color="red",
+             label_text = "Exponential", label_x=0.9, label_color="red") %>%
+  slice_plot(fpower(year) ~ year, domain(year=c(1790, 2100)), color="green",
+             label_text = "\nPower-law\np=2.56", label_x=0.92, label_color="green") %>%
+  gf_line(pop ~ year, data = accum, color="gray") %>%
+  gf_point(404.4 ~ 2060, color="blue", size=1)
+```
+
+The power-law function with power 2.56 is an excellent match to the historical data up through the present. But ...
+</details>
+
+There are occasions where the modeler has no alternative to curve fitting. However, it's best when the modeler knows as much as possible about the mechanisms of the process being modeled and can somehow incorporate those processes into the model.
+
+With population, you know an awful lot about the mechanisms involved: birth, death, and immigration. As for births .... this is a personal matter. What I mean is that it's appropriate to look at the mechanism in terms of births per person. And if we're interested in the yearly growth of the population, what's relevant is the rate of births per person per year. That's a complicated rate, but when you multiply it by the population it turns into births per year, which is exactly right for studying population. The trend in births per person per year has been downward since 1900.  Immigration has fluctuated over the decades. That's going to be hard to predict. And death ... Old age is still the primary risk factor for death. The population is getting older, so deaths per year may be going up.
+
+Births, deaths, and immigration are the components of the population rate of growth per year. The statements in the previous paragraph suggest that the population rate of growth per year is going down. The census data don't break down population change into its components. Still, we can check for patterns over the decades, as in Figure \@ref(fig:pop-growth).
+
+```{r pop-growth, echo=FALSE, fig.cap="Annual growth rate of the US population (%)"}
+growth_mod <- lm(yearly_growth_rate ~ year, data = USPop)
+growth_fun <- makeFun(growth_mod)
+gf_point(yearly_growth_rate ~ year, data = USPop) %>%
+  gf_lims(x = c(1790, 2100), y=c(-.5,4)) %>%
+  gf_lm() %>%
+  gf_labs(y = "Growth rate (% per year)") 
+```
+
+There's a lot of fluctuation, but an overall trend stands out: the population growth rate has been declining since the mid-to late 1800s. The deviations from the trend are telling. There's a relatively low growth rate seen in the 1870 census: that's the effect of the US Civil War. The Great depression is seen in the very low growth from 1930 to 1940. Baby Boom: look at the growth from 1950-1960. The bump from 1990 to 2000? Not coincidentally, the 1990 Immigration Act substantially increased the yearly rate of immigration. 
+
+The extrapolation of the historical pattern in annual growth rate has a zero crossing at about 2075. As you know from Block 2, a zero crossing of the rate of change corresponds to a local maximum. A reasonable prediction is therefore that the US population will max out in the second half of the 21st century and decline thereafter.
+
+What will that maximum population be? The derivative tells us only about the argmax, not the max. What we need to do to make a prediction of the future population is to ***accumulate*** the yearly change in the population on top of the known, current population. In other words, rather than going from the population vs time to the rate of change in population versus time, we need to go the other way. This process of knowing a derivative $\partial_x f()$ and finding the unknown function $f()$ from which it was derived is called ***anti-differentiation***. Just as the name suggests, anti-differentiation is the opposite of differentiation. But how to do it?
+
+::: {.intheworld}
+The predictions from the accumulate-population-growth model are shown as a thin gray line in Figure \@ref(fig:pop-prediction-bad) along with the exponential and power law models fit directly to the population vs year data. According to the accumulation model, the population peaks in 2075 at 390 million. Professional demographers make much more sophisticated models using data from many sources. The demographers at the US Census Bureau predict that the population will reach a maximum of 404 million in 2060, shown by the little blue dot in Figure \@ref(fig:pop-prediction-bad).
+:::
+
+
 
 # Modeling with Accumulation
 
