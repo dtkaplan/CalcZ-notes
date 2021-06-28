@@ -48,15 +48,74 @@ $t$  | $\partial_t f(t)$ | $\int f(t) dt$
 
 </details>
 
+## Automating Euler
 
-## As a spreadsheet
+Although the Euler method was invented in the 18th century, it only became a practicable way of accumulating in the 1930s with the advent of analog computing and then in the 1940s when electronic computing was first becoming available. In those days, a primary mission for computers was accumulating the trajectories of artillery shells, a problem that was inaccessible to symbolic anti-differentiation because of the complexities of air resistence and the varying density of air at different altitudes, with different humidity, and so on. 
 
-## Using `cumsum()`
+Nowadays computing is roughly one-billionth the cost that it was the World War II era, and we use computers for just about every task imaginable. But in those early days, the huge costs involved in developing early computers was justified only by the prospect of improved gunnery in war. And those problems were all about accumulation and, more specifically, Euler methods. 
 
-## Using `iterate()`
+What today seems an esoteric use for computers was in fact the prime motivation for their development.
+
+### Euler as a spreadsheet
+
+Spreadsheets are popular for certain simple kinds of computer programming. The Euler method is a case in point. Figure \@ref(fig:euler-spreadsheet1) shows the formula layer of a Google Sheet implementing the Euler method for $\int \dnorm(t) dt$. In the spreadsheet, `NORMDIST()` is the equivalent of $\dnorm()$.
+
+```{r euler-spreadsheet1, echo=FALSE, fig.cap="The formula layer of a spreadsheet implementing the Euler method for $\int \dnorm(x) dx$. The whole spreadsheet is viewable [here](https://docs.google.com/spreadsheets/d/1e3SwcNLQxoYCUedALia6XxzIlh5kY_dTohFroewbNR8/edit?usp=sharing)"}
+knitr::include_graphics("www/Euler-spreadsheet1.png")
+```
+
+The first argument to `NORMDIST()` is a reference to a cell in column B which stores the sequence $t_0$, $t_0 + h$, $t_0 + 2h, \ldots$. (The value of $h$ is stored in cell `H2` (not shown).) Column D contains the results of the Euler calculation. It starts at time $t_0=0$ by referencing cell `H4` (not shown) which contains the starting value $f(t_0)$. Each successive cell in that column refers to the one immediately above that, adding in the appropriate value from the `NORMDIST()` column and multiplying it by $h$ (that is, `H2`). 
+
+Only about 10 Euler steps are shown, out of 100 altogether. Typically in viewing a spreadsheet you don't see the formula layer. Instead, the results of the calculation in each cell are presented. (Figure \@ref(fig:euler-spreadsheet2)). 
+
+```{r euler-spreadsheet2, echo=FALSE, fig.cap="Results from the formula layer shown in Figure \@ref(fig:euler-spreadsheet1)."}
+knitr::include_graphics("www/Euler-spreadsheet2.png")
+```
+
+Plotting column `D` against column `B` gives a graph of $\int \dnorm(t) dt$ versus $t$. Notice that the output of the Euler method is a function stored as a ***table*** rather than as a function formula. And even though $\int \dnorm(t) dt$ has a pretty simple form, namely, $\pnorm(t)$, the spreadsheet makes it look like something more elaborate.
+
+Spreadsheets are rightly criticized for being verbose. This can make it extremely challenging for the human programmer to create a spreadsheet that does what is claimed for it, let alone to demonstrate that the result is correct. 
+
+Worse, it's hard to generalize a spreadsheet to handle any given function rather than the one (here, `NORMDIST()`) hard-coded into the sheet. A usual practice is to copy a spreadsheet and then customize it to use the function whose anti-derivative is sought. This introduces the potential for human error in a way that can be hard to detect down the line.
+
+### Using `antiD()`
+
+The R/mosaic `antiD()` operator uses symbolic differentiation if it can. Otherwise it uses numerical methods in the spirit of Euler. Here is the same anti-differentiation as in the spreadsheet but done with `antiD()`:
+
+```{r}
+f <- antiD(dnorm(t) ~ t)
+```
+
+It happens that $\dnorm(t)$ is one of those many functions where the anti-derivative cannot be calculated symbolically. (We already know that $\int \dnorm(t) dt = \pnorm(t)$, but this in fact the *definition* of $\pnorm()$, which is only known from numerical calculations like Euler.)
+
+An advantage of using programming systems like R/mosaic is that they provide a way to do something with the result of the calculation. You could of course plot `f()` with `slice_plot()`, but let's show something much more fundamental ... 
+
+> **How do we know that `antiD()` is giving the result it should give?**
+
+Whenever you do a calculation, you should ask a similar question: "How do I know that [*my calculation*] is giving the result it should?" In general, it takes considerable experience to provide an answer to such a question, but in the case of `antiD()`, the approach is simple: If `f()` is really the anti-derivative of `dnorm()`, then differentiating `f()` should give us something that's the same as `dnorm()`.
+
+Here's the actual calculation:
+```{r}
+fprime <- D(f(t) ~ t)
+deviation <- makeFun(dnorm(t) - fprime(t) ~ t)
+slice_plot(deviation(t) ~ t, domain(t=c(-5,5)))
+```
+
+With numerical methods, there will almost always be some error introduced by round-off in the calculations, so we should never expect the deviation to be zero. You can see from the plot of the deviation (Look carefully at the vertical axis!) that it is smaller than 0.0000000001, which is a tiny, tiny part of the size of the output from $\dnorm()$.
+
+It might seem odd to use 3 lines of R/mosaic commands to confirm an answer that was calculated in one line. That's a pretty good representation of how much effort a professional will put into **testing** the result compared to **getting** the result.
+
+```{exercise}
+Try another strategy for confirming that `antiD()` is giving a good answer. Compare `f()` from the `antiD()` calculation to `pnorm()`.
+```
 
 
-## Using a loop
+### Using `cumsum()`
+
+### Using `iterate()`
+
+
+### Using a loop
 
 
 
