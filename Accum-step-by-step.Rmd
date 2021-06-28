@@ -1,15 +1,65 @@
-# Anti-differentiation
+# Iteration and accumulation
 
-## Reading the table backwards
+Let's review the concept of an ***Euler step***.
 
-::: {.objectives}
-```{r echo=FALSE, results="markup"}
-state_objective("Int-2b", "Utilize your knowledge of derivatives rules to backwards solve for anti-derivatives.")
-state_objective("Int-2f", "Understand that the output of anti-differentiation is a function known as a general solution and more information is necessary to find the particular solution [DTK: This is language I associate with differential equations. How about: Find the constant of integration.]")
-state_objective("Int-2c", "Understand the notation of an indefinite integral to include a. the integral symbol; b. variable of integration (\"with respect to\" variable); c. the constant of integration")
-state_objective("Int-2d", "Understand the relationship between a (child) function  and its (parent) integral.")
+
+**Problem statement**:
+
+1. You seek to find a function, e.g. $f(t)$ which you do not yet know.
+2. You already know $\partial_t f(t)$. (In the following chapters we'll show you some of the many instances of this unlikely-sounding situation, where you don't know $f(t)$ but you do know $\partial_t f(t)$.) This relationship, $\partial_t f(t) \longrightarrow f(t)$ is, of course, revealed by ***anti-differentiation***.
+
+**Setup**:
+
+3. You know or make up a value for $f(t)$ at a particular time of interest $t=t_0$. "Making up" is a perfectly legitimate practice here to get started in creating an an anti-derivative. The reason is hard to explain until you see the whole process of anti-differentiation by the ***Euler method***, so hang on. In the population modeling problem in Chapter \@ref(change-accumulation), we were interested in forecasting the population into the future, so we chose $t_0$ to be the most recent year for which we have information: $t_0 = 2020$. (In polite mathematical conversation, "making up" is pronounced "assuming.")
+4. Consider a quantity $h$ which is to be regarded as a little bit of $t$: they have the same dimension. $h$ should be "small," but "small" compared to what? Often, the modeling problem at hand involves a domain of interest. For instance, the population modeling problem in Chapter \@ref(change-accumulation) involved a forecast over the time interval from year 2020 to 2100. Provisionally, take small to mean 1% or 0.1% of the extent of the domain of interest. (In the population modeling problem, we chose $h=1$ year.)
+
+**The Step**
+
+1. Compute the value of the (still unknown) function $f(t)$ at input $t_0 + h$ as
+$$f(t_0+h) = f(t_0) + h \times \partial_t f(t)$$
+
+Now you know a little bit more about $f(t)$, namely, its value at $t_0 + h$.
+
+Since the original problem was to figure out $f(t)$ over some domain of interest (starting at $t=t_0$), we are not finished. We have taken but one step of our journey and have many more to go.
+
+To continue on the journey, we take what we just found out, namely $f(t_0 + h)$. We use this as the starting point in a new step. We don't have to make anything up because we already know $f(t_0 + h)$.
+
+The second step brings us to $f(t_0 + 2h)$
+
+$$f(t_0+2h) = f(t_0+h) + h \times \partial_t f(t+h)$$
+And the third:
+$$f(t_0+3h) = f(t_0+2h) + h \times \partial_t f(t+2h)$$
+
+How long to continue this step-by-step process? The original problem involved some domain of interest, and we selected $h$ as 1% or 0.1% of the extent of this domain. For $h$ as 1%, taking 100 steps will get us to the far end of the domain. For $h$ as 0.1%, we would need to take 1000 steps. 
+
+```{exercise, name="euler-step"}
+Exercises like this:
 ```
-:::
+<details>
+  
+Using the Euler method find $\int f(t) dt$ over the interval $t_0=0$ to $t_{end}=1$. The $t$ quantity is in steps of $h=0.01$.
+
+$t$  | $\partial_t f(t)$ | $\int f(t) dt$
+-----|-------------------|-----------------
+0    | `r round(dnorm(0)   , 3)`   |    0.5
+0.01 | `r round(dnorm(0,01), 3)`   |  
+0.02 | `r round(dnorm(0,02), 3)`   |  
+0.03 | `r round(dnorm(0.03), 3)`   |  
+
+</details>
+
+
+## As a spreadsheet
+
+## Using `cumsum()`
+
+## Using `iterate()`
+
+
+## Using a loop
+
+
+
 
 ## The accumulated quantity
 
