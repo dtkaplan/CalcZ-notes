@@ -1,4 +1,4 @@
-# Iteration and accumulation
+# Iteration and accumulation {#iteration-and-accumulation}
 
 Let's review the concept of an ***Euler step***.
 
@@ -54,7 +54,13 @@ Although the Euler method was invented in the 18th century, it only became a pra
 
 Nowadays computing is roughly one-billionth the cost that it was the World War II era, and we use computers for just about every task imaginable. But in those early days, the huge costs involved in developing early computers was justified only by the prospect of improved gunnery in war. And those problems were all about accumulation and, more specifically, Euler methods. 
 
-What today seems an esoteric use for computers was in fact the prime motivation for their development.
+What today seems an esoteric use for computers was in fact the prime motivation for their development. This section introduces various ways of programming the Euler method on a computer. 
+
+::: {.takenote}
+The Euler method has been supplanted by other, more modern methods whose inner workings are based on a deeper knowledge of calculus than we have covered to date and programming methods that automatically check and adapt the size of $h$. 
+
+However sophisticated these methods may be, they are always easy to use. For example, the R/mosaic `antiD()` operator draws on one of these methods.
+:::
 
 ### Euler as a spreadsheet
 
@@ -112,11 +118,175 @@ Try another strategy for confirming that `antiD()` is giving a good answer. Comp
 
 ### Using `cumsum()`
 
-### Using `iterate()`
+`antiD()` produces a function that can be evaluated at any input. In contrast,
+the Euler method as described here produces a data table of values as, for example, seen in the spreadsheet implementation of Euler.
+
+In R, a data table can be created with the `data.table()` function. Here' we'll illustrate how to implement Euler with this format as a topic. The raw ingredients are:
+
+- $t_0$ and $t_\text{end}$, the start and end of the input interval over which you want to do the accumulation.
+- Your choice of $h$. We'll set this to 1/100 of the length of the input interval.
+- The function that you want to accumulate. We'll represent that with a tilde expression in exactly the same manner as `makeFun()`, `D()`, and other operators in the R/mosaic suite of software. We'll implement the method as a series of steps that make a data table whose `t` and `accum` columns describe the accumulated function.
+
+```{r}
+# Setup the incredients
+tilde_expr <- dnorm(t) ~ t
+t_0 <- -2
+t_end <- 2
+h <- (t_end - t_0) / 100
+# Create the function to be accumulated from the tilde expression
+f <- makeFun(tilde_expr)
+# Create a set of evenly spaced input values separated by h
+# tibble() arranges this as a data table
+Results <- tibble(
+  t = seq(t_0, t_end, by=h), # seq() makes a sequence
+  steps = f(t) * h,
+  accum = cumsum(steps)
+)
+```
+
+The `cumsum()` function is easy to understand. First, know that `sum()` adds together a set of numbers. For instance, here's a data frame with the numbers 0, 1, 2, 3, ..., 10. The sum of these is 55. The cumulative sum is also known as the "running sum."
+
+```{r}
+n <- seq(0, 10, by=1)
+n
+sum(n)
+cumsum(n)
+```
+```{exercise, name="cumsum"}
+Consider this sequence: 4, 5, 3, 1, 2
+
+What is the sum?
+  
+What is the cumulative sum?
+  
+Which entry in the cumulative sum matches the sum?
+```
+
+A good practice with numerical methods is to package them as a ***function***, so that you can easily apply the same method in many different contexts. This is the best way to arrange a calculation so it can be debugged and verified. This is what such a function would look like in R:
+
+```{r}
+accumulate <- function(tilde_expr, t_0=0, t_end=1, h=(t_end-t_0)/100) {
+  f <- makeFun(tilde_expr)
+  
+  tibble(
+    t = seq(t_0, t_end, by=h), 
+    steps = f(t) * h,
+    euler = cumsum(steps)
+  )
+}
+```
+ 
+Let's test `accumulate()`. Since `dnorm()` is the derivative of `pnorm()`, accumulating `dnorm()` should give a function that has the same shape as `pnorm()`.
+
+```{r}
+Pts <- accumulate(dnorm(t) ~ t, t_0=-1, t_end=3, h=0.01)
+gf_point(euler ~ t, data = Pts) %>%
+  slice_plot(pnorm(t) ~ t, color="red")
+```
+
+From the plot, you can see that accumulated version of `dnorm()` has the same shape as `pnorm()`. But the two functions are shifted vertically. By how much?
+
+```{r}
+For_plot <- Pts %>%
+  mutate(actual = pnorm(t),
+         diff = abs(actual - euler))
+gf_point(diff ~ t, data = For_plot) %>% 
+  gf_lims(y = c(0, NA))
+```
+
+The Euler method gives results that are roughly 0.16 units less than the true answer, `pnorm()`. Notice that the error is practically the same for all $t$. This shows that the Euler accumulated `dnorm()` is practically `pnorm(t) - 0.16`: a pure vertical shift. (If you look very closely, you'll see that `diff` is not exactly a constant. That's the result of using finite $h$ in the Euler accumulation.)
 
 
-### Using a loop
+```{exercise}
+Implement `accumulate()` in a sandbox. Show that the vertical difference between the accumulated points and `pnorm()` gets smaller as you move $t_0$ to the left. 
+```
 
+## Iteration
+
+There is an important computational strategy behind the Euler method, whether it be implemented on a spreadsheet or in R: ***iteration***
+
+"Iteration" means to do something over and over again, or, as defined nicely by the New Oxford American Dictionary:
+
+> *repetition of a mathematical or computational procedure applied to the result of a previous application*
+
+You saw iteration at work in Section \@ref(anti-diff-viz) when we turned the discrete sloping segments of the ***slope-function visualization*** into continuous, joined line segments. We started with the right endpoint of segment (a). Then we applied a procedure: change the vertical position of segment (b) so that the left end of (b) joins with the right end of (a). Now repeat that, but starting not with the original segment (a) but the joined (a)-(b) segments: move segment (c) vertically until its left end is joined with the rightmost point of the (a)-(b) segments. This produces a continuous (a)-(b)-(c) structure. Repeat again, using (a)-(b)-(c) and joining (d) to that. And so on. Iteration.
+
+Iteration is behind many of the algorithms used throughout mathematics and computation generally. The fundamental structure of iteration involves three things:
+
+1. A set of items over which the iteration is to be performed. Call this the ***iteration set***. Examples of iteration sets: the line segments in the slope-function visualization; the cells in a spreadsheet; the individual numbers in a sequence like 0, 1, 2, 3, 
+2. An object, called the ***accumulator*** to hold the result of the accumulation. This might be in the shape of a single number, or it might be a sequence of things, more or less like the set in (1).
+3. A ***procedure*** that takes the accumulator as well as an item from (1) and calculates something, with which to augment the accumulator.
+
+To carry out the iteration, you initialize the accumulator in a way that's appropriate, then apply the procedure to the first item of the set (1), thereby updating the accumulator. Next, move to the second item in the set (1) and update the accumulator. Repeat this for each of the items in the set (1). When you've processed each of those items the accumulator holds the result.
+
+**Example 1**: Summing a set of numbers. 
+
+- The iteration set is those numbers, for instance, 3, 5, -2, 1, 4.
+- The accumulator is a single number, which we initialize to 0.
+- The procedure takes the item from the iteration set and updates the accumulator by adding that item to the accumulator.
+
+The accumulator starts out as 0. Then 3 is added to it and the accumulator becomes 3. Then 5 is added to it and the accumulator becomes 8. Next, -2 is added to it and the accumulator becomes 6. The 1 in the iteration set updates the accumulator to 7 and, finally, the last item in the iteration set---4---updates the accumulator to 11. The final result: 11.
+
+Let's look at how this might be written in base R, even though the R/mosaic software allows you to avoid such constructions.
+
+```{r}
+iteration_set <- c(3, 5, -2, 1, 4)
+accumulator   <- 0 # initialize accumulator
+for (item in iteration_set) { # for every item in the set, do ...
+  accumulator <- accumulator + item # the procedure on that item
+}
+# Done! accumulator holds the final result
+accumulator
+```
+
+Almost all computer languages have a structure like the ***for loop*** in R for carrying out the repetition. Learning how to use such things is a fundamental part of computer programming.
+
+**Example 2**: The cumulative sum
+
+We'll use the same iteration set as in the previous example. But the accumulator will have two parts, a `running_sum` and a set of numbers. As in the summation iteration, we'll initialize `running_sum` to zero. The set of numbers will be initialized to the empty set.  In addition to updating `running_sum`,  the update procedure will append the running sum to the end of the set of numbers. The process of appending is called ***concatenation***. One of the many ways in R to concatenate the most recent result looks like
+
+    set_of_numbers <- c(set_of_numbers, running_sum)
+    
+In R, the `c()` function performs the appending. "`c`" stands for "concatenate."
+
+Here's one way to write the cumulative sum operation in R:
+```{r}
+iteration_set <- c(3, 5, -2, 1, 4)
+running_sum   <- 0 # initialize accumulator
+set_of_numbers <- c()
+for (item in iteration_set) {
+  # procedure on one item
+  running_sum <- running_sum + item # update running_sum
+  set_of_numbers <- c(set_of_numbers, running_sum) # append
+}
+# set_of_numbers holds the result
+set_of_numbers
+```
+
+::: {.takenote}
+To experienced programmers, the cumulative-sum iteration will seem odd. That's because in learning to program they mastered additional features of the programming language like ***indexing***, which enables you to refer to a specific item in a set. Many, many bugs in programs originate in faulty indexing; it's not always so easy to do right. 
+
+Here's the cumulative-sum iteration in a way that will seem more familiar to experienced programmers:
+
+```{r}
+iteration_set <- c(3, 5, -2, 1, 4)
+accumulator   <- rep(iteration_set[1], length(iteration_set))
+for (index in seq(2, length(iteration_set))) {
+  accumulator[index] <- accumulator[index-1] + iteration_set[index]
+}
+accumulator
+```
+In programming languages such as Python or C, such a looping style is commonplace. It also works in R, but experienced R programmers know a set of functions such as `cumsum()` or `cumprod()` or `lapply()` that hide the loop. Hiding the loop makes the program much smaller and simpler, for instance, the following does the same accumulation as the loop.
+```{r}
+iteration_set <- c(3, 5, -2, 1, 4)
+cumsum(iteration_set)
+```
+
+Since functions like `cumsum()` have been carefully debugged and validated by their authors, they are much more reliable than home-brew loops. In addition, they are programmed to run close to the hardware and are therefore very fast. That's not an issue with an iteration set containing five numbers, but such sets might well be 100,000 times longer, or more.
+
+
+
+:::
 
 ## Accumulating population change
 
@@ -157,24 +327,7 @@ Year $t$ | $P(t)$ | $\ln(P(t))$ | $\partial_t \ln(P(t))$ (from model)
 
 Performing the accumulation is simply accounting. Our model has told us the 4th column of the table for each year. We the first row of the table: $P(2020) = 331$M and therefore $\ln(P(2020)) = 19.618$. To get the $\ln(P(2021)$ row, add the number in the fourth column of previous row. Continue on from each row to the next. Once we have accumulated $\ln(P(t))$, we can convert it through exponentiation to $P(t)$.
 
-## Discrete-time Euler Step
 
-Remembering that accumulation is the opposite of differentiation, let's invert differentiation. The setting is that we know $\partial_t f(t)$ but do not yet know $f(t)$. Recall the familiar form of derivative, approximated by 
-$$\color{blue}{\partial_t f(t_0)} \equiv \frac{f(t_0+\color{blue}{h}) - f(t_0)}{\color{blue}{h}}$$
-We've put the quantities we know in <span style="color: blue;">blue</span>. We know the derivative $\color{blue}{\partial_t f(t)}$ and we have selected some $\color{blue}{h}$. (In the population example, we set $\color{blue}{h}$ to be 1 year.) Re-arranging the above formula gives: 
-$$f(t_0+h) = \color{blue}{f(t_0)} + \color{blue}{h} \times \color{blue}{\partial_t f(t_0)}$$
-Notice that we're saying we know $\color{blue}{f(t_0)}$. This is just like saying that we knew the population in year 2020; we know where we start.
-
-The formula allows us to find $f()$ at time $h$ in the future. That is, we compute the unknown $f(t_0 + h)$ from what we already know.
-
-This projection into the future using the (known) rate of change is called an ***Euler step***. The idea of inverting differentiation is to take one Euler step after another, constructing the future values one after the other 
-$f(t_0 + h)$, $f(t_0 + 2h)$, $f(t_0 + 3h), \cdots$. After each step, we know something more about $f()$ which we can use in taking the next step. For instance, once $f(t_0 + h)$ has been calculated, we get $f(t_0 + 2h)$ by applying the Euler step formula:
-
-$$f(t_0 + 2h) = \color{blue}{f(t_0 + h)} + \color{blue}{h} \times \color{blue}{\partial_t f(t_0 + h)}$$
-Notice that we've written $\color{blue}{f(t_0 + h)}$ in blue. Although we didn't know $f(t_0 + h)$ at the very start of the process, we figured it out by the first Euler step and it's ready for use in the second step.
-
-
-## The accumulated quantity
 
 ::: {.objectives}
 ```{r echo=FALSE, results="asis"}
@@ -182,8 +335,6 @@ state_objective("Int-2e", "Determine the units of an anti-derivative given the b
 ```
 :::
 
-
-## Graphical construction
 
 ::: {.objectives}
 ```{r echo=FALSE, results="asis"}
