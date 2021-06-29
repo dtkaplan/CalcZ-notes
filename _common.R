@@ -107,3 +107,26 @@ askMC <- function (prompt = "The question prompt", ..., id = NULL, right_one = N
 sandbox_link <- function() {
   "[SANDBOX](https://maa-statprep.shinyapps.io/CalcZ-Sandbox/)"
 }
+
+segments <- function(tilde, domain, h=NULL, nsegs=20) {
+  f <- makeFun(tilde)
+  df <- D(tilde)
+  vname <- all.vars(tilde[[3]])
+  if (is.null(h)) h <- base::diff(domain[[1]])/nsegs
+  start <- seq(domain[[1]][1] + h/2, domain[[1]][2], by=h )
+  slopes <- df(start)
+  offsets <- f(start)
+
+  res <- tibble(x = start - h/2,
+                xend = x + h,
+                start = start,
+                y = -slopes*h/2.2,
+                yend = slopes*h/2.2,
+                slope = slopes,
+                offset = offsets,
+                yf = y + offset,
+                yfend = yend + offset)
+
+  res
+}
+

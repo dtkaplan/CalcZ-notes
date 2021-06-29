@@ -103,60 +103,92 @@ The R/mosaic notation for the anti-derivative has exactly the same format as the
     antiD(f(t) ~ t)
 
 
-## Accumulating population change
+## Visualizing anti-differentiation 
 
-Let's return to the prediction of future population to show how it was done. Recall that we started with the total population of the US as estimated by the Census Bureau every ten years from 1790 on.^[The Census estimate was a particular and somewhat peculiar way of counting people. For instance, Native Americans were excluded from the count. So the census numbers give a false impression of a small population growing on an empty continent.] 
+Section \@ref(slope-fun-visualization) introduced a non-standard visualization of the slope function. We can build on that to show how the function $f(x)$ can be reconstructed from $\partial_x f(x)$. 
 
-Those numbers are monotonically increasing, so a projection into the future based just on those numbers is bound to give an ever-increasing value. Augmenting the data with our understanding of the mechanisms of population growth, and bringing in additional information from other sources---families are getting smaller on average, people are living longer---we decided to process the census numbers to give us a better representation of growth: the annual per-capita population growth. 
+Figure \@ref(fig:euler-viz-1) shows a slope function visualization of some function $f(x)$
 
-Writing "annual per-capita population growth" in explicit units gives "change in population per year per person." We observed from the historical record that this quantity is decreasing over time in a way that's reasonably extrapolated into the future by a straight-line function. 
+```{r euler-viz-1, echo=FALSE, fig.cap="A slope function $\\partial_x f(x)$ from which we are going to reconstruct the mother function $f(x)$. Each of the sloped segments has been given a label for later reference."}
+Segs <- segments(sin(x) ~ x, domain(x=c(-pi,pi)), nsegs=30)
+Segs$num <- c(letters, LETTERS)[1:nrow(Segs)]
+Segs_orig <- Segs
+gf_segment(y + yend ~ x + xend, data = Segs, 
+           color=~slope,size=1.3, lineend="round") %>%
+  gf_point(0 ~ start, size=1, color="green") %>%
+  gf_text(0.25 ~ start, label=~num, size=3) %>%
+    gf_labs(title="sin(x) slope-function visualization") %>%
+    gf_lims(y=c(-1,1))
 
-That part of the quantity which is "change in population per year" has the units of the derivative with respect to time of population: $\partial_t P(t)$. In other words, the information that we're taking as informative for predicting future population growth, the extrapolation of the growth rate, has the form of a derivative. We're going to transform that derivative into the the population function itself $P(t)$. This is an absolutely typical use of anti-differentiation. 
+```
+We'll reconstruct $f(x)$ one segment at a time. Recall that each of the segments shows a linear approximation to $f(x)$ at the input marked by the green dot. But in constructing the slope function, we threw away the information about the vertical placement of the segment. Now we have to recover that discarded information, as well as we can.
 
-The annual growth rate in population $\partial_t P(t)$ can be approximated from the once-per-decade data by finite differencing:
-$$\diff{t} P(\text{year}) = \frac{P(\text{year} + 10) - P(\text{year})}{10}$$
-The quantity graphed in Figure \@ref(fig:pop-growth) is a little different, it is 
-the population growth rate ***per capital***, that is, population growth rate divided by the population. In terms of derivatives, the quantity we are using for the prediction is the function drawn as a blue line in Figure \@ref(fig:pop-growth) we can directly estimate from the data $P(t)$ is 
-$$\frac{\partial_t P(t)}{P(t)} = 0.0071 - 0.000120 (t - 2020)$$
+The big clue for the reconstruction is that the function $f(x)$ was ***continuous***. But the piecewise function graphed in Figure \@ref(fig:euler-viz-1) is discontinuous; the endpoints of adjacent segments don't meet each other.
 
-Someone who has absolutely mastered the rules of differentiation in Block 2 might recognize that $$\partial_t \ln(P(t)) = \frac{\partial_t P(t)}{P(t)}$$
-In other words, our modeling of the data has told us the derivative not of $P(t)$ but of $\ln(P(t))$. Let's accumulate that.
+That's easy to fix: we'll just move segment (b) vertically so that it becomes continuous with segment (a). 
 
-The growth rate model is $$\text{Growth rate model:}\ \ \ \partial_t \ln(P(t)) = 0.0071 - 0.000120(t-2020)$$
+```{r euler-viz-2, echo=FALSE, fig.cap="Moving segment (b) to become continuous with segment (a)."}
+Segs$y[2] <- Segs$y[2] -0.199
+Segs$yend[2] <- Segs$yend[2] - 0.199 
+gf_segment(y + yend ~ x + xend, data = Segs, 
+           color=~slope,size=1.3, lineend="round") %>%
+  gf_point(0 ~ start, size=1, color="green") %>%
+  gf_text(0.25 ~ start, label=~num, size=3) %>%
+    gf_labs(title="sin(x) slope-function visualization") %>%
+    gf_lims(y=c(-1,1))
+```
 
-We'll start in 2020, when we know $P(t) = 331$ million, so $\ln(P(2020)) = 19.618$. According to the growth rate model, for the year to 2021, the growth rate will be  $0.0071 - 0.000120(2021-2020)n= 0.00698$$ per year. This means that $\ln(P(2021)) = 19.619 + 0.00698 = 19.6247$. 
+Now that (a) and (b) are joined, we can join (c) to that:
 
-Year $t$ | $P(t)$ | $\ln(P(t))$ | $\partial_t \ln(P(t))$ (from model)
----------|--------|-------------|----------------------------------
-2020     | 331M   | 19.618      | 0.00698
-2021     |        | 19.625      | 0.00686 
-2022     |        | 19.632      | 0.00674 
-2023     |        | 19.639      | 0.00662 
-2024     |        | 19.645      | 0.00650 
-2025     |        | 19.652      | 0.00638 
-2026     |        | 19.658      | 0.00626 
-2027     |        | 19.664      | 0.00614 
-2028     |        | 19.670      | 0.00602 
-2029     | 351M   | 19.677      | 0.00590
+```{r euler-viz-3, echo=FALSE, fig.cap="Moving segment (c) to become continuous with segments (a) and (b)."}
+Segs$y[3] <- Segs$y[3] -0.4
+Segs$yend[3] <- Segs$yend[3] - 0.4
+gf_segment(y + yend ~ x + xend, data = Segs, 
+           color=~slope,size=1.3, lineend="round") %>%
+  gf_point(0 ~ start, size=1, color="green") %>%
+  gf_text(0.25 ~ start, label=~num, size=3) %>%
+    gf_labs(title="sin(x) slope-function visualization") %>%
+    gf_lims(y=c(-1,1))
+```
+
+Continue this process one segment at a time to reconstruct $f(x)$.
+
+```{r euler-viz-4, echo=FALSE, fig.cap="After joining all the segments together, the picture of $f()$ is complete."}
+gf_segment(yf + yfend ~ x + xend, data = Segs_orig, 
+           color=~slope,size=1.3, lineend="round") %>%
+  gf_point(0 ~ start, size=1, color="green") %>%
+  gf_text(0.25 ~ start, label=~num, size=3) %>%
+    gf_lims(y=c(-1,1))
+```
+This process reconstructs the ***shape*** of $f(x)$ from $\partial_x f(x)$. But there is still something missing. We never touched segment (a). Its vertical location was arbitrary. So we have to qualify our claim to have reconstructed $f(x)$. What we've reconstructed is some function $\widehat{f}(x)$ whose derivative is $\partial_x f(x)$. There are other such functions; any function $\widehat{f}(x) + C$ can make a legitimate claim to being the anti-derivative of $\partial_t f(x)$.  
+
+::: {.workedexample}
+In the population example that started this chapter, we constructed a model for $\partial_t f(t)$, where $f(t) = \ln(P(t))$. We can plot $\partial_t f(t)$ using an ordinary graph as we did in Figure \@ref(fig:pop-growth), but let's use the slope-function representation instead.
+
+```{r pop-slope-fun, echo=FALSE, fig.cap="The slope-function visualization corresponding to the plot of $\\partial_t f(t)$ in Figure \\@ref(fig:pop-growth)."}
+G <- antiD(growth_fun(t) ~ t, lower.bound = 2020)
+Segs <- segments(G(t) ~ t, domain(t=c(2020-1.5, 2100)), nsegs=30)
+gf_segment(y + yend ~ x + xend, data = Segs, 
+           color=~slope,size=1.3, lineend="round") %>%
+  gf_point(0 ~ start, size=1, color="green") %>%
+  gf_labs(x="Year", y="Percent growth per year")
+```
+
+To construct the original function $f(t)$, just connect the segments in Figure \@ref(fig:pop-slope-fun). 
+
+```{r accum-pop-growth, echo=FALSE, fig.cap="Accumulating the annual growth in Figure \\@ref(fig:pop-slope-fun)."}
+gf_segment(yf + yfend ~ x + xend, data = Segs, 
+           color=~slope,size=1.3, lineend="round") %>%
+  gf_point(0 ~ start, size=1, color="green") %>%
+  gf_labs(x="Year", y="Growth accumulated versus year")
+```
+
+The accumulated annual growth graph shows that by around 2075, the accumulated growth will be about 17% above the population of 2020. 
+
+:::
 
 
-Performing the accumulation is simply accounting. Our model has told us the 4th column of the table for each year. We the first row of the table: $P(2020) = 331$M and therefore $\ln(P(2020)) = 19.618$. To get the $\ln(P(2021)$ row, add the number in the fourth column of previous row. Continue on from each row to the next. Once we have accumulated $\ln(P(t))$, we can convert it through exponentiation to $P(t)$.
 
-## Discrete-time Euler Step
-
-Remembering that accumulation is the opposite of differentiation, let's invert differentiation. The setting is that we know $\partial_t f(t)$ but do not yet know $f(t)$. Recall the familiar form of derivative, approximated by 
-$$\color{blue}{\partial_t f(t_0)} \equiv \frac{f(t_0+\color{blue}{h}) - f(t_0)}{\color{blue}{h}}$$
-We've put the quantities we know in <span style="color: blue;">blue</span>. We know the derivative $\color{blue}{\partial_t f(t)}$ and we have selected some $\color{blue}{h}$. (In the population example, we set $\color{blue}{h}$ to be 1 year.) Re-arranging the above formula gives: 
-$$f(t_0+h) = \color{blue}{f(t_0)} + \color{blue}{h} \times \color{blue}{\partial_t f(t_0)}$$
-Notice that we're saying we know $\color{blue}{f(t_0)}$. This is just like saying that we knew the population in year 2020; we know where we start.
-
-The formula allows us to find $f()$ at time $h$ in the future. That is, we compute the unknown $f(t_0 + h)$ from what we already know.
-
-This projection into the future using the (known) rate of change is called an ***Euler step***. The idea of inverting differentiation is to take one Euler step after another, constructing the future values one after the other 
-$f(t_0 + h)$, $f(t_0 + 2h)$, $f(t_0 + 3h), \cdots$. After each step, we know something more about $f()$ which we can use in taking the next step. For instance, once $f(t_0 + h)$ has been calculated, we get $f(t_0 + 2h)$ by applying the Euler step formula:
-
-$$f(t_0 + 2h) = \color{blue}{f(t_0 + h)} + \color{blue}{h} \times \color{blue}{\partial_t f(t_0 + h)}$$
-Notice that we've written $\color{blue}{f(t_0 + h)}$ in blue. Although we didn't know $f(t_0 + h)$ at the very start of the process, we figured it out by the first Euler step and it's ready for use in the second step.
 
 ## Symbolic anti-derivatives
 
