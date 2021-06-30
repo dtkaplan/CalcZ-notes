@@ -1,4 +1,4 @@
-## Accumulation as net change {#net-change}
+# Accumulation as net change {#net-change}
 
 The derivative function $\partial_t F(t)$ tells us, for any input $t$, what was the ***instantaneous rate of change*** of some mother function $F(t)$. Suppose $F(t)$ is the position of a car along a city street, perhaps measured in miles from a marked starting point. The car, slowing down, stopping, and speeding up in traffic, has a velocity (instantaneous rate of change of position) that changes in time, so $\partial_t F(t)$ will have different outputs for different values of the input $t$. 
 
@@ -52,7 +52,7 @@ sum(rnorm(10000) == tau) # 10,000 events
 
 ```
 
-```{r rnorm-check, eval=FALSE}
+```{r rnorm-check, eval=FALSE, echo=FALSE}
 options(gradethis_glue_correct = "All misses!! Don't feel bad. { .message } { .correct }",
         gradethis_glue_incorrect = "Really? {.message}")
 gradethis::grade_result(
@@ -233,9 +233,11 @@ askMC(
 )
 ```
 
+
+::: {.scaffolding}
 The sandbox below gives the probability density function for the exponential process used in the example of the time interval between successive 100 year storms. Your task is to compute the expectation value for the time between storms. In symbols, this is $$\int_{-\infty}^\infty t\times p(t)\, dt$$ You can use `antiD()` to find the antiderivative and `Inf` to stand for infinity. 
 
-```{r expect2, exercise=TRUE, exercise.cap="Expectation value for time between 100-year storms", excercise.nlines=7}
+```{r expect2, eval=FALSE, exercise.cap="Expectation value for time between 100-year storms", excercise.nlines=7}
 # probability density
 p <- makeFun(ifelse(t < 0, 0, exp(-t/100)/100) ~ t)
 # For the expectation value, we want to integrate t*p(t) 
@@ -244,13 +246,13 @@ F <- antiD(...integrand... ~ t)
 F(...upper...) - F(...lower...)
 ```
 
-```{r expect2-check}
+```{r eval=FALSE, echo=FALSE, expect2-check}
 grade_result(
   pass_if(~ abs(.result - 100) < .0001, message="Since you're integrating out to infinity, don't be surprised if there's some round-off error."),
   fail_if( ~ TRUE)
 )
 ```
-
+:::
 
 ::: {.objectives}
 ```{r echo=FALSE, results="asis"}

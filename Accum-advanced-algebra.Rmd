@@ -17,7 +17,7 @@ With anti-differentiation (also called "integration"), we write things different
 
 In interpreting a sequence of symbols like $\int f(x,t) dx$, it's natural to think of the sequence as three parts:
 
-$$\underbrace{\int}_{\mbox{integral sign}} \overbrace{f(x, t)}^{\mbox{function to be anti-differentiated}} \underbrace{dx}_{\mbox{identifies 'with respect to' variable}}$$
+$$\underbrace{\int}_{\mbox{integral sign}} \overbrace{f(x, t)}^{\mbox{function to be anti-differentiated}} \underbrace{dx}_{\mbox{'with respect to'}}$$
 
 By analogy, the sentence 
 
@@ -35,8 +35,8 @@ Likewise, the integrate sentence can be seen as consisting of just two parts:
 
 $$\underbrace{\int}_{\mbox{integral sign}} \overbrace{f(x, t) dx}^{\mbox{differential}}$$
 
-A differential corresponds to the little rectangles that we add up when calculuting a definite integral numerically. That is
-$$\underbrace{\int}_{\mbox{Sum}} \underbrace{\overbrace{f(x,t)}^\mbox{height} \overbrace{dx}^\mbox{width}}_\mbox{area of box}$$
+A differential corresponds to the little sloped segments that we add up when calculating a definite integral numerically using the ***slope function visualization***. That is
+$$\underbrace{\int}_{\mbox{Sum}} \underbrace{\overbrace{f(x,t)}^\mbox{slope of segment}\ \  \overbrace{dx}^\mbox{run}}_\mbox{rise}$$
 
 A differential is a genuine mathematical object and is used, for example, in analyzing the geometry of curved spaces, as in the Theory of General Relativity. But this is well beyond the scope of this introductory calculus course.
 
@@ -58,6 +58,10 @@ $g(x) \equiv t^3$     | $3 t^2$     | t | $dg = 3 t^2 dt$
 
 As you can see, the *differential* of a function is simply the derivative of that function followed by the little $dx$ or $dt$ or whatever is appropriate for the "with respect to" variable.
 
+
+```{exercise}
+```
+<details>
 Note: Tradition is to write something like $u \equiv e^{3 x}$ rather than $u(x) \equiv e^{3 x}$. The traditional notation is what we'll use in the following exercises.
 
 ```{r diff1, echo=FALSE}
@@ -99,7 +103,7 @@ askMC(
     "$df = -\\sin(\\ln(x))/x dx$" = "$f$ is a function of $t$, not $x$."
 )
 ```
-
+<details>
 
 ## U-substitution
 
@@ -130,7 +134,7 @@ You don't know ahead of time that this is an integral amenable to solution by u-
 
 2. Assume for a moment---without any guarantee that this will work, mind you---that the answer can be built using u-substitution. You will therefore look hard at $h()$ and try to see in it a plausible form that looks like the derivative of some $f(g(x))$.
 
-In the problem at hand, we can readily see something of the form $f(g(x))$ in the $\sin(\ln(x))$. This immediately gives you a candidate for $g(x)$, namely, $g(x)\equiv \ln(x)$. We don't know $f()$ yet, but if $g()$ is the right guess, and if u-substitution is going to work, we know that $f()$ has to be something that produces $\sin()$ when you differentiate it. That's $-\cos()$. So now we have a guess $$h_\mbox{guess}(x) = -\cos(\ln(x)) \partial_x \ln(x) = - \cos(\ln(x)) / x$$
+In the problem at hand, we can readily see something of the form $f(g(x))$ in the $\sin(\ln(x))$. This immediately gives you a candidate for $g(x)$, namely $g(x)\equiv \ln(x)$ We don't know $f()$ yet, but if $g()$ is the right guess, and if u-substitution is going to work, we know that $f()$ has to be something that produces $\sin()$ when you differentiate it. That's $-\cos()$. So now we have a guess $$h_\mbox{guess}(x) = -\cos(\ln(x)) \partial_x \ln(x) = - \cos(\ln(x)) / x$$
 
 > If this guess matches the actual $h()$ then you win. The answer to $\int h(x) dx$ will be $f(g(x)) = -\cos(\ln(x))$. If not, see if there is any other plausible guess for $g(x)$ to try. If you can't find one that works, go on to
 
@@ -138,7 +142,10 @@ In the problem at hand, we can readily see something of the form $f(g(x))$ in th
 
 > If integration by parts doesn't work ... there is a variety of possibilities such as asking a math professor (who has a much larger set of functions at hand than you), looking through a table of integrals (which is to say, the collective calculus diary of generations of math professors), using a computer algebra system, or using numerical integration. One of these will work.
 
-Back to u-substitution.
+
+```{exercise}
+```
+<details>
 
 ```{r usub1, echo=FALSE}
 askMC(
@@ -170,7 +177,11 @@ askMC(
 ```
 
 Now that you have found both $g()$ and $f()$, you simply need to find a function $F(x)$ such that $\partial_x F(x) = f(x)$.  Since $\partial_x \ln(x) = 1/x$, we know that $F(x) = \ln(x)$. Thus,  $\int h(x) dx = F(g(x)) = F(x^2 + 2) = \ln(x^2 + 2)$.
+<details>
 
+```{exercise}
+```
+<details>
 ```{r usub4, echo=FALSE}
 askMC(
   "$$\\mbox{Find a plausible interior g(x) in} \\ x \\exp(x^2 + 3)$$",
@@ -191,18 +202,27 @@ askMC(
 )
 ```
 
-Confirm that $h(x) = f(g(x)) \partial_x g(x)$ and you win. The answer will be $F(g(x)) + C$.
+Confirm that $h(x) = f(g(x)) \partial_x g(x)$ and you win. The answer will be $F(g(x)) + C$
+</details>
 
+```{exercise}
+```
+<details>
 ```{r usb6, echo=FALSE}
 askMC(
-  "Which of these candidates for $f()$ and $g()$ will produce  $$f(g(x)) \\partial_x g(x) = x^3 \\cos(x^4)\\ ?$$",
+  "Which of these candidates for $f()$ and $g()$ will produce  $$f(g(x))\\, \\partial_x g(x) = x^3 \\cos(x^4)\\ ?$$",
   "+$f(x) = \\cos(x)/4$ and $g(x) = x^4$+" = "The 1/4 cancels out the 4 produced by $\\partial_x g(x)$.",
   "$f(x) = \\cos(x)$ and $g(x) = x^4$",
   "$f(x) = x^4$ and $g(x) = \\cos(x)$" = "But $h(x)$ involves $\\cos(x^4)$ not $cos^4(x)$."
 )
 ```
+</details>
 
 Once again, $\int h(x) dx = F(g(x))$, where $\partial_x F(x) = f(x)$.
+
+```{exercise}
+```
+<details>
 
 ```{r usb7, echo=FALSE}
 askMC(
@@ -212,6 +232,11 @@ askMC(
   "$\\frac{1}{6} \\cos^{-6}(x)$"
 )
 ```
+<details>
+
+```{exercise}
+```
+<details>
 
 ```{r usb8, echo=FALSE}
 askMC(
@@ -222,6 +247,8 @@ askMC(
   "$\\frac{1}{2} 1/(e^{4x} + 4)^2$"
 )
 ```
+
+</details>
 
 ## Integration by parts
 
@@ -250,6 +277,9 @@ We added in a constant $C$ at the end to get the entire family of anti-derivativ
 
 Aren't sure this answer is right? You can check it by computing the derivative of the answer to see that it gives $x e^x$.
 
+```{exercise}
+```
+<details>
 **Problem 1**: Go through the steps above to find the anti-derivative of $g(x) \equiv x \cos(x)$. 
 
 Step 1 hint: We know the anti-derivative of $\cos(x)$ is $\sin(x)$, so an appropriate helper function is the function $x\, \sin(x)$. Now do steps (2) and (3): (2) take the derivative of the helper function and then (3) integrate each term in the result. 
@@ -298,15 +328,17 @@ Solve for the answer to the original function and write the function in R notati
 makeFun( ...your stuff here... ~ x)
 ```
 
-```{r parts5-check, echo=FALSE}
+```{r parts5-check, echo=FALSE, eval=FALSE}
 grade_result(
 
   pass_if( ~ sd(.result(1:10) -  ((1:10)*sin(1:10) + cos(1:10))) < 0.001),
   fail_if( ~ TRUE, message = "No!")
 )
 ```
+</details>
 
-
+```{exercise}
+```
 **Problem 2**: Use the same procedure to find the anti-derivative of $x\, \cos(2x)$. Since $$\cos(2x) = \frac{1}{2}\partial_x \sin(2 x)$$ a reasonable guess for a helper function will be $x \sin(2x)$. 
 
 
@@ -343,9 +375,13 @@ askMC(
   "$x\\, \\sin(x) + \\sin(x)$"
 )
 ```
+</details>
 
 
-**Problem 3**: A giant tortoise (with very good eyesight and standing on an unobstructed plane!) spies a head of lettuce on the ground 65 meters away.  Being hungry (and knowing the shortest path between two points on the plane!), the tortoise takes off in a straight line for the lettuce. She pretty quickly reaches her top speed, but then starts to tire. If her velocity as a function of time (in meters per minute) is modeled by $v(t) = 7 t e^{−0.3t}$, how long does it take the tortoise to reach her lunch? Answer this question by finding an calculus/algebra formula for the tortoise’s displacement and then use it to approximate how long it takes to get to the lettuce. 
+```{exercise}
+```
+<details>
+A giant tortoise (with very good eyesight and standing on an unobstructed plane!) spies a head of lettuce on the ground 65 meters away.  Being hungry (and knowing the shortest path between two points on the plane!), the tortoise takes off in a straight line for the lettuce. She pretty quickly reaches her top speed, but then starts to tire. If her velocity as a function of time (in meters per minute) is modeled by $v(t) = 7 t e^{−0.3t}$, how long does it take the tortoise to reach her lunch? Answer this question by finding an calculus/algebra formula for the tortoise’s displacement and then use it to approximate how long it takes to get to the lettuce. 
 
 We're going to be looking at $\int v(t) dt = 7 \int t e^{-0.3 t} dt$.
 
@@ -369,7 +405,7 @@ askMC(
   random_answer_order = FALSE
 )
 ```
-
+</details>
 
 **Commentary**: The procedure we have been using to find these anti-derivatives can be formalized into a method called *integration by parts* (IBP).  However, rather than simply giving a formula and an algorithm, we wanted you to understand what is actually going on behind the scenes.  In a more formal IBP approach, you try to re-arrange the function you are integrating into the product of two simple functions: $$\int f(x)\, \partial_x g(x)\, dx$$
 
