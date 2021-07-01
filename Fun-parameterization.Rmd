@@ -82,7 +82,7 @@ Taking the traditional unit scale as the input and the metric scale as the outpu
 $$\underbrace{C(F) = \frac{5}{9}(F-32)}_\mbox{Fahrenheit to Celcius}\ \ \ \text{and}\ \ \ \ \underbrace{\text{cm(inches)} = 2.54 \times (\text{inches}-0}_\mbox{inches to cm})$$
 These are very simple, straight-line functions, but they play an important role in modeling. 
 
-Each conversion function can be written in the form $h(x) \equiv m (x - x_0)$. Of course, if you multiply the $m$ through both terms in parentheses, you get $h(x) = m x - m x_0$ which can be written even more simply as $mx + b$ by setting $b\equiv m x_0$. So the conversion function is simply the straight-line function.
+Each conversion function can be written in the form $\line(x) \equiv m (x - x_0)$. Of course, if you multiply the $m$ through both terms in parentheses, you get $\line(x) = m x - m x_0$ which can be written even more simply as $mx + b$ by setting $b\equiv m x_0$. So the conversion function is simply the straight-line function.
 
 $m$ and $x_0$ are the ***parameters*** of the straight-line function. In terms of the graph of a straight-line function, they are the slope and x-intercept respectively.
 
@@ -92,16 +92,18 @@ Often, functions can be parameterized in other ways. For instance, you likely le
 We can call $m(x - x_0)$ the "x-intercept parameterization" and $m x + b$ the "y-intercept parameterization. They are equivalent and equally good ways of parameterizing the straight line. There are still other ways of parameterizing, each style reflecting its own format for specifying the two points that make up a line. 
 :::
 
-To turn a naked modeling function into a ***basic modeling function*** all we do is use $h()$ to convert the input *before* applying the naked function.  `r mark(840)`
+To turn a naked modeling function into a ***basic modeling function*** all we do is use $\line()$ to convert the input *before* applying the naked function.  `r mark(840)`
 
 Basic modeling function^[We're leaving the log function out of the list, simply because it's rarely used with $h()$.] | formula
 ------------------------|----------------------
-Exponential             | $e^{h(x)}$
-Power-law               | $\left[h(x)\right]^p$
-Sinusoid                | $\sin(h(x))$
-Hump                    | $\text{dnorm}(h(x))$
-Sigmoid                 | $\text{pnorm}(h(x))$
-Straight-line           | $h(x())$
+Exponential             | $e^{\line(x)}$
+Power-law               | $\left[\line(x)\right]^p$
+Sinusoid                | $\sin(\line(x))$
+Hump                    | $\text{dnorm}(\line(x))$
+Sigmoid                 | $\text{pnorm}(\line(x))$
+Proportional            | $\line(x)$
+Reciprocal              | $1/\line(x)$
+
 
 As you can see, the straight-line function is a fundamental part of modeling. 
 
@@ -117,7 +119,7 @@ The naked modeling function does not give a good model of the COVID case numbers
 
 Input scaling empowers the naked modeling functions to model a huge variety of phenomena. There's just one exponential function and it always looks exactly the same. But there is a huge variety of ways to scale the input. With input scaling, the naked modeling function puts on clothes and becomes one of our basic modeling functions.
 $$\underbrace{e^x}_\mbox{naked modeling function}\ \ \ \underbrace{e^{k(x-x_0)}}_\mbox{basic modeling function}$$
-The straight-line function $h()$ is being written here as $k(x-x_0)$ rather than $m(x-x_0)$. It's traditional to to write some of the basic modeling functions 
+The straight-line function $\line()$ is being written here as $k(x-x_0)$ rather than $m(x-x_0)$. It's traditional to to write some of the basic modeling functions 
 You may have noticed that the above uses $k$ instead of $m$ as the multiplier in the straight-line function in the exponent. Of course, you can use whatever name you wish for a parameter. The idiom of mathematical notation has several conventions. Knowing these will help you read mathematics more fluently.  `r mark(850)`
 
 The table shows a few of them. Often, there are multiple parameterizations.
@@ -152,7 +154,7 @@ Name        |  Naked form | Dressed for action
 ------------|-------------|------------------
 exponential |  $e^x$      | $A e^{kx} + C$
 sinusoid    | $\sin(x)$   | $A \sin(\frac{2 \pi}{P} x) + C$
-straight-line | $a x + b$ | $a x + b$
+proportional | $x$        | $a x + b$
 
 ::: {.takenote}
 The parameter $C$ is often called the ***baseline*** or the ***offset***. Statisticians call it the "intercept," because it plays the same role as $b$ in the straight-line function.
@@ -178,20 +180,6 @@ slice_plot(exp(x) ~ x, domain(x=c(-2, 2))) %>%
 ```
 :::
 
-::: {.why}
-The straight-line function is like a penguin: even when it's naked, it's still fully dressed!
-
-Now we can let you in on a little secret. All along, the straight-line function has been dressed, not naked. The actual naked form is so simple that it can be confusing:
-
-$$\text{identity}(x) \equiv x$$
-Clothing the identity function by scaling looks like this:
-
-$$ x \underbrace{\longrightarrow}_\mbox{input scaling} k x + c \underbrace{\longrightarrow}_\mbox{output scaling} A(kx + c) + C$$
-A little bit of algebra transforms the scaled function into a more concise form:
-
-$$A(kx + c) + C \longrightarrow \underbrace{Ak}_ax + \underbrace{Ac + C}_b \longrightarrow ax + b$$
-Most students have thoroughly explored the straight-line function in their high-school studies, so we thought it ill-advised to start out with the identity function.
-:::
 
 <details>
 <summary>`r ex.mark(7.3, "uKCIE", fname="Exercises/Fun/scale-input-1.Rmd")` </summary>

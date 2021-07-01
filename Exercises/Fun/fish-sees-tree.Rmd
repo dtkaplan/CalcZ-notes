@@ -1,0 +1,59 @@
+---
+id: "fish-sees-tree"
+author: "Daniel Kaplan"
+---
+
+Open a `r sandbox_link()`. (Just click on that link, although you may eventually be given other ways to open a sandbox.)
+
+::: {.scaffolding}
+When you see a breakout box like this, it means that we're providing some computer code that you can paste into a sandbox and run. For this exercise, that code is
+
+```{r results="hide"}
+x <- 2
+sin(x)*sqrt(x)
+```
+
+Paste this into the sandbox and press "Run code." Verify that you get this as a result:
+
+`[1] 1.285941`
+:::
+
+The sandbox has two commands, one on each line. The first command gives a value to $x$. The second command uses that value for $x$ to calculate a function output. The function is $g(x)\equiv \sin(x) \times \sqrt{\strut x}$. You'll see how to give a function a name like $g()$ in Section \@ref(objects-and-actions). 
+
+::: {.why}
+Why not simplify the above code to `sin(2)*sqrt(2)`? We want to make it clear to the reader (and the computer) that whatever $x$ might be, it should be used as inputs to **both** the $\sin()$ and the $\sqrt{\strut\ \ \ }$ functions.
+:::
+
+```{r fst9-1, echo=FALSE, results="markup"}
+askMC(
+  "Change $x$ to 1. What's the output of $\\sin(x) \\times \\sqrt{\\strut x}$",
+  "-1.51", "0.244", "+0.84+", "0.99", "2.14", "`NaN`",
+  random_answer_order=FALSE
+)
+```
+
+```{r fst9-2, echo=FALSE, results="markup"}
+askMC(
+  "Change $x$ to 3. What's the output of $\\sin(x) \\times \\sqrt{\\strut x}$",
+  "-1.51", "+0.244+", "0.84", "0.99", "2.14", "`NaN`",
+  random_answer_order=FALSE
+)
+```
+
+```{r fst9-3, echo=FALSE, results="markup"}
+askMC(
+  "Change $x$ to $-5$. What's the output of $\\sin(x) \\times \\sqrt{\\strut x}$",
+  "-1.51", "0.244", "0.84", "0.99", "2.14", "+`NaN`+" = "This stands for Not-a-Number, which is what you get when you calculate the square root of a negative input.",
+  random_answer_order=FALSE
+)
+```
+
+In the sandbox, change the **function** to be $\sqrt{\strut\pnorm(x)}$.
+
+```{r fst9-4, echo=FALSE, results="markup"}
+askMC(
+  "For $x=2$, what's the output of $\\sqrt{\\strut\\pnorm(x)}$",
+  "-1.51", "0.244", "0.84", "+0.99+", "2.14", "+NaN`",
+  random_answer_order=FALSE
+)
+```
