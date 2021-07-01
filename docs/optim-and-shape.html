@@ -1,427 +1,118 @@
 <!DOCTYPE html>
-<html lang="" xml:lang="">
+<html lang="en">
 <head>
-
-  <meta charset="utf-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 22 Optimization | CalcZ Student Notes</title>
-  <meta name="description" content="Textbook for Math 141Z/142Z for 2021-2022" />
-  <meta name="generator" content="bookdown 0.22 and GitBook 2.6.7" />
-
-  <meta property="og:title" content="Chapter 22 Optimization | CalcZ Student Notes" />
-  <meta property="og:type" content="book" />
-  
-  
-  <meta property="og:description" content="Textbook for Math 141Z/142Z for 2021-2022" />
-  
-
-  <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 22 Optimization | CalcZ Student Notes" />
-  
-  <meta name="twitter:description" content="Textbook for Math 141Z/142Z for 2021-2022" />
-  
-
-<meta name="author" content="Daniel Kaplan" />
-
-
-<meta name="date" content="2021-07-01" />
-
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="apple-mobile-web-app-capable" content="yes" />
-  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
-  
-  
-<link rel="prev" href="prod-comp-rules.html"/>
-<link rel="next" href="partial-change.html"/>
-<script src="libs/header-attrs-2.8/header-attrs.js"></script>
-<script src="libs/jquery-3.5.1/jquery.min.js"></script>
-<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
-<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
-<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
-<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
-<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
-<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
-<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
-
-
-
-
-
-
-
-
-
-<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
-<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
-<script src="libs/kePrint-0.0.1/kePrint.js"></script>
-<link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
-<script src="libs/htmlwidgets-1.5.3/htmlwidgets.js"></script>
-<script src="libs/plotly-binding-4.9.4/plotly.js"></script>
-<script src="libs/typedarray-0.1/typedarray.min.js"></script>
-<link href="libs/crosstalk-1.1.1/css/crosstalk.css" rel="stylesheet" />
-<script src="libs/crosstalk-1.1.1/js/crosstalk.min.js"></script>
-<link href="libs/plotly-htmlwidgets-css-1.57.1/plotly-htmlwidgets.css" rel="stylesheet" />
-<script src="libs/plotly-main-1.57.1/plotly-latest.min.js"></script>
-<link href="libs/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet" />
-<script src="libs/datatables-binding-0.18/datatables.js"></script>
-<link href="libs/dt-core-1.10.20/css/jquery.dataTables.min.css" rel="stylesheet" />
-<link href="libs/dt-core-1.10.20/css/jquery.dataTables.extra.css" rel="stylesheet" />
-<script src="libs/dt-core-1.10.20/js/jquery.dataTables.min.js"></script>
-<span class="math inline">
-\(\newcommand{\line}{\text{line}}
-\newcommand{\hump}{\text{hump}}
-\newcommand{\sigmoid}{\text{sigmoid}}
-\newcommand{\recip}{\text{recip}}
-\newcommand{\diff}[1]{{\cal D}_#1}
-\newcommand{\pnorm}{\text{pnorm}}
-\newcommand{\dnorm}{\text{dnorm}}\)
-</span>
-
-<!-- see https://www.homepages.ucl.ac.uk/~ucahmto/elearning/2019/09/14/bookdown.html-->
-
-
-<style type="text/css">
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-    color: #aaaaaa;
-  }
-pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
-}
-code span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code span.at { color: #7d9029; } /* Attribute */
-code span.bn { color: #40a070; } /* BaseN */
-code span.bu { } /* BuiltIn */
-code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code span.ch { color: #4070a0; } /* Char */
-code span.cn { color: #880000; } /* Constant */
-code span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-code span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code span.dt { color: #902000; } /* DataType */
-code span.dv { color: #40a070; } /* DecVal */
-code span.er { color: #ff0000; font-weight: bold; } /* Error */
-code span.ex { } /* Extension */
-code span.fl { color: #40a070; } /* Float */
-code span.fu { color: #06287e; } /* Function */
-code span.im { } /* Import */
-code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
-code span.kw { color: #007020; font-weight: bold; } /* Keyword */
-code span.op { color: #666666; } /* Operator */
-code span.ot { color: #007020; } /* Other */
-code span.pp { color: #bc7a00; } /* Preprocessor */
-code span.sc { color: #4070a0; } /* SpecialChar */
-code span.ss { color: #bb6688; } /* SpecialString */
-code span.st { color: #4070a0; } /* String */
-code span.va { color: #19177c; } /* Variable */
-code span.vs { color: #4070a0; } /* VerbatimString */
-code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
-</style>
-
-
-<link rel="stylesheet" href="css/CalcZ-style.css" type="text/css" />
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>Chapter 22 Optimization | CalcZ Student Notes</title>
+<meta name="author" content="Daniel Kaplan">
+<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.2"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/header-attrs-2.8/header-attrs.js"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.2.5.1/tabs.js"></script><script src="libs/bs3compat-0.2.5.1/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="libs/kePrint-0.0.1/kePrint.js"></script><link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet">
+<script src="libs/htmlwidgets-1.5.3/htmlwidgets.js"></script><script src="libs/plotly-binding-4.9.4/plotly.js"></script><script src="libs/typedarray-0.1/typedarray.min.js"></script><link href="libs/crosstalk-1.1.1/css/crosstalk.css" rel="stylesheet">
+<script src="libs/crosstalk-1.1.1/js/crosstalk.min.js"></script><link href="libs/plotly-htmlwidgets-css-1.57.1/plotly-htmlwidgets.css" rel="stylesheet">
+<script src="libs/plotly-main-1.57.1/plotly-latest.min.js"></script><link href="libs/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet">
+<script src="libs/datatables-binding-0.18/datatables.js"></script><link href="libs/dt-core-1.10.20/css/jquery.dataTables.min.css" rel="stylesheet">
+<link href="libs/dt-core-1.10.20/css/jquery.dataTables.extra.css" rel="stylesheet">
+<script src="libs/dt-core-1.10.20/js/jquery.dataTables.min.js"></script><script type="text/x-mathjax-config">
+    const popovers = document.querySelectorAll('a.footnote-ref[data-toggle="popover"]');
+    for (let popover of popovers){
+      const div = document.createElement('div');
+      div.setAttribute('style', 'position: absolute; top: 0, left:0; width:0, height:0, overflow: hidden; visibility: hidden;');
+      div.innerHTML = popover.getAttribute('data-content');
+      
+      // Will this work with TeX on its own line?
+      var has_math = div.querySelector("span.math");
+      if (has_math) {
+        document.body.appendChild(div);
+      	MathJax.Hub.Queue(["Typeset", MathJax.Hub, div]);
+      	MathJax.Hub.Queue(function(){
+          popover.setAttribute('data-content', div.innerHTML);
+      	})
+      }
+    }
+    </script>
 </head>
-
 <body>
+<span class="math inline">
+    \(\newcommand{\line}{\text{line}}
+    \newcommand{\hump}{\text{hump}}
+    \newcommand{\sigmoid}{\text{sigmoid}}
+    \newcommand{\recip}{\text{recip}}
+    \newcommand{\diff}[1]{{\cal D}_#1}
+    \newcommand{\pnorm}{\text{pnorm}}
+    \newcommand{\dnorm}{\text{dnorm}}\)
+    </span>
 
+    <!-- see https://www.homepages.ucl.ac.uk/~ucahmto/elearning/2019/09/14/bookdown.html-->
+    <script src="https://cdn.jsdelivr.net/autocomplete.js/0/autocomplete.jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/mark.js@8.11.1/dist/mark.min.js"></script><!-- CSS --><link rel="stylesheet" href="css/CalcZ-style.css">
+<div class="container-fluid">
+<div class="row">
+  <header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
 
-
-  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
-
-    <div class="book-summary">
-      <nav role="navigation">
-
-<ul class="summary">
-<li><strong><a href="./">CalcZ</a></strong></li>
-
-<li class="divider"></li>
-<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Welcome to calculus</a>
-<ul>
-<li class="chapter" data-level="" data-path="index.html"><a href="index.html#computing-and-apps"><i class="fa fa-check"></i>Computing and apps</a></li>
-<li class="chapter" data-level="" data-path="index.html"><a href="index.html#exercises-and-feedback"><i class="fa fa-check"></i>Exercises and feedback</a></li>
-</ul></li>
-<li class="part"><span><b>I Block 1: Functions and quantity</b></span></li>
-<li class="chapter" data-level="" data-path="outline-of-block-1.html"><a href="outline-of-block-1.html"><i class="fa fa-check"></i>Outline of Block 1</a></li>
-<li class="chapter" data-level="1" data-path="change.html"><a href="change.html"><i class="fa fa-check"></i><b>1</b> Change</a>
-<ul>
-<li class="chapter" data-level="1.1" data-path="change.html"><a href="change.html#quantity-vs-number"><i class="fa fa-check"></i><b>1.1</b> Quantity vs number</a></li>
-<li class="chapter" data-level="1.2" data-path="change.html"><a href="change.html#functions"><i class="fa fa-check"></i><b>1.2</b> Functions</a></li>
-</ul></li>
-<li class="chapter" data-level="2" data-path="structure-of-a-function.html"><a href="structure-of-a-function.html"><i class="fa fa-check"></i><b>2</b> Structure of a function</a>
-<ul>
-<li class="chapter" data-level="2.1" data-path="structure-of-a-function.html"><a href="structure-of-a-function.html#inputs-to-output"><i class="fa fa-check"></i><b>2.1</b> Inputs to output</a></li>
-<li class="chapter" data-level="2.2" data-path="structure-of-a-function.html"><a href="structure-of-a-function.html#a-bureaucratic-analogy"><i class="fa fa-check"></i><b>2.2</b> A bureaucratic analogy</a></li>
-<li class="chapter" data-level="2.3" data-path="structure-of-a-function.html"><a href="structure-of-a-function.html#domain-input-space"><i class="fa fa-check"></i><b>2.3</b> Domain: input space</a></li>
-<li class="chapter" data-level="2.4" data-path="structure-of-a-function.html"><a href="structure-of-a-function.html#range-output-space"><i class="fa fa-check"></i><b>2.4</b> Range: output space</a></li>
-</ul></li>
-<li class="chapter" data-level="3" data-path="naked-intro.html"><a href="naked-intro.html"><i class="fa fa-check"></i><b>3</b> Naked modeling functions</a>
-<ul>
-<li class="chapter" data-level="3.1" data-path="naked-intro.html"><a href="naked-intro.html#the-list"><i class="fa fa-check"></i><b>3.1</b> The list</a></li>
-<li class="chapter" data-level="3.2" data-path="naked-intro.html"><a href="naked-intro.html#function-shapes"><i class="fa fa-check"></i><b>3.2</b> Function shapes</a></li>
-<li class="chapter" data-level="3.3" data-path="naked-intro.html"><a href="naked-intro.html#the-power-law-family"><i class="fa fa-check"></i><b>3.3</b> The power-law family</a></li>
-</ul></li>
-<li class="chapter" data-level="4" data-path="fun-describing.html"><a href="fun-describing.html"><i class="fa fa-check"></i><b>4</b> Describing functions</a>
-<ul>
-<li class="chapter" data-level="4.1" data-path="fun-describing.html"><a href="fun-describing.html#computer-commands"><i class="fa fa-check"></i><b>4.1</b> Computer commands</a></li>
-<li class="chapter" data-level="4.2" data-path="fun-describing.html"><a href="fun-describing.html#tables-of-inputs-and-outputs"><i class="fa fa-check"></i><b>4.2</b> Tables of inputs and outputs</a></li>
-<li class="chapter" data-level="4.3" data-path="fun-describing.html"><a href="fun-describing.html#word-descriptions"><i class="fa fa-check"></i><b>4.3</b> Word descriptions</a></li>
-<li class="chapter" data-level="4.4" data-path="fun-describing.html"><a href="fun-describing.html#computer-function-names"><i class="fa fa-check"></i><b>4.4</b> Computer function names</a></li>
-<li class="chapter" data-level="4.5" data-path="fun-describing.html"><a href="fun-describing.html#mathematical-notation"><i class="fa fa-check"></i><b>4.5</b> Mathematical notation</a></li>
-</ul></li>
-<li class="chapter" data-level="5" data-path="fun-notation.html"><a href="fun-notation.html"><i class="fa fa-check"></i><b>5</b> Notation for functions</a>
-<ul>
-<li class="chapter" data-level="5.1" data-path="fun-notation.html"><a href="fun-notation.html#a-notation-for-computing"><i class="fa fa-check"></i><b>5.1</b> A notation for computing</a></li>
-<li class="chapter" data-level="5.2" data-path="fun-notation.html"><a href="fun-notation.html#objects-and-actions"><i class="fa fa-check"></i><b>5.2</b> Objects and actions</a></li>
-<li class="chapter" data-level="5.3" data-path="fun-notation.html"><a href="fun-notation.html#algorithms"><i class="fa fa-check"></i><b>5.3</b> Formulas and algorithms</a></li>
-<li class="chapter" data-level="5.4" data-path="fun-notation.html"><a href="fun-notation.html#algorithms-without-formulas"><i class="fa fa-check"></i><b>5.4</b> Algorithms without formulas</a></li>
-<li class="chapter" data-level="5.5" data-path="fun-notation.html"><a href="fun-notation.html#computer-notation"><i class="fa fa-check"></i><b>5.5</b> Computer notation</a></li>
-<li class="chapter" data-level="5.6" data-path="fun-notation.html"><a href="fun-notation.html#calcz-naming-conventions"><i class="fa fa-check"></i><b>5.6</b> CalcZ naming conventions</a></li>
-<li class="chapter" data-level="5.7" data-path="fun-notation.html"><a href="fun-notation.html#functions-in-r"><i class="fa fa-check"></i><b>5.7</b> Functions in R</a></li>
-<li class="chapter" data-level="5.8" data-path="fun-notation.html"><a href="fun-notation.html#foursigns"><i class="fa fa-check"></i><b>5.8</b> <span class="math inline">\(=\)</span>, <span class="math inline">\(\equiv\)</span>, <span class="math inline">\(\rightarrow\)</span>, <code>&lt;-</code></a></li>
-</ul></li>
-<li class="chapter" data-level="6" data-path="graphs-and-graphics.html"><a href="graphs-and-graphics.html"><i class="fa fa-check"></i><b>6</b> Graphics &amp; function graphs</a>
-<ul>
-<li class="chapter" data-level="6.1" data-path="graphs-and-graphics.html"><a href="graphs-and-graphics.html#the-graphics-frame"><i class="fa fa-check"></i><b>6.1</b> The graphics frame</a></li>
-<li class="chapter" data-level="6.2" data-path="graphs-and-graphics.html"><a href="graphs-and-graphics.html#data-graphics-the-point-plot"><i class="fa fa-check"></i><b>6.2</b> Data graphics: the point plot</a></li>
-<li class="chapter" data-level="6.3" data-path="graphs-and-graphics.html"><a href="graphs-and-graphics.html#graphics-layers"><i class="fa fa-check"></i><b>6.3</b> Graphics layers</a></li>
-<li class="chapter" data-level="6.4" data-path="graphs-and-graphics.html"><a href="graphs-and-graphics.html#data-and-functions"><i class="fa fa-check"></i><b>6.4</b> Data and functions</a></li>
-<li class="chapter" data-level="6.5" data-path="graphs-and-graphics.html"><a href="graphs-and-graphics.html#inputs-to-output-1"><i class="fa fa-check"></i><b>6.5</b> Inputs to output</a></li>
-<li class="chapter" data-level="6.6" data-path="graphs-and-graphics.html"><a href="graphs-and-graphics.html#outputs-to-inputs"><i class="fa fa-check"></i><b>6.6</b> Outputs to inputs</a></li>
-<li class="chapter" data-level="6.7" data-path="graphs-and-graphics.html"><a href="graphs-and-graphics.html#graphs-of-functions-with-two-inputs"><i class="fa fa-check"></i><b>6.7</b> Graphs of functions with two inputs</a></li>
-<li class="chapter" data-level="6.8" data-path="graphs-and-graphics.html"><a href="graphs-and-graphics.html#contour-plots"><i class="fa fa-check"></i><b>6.8</b> Contour plots</a></li>
-<li class="chapter" data-level="6.9" data-path="graphs-and-graphics.html"><a href="graphs-and-graphics.html#slice-plots"><i class="fa fa-check"></i><b>6.9</b> Slice plots</a></li>
-</ul></li>
-<li class="chapter" data-level="7" data-path="params-intro.html"><a href="params-intro.html"><i class="fa fa-check"></i><b>7</b> Parameters for functions</a>
-<ul>
-<li class="chapter" data-level="7.1" data-path="params-intro.html"><a href="params-intro.html#parallel-scales"><i class="fa fa-check"></i><b>7.1</b> Parallel scales</a></li>
-<li class="chapter" data-level="7.2" data-path="params-intro.html"><a href="params-intro.html#scale-the-output"><i class="fa fa-check"></i><b>7.2</b> Scale the output</a></li>
-</ul></li>
-<li class="chapter" data-level="8" data-path="process-of-modeling.html"><a href="process-of-modeling.html"><i class="fa fa-check"></i><b>8</b> Process of modeling</a>
-<ul>
-<li class="chapter" data-level="8.1" data-path="process-of-modeling.html"><a href="process-of-modeling.html#variations-from-scaling"><i class="fa fa-check"></i><b>8.1</b> Variations from scaling</a></li>
-<li class="chapter" data-level="8.2" data-path="process-of-modeling.html"><a href="process-of-modeling.html#fit-exponential"><i class="fa fa-check"></i><b>8.2</b> Curve fitting an exponential function</a></li>
-<li class="chapter" data-level="8.3" data-path="process-of-modeling.html"><a href="process-of-modeling.html#fit-periodic"><i class="fa fa-check"></i><b>8.3</b> Curve fitting a periodic function</a></li>
-<li class="chapter" data-level="8.4" data-path="process-of-modeling.html"><a href="process-of-modeling.html#curve-fitting-a-power-law-function"><i class="fa fa-check"></i><b>8.4</b> Curve fitting a power-law function</a></li>
-<li class="chapter" data-level="8.5" data-path="process-of-modeling.html"><a href="process-of-modeling.html#hump-and-sigmoid-functions"><i class="fa fa-check"></i><b>8.5</b> Hump and sigmoid functions</a></li>
-<li class="chapter" data-level="8.6" data-path="process-of-modeling.html"><a href="process-of-modeling.html#modeling-cycle"><i class="fa fa-check"></i><b>8.6</b> The modeling cycle</a>
-<ul>
-<li class="chapter" data-level="8.6.1" data-path="process-of-modeling.html"><a href="process-of-modeling.html#example-cooling-water"><i class="fa fa-check"></i><b>8.6.1</b> Example: Cooling water</a></li>
-<li class="chapter" data-level="8.6.2" data-path="process-of-modeling.html"><a href="process-of-modeling.html#example-the-tides"><i class="fa fa-check"></i><b>8.6.2</b> Example: The tides</a></li>
-</ul></li>
-</ul></li>
-<li class="chapter" data-level="9" data-path="fun-slopes.html"><a href="fun-slopes.html"><i class="fa fa-check"></i><b>9</b> Slope function</a>
-<ul>
-<li class="chapter" data-level="9.1" data-path="fun-slopes.html"><a href="fun-slopes.html#change-and-slope"><i class="fa fa-check"></i><b>9.1</b> Change and slope</a></li>
-<li class="chapter" data-level="9.2" data-path="fun-slopes.html"><a href="fun-slopes.html#continuous-change"><i class="fa fa-check"></i><b>9.2</b> Continuous change</a></li>
-<li class="chapter" data-level="9.3" data-path="fun-slopes.html"><a href="fun-slopes.html#slope"><i class="fa fa-check"></i><b>9.3</b> Slope</a></li>
-<li class="chapter" data-level="9.4" data-path="fun-slopes.html"><a href="fun-slopes.html#the-fitted-line"><i class="fa fa-check"></i><b>9.4</b> The fitted line</a></li>
-<li class="chapter" data-level="9.5" data-path="fun-slopes.html"><a href="fun-slopes.html#average-rate-of-change"><i class="fa fa-check"></i><b>9.5</b> Average rate of change</a></li>
-<li class="chapter" data-level="9.6" data-path="fun-slopes.html"><a href="fun-slopes.html#instantaneous-rate-of-change"><i class="fa fa-check"></i><b>9.6</b> Instantaneous rate of change</a></li>
-</ul></li>
-<li class="chapter" data-level="10" data-path="function-inverses-and-solving.html"><a href="function-inverses-and-solving.html"><i class="fa fa-check"></i><b>10</b> Function inverses and “solving”</a>
-<ul>
-<li class="chapter" data-level="10.1" data-path="function-inverses-and-solving.html"><a href="function-inverses-and-solving.html#function-inverses"><i class="fa fa-check"></i><b>10.1</b> Function inverses</a></li>
-<li class="chapter" data-level="10.2" data-path="function-inverses-and-solving.html"><a href="function-inverses-and-solving.html#exercises"><i class="fa fa-check"></i><b>10.2</b> Exercises</a></li>
-</ul></li>
-<li class="chapter" data-level="11" data-path="fun-assembling.html"><a href="fun-assembling.html"><i class="fa fa-check"></i><b>11</b> Assembling functions</a>
-<ul>
-<li class="chapter" data-level="11.1" data-path="fun-assembling.html"><a href="fun-assembling.html#linear-combination"><i class="fa fa-check"></i><b>11.1</b> Linear combination</a></li>
-<li class="chapter" data-level="11.2" data-path="fun-assembling.html"><a href="fun-assembling.html#function-composition"><i class="fa fa-check"></i><b>11.2</b> Function composition</a></li>
-<li class="chapter" data-level="11.3" data-path="fun-assembling.html"><a href="fun-assembling.html#modeling-polynomial-1"><i class="fa fa-check"></i><b>11.3</b> The modeling polynomial</a></li>
-<li class="chapter" data-level="11.4" data-path="fun-assembling.html"><a href="fun-assembling.html#tukeys-ladder-optional"><i class="fa fa-check"></i><b>11.4</b> Tukey’s ladder (optional)</a></li>
-<li class="chapter" data-level="11.5" data-path="fun-assembling.html"><a href="fun-assembling.html#function-multiplication"><i class="fa fa-check"></i><b>11.5</b> Function multiplication</a></li>
-<li class="chapter" data-level="11.6" data-path="fun-assembling.html"><a href="fun-assembling.html#all-together-now"><i class="fa fa-check"></i><b>11.6</b> All together now!</a></li>
-<li class="chapter" data-level="11.7" data-path="fun-assembling.html"><a href="fun-assembling.html#exercises-1"><i class="fa fa-check"></i><b>11.7</b> Exercises</a></li>
-</ul></li>
-<li class="chapter" data-level="12" data-path="fun-multiple-inputs.html"><a href="fun-multiple-inputs.html"><i class="fa fa-check"></i><b>12</b> Functions with multiple inputs</a>
-<ul>
-<li class="chapter" data-level="12.1" data-path="fun-multiple-inputs.html"><a href="fun-multiple-inputs.html#fx-times-gt"><i class="fa fa-check"></i><b>12.1</b> f(x) times g(t)</a></li>
-<li class="chapter" data-level="12.2" data-path="fun-multiple-inputs.html"><a href="fun-multiple-inputs.html#two-variable-modeling-polynomial"><i class="fa fa-check"></i><b>12.2</b> Two-variable modeling polynomial</a></li>
-<li class="chapter" data-level="12.3" data-path="fun-multiple-inputs.html"><a href="fun-multiple-inputs.html#function-composition-not"><i class="fa fa-check"></i><b>12.3</b> Function composition (not!)</a></li>
-</ul></li>
-<li class="chapter" data-level="13" data-path="fun-piecewise.html"><a href="fun-piecewise.html"><i class="fa fa-check"></i><b>13</b> Piecewise functions</a>
-<ul>
-<li class="chapter" data-level="13.1" data-path="fun-piecewise.html"><a href="fun-piecewise.html#piecewise-functions"><i class="fa fa-check"></i><b>13.1</b> Piecewise functions</a></li>
-</ul></li>
-<li class="chapter" data-level="14" data-path="magnitudes.html"><a href="magnitudes.html"><i class="fa fa-check"></i><b>14</b> Magnitudes</a>
-<ul>
-<li class="chapter" data-level="14.1" data-path="magnitudes.html"><a href="magnitudes.html#counting-digits"><i class="fa fa-check"></i><b>14.1</b> Counting digits</a></li>
-<li class="chapter" data-level="14.2" data-path="magnitudes.html"><a href="magnitudes.html#using-digit-to-understand-magnitude"><i class="fa fa-check"></i><b>14.2</b> Using digit() to understand magnitude</a></li>
-<li class="chapter" data-level="14.3" data-path="magnitudes.html"><a href="magnitudes.html#quantity-and-magnitude"><i class="fa fa-check"></i><b>14.3</b> Quantity and magnitude</a></li>
-<li class="chapter" data-level="14.4" data-path="magnitudes.html"><a href="magnitudes.html#composing-ln"><i class="fa fa-check"></i><b>14.4</b> Composing <span class="math inline">\(\ln()\)</span></a></li>
-<li class="chapter" data-level="14.5" data-path="magnitudes.html"><a href="magnitudes.html#magnitude-graphics"><i class="fa fa-check"></i><b>14.5</b> Magnitude graphics</a></li>
-<li class="chapter" data-level="14.6" data-path="magnitudes.html"><a href="magnitudes.html#magnitude-scales"><i class="fa fa-check"></i><b>14.6</b> Magnitude scales</a></li>
-<li class="chapter" data-level="14.7" data-path="magnitudes.html"><a href="magnitudes.html#fractional-digits"><i class="fa fa-check"></i><b>14.7</b> Fractional digits (optional)</a></li>
-</ul></li>
-<li class="chapter" data-level="15" data-path="dimensions.html"><a href="dimensions.html"><i class="fa fa-check"></i><b>15</b> Dimensions</a>
-<ul>
-<li class="chapter" data-level="15.1" data-path="dimensions.html"><a href="dimensions.html#mathematics-of-quantity"><i class="fa fa-check"></i><b>15.1</b> Mathematics of quantity</a></li>
-<li class="chapter" data-level="15.2" data-path="dimensions.html"><a href="dimensions.html#compound-dimensions"><i class="fa fa-check"></i><b>15.2</b> Compound dimensions</a></li>
-<li class="chapter" data-level="15.3" data-path="dimensions.html"><a href="dimensions.html#arithmetic-with-dimensions"><i class="fa fa-check"></i><b>15.3</b> Arithmetic with dimensions</a></li>
-<li class="chapter" data-level="15.4" data-path="dimensions.html"><a href="dimensions.html#example-dimensional-analysis"><i class="fa fa-check"></i><b>15.4</b> Example: Dimensional analysis</a></li>
-<li class="chapter" data-level="15.5" data-path="dimensions.html"><a href="dimensions.html#conversion-flavors-of-1"><i class="fa fa-check"></i><b>15.5</b> Conversion: Flavors of 1</a></li>
-<li class="chapter" data-level="15.6" data-path="dimensions.html"><a href="dimensions.html#dimensions-and-linear-combinations"><i class="fa fa-check"></i><b>15.6</b> Dimensions and linear combinations</a></li>
-</ul></li>
-<li class="part"><span><b>II Block 2: Differentiation</b></span></li>
-<li class="chapter" data-level="" data-path="outline-of-block-2.html"><a href="outline-of-block-2.html"><i class="fa fa-check"></i>Outline of Block 2</a></li>
-<li class="chapter" data-level="16" data-path="change-relationships.html"><a href="change-relationships.html"><i class="fa fa-check"></i><b>16</b> Change relationships</a>
-<ul>
-<li class="chapter" data-level="16.1" data-path="change-relationships.html"><a href="change-relationships.html#slopes-and-motion"><i class="fa fa-check"></i><b>16.1</b> Slopes and motion</a></li>
-<li class="chapter" data-level="16.2" data-path="change-relationships.html"><a href="change-relationships.html#differentiation"><i class="fa fa-check"></i><b>16.2</b> Differentiation</a></li>
-<li class="chapter" data-level="16.3" data-path="change-relationships.html"><a href="change-relationships.html#notations-for-differentiation"><i class="fa fa-check"></i><b>16.3</b> Notations for differentiation</a></li>
-<li class="chapter" data-level="16.4" data-path="change-relationships.html"><a href="change-relationships.html#dimension-of-derivatives"><i class="fa fa-check"></i><b>16.4</b> Dimension of derivatives</a></li>
-<li class="chapter" data-level="16.5" data-path="change-relationships.html"><a href="change-relationships.html#slope-fun-visualization"><i class="fa fa-check"></i><b>16.5</b> Visualizing the slope function</a></li>
-</ul></li>
-<li class="chapter" data-level="17" data-path="computing-derivs.html"><a href="computing-derivs.html"><i class="fa fa-check"></i><b>17</b> Computing derivatives</a>
-<ul>
-<li class="chapter" data-level="17.1" data-path="computing-derivs.html"><a href="computing-derivs.html#a-function-from-a-function"><i class="fa fa-check"></i><b>17.1</b> A function from a function</a></li>
-<li class="chapter" data-level="17.2" data-path="computing-derivs.html"><a href="computing-derivs.html#finite-differencing"><i class="fa fa-check"></i><b>17.2</b> Finite differencing</a></li>
-<li class="chapter" data-level="17.3" data-path="computing-derivs.html"><a href="computing-derivs.html#the-slope-function-operator"><i class="fa fa-check"></i><b>17.3</b> The slope-function operator</a></li>
-<li class="chapter" data-level="17.4" data-path="computing-derivs.html"><a href="computing-derivs.html#symbolic-differentiation"><i class="fa fa-check"></i><b>17.4</b> Symbolic differentiation</a></li>
-</ul></li>
-<li class="chapter" data-level="18" data-path="convexity-and-curvature.html"><a href="convexity-and-curvature.html"><i class="fa fa-check"></i><b>18</b> Convexity and curvature</a>
-<ul>
-<li class="chapter" data-level="18.1" data-path="convexity-and-curvature.html"><a href="convexity-and-curvature.html#concavity"><i class="fa fa-check"></i><b>18.1</b> Concavity</a></li>
-<li class="chapter" data-level="18.2" data-path="convexity-and-curvature.html"><a href="convexity-and-curvature.html#curvature"><i class="fa fa-check"></i><b>18.2</b> Curvature</a></li>
-</ul></li>
-<li class="chapter" data-level="19" data-path="cont-and-smooth.html"><a href="cont-and-smooth.html"><i class="fa fa-check"></i><b>19</b> Continuity and smoothness</a>
-<ul>
-<li class="chapter" data-level="19.1" data-path="cont-and-smooth.html"><a href="cont-and-smooth.html#continuity"><i class="fa fa-check"></i><b>19.1</b> Continuity</a></li>
-<li class="chapter" data-level="19.2" data-path="cont-and-smooth.html"><a href="cont-and-smooth.html#smoothness"><i class="fa fa-check"></i><b>19.2</b> Smoothness</a></li>
-<li class="chapter" data-level="19.3" data-path="cont-and-smooth.html"><a href="cont-and-smooth.html#doesnt-exist"><i class="fa fa-check"></i><b>19.3</b> Doesn’t exist?</a></li>
-<li class="chapter" data-level="19.4" data-path="cont-and-smooth.html"><a href="cont-and-smooth.html#piecewise-functions-1"><i class="fa fa-check"></i><b>19.4</b> Piecewise functions</a></li>
-<li class="chapter" data-level="19.5" data-path="cont-and-smooth.html"><a href="cont-and-smooth.html#continuity-1"><i class="fa fa-check"></i><b>19.5</b> Continuity</a></li>
-<li class="chapter" data-level="19.6" data-path="cont-and-smooth.html"><a href="cont-and-smooth.html#differentiability"><i class="fa fa-check"></i><b>19.6</b> Differentiability</a></li>
-</ul></li>
-<li class="chapter" data-level="20" data-path="evanescent-h.html"><a href="evanescent-h.html"><i class="fa fa-check"></i><b>20</b> Evanescent h</a>
-<ul>
-<li class="chapter" data-level="20.1" data-path="evanescent-h.html"><a href="evanescent-h.html#role-of-h"><i class="fa fa-check"></i><b>20.1</b> Role of h</a></li>
-<li class="chapter" data-level="20.2" data-path="evanescent-h.html"><a href="evanescent-h.html#derivatives-of-linear-combinations"><i class="fa fa-check"></i><b>20.2</b> Derivatives of linear combinations</a></li>
-<li class="chapter" data-level="20.3" data-path="evanescent-h.html"><a href="evanescent-h.html#derivatives-of-the-basic-modeling-functions"><i class="fa fa-check"></i><b>20.3</b> Derivatives of the basic modeling functions</a></li>
-</ul></li>
-<li class="chapter" data-level="21" data-path="prod-comp-rules.html"><a href="prod-comp-rules.html"><i class="fa fa-check"></i><b>21</b> Differentiation of assembled functions</a>
-<ul>
-<li class="chapter" data-level="21.1" data-path="prod-comp-rules.html"><a href="prod-comp-rules.html#step-1-identify-f-and-g"><i class="fa fa-check"></i><b>21.1</b> Step 1: Identify f() and g()</a></li>
-<li class="chapter" data-level="21.2" data-path="prod-comp-rules.html"><a href="prod-comp-rules.html#step-2-find-f-and-g"><i class="fa fa-check"></i><b>21.2</b> Step 2: Find f’() and g’()</a></li>
-<li class="chapter" data-level="21.3" data-path="prod-comp-rules.html"><a href="prod-comp-rules.html#product-rule"><i class="fa fa-check"></i><b>21.3</b> Product rule</a></li>
-<li class="chapter" data-level="21.4" data-path="prod-comp-rules.html"><a href="prod-comp-rules.html#composition-chain-rule"><i class="fa fa-check"></i><b>21.4</b> Composition (“chain”) rule</a></li>
-<li class="chapter" data-level="21.5" data-path="prod-comp-rules.html"><a href="prod-comp-rules.html#step-3-apply-the-relevant-rule"><i class="fa fa-check"></i><b>21.5</b> Step 3: Apply the relevant rule</a></li>
-<li class="chapter" data-level="21.6" data-path="prod-comp-rules.html"><a href="prod-comp-rules.html#exponentials-and-logarithms-optional"><i class="fa fa-check"></i><b>21.6</b> Exponentials and logarithms (optional)</a></li>
-<li class="chapter" data-level="21.7" data-path="prod-comp-rules.html"><a href="prod-comp-rules.html#checking-your-work"><i class="fa fa-check"></i><b>21.7</b> Checking your work</a></li>
-</ul></li>
-<li class="chapter" data-level="22" data-path="optim-and-shape.html"><a href="optim-and-shape.html"><i class="fa fa-check"></i><b>22</b> Optimization</a>
-<ul>
-<li class="chapter" data-level="22.1" data-path="optim-and-shape.html"><a href="optim-and-shape.html#structure-of-the-problem"><i class="fa fa-check"></i><b>22.1</b> Structure of the problem</a></li>
-<li class="chapter" data-level="22.2" data-path="optim-and-shape.html"><a href="optim-and-shape.html#interpreting-the-argmax"><i class="fa fa-check"></i><b>22.2</b> Interpreting the argmax</a></li>
-<li class="chapter" data-level="22.3" data-path="optim-and-shape.html"><a href="optim-and-shape.html#derivatives-and-optimization"><i class="fa fa-check"></i><b>22.3</b> Derivatives and optimization</a></li>
-<li class="chapter" data-level="22.4" data-path="optim-and-shape.html"><a href="optim-and-shape.html#tree-harvesting"><i class="fa fa-check"></i><b>22.4</b> Tree harvesting</a></li>
-</ul></li>
-<li class="chapter" data-level="23" data-path="partial-change.html"><a href="partial-change.html"><i class="fa fa-check"></i><b>23</b> Partial change</a>
-<ul>
-<li class="chapter" data-level="23.1" data-path="partial-change.html"><a href="partial-change.html#calculus-on-two-inputs"><i class="fa fa-check"></i><b>23.1</b> Calculus on two inputs</a></li>
-<li class="chapter" data-level="23.2" data-path="partial-change.html"><a href="partial-change.html#all-other-things-being-equal"><i class="fa fa-check"></i><b>23.2</b> All other things being equal …</a></li>
-<li class="chapter" data-level="23.3" data-path="partial-change.html"><a href="partial-change.html#gradient-vector"><i class="fa fa-check"></i><b>23.3</b> Gradient vector</a></li>
-<li class="chapter" data-level="23.4" data-path="partial-change.html"><a href="partial-change.html#gradient-vector-1"><i class="fa fa-check"></i><b>23.4</b> Gradient vector</a></li>
-</ul></li>
-<li class="chapter" data-level="24" data-path="local-approximations.html"><a href="local-approximations.html"><i class="fa fa-check"></i><b>24</b> Local approximations</a>
-<ul>
-<li class="chapter" data-level="24.1" data-path="local-approximations.html"><a href="local-approximations.html#eight-simple-shapes"><i class="fa fa-check"></i><b>24.1</b> Eight simple shapes</a></li>
-<li class="chapter" data-level="24.2" data-path="local-approximations.html"><a href="local-approximations.html#low-order-polynomial"><i class="fa fa-check"></i><b>24.2</b> Low-order polynomial</a></li>
-<li class="chapter" data-level="24.3" data-path="local-approximations.html"><a href="local-approximations.html#the-low-order-polynomial-with-two-inputs"><i class="fa fa-check"></i><b>24.3</b> The low-order polynomial with two inputs</a></li>
-<li class="chapter" data-level="24.4" data-path="local-approximations.html"><a href="local-approximations.html#derivatives-of-polynomials"><i class="fa fa-check"></i><b>24.4</b> Derivatives of polynomials</a></li>
-<li class="chapter" data-level="24.5" data-path="local-approximations.html"><a href="local-approximations.html#approximations-around-xstar"><i class="fa fa-check"></i><b>24.5</b> Approximations around <span class="math inline">\(x^\star\)</span></a></li>
-<li class="chapter" data-level="24.6" data-path="local-approximations.html"><a href="local-approximations.html#solving-computationally"><i class="fa fa-check"></i><b>24.6</b> Solving computationally</a></li>
-<li class="chapter" data-level="24.7" data-path="local-approximations.html"><a href="local-approximations.html#from-an-earlier-draft"><i class="fa fa-check"></i><b>24.7</b> From an earlier draft</a></li>
-</ul></li>
-<li class="chapter" data-level="25" data-path="approximation-near-a-reference-input.html"><a href="approximation-near-a-reference-input.html"><i class="fa fa-check"></i><b>25</b> Approximation near a reference input</a>
-<ul>
-<li class="chapter" data-level="25.1" data-path="approximation-near-a-reference-input.html"><a href="approximation-near-a-reference-input.html#the-reference-point"><i class="fa fa-check"></i><b>25.1</b> The reference point</a></li>
-<li class="chapter" data-level="25.2" data-path="approximation-near-a-reference-input.html"><a href="approximation-near-a-reference-input.html#taylor-polynomials"><i class="fa fa-check"></i><b>25.2</b> Taylor polynomials</a></li>
-<li class="chapter" data-level="25.3" data-path="approximation-near-a-reference-input.html"><a href="approximation-near-a-reference-input.html#polynomials-and-data"><i class="fa fa-check"></i><b>25.3</b> Polynomials and data</a></li>
-</ul></li>
-<li class="part"><span><b>III Block 3: Accumulation</b></span></li>
-<li class="chapter" data-level="" data-path="outline-of-block-3.html"><a href="outline-of-block-3.html"><i class="fa fa-check"></i>Outline of Block 3</a></li>
-<li class="chapter" data-level="26" data-path="change-accumulation.html"><a href="change-accumulation.html"><i class="fa fa-check"></i><b>26</b> Change and accumulation</a>
-<ul>
-<li class="chapter" data-level="26.1" data-path="change-accumulation.html"><a href="change-accumulation.html#differentiation-and-anti-differentiation"><i class="fa fa-check"></i><b>26.1</b> Differentiation and anti-differentiation</a></li>
-<li class="chapter" data-level="26.2" data-path="change-accumulation.html"><a href="change-accumulation.html#anti-diff-viz"><i class="fa fa-check"></i><b>26.2</b> Visualizing anti-differentiation</a></li>
-<li class="chapter" data-level="26.3" data-path="change-accumulation.html"><a href="change-accumulation.html#symbolic-anti-derivatives"><i class="fa fa-check"></i><b>26.3</b> Symbolic anti-derivatives</a></li>
-</ul></li>
-<li class="chapter" data-level="27" data-path="iteration-and-accumulation.html"><a href="iteration-and-accumulation.html"><i class="fa fa-check"></i><b>27</b> Iteration and accumulation</a>
-<ul>
-<li class="chapter" data-level="27.1" data-path="iteration-and-accumulation.html"><a href="iteration-and-accumulation.html#automating-euler"><i class="fa fa-check"></i><b>27.1</b> Automating Euler</a>
-<ul>
-<li class="chapter" data-level="27.1.1" data-path="iteration-and-accumulation.html"><a href="iteration-and-accumulation.html#euler-as-a-spreadsheet"><i class="fa fa-check"></i><b>27.1.1</b> Euler as a spreadsheet</a></li>
-<li class="chapter" data-level="27.1.2" data-path="iteration-and-accumulation.html"><a href="iteration-and-accumulation.html#using-antid"><i class="fa fa-check"></i><b>27.1.2</b> Using <code>antiD()</code></a></li>
-<li class="chapter" data-level="27.1.3" data-path="iteration-and-accumulation.html"><a href="iteration-and-accumulation.html#using-cumsum"><i class="fa fa-check"></i><b>27.1.3</b> Using <code>cumsum()</code></a></li>
-</ul></li>
-<li class="chapter" data-level="27.2" data-path="iteration-and-accumulation.html"><a href="iteration-and-accumulation.html#iteration"><i class="fa fa-check"></i><b>27.2</b> Iteration</a></li>
-<li class="chapter" data-level="27.3" data-path="iteration-and-accumulation.html"><a href="iteration-and-accumulation.html#accumulating-population-change"><i class="fa fa-check"></i><b>27.3</b> Accumulating population change</a></li>
-</ul></li>
-<li class="chapter" data-level="28" data-path="net-change.html"><a href="net-change.html"><i class="fa fa-check"></i><b>28</b> Accumulation as net change</a>
-<ul>
-<li class="chapter" data-level="28.1" data-path="net-change.html"><a href="net-change.html#quantifying-uncertainty-with-probability"><i class="fa fa-check"></i><b>28.1</b> Quantifying uncertainty with probability</a></li>
-<li class="chapter" data-level="28.2" data-path="net-change.html"><a href="net-change.html#calculus-and-probability"><i class="fa fa-check"></i><b>28.2</b> Calculus and probability</a></li>
-<li class="chapter" data-level="28.3" data-path="net-change.html"><a href="net-change.html#the-probability-density-function"><i class="fa fa-check"></i><b>28.3</b> The probability density function</a></li>
-<li class="chapter" data-level="28.4" data-path="net-change.html"><a href="net-change.html#the-cumulative-distribution"><i class="fa fa-check"></i><b>28.4</b> The cumulative distribution</a></li>
-<li class="chapter" data-level="28.5" data-path="net-change.html"><a href="net-change.html#the-expectation-value"><i class="fa fa-check"></i><b>28.5</b> The expectation value</a></li>
-</ul></li>
-<li class="chapter" data-level="29" data-path="accum-advanced-algebra.html"><a href="accum-advanced-algebra.html"><i class="fa fa-check"></i><b>29</b> Advanced algebraic methods</a>
-<ul>
-<li class="chapter" data-level="29.1" data-path="accum-advanced-algebra.html"><a href="accum-advanced-algebra.html#differentials"><i class="fa fa-check"></i><b>29.1</b> Differentials</a></li>
-<li class="chapter" data-level="29.2" data-path="accum-advanced-algebra.html"><a href="accum-advanced-algebra.html#u-substitution"><i class="fa fa-check"></i><b>29.2</b> U-substitution</a></li>
-<li class="chapter" data-level="29.3" data-path="accum-advanced-algebra.html"><a href="accum-advanced-algebra.html#integration-by-parts"><i class="fa fa-check"></i><b>29.3</b> Integration by parts</a>
-<ul>
-<li class="chapter" data-level="29.3.1" data-path="accum-advanced-algebra.html"><a href="accum-advanced-algebra.html#application-to-probability"><i class="fa fa-check"></i><b>29.3.1</b> Application to probability</a></li>
-</ul></li>
-</ul></li>
-<li class="chapter" data-level="30" data-path="antidiff-review.html"><a href="antidiff-review.html"><i class="fa fa-check"></i><b>30</b> Review of anti-differentiation methods</a></li>
-</ul>
-
-      </nav>
+    <div class="d-flex align-items-start justify-content-between">
+      <h1>
+        <a href="index.html" title="">CalcZ Student Notes</a>
+      </h1>
+      <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
     </div>
 
-    <div class="book-body">
-      <div class="body-inner">
-        <div class="book-header" role="navigation">
-          <h1>
-            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">CalcZ Student Notes</a>
-          </h1>
+    <div id="main-nav" class="collapse-lg">
+      <form role="search">
+        <input id="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
+</form>
+
+      <nav aria-label="Table of contents"><h2>Table of contents</h2>
+        <ul class="book-toc list-unstyled">
+<li><a class="" href="index.html">Welcome to calculus</a></li>
+<li class="book-part">Block 1: Functions and quantity</li>
+<li><a class="" href="outline-of-block-1.html">Outline of Block 1</a></li>
+<li><a class="" href="change.html"><span class="header-section-number">1</span> Change</a></li>
+<li><a class="" href="structure-of-a-function.html"><span class="header-section-number">2</span> Structure of a function</a></li>
+<li><a class="" href="naked-intro.html"><span class="header-section-number">3</span> Naked modeling functions</a></li>
+<li><a class="" href="fun-describing.html"><span class="header-section-number">4</span> Describing functions</a></li>
+<li><a class="" href="fun-notation.html"><span class="header-section-number">5</span> Notation for functions</a></li>
+<li><a class="" href="graphs-and-graphics.html"><span class="header-section-number">6</span> Graphics &amp; function graphs</a></li>
+<li><a class="" href="params-intro.html"><span class="header-section-number">7</span> Parameters for functions</a></li>
+<li><a class="" href="process-of-modeling.html"><span class="header-section-number">8</span> Process of modeling</a></li>
+<li><a class="" href="fun-slopes.html"><span class="header-section-number">9</span> Slope function</a></li>
+<li><a class="" href="function-inverses-and-solving.html"><span class="header-section-number">10</span> Function inverses and “solving”</a></li>
+<li><a class="" href="fun-assembling.html"><span class="header-section-number">11</span> Assembling functions</a></li>
+<li><a class="" href="fun-multiple-inputs.html"><span class="header-section-number">12</span> Functions with multiple inputs</a></li>
+<li><a class="" href="fun-piecewise.html"><span class="header-section-number">13</span> Piecewise functions</a></li>
+<li><a class="" href="magnitudes.html"><span class="header-section-number">14</span> Magnitudes</a></li>
+<li><a class="" href="dimensions.html"><span class="header-section-number">15</span> Dimensions</a></li>
+<li class="book-part">Block 2: Differentiation</li>
+<li><a class="" href="outline-of-block-2.html">Outline of Block 2</a></li>
+<li><a class="" href="change-relationships.html"><span class="header-section-number">16</span> Change relationships</a></li>
+<li><a class="" href="computing-derivs.html"><span class="header-section-number">17</span> Computing derivatives</a></li>
+<li><a class="" href="convexity-and-curvature.html"><span class="header-section-number">18</span> Convexity and curvature</a></li>
+<li><a class="" href="cont-and-smooth.html"><span class="header-section-number">19</span> Continuity and smoothness</a></li>
+<li><a class="" href="evanescent-h.html"><span class="header-section-number">20</span> Evanescent h</a></li>
+<li><a class="" href="prod-comp-rules.html"><span class="header-section-number">21</span> Differentiation of assembled functions</a></li>
+<li><a class="active" href="optim-and-shape.html"><span class="header-section-number">22</span> Optimization</a></li>
+<li><a class="" href="partial-change.html"><span class="header-section-number">23</span> Partial change</a></li>
+<li><a class="" href="local-approximations.html"><span class="header-section-number">24</span> Local approximations</a></li>
+<li><a class="" href="approximation-near-a-reference-input.html"><span class="header-section-number">25</span> Approximation near a reference input</a></li>
+<li class="book-part">Block 3: Accumulation</li>
+<li><a class="" href="outline-of-block-3.html">Outline of Block 3</a></li>
+<li><a class="" href="change-accumulation.html"><span class="header-section-number">26</span> Change and accumulation</a></li>
+<li><a class="" href="iteration-and-accumulation.html"><span class="header-section-number">27</span> Iteration and accumulation</a></li>
+<li><a class="" href="net-change.html"><span class="header-section-number">28</span> Accumulation as net change</a></li>
+<li><a class="" href="accum-advanced-algebra.html"><span class="header-section-number">29</span> Advanced algebraic methods</a></li>
+<li><a class="" href="antidiff-review.html"><span class="header-section-number">30</span> Review of anti-differentiation methods</a></li>
+</ul>
+
+        <div class="book-extra">
+          <p><a id="book-repo" href="https://github.com/dtkaplan/CalcZ-notes">View book source <i class="fab fa-github"></i></a></p>
         </div>
-
-        <div class="page-wrapper" tabindex="-1" role="main">
-          <div class="page-inner">
-
-            <section class="normal" id="section-">
-<div id="optim-and-shape" class="section level1" number="22">
-<h1><span class="header-section-number">Chapter 22</span> Optimization</h1>
+      </nav>
+</div>
+  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="optim-and-shape" class="section level1" number="22">
+<h1>
+<span class="header-section-number">22</span> Optimization<a class="anchor" aria-label="anchor" href="#optim-and-shape"><i class="fas fa-link"></i></a>
+</h1>
 <p>To “optimize” means to make something as good as possible with the available resources. Optimization problems are common in science, logistics, industry, and any other area where one seeks the best solution to a problem. Some everyday examples:</p>
 <ul>
 <li>How much salt to add to a stew. Stews can be too salty, or they can be not salty enough. Somewhere in the middle is the optimum.</li>
@@ -429,7 +120,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>Walking up too steep a slope is tiring and slows you down; that’s why hiking trails have switchbacks. When the switchbacks are too shallow, it takes a long time to cover the distance. What’s the most efficient angle to enable hikers to get up the hill in the shortest time.</li>
 </ul>
 <div id="structure-of-the-problem" class="section level2" number="22.1">
-<h2><span class="header-section-number">22.1</span> Structure of the problem</h2>
+<h2>
+<span class="header-section-number">22.1</span> Structure of the problem<a class="anchor" aria-label="anchor" href="#structure-of-the-problem"><i class="fas fa-link"></i></a>
+</h2>
 <p>In an optimization problem, there is one or more input quantity whose value you have to choose. The amount of salt; the years to wait from planting to harvesting a tree; the angle of the trail with respect to the slope. We’ll call this the <strong><em>decision quantity</em></strong>.</p>
 <p>Similarly, there is one or more output quantity that you value and want to make as good as possible. The taste of the stew; the income produced by selling the lumber; the time it takes to walk up the hill. The output quantity is called the <strong><em>objective</em></strong>.</p>
 <p>The model that relates to inputs to the objective output is called the <strong><em>objective function</em></strong>. Solving an optimization problem—once the modeling phase is complete—amounts to finding a value for the decision quantity (the input to the objective function) that produces the best level of the objective (the output from the objective function).</p>
@@ -453,12 +146,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 Our objective function is hdist(), and we seek to find the argmax. The input <span class="math inline">\(v_0\)</span> is (we have assumed) fixed, so the decision quantity is the angle <span class="math inline">\(\theta\)</span>.</p>
 <p>The best choice of <span class="math inline">\(\theta\)</span> will make the quantity <span class="math inline">\(\cos(\theta)\sin(\theta)\)</span> as large as possible. So in finding the argmax, we don’t need to be concerned with <span class="math inline">\(v_0\)</span> or <span class="math inline">\(g\)</span>.</p>
 <p>Finding the argmax can be accomplished simply by plotting the function <span class="math inline">\(\cos(\theta)\sin(\theta)\)</span>. We’ll implement the function so that the input is in units of <em>degrees</em>.</p>
-<div class="sourceCode" id="cb164"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb164-1"><a href="optim-and-shape.html#cb164-1" aria-hidden="true" tabindex="-1"></a>f <span class="ot">&lt;-</span> <span class="fu">makeFun</span>(<span class="fu">cos</span>(pi<span class="sc">*</span>theta<span class="sc">/</span><span class="dv">180</span>)<span class="sc">*</span><span class="fu">sin</span>(pi<span class="sc">*</span>theta<span class="sc">/</span><span class="dv">180</span>) <span class="sc">~</span> theta)</span>
-<span id="cb164-2"><a href="optim-and-shape.html#cb164-2" aria-hidden="true" tabindex="-1"></a><span class="fu">slice_plot</span>(<span class="fu">f</span>(theta) <span class="sc">~</span> theta, <span class="fu">domain</span>(<span class="at">theta=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">90</span>)))</span>
-<span id="cb164-3"><a href="optim-and-shape.html#cb164-3" aria-hidden="true" tabindex="-1"></a><span class="fu">slice_plot</span>(<span class="fu">f</span>(theta) <span class="sc">~</span> theta, <span class="fu">domain</span>(<span class="at">theta =</span> <span class="fu">c</span>(<span class="dv">40</span>, <span class="dv">50</span>)))</span></code></pre></div>
-<div class="figure" style="text-align: center"><span id="fig:ball-theta"></span>
-<img src="CalcZ-notes_files/figure-html/ball-theta-1.png" alt="The distance travelled by a ball launched at an angle of $\theta$$, according to the simple model is duration of flight and distance travelled." width="90%" /><img src="CalcZ-notes_files/figure-html/ball-theta-2.png" alt="The distance travelled by a ball launched at an angle of $\theta$$, according to the simple model is duration of flight and distance travelled." width="90%" />
-<p class="caption">
+<div class="sourceCode" id="cb164"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">f</span> <span class="op">&lt;-</span> <span class="fu">makeFun</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Trig.html">cos</a></span><span class="op">(</span><span class="va">pi</span><span class="op">*</span><span class="va">theta</span><span class="op">/</span><span class="fl">180</span><span class="op">)</span><span class="op">*</span><span class="fu"><a href="https://rdrr.io/r/base/Trig.html">sin</a></span><span class="op">(</span><span class="va">pi</span><span class="op">*</span><span class="va">theta</span><span class="op">/</span><span class="fl">180</span><span class="op">)</span> <span class="op">~</span> <span class="va">theta</span><span class="op">)</span>
+<span class="fu">slice_plot</span><span class="op">(</span><span class="fu">f</span><span class="op">(</span><span class="va">theta</span><span class="op">)</span> <span class="op">~</span> <span class="va">theta</span>, <span class="fu">domain</span><span class="op">(</span>theta<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">90</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
+<span class="fu">slice_plot</span><span class="op">(</span><span class="fu">f</span><span class="op">(</span><span class="va">theta</span><span class="op">)</span> <span class="op">~</span> <span class="va">theta</span>, <span class="fu">domain</span><span class="op">(</span>theta <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">40</span>, <span class="fl">50</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<div class="figure" style="text-align: center">
+<span id="fig:ball-theta"></span>
+<img src="CalcZ-notes_files/figure-html/ball-theta-1.png" alt="The distance travelled by a ball launched at an angle of $\theta$$, according to the simple model is duration of flight and distance travelled." width="90%"><img src="CalcZ-notes_files/figure-html/ball-theta-2.png" alt="The distance travelled by a ball launched at an angle of $\theta$$, according to the simple model is duration of flight and distance travelled." width="90%"><p class="caption">
 Figure 22.1: The distance travelled by a ball launched at an angle of <span class="math inline">\(\theta\)</span>$, according to the simple model is duration of flight and distance travelled.
 </p>
 </div>
@@ -469,14 +163,18 @@ Figure 22.1: The distance travelled by a ball launched at an angle of <span clas
 </div>
 </div>
 <div id="interpreting-the-argmax" class="section level2" number="22.2">
-<h2><span class="header-section-number">22.2</span> Interpreting the argmax</h2>
+<h2>
+<span class="header-section-number">22.2</span> Interpreting the argmax<a class="anchor" aria-label="anchor" href="#interpreting-the-argmax"><i class="fas fa-link"></i></a>
+</h2>
 <p>The graphical solution given to the slingshot problem is entirely satisfactory. Whether that solution will win the contest depends of course on whether the model we built for the objective function is correct. There are potentially important things we have left out, such as air resistence.</p>
 <p>Solving the optimization problem has prepared us to go out in the field and test the result. Perhaps we’ll find that the real-world optimum angle is somewhat steeper or shallower than <span class="math inline">\(\theta = 45^\circ\)</span>.</p>
 <p>Besides the argmax, another important quantity to read from the graph in Figure <a href="optim-and-shape.html#fig:ball-theta">22.1</a> is the <strong><em>precision</em></strong> of the argmax. In strict mathematical terms, the argmax is exactly 45 degrees. But in practical terms, it may not matter so much to the outcome if we are a little away from <span class="math inline">\(45^\circ\)</span>. For example, according to the model, any angle in the range <span class="math inline">\(40^\circ &lt; \theta &lt; 50^\circ\)</span> would produce an output that is within 1% of the distance reached at the argmax.</p>
 <p>Contests are won or lost by margins of less than 1%, so you should not casually deviate from the argmax. On the other hand, <span class="math inline">\(45^\circ\)</span> is the argmax of the <em>model</em>. Reality may deviate from the model. For instance, suppose that air resistance or wind might might have an effect of about 1% on the distance. You can expect that such factors might change the optimal angle by as much or more than <span class="math inline">\(\pm 5^\circ\)</span>.</p>
 </div>
 <div id="derivatives-and-optimization" class="section level2" number="22.3">
-<h2><span class="header-section-number">22.3</span> Derivatives and optimization</h2>
+<h2>
+<span class="header-section-number">22.3</span> Derivatives and optimization<a class="anchor" aria-label="anchor" href="#derivatives-and-optimization"><i class="fas fa-link"></i></a>
+</h2>
 <p>We’re now going to reframe the search for the argmax and it’s interpretation in terms of derivatives of the objective function with respect to the decision quantity (<span class="math inline">\(\theta\)</span> in the slingshot problem). For a function of one variable, this will not be an improvement from the look-at-the-graph technique to find the argmax. A genuine reason to use derivatives is to set us up in the future to solve problems with more than one variable, where it is hard to draw or interpret a graph. Also, describing functions in the language of derivatives can help us think more clearly about aspects of the problem, such as the precision of the argmax.</p>
 <p>With a graph such as Figure <a href="optim-and-shape.html#fig:ball-theta">22.1</a>, it’s easy to find the argmax; common sense carries the day. So it won’t be obvious at first why we are going to take the following approach:</p>
 <p>Let’s denote an argmax of the objective function <span class="math inline">\(f(x)\)</span> by <span class="math inline">\(x^\star\)</span>.
@@ -498,9 +196,9 @@ Let’s look at the derivative <span class="math inline">\(\partial_x f(x)\)</sp
 ## Warning: geom_vline(): Ignoring `mapping` because `xintercept` was provided.
 
 ## Warning: geom_vline(): Ignoring `mapping` because `xintercept` was provided.</code></pre>
-<div class="figure" style="text-align: center"><span id="fig:d2-hill"></span>
-<img src="CalcZ-notes_files/figure-html/d2-hill-1.png" alt="Top row: An objective function near an argmax (left) and an argmin (right). Bottom row: The derivative of the objective function" width="50%" /><img src="CalcZ-notes_files/figure-html/d2-hill-2.png" alt="Top row: An objective function near an argmax (left) and an argmin (right). Bottom row: The derivative of the objective function" width="50%" /><img src="CalcZ-notes_files/figure-html/d2-hill-3.png" alt="Top row: An objective function near an argmax (left) and an argmin (right). Bottom row: The derivative of the objective function" width="50%" /><img src="CalcZ-notes_files/figure-html/d2-hill-4.png" alt="Top row: An objective function near an argmax (left) and an argmin (right). Bottom row: The derivative of the objective function" width="50%" />
-<p class="caption">
+<div class="figure" style="text-align: center">
+<span id="fig:d2-hill"></span>
+<img src="CalcZ-notes_files/figure-html/d2-hill-1.png" alt="Top row: An objective function near an argmax (left) and an argmin (right). Bottom row: The derivative of the objective function" width="50%"><img src="CalcZ-notes_files/figure-html/d2-hill-2.png" alt="Top row: An objective function near an argmax (left) and an argmin (right). Bottom row: The derivative of the objective function" width="50%"><img src="CalcZ-notes_files/figure-html/d2-hill-3.png" alt="Top row: An objective function near an argmax (left) and an argmin (right). Bottom row: The derivative of the objective function" width="50%"><img src="CalcZ-notes_files/figure-html/d2-hill-4.png" alt="Top row: An objective function near an argmax (left) and an argmin (right). Bottom row: The derivative of the objective function" width="50%"><p class="caption">
 Figure 22.2: Top row: An objective function near an argmax (left) and an argmin (right). Bottom row: The derivative of the objective function
 </p>
 </div>
@@ -537,9 +235,8 @@ neither| 0 | 0</p>
 <div class="exercise">
 <span id="exr:concavity" class="exercise"><strong>Exercise 22.1  (02/concavity)  </strong></span>
 </div>
-<details>
-<p>The graph shows three different functions labeled (A), (B), and (C).</p>
-<p><img src="CalcZ-notes_files/figure-html/daily-digital-02-C1-1.png" width="32%" style="display: block; margin: auto;" /><img src="CalcZ-notes_files/figure-html/daily-digital-02-C1-2.png" width="32%" style="display: block; margin: auto;" /><img src="CalcZ-notes_files/figure-html/daily-digital-02-C1-3.png" width="32%" style="display: block; margin: auto;" /></p>
+<details><p>The graph shows three different functions labeled (A), (B), and (C).</p>
+<p><img src="CalcZ-notes_files/figure-html/daily-digital-02-C1-1.png" width="32%" style="display: block; margin: auto;"><img src="CalcZ-notes_files/figure-html/daily-digital-02-C1-2.png" width="32%" style="display: block; margin: auto;"><img src="CalcZ-notes_files/figure-html/daily-digital-02-C1-3.png" width="32%" style="display: block; margin: auto;"></p>
 <p><strong>Question A</strong> Function (A) is</p>
 <p>    concave down<span class="mcanswer"> ✓ </span>       non-concave<span class="mcanswer"> ☹︎ </span>       concave up<span class="mcanswer"> ☹︎ </span></p>
 <p><strong>Question B</strong> Function (B) is</p>
@@ -549,57 +246,58 @@ neither| 0 | 0</p>
 <p><strong>Question D</strong> The <strong>negative</strong> of function (A) is</p>
 <p>    concave down<span class="mcanswer"> ☹︎ </span>       non-concave<span class="mcanswer"> ☹︎ </span>       concave up<span class="mcanswer"> ✓ </span></p>
 <p>The graph shows a function <span class="math inline">\(\mbox{wave}(t) \equiv \sin(2 \pi t/4)\)</span> and labels four input values <span class="math inline">\(t\)</span>.</p>
-<p><img src="CalcZ-notes_files/figure-html/daily-digital-02-C2-1.png" width="90%" style="display: block; margin: auto;" /></p>
+<div class="inline-figure"><img src="CalcZ-notes_files/figure-html/daily-digital-02-C2-1.png" width="90%" style="display: block; margin: auto;"></div>
 <p><strong>Question E</strong> For what values of the input <span class="math inline">\(t\)</span> is the function concave up?</p>
 <ol style="list-style-type: lower-roman">
-<li><span class="math inline">\(t = A\)</span> and <span class="math inline">\(t=D\)</span><span class="mcanswer"> ☹︎ </span><br />
+<li>
+<span class="math inline">\(t = A\)</span> and <span class="math inline">\(t=D\)</span><span class="mcanswer"> ☹︎ </span><br>
 </li>
-<li><span class="math inline">\(t = A\)</span> and <span class="math inline">\(t=C\)</span><span class="mcanswer"> ☹︎ </span><br />
+<li>
+<span class="math inline">\(t = A\)</span> and <span class="math inline">\(t=C\)</span><span class="mcanswer"> ☹︎ </span><br>
 </li>
-<li><span class="math inline">\(t = C\)</span> and <span class="math inline">\(t = D\)</span><span class="mcanswer"> ✓ </span><br />
+<li>
+<span class="math inline">\(t = C\)</span> and <span class="math inline">\(t = D\)</span><span class="mcanswer"> ✓ </span><br>
 </li>
-<li>none of the above<span class="mcanswer"> ☹︎ </span></li>
+<li>none of the above<span class="mcanswer"> ☹︎ </span>
+</li>
 </ol>
 <p><strong>Question F</strong> For what values of the input <span class="math inline">\(t\)</span> is the function non-concave?</p>
 <p>    <span class="math inline">\(t = A\)</span><span class="mcanswer"> ✓ </span>       <span class="math inline">\(t=B\)</span><span class="mcanswer"> ☹︎ </span>       <span class="math inline">\(t=C\)</span><span class="mcanswer"> ☹︎ </span>       none of the above<span class="mcanswer"> ☹︎ </span></p>
 <p><strong>Question G</strong> Where is the function steepest?</p>
     <span class="math inline">\(t = A\)</span><span class="mcanswer"> ✓ </span>       <span class="math inline">\(t=B\)</span><span class="mcanswer"> ☹︎ </span>       <span class="math inline">\(t=C\)</span><span class="mcanswer"> ☹︎ </span>       <span class="math inline">\(t=D\)</span><span class="mcanswer"> ☹︎ </span>
-</details>
-
-<div class="exercise">
-<span id="exr:unnamed-chunk-140" class="exercise"><strong>Exercise 22.2  (tree-loves-fish)  </strong></span>
+</details><div class="exercise">
+<span id="exr:unnamed-chunk-142" class="exercise"><strong>Exercise 22.2  (tree-loves-fish)  </strong></span>
 </div>
-<details>
-<p>Here is a smooth function marked at a few points. Your task is, at each point, to estimate the value of the derivative, the sign of the second derivative, and the radius of the circle that would nicely match the function in a small region around each point. (Remember, we’re asking for the <em>radius</em> of the circle, which is half the <em>diameter</em>.)</p>
+<details><p>Here is a smooth function marked at a few points. Your task is, at each point, to estimate the value of the derivative, the sign of the second derivative, and the radius of the circle that would nicely match the function in a small region around each point. (Remember, we’re asking for the <em>radius</em> of the circle, which is half the <em>diameter</em>.)</p>
 <p>To simplify things, here is a table giving seven different combinations of the quantities you are to estimate. Some of them correctly match one of the labeled points, some do not. All you need to do is choose which is the correct set of quantities for each labeled point.</p>
-<p><img src="CalcZ-notes_files/figure-html/unnamed-chunk-344-1.png" width="90%" style="display: block; margin: auto;" /></p>
-<table>
+<div class="inline-figure"><img src="CalcZ-notes_files/figure-html/unnamed-chunk-346-1.png" width="90%" style="display: block; margin: auto;"></div>
+<table class="table table-sm">
 <colgroup>
-<col width="13%" />
-<col width="23%" />
-<col width="36%" />
-<col width="26%" />
+<col width="13%">
+<col width="23%">
+<col width="36%">
+<col width="26%">
 </colgroup>
-<thead>
-<tr class="header">
+<thead><tr class="header">
 <th align="left">row</th>
 <th align="right">value of 1st deriv</th>
 <th align="center">sign of 2nd deriv</th>
 <th align="left">radius                                       </th>
-</tr>
-</thead>
+</tr></thead>
 <tbody>
 <tr class="odd">
 <td align="left">i</td>
 <td align="right">-0.3</td>
 <td align="center">pos</td>
-<td align="left">0.25 <!--D--></td>
+<td align="left">0.25 <!--D-->
+</td>
 </tr>
 <tr class="even">
 <td align="left">ii</td>
 <td align="right">2.1</td>
 <td align="center">near 0</td>
-<td align="left">2000 <!--B--></td>
+<td align="left">2000 <!--B-->
+</td>
 </tr>
 <tr class="odd">
 <td align="left">iii</td>
@@ -611,7 +309,8 @@ neither| 0 | 0</p>
 <td align="left">iv</td>
 <td align="right">0.3</td>
 <td align="center">neg</td>
-<td align="left">0.3 <!--C--></td>
+<td align="left">0.3 <!--C-->
+</td>
 </tr>
 <tr class="odd">
 <td align="left">v</td>
@@ -623,13 +322,15 @@ neither| 0 | 0</p>
 <td align="left">vi</td>
 <td align="right">1.3</td>
 <td align="center">neg</td>
-<td align="left">3 <!--E--></td>
+<td align="left">3 <!--E-->
+</td>
 </tr>
 <tr class="odd">
 <td align="left">vii</td>
 <td align="right">0.5</td>
 <td align="center">pos</td>
-<td align="left">1 <!--A--></td>
+<td align="left">1 <!--A-->
+</td>
 </tr>
 </tbody>
 </table>
@@ -643,8 +344,7 @@ neither| 0 | 0</p>
 <p>    i<span class="mcanswer"> ✓ </span>       ii<span class="mcanswer"> ☹︎ </span>       iii<span class="mcanswer"> ☹︎ </span>       iv<span class="mcanswer"> ☹︎ </span>       v<span class="mcanswer"> ☹︎ </span>       vi<span class="mcanswer"> ☹︎ </span>       vii<span class="mcanswer"> ☹︎ </span></p>
 <p><strong>Question E</strong> Which row from the table best matches the function at point E?</p>
     i<span class="mcanswer"> ☹︎ </span>       ii<span class="mcanswer"> ☹︎ </span>       iii<span class="mcanswer"> ☹︎ </span>       iv<span class="mcanswer"> ☹︎ </span>       v<span class="mcanswer"> ☹︎ </span>       vi<span class="mcanswer"> ✓ </span>       vii<span class="mcanswer"> ☹︎ </span>
-</details>
-<div class="todo">
+</details><div class="todo">
 <p>Pick up on the Lorenz curve <code>{.intheworld}</code> in block 1. Compute the concavity of a lorenz function, showing that it’s everywhere positive. Then examine the concavity of a composition of lorenz functions to determine if that is necessarily everywhere positive.</p>
 </div>
 <div class="workedexample">
@@ -658,138 +358,138 @@ The above is an equation, not a definition. It says that whatever <span class="m
 </div>
 
 <div class="exercise">
-<span id="exr:unnamed-chunk-141" class="exercise"><strong>Exercise 22.3  (optim-violet)  </strong></span>
+<span id="exr:unnamed-chunk-143" class="exercise"><strong>Exercise 22.3  (optim-violet)  </strong></span>
 </div>
-<details>
-<p>You’re very proud of your pet dog, Swimmer. You often go to the beach and walk along the water’s edge. You throw a ball down the beach, but at an angle so it lands in the water. Swimmer goes to work. She runs down the beach (fast) and then plunges into the water, heading toward the ball. She can run fast on the beach: 400 m/minute. But she swims rather slower: 50 m/min.</p>
+<details><p>You’re very proud of your pet dog, Swimmer. You often go to the beach and walk along the water’s edge. You throw a ball down the beach, but at an angle so it lands in the water. Swimmer goes to work. She runs down the beach (fast) and then plunges into the water, heading toward the ball. She can run fast on the beach: 400 m/minute. But she swims rather slower: 50 m/min.</p>
 <p>Suppose you threw the ball to a point 50 meters down the beach and 10 meters out in the water. The overall distance to the ball is therefore <span class="math inline">\(\sqrt{50^2 + 10^2} = 51\)</span> meters. If Swimmer entered the water immediately, she would take about minute to reach the ball (51 m / 50 m/min). Swimmer can get to the ball faster by running down the beach a big and then turning into the water. If Swimmer ran all 50 meters down the beach and then turned to swim the 10 meters, it would take her (50/400 + 10/50) minutes, about one-third of a minute.</p>
 <p>Can Swimmer do better? You can set up the calculation like this. Imagine <span class="math inline">\(x\)</span> to be the distance down the beach that Swimmer runs. The time to run this distance will be <span class="math inline">\(x/400\)</span>. The distance remaining to the ball can be found by the pythagorean theorem. One leg of the triangle has length <span class="math inline">\((50-x)\)</span>, the other has length 10 m. So if <span class="math inline">\(x\)</span> were 45, the distance to swim in the water would be <span class="math inline">\(\sqrt{(50-45)^2 + 10^2}\)</span>. Divide this distance by 50 m/min to get the time spent in the water.</p>
-<div class="sourceCode" id="cb166"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb166-1"><a href="optim-and-shape.html#cb166-1" aria-hidden="true" tabindex="-1"></a>distance_in_water <span class="ot">&lt;-</span> <span class="fu">makeFun</span>( your_pythagorus_calculation <span class="sc">~</span> x)</span>
-<span id="cb166-2"><a href="optim-and-shape.html#cb166-2" aria-hidden="true" tabindex="-1"></a>time_to_ball <span class="ot">&lt;-</span> <span class="fu">makeFun</span>(x<span class="sc">/</span><span class="dv">400</span> <span class="sc">+</span> distance_in_water<span class="sc">/</span><span class="dv">50</span> <span class="sc">~</span> x)</span></code></pre></div>
+<div class="sourceCode" id="cb166"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">distance_in_water</span> <span class="op">&lt;-</span> <span class="fu">makeFun</span><span class="op">(</span> <span class="va">your_pythagorus_calculation</span> <span class="op">~</span> <span class="va">x</span><span class="op">)</span>
+<span class="va">time_to_ball</span> <span class="op">&lt;-</span> <span class="fu">makeFun</span><span class="op">(</span><span class="va">x</span><span class="op">/</span><span class="fl">400</span> <span class="op">+</span> <span class="va">distance_in_water</span><span class="op">/</span><span class="fl">50</span> <span class="op">~</span> <span class="va">x</span><span class="op">)</span></code></pre></div>
 <p><code>Time_to_ball()</code> takes one argument, the distance <span class="math inline">\(x\)</span> Swimmer runs down the beach before turning into the water. Use a <a href="https://maa-statprep.shinyapps.io/CalcZ-Sandbox/">SANDBOX</a> to find the distance that calculus-savvy Swimmer runs down the beach before turning into the water, if Swimmer’s goal is to get to the ball as fast as possible.</p>
 <p><strong>Question A</strong> What’s the optimal running distance for Swimmer?</p>
 <p>    47.25<span class="mcanswer"> ☹︎ </span>       47.5<span class="mcanswer"> ☹︎ </span>       48.25<span class="mcanswer"> ☹︎ </span>       48.75<span class="mcanswer"> ✓ </span>       49.25<span class="mcanswer"> ☹︎ </span>       49.75<span class="mcanswer"> ☹︎ </span></p>
 <a href="https://abcnews.go.com/Technology/story?id=97628&amp;page=1">Here’s a news story</a> about a mathematician’s dog on the shore of Lake Michigan. It’s not plausible that Swimmer has been trained in calculus. Perhaps the way Swimmer solves the running distance problem is simply to graph <code>time_to_ball(x) ~ x</code> over a suitable domain and find the argmax by eye!
-</details>
-
-<div class="exercise">
-<span id="exr:unnamed-chunk-142" class="exercise"><strong>Exercise 22.4  (optim-pink)  </strong></span>
+</details><div class="exercise">
+<span id="exr:unnamed-chunk-144" class="exercise"><strong>Exercise 22.4  (optim-pink)  </strong></span>
 </div>
-<details>
-<p>If you’re skeptical that a dog might do a calculus problem before running to fetch a ball, consider the path taken by a photon. “Fermat’s Principle” is that light takes the path of least time. To illustrate, consider the problem of a photon travelling from a point A to a point B, as in the diagram. The shortest path between the two points is a straight line. Along this straight-line path, the time taken by the photon will be the distance divided by the speed of light.</p>
+<details><p>If you’re skeptical that a dog might do a calculus problem before running to fetch a ball, consider the path taken by a photon. “Fermat’s Principle” is that light takes the path of least time. To illustrate, consider the problem of a photon travelling from a point A to a point B, as in the diagram. The shortest path between the two points is a straight line. Along this straight-line path, the time taken by the photon will be the distance divided by the speed of light.</p>
 <p>The diagram shows another path consisting of two segments, one of length <span class="math inline">\(l_1\)</span> and the other <span class="math inline">\(l_2\)</span>. Obviously, the two-segment path is longer than the straight-line path. But Fermat’s principle would lead light to “prefer” the longer path if the time taken to traverse it is shorter.</p>
-<pre><code>## Warning in normalizePath(&quot;www/1200px-Fermat_Snellius.svg.png&quot;): path[1]=&quot;www/
-## 1200px-Fermat_Snellius.svg.png&quot;: No such file or directory</code></pre>
-<p><img src="www/1200px-Fermat_Snellius.svg.png" width="60%" style="display: block; margin: auto;" /></p>
+<pre><code>## Warning in normalizePath("www/1200px-Fermat_Snellius.svg.png"): path[1]="www/
+## 1200px-Fermat_Snellius.svg.png": No such file or directory</code></pre>
+<div class="inline-figure"><img src="www/1200px-Fermat_Snellius.svg.png" width="60%" style="display: block; margin: auto;"></div>
 <p>The reason the indirect path might be shorter is that the speed of light differs in different physical media. Light traveling in a vacuum famously has a speed of about 300,000 km per second. In air, the speed is smaller by a factor of 1/1.003. In water, the speed is smaller still: the factor is 1/1.3.</p>
 <p>Imagine that the blue zone of the diagram is water and the clear zone air. The time for the photon to travel from point A to B is proportional to <span class="math inline">\(1.003\ l_1 + 1.3\ l_2\)</span>.</p>
 <p>To see the path actually taken by light, let’s imagine that point A is <span class="math inline">\((x=0, y=10)\)</span> and point B is <span class="math inline">\((x=20, y=-10)\)</span>, and that the boundary between water and air is at <span class="math inline">\(y=0\)</span>. We’ll place the point P at <span class="math inline">\((x, 0)\)</span>. The total time taken for light to traverse this path is 1.003 dist(A to P) + 1.3 dist(P to B).</p>
 <p><strong>Question A</strong> Which of these formulas gives the total time it takes for light to traverse the path from A to P at relative speed 1/1.003 and then the path from P to B at relative speed 1/1.3? A is located at <span class="math inline">\((0, 10)\)</span>, B is located at <span class="math inline">\((20,-10)\)</span>, and P is located at <span class="math inline">\((x, 0)\)</span></p>
 <ol style="list-style-type: lower-roman">
-<li><span class="math inline">\(1.003 \sqrt{(x-0)^2 +(0-10)^2}+ 1.3\sqrt{(20-x)^2 + (-10 - 0)^2}\)</span><span class="mcanswer"> ✓ </span><br />
+<li>
+<span class="math inline">\(1.003 \sqrt{(x-0)^2 +(0-10)^2}+ 1.3\sqrt{(20-x)^2 + (-10 - 0)^2}\)</span><span class="mcanswer"> ✓ </span><br>
 </li>
-<li><span class="math inline">\(\sqrt{(x-0)^2 +(0-10)^2}/1.003+ \sqrt{(20-x)^2 + (-10 - 0)^2}/1.3\)</span><span class="mcanswer"> ☹︎ It’s true that you divide distance by speed to get time, but here the relative speeds are <span class="math inline">\(1/1.003\)</span> and <span class="math inline">\(1/1.3\)</span>. </span><br />
+<li>
+<span class="math inline">\(\sqrt{(x-0)^2 +(0-10)^2}/1.003+ \sqrt{(20-x)^2 + (-10 - 0)^2}/1.3\)</span><span class="mcanswer"> ☹︎ It’s true that you divide distance by speed to get time, but here the relative speeds are <span class="math inline">\(1/1.003\)</span> and <span class="math inline">\(1/1.3\)</span>. </span><br>
 </li>
-<li><span class="math inline">\(1.003 \sqrt{(x-10)^2 +(0-0)^2}+ 1.3\sqrt{(-10 -x)^2 + (50 - 0)^2}\)</span><span class="mcanswer"> ☹︎ This mixes up the x and y coordinates. The distance from A to P is <span class="math inline">\(\sqrt{(x_P - x_A)^2 + (y_P - y_A)^2}\)</span>. In this problem, point P is at <span class="math inline">\((50-x, 0)\)</span>. </span></li>
+<li>
+<span class="math inline">\(1.003 \sqrt{(x-10)^2 +(0-0)^2}+ 1.3\sqrt{(-10 -x)^2 + (50 - 0)^2}\)</span><span class="mcanswer"> ☹︎ This mixes up the x and y coordinates. The distance from A to P is <span class="math inline">\(\sqrt{(x_P - x_A)^2 + (y_P - y_A)^2}\)</span>. In this problem, point P is at <span class="math inline">\((50-x, 0)\)</span>. </span>
+</li>
 </ol>
 <p>Implement the calculation of <code>total_time()</code> in R, then use a graph to find the argmin.</p>
 <div class="scaffolding">
-<div class="sourceCode" id="cb168"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb168-1"><a href="optim-and-shape.html#cb168-1" aria-hidden="true" tabindex="-1"></a>total_time <span class="ot">&lt;-</span> <span class="fu">makeFun</span>( your_formula <span class="sc">~</span> x)</span>
-<span id="cb168-2"><a href="optim-and-shape.html#cb168-2" aria-hidden="true" tabindex="-1"></a><span class="fu">slice_plot</span>(<span class="fu">total_time</span>(x) <span class="sc">~</span> x, <span class="fu">domain</span>(<span class="at">x=</span><span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">20</span>)))</span>
-<span id="cb168-3"><a href="optim-and-shape.html#cb168-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb168-4"><a href="optim-and-shape.html#cb168-4" aria-hidden="true" tabindex="-1"></a><span class="co"># For the next problem</span></span>
-<span id="cb168-5"><a href="optim-and-shape.html#cb168-5" aria-hidden="true" tabindex="-1"></a>dx_time  <span class="ot">&lt;-</span> <span class="fu">D</span>(<span class="fu">total_time</span>(x) <span class="sc">~</span> x)</span>
-<span id="cb168-6"><a href="optim-and-shape.html#cb168-6" aria-hidden="true" tabindex="-1"></a>dxx_time <span class="ot">&lt;-</span> <span class="fu">D</span>(<span class="fu">total_time</span>(x) <span class="sc">~</span> x <span class="sc">+</span> x)</span></code></pre></div>
+<div class="sourceCode" id="cb168"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">total_time</span> <span class="op">&lt;-</span> <span class="fu">makeFun</span><span class="op">(</span> <span class="va">your_formula</span> <span class="op">~</span> <span class="va">x</span><span class="op">)</span>
+<span class="fu">slice_plot</span><span class="op">(</span><span class="fu">total_time</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">~</span> <span class="va">x</span>, <span class="fu">domain</span><span class="op">(</span>x<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">20</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
+
+<span class="co"># For the next problem</span>
+<span class="va">dx_time</span>  <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/deriv.html">D</a></span><span class="op">(</span><span class="fu">total_time</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">~</span> <span class="va">x</span><span class="op">)</span>
+<span class="va">dxx_time</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/deriv.html">D</a></span><span class="op">(</span><span class="fu">total_time</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">~</span> <span class="va">x</span> <span class="op">+</span> <span class="va">x</span><span class="op">)</span></code></pre></div>
 </div>
 <p><strong>Question B</strong> i) What value of <span class="math inline">\(x\)</span> (that is, the argmin) minimizes the travel time of light between points A and B? (Choose the best answer)</p>
 <ol style="list-style-type: lower-roman">
-<li>10.52<span class="mcanswer"> ☹︎ </span><br />
+<li>10.52<span class="mcanswer"> ☹︎ </span><br>
 </li>
-<li>11.02<span class="mcanswer"> ☹︎ </span><br />
+<li>11.02<span class="mcanswer"> ☹︎ </span><br>
 </li>
-<li>11.19<span class="mcanswer"> ☹︎ </span><br />
+<li>11.19<span class="mcanswer"> ☹︎ </span><br>
 </li>
-<li>11.61<span class="mcanswer"> ☹︎ </span><br />
+<li>11.61<span class="mcanswer"> ☹︎ </span><br>
 </li>
-<li>12.07<span class="mcanswer"> ☹︎ </span><br />
+<li>12.07<span class="mcanswer"> ☹︎ </span><br>
 </li>
-<li>12.22<span class="mcanswer"> ☹︎ </span><br />
+<li>12.22<span class="mcanswer"> ☹︎ </span><br>
 </li>
-<li>12.46<span class="mcanswer"> ☹︎ </span><br />
+<li>12.46<span class="mcanswer"> ☹︎ </span><br>
 </li>
-<li>12.50<span class="mcanswer"> ✓ </span><br />
+<li>12.50<span class="mcanswer"> ✓ </span><br>
 </li>
-<li>12.95<span class="mcanswer"> ☹︎ </span><br />
+<li>12.95<span class="mcanswer"> ☹︎ </span><br>
 </li>
-<li>13.19<span class="mcanswer"> ☹︎ </span><br />
+<li>13.19<span class="mcanswer"> ☹︎ </span><br>
 </li>
-<li>13.21<span class="mcanswer"> ☹︎ </span><br />
+<li>13.21<span class="mcanswer"> ☹︎ </span><br>
 </li>
-<li>13.34<span class="mcanswer"> ☹︎ </span><br />
+<li>13.34<span class="mcanswer"> ☹︎ </span><br>
 </li>
-<li>13.92<span class="mcanswer"> ☹︎ </span><br />
+<li>13.92<span class="mcanswer"> ☹︎ </span><br>
 </li>
-<li>14.03<span class="mcanswer"> ☹︎ </span><br />
+<li>14.03<span class="mcanswer"> ☹︎ </span><br>
 </li>
-<li>14.14<span class="mcanswer"> ☹︎ </span><br />
+<li>14.14<span class="mcanswer"> ☹︎ </span><br>
 </li>
-<li>14.16<span class="mcanswer"> ☹︎ </span><br />
+<li>14.16<span class="mcanswer"> ☹︎ </span><br>
 </li>
-<li>14.44<span class="mcanswer"> ☹︎ </span><br />
+<li>14.44<span class="mcanswer"> ☹︎ </span><br>
 </li>
-<li>14.5<span class="mcanswer"> ☹︎ </span><br />
+<li>14.5<span class="mcanswer"> ☹︎ </span><br>
 </li>
-<li>14.94<span class="mcanswer"> ☹︎ </span></li>
+<li>14.94<span class="mcanswer"> ☹︎ </span>
+</li>
 </ol>
 <p><strong>Question C</strong> ii) Suppose that instead of being water, the blue area was glass. The speed of light in glass is roughly 1/1.5 times as big as in vacuum. What value of <span class="math inline">\(x\)</span> minimizes the travel time of light between points A and B? (Choose the best answer)</p>
 <ol style="list-style-type: lower-roman">
-<li>10.13<span class="mcanswer"> ☹︎ </span><br />
+<li>10.13<span class="mcanswer"> ☹︎ </span><br>
 </li>
-<li>11.07<span class="mcanswer"> ☹︎ </span><br />
+<li>11.07<span class="mcanswer"> ☹︎ </span><br>
 </li>
-<li>11.13<span class="mcanswer"> ☹︎ </span><br />
+<li>11.13<span class="mcanswer"> ☹︎ </span><br>
 </li>
-<li>11.5<span class="mcanswer"> ☹︎ </span><br />
+<li>11.5<span class="mcanswer"> ☹︎ </span><br>
 </li>
-<li>11.57<span class="mcanswer"> ☹︎ </span><br />
+<li>11.57<span class="mcanswer"> ☹︎ </span><br>
 </li>
-<li>12<span class="mcanswer"> ☹︎ </span><br />
+<li>12<span class="mcanswer"> ☹︎ </span><br>
 </li>
-<li>12.38<span class="mcanswer"> ☹︎ </span><br />
+<li>12.38<span class="mcanswer"> ☹︎ </span><br>
 </li>
-<li>12.62<span class="mcanswer"> ☹︎ </span><br />
+<li>12.62<span class="mcanswer"> ☹︎ </span><br>
 </li>
-<li>12.87<span class="mcanswer"> ☹︎ </span><br />
+<li>12.87<span class="mcanswer"> ☹︎ </span><br>
 </li>
-<li>12.88<span class="mcanswer"> ☹︎ </span><br />
+<li>12.88<span class="mcanswer"> ☹︎ </span><br>
 </li>
-<li>12.95<span class="mcanswer"> ☹︎ </span><br />
+<li>12.95<span class="mcanswer"> ☹︎ </span><br>
 </li>
-<li>13.16<span class="mcanswer"> ☹︎ </span><br />
+<li>13.16<span class="mcanswer"> ☹︎ </span><br>
 </li>
-<li>13.4<span class="mcanswer"> ☹︎ </span><br />
+<li>13.4<span class="mcanswer"> ☹︎ </span><br>
 </li>
-<li>13.60<span class="mcanswer"> ✓ </span><br />
+<li>13.60<span class="mcanswer"> ✓ </span><br>
 </li>
-<li>13.71<span class="mcanswer"> ☹︎ </span><br />
+<li>13.71<span class="mcanswer"> ☹︎ </span><br>
 </li>
-<li>13.85<span class="mcanswer"> ☹︎ </span><br />
+<li>13.85<span class="mcanswer"> ☹︎ </span><br>
 </li>
-<li>14.18<span class="mcanswer"> ☹︎ </span><br />
+<li>14.18<span class="mcanswer"> ☹︎ </span><br>
 </li>
-<li>14.25<span class="mcanswer"> ☹︎ </span><br />
+<li>14.25<span class="mcanswer"> ☹︎ </span><br>
 </li>
-<li>14.34<span class="mcanswer"> ☹︎ </span><br />
+<li>14.34<span class="mcanswer"> ☹︎ </span><br>
 </li>
 <li>14.7<span class="mcanswer"> ☹︎ </span>
-</details></li>
-</ol>
-
-<div class="exercise">
-<span id="exr:unnamed-chunk-143" class="exercise"><strong>Exercise 22.5  (optim-red)  </strong></span>
+</li>
+</ol></details><div class="exercise">
+<span id="exr:unnamed-chunk-145" class="exercise"><strong>Exercise 22.5  (optim-red)  </strong></span>
 </div>
-<details>
-<div class="todo">
+<details><div class="todo">
 <p>Turn this into a problem about algebra.</p>
 <p>Later in accumulation, figure out the mile-markers on the road.</p>
 </div>
@@ -797,153 +497,156 @@ The above is an equation, not a definition. It says that whatever <span class="m
 <p>Suppose you have a function <span class="math inline">\(f(x)\)</span> whose graph represents the path of a road through the jungle. There is a lion at coordinates <span class="math inline">\((3, 2)\)</span> in the jungle. At what point as you travel along the road will you be closest to the lion.</p>
 <p>The trick here is to see that your position on the road at any value of <span class="math inline">\(x\)</span> is <span class="math inline">\((x, f(x))\)</span>. The distance to the lion as a function of <span class="math inline">\(x\)</span> is <span class="math display">\[ \text{lion_dist}(x) \equiv \sqrt{(x - 3)^2 + (f(x)-2)^2} .\]</span></p>
 <p>The road and the lion are graphed in the sandbox for the road <span class="math inline">\(f(x) \equiv x^2 e^{-x}\)</span>. You can see that the road comes closest to the lion at roughly <span class="math inline">\(x=3\)</span>. When you implement the <span class="math inline">\(\text{lion_dist}(x)\)</span> function, you’ll be able to find the <em>argmin</em>, that is, the value of the input <span class="math inline">\(x\)</span> for which the output <span class="math inline">\(\text{lion_dist}(x)\)</span> is minimal. The value of the function <span class="math inline">\(\text{lion_dist}(x)\)</span> at the argmin is the <em>min</em> of the function.</p>
-<div class="sourceCode" id="cb169"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb169-1"><a href="optim-and-shape.html#cb169-1" aria-hidden="true" tabindex="-1"></a><span class="fu">slice_plot</span>(x<span class="sc">^</span><span class="dv">2</span> <span class="sc">*</span> <span class="fu">exp</span>(<span class="sc">-</span>x) <span class="sc">~</span> x, <span class="fu">domain</span>(<span class="at">x=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">5</span>))) <span class="sc">%&gt;%</span></span>
-<span id="cb169-2"><a href="optim-and-shape.html#cb169-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gf_label</span>(<span class="dv">2</span> <span class="sc">~</span> <span class="dv">3</span>, <span class="at">label=</span><span class="st">&quot;lion&quot;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb169-3"><a href="optim-and-shape.html#cb169-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gf_refine</span>(<span class="fu">coord_fixed</span>())</span></code></pre></div>
-<p><img src="CalcZ-notes_files/figure-html/unnamed-chunk-352-1.png" width="90%" style="display: block; margin: auto;" /></p>
+<div class="sourceCode" id="cb169"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu">slice_plot</span><span class="op">(</span><span class="va">x</span><span class="op">^</span><span class="fl">2</span> <span class="op">*</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html">exp</a></span><span class="op">(</span><span class="op">-</span><span class="va">x</span><span class="op">)</span> <span class="op">~</span> <span class="va">x</span>, <span class="fu">domain</span><span class="op">(</span>x<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">5</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu">gf_label</span><span class="op">(</span><span class="fl">2</span> <span class="op">~</span> <span class="fl">3</span>, label<span class="op">=</span><span class="st">"lion"</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu">gf_refine</span><span class="op">(</span><span class="fu">coord_fixed</span><span class="op">(</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<div class="inline-figure"><img src="CalcZ-notes_files/figure-html/unnamed-chunk-354-1.png" width="90%" style="display: block; margin: auto;"></div>
 <p>To find the argmin of the distance to the lion more precisely, implement the <span class="math inline">\(\text{lion_dist}(x)\)</span> function in the sandbox. Plot this out and look for the minimum. Alternatively, find <span class="math inline">\(\partial_x \text{lion_dist}(x)\)</span> and find the <span class="math inline">\(x\)</span> of the zero crossing.</p>
 <p><strong>Question A</strong> Using the sandbox above, find the argmin for which the graph of the function <span class="math inline">\(g(x) \equiv x^2 \exp(-x)\)</span> comes closest to the point <span class="math inline">\((3, 2)\)</span>? (Choose the best answer.)</p>
 <ol style="list-style-type: lower-roman">
-<li>2.03<span class="mcanswer"> ☹︎ </span><br />
+<li>2.03<span class="mcanswer"> ☹︎ </span><br>
 </li>
-<li>2.07<span class="mcanswer"> ☹︎ </span><br />
+<li>2.07<span class="mcanswer"> ☹︎ </span><br>
 </li>
-<li>2.21<span class="mcanswer"> ☹︎ </span><br />
+<li>2.21<span class="mcanswer"> ☹︎ </span><br>
 </li>
-<li>2.27<span class="mcanswer"> ☹︎ </span><br />
+<li>2.27<span class="mcanswer"> ☹︎ </span><br>
 </li>
-<li>2.28<span class="mcanswer"> ☹︎ </span><br />
+<li>2.28<span class="mcanswer"> ☹︎ </span><br>
 </li>
-<li>2.33<span class="mcanswer"> ☹︎ </span><br />
+<li>2.33<span class="mcanswer"> ☹︎ </span><br>
 </li>
-<li>2.37<span class="mcanswer"> ☹︎ </span><br />
+<li>2.37<span class="mcanswer"> ☹︎ </span><br>
 </li>
-<li>2.39<span class="mcanswer"> ☹︎ </span><br />
+<li>2.39<span class="mcanswer"> ☹︎ </span><br>
 </li>
-<li>2.43<span class="mcanswer"> ☹︎ </span><br />
+<li>2.43<span class="mcanswer"> ☹︎ </span><br>
 </li>
-<li>2.48<span class="mcanswer"> ☹︎ </span><br />
+<li>2.48<span class="mcanswer"> ☹︎ </span><br>
 </li>
-<li>2.58<span class="mcanswer"> ☹︎ </span><br />
+<li>2.58<span class="mcanswer"> ☹︎ </span><br>
 </li>
-<li>2.71<span class="mcanswer"> ☹︎ </span><br />
+<li>2.71<span class="mcanswer"> ☹︎ </span><br>
 </li>
-<li>2.80<span class="mcanswer"> ✓ </span><br />
+<li>2.80<span class="mcanswer"> ✓ </span><br>
 </li>
-<li>2.94<span class="mcanswer"> ☹︎ </span></li>
-</ol>
-</details>
-
-<div class="exercise">
-<span id="exr:unnamed-chunk-144" class="exercise"><strong>Exercise 22.6  (optim-blue)  </strong></span>
+<li>2.94<span class="mcanswer"> ☹︎ </span>
+</li>
+</ol></details><div class="exercise">
+<span id="exr:unnamed-chunk-146" class="exercise"><strong>Exercise 22.6  (optim-blue)  </strong></span>
 </div>
-<details>
-<p>In the previous problem, you used graphics to find the argmin of a function. You can, of course, successively reset the domain of the graphing window to zoom in on the location of the argmin.</p>
-<p>To find the argmin numerically, you start with a (pretty good) guess for the argmin. Recall that a function (such as <code>total_time()</code>) can be modeled with a low-order polynomial. When the function has an extreme point the polynomial should include a quadratic term. Suppose you have guessed that <span class="math inline">\(x=10\)</span> is a good starting guess for the argmin of the air-to-water problem. You can compute the first and second derivatives of <code>total_time(x)</code> with respect to <code>x</code> and evaluate those derivative functions at <span class="math inline">\(x=10\)</span>. (Use the <code>D()</code> function to construct the derivatives.) In the sandbox, use the value of those two derivatives at the <span class="math inline">\(x=10\)</span> guess to find the approximation to the minimum of the function.</p>
+<details><p>In the previous problem, you used graphics to find the argmin of a function. You can, of course, successively reset the domain of the graphing window to zoom in on the location of the argmin.</p>
+<p>To find the argmin numerically, you start with a (pretty good) guess for the argmin. Recall that a function (such as <code>total_time()</code>) can be modeled with a low-order polynomial. When the function has an extreme point the polynomial should include a quadratic term. Suppose you have guessed that <span class="math inline">\(x=10\)</span> is a good starting guess for the argmin of the air-to-water problem. You can compute the first and second derivatives of <code>total_time(x)</code> with respect to <code>x</code> and evaluate those derivative functions at <span class="math inline">\(x=10\)</span>. (Use the <code><a href="https://rdrr.io/r/stats/deriv.html">D()</a></code> function to construct the derivatives.) In the sandbox, use the value of those two derivatives at the <span class="math inline">\(x=10\)</span> guess to find the approximation to the minimum of the function.</p>
 <p>To help remind you, the quadratic approximation to a function <span class="math inline">\(t(x)\)</span> around a reference point <span class="math inline">\(x_0\)</span> is: <span class="math display">\[q(x) \equiv t(x_0) + \partial_x t(x_0) [x - x_0] + \frac{1}{2} \partial_{xx} t(x_0) [x - x_0]^2\]</span>
 Find the derivative <span class="math inline">\(\partial_x q(x)\)</span> and set this equal to zero. Inserting appropriate values for <span class="math inline">\(x_0\)</span>, <span class="math inline">\(\partial_x t(x_0)\)</span>, and <span class="math inline">\(\partial_{xx} t(x_0)\)</span> will enable you to calculate the value of <span class="math inline">\(x\)</span> at the minimum of the approximating quadratic.</p>
 <p><strong>Question A</strong> iii) Letting the blue area be water (1/1.3 speed factor) and starting with a guess <span class="math inline">\(x_0=10\)</span>, find the <span class="math inline">\(x\)</span> that minimizes the approximating quadratic.</p>
 <ol style="list-style-type: lower-roman">
-<li>9.912<span class="mcanswer"> ☹︎ </span><br />
+<li>9.912<span class="mcanswer"> ☹︎ </span><br>
 </li>
-<li>10.748<span class="mcanswer"> ☹︎ </span><br />
+<li>10.748<span class="mcanswer"> ☹︎ </span><br>
 </li>
-<li>11.017<span class="mcanswer"> ☹︎ </span><br />
+<li>11.017<span class="mcanswer"> ☹︎ </span><br>
 </li>
-<li>11.151<span class="mcanswer"> ☹︎ </span><br />
+<li>11.151<span class="mcanswer"> ☹︎ </span><br>
 </li>
-<li>11.267<span class="mcanswer"> ☹︎ </span><br />
+<li>11.267<span class="mcanswer"> ☹︎ </span><br>
 </li>
-<li>11.327<span class="mcanswer"> ☹︎ </span><br />
+<li>11.327<span class="mcanswer"> ☹︎ </span><br>
 </li>
-<li>11.515<span class="mcanswer"> ☹︎ </span><br />
+<li>11.515<span class="mcanswer"> ☹︎ </span><br>
 </li>
-<li>11.713<span class="mcanswer"> ☹︎ </span><br />
+<li>11.713<span class="mcanswer"> ☹︎ </span><br>
 </li>
-<li>11.81<span class="mcanswer"> ☹︎ </span><br />
+<li>11.81<span class="mcanswer"> ☹︎ </span><br>
 </li>
-<li>12.074<span class="mcanswer"> ☹︎ </span><br />
+<li>12.074<span class="mcanswer"> ☹︎ </span><br>
 </li>
-<li>12.276<span class="mcanswer"> ☹︎ </span><br />
+<li>12.276<span class="mcanswer"> ☹︎ </span><br>
 </li>
-<li>12.321<span class="mcanswer"> ☹︎ </span><br />
+<li>12.321<span class="mcanswer"> ☹︎ </span><br>
 </li>
-<li>12.438<span class="mcanswer"> ☹︎ </span><br />
+<li>12.438<span class="mcanswer"> ☹︎ </span><br>
 </li>
-<li>12.461<span class="mcanswer"> ☹︎ </span><br />
+<li>12.461<span class="mcanswer"> ☹︎ </span><br>
 </li>
-<li>12.579<span class="mcanswer"> ✓ </span><br />
+<li>12.579<span class="mcanswer"> ✓ </span><br>
 </li>
-<li>12.618<span class="mcanswer"> ☹︎ </span><br />
+<li>12.618<span class="mcanswer"> ☹︎ </span><br>
 </li>
-<li>12.637<span class="mcanswer"> ☹︎ </span><br />
+<li>12.637<span class="mcanswer"> ☹︎ </span><br>
 </li>
-<li>12.993<span class="mcanswer"> ☹︎ </span><br />
+<li>12.993<span class="mcanswer"> ☹︎ </span><br>
 </li>
-<li>13.261<span class="mcanswer"> ☹︎ </span><br />
+<li>13.261<span class="mcanswer"> ☹︎ </span><br>
 </li>
-<li>13.36<span class="mcanswer"> ☹︎ </span><br />
+<li>13.36<span class="mcanswer"> ☹︎ </span><br>
 </li>
-<li>13.527<span class="mcanswer"> ☹︎ </span><br />
+<li>13.527<span class="mcanswer"> ☹︎ </span><br>
 </li>
-<li>13.888<span class="mcanswer"> ☹︎ </span></li>
+<li>13.888<span class="mcanswer"> ☹︎ </span>
+</li>
 </ol>
 <p><strong>Question B</strong> iv) Using the correct answer from (iii) for a new <span class="math inline">\(x_0\)</span>, find the value of <span class="math inline">\(x\)</span> that minimizes the new approximating quadratic.</p>
 <ol style="list-style-type: lower-roman">
-<li>9.912<span class="mcanswer"> ☹︎ </span><br />
+<li>9.912<span class="mcanswer"> ☹︎ </span><br>
 </li>
-<li>10.748<span class="mcanswer"> ☹︎ </span><br />
+<li>10.748<span class="mcanswer"> ☹︎ </span><br>
 </li>
-<li>11.017<span class="mcanswer"> ☹︎ </span><br />
+<li>11.017<span class="mcanswer"> ☹︎ </span><br>
 </li>
-<li>11.151<span class="mcanswer"> ☹︎ </span><br />
+<li>11.151<span class="mcanswer"> ☹︎ </span><br>
 </li>
-<li>11.267<span class="mcanswer"> ☹︎ </span><br />
+<li>11.267<span class="mcanswer"> ☹︎ </span><br>
 </li>
-<li>11.327<span class="mcanswer"> ☹︎ </span><br />
+<li>11.327<span class="mcanswer"> ☹︎ </span><br>
 </li>
-<li>11.515<span class="mcanswer"> ☹︎ </span><br />
+<li>11.515<span class="mcanswer"> ☹︎ </span><br>
 </li>
-<li>11.713<span class="mcanswer"> ☹︎ </span><br />
+<li>11.713<span class="mcanswer"> ☹︎ </span><br>
 </li>
-<li>11.81<span class="mcanswer"> ☹︎ </span><br />
+<li>11.81<span class="mcanswer"> ☹︎ </span><br>
 </li>
-<li>12.074<span class="mcanswer"> ☹︎ </span><br />
+<li>12.074<span class="mcanswer"> ☹︎ </span><br>
 </li>
-<li>12.276<span class="mcanswer"> ☹︎ </span><br />
+<li>12.276<span class="mcanswer"> ☹︎ </span><br>
 </li>
-<li>12.321<span class="mcanswer"> ☹︎ </span><br />
+<li>12.321<span class="mcanswer"> ☹︎ </span><br>
 </li>
-<li>12.438<span class="mcanswer"> ☹︎ </span><br />
+<li>12.438<span class="mcanswer"> ☹︎ </span><br>
 </li>
-<li>12.461<span class="mcanswer"> ✓ </span><br />
+<li>12.461<span class="mcanswer"> ✓ </span><br>
 </li>
-<li>12.579<span class="mcanswer"> ☹︎ </span><br />
+<li>12.579<span class="mcanswer"> ☹︎ </span><br>
 </li>
-<li>12.618<span class="mcanswer"> ☹︎ </span><br />
+<li>12.618<span class="mcanswer"> ☹︎ </span><br>
 </li>
-<li>12.637<span class="mcanswer"> ☹︎ </span><br />
+<li>12.637<span class="mcanswer"> ☹︎ </span><br>
 </li>
-<li>12.993<span class="mcanswer"> ☹︎ </span><br />
+<li>12.993<span class="mcanswer"> ☹︎ </span><br>
 </li>
-<li>13.261<span class="mcanswer"> ☹︎ </span><br />
+<li>13.261<span class="mcanswer"> ☹︎ </span><br>
 </li>
-<li>13.36<span class="mcanswer"> ☹︎ </span><br />
+<li>13.36<span class="mcanswer"> ☹︎ </span><br>
 </li>
-<li>13.527<span class="mcanswer"> ☹︎ </span><br />
+<li>13.527<span class="mcanswer"> ☹︎ </span><br>
 </li>
-<li>13.888<span class="mcanswer"> ☹︎ </span></li>
-</ol>
+<li>13.888<span class="mcanswer"> ☹︎ </span>
+</li>
+</ol></details>
 </div>
 <div id="tree-harvesting" class="section level2" number="22.4">
-<h2><span class="header-section-number">22.4</span> Tree harvesting</h2>
+<h2>
+<span class="header-section-number">22.4</span> Tree harvesting<a class="anchor" aria-label="anchor" href="#tree-harvesting"><i class="fas fa-link"></i></a>
+</h2>
 <p>Your uncle Bob is writing a business plan for a tree farm for lumber. Having heard that you are taking Math 141Z, he emails you giving some information asking for some numbers. In particular, Bob sends you a report saying that, for the species of tree he plans to plant, the amount of usable lumber is a function of growth time <span class="math inline">\(t\)</span> looking like the function defined in the sandbox:</p>
 <div class="scaffolding">
-<div class="sourceCode" id="cb170"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb170-1"><a href="optim-and-shape.html#cb170-1" aria-hidden="true" tabindex="-1"></a>lumber <span class="ot">&lt;-</span> <span class="fu">makeFun</span>(<span class="fu">ifelse</span>(t<span class="sc">&lt;</span><span class="dv">10</span>, <span class="dv">0</span>, <span class="dv">100</span><span class="sc">*</span><span class="fu">exp</span>((t<span class="dv">-25</span>)<span class="sc">/</span><span class="dv">8</span>)<span class="sc">/</span>(<span class="dv">1</span> <span class="sc">+</span> <span class="fu">exp</span>((t<span class="dv">-25</span>)<span class="sc">/</span><span class="dv">8</span>))) <span class="sc">~</span> t)</span>
-<span id="cb170-2"><a href="optim-and-shape.html#cb170-2" aria-hidden="true" tabindex="-1"></a>dt_lumber <span class="ot">&lt;-</span> <span class="fu">D</span>(<span class="fu">lumber</span>(t) <span class="sc">~</span> t)</span>
-<span id="cb170-3"><a href="optim-and-shape.html#cb170-3" aria-hidden="true" tabindex="-1"></a>ave_growth_rate <span class="ot">&lt;-</span> <span class="fu">makeFun</span>( your_expression_here <span class="sc">~</span> t)</span>
-<span id="cb170-4"><a href="optim-and-shape.html#cb170-4" aria-hidden="true" tabindex="-1"></a><span class="fu">slice_plot</span>(<span class="fu">lumber</span>(t) <span class="sc">~</span> t, <span class="fu">domain</span>(<span class="at">t=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">100</span>)))</span></code></pre></div>
-<p><img src="CalcZ-notes_files/figure-html/unnamed-chunk-354-1.png" width="90%" style="display: block; margin: auto;" /></p>
+<div class="sourceCode" id="cb170"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">lumber</span> <span class="op">&lt;-</span> <span class="fu">makeFun</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="va">t</span><span class="op">&lt;</span><span class="fl">10</span>, <span class="fl">0</span>, <span class="fl">100</span><span class="op">*</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html">exp</a></span><span class="op">(</span><span class="op">(</span><span class="va">t</span><span class="op">-</span><span class="fl">25</span><span class="op">)</span><span class="op">/</span><span class="fl">8</span><span class="op">)</span><span class="op">/</span><span class="op">(</span><span class="fl">1</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html">exp</a></span><span class="op">(</span><span class="op">(</span><span class="va">t</span><span class="op">-</span><span class="fl">25</span><span class="op">)</span><span class="op">/</span><span class="fl">8</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">~</span> <span class="va">t</span><span class="op">)</span>
+<span class="va">dt_lumber</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/deriv.html">D</a></span><span class="op">(</span><span class="fu">lumber</span><span class="op">(</span><span class="va">t</span><span class="op">)</span> <span class="op">~</span> <span class="va">t</span><span class="op">)</span>
+<span class="va">ave_growth_rate</span> <span class="op">&lt;-</span> <span class="fu">makeFun</span><span class="op">(</span> <span class="va">your_expression_here</span> <span class="op">~</span> <span class="va">t</span><span class="op">)</span>
+<span class="fu">slice_plot</span><span class="op">(</span><span class="fu">lumber</span><span class="op">(</span><span class="va">t</span><span class="op">)</span> <span class="op">~</span> <span class="va">t</span>, <span class="fu">domain</span><span class="op">(</span>t<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">100</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<div class="inline-figure"><img src="CalcZ-notes_files/figure-html/unnamed-chunk-356-1.png" width="90%" style="display: block; margin: auto;"></div>
 </div>
 <p>Bob has heard that the time to harvest is when the tree is growing fastest.</p>
 <p><strong>Question C</strong> A) What is the value of <code>t</code> (in years) at which <span class="math inline">\(\partial_t\)</span> <code>lumber(t)</code> is largest?</p>
@@ -951,63 +654,75 @@ Find the derivative <span class="math inline">\(\partial_x q(x)\)</span> and set
 <p>You patiently explain to your uncle that you certainly do not want to harvest trees when they are growing the fastest. You say, “You want to wait until the average growth rate up to that point is fastest. That will be a little while before the tree reaches its adult volume.”</p>
 <p><strong>Question D</strong> B) What is the value of t (in years) for which the average growth rate, up to that time, is fastest.</p>
     15<span class="mcanswer"> ☹︎ </span>       17<span class="mcanswer"> ☹︎ </span>       19<span class="mcanswer"> ☹︎ </span>       21<span class="mcanswer"> ☹︎ </span>       23<span class="mcanswer"> ☹︎ </span>       25<span class="mcanswer"> ☹︎ </span>       27<span class="mcanswer"> ☹︎ </span>       29<span class="mcanswer"> ☹︎ </span>       31<span class="mcanswer"> ☹︎ </span>       33<span class="mcanswer"> ☹︎ </span>       35<span class="mcanswer"> ✓ </span>       37<span class="mcanswer"> ☹︎ </span>       39<span class="mcanswer"> ☹︎ </span>       41<span class="mcanswer"> ☹︎ </span>
-</details>
+
 
 <div class="exercise">
-<span id="exr:unnamed-chunk-145" class="exercise"><strong>Exercise 22.7  (optim-purple)  </strong></span>This is probably misplaced. and the <code>plot_lens()</code> function would have to be provided.
+<span id="exr:unnamed-chunk-147" class="exercise"><strong>Exercise 22.7  (optim-purple)  </strong></span>This is probably misplaced. and the <code>plot_lens()</code> function would have to be provided.
 </div>
-<details>
-<p>Figure 1 shows a lens together with a source and target point. Light passing through the lens is refracted. The path followed by the light will be the one with the shortest time of transit from source to target.</p>
+<details><p>Figure 1 shows a lens together with a source and target point. Light passing through the lens is refracted. The path followed by the light will be the one with the shortest time of transit from source to target.</p>
 <p>The light enters the lens at some point <span class="math inline">\(P_{in} = (x_{in}\ , \ -\mbox{Lens}(x_{in}))\)</span> and leaves at <span class="math inline">\(P_{out} = (x_{out}\ ,\  \mbox{Lens}(x_{out}))\)</span>. We don’t know either <span class="math inline">\(x_{in}\)</span> or <span class="math inline">\(x_{out}\)</span>. but we can find them by optimization.</p>
 <p>To do this, we find the distance from the source to <span class="math inline">\(P_{in}\)</span>, and from <span class="math inline">\(P_{out}\)</span> to the target. These two legs of the route are through air, so the time of transit on each leg is proportional to the refractive index 1.03 times the distance.</p>
 <p>Of course, light also has to travel through the lens. We’ll make the lens out of glass with a high refractive index, so the transit time will be the distance from <span class="math inline">\(P_{in}\)</span> to <span class="math inline">\(P_{out}\)</span> multiplied by the lens’s refractive index of 1.8.</p>
 <p>The objective function will be the sum of the three legs’ transit times. It’s already programmed for you in the sandbox. So is the command to make a contour plot of the output of the objective function over a domain of <span class="math inline">\(x_{in}\)</span> and <span class="math inline">\(x_{out}\)</span>. Finally, the last line in the sandbox draws a picture of the lens and the light path, but you will have to insert the argmins <span class="math inline">\(x_{in}\)</span> and <span class="math inline">\(x_{out}\)</span> that you pick from the contour plot of the objective function. (The <span class="math inline">\(x_{in}\)</span> and <span class="math inline">\(x_{out}\)</span> shown in the initial code of the sandbox are not right!)</p>
-<div class="sourceCode" id="cb171"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb171-1"><a href="optim-and-shape.html#cb171-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Describe the shape of the lens</span></span>
-<span id="cb171-2"><a href="optim-and-shape.html#cb171-2" aria-hidden="true" tabindex="-1"></a>Lens_top <span class="ot">&lt;-</span> <span class="fu">makeFun</span>(<span class="sc">-</span><span class="dv">90</span> <span class="sc">+</span> <span class="fu">sqrt</span>(<span class="dv">100</span><span class="sc">^</span><span class="dv">2</span> <span class="sc">-</span> x<span class="sc">^</span><span class="dv">2</span>)  <span class="sc">~</span> x)</span>
-<span id="cb171-3"><a href="optim-and-shape.html#cb171-3" aria-hidden="true" tabindex="-1"></a>Lens_bottom <span class="ot">&lt;-</span> <span class="fu">makeFun</span>(<span class="sc">-</span><span class="fu">Lens_top</span>(x) <span class="sc">~</span> x)</span>
-<span id="cb171-4"><a href="optim-and-shape.html#cb171-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb171-5"><a href="optim-and-shape.html#cb171-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Define the objective function</span></span>
-<span id="cb171-6"><a href="optim-and-shape.html#cb171-6" aria-hidden="true" tabindex="-1"></a>transit_time <span class="ot">&lt;-</span> <span class="fu">makeFun</span>(</span>
-<span id="cb171-7"><a href="optim-and-shape.html#cb171-7" aria-hidden="true" tabindex="-1"></a>  <span class="fl">1.03</span> <span class="sc">*</span> <span class="fu">sqrt</span>((x_in <span class="sc">-</span> <span class="sc">-</span><span class="dv">20</span>)<span class="sc">^</span><span class="dv">2</span> <span class="sc">+</span> (<span class="fu">Lens_bottom</span>(x_in)<span class="sc">-</span> (<span class="sc">-</span><span class="dv">30</span>))<span class="sc">^</span><span class="dv">2</span>) <span class="sc">+</span></span>
-<span id="cb171-8"><a href="optim-and-shape.html#cb171-8" aria-hidden="true" tabindex="-1"></a>  <span class="fl">1.80</span> <span class="sc">*</span> <span class="fu">sqrt</span>((x_out<span class="sc">-</span>x_in)<span class="sc">^</span><span class="dv">2</span> <span class="sc">+</span> (<span class="fu">Lens_top</span>(x_out) <span class="sc">-</span> <span class="fu">Lens_bottom</span>(x_in))<span class="sc">^</span><span class="dv">2</span>) <span class="sc">+</span> </span>
-<span id="cb171-9"><a href="optim-and-shape.html#cb171-9" aria-hidden="true" tabindex="-1"></a>  <span class="fl">1.03</span> <span class="sc">*</span> <span class="fu">sqrt</span>((x_out <span class="sc">-</span> <span class="sc">-</span><span class="dv">10</span>)<span class="sc">^</span><span class="dv">2</span> <span class="sc">+</span> (<span class="fu">Lens_top</span>(x_out)<span class="sc">-</span><span class="dv">50</span>)<span class="sc">^</span><span class="dv">2</span>) <span class="sc">~</span></span>
-<span id="cb171-10"><a href="optim-and-shape.html#cb171-10" aria-hidden="true" tabindex="-1"></a>    x_in <span class="sc">+</span> x_out)</span>
-<span id="cb171-11"><a href="optim-and-shape.html#cb171-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Graph the objective function</span></span>
-<span id="cb171-12"><a href="optim-and-shape.html#cb171-12" aria-hidden="true" tabindex="-1"></a><span class="fu">contour_plot</span>(<span class="fu">transit_time</span>(x_in, x_out) <span class="sc">~</span> x_in <span class="sc">+</span> x_out, </span>
-<span id="cb171-13"><a href="optim-and-shape.html#cb171-13" aria-hidden="true" tabindex="-1"></a>             <span class="fu">domain</span>(<span class="at">x_in =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">40</span>,<span class="dv">40</span>), <span class="at">x_out =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">40</span>,<span class="dv">40</span>)), <span class="at">npts=</span><span class="dv">200</span>)</span></code></pre></div>
-<p><img src="CalcZ-notes_files/figure-html/unnamed-chunk-357-1.png" width="90%" style="display: block; margin: auto;" /></p>
-<div class="sourceCode" id="cb172"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb172-1"><a href="optim-and-shape.html#cb172-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Insert argmax from contour plot</span></span>
-<span id="cb172-2"><a href="optim-and-shape.html#cb172-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_lens</span>(<span class="dv">10</span>, <span class="sc">-</span><span class="dv">5</span>, Lens_top, Lens_bottom)</span></code></pre></div>
-<p><img src="CalcZ-notes_files/figure-html/unnamed-chunk-357-2.png" width="90%" style="display: block; margin: auto;" /></p>
+<div class="sourceCode" id="cb171"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># Describe the shape of the lens</span>
+<span class="va">Lens_top</span> <span class="op">&lt;-</span> <span class="fu">makeFun</span><span class="op">(</span><span class="op">-</span><span class="fl">90</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">sqrt</a></span><span class="op">(</span><span class="fl">100</span><span class="op">^</span><span class="fl">2</span> <span class="op">-</span> <span class="va">x</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span>  <span class="op">~</span> <span class="va">x</span><span class="op">)</span>
+<span class="va">Lens_bottom</span> <span class="op">&lt;-</span> <span class="fu">makeFun</span><span class="op">(</span><span class="op">-</span><span class="fu">Lens_top</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">~</span> <span class="va">x</span><span class="op">)</span>
+
+<span class="co"># Define the objective function</span>
+<span class="va">transit_time</span> <span class="op">&lt;-</span> <span class="fu">makeFun</span><span class="op">(</span>
+  <span class="fl">1.03</span> <span class="op">*</span> <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">sqrt</a></span><span class="op">(</span><span class="op">(</span><span class="va">x_in</span> <span class="op">-</span> <span class="op">-</span><span class="fl">20</span><span class="op">)</span><span class="op">^</span><span class="fl">2</span> <span class="op">+</span> <span class="op">(</span><span class="fu">Lens_bottom</span><span class="op">(</span><span class="va">x_in</span><span class="op">)</span><span class="op">-</span> <span class="op">(</span><span class="op">-</span><span class="fl">30</span><span class="op">)</span><span class="op">)</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fl">1.80</span> <span class="op">*</span> <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">sqrt</a></span><span class="op">(</span><span class="op">(</span><span class="va">x_out</span><span class="op">-</span><span class="va">x_in</span><span class="op">)</span><span class="op">^</span><span class="fl">2</span> <span class="op">+</span> <span class="op">(</span><span class="fu">Lens_top</span><span class="op">(</span><span class="va">x_out</span><span class="op">)</span> <span class="op">-</span> <span class="fu">Lens_bottom</span><span class="op">(</span><span class="va">x_in</span><span class="op">)</span><span class="op">)</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span> <span class="op">+</span> 
+  <span class="fl">1.03</span> <span class="op">*</span> <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">sqrt</a></span><span class="op">(</span><span class="op">(</span><span class="va">x_out</span> <span class="op">-</span> <span class="op">-</span><span class="fl">10</span><span class="op">)</span><span class="op">^</span><span class="fl">2</span> <span class="op">+</span> <span class="op">(</span><span class="fu">Lens_top</span><span class="op">(</span><span class="va">x_out</span><span class="op">)</span><span class="op">-</span><span class="fl">50</span><span class="op">)</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span> <span class="op">~</span>
+    <span class="va">x_in</span> <span class="op">+</span> <span class="va">x_out</span><span class="op">)</span>
+<span class="co"># Graph the objective function</span>
+<span class="fu">contour_plot</span><span class="op">(</span><span class="fu">transit_time</span><span class="op">(</span><span class="va">x_in</span>, <span class="va">x_out</span><span class="op">)</span> <span class="op">~</span> <span class="va">x_in</span> <span class="op">+</span> <span class="va">x_out</span>, 
+             <span class="fu">domain</span><span class="op">(</span>x_in <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">40</span>,<span class="fl">40</span><span class="op">)</span>, x_out <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">40</span>,<span class="fl">40</span><span class="op">)</span><span class="op">)</span>, npts<span class="op">=</span><span class="fl">200</span><span class="op">)</span></code></pre></div>
+<div class="inline-figure"><img src="CalcZ-notes_files/figure-html/unnamed-chunk-359-1.png" width="90%" style="display: block; margin: auto;"></div>
+<div class="sourceCode" id="cb172"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># Insert argmax from contour plot</span>
+<span class="fu">plot_lens</span><span class="op">(</span><span class="fl">10</span>, <span class="op">-</span><span class="fl">5</span>, <span class="va">Lens_top</span>, <span class="va">Lens_bottom</span><span class="op">)</span></code></pre></div>
+<div class="inline-figure"><img src="CalcZ-notes_files/figure-html/unnamed-chunk-359-2.png" width="90%" style="display: block; margin: auto;"></div>
 <p><strong>Question A</strong> When the index of refraction of the lens is 1.80, what are the optimal values for <span class="math inline">\(x_{in}\)</span> and <span class="math inline">\(x_{out}\)</span>? (Choose the best answer.)</p>
 <ol style="list-style-type: lower-roman">
-<li><span class="math inline">\(x_{in} = -22, \ x_{out} = -21\)</span><span class="mcanswer"> ✓ </span><br />
+<li>
+<span class="math inline">\(x_{in} = -22, \ x_{out} = -21\)</span><span class="mcanswer"> ✓ </span><br>
 </li>
-<li><span class="math inline">\(x_{in} = -26, \ x_{out} = -20\)</span><span class="mcanswer"> ☹︎ </span><br />
+<li>
+<span class="math inline">\(x_{in} = -26, \ x_{out} = -20\)</span><span class="mcanswer"> ☹︎ </span><br>
 </li>
-<li><span class="math inline">\(x_{in} = -24, \ x_{out} = -21\)</span><span class="mcanswer"> ☹︎ </span><br />
+<li>
+<span class="math inline">\(x_{in} = -24, \ x_{out} = -21\)</span><span class="mcanswer"> ☹︎ </span><br>
 </li>
-<li><span class="math inline">\(x_{in} = -18, \ x_{out} = -17\)</span><span class="mcanswer"> ☹︎ </span><br />
+<li>
+<span class="math inline">\(x_{in} = -18, \ x_{out} = -17\)</span><span class="mcanswer"> ☹︎ </span><br>
 </li>
-<li><span class="math inline">\(x_{in} = -25, \ x_{out} = -20\)</span><span class="mcanswer"> ☹︎ </span></li>
+<li>
+<span class="math inline">\(x_{in} = -25, \ x_{out} = -20\)</span><span class="mcanswer"> ☹︎ </span>
+</li>
 </ol>
 <p>It’s a good practice to test software against situations where you know the right answer. A simple situation is when there is <em>no lens at all</em>. One way to do this is to change the middle line of <code>transit_time()</code> so that the index of refraction is 1.03, just like the surrounding air.</p>
 <p><strong>Question B</strong> When the index of refraction of the lens is 1.03, what are the optimal values for <span class="math inline">\(x_{in}\)</span> and <span class="math inline">\(x_{out}\)</span>? (Choose the best answer.)</p>
 <ol style="list-style-type: lower-roman">
-<li><span class="math inline">\(x_{in} = -17, \ x_{out} = -15\)</span><span class="mcanswer"> ✓ </span><br />
+<li>
+<span class="math inline">\(x_{in} = -17, \ x_{out} = -15\)</span><span class="mcanswer"> ✓ </span><br>
 </li>
-<li><span class="math inline">\(x_{in} = -18, \ x_{out} = -14\)</span><span class="mcanswer"> ☹︎ </span><br />
+<li>
+<span class="math inline">\(x_{in} = -18, \ x_{out} = -14\)</span><span class="mcanswer"> ☹︎ </span><br>
 </li>
-<li><span class="math inline">\(x_{in} = -16, \ x_{out} = -16\)</span><span class="mcanswer"> ☹︎ </span><br />
+<li>
+<span class="math inline">\(x_{in} = -16, \ x_{out} = -16\)</span><span class="mcanswer"> ☹︎ </span><br>
 </li>
-<li><span class="math inline">\(x_{in} = -18, \ x_{out} = -18\)</span><span class="mcanswer"> ☹︎ </span><br />
+<li>
+<span class="math inline">\(x_{in} = -18, \ x_{out} = -18\)</span><span class="mcanswer"> ☹︎ </span><br>
 </li>
-<li><span class="math inline">\(x_{in} = -17, \ x_{out} = -18\)</span><span class="mcanswer"> ☹︎ </span></li>
+<li>
+<span class="math inline">\(x_{in} = -17, \ x_{out} = -18\)</span><span class="mcanswer"> ☹︎ </span>
+</li>
 </ol>
 <p>Let’s explore an extreme situation. Diamond is the transparent material that has the highest index of refraction, 2.417. Imagine a material with an index of refraction of 10. This means that light will travel very slowly within the lens.</p>
 <strong>Essay question tmp-33</strong>: When you examine the contour plot of <code>transit_time()</code> for this high index of refraction, there will be two, widely separated local minima. Explain briefly which part of the lens these two minima correspond to. Hint: High index means slow speed of light. Sometimes it’s worthwhile to go out of your way to avoid slowdowns.
-</details>
-<div class="todo">
+</details><div class="todo">
 <p>Exercises involving computing derivatives</p>
 </div>
 <div class="takenote">
@@ -1015,73 +730,71 @@ Find the derivative <span class="math inline">\(\partial_x q(x)\)</span> and set
 </div>
 <div class="objectives">
 <ol>
-<li><strong>[Deriv-10a]</strong> <em>Understand and distinguish between max (min) and argmax (argmin)</em></li>
-<li><strong>[Deriv-10b]</strong> <em>Visually identify max (min) and argmax (argmin) in graphs of functions of one and two variables.</em></li>
+<li>
+<strong>[Deriv-10a]</strong> <em>Understand and distinguish between max (min) and argmax (argmin)</em>
+</li>
+<li>
+<strong>[Deriv-10b]</strong> <em>Visually identify max (min) and argmax (argmin) in graphs of functions of one and two variables.</em>
+</li>
 </ol>
 </div>
 <div class="objectives">
 <ol>
-<li><strong>[Deriv-10c]</strong> <em>Find max and min of a quadratic function using calculus and algebra</em></li>
+<li>
+<strong>[Deriv-10c]</strong> <em>Find max and min of a quadratic function using calculus and algebra</em>
+</li>
 </ol>
 </div>
 <div class="objectives">
 <ol>
-<li><strong>[Deriv-11a]</strong> <em>Convert a word problem into an Objective function and constraint.</em></li>
-<li><strong>[Deriv-11b]</strong> <em>Convert a multivariate objective function to a univariate objective function using the constraint</em></li>
+<li>
+<strong>[Deriv-11a]</strong> <em>Convert a word problem into an Objective function and constraint.</em>
+</li>
+<li>
+<strong>[Deriv-11b]</strong> <em>Convert a multivariate objective function to a univariate objective function using the constraint</em>
+</li>
 </ol>
 </div>
 
 </div>
 </div>
-            </section>
+  <div class="chapter-nav">
+<div class="prev"><a href="prod-comp-rules.html"><span class="header-section-number">21</span> Differentiation of assembled functions</a></div>
+<div class="next"><a href="partial-change.html"><span class="header-section-number">23</span> Partial change</a></div>
+</div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
+    <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
+      <ul class="nav navbar-nav">
+<li><a class="nav-link" href="#optim-and-shape"><span class="header-section-number">22</span> Optimization</a></li>
+<li><a class="nav-link" href="#structure-of-the-problem"><span class="header-section-number">22.1</span> Structure of the problem</a></li>
+<li><a class="nav-link" href="#interpreting-the-argmax"><span class="header-section-number">22.2</span> Interpreting the argmax</a></li>
+<li><a class="nav-link" href="#derivatives-and-optimization"><span class="header-section-number">22.3</span> Derivatives and optimization</a></li>
+<li><a class="nav-link" href="#tree-harvesting"><span class="header-section-number">22.4</span> Tree harvesting</a></li>
+</ul>
 
-          </div>
-        </div>
-      </div>
-<a href="prod-comp-rules.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="partial-change.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
-    </div>
+      <div class="book-extra">
+        <ul class="list-unstyled">
+<li><a id="book-source" href="https://github.com/dtkaplan/CalcZ-notes/blob/master/Diff-optim.Rmd">View source <i class="fab fa-github"></i></a></li>
+          <li><a id="book-edit" href="https://github.com/dtkaplan/CalcZ-notes/edit/master/Diff-optim.Rmd">Edit this page <i class="fab fa-github"></i></a></li>
+        </ul>
+</div>
+    </nav>
+</div>
+
+</div>
+</div> <!-- .container -->
+
+<footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>"<strong>CalcZ Student Notes</strong>" was written by Daniel Kaplan. It was last built on 2021-07-01.</p>
   </div>
-<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
-<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
-<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
-<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
-<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
-<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
-<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
-<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
-<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
-<script>
-gitbook.require(["gitbook"], function(gitbook) {
-gitbook.start({
-"sharing": false,
-"fontsettings": {
-"theme": "white",
-"family": "sans",
-"size": 2
-},
-"edit": {
-"link": "https://github.com/dtkaplan/CalcZ-notes/edit/shared/Diff-optim.Rmd",
-"text": "Edit"
-},
-"history": {
-"link": null,
-"text": null
-},
-"view": {
-"link": null,
-"text": null
-},
-"download": null,
-"toc": {
-"collapse": "section"
-}
-});
-});
-</script>
 
-<!-- dynamically load mathjax for compatibility with self-contained -->
-<script>
+  <div class="col-12 col-md-6 mt-3">
+    <p>This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
+  </div>
+
+</div></div>
+</footer><!-- dynamically load mathjax for compatibility with self-contained --><script>
   (function () {
     var script = document.createElement("script");
     script.type = "text/javascript";
@@ -1095,5 +808,4 @@ gitbook.start({
   })();
 </script>
 </body>
-
 </html>
