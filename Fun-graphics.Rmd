@@ -104,7 +104,7 @@ In Figure \@ref(fig:penguin-flipper), the data point plot of the penguin flipper
 
 When we construct a function to model the pattern observed in that cloud, we need to respect the mathematical definition of function, part of which is that a function has ***only one output*** for any given input. 
 
-```{r penguin-flipper2,echo=FALSE, warning=FALSE, out.width="50%", fig.show="keep", fig.cap="The penguin data doesn't directly describe any sensible mathematical function. (left) We use modeling to create a function that stays close, but not too close, to the data points. (right)"}
+```{r penguin-flipper2,echo=FALSE, warning=FALSE,message=FALSE, out.width="50%", fig.show="keep", fig.cap="The penguin data doesn't directly describe any sensible mathematical function. (left) We use modeling to create a function that stays close, but not too close, to the data points. (right)"}
 gf_line(flipper_length_mm/10 ~ body_mass_g/1000, 
          data=penguins) %>%
   gf_labs(y = "Flipper length (cm)", x = "Body mass (kg)") 
@@ -150,7 +150,7 @@ Invertible or not, it is a common procedure for working with functions to find *
 
 We can draw graphs of functions with two inputs. Now the points need to be marked in a 3-dimensional space: one axis for each of the two inputs and another axis for the output. Like this:
 
-```{r echo=FALSE, fig.cap="(Figure Fun-1b-1.2)"}
+```{r fun-1b-1.2, echo=FALSE, fig.cap="A graph of a function of two inputs is a surface."}
 f2 <- rfun( ~ input_1 + input_2, seed=932)
 interactive_plot(f2(input_1, input_2) ~ input_1 + input_2,
                  domain(input_1=c(-5, 5), input_2 = c(0, 4)))
@@ -169,14 +169,14 @@ state_objective("F-21", "Interpret a contour plot of a function of two input var
 
 A mathematical graph is just one way to draw a picture of a function with two inputs. There are other ways. One helpful mode of picture is called a ***contour plot***, familiar to many non-mathematicians in the form of topgraphical maps showing landscape elevation as a function of latitude and longitude. Here's a contour plot of the same function shown in the previous graph:
 
-```{r echo=FALSE, fig.cap="(Fig-1b-2.1)"}
+```{r Fig-1b-2.1, echo=FALSE, fig.cap="A contour plot displays the surface in the same manner as a topographical map shows the terrain."}
 f2 <- rfun( ~ input_1 + input_2, seed=932)
 contour_plot(f2(input_1, input_2) ~ input_1 + input_2,
                  domain(input_1=c(-5, 5), input_2 = c(0, 4)),
              skip=0)
 ```
 
-This contour plot is a topographical map of the mathematical graph in Figure Figure (Fun-1b-1.2)
+This contour plot is a topographical map of the mathematical graph in Figure \@ref(fig:fun-1b-1.2)
 
 It may take some practice to learn to read contour plots fluently but it is a skill that's worthwhile to have. Note that the graphics frame is the Cartesian space of the two inputs. The output is presented as ***contour lines***. Each contour line has a label giving the numerical value of the function output. Each of the input value pairs on a given contour line corresponds to an output at the level labeling that contour line. To find the output for an input pair that is *not* on a contour line, you ***interpolate*** between the contours on either side of that point.
 
@@ -253,12 +253,14 @@ Austin has a `surface_plot_with_contours()` function. Add that in to mosaicCalc.
 :::
 
 
-```{exercise, name="drawing"}
-```
-<details>`r MC_counter$reset()` `r knitr::knit_child(exercise_file("03", "drawing.Rmd"))`</details>
+<details>
+<summary>`r ex.mark(6.3, "drawing", fname=exercise_file("03", "drawing.Rmd"))` </summary>
+`r MC_counter$reset()` `r knitr::knit_child(exercise_file("03", "drawing.Rmd"))`
+</details>
 
 
-```{exercise, daylength, name="length-of-day"}
-```
-<details>`r MC_counter$reset()` `r knitr::knit_child("Exercises/Fun/length-of-day.Rmd")`</details>
+<details>
+<summary>`r ex.mark(6.8, "daylength", fname="Fun/length-of-day.Rmd")` </summary>
+`r MC_counter$reset()` `r knitr::knit_child("Exercises/Fun/length-of-day.Rmd")`
+</details>
 

@@ -6,7 +6,7 @@ library(mosaic)
 library(mosaicCalc)
 ```
 
-We will need to communicate about functions to your fellow humans and to computers. Important modes of communication include:
+We will need to communicate about functions to your fellow humans and to computers. Important modes of communication include: `r mark(400)`
 
 * Graphs of functions that show their "shape"
 * Tables of inputs and outputs
@@ -29,7 +29,7 @@ slice_plot(exp(x) ~ x, domain(x=c(-2,2)))
 ```
 :::
 
-You can simply copy-and-paste the command into a sandbox to create the graph. But let's take apart the command into it's components to see how R commands are structured.
+You can simply copy-and-paste the command into a sandbox to create the graph. But let's take apart the command into it's components to see how R commands are structured. `r mark(410)`
 
 1. `slice_plot( ... )` Commands usually start with the name of the operation to perform. The name is *always* followed by a pair of parentheses. Those parentheses will contain the ***arguments*** of the operation, which you can think of as specifying the details of what is to be done. The `slice_plot()` operator draws graphs for functions of a single input.
 2. `exp(x) ~ x` is being given as the first argument to the `slice_plot()` operator. We'll defer a detailed explanation, just pointing out that we are specifying to the computer that we want a plot of the ***exponential*** function and that we are going to use `x` as the name of the input.
@@ -47,7 +47,7 @@ tibble::tibble(
   knitr::kable() %>%
   kableExtra::kable_styling()
 ```
-Before modern computing, tables were one of the primary means to describe functions. People working with calculus needed a reference collection of books containing tables for the functions they used. 
+Before modern computing, tables were one of the primary means to describe functions. People working with calculus needed a reference collection of books containing tables for the functions they used. `r mark(420)`
 
 With computers, we have better and faster ways to get the output of a function from the input. Still, modelers often use recorded data to construct functions. Tables are perhaps the most widely used method for storing and accessing data, although electronic spreadsheets are used today instead of printed tables.
 
@@ -57,7 +57,7 @@ Conceptually, it's helpful to keep in mind that every naked modeling function is
 
 ## Word descriptions
 
-Knowing and correctly using a handful of phrases goes a long way in being able to communicate with other people about functions with a single input. Often, the words make sense in everyday speech ("steep", "growing", "decaying", "goes up", "goes down", "flat). 
+Knowing and correctly using a handful of phrases goes a long way in being able to communicate with other people about functions with a single input. Often, the words make sense in everyday speech ("steep", "growing", "decaying", "goes up", "goes down", "flat). `r mark(430)`
 
 Sometimes the words are used in everyday speech but the casual person isn't sure exactly what they mean. For instance, you will often hear the phrase "growing exponentially." The graph of the exponential function illustrates exactly this sort of growth: flat for small $x$ and growing steadily steeper and steeper as $x$ increases. 
 
@@ -93,7 +93,7 @@ slice_plot(1/x ~ x, domain(x=c(.01, 1.25))) %>%
 
 ## Computer function names
 
-As you might expect, computer programmers and language developers have written software implementing several of the ***naked modeling functions***: `exp()`, `log()`, `sin()`, `dnorm()`, and `pnorm()`. For these functions, the name tells everying, so far as the computer is concerned, that is needed to calculate the output from any given input.
+As you might expect, computer programmers and language developers have written software implementing several of the ***naked modeling functions***: `exp()`, `log()`, `sin()`, `dnorm()`, and `pnorm()`. For these functions, the name tells everying, so far as the computer is concerned, that is needed to calculate the output from any given input. `r mark(440)`
 
 Computer notation for the power-law and straight-line functions is different. It will be much easier to understand once you have seen how to create and name your own functions. The reason for this difference is that the power-law and straight-line functions are not quite naked. Both of them have parameters: the exponent in the power-law function and the slope and intercept in the straight-line function.
 
@@ -110,7 +110,7 @@ To make the list of shapes in (ii) comprehensive, we've had to stretch the "nake
 
 ## Mathematical notation
 
-You have grown up with traditional mathematical notation and have are likely familiar with the notation for several of the naked modeling functions: $\ln x$, $\sin x$, $e^x$, $x^p$ (as in $x^2$ where $p=2$ or $\sqrt{x}$ where $p=1/2$).
+You have grown up with traditional mathematical notation and have are likely familiar with the notation for several of the naked modeling functions: $\ln x$, $\sin x$, $e^x$, $x^p$ (as in $x^2$ where $p=2$ or $\sqrt{x}$ where $p=1/2$). `r mark(450)`
 
 Traditional notation mixes up several things that computer notation sensibly keeps separate. From the computer programmer's point of view, traditional notation is idiosyncratic rather than systematic. 
 
@@ -120,7 +120,7 @@ If you are interested in these things, three concepts from computing may help yo
 - ***Infix notation*** For functions with two inputs, computing languages often support a different arrangement of the function name and the inputs where the name comes between the arguments. You've seen this in parts of traditional arithmetic notation, for instance, $3 + 5$ or $8/2$. Infix notation is sometimes used in place of functional notation as in `3^2` or `x^3`. 
 - ***Markup notation*** You are undoubtedly familar with word processing and, particularly, a style of word processing called What-you-see-is-what-you-get (WYSIWYG). In WYSIWYG, you can enter plain text just using the keyboard, but if you want to make something **boldface** or **italics**, you use the mouse to select the text involved and select a style from a menu. Typically, WYSIWYG mathematical content involves a similar mouse-based process. In contrast, in mainstream computer languages, the mouse is not needed at all. The computer commands are constructed from plain, linear sequences of letters and other characters. 
 
-    Computer programmers helpfully observed that the word-processing process can be constructed as simple plain text input to computer program that interprets the input in well-defined ways and carries out ***typesetting***. To illustrate, consider the next couple of lines. The first shows an ordinary looking word-processor formatted sentence. The second shows the way this was encoded so that a typesetter can produce the formatted content.
+    Computer programmers helpfully observed that the word-processing process can be constructed as simple plain text input to computer program that interprets the input in well-defined ways and carries out ***typesetting***. To illustrate, consider the next couple of lines. The first shows an ordinary looking word-processor formatted sentence. The second shows the way this was encoded so that a typesetter can produce the formatted content. `r mark(460)`
     
     > $e^x$, $\sqrt{x^2}$ and $\int_0^\infty \frac{1}{x^2} dx$ are examples of *traditional* notation.^[A footnote]
     
