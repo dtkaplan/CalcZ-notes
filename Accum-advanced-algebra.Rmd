@@ -1,0 +1,433 @@
+# Advanced algebraic methods {#accum-advanced-algebra}
+
+::: {.objectives}
+```{r echo=FALSE, results="asis"}
+state_objective("Int-7a", "Find the integral algebraically using the technique u-substitution.")
+state_objective("Int-7b", "Find the integral algebraically of select functions using Integration by Parts.")
+```
+:::
+
+
+
+## Differentials
+
+The notation we have been using in this course for "the derivative of $f()$ with respect to $x$ is $$\partial_x f$$ The subscript on the $\partial$ indicates the "with respect to" variable, the curly-d $\partial$ itself signals "the derivative." The identification of the "with respect to" variable is particularly important when the function $f()$ has more than one input, for example with $f(x, t) \equiv e^{-k x} \sin(\omega t)$.
+
+With anti-differentiation (also called "integration"), we write things differently, for example $$\int f(x, t) dx$$ where the $dx$ signals the "with respect to" variable. And just as $\partial_x f(x, t)$ and $\partial_t f(x,t)$ are different functions, so are $\int f(x, t) dx$ and $\int f(x, t) dt$. Writing anti-differentiation/integration this way follows a convention of long standing.
+
+In interpreting a sequence of symbols like $\int f(x,t) dx$, it's natural to think of the sequence as three parts:
+
+$$\underbrace{\int}_{\mbox{integral sign}} \overbrace{f(x, t)}^{\mbox{function to be anti-differentiated}} \underbrace{dx}_{\mbox{'with respect to'}}$$
+
+By analogy, the sentence 
+
+$$\mbox{We loaded up on snacks.}$$ 
+
+consists of five parts: the five words in the sentence.
+
+But you can also see "We loaded up on snacks" as having *three* parts:
+
+$$\underbrace{\mbox{We}}_{\mbox{subject}}\  
+\overbrace{\mbox{loaded up on}}^{\mbox{verb}}\ \ \ 
+\underbrace{\mbox{snacks}}_{\mbox{object}}$$
+
+Likewise, the integrate sentence can be seen as consisting of just two parts:
+
+$$\underbrace{\int}_{\mbox{integral sign}} \overbrace{f(x, t) dx}^{\mbox{differential}}$$
+
+A differential corresponds to the little sloped segments that we add up when calculating a definite integral numerically using the ***slope function visualization***. That is
+$$\underbrace{\int}_{\mbox{Sum}} \underbrace{\overbrace{f(x,t)}^\mbox{slope of segment}\ \  \overbrace{dx}^\mbox{run}}_\mbox{rise}$$
+
+A differential is a genuine mathematical object and is used, for example, in analyzing the geometry of curved spaces, as in the Theory of General Relativity. But this is well beyond the scope of this introductory calculus course.
+
+There is one place in introductory calculus where you need to manipulate differentials: carrying out anti-differentiation of some functions that are not basic modeling functions with a linear interior function but which nonetheless have an anti-derivative that can be expressed in algebra. 
+
+You should be thinking in terms of differentials when you see a sentence like the following:
+
+> "In $\int \sin(x) \cos(x) dx$, make the substitution $u = \sin(x)$, implying that $du = \cos(x) dx$ and getting $\int u du$, which is simple to integrate."
+
+The table gives some examples of functions and their differentials. "w.r.t" means "with respect to."
+
+Function | derivative | w.r.t. |differential
+---------|------------|--------|-------------
+$v(x) \equiv x$      |    1       | x |   $dv = dx$
+$u(x) \equiv x^2$    |   $2x$     | x | $du = 2x dx$
+$f(x) \equiv \sin(x)$ | $\cos(x)$ | x | $df = \cos(x)dx$
+$u(x) \equiv e^{3 x}$ | $3 e^{3 x}$ | x | $du = 3 e^{3 x} dx$ 
+$g(x) \equiv t^3$     | $3 t^2$     | t | $dg = 3 t^2 dt$
+
+As you can see, the *differential* of a function is simply the derivative of that function followed by the little $dx$ or $dt$ or whatever is appropriate for the "with respect to" variable.
+
+
+```{exercise}
+```
+<details>
+Note: Tradition is to write something like $u \equiv e^{3 x}$ rather than $u(x) \equiv e^{3 x}$. The traditional notation is what we'll use in the following exercises.
+
+```{r diff1, echo=FALSE}
+askMC(
+  "What is the differential of $u = x + 5$?",
+  "+$du = dx$+" = "Since $\\partial_x (x+5) = 1$.",
+  "$du = (x+5)dx$" = "You should have used $\\partial_x (x+5)$ instead of $(x+5)$ on the right side.",
+  "$du = 5 dx$" = "Is $\\partial_x (x+5) = 5$? No!",
+  "$du = x dx$" = "You should have used $\\partial_x (x+5) = 1$ instead of $x$ on the right side."
+)
+```
+
+```{r diff2, echo=FALSE}
+askMC(
+  "What is the differential of $u = \\sin(2x + 5)$?",
+  "+$du = 2 \\cos(2x + 5) dx$+" = "Since $\\partial_x \\sin(2x + 5) = 2 \\cos(2x + 5)$.",
+  "$du = (2x+5)dx$" = "You should have used $\\partial_x \\sin(2x+5)$ instead of $(2x+5)$ on the right side.",
+  "$du = 5 dx$" = "Is $\\partial_x \\sin(2x+5) = 5$? No!",
+  "$du = 2x dx$" = "You should have used $\\partial_x \\sin(2x+5) = 2 \\cos(2x + 5)$ instead of $2x$ on the right side."
+)
+```
+
+```{r diff3, echo=FALSE}
+askMC(
+  "What is the differential of $v = e^x$?",
+  "$du = e^x dx$" = "The name of the function here is $v()$, not $u$. So the differential should be written $dv$.",
+  "+$dv = e^x dx$+" = "Since $\\partial_x e^x = 1$.",
+  "$du = x dx$" = "The name of the function here is $v()$, not $u$. So the differential should be written $dv$.",
+  "$dv = x dx$" = "But $\\partial e^x = e^x$, not $x$."
+)
+```
+
+```{r diff4, echo=FALSE}
+askMC(
+  "What is the differential of $f = \\cos(\\ln(t))$?",
+  "+$df = -\\sin(\\ln(t))/t dt$+" = "Since the chain rule tells us $\\partial_t\\cos(\\ln(t)) = -\\sin(\\ln(t))/x$.",
+    "$du = -\\sin(\\ln(t))/t dt$" = "There's no $u$ in sight in this problem. It's $f$.",
+    "$dv = -\\sin(\\ln(t))/t dt$" = "There's no $v$ being used in this problem. It's $f$ that we're asking about.",
+    "$df = -\\sin(\\ln(x))/x dx$" = "$f$ is a function of $t$, not $x$."
+)
+```
+<details>
+
+## U-substitution
+
+Differentiation and anti-differentiation are operations that undo one another. For instance, $$F(t) = \int \left[\partial_t F(t)\right] dt + C$$ and $$f(t) = \partial_t \int f(t) dt$$
+We use differentiation and integration when we have information in one form (for instance a measurement of current in a circuit) and we find it more usefult to translate into another form (for instance the voltage across an element of the circuit).
+
+There is little reason to use $\partial_t$ and $\int \left[\right]dt$ to cancel each other out, but it is the basis of a successful strategy for finding some anti-derivatives algebraically. Here's the differentiate/integrate algorithm behind u-substitution.
+
+1. Pick a function $f()$ and another function $g()$. Typically $f()$ and $g()$ belong to the family of basic modeling functions, e.g. $e^x$, $\sin(t)$, $x^n$, $\ln(x)$, and so on. For the purpose of illustration, we'll use $f(x) = \ln(x)$ and $g(t) = \cos(t)$.
+2. Compose $f()$ with $g()$ to produce a new function $f(g())$ which, in our case, will be $\ln(\cos(t))$.
+3. Use the chain rule to find $\partial_t f(g(t))$. In the example, the derivative of $\ln(x)$ is $1/x$, the derivative of $g(t)$ is $-\sin(t)$. By the chain rule, $$\partial_t f(g(t)) = - \frac{1}{g(t)} \sin(t)= -  \frac{\sin(t)}{\cos(t)} = - \tan(t)$$
+
+In a sense, we have just watched a function give birth to another through the straightforward process of differentiation. Having witnessed the birth, we know who is the integration mother of $\tan(t)$, namely $\int \tan(t) dt = \ln(\cos(t)$. For future reference, we might write this down in our diary of integrals:
+$$\int \tan(t) dt = - \ln(\cos(t)) + C$$
+Saving this fact in your diary is helpful. The next time you need to find $\int \tan(x) dx$, you can look up the answer ($-\ln(\cos(x)) + C$) from your diary. If you use $\int \tan(x) dx$ a lot, you will probably come to memorize the answer, just as you have already memorized that $\int \cos(t) dt = \sin(t)$ (a fact that you actually will use a lot in the rest of this course).
+
+Now for the u-substitution game. The trick is to take a problem of the form $\int h(t) dt$ and extract from $h(t)$ two functions, an $f()$ and a $g()$. You're going to do this so that $h(t) =  \partial_t F(g(t))$, where $\partial_x F(x) = f(x)$ Once you've done this, you have an answer to the original integration question: $\int h(t) dt = F(g(t)) + C$.
+
+Here's Example 7 from the MMAC book:
+
+> Evaluate the definite integral $\int \frac{\sin(\ln(x))}{x} dx$.
+
+You don't know ahead of time that this is an integral amenable to solution by u-substitution. For all you know, it's not. So you look at the instruction manual for calculating integrals that you don't yet know:
+
+1. Is the integrand (that is $h(x)$ in $\int h(x) dx$) one of the basic modeling functions (with, perhaps, a linear interior function)?
+
+> If so, you've already memorized the answer and you are done. If not ...
+
+2. Assume for a moment---without any guarantee that this will work, mind you---that the answer can be built using u-substitution. You will therefore look hard at $h()$ and try to see in it a plausible form that looks like the derivative of some $f(g(x))$.
+
+In the problem at hand, we can readily see something of the form $f(g(x))$ in the $\sin(\ln(x))$. This immediately gives you a candidate for $g(x)$, namely $g(x)\equiv \ln(x)$ We don't know $f()$ yet, but if $g()$ is the right guess, and if u-substitution is going to work, we know that $f()$ has to be something that produces $\sin()$ when you differentiate it. That's $-\cos()$. So now we have a guess $$h_\mbox{guess}(x) = -\cos(\ln(x)) \partial_x \ln(x) = - \cos(\ln(x)) / x$$
+
+> If this guess matches the actual $h()$ then you win. The answer to $\int h(x) dx$ will be $f(g(x)) = -\cos(\ln(x))$. If not, see if there is any other plausible guess for $g(x)$ to try. If you can't find one that works, go on to
+
+3. Integration by parts. We'll talk about this later.
+
+> If integration by parts doesn't work ... there is a variety of possibilities such as asking a math professor (who has a much larger set of functions at hand than you), looking through a table of integrals (which is to say, the collective calculus diary of generations of math professors), using a computer algebra system, or using numerical integration. One of these will work.
+
+
+```{exercise}
+```
+<details>
+
+```{r usub1, echo=FALSE}
+askMC(
+  "In $h(x) = 2x/(x^2 + 2)$ which of the following is a plausible candidate for an interior function $g(x)$?",
+  "$\\sin(x)$",
+  "$\\ln(x)$",
+  "$2x$" = "In order for this to be an interior function $g(x)$ there has to be some other function embracing it. $2x$ is standing proudly on its own, so it's not a good choice for $g(x)$",
+  "+$x^2 + 2$+"
+)
+```
+
+```{r usub2, echo=FALSE}
+askMC(
+  "Continuing with the integral of $h(x) = 2x/(x^2 + 2)$ and the working guess that $g(x) = x^2 + 2$, do you see any part of $h()$ which is a match to $\\partial_x g()$?",
+  "$1/x$" = "But that's not anything like $\\partial_x g(x)$.",
+  "$\\ln(x)$",
+  "+$2x$+"
+)
+```
+
+```{r usub3, echo=FALSE}
+askMC(
+  "Taking seriously the progress we made in the previous two questions, we now need to write  $h(x)$ as $f(x^2 + 2) 2x$? What should $f()$ be to make this match $h(x)$?",
+  "$f(x) = \\sin(x)$",
+  "$f(x) = \\ln(x)$",
+  "+$f(x) = 1/x$+",
+  "$x^2 + 2$"
+)
+```
+
+Now that you have found both $g()$ and $f()$, you simply need to find a function $F(x)$ such that $\partial_x F(x) = f(x)$.  Since $\partial_x \ln(x) = 1/x$, we know that $F(x) = \ln(x)$. Thus,  $\int h(x) dx = F(g(x)) = F(x^2 + 2) = \ln(x^2 + 2)$.
+<details>
+
+```{exercise}
+```
+<details>
+```{r usub4, echo=FALSE}
+askMC(
+  "$$\\mbox{Find a plausible interior g(x) in} \\ x \\exp(x^2 + 3)$$",
+  "$\\exp(x)$",
+  "$x$",
+  "+$x^2 + 3$+",
+  "$x^2$" = "The interior function has to be *everything* embraced by the parentheses of the exterior function $f()$."
+)
+```
+
+```{r usub5, echo=FALSE}
+askMC(
+  "Using your candidate for $g()$ from the previous question, which of these is a *exterior* f(x) in $x \\exp(x^2 + 3)$",
+  "+$f(x) = \\exp(x)$+",
+  "$f(x) = x$",
+  "$f(x) = x \\exp(x)$" = "If this were so, the resulting $h()$ would have something like $(x^2 + 3) \\exp(x^2 + 3)$ in it.",
+  "$f(x) = \\ln(x)$"
+)
+```
+
+Confirm that $h(x) = f(g(x)) \partial_x g(x)$ and you win. The answer will be $F(g(x)) + C$
+</details>
+
+```{exercise}
+```
+<details>
+```{r usb6, echo=FALSE}
+askMC(
+  "Which of these candidates for $f()$ and $g()$ will produce  $$f(g(x))\\, \\partial_x g(x) = x^3 \\cos(x^4)\\ ?$$",
+  "+$f(x) = \\cos(x)/4$ and $g(x) = x^4$+" = "The 1/4 cancels out the 4 produced by $\\partial_x g(x)$.",
+  "$f(x) = \\cos(x)$ and $g(x) = x^4$",
+  "$f(x) = x^4$ and $g(x) = \\cos(x)$" = "But $h(x)$ involves $\\cos(x^4)$ not $cos^4(x)$."
+)
+```
+</details>
+
+Once again, $\int h(x) dx = F(g(x))$, where $\partial_x F(x) = f(x)$.
+
+```{exercise}
+```
+<details>
+
+```{r usb7, echo=FALSE}
+askMC(
+  "What is $$\\int \\frac{\\sin(x)}{\\cos^5(x)}dx\\ ?$$",
+  "$\\ln(cos(x))$",
+  "+$- \\frac{1}{4} \\cos^{-4}(x)$+",
+  "$\\frac{1}{6} \\cos^{-6}(x)$"
+)
+```
+<details>
+
+```{exercise}
+```
+<details>
+
+```{r usb8, echo=FALSE}
+askMC(
+  "Use u-substitution to find $$\\int \\frac{4 e^{4x} + 4}{e^{4x}}dx$$",
+  "+$\\ln(e^{4x} + 4)$+",
+  "$1/(e^{4x} + 4)$",
+  "$\\frac{1}{4} e^{4x} + 4$",
+  "$\\frac{1}{2} 1/(e^{4x} + 4)^2$"
+)
+```
+
+</details>
+
+## Integration by parts
+
+So far in CalcZ we have developed methods for algebraically finding anti-derivatives for a small set of functions. These include basic modeling functions such as $$\int\cos(3x)dx = \frac{1}{3}\sin(3x) + C$$ and more complicated functions where we reverse the chain rule, such as $$\int x^2 \exp(x^3) dx = \frac{1}{3} \exp(x^3) + C .$$
+
+With a bit more work, we can extend to a broader class of functions that do not fit into the two classes of examples above. For example, consider finding the anti-derivatives of the following functions:
+$$f(x) \equiv x e^x, \ \ \ g(x)\equiv x \cos(x),\ \ \mbox{and}\ \ h(x) = x \ln(x)$$ None of these are basic modeling functions and none of these fit the "came from the chain rule" pattern.
+
+Now, we're going to explore a “guess and correct” method for these types of anti-derivatives. It doesn't always work, but when it does it's impressive.
+
+Note that each of the function above are products of $x$ with a basic modeling functions.  Finding the anti-derivatives of these functions will, in some sense, involve reversing the product rule. 
+
+Consider $f(x) = x e^x$. This will seem to come out of the blue, but notice that $f(x) = x \partial_x(e^x)$. Our strategy has three steps. 
+
+First, we will find a helper function by substituting $\partial_x(e^x)$ with the value produced by differentiation. In this case $\partial_x (e^x) = e^x$, so our helper function will be $x e^x$. 
+
+Second, differentiate the helper function, which we can do using the product rule: $$\partial_x (x e^x) = x e^x + e^x$$
+
+Third, take the anti-derivative of each term in the above equation. Some of them are easy, but one of them is not.
+$$\int \partial_x (x e^x)
+ = \int x e^x dx + \int e^x dx\\
+ \mbox{integrating what we can ...}\\
+x e^x\ \ \ \ = \int x e^x dx +\ \ \ \ e^x$$ The one we don't know how to do is the same as the original problem. So now we know how to do it, by re-arranging the previous equation:
+$$\int x e^x dx = x e^x - e^x + C$$
+We added in a constant $C$ at the end to get the entire family of anti-derivatives.
+
+Aren't sure this answer is right? You can check it by computing the derivative of the answer to see that it gives $x e^x$.
+
+```{exercise}
+```
+<details>
+**Problem 1**: Go through the steps above to find the anti-derivative of $g(x) \equiv x \cos(x)$. 
+
+Step 1 hint: We know the anti-derivative of $\cos(x)$ is $\sin(x)$, so an appropriate helper function is the function $x\, \sin(x)$. Now do steps (2) and (3): (2) take the derivative of the helper function and then (3) integrate each term in the result. 
+
+```{r parts1, echo=FALSE}
+askMC(
+  "What is the derivative of the helper function with respect to $x$?",
+  "+$\\partial_x \\mbox{helper}(x) = \\sin(x) + x \\cos(x)$+",
+  "$\\partial_x \\mbox{helper}(x) = \\sin(x) + x \\sin(x)$",
+  "$\\partial_x \\mbox{helper}(x) = \\sin(x) + \\cos(x)$",
+  "$\\partial_x \\mbox{helper}(x) = \\sin(x)\\cos(x)$"
+)
+```
+
+```{r parts2, echo=FALSE}
+askMC(
+  "What is $$\\int \\partial_x \\mbox{helper}(x)\\ ?$$",
+  "+$\\mbox{helper}(x) + C$+" = "We included the constant of integration $C$ just as a reminder.",
+  "$\\frac{1}{2} \\mbox{helper}^2(x)$",
+  "$1 / \\mbox{helper}(x)$",
+  "Whatever it is, it's just as complicated as the original integral. No obvious way to do it." = "Actually, the answer is simple, even if it doesn't seem to get us anywhere. Wait for the next problem!")
+```
+
+```{r parts3, echo=FALSE}
+askMC(
+  "What is the integral with respect to $x$ of the first part of the expanded form of the helper function, that is, $\\int \\sin(x) dx$?",
+  "+$-\\cos(x)$+" = "This is one of our basic modeling functions.",
+  "$\\cos(x)$" = "Close. $\\cos(x) = \\partial_x \\sin(x)$, but we want $\\int \\sin(x) dx.$",
+  "$e^x \\sin(x)$", 
+  "$e^x \\cos(x)$"
+)
+```
+
+```{r parts4, echo=FALSE}
+askMC(
+  "What is the integral with respect to $x$ of the second part of the expanded form of the helper function, that is, $\\int x\\, \\cos(x)$?",
+  "It's the same as the original problem! I thought you were showing us how to do the problem. If we didn't know the answer when we started, why should we be able to do it now?" = "An understandable frustration. But think! Now you have the original problem written out as part of an equation with two integrals that you *do* know.",
+  "+It's the same as the original problem. I've got an equation involving the original problem and two bits of algebra/calculus that I know how to do. Thanks!+",
+  "$\\sin(x)$" = "If this were true, then $\\partial_x \\sin(x)$ would give us $x\\, \\cos(x)$. But, as you know, $\\partial_x \\sin(x) = \\cos(x)$, so this answer must be wrong."
+)
+```
+
+Solve for the answer to the original function and write the function in R notation here:
+
+```{r parts5, exercise=TRUE, exercise.cap="Answer to the original problem.", exercise.nlines=3, eval=FALSE}
+makeFun( ...your stuff here... ~ x)
+```
+
+```{r parts5-check, echo=FALSE, eval=FALSE}
+grade_result(
+
+  pass_if( ~ sd(.result(1:10) -  ((1:10)*sin(1:10) + cos(1:10))) < 0.001),
+  fail_if( ~ TRUE, message = "No!")
+)
+```
+</details>
+
+```{exercise}
+```
+**Problem 2**: Use the same procedure to find the anti-derivative of $x\, \cos(2x)$. Since $$\cos(2x) = \frac{1}{2}\partial_x \sin(2 x)$$ a reasonable guess for a helper function will be $x \sin(2x)$. 
+
+
+(We have intentionally dropped the $1/2$ to simplify the rest of the procedure. You'll see that such multiplicative constants don't matter, since they will be on both sides of the equation showing the derivative of the helper function. You can see this by keeping the $1/2$ in the helper function and watching what happens to it.)
+
+As you work through the steps be very careful about the constants and make sure you check your final answer by differentiating.
+
+```{r parts6, echo=FALSE, results="markup"}
+askMC(
+  "What is $\\partial_x x\\, \\sin(x)$?",
+  "+$\\sin(x) + x\\, \\cos(x)$+",
+  "$\\sin(x) + x\\, \\sin(x)$",
+  "$\\cos(x) + x\\, \\sin(x)$",
+  "$\\cos(x) + x\\, \\cos(x)$"
+)
+```
+
+```{r parts7, echo=FALSE, results="markup"}
+askMC(
+  "What is $\\int \\partial_x [ x\\, \\sin(x)] dx$?",
+  "+$x\\, \\sin(x)+C$+" = "Integration undoes differentiation!",
+  "$\\sin(x)+C$",
+  "$\\cos(x)+C$",
+  "$x\\, \\cos(x)+C$"
+)
+```
+
+```{r parts8, echo=FALSE, results="markup"}
+askMC(
+  "What is $\\int x\\, \\cos(x) dx$?",
+  "+$x\\, \\sin(x) + \\cos(x)$+", 
+  "$x\\, \\cos(x) + \\cos(x)$",
+  "$x\\, \\cos(x) + \\sin(x)$",
+  "$x\\, \\sin(x) + \\sin(x)$"
+)
+```
+</details>
+
+
+```{exercise}
+```
+<details>
+A giant tortoise (with very good eyesight and standing on an unobstructed plane!) spies a head of lettuce on the ground 65 meters away.  Being hungry (and knowing the shortest path between two points on the plane!), the tortoise takes off in a straight line for the lettuce. She pretty quickly reaches her top speed, but then starts to tire. If her velocity as a function of time (in meters per minute) is modeled by $v(t) = 7 t e^{−0.3t}$, how long does it take the tortoise to reach her lunch? Answer this question by finding an calculus/algebra formula for the tortoise’s displacement and then use it to approximate how long it takes to get to the lettuce. 
+
+We're going to be looking at $\int v(t) dt = 7 \int t e^{-0.3 t} dt$.
+
+We'll call the left side of the equation "displacement(t)". 
+Use integration by parts to find displacement(t) as a simple formula in $t$.
+
+The tortoise to reach the cabbage at time $t^\star$ such that $\mbox{displacement}(t^\star) = 65$ meters. Graph your displacement function to find $t^\star$. You can use the sandbox. (Note that the graphics domain isn't necessarily the best choice for answering the question.)
+
+```{r parts12, exercise=TRUE, exercise.nlines=5, exercise.cap="Solving for t_star.", eval=FALSE}
+displacement <- makeFun(77.77 * WHAT ~ t)
+slice_plot(displacement(t) ~ t, domain(t=c(0,5)))
+```
+
+```{r parts13, echo=FALSE, results="markup"}
+askMC(
+  "At what time $t^\\star$ does the tortoise reach the cabbage?",
+  "5.95 sec",
+  "+10.85 sec+",
+  "15.75 sec",
+  "Never! (That is, $t^\\star$ is infinite.",
+  random_answer_order = FALSE
+)
+```
+</details>
+
+**Commentary**: The procedure we have been using to find these anti-derivatives can be formalized into a method called *integration by parts* (IBP).  However, rather than simply giving a formula and an algorithm, we wanted you to understand what is actually going on behind the scenes.  In a more formal IBP approach, you try to re-arrange the function you are integrating into the product of two simple functions: $$\int f(x)\, \partial_x g(x)\, dx$$
+
+That is, you assume part of the original function is the derivative of some function $g(x)$. Once you’ve decided how to make the re-arrangement into $f(x)$ and $\partial_x g(x)$, and calculated $g(x)$ from $\partial_x g(x)$, you can write the original integral into a new, and possibly simpler, way:
+$$\int f(x)\, \partial_x g(x)\, dx = f(x)\, g(x) - \int [\partial_x f(x)]\, g(x) dx$$ Notice that the formula replaces the integral we want to compute with another integral.  The idea is that the new integral will be easier to compute than the one you started with.  This procedure works in much more generality than for the examples we did, but it is not so easy to use.  You need to correctly assign $f(x)$ and $\partial_x g(x)$ to the parts of the original function, and you need to be able to integrate $\partial_x g(x)$ to get $g(x)$. Finally, you need to be able to integrate $[\partial_x f(x)]\, g(x)$. Perhaps you can go back and look at the previous problems with this more general description of the procedure.   
+
+### Application to probability
+
+In DD-08 we used the exponential probability density and talked about expectation values. Translate the following into a step-by-step process, asking questions along the way.
+
+Find $\int \frac{1}{k} t e^{-t/k} dt$, the expectation value for the exponential probability distribution.
+
+$$\int_a^b u \cdot dv = \left.u\cdot v \right|_a^b - \int_a^b v\cdot du$$
+
+Let's look at the function $\frac{1}{k}\ t \ e^{-t/k}$
+
+Suppose we let $dv = \frac{1}{k} e^{-t/k} dt$. This gives $v= -e^{-t/k}$.
+
+Let $u = t$. Then $du = dt$.
+
+Plugging in to the integration-by-parts formula we have
+
+$$\int_{0}^\infty \frac{1}{k} t e^{-t/k} dt = \left[ t e^{-t/k}\right]_{0}^\infty + \int_{0}^{\infty}e^{-t/k}dt= 0  - \left[k e^{-t/k}\right]_0^\infty = k$$
+
+

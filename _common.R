@@ -107,3 +107,35 @@ askMC <- function (prompt = "The question prompt", ..., id = NULL, right_one = N
 sandbox_link <- function() {
   "[SANDBOX](https://maa-statprep.shinyapps.io/CalcZ-Sandbox/)"
 }
+
+segments <- function(tilde, domain, h=NULL, nsegs=20) {
+  f <- makeFun(tilde)
+  df <- D(tilde)
+  vname <- all.vars(tilde[[3]])
+  if (is.null(h)) h <- base::diff(domain[[1]])/nsegs
+  start <- seq(domain[[1]][1] + h/2, domain[[1]][2], by=h )
+  slopes <- df(start)
+  offsets <- f(start)
+
+  res <- tibble(x = start - h/2,
+                xend = x + h,
+                start = start,
+                y = -slopes*h/2.2,
+                yend = slopes*h/2.2,
+                slope = slopes,
+                offset = offsets,
+                yf = y + offset,
+                yfend = yend + offset)
+
+  res
+}
+
+mark <- function(id) {
+  id <- as.character(substitute(id))
+  glue::glue('<span style="float: right; padding-left: 50px;"><a name="{id}" href="#{id}"><img src="./images/_icons8/icons8-signpost.png" title="Location: {id}" width="12px"/></a><span style="color: red; font-size: 6pt;">{id}</red></span>')
+}
+
+ex.mark <- function(num, perm_id, fname="no file specified") {
+  perm_id <- as.character(substitute(perm_id))
+  glue::glue('**Exercise {num}**: <span><a name="File: {fname}" href="#{perm_id}"><img src="./images/_icons8/icons8-signpost.png" title="Location: {fname}" width="12px"/></a><span style="color: red; font-size: 6pt;">{perm_id}</red></span>')
+}

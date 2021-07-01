@@ -1,0 +1,50 @@
+---
+title: "Energy-Maneuverability Theory"
+author: "Daniel Kaplan"
+date: "Dec 23, 2020"
+output: learnr::tutorial
+runtime: shiny_prerendered
+---
+
+```{r include=FALSE}
+library(gradethis)
+library(mosaic)
+knitr::opts_chunk$set(echo = FALSE)
+learnr::tutorial_options(exercise.timelimit = 60,
+                 exercise.checker = gradethis::grade_learnr)
+```
+
+The "Energy-maneuverability Theory" of aircraft performance was developed by renowned fighter pilot Col John Boyd and mathematician Thomas Christie in the 1960s. The theory posits that the available maneuverability of an aircraft is closely related to its *specific energy*, that is, the kinetic plus potential energy of the aircraft divided by aircraft weight.
+
+An important formula in E-M Theory is $$P_s = \frac{T - D}{W} V$$ where $T$ is aircraft thrust, $D$ is drag, $W$ is weight, and $V$ is velocity. $(T-D)$, thrust minus drag, is the net forward force on the aircraft.
+
+Recall these facts about the dimension of physical quantities: 
+
+- Velocity has dimension $L^1 T^{-1}$ (e.g. meters per second)
+
+- Acceleration has dimension $L^1 T^{-2} =$ [Velocity] $\times\  T^{-1}$ (e.g. meters per second-squared)
+- Force has dimension $M \times\ $ [Acceleration]
+- Energy has dimension [Force] $\times\  L$
+- Power has dimension [Energy] $\times\  T^{-1}$
+
+```{r boyd-1}
+etude2::etudeQ(
+  prompt = "What is the dimension of $P_s$ in E-M Theory?",
+  "+[Power] $\\times\\ M^{-1}$+" = "In other words, specific power",
+  "[Force] $\\times$ [Acceleration]" = "Just so you know, such a dimension is rarely, if ever, encountered in practice.",
+  "[Force] $\\times$ [Velocity]" = "You're leaving out the division by $W$ in the E-M Theory formula.",
+  "[Power]"
+)
+```
+
+If you multiply $P_s$ (specific power) times the duration of a flight segment, the result has dimension [Energy]$\times M^{-1}$ which is energy per mass: so-called "specific energy." In practice, all of the quantities in the E-M Theory formula change with time, often very quickly in a fighter aircraft. In order to know the aircraft specific energy at any instant, we need to accumulate the changing specific power over time. This amounts to finding the anti-derivative of specific power with respect to time: $$\mbox{specific energy} \equiv \int P_s(t) dt$$ You can think of the $dt$ as a short interval of time.  $P_s(t) dt$ is  multiplying specific power at instant $t$ by the duration of that short interval of time which produces a small amount of specific energy at instant $t$. The $\int$ means "accumulate" these small bits of specific energy from each instant in time over a longer time interval.
+
+```{r boyd-2}
+etude2::etudeQ(
+  prompt = "What is the dimension of $dt$ within the context of this problem?",
+  "+[dt] = T+" = "Correct",
+  "[dt] = M" = "Think about what you are accumulating over.",
+  "[dt] = L" = "Think about what you are accumulating over.",
+  "[dt] = 1/T" = "Reconsider the units of specific energy."
+)
+```

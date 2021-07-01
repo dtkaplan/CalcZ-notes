@@ -1,6 +1,6 @@
 # Process of modeling
 
-Seen very abstractly, a mathematical model, as we are using the term, is a set of ***functions*** that represent the relationships between inputs and outputs.
+Seen very abstractly, a mathematical model, as we are using the term, is a set of ***functions*** that represent the relationships between inputs and outputs.  `r mark(900)`
 
 At the most simple level, building a model can be a short process:
 
@@ -19,7 +19,7 @@ The process of constructing a model that is a good match for data is called ***c
 
 ## Variations from scaling
 
-A good place to start building a model is to pick one of the basic modeling functions. This works surprisingly often. To remind you, here are our seven basic modeling functions: 
+A good place to start building a model is to pick one of the basic modeling functions. This works surprisingly often. To remind you, here are our seven basic modeling functions:   `r mark(910)`
 
 - straight-line
 - exponential
@@ -58,13 +58,14 @@ slice_plot(-exp(-x) ~ x, domain(x=c(-2,2))) %>%
 
 ```
 
-```{exercise, name="exponential-bases"}
-```
-<details>`r MC_counter$reset()` `r knitr::knit_child("Exercises/DD-141Z-04/exponential-bases.Rmd")`</details>
+<details>
+<summary>`r ex.mark(8.3, "ds4e7", fname="Exercises/DD-141Z-04/exponential-bases.Rmd")` </summary>
+`r MC_counter$reset()` `r knitr::knit_child("Exercises/DD-141Z-04/exponential-bases.Rmd")`
+</details>
 
 ## Curve fitting an exponential function {#fit-exponential}
 
-The exponential function is particularly useful when the quantity we want to model shows ***constant proportional increase***. Many quantities in everyday life are this way. For instance, an increase in salary is typically presented in a format like "a 3% increase." The population growth of a country is often presented as "percent per year." Inflation in the price of goods is similarly described in percent per year. Interest on money in a bank savings account is also described as percent per year. But if you have the bad fortune to owe money to a loan shark, the proportional increase might be described as "percent per month" or "percent per week."
+The exponential function is particularly useful when the quantity we want to model shows ***constant proportional increase***. Many quantities in everyday life are this way. For instance, an increase in salary is typically presented in a format like "a 3% increase." The population growth of a country is often presented as "percent per year." Inflation in the price of goods is similarly described in percent per year. Interest on money in a bank savings account is also described as percent per year. But if you have the bad fortune to owe money to a loan shark, the proportional increase might be described as "percent per month" or "percent per week."   `r mark(920)`
 
 When you know the "percent increase per time" of a quantity whose initial value is $A$, the exponential function is easy to write down: $$f(t) = A (1+r)^t$$ 
 The number $r$ is often called the ***interest rate*** or ***discount rate*** and is given in **percent**. 
@@ -81,7 +82,7 @@ Almost everybody is happier doing arithmetic with numbers like 2 and 10 rather t
 :::
 
 
-Exponential functions also describe ***decrease*** or ***decay***. Just replace $t$ with $-t$. That is, a movie of a decreasing quantity is just the movie of an increasing quantity played backwards in time! 
+Exponential functions also describe ***decrease*** or ***decay***. Just replace $t$ with $-t$. That is, a movie of a decreasing quantity is just the movie of an increasing quantity played backwards in time!    `r mark(930)`
 
 Figure \@ref(fig:Fun-4-intro-1) shows some data collected by Prof. Stan Wagon to support his making a detailed mechanistic model of an everyday phenomenon: [The cooling of a mug of hot beverage to room temperature](https://www.researchgate.net/profile/Gianluca_Argentini/post/Is_analogy_reasoning_between_heat_transfert_and_electriocity_allows_to_apply_the_electricity_laws_about_resistance_to_thermal_resistances/attachment/59d6573379197b80779ada64/AS%3A533325451403264%401504166104259/download/Stan+WAGON+How+quickly+does+water+cool.pdf). The mug started at room temperature, which was measured at 26 degrees C. At time 0 he poured in boiling water from a kettle and measured the temperature of the water over the next few hours.
 
@@ -123,7 +124,7 @@ iii. The parameter $k$ is $0.693 / (t_1 - t_{1/2})$. Double check the sign of $k
 
 **Exponential curve fitting applied to the water-cooling data**
 
-Let's illustrate the general process on the water-cooling data, redrawn in Figure \@ref(fig:Fun-4-a-2-1).
+Let's illustrate the general process on the water-cooling data, redrawn in Figure \@ref(fig:Fun-4-a-2-1).   `r mark(950)`
 
 ```{r Fun-4-a-2-1, echo=FALSE, fig.cap="The cooling-water data, repeated here for convenience."}
 set.seed(101)
@@ -158,27 +159,28 @@ gf_point(temp ~ time, data=CoolingWater %>% sample_n(20)) %>%
 ```
 
 
-```{exercise, name="chicken-choose-vase"}
-```
-<details>`r MC_counter$reset()` `r knitr::knit_child(exercise_file("05", "chicken-choose-vase.Rmd"))`</details>
+<details>
+<summary>`r ex.mark(8.7, "vkwl4", fname=exercise_file("05", "chicken-choose-vase.Rmd"))` </summary>
+`r MC_counter$reset()` `r knitr::knit_child(exercise_file("05", "chicken-choose-vase.Rmd"))`
+</details>
 
 
 
-```{exercise, name="cow-type-kayak-new"}
-```
-<details>`r MC_counter$reset()` `r knitr::knit_child(exercise_file("05", "cow-type-kayak-new.Rmd"))`</details>
+<details>
+<summary>`r ex.mark(8.11, "asevss", fname=exercise_file("05", "cow-type-kayak-new.Rmd"))` </summary>
+`r MC_counter$reset()` `r knitr::knit_child(exercise_file("05", "cow-type-kayak-new.Rmd"))`
+</details>
 
 
-
-
-```{exercise, name="maple-hit-saucer"}
-```
-<details>`r MC_counter$reset()` `r knitr::knit_child("Exercises/Fun/maple-hit-saucer.Rmd")`</details>
+<details>
+<summary>`r ex.mark(8.15, "j3xe", fname="Exercises/Fun/maple-hit-saucer.Rmd")` </summary>
+`r MC_counter$reset()` `r knitr::knit_child("Exercises/Fun/maple-hit-saucer.Rmd")`
+</details>
 
 
 ## Curve fitting a periodic function {#fit-periodic}
 
-Figure \@ref(fig:Fun-4-a-3-1) shows the tide level in [Providence, Rhode Island](https://www.google.com/maps/place/Providence,+RI/@41.8071,-71.4012,14z/data=!4m5!3m4!1s0x89e444e0437e735d:0x69df7c4d48b3b627!8m2!3d41.8071!4d-71.4012), starting at midnight on April 1, 2020 and recorded every minute for four and a half days. (These data were collected by the US National Oceanic and Atmospheric Administration. [Link](https://tidesandcurrents.noaa.gov/api/datagetter?begin_date=20200401%2010:00&end_date=20200405%201:59&station=8454000&product=one_minute_water_level&datum=mllw&units=metric&time_zone=gmt&application=web_services&format=csv))
+Figure \@ref(fig:Fun-4-a-3-1) shows the tide level in [Providence, Rhode Island](https://www.google.com/maps/place/Providence,+RI/@41.8071,-71.4012,14z/data=!4m5!3m4!1s0x89e444e0437e735d:0x69df7c4d48b3b627!8m2!3d41.8071!4d-71.4012), starting at midnight on April 1, 2020 and recorded every minute for four and a half days. (These data were collected by the US National Oceanic and Atmospheric Administration. [Link](https://tidesandcurrents.noaa.gov/api/datagetter?begin_date=20200401%2010:00&end_date=20200405%201:59&station=8454000&product=one_minute_water_level&datum=mllw&units=metric&time_zone=gmt&application=web_services&format=csv))   `r mark(960)`
 
 ```{r Fun-4-a-3-1, echo=FALSE, fig.cap="About four days of tide-level data from Providence, Rhode Island"}
 #gf_line(level ~ hour, data = math141Z::Anchorage_tide[1:1000,])
@@ -238,17 +240,21 @@ gf_line(level ~ hour,
 ```
 
 
-```{exercise, name="lamb-talk-gloves"}
-```
-<details>`r MC_counter$reset()` `r knitr::knit_child("Exercises/Fun/lamb-talk-gloves.Rmd")`</details>
 
-```{exercise, name="spirometer"}
-```
-<details>`r MC_counter$reset()` `r knitr::knit_child("Exercises/Fun/spirometer.Rmd")`</details>
+<details>
+<summary>`r ex.mark(8.19, "YELXG", fname="Exercises/Fun/lamb-talk-gloves.Rmd")` </summary>
+`r MC_counter$reset()` `r knitr::knit_child("Exercises/Fun/lamb-talk-gloves.Rmd")`
+</details>
+
+
+<details>
+<summary>`r ex.mark(8.23, "VBWD", fname="Exercises/Fun/spirometer.Rmd")` </summary>
+`r MC_counter$reset()` `r knitr::knit_child("Exercises/Fun/spirometer.Rmd")`
+</details>
 
 ## Curve fitting a power-law function
 
-You have been using power-law functions from early in your math and science education.  Some examples:
+You have been using power-law functions from early in your math and science education.  Some examples:   `r mark(970)`
 
 Setting | Function formula | exponent
 --------|------------------|----------
@@ -271,7 +277,7 @@ As for finding the power law $f(x) \equiv A x^p$ that provides a good match to d
 
 ## Hump and sigmoid functions
 
-Our last two basic modeling functions express an important idea in modeling: ***localness***. To put this in concrete terms, imagine creating a function to depict the elevation above sea level of a long road as a function of distance in miles, $x$, from the start of the road. If the road were level at 1200 feet elevation, a sensible model would be $\mbox{elevation}(x) = 1200 \text{ft}$. If the road were gently sloping, a better model would be $\mbox{elevation}(x) = 1200 + 3 x$. 
+Our last two basic modeling functions express an important idea in modeling: ***localness***. To put this in concrete terms, imagine creating a function to depict the elevation above sea level of a long road as a function of distance in miles, $x$, from the start of the road. If the road were level at 1200 feet elevation, a sensible model would be $\mbox{elevation}(x) = 1200 \text{ft}$. If the road were gently sloping, a better model would be $\mbox{elevation}(x) = 1200 + 3 x$.   `r mark(980)`
 
 Now let's add a bump to the road. A bump is a local feature, often only a few feet wide. Or, perhaps the road is crossing a mountain range. That's also a local feature, but unlike a bump in the road a mountain range extends for many miles.
 
@@ -294,7 +300,7 @@ It's easy to read off the ***center*** parameter from a graph of a hump. It's th
 
 The ***spread*** parameter is also pretty straightforward, but you first have to become familiar with an unusual feature of the hump function. The output of the hump function *far from the center* is practically zero. But it is not exactly zero. You can see from the graphs that the hump function has long flanks which approach zero output more or less in the manner of an exponential function. This means that we can't measure the spread of the hump function by the distance between the zeros on either side of the peak. Instead, we need a ***convention*** that will allow us to be precise in quantifying what is admittedly a vague concept of width.
 
-A simple convention is that the spread is the "half-width at half-height." Come down half-way from the peak of the hump. Panel (c) of Figure \@ref(fig:Fun-3C-1) marks that elevation with a thin, red, horizontal line. Along that line, measure the width of the hump, as marked by the thick red line in Panel (c). The ***spread*** parameter is half the width of the hump measured in this way. 
+A simple convention is that the spread is the "half-width at half-height." Come down half-way from the peak of the hump. Panel (c) of Figure \@ref(fig:Fun-3C-1) marks that elevation with a thin, red, horizontal line. Along that line, measure the width of the hump, as marked by the thick red line in Panel (c). The ***spread*** parameter is half the width of the hump measured in this way.   `r mark(990)`
 
 If you have a keen eye, you'll notice that the red line is not exactly half-way down from the peak. It's down 39.35% from the peak. The official definition of width of a hump is not actually half-width at half-height, but that simple formulation will do for us for the present.
 
@@ -318,7 +324,7 @@ The parameters of the sigmoid function are the same as for the hump function: **
 
 Hump functions and sigmoid functions with the same center and width parameters have a very close relationship. The ***slope*** of the sigmoid function is the corresponding ***hump*** function. Figures \@ref(fig:Fun-3C-1) and \@ref(fig:Fun-3C-2) show corresponding hump and sigmoid functions. To the very far left, the sigmoid function is effectively flat: a slope near zero. Moving toward the center the sigmoid has a gentle slope: a low number. In the center, the sigmoid is steepest: a higher number. Then the slope of the sigmoid becomes gentle again before gradually falling off to zero. Near zero, then low, then higher, then low again, then falling off to zero: that's also the description of a hump function!
 
-In R, the name of the sigmoid function is `pnorm()`. The hump is `dnorm()`. The parameters that specify center and spread are named `mean` and `sd`. The word "mean" accurately conveys the idea of "center." It would be nice to be able to say that `sd` comes from `s`prea`d`, but in fact `sd` is short for ***standard deviation***, a old-fashioned term familiar to students of statistics. 
+In R, the name of the sigmoid function is `pnorm()`. The hump is `dnorm()`. The parameters that specify center and spread are named `mean` and `sd`. The word "mean" accurately conveys the idea of "center." It would be nice to be able to say that `sd` comes from `s`prea`d`, but in fact `sd` is short for ***standard deviation***, a old-fashioned term familiar to students of statistics.   `r mark(1000)`
 
 
 
@@ -327,33 +333,32 @@ In R, the name of the sigmoid function is `pnorm()`. The hump is `dnorm()`. The 
 :::
 
 
-
-```{exercise, name="hump-intro"}
-```
-<details>`r MC_counter$reset()` `r knitr::knit_child("Exercises/Fun/hump-intro.Rmd")`</details>
-
+<details>
+<summary>`r ex.mark(8.25, "IELWV", fname="Exercises/Fun/hump-intro.Rmd")` </summary>
+`r MC_counter$reset()` `r knitr::knit_child("Exercises/Fun/hump-intro.Rmd")`</details>
 
 
-```{exercise, name="sigmoid-intro"}
-```
-<details>`r MC_counter$reset()` `r knitr::knit_child("Exercises/Fun/sigmoid-intro.Rmd")`</details>
+<details>
+<summary>`r ex.mark(8.29, "CKSLE", fname="Exercises/Fun/sigmoid-intro.Rmd")` </summary>
+`r MC_counter$reset()` `r knitr::knit_child("Exercises/Fun/sigmoid-intro.Rmd")`</details>
 
 
+<details>
+<summary>`r ex.mark(8.33, "bllKR", fname="Exercises/Fun/sigmoid-bath.Rmd")` </summary>
+`r MC_counter$reset()` `r knitr::knit_child("Exercises/Fun/sigmoid-bath.Rmd")`
+</details>
 
-```{exercise, name="sigmoid-bath"}
-```
-<details>`r MC_counter$reset()` `r knitr::knit_child("Exercises/Fun/sigmoid-bath.Rmd")`</details>
-
-```{exercise, name="ebola-sigmoid"}
-```
-<details>`r MC_counter$reset()` `r knitr::knit_child("Exercises/Fun/ebola-sigmoid.Rmd")`</details>
+<details>
+<summary>`r ex.mark(8.37, "EKCIE", fname="Exercises/Fun/ebola-sigmoid.Rmd")` </summary>
+`r MC_counter$reset()` `r knitr::knit_child("Exercises/Fun/ebola-sigmoid.Rmd")`
+</details>
 
 
 
 
 ## The modeling cycle {#modeling-cycle}
 
-Effective modelers treat models with skepticism. They look for ways in which models failure to capture salient features of the real world. They have an eye out for deviations between what their models show and what they believe they know about the system being modeled. They consider ways in which the models might not serve the purpose for which they were developed. 
+Effective modelers treat models with skepticism. They look for ways in which models failure to capture salient features of the real world. They have an eye out for deviations between what their models show and what they believe they know about the system being modeled. They consider ways in which the models might not serve the purpose for which they were developed.  `r mark(1010)`
 
 When modelers spot a failure or deviation or lack of proper utility, they might discard the model but more often they make a series of small adjustments, tuning up the model until is successfully serves the purposes for which it is intended. 
 
@@ -365,7 +370,7 @@ Thus, modeling is a cyclic process of creating a model, assessing the model, and
 Looking back on the exponential fitted to the cooling water data in Section \@ref(fit-exponential), it looks like our original estimate of the half-life is a bit too small; the data doesn't seem to decay at the rate implied by $k = -0.0277$. Perhaps we should try a somewhat slower decay, say $k = -0.2$ and see if that improves things. 
 
 ::: {.scaffolding}
-In the cooling water example, we're using only a subset of the data collected by Prof. Wagon. The next commands re-create that subset so that you can work with it. They also plot the data and an exponential model.
+In the cooling water example, we're using only a subset of the data collected by Prof. Wagon. The next commands re-create that subset so that you can work with it. They also plot the data and an exponential model.  `r mark(1020)`
 ```{r results="hide"}
 # reconstruct the sample
 set.seed(101)
@@ -401,7 +406,7 @@ The refined parameters give a much better fit to the data than our original roug
 
 We had two rounds of the ***modeling cycle***. First, choice of an A/B expontential model and a rough estimate of the parameters A, B, and $k$. Second, refinement of those parameters using the computer.
 
-Looking at the results of the second round, the experienced modeler can see some disturbing discrepancies. First, the estimated baseline appears to be too high. Related, the initial decay of the model function doesn't seem to be fast enough and the decay of the model function for large $t$ appears to be too slow. Prof. Stan Wagon noticed this. He used additional data to fill in the gaps for small $t$ and refined his model further by changing the basis functions in the linear combination. He hypothesized that there are at least two different cooling processes. First, the newly poured water raises the temperature of the mug itself. Since the water and mug are in direct contact, this is a fast process. Then, the complete water/mug unit comes slowly into equilibrium with the room temperature.
+Looking at the results of the second round, the experienced modeler can see some disturbing discrepancies. First, the estimated baseline appears to be too high. Related, the initial decay of the model function doesn't seem to be fast enough and the decay of the model function for large $t$ appears to be too slow. Prof. Stan Wagon noticed this. He used additional data to fill in the gaps for small $t$ and refined his model further by changing the basis functions in the linear combination. He hypothesized that there are at least two different cooling processes. First, the newly poured water raises the temperature of the mug itself. Since the water and mug are in direct contact, this is a fast process. Then, the complete water/mug unit comes slowly into equilibrium with the room temperature. `r mark(1030)`
 
 
 The newly refined model was a even better match to the data. But nothing's perfect and Prof. Wagon saw an opportunity for additional refinement based on the idea that there is a third physical mechanism of cooling: evaporation from the surface of the hot water. Prof. Wagon's additional circuits of the modeling cycle were appropriate to his purpose, which was to develop a detailed understanding of the process of cooling. For other purposes, such as demonstrating the appropriateness of an exponential process or interpolating between the data points, earlier cycles might have sufficed.
@@ -420,9 +425,9 @@ The modeling cycle can go round and round!
 
 ### Example: The tides
 
-**Step 4**: Evaluate and refine. The green model would make poor predictions. The model says "high tide" when the data say otherwise. What's missing is the ***phase*** of the sinusoid. A model that incorporates the phase is 
+**Step 4**: Evaluate and refine. The green model would make poor predictions. The model says "high tide" when the data say otherwise. What's missing is the ***phase*** of the sinusoid. A model that incorporates the phase is  `r mark(1040)`
 
-$${\color{blue}\mbox{tide}(t) \equiv 1.05 + 0.55 \sin(2\pi (t - t_0)/11)}$$
+$${\color{blue}{\mbox{tide}(t)} \equiv 1.05 + 0.55 \sin(2\pi (t - t_0)/11)}$$
 
 The new parameter, $t_0$, should be set to be the time of a positive-going crossing of the baseline. There's such a crossing at about time = 17. Happily, changing the phase does not itself necessitate re-estimating the other parameters: baseline, amplitude, period. This model, incorporating the phase, has been graphed in $\color{blue}\mbox{blue}$.
 
@@ -444,7 +449,7 @@ gf_line(level ~ hour,
 For some modeling purposes, such as prediction of future tides, the phase information is impossible. For others, say, description of the amplitude of the tides, not. But getting the phase roughly right can help point out other problems. For instance, having the blue sinusoid for comparison makes it clear that the estimated period of 11 hours is too short. Maybe 13 hours would be better. Better still, since at $t=t_0 = 17$ the model is a close match to the data, let's use that as the estimate of the start of a cycle. But then, let's move much further along in the data to find another baseline crossing. To judge from the right panel, there is a baseline crossing at $t=103$. The difference between these two times is $103 - 17 = 86$ hours. Of course, the period is not 86 hours. Looking back at the whole set of data we can see 7 complete cycles between $t=17$ and $t=103$. So our new estimate of the period is $86/7 = 12.3$ hours.
 
 With this refinement the model is
-$${\color{violet}\mbox{tide}(t) \equiv 1.05 + 0.55 \sin(2\pi (t - 17)/12.3)}$$
+$${\color{green}{\mbox{tide}(t)} \equiv 1.05 + 0.55 \sin(2\pi (t - 17)/12.3)}$$
 
 ```{r Fun-4-a-3-5, echo=FALSE, fig.cap="With the phase about right, a better estimate can be made of the period: 12.3 hours."}
 mod3 <- makeFun(1.05 + 0.55*sin(2*pi*(hour-17)/12.3) ~ hour)
@@ -469,7 +474,7 @@ gf_line(level ~ hour, data = math141Z::RI_tide) %>%
   gf_labs(y="Water level (meters)", x="Time (hours)", title="After polishing by the computer") %>%
   gf_lims(y =c(0, 2))
 ```
-This last model seems capable of making reasonable predictions, so if we collected up-to-date data we might be able to fit a new model to predict the tide level pretty accurately a few days ahead of time. Also, the excellent alignment of the model peaks with the data tell us that the cyclic tide has a period that constant, at least so far as well can tell. 
+This last model seems capable of making reasonable predictions, so if we collected up-to-date data we might be able to fit a new model to predict the tide level pretty accurately a few days ahead of time. Also, the excellent alignment of the model peaks with the data tell us that the cyclic tide has a period that constant, at least so far as well can tell.  `r mark(1050)`
 
 With the period estimate $P=12.56$ hours, we can go looking for other phenomena that might account for the tides. The period of the day-night cycle is, of course 24 hours. So the tides in Providence come in and out twice a day. But not exactly. Something else must be going on. 
 
@@ -479,10 +484,11 @@ This is the modeling cycle at work: Propose a model form (A/B model with sinusoi
 
 Discrepancies between a model and data play two roles: they help us decide if the model is fit for the purpose we have in mind and they can point the way to improved models. That the tidal data deviates from the steady amplitude of our model can be a clue for where to look next. It's not always obvious where this will lead. 
 
-Historically, careful analysis of tides led to a highly detailed, highly accurate model: a linear combination of sinusoids with diurnal periods 12.42, 12.00, 12.66, and 11.97 hours as well components with period 23.93, 25.82, 24.07, 26.87, and 24.00 hours. A tide-prediction model is constructed by finding the coefficients of the linear combination; these differ from locale to locale.
+Historically, careful analysis of tides led to a highly detailed, highly accurate model: a linear combination of sinusoids with diurnal periods 12.42, 12.00, 12.66, and 11.97 hours as well components with period 23.93, 25.82, 24.07, 26.87, and 24.00 hours. A tide-prediction model is constructed by finding the coefficients of the linear combination; these differ from locale to locale.  `r mark(1060)`
 
-```{exercise, daylength, name="sunset-in-LA"}
-```
-<details>`r MC_counter$reset()` `r knitr::knit_child("Exercises/Fun/sunset-in-LA.Rmd")`</details>
+<details>
+<summary>`r ex.mark(8.39, "GSEww", fname="Exercises/Fun/sunset-in-LA.Rmd")` </summary>
+`r MC_counter$reset()` `r knitr::knit_child("Exercises/Fun/sunset-in-LA.Rmd")`
+</details>
 
 

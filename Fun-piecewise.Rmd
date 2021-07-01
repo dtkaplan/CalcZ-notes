@@ -12,7 +12,7 @@ state_objective("Fun-4-b-4d", "Distinguish between continuous and discontinuous 
 ```
 :::
 
-Each of our basic modeling functions, with two exceptions, has a domain that is the entire number line $-\infty < x < \infty$. No matter how big or small is the value of the input, the function has an output. Such functions are particularly nice to work with, since we never have to worry about the input going out of bounds.
+Each of our basic modeling functions, with two exceptions, has a domain that is the entire number line $-\infty < x < \infty$. No matter how big or small is the value of the input, the function has an output. Such functions are particularly nice to work with, since we never have to worry about the input going out of bounds. `r mark(1500)` 
 
 The two exceptions are:
 
@@ -34,7 +34,7 @@ NaN - NaN
 NaN / NaN
 ```
 
-Division by zero produces `Inf`, whose name is reminiscent of "infinity." `Inf` infiltrates any calculation in which it takes part:
+Division by zero produces `Inf`, whose name is reminiscent of "infinity." `Inf` infiltrates any calculation in which it takes part:  `r mark(1510)` 
 ```{r warning=FALSE}
 3 * Inf
 sqrt(Inf)
@@ -62,7 +62,7 @@ slice_plot(g(x) ~ x, domain(x = c(-2, 2)))
 ```
 What takes getting used to here is the expression `x < 1` which is a ***question*** not a statement of fact. There's no standard traditional mathematical notation for questions, although some people use a question mark as in $x \stackrel{?}{<} 1$.
 
-The table shows computer notation for some common sorts of questions.
+The table shows computer notation for some common sorts of questions.  `r mark(1520)` 
 
 R notation              | English
 ------------------------|---------
@@ -72,6 +72,7 @@ R notation              | English
 `2 < x & x < 5`| "Is $x$ between 2 and 5?"^[Literally, "Is $x$ both greater than 2 and less than 5?"]
 `x < 2 | x > 6` | "Is $x$ either less than 2 or greater than 6?"
 `abs(x-5) < 2` | "Is $x$ within two units of 5?"
+
 
 ## Piecewise functions
 
@@ -118,9 +119,10 @@ A linear combination of two input-shifted ramp functions gives a piecewise versi
 sig <- makeFun(ramp(x+0.5) - ramp(x-0.5) ~ x)
 slice_plot(sig(x) ~ x, domain(x=c(-3, 3)))
 ```
-::: {r .workedexample}
 
-Figure \@ref(fig:gas-use-2) is a graph of monthly natural gas use in the author's household versus average temperature during the month. (Natural gas is measured in cubic feet, appreviated *ccf*.)
+
+::: {.intheworld}
+Figure \@ref(fig:gas-use-2) is a graph of monthly natural gas use in the author's household versus average temperature during the month. (Natural gas is measured in cubic feet, appreviated *ccf*.)  `r mark(1530)` 
 
 ```{r gas-use-2, echo=FALSE}
 gf_point(ccf ~ temp, data = Home_utilities, alpha=0.5) %>%
@@ -135,13 +137,14 @@ Even simpler is the model for the other uses of natural gas:
 $$\text{other_ccf}(x) \equiv 15$$. 
 :::
 
+
 ::: {.todo}
 Do heating degree days in integration.
 
 Similarly with power from wind turbines
 :::
 
-Our last example concerns a bit of familiar technology: music synthesis. Generating a pure tone electronically is easy done using a sinusoid. Generating a note with rich instrumental timbre can be accomplished by a linear combination of sinusoids. Of course, the note will be localized in time. This could be accomplished by multiplying the sinusoids by a hump function envelope. 
+Our last example concerns a bit of familiar technology: music synthesis. Generating a pure tone electronically is easy done using a sinusoid. Generating a note with rich instrumental timbre can be accomplished by a linear combination of sinusoids. Of course, the note will be localized in time. This could be accomplished by multiplying the sinusoids by a hump function envelope.  `r mark(1540)` 
 
 It turns out that our standard hump function, `dnorm()`, does not generate a realistic sound. Instead, a more complicated envelope is used, such as the [ADSR function](https://en.wikipedia.org/wiki/Envelope_(music)) shown in Figure \@ref(fig:ADSR). The function has six (!) parameters: the time the key is pressed, the duration A of the "attack" phase when the sound amplitude is increasing in response to the impulse imposed on the key, a decay of duration D to an output level S that lasts until the key is released, then a decay to zero over duration R. It's reasonable to think of the D and S phases as a piecewise linear approximation to exponential decay.
 
