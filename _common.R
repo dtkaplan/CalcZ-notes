@@ -135,7 +135,7 @@ mark <- function(id) {
   glue::glue('<span style="float: right; padding-left: 50px;"><a name="{id}" href="#{id}"><img src="./images/_icons8/icons8-signpost.png" title="Location: {id}" width="12px"/></a><span style="color: red; font-size: 6pt;">{id}</red></span>')
 }
 
-ex.mark <- function(num, perm_id) {
+ex.mark <- function(num, perm_id, fname="no file specified") {
   perm_id <- as.character(substitute(perm_id))
-  glue::glue('**Exercise {num}**: <span><a name="{perm_id}" href="#{perm_id}"><img src="./images/_icons8/icons8-signpost.png" title="Location: {perm_id}" width="12px"/></a><span style="color: red; font-size: 6pt;">{perm_id}</red></span>')
+  glue::glue('**Exercise {num}**: <span><a name="File: {fname}" href="#{perm_id}"><img src="./images/_icons8/icons8-signpost.png" title="Location: {perm_id}" width="12px"/></a><span style="color: red; font-size: 6pt;">{perm_id}</red></span>')
 }

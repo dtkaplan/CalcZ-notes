@@ -58,9 +58,10 @@ slice_plot(-exp(-x) ~ x, domain(x=c(-2,2))) %>%
 
 ```
 
-```{exercise, name="exponential-bases"}
-```
-<details>`r MC_counter$reset()` `r knitr::knit_child("Exercises/DD-141Z-04/exponential-bases.Rmd")`</details>
+<details>
+<summary>`r ex.mark(8.3, "ds4e7", fname="Exercises/DD-141Z-04/exponential-bases.Rmd")` </summary>
+`r MC_counter$reset()` `r knitr::knit_child("Exercises/DD-141Z-04/exponential-bases.Rmd")`
+</details>
 
 ## Curve fitting an exponential function {#fit-exponential}
 
@@ -158,22 +159,23 @@ gf_point(temp ~ time, data=CoolingWater %>% sample_n(20)) %>%
 ```
 
 
-```{exercise, name="chicken-choose-vase"}
-```
-<details>`r MC_counter$reset()` `r knitr::knit_child(exercise_file("05", "chicken-choose-vase.Rmd"))`</details>
+<details>
+<summary>`r ex.mark(8.7, "vkwl4", fname=exercise_file("05", "chicken-choose-vase.Rmd"))` </summary>
+`r MC_counter$reset()` `r knitr::knit_child(exercise_file("05", "chicken-choose-vase.Rmd"))`
+</details>
 
 
 
-```{exercise, name="cow-type-kayak-new"}
-```
-<details>`r MC_counter$reset()` `r knitr::knit_child(exercise_file("05", "cow-type-kayak-new.Rmd"))`</details>
+<details>
+<summary>`r ex.mark(8.11, "asevss", fname=exercise_file("05", "cow-type-kayak-new.Rmd"))` </summary>
+`r MC_counter$reset()` `r knitr::knit_child(exercise_file("05", "cow-type-kayak-new.Rmd"))`
+</details>
 
 
-
-
-```{exercise, name="maple-hit-saucer"}
-```
-<details>`r MC_counter$reset()` `r knitr::knit_child("Exercises/Fun/maple-hit-saucer.Rmd")`</details>
+<details>
+<summary>`r ex.mark(8.15, "j3xe", fname="Exercises/Fun/maple-hit-saucer.Rmd")` </summary>
+`r MC_counter$reset()` `r knitr::knit_child("Exercises/Fun/maple-hit-saucer.Rmd")`
+</details>
 
 
 ## Curve fitting a periodic function {#fit-periodic}
@@ -238,13 +240,17 @@ gf_line(level ~ hour,
 ```
 
 
-```{exercise, name="lamb-talk-gloves"}
-```
-<details>`r MC_counter$reset()` `r knitr::knit_child("Exercises/Fun/lamb-talk-gloves.Rmd")`</details>
 
-```{exercise, name="spirometer"}
-```
-<details>`r MC_counter$reset()` `r knitr::knit_child("Exercises/Fun/spirometer.Rmd")`</details>
+<details>
+<summary>`r ex.mark(8.19, "YELXG", fname="Exercises/Fun/lamb-talk-gloves.Rmd")` </summary>
+`r MC_counter$reset()` `r knitr::knit_child("Exercises/Fun/lamb-talk-gloves.Rmd")`
+</details>
+
+
+<details>
+<summary>`r ex.mark(8.23, "VBWD", fname="Exercises/Fun/spirometer.Rmd")` </summary>
+`r MC_counter$reset()` `r knitr::knit_child("Exercises/Fun/spirometer.Rmd")`
+</details>
 
 ## Curve fitting a power-law function
 
@@ -327,26 +333,25 @@ In R, the name of the sigmoid function is `pnorm()`. The hump is `dnorm()`. The 
 :::
 
 
-
-```{exercise, name="hump-intro"}
-```
-<details>`r MC_counter$reset()` `r knitr::knit_child("Exercises/Fun/hump-intro.Rmd")`</details>
-
+<details>
+<summary>`r ex.mark(8.25, "IELWV", fname="Exercises/Fun/hump-intro.Rmd")` </summary>
+`r MC_counter$reset()` `r knitr::knit_child("Exercises/Fun/hump-intro.Rmd")`</details>
 
 
-```{exercise, name="sigmoid-intro"}
-```
-<details>`r MC_counter$reset()` `r knitr::knit_child("Exercises/Fun/sigmoid-intro.Rmd")`</details>
+<details>
+<summary>`r ex.mark(8.29, "CKSLE", fname="Exercises/Fun/sigmoid-intro.Rmd")` </summary>
+`r MC_counter$reset()` `r knitr::knit_child("Exercises/Fun/sigmoid-intro.Rmd")`</details>
 
 
+<details>
+<summary>`r ex.mark(8.33, "bllKR", fname="Exercises/Fun/sigmoid-bath.Rmd")` </summary>
+`r MC_counter$reset()` `r knitr::knit_child("Exercises/Fun/sigmoid-bath.Rmd")`
+</details>
 
-```{exercise, name="sigmoid-bath"}
-```
-<details>`r MC_counter$reset()` `r knitr::knit_child("Exercises/Fun/sigmoid-bath.Rmd")`</details>
-
-```{exercise, name="ebola-sigmoid"}
-```
-<details>`r MC_counter$reset()` `r knitr::knit_child("Exercises/Fun/ebola-sigmoid.Rmd")`</details>
+<details>
+<summary>`r ex.mark(8.37, "EKCIE", fname="Exercises/Fun/ebola-sigmoid.Rmd")` </summary>
+`r MC_counter$reset()` `r knitr::knit_child("Exercises/Fun/ebola-sigmoid.Rmd")`
+</details>
 
 
 
@@ -422,7 +427,7 @@ The modeling cycle can go round and round!
 
 **Step 4**: Evaluate and refine. The green model would make poor predictions. The model says "high tide" when the data say otherwise. What's missing is the ***phase*** of the sinusoid. A model that incorporates the phase is 
 
-$${\color{blue}\mbox{tide}(t) \equiv 1.05 + 0.55 \sin(2\pi (t - t_0)/11)}$$
+$${\color{blue}{\mbox{tide}(t)} \equiv 1.05 + 0.55 \sin(2\pi (t - t_0)/11)}$$
 
 The new parameter, $t_0$, should be set to be the time of a positive-going crossing of the baseline. There's such a crossing at about time = 17. Happily, changing the phase does not itself necessitate re-estimating the other parameters: baseline, amplitude, period. This model, incorporating the phase, has been graphed in $\color{blue}\mbox{blue}$.
 
@@ -444,7 +449,7 @@ gf_line(level ~ hour,
 For some modeling purposes, such as prediction of future tides, the phase information is impossible. For others, say, description of the amplitude of the tides, not. But getting the phase roughly right can help point out other problems. For instance, having the blue sinusoid for comparison makes it clear that the estimated period of 11 hours is too short. Maybe 13 hours would be better. Better still, since at $t=t_0 = 17$ the model is a close match to the data, let's use that as the estimate of the start of a cycle. But then, let's move much further along in the data to find another baseline crossing. To judge from the right panel, there is a baseline crossing at $t=103$. The difference between these two times is $103 - 17 = 86$ hours. Of course, the period is not 86 hours. Looking back at the whole set of data we can see 7 complete cycles between $t=17$ and $t=103$. So our new estimate of the period is $86/7 = 12.3$ hours.
 
 With this refinement the model is
-$${\color{violet}\mbox{tide}(t) \equiv 1.05 + 0.55 \sin(2\pi (t - 17)/12.3)}$$
+$${\color{green}{\mbox{tide}(t)} \equiv 1.05 + 0.55 \sin(2\pi (t - 17)/12.3)}$$
 
 ```{r Fun-4-a-3-5, echo=FALSE, fig.cap="With the phase about right, a better estimate can be made of the period: 12.3 hours."}
 mod3 <- makeFun(1.05 + 0.55*sin(2*pi*(hour-17)/12.3) ~ hour)
@@ -481,8 +486,9 @@ Discrepancies between a model and data play two roles: they help us decide if th
 
 Historically, careful analysis of tides led to a highly detailed, highly accurate model: a linear combination of sinusoids with diurnal periods 12.42, 12.00, 12.66, and 11.97 hours as well components with period 23.93, 25.82, 24.07, 26.87, and 24.00 hours. A tide-prediction model is constructed by finding the coefficients of the linear combination; these differ from locale to locale.
 
-```{exercise, daylength, name="sunset-in-LA"}
-```
-<details>`r MC_counter$reset()` `r knitr::knit_child("Exercises/Fun/sunset-in-LA.Rmd")`</details>
+<details>
+<summary>`r ex.mark(8.39, "GSEww", fname="Exercises/Fun/sunset-in-LA.Rmd")` </summary>
+`r MC_counter$reset()` `r knitr::knit_child("Exercises/Fun/sunset-in-LA.Rmd")`
+</details>
 
 
