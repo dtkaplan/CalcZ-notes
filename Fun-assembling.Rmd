@@ -1,6 +1,6 @@
 # Assembling functions {#fun-assembling}
 
-When we need a new function for some purpose, we practically always build it out of existing functions. For instance, a  parameterized function like $$A \sin\left(\frac{2 \pi}{P}x\right) + C$$ is built by assempling together a straight-line input scaling, a naked $\sin()$ function, and another straight-line function for scaling the output from $\sin()$.  `r note(1300)`
+When we need a new function for some purpose, we practically always build it out of existing functions. For instance, a  parameterized function like $$A \sin\left(\frac{2 \pi}{P}x\right) + C$$ is built by assempling together a straight-line input scaling, a naked $\sin()$ function, and another straight-line function for scaling the output from $\sin()$.  `r mark(1300)`
 
 In this chapter, we'll introduce three general frameworks for combining functions: linear combination, composition, and multiplication.
 
@@ -24,7 +24,7 @@ There are other places where you have seen linear combinations:
 
 - The parameterized ***sinusoid***  $$A \sin\left(\frac{2 \pi}{P}t\right) + C$$ is a linear combination of the functions $h_1(t) \equiv \sin\left(\frac{2 \pi}{P} t\right)$ and $g_0(t) \equiv 1$. The scalars are $A$ and $C$.
 - The parameterized ***exponential*** $$A e^{kt} + C$$ The functions being combined are $e^{kt}$ and $g_0(t) \equiv 1$. The scalars are, again, $A$ and $C$.
-- The straight line function $a x + b$. The functions being combined are $x$ and $1$, the scalars are $a$ and $b$.  `r note(1310)`
+- The straight line function $a x + b$. The functions being combined are $x$ and $1$, the scalars are $a$ and $b$.  `r mark(1310)`
 
 Note that neither the parameterized exponential or the parameterized sinusoid is a polynomial.
 
@@ -58,7 +58,7 @@ We used $C$ as the name of the input to CtoK(). Shouldn't it be something like $
 
 Keep in mind that the names of the inputs to a function can be anything whatsoever, so long as they are used consistently in the function algorithm. If we wanted, we could call the first input to any function $x$, or for that matter $y$ or giraffe.
 
-The point of the notation $\mbox{CtoK}(C) \equiv C + 273.15$ is to make it utterly clear that $C$ is the name we're using for the input by listing it in the parentheses that follow the function name CtoK(). This, unlike high-school notation, allows us great freedom in the choice of names.  `r note(1320)`
+The point of the notation $\mbox{CtoK}(C) \equiv C + 273.15$ is to make it utterly clear that $C$ is the name we're using for the input by listing it in the parentheses that follow the function name CtoK(). This, unlike high-school notation, allows us great freedom in the choice of names.  `r mark(1320)`
 
 We can use that freedom to make it easier to communicate with other people. (And remember, one of those other people is "future you.") We used the name $C$ to reinforce the message that CtoK() converts *celsius* to *kelvin*, and not vice versa.
 :::
@@ -131,7 +131,7 @@ etude2::etudeQ(
 
 
 ::: {.intheworld}
-Income inequality is a matter of perennial political debate. In the US, most people support Social Security, which is an income re-distribution programming dating back almost a century. But other re-distribution policies are controversial. Some believe they are essential to a healthy society, others that the "cure" is worse than the "disease."  `r note(1330)`
+Income inequality is a matter of perennial political debate. In the US, most people support Social Security, which is an income re-distribution programming dating back almost a century. But other re-distribution policies are controversial. Some believe they are essential to a healthy society, others that the "cure" is worse than the "disease."  `r mark(1330)`
 
 Whatever one's views, it's helpful to have a way to quantify inequality. There are many ways that this might be done. A mathematically sophisticated one is called the ***Gini coefficient***.
 
@@ -174,7 +174,7 @@ Here are some functions that meet the requirements:
 - $L_b(p) \equiv p^b$ where $1 \leq b$.
 - $L_q(p) \equiv 1 - (1-p)^q$ where $0 < q \leq 1$
 
-Notice that each of these functions has just one parameter. It seems implausible that the workings of a complex society can be summarized with just one number. We can use the curve-polishing techniques introduced in Section \@ref(modeling-cycle) to find the "best" parameter value to match the data. Then we can see if "best" is good enough.  `r note(1340)`
+Notice that each of these functions has just one parameter. It seems implausible that the workings of a complex society can be summarized with just one number. We can use the curve-polishing techniques introduced in Section \@ref(modeling-cycle) to find the "best" parameter value to match the data. Then we can see if "best" is good enough.  `r mark(1340)`
 
 ```{r}
 Lb <- fitModel(income ~ pop^b, data = Income, start=list(b=1.5))
@@ -206,7 +206,7 @@ To get started, figure out whether or not $L_1(L_2(0)) = 0$ and $L_1(L_2(1)) = 1
 
 ## The modeling polynomial {#modeling-polynomial-1}
 
-Sometimes, in order to model some simple relationship you need to build a function whose graph has a simple, curving shape.  `r note(1350)`
+Sometimes, in order to model some simple relationship you need to build a function whose graph has a simple, curving shape.  `r mark(1350)`
 
 A simple but surprisingly powerful approach is to use a ***low-order polynomial***. The ***order of a polynomial*** is the highest exponent on the input. For example, a straight-line function, $g_1(x) \equiv a_0 + a_1 x$, is a **first-order** polynomial. A ***quadratic***, $g_2(x) \equiv b_0 + b_1 x + b_2 x^2$ is a **second-order** polynomial.
 
@@ -256,7 +256,7 @@ In multiplication, each of the functions is applied to the input individually. T
 
 In function composition, the order of the functions matters: $f(g(x))$ and $g(f(x))$ are in general completely different functions.
 
-In function multiplication, the order doesn't matter because multiplication is ***commutative***, that is, if $a$ and $b$ are each quantities, $a \times b = b \times a$.  `r note(1360)`
+In function multiplication, the order doesn't matter because multiplication is ***commutative***, that is, if $a$ and $b$ are each quantities, $a \times b = b \times a$.  `r mark(1360)`
 
 
 
@@ -318,7 +318,7 @@ EXERCISE: Provide a sigmoid and a series of humps. Ask the student to sketch out
 
 ## All together now!
 
-Two or all three of the techniques for combining functions---linear combinations, function composition, and function multiplication---can be used in the same function.  `r note(1370)`
+Two or all three of the techniques for combining functions---linear combinations, function composition, and function multiplication---can be used in the same function.  `r mark(1370)`
 
 Consider the function for the length of the day
 $$\text{day_length}(L, \delta) \equiv \frac{2}{15} \arccos\left(-\tan(L)*\tan(δ)\right)$$

@@ -7,7 +7,7 @@ state_objective("F-20", "Understand that a mathematical graph consists of points
 :::
 
 
-***Scientific and statistical graphics*** are visual depictions of information and data. For displaying a function with a single input, mathematicians and other favor a particular style of graphics. This favored style is called a ***function graph***, which has a specific technical meaning in mathematics. Notice that we're writing "function graph" rather than "function graphic." A function graph is a particular sort of graphic: there are many other types of graphics some of which we'll use to display data or features of functions. `r note(700)`
+***Scientific and statistical graphics*** are visual depictions of information and data. For displaying a function with a single input, mathematicians and other favor a particular style of graphics. This favored style is called a ***function graph***, which has a specific technical meaning in mathematics. Notice that we're writing "function graph" rather than "function graphic." A function graph is a particular sort of graphic: there are many other types of graphics some of which we'll use to display data or features of functions. `r mark(700)`
 
 ## The graphics frame
 
@@ -28,7 +28,7 @@ gf_blank(mpg ~ wt, data=mtcars) %>%
 
 ## Data graphics: the point plot
 
-One of the most common uses of a graphics frame is to display visually two columns from a table containing data. For instance, here is a small part of a table about the size of penguins in the Palmer Archipelago in Antarctica. `r note(710)`
+One of the most common uses of a graphics frame is to display visually two columns from a table containing data. For instance, here is a small part of a table about the size of penguins in the Palmer Archipelago in Antarctica. `r mark(710)`
 
 ```{r echo=FALSE}
 library(palmerpenguins)
@@ -85,7 +85,7 @@ Before you can use `gf_point()` to plot a pair of columns from a data frame, you
 
 ## Graphics layers
 
-You will often want to compare to functions, or compare a function to data, or something more elaborage. You can do this using the ordinary graphics functions, e.g. `slice_plot()` or `gf_point()`. Each such command would generates a ***graphics layer***. You can stack layers on top of one another by connecting the commands with a ***pipe***, which is written `%>%` in R. The pipe token should always come at the end of a line, never at the beginning. The last command in the ***pipeline*** should not be followed by `%>%`. `r note(720)`
+You will often want to compare to functions, or compare a function to data, or something more elaborage. You can do this using the ordinary graphics functions, e.g. `slice_plot()` or `gf_point()`. Each such command would generates a ***graphics layer***. You can stack layers on top of one another by connecting the commands with a ***pipe***, which is written `%>%` in R. The pipe token should always come at the end of a line, never at the beginning. The last command in the ***pipeline*** should not be followed by `%>%`. `r mark(720)`
 
 ::: {.workedexample}
 Here is an ugly plot made of three layers, each layer displaying one of the naked modeling functions. When a `slice_plot()` is the first layer, the `domain()` must be given explicitly. You're welcome to do so in the later layers, but if you don't the original `domain()` will be passed down the pipeline.
@@ -115,12 +115,12 @@ gf_point(flipper_length_mm/10 ~ body_mass_g/1000,
 ```
 
 ::: {.intheworld}
-To create the model of flipper length as a function of body mass, we used one of a set of techniques called ***machine learning***. That is, we didn't specify that the form should be an exponential or a hump or a sigmoid or any other particular shape. We simply asked the computer to figure out a smooth function that stays close to the data. The result, as it happens, was a sigmoid. `r note(730)`
+To create the model of flipper length as a function of body mass, we used one of a set of techniques called ***machine learning***. That is, we didn't specify that the form should be an exponential or a hump or a sigmoid or any other particular shape. We simply asked the computer to figure out a smooth function that stays close to the data. The result, as it happens, was a sigmoid. `r mark(730)`
 :::
 
 ## Inputs to output 
 
-You can easily evaluate a function for a given input from its graph. As you know, just put your finger at the horizontal coordinate for the input. Then move your finger upward to reach the point on the curve directly above that horizontal coordinate. You read off the value of the function at that input by reference to the scale on the vertical axis. `r note(740)`
+You can easily evaluate a function for a given input from its graph. As you know, just put your finger at the horizontal coordinate for the input. Then move your finger upward to reach the point on the curve directly above that horizontal coordinate. You read off the value of the function at that input by reference to the scale on the vertical axis. `r mark(740)`
 
 It's not possible to show with a graph the whole of a function whose domain is $-\infty$ to $\infty$. Consequently, when drawing a graph we choose to show only that part of the domain that we expect will be relevant to our needs.
 
@@ -136,7 +136,7 @@ This function has a range that runs from $-\infty$ to $\infty$, but the limits o
 
 ## Outputs to inputs
 
-Graphs are relatively modern, coming into mainstream use only in the 1700s. Much of mathematics was developed before graphs were invented. One consequence of this is that function tasks that are easy using a graph might be very hard with the previous ways of implementing functions. This is analogous to the way that arithmetic is pretty easy with Arabic numerals, but really hard with Roman numerals. `r note(750)`
+Graphs are relatively modern, coming into mainstream use only in the 1700s. Much of mathematics was developed before graphs were invented. One consequence of this is that function tasks that are easy using a graph might be very hard with the previous ways of implementing functions. This is analogous to the way that arithmetic is pretty easy with Arabic numerals, but really hard with Roman numerals. `r mark(750)`
 
 A function graph makes it easy to evaluate the ***function inverse***. For all the basic modeling functions we have a way to calculate numerically the output for any given input (in the function's domain). 
 
@@ -148,7 +148,7 @@ Invertible or not, it is a common procedure for working with functions to find *
 
 ## Graphs of functions with two inputs
 
-We can draw graphs of functions with two inputs. Now the points need to be marked in a 3-dimensional space: one axis for each of the two inputs and another axis for the output. Like this: `r note(760)`
+We can draw graphs of functions with two inputs. Now the points need to be marked in a 3-dimensional space: one axis for each of the two inputs and another axis for the output. Like this: `r mark(760)`
 
 ```{r fun-1b-1.2, echo=FALSE, fig.cap="A graph of a function of two inputs is a surface."}
 f2 <- rfun( ~ input_1 + input_2, seed=932)
@@ -167,7 +167,7 @@ state_objective("F-21", "Interpret a contour plot of a function of two input var
 ```
 :::
 
-A mathematical graph is just one way to draw a picture of a function with two inputs. There are other ways. One helpful mode of picture is called a ***contour plot***, familiar to many non-mathematicians in the form of topgraphical maps showing landscape elevation as a function of latitude and longitude. Here's a contour plot of the same function shown in the previous graph: `r note(770)`
+A mathematical graph is just one way to draw a picture of a function with two inputs. There are other ways. One helpful mode of picture is called a ***contour plot***, familiar to many non-mathematicians in the form of topgraphical maps showing landscape elevation as a function of latitude and longitude. Here's a contour plot of the same function shown in the previous graph: `r mark(770)`
 
 ```{r Fig-1b-2.1, echo=FALSE, fig.cap="A contour plot displays the surface in the same manner as a topographical map shows the terrain."}
 f2 <- rfun( ~ input_1 + input_2, seed=932)
@@ -186,7 +186,7 @@ Often, the specific numerical value at a point is not of primary interest. Inste
 
 Another common task for interpreting contour plots is to locate the input pair that's at a local high point or low point: the top of a hill or the bottom of a hollow. Such points are called ***local argmax*** or ***local argmin*** respectively. The *output* of the function at a local argmax is called the ***local maximum***; similarly for a local argmin, where the output is called a ***local minimum***. (The word "argmax" is a contraction of "argument of the maximum." We will tend to use the word "input" instead of "argument", but it means exactly the same thing to say "the inputs to a function" as to says "the arguments of a function.")
 
-Still other common tasks for reading contour plots are to start at a given input pair and figure out 1) the direction to move which is most steeply uphill, or 2) the direction to move which will keep the function output the same. `r note(780)`
+Still other common tasks for reading contour plots are to start at a given input pair and figure out 1) the direction to move which is most steeply uphill, or 2) the direction to move which will keep the function output the same. `r mark(780)`
 
 It can be helpful to look at a contour map and interpret the contours as representing geographical features: hills, valleys, crests, coves, hollows, and so on.
 
@@ -204,7 +204,7 @@ As mentioned before, ***mathematical modeling*** is the process of constructing 
 
 Almost always, when mathematically modeling a real-world situation or phenomenon, we do not try to capture every nuance of every relationship that might exist in the real world. We leave some things out. Such simplifications make modeling problems tractable and encourage us to identify the most important features of the most important relationships.
 
-On the other hand, it's easy to go wrong and leave out something that's important. To mitigate this risk, many modeling projects involve a ***modeling cycle*** where we propose a candidate model, examine the consequence of that model to see if it corresponds well to the parts of reality that are important to us in our task, and modify the model as needed to produce a new and better candidate. `r note(790)`
+On the other hand, it's easy to go wrong and leave out something that's important. To mitigate this risk, many modeling projects involve a ***modeling cycle*** where we propose a candidate model, examine the consequence of that model to see if it corresponds well to the parts of reality that are important to us in our task, and modify the model as needed to produce a new and better candidate. `r mark(790)`
 
 In this spirit, it's useful always to assume that our models are leaving something out and that a more complete model involves a function with more inputs than the present candidate. The present candidate model should be considered as a ***slice*** of a more complete model. Our slice leaves out one or more of the variables in a more complete model.
 
@@ -221,7 +221,7 @@ As you become practiced reading contour plots, you might prefer to read this one
 
 The most common forms of ***slice*** involve constructing a simpler function that has one input but not the other. For example, our simpler function might ignore input #2. There are different ways of collapsing the function of two inputs into a function of one input. An especially useful way in calculus is to take the two-input function and set one of the inputs to a ***constant value***.
 
-For instance, suppose we set input #2 to the constant value 1.5. This means that we can consider any value of input #1, but input #2 has been replaced by 1.5. In Figure Fig-1c.2, we've marked in red the points in the contour plot that give the output of the simplified function. `r note(795)`
+For instance, suppose we set input #2 to the constant value 1.5. This means that we can consider any value of input #1, but input #2 has been replaced by 1.5. In Figure Fig-1c.2, we've marked in red the points in the contour plot that give the output of the simplified function. `r mark(795)`
 
 ```{r (Fig-1c.2), echo=FALSE, out.width="50%", fig.show="hold", warning=FALSE}
 f2 <- rfun( ~ input_1 + input_2, seed=96)

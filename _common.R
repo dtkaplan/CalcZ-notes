@@ -137,5 +137,5 @@ mark <- function(id) {
 
 ex.mark <- function(num, perm_id, fname="no file specified") {
   perm_id <- as.character(substitute(perm_id))
-  glue::glue('**Exercise {num}**: <span><a name="File: {fname}" href="#{perm_id}"><img src="./images/_icons8/icons8-signpost.png" title="Location: {perm_id}" width="12px"/></a><span style="color: red; font-size: 6pt;">{perm_id}</red></span>')
+  glue::glue('**Exercise {num}**: <span><a name="File: {fname}" href="#{perm_id}"><img src="./images/_icons8/icons8-signpost.png" title="Location: {fname}" width="12px"/></a><span style="color: red; font-size: 6pt;">{perm_id}</red></span>')
 }

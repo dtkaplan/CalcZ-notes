@@ -1,6 +1,6 @@
 # Magnitudes {#magnitudes}
 
-Undoubtedly you are comfortable with the standard way of writing numbers, for instance 33 or 512 or 1051. Elementary school students master the comparison of such numbers. Which is greater: 512 or 33? Which is less, 1051 or 512? You can answer such questions at a glance; the comparison can be accomplished simply by counting the number of digits. 1051 has four digits, so it is larger than the three-digit number 512. There are two digits in 33, so it smaller than 512. When two numerals have the same number of digits---say, 337 and 512---you can't answer the "greater than" question by simple counting. Instead, you proceed from left to write and compare the number in each place. So, for 512 and 337, you compare 5 to 3 and ... since 5 is greater than 3, 512 is greater than 337. If the two leading digits are the same, go on to the next digit and so on for all the digits in turn.  `r note(1600)` 
+Undoubtedly you are comfortable with the standard way of writing numbers, for instance 33 or 512 or 1051. Elementary school students master the comparison of such numbers. Which is greater: 512 or 33? Which is less, 1051 or 512? You can answer such questions at a glance; the comparison can be accomplished simply by counting the number of digits. 1051 has four digits, so it is larger than the three-digit number 512. There are two digits in 33, so it smaller than 512. When two numerals have the same number of digits---say, 337 and 512---you can't answer the "greater than" question by simple counting. Instead, you proceed from left to write and compare the number in each place. So, for 512 and 337, you compare 5 to 3 and ... since 5 is greater than 3, 512 is greater than 337. If the two leading digits are the same, go on to the next digit and so on for all the digits in turn.  `r mark(1600)` 
 
 Things were not always this simple. Our number system that uses *place* and *Arabic* numerals is a human invention. An example of an earlier number system is Roman numerals. Here, comparison is hard. For instance, which of these three numbers is bigger?
 
@@ -37,7 +37,7 @@ $$\text{digit(x)} = 2.302585 \ln(x)$$ or, in R, `log10()`. We elected  $\ln()$ r
 
 ## Quantity and magnitude
 
-The familiar quantity 60 miles-per-hour is written as a number (60 here) followed by units. The quantity is neither the number nor the units: it is the combination of the two. For instance, 100 is obviously not the same as 60. And miles-per-hour is not the same as kilometers-per-hour. Yet, 60 miles-per-hour is almost exactly the same quantity as 100 kilometers-per hour.^[95.69 km/hr is exactly 60 mph.]  `r note(1610)` 
+The familiar quantity 60 miles-per-hour is written as a number (60 here) followed by units. The quantity is neither the number nor the units: it is the combination of the two. For instance, 100 is obviously not the same as 60. And miles-per-hour is not the same as kilometers-per-hour. Yet, 60 miles-per-hour is almost exactly the same quantity as 100 kilometers-per hour.^[95.69 km/hr is exactly 60 mph.]  `r mark(1610)` 
 
 6, 60, 600, and 6000 miles-per-hour are quantities that differ in size by ***orders of magnitude***. Such differences often point to a substantial change in context. A jog is 6 mph, a car on a highway goes 60 mpg, a cruising commercial jet goes 600 mph, a rocket passes through 6000 mph on its way to orbital velocity. 
 
@@ -53,7 +53,7 @@ One clue that thinking in terms of orders of magnitude is appropriate is when yo
 
 Another clue is whether "zero" means "nothing." Daily temperatures in the winter are often near "zero" on the Fahrenheit or Celcius scales, but that in no way means there is a complete absence of heat. Those scales are arbitrary. Another way to think about this clue is whether ***negative values*** are meaningful. If so, thinking in terms of orders of magnitude is not likely to be useful.
 
-You may have guessed that `digits()` is handy for computing differences in terms of orders of magnitude. Here's how:  `r note(1620)` 
+You may have guessed that `digits()` is handy for computing differences in terms of orders of magnitude. Here's how:  `r mark(1620)` 
 
 1. Make sure that the quantities are expressed in the same ***units***. 
 2. Calculate the difference between the `digits()` of the numerical part of the quantity.
@@ -92,7 +92,7 @@ For a creature active both night and day, they eye needs to be sensitive over 7 
 
 The logarithm is the inverse of the exponential function. In other words, $$\ln(e^x) = x\ \ \text{and}\ \ e^{\ln(x)} = x$$
 
-Think about this in terms of the kinds of quantities that are the input and output to each function.  `r note(1630)` 
+Think about this in terms of the kinds of quantities that are the input and output to each function.  `r mark(1630)` 
 
 * Logarithm: The input is a quantity, the output is the magnitude of that quantity.
 * Exponential: The input is a magnitude, the output is the quantity with that magnitude.
@@ -135,12 +135,9 @@ P
 P %>%
   gf_refine(scale_y_log10(), scale_x_log10())
 ```
-
 :::
 
 
-```{exercise, name="engine-magnitude-new"}
-```
 <details>
 <summary>`r ex.mark(14.15, "EWLCI", fname="Exercises/Fun/engine-magnitude-new.Rmd")`</summary>
 `r MC_counter$reset()` `r knitr::knit_child("Exercises/Fun/engine-magnitude-new.Rmd")`
@@ -149,7 +146,7 @@ P %>%
 
 ## Magnitude scales
 
-Plotting the logarithm of a quantity gives a visual display of the magnitude of the quantity and labels the axis as that magnitude. A useful graphical technique is to label the axis with the original quantity, letting the position on the axis show the magnitude.  `r note(1640)` 
+Plotting the logarithm of a quantity gives a visual display of the magnitude of the quantity and labels the axis as that magnitude. A useful graphical technique is to label the axis with the original quantity, letting the position on the axis show the magnitude.  `r mark(1640)` 
 
 To illustrate, Figure \@ref(fig:mag-scales-1)(left) is a log-log graph of horsepower versus displacement for the internal combustion engines reported in the `Engines` data frame. The points are admirably evenly spaced, but it is hard to translate the scales to the physical quantity. The right panel in Figure \@ref(fig:mag-scales) shows *exactly the same data points*, but now the scales are labeled using the original quantity.
 
@@ -186,7 +183,7 @@ It's nice to have the labels show round numbers. It's also nice for them to be e
 
 ## Fractional digits (optional) {#fractional-digits}
 
-So far, we have the digit() function in a tabular form:  `r note(1650)` 
+So far, we have the digit() function in a tabular form:  `r mark(1650)` 
 
 input | output
 ----|-----------
@@ -299,7 +296,7 @@ knitr::include_graphics(normalizePath("www/Briggs-starttable.png"))
 
 The table was called the *Chilias prima*, Latin for "First group of one thousand." True to its name, the table gives the output of digits() for the inputs 1, 2, 3, ..., 998, 999, 1000. For instance, as you can see from the top row of the right-most column, digits(67) = 1.82607480270082. 
 
-In everyday speech, 67 has two digits. The authors of *Chilias prima* sensibly didn't use the name "digit()" for the function. They chose something more abstract: "logarithm()". Nowadays, this function is named $\log_{10}()$. In R, the function is called `log10()`.  `r note(1660)` 
+In everyday speech, 67 has two digits. The authors of *Chilias prima* sensibly didn't use the name "digit()" for the function. They chose something more abstract: "logarithm()". Nowadays, this function is named $\log_{10}()$. In R, the function is called `log10()`.  `r mark(1660)` 
 
 ```{r}
 log10(67)
