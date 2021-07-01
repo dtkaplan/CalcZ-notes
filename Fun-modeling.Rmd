@@ -19,15 +19,26 @@ The process of constructing a model that is a good match for data is called ***c
 
 ## Variations from scaling
 
-A good place to start building a model is to pick one of the basic modeling functions. This works surprisingly often. To remind you, here are our seven basic modeling functions:   `r mark(910)`
+A good place to start building a model is to pick one of the basic modeling functions. This works surprisingly often. To remind you, here are our nine ***naked*** modeling functions:   `r mark(910)`
 
-- straight-line
-- exponential
-- power-law
-- logarithm
-- sinusoid
-- hump
-- sigmoid
+```{r child="naked-list.Rmd"}
+```
+     
+The basic modeling functions are the same, but replace the plain $x$ in the naked function with a straight-line function, for instance $ax + b$ or, equivalently $a(x - x_0)$.  In use, the parameter $a$ is often written with some other letter and, often, the $b$ or $-x_0$ part is not needed. 
+
+
+Here are some of the common forms of the basic modeling functions you will encounter:
+
+Name | Common forms | note
+-----|--------------|------------
+Exponential | $e^{k t}$ or  $e^{-k t}$ or $e^{-t/ \tau}$
+Sinusoid | $\sin\left(\frac{2 \pi}{P} (t-t_0)\right)$, $\sin\left(\frac{2 \pi}{P} t\right)$, or $\sin(\omega t)$ | $P$ is "period", $\omega$ is "angular frequency"
+Monomials | $[x-x_0]$ or $[x-x_0]^2$, and so on
+Power-law generally | $x^p$ or $[x-x_0]^p$ | $p$ is "power"
+Hump | $\dnorm(x, mn, sd)$ | $mn$ is "mean" or "center"
+Sigmoid | $\dnorm(x, mn, sd)$ | $sd$ is "standard deviation" or "spread"
+
+
 
 It helps in making the selection to have ready to mind the basic shape of each of these function families. To review, revisit Section \@ref(function-shapes).
 

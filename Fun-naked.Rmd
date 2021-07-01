@@ -8,38 +8,17 @@ A mathematical modeler is a kind of playwright. She combines mathematical charac
 
 Here is a list of our basic, unadorned functions, the naked model function,
 
-::: {.todo}
-Update this list to correspond to the one newly developed for the Accum series.
-
-Name | $f(x)$ 
------|---------------
-exponential | $e^x$     
-logarithm   | $\ln(x)$  
-sinusoid    | $\sin(x)$ 
-square | $x^2$  
-proportional | $x$ 
-constant | $1$
-reciprocal | $1/x$ or $x^{-1}$   
-hump     |  $\dnorm(x)$           
-sigmoid  |  $\pnorm(x)$        
-
-:::
+```{r child="naked-list.Rmd"}
+```
+     
 
 
-* Exponential $e^x$
-* Logarithm $\ln(x)$
-* Power-law $x^p$
-* Sinusoid $\sin(x)$
-* Straight-line $m x + b$
-* Hump $\text{dnorm}(x)$
-* Sigmoid $\text{pnorm}(x)$
+We've written these here in a traditional formula notation so that you can see the connections to the math you've already studied. We've used $x$ to stand for the single input to these functions just because that's traditional.  `r mark(310)`
 
-We've written these here in a traditional notation so that you can see the connections to the math you've already studied. We've used $x$ to stand for the single input to these functions just because that's traditional. `r mark(310)`
-
-It's good to refer to the functions by their word name---exponential, logarithm, power-law, sinusoid, straight-line, etc. This helps to avoid the source of common confusion. For example, the mathematical expressions $e^x$ and $x^e$ are easily confused, but they are notation for ***utterly different patterns***. You won't so easily mistake "exponential" and "power-law."
+It's good to refer to the functions by their word name---exponential, logarithm, square, sinusoid, reciprocal, etc. This helps to avoid the source of common confusion. For example, the mathematical expressions $e^x$ and $x^e$ are easily confused, but they are notation for ***utterly different patterns***. You won't so easily mistake "exponential" and "power-law."
 
 ::: {.takenote}
-One important point to make here is that our list of naked modeling functions is very short. You should memorize the names and be able easily to associate each name with the traditional notation.
+One important point to make here is that our list of naked modeling functions is short. You should memorize the names and be able easily to associate each name with the traditional notation.
 
 Over the next several chapters, we will introduce several features of functions. Some of our basic modeling functions have these features, some don't. These features include:
 
@@ -49,7 +28,7 @@ Over the next several chapters, we will introduce several features of functions.
 - vertical asymptotes
 - periodicity
 
-By the end of Block 1, you should be able to list all seven basic modeling functions and say which of these features are relevant to each. `r mark(320)`
+By the end of Block 1, you should be able to list all nine basic modeling functions and say which of these features are relevant to each. `r mark(320)`
 
 :::
 
@@ -57,35 +36,30 @@ You will also use and see the computer names for these functions. The names can 
 
 For ease of reference, here's a table
 
-::: {.todo}
-
-Similarly, update this:
-
 Name | Traditional notation | R expression
 -----|----------------------|---------------
 Exponential | $e^x$ | `exp(x)`
 Logarithm | $\ln(x)$ | `log(x)`
-Power law | $x^p$ | `x^p`
 Sinusoid | $\sin(x)$ | `sin(x)`
+Square   | $x^2$     | `x^2`
+Proportional | $x$   |  `x`
+Constant | | 
+Reciprocal | $1/x$ or $x^{-1}$ | `1/x`
 Straight-line | $m x + b$ | `m*x+b`
 Hump |   | `dnorm(x)`
 Sigmoid | | `pnorm(x)`
 
-:::
+We've left out the traditional notation for the hump and sigmoid because there isn't a standard one. We will denote them as $\dnorm()$ and $\pnorm()$. 
 
-We've left out the traditional notation for the hump and sigmoid because there isn't a standard one. Surprisingly, there is no specific name in R for the Power law or Straight-Line functions, but it's easy to implement them when needed using the code above.
+The constant function might as well be written $1$ or `1`. But in use in modeling, the constant is generally multiplied by some quantity, and tradition is for the $1$ to disappear. For instance, a straight-line function $3 x + 7$ is three times the proportional function plus seven times the constant function. But the $1$ does not appear explicitly. 
 
-You noticed that the section heading is "The naked modeling functions." We mean "naked" in a metaphorical sense, and chose the metaphor to make it easy to remember. Think of this list of seven functions as the celebrities of the world of calculus. Unlike human celebrities who appear and wane over the years, and marry and divorce each other frequently, these celebrities have been with us for generations and maintain intimate connections with one another that reflect the nature of mathematics rather than the fads and fancies of celebrities. (Mastering calculus is largely a matter of becoming familiar with the mathematical connections. You'll see these in due time.)
+You noticed that the section heading is "The naked modeling functions." We mean "naked" in a metaphorical sense, and chose the metaphor to make it easy to remember. Think of this list of nine functions as the celebrities of the world of calculus. Unlike human celebrities who appear and wane over the years, and marry and divorce each other frequently, these celebrities have been with us for generations and maintain intimate connections with one another that reflect the nature of mathematics rather than the fads and fancies of celebrities. (Mastering calculus is largely a matter of becoming familiar with the mathematical connections. You'll see these in due time.)
 
 These (basic) celebrity functions appear in many mathematical settings, just as a human celebrity strives to maintain a public image. The human celebrity is a human organism and that organism is naturally naked. In public appearance, however, the celebrity always is clothed in one way or another. (OK ... Rarely some of them appear unclothed and the same is true in mathematics.) In other words, in order to interact with the world at large, the celebrities need attire. `r mark(330)`
 
 Similarly, the mathematical functions that appear in real-world applications---as opposed to most math textbooks---always wear clothes, they are adorned with what we call ***parameters***. Parameters help them deal with the units and dimension of quantities. And just as there are standard elements of clothing: shirt, skirt, trousers, ... there are standard ways of clothing the naked modeling function. The process of decorating basic modeling functions is called the ***parameterization*** of the function, and there are often multiple ways of paremeterizing the same function.
 
 Once we dress the naked functions---that is, *parameterize* them---they will become the superheroes of calculus. We'll call this league of superheroes the ***basic modeling functions***..
-
-::: {.forinstructor}
-To be consistent, $mx + b$ is not really naked. The naked equivalent is simply $x$. Almost always, the way we will clothe functions is to replace the naked $x$ with $mx + b$
-:::
 
 ##  Function shapes
 
@@ -106,7 +80,8 @@ slice_plot(dnorm(x) ~ x, domain(x=c(-3,3))) %>%
 slice_plot(pnorm(x) ~ x, domain(x=c(-3,3))) %>%
   gf_labs(title="Sigmoid")
 ```
-I didn't include a graph of the straight-line function, since you already know what that looks like. Instead, I'll plot two more basic functions, the ***identity function*** and the ***constant function***. As you'll see later, every straight-line function is a "linear combination" of these two.
+
+The ***identity function*** and the ***constant function*** have extremely simple shapes. Note that the graph of constant function is not just any line, but a line with zero slope. 
 
 ```{r echo=FALSE, out.width="50%", fig.show="hold"}
 dom <- domain(x=c(-1.25, 1.25))
@@ -121,11 +96,7 @@ It's tempting to deny that the constant function is a function. After all, the o
 
 ## The power-law family
 
-::: {.todo}
-Update this to reference the square and reciprocal naked modeling functions.
-:::
-
-The power-law "function" is really a set of differently shaped functions. We lump them together under the name "power-law" because they are strongly related, especially when it comes to the calculus operations you will be learning to use. `r mark(350)`
+Three of the naked modeling functions---$1/x$, $x$, $x^2$---belong to a infinite family called the ***power-law functions***.  Some other examples, $x^3, x^4, \ldots$ as well as $x^{1/2}$ (also written $\sqrt{x}$), $x^{1.36}$, and so on. All of these can be written $x^p$, where $p$ is a number. `r mark(350)`
 
 Even within the power-law family, it's helpful to consider different but overlapping groups:
 
