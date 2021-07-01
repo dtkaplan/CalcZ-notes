@@ -4,10 +4,12 @@ Consider this table of **population** versus **year**, which records the overall
 
 ```{r pop-table, echo=FALSE, message=FALSE, warning=FALSE, fig.cap="US Population as counted by the US Census Bureau: 1790-2020"}
 USPop <- readr::read_csv("www/census-totals.csv")
-DT::datatable(USPop %>% mutate(population=prettyNum(population, big.mark=",")))
+DT::datatable(USPop %>% mutate(population=prettyNum(population, big.mark=",")) %>% select(-growth_rate))
 USPop <- USPop %>% 
   mutate(population = population/1e6)
 ```
+
+`r mark(population)`
 
 These are ***discrete-time*** data, but nobody would dispute that the population is a continuous function of time and that we are entitled to graph it as in Figure \@ref(fig:pop-graph).
 
@@ -22,7 +24,7 @@ gf_point(population ~ year, data = USPop) %>%
   gf_labs(y="Population (millions)") %>%
   gf_lims(x = c(1790, 2100), y=c(0,500))
 ```
-Many of the student readers of this book will have children who will be about 70 years old in the year 2100. Use Figure \@ref(fig:pop-growth) to make a prediction of the population in 2100.
+Many of the student readers of this book will have children who will be about 70 years old in the year 2100. Use Figure \@ref(fig:pop-growth) to make a prediction of the population in 2100. 
 
 From the graph itself, you might just sketch out what you think is the trend. Or, more formally, and based on the ideas introduced in Block 1, you might seek an exponential or power-law function, fit it to the data, and extrapolate out to year 2100. The next figure does exactly that, but you'll have to click on "Show model prediction" to see the results.
 
@@ -96,7 +98,7 @@ To make this principle even easier to remember, let's restate it using the mathe
 The mathematical notation for differentiation is simple: $\partial_t f(t)$. For anti-differentiation the notation is typographically very different. The anti-derivative of a function $f(t)$ is written:
 
 $$\huge \color{blue}{\int} f(\color{blue}{t}) \color{blue}{dt}$$
-The math notation consists of several components, each of which has something to say. You'll get familiar with these components as we move along. 
+The math notation consists of several components, each of which has something to say. The components colored blue are part of the general notation. You can change the name of the input variable from $\color{blue}{t}$ to whatever you like, but you'll have to change the $\color{blue}{dt}$ accordingly. 
 
 The R/mosaic notation for the anti-derivative has exactly the same format as the derivative: 
 
@@ -134,7 +136,7 @@ gf_segment(y + yend ~ x + xend, data = Segs,
            color=~slope,size=1.3, lineend="round") %>%
   gf_point(0 ~ start, size=1, color="green") %>%
   gf_text(0.25 ~ start, label=~num, size=3) %>%
-    gf_labs(title="sin(x) slope-function visualization") %>%
+    gf_labs(title="sin(x) slope-function visualization. Segment (b) moved.") %>%
     gf_lims(y=c(-1,1))
 ```
 
@@ -160,7 +162,7 @@ gf_segment(yf + yfend ~ x + xend, data = Segs_orig,
   gf_text(0.25 ~ start, label=~num, size=3) %>%
     gf_lims(y=c(-1,1))
 ```
-This process reconstructs the ***shape*** of $f(x)$ from $\partial_x f(x)$. But there is still something missing. We never touched segment (a). Its vertical location was arbitrary. So we have to qualify our claim to have reconstructed $f(x)$. What we've reconstructed is some function $\widehat{f}(x)$ whose derivative is $\partial_x f(x)$. There are other such functions; any function $\widehat{f}(x) + C$ can make a legitimate claim to being the anti-derivative of $\partial_t f(x)$.  
+This process reconstructs the ***shape*** of $f(x)$ from $\partial_x f(x)$. But there is still something missing. We never touched segment (a). Its vertical location was arbitrary. So we have to qualify our claim to have reconstructed $f(x)$. What we've reconstructed is some function $\widehat{f}(x)$ whose derivative is $\partial_x f(x)$. There are other such functions; any function $\widehat{f}(x) + C$ can make a legitimate claim to being the anti-derivative of $\partial_t f(x)$.  We'll return to $C$ in later chapters, but for now we'll just name it: the ***constant of integration***.
 
 ::: {.workedexample}
 In the population example that started this chapter, we constructed a model for $\partial_t f(t)$, where $f(t) = \ln(P(t))$. We can plot $\partial_t f(t)$ using an ordinary graph as we did in Figure \@ref(fig:pop-growth), but let's use the slope-function representation instead.
@@ -187,7 +189,7 @@ The accumulated annual growth graph shows that by around 2075, the accumulated g
 
 :::
 
-::: {.fortheinstructor}
+::: {.forinstructor}
 You may wonder why I'm introducing anti-differentiation with the "slope-function visualization" rather than the "area under a curve." One reason is that the slope-function visualization is closer to the logic of Euler's method, so in addition to showing how differentiation can be undone, we get a free introduction to Euler.  The other reasons are more fundamental to pedagogy and the challenges students have relating differentiation and anti-differentiation when presented as slope-and-area. I'll start with some history ...
 
 Pyrrhus was a Greek king who invaded Italy in 280 B.C. and fought the Romans. His first battle, at Heraclea, was a famous victory, as was his second battle a year later at Asculum. History records Pyrrhus saying, after his second victory, “If we are victorious in one more battle with the Romans, we shall be utterly ruined.” The victories were so costly that the army could not be sustained.
@@ -256,7 +258,7 @@ state_objective("Int-5c", "Know common scientific application relationships betw
 ```
 :::
 
-Include the mortgage problem
+
 
 
     

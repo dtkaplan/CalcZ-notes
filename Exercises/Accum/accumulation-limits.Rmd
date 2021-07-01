@@ -1,20 +1,11 @@
 ---
-title: "Accumulation and limits of integration"
-date: "MMM DD YYYY"
-output: learnr::tutorial
-runtime: shiny_prerendered
+id: "accumulation-limits.Rmd"
 ---
 
 ```{r include=FALSE}
-etude2::load_learnr_safely()
-library(gradethis)
 library(etude2)
-library(shiny)
 library(mosaic)
 library(mosaicCalc)
-knitr::opts_chunk$set(echo = FALSE)
-learnr::tutorial_options(exercise.timelimit = 60,
-                 exercise.checker = gradethis::grade_learnr)
 ```
 
 
@@ -53,7 +44,7 @@ Slabs <- tibble::tibble(
 Assume that the "area" of each small box on the graph is the product of 1 Watt $\times$ 1 second.
 
 ```{r alima1}
-etude2::etudeQ(
+askMC(
   "What is $$\\int_1^2 f(t) dt\\ \\mbox{?}$$ (Choose the closest answer. The units are in Watt-seconds.)",
   -3.2, "-1.4"="Count the boxes in the interval", "0"="Count the boxes in the interval", "2.5"="Count the boxes in the interval", "3.3" = "That's a pretty good count of boxes, but still not the right answer.", 6.1, right_one = -3.2,
   random_answer_order = FALSE
@@ -65,7 +56,7 @@ etude2::etudeQ(
 $$\mbox{Let}\ \ A = \int_1^3 f(x) dx\ \ \ \mbox{and}\ \ \ B = \int_2^4 f(x) dx$$
 
 ```{r alim1}
-etude2::etudeQ(
+askMC(
   "Which is bigger, A or B?",
   "A", "B", "They are the same size", right_one = "B",
   random_answer_order = FALSE
@@ -75,7 +66,7 @@ etude2::etudeQ(
 $$\mbox{Let}\ \ A = \int_3^1 f(t) dt\ \ \ \mbox{and}\ \ \ B = \int_4^2 f(t) dt$$
 
 ```{r alim2}
-etude2::etudeQ(
+askMC(
   "Which is bigger, A or B?",
   "A", "B", "They are the same size", right_one = "A",
   random_answer_order = FALSE
@@ -85,7 +76,7 @@ etude2::etudeQ(
 Consider the function $$g(x) \equiv \int_4^x f(t) dt$$ for the next three questions
 
 ```{r alim3}
-etude2::etudeQ(
+askMC(
   "Which is bigger, $g(8)$ or $g(9)$?",
   "+$g(8)$+", "$g(9)$"="the interval from 8 to 9 decreases the total size", "They are the same size", 
   "Trick question! There can be no such function $g(x)$ since $f()$ is a function of $t$" = "Try plugging in $x=8$ on the right side of the definition and see if it makes sense."
@@ -93,14 +84,14 @@ etude2::etudeQ(
 ```
 
 ```{r alim4}
-etude2::etudeQ(
+askMC(
   "Is $g(2.5)$ positive or negative?",
   "positive" = "The function being integrated, $f(t)$, is positive over the interval $2.5 \\leq t \\leq 4$. Since the lower limit $t=4$ is larger than the upper limit $t=2.5$, the $\\int_4^{2.5} f(t)dt$ is negative.", "zero", "+negative+"
 )
 ```
 
 ```{r alim5}
-etude2::etudeQ(
+askMC(
   "At what value of $x$ is $g(x) = 0$?",
   "2"="There is still area under the curve for this interval", "3"="There is still area under the curve for this interval", "4" = "When the two limits of integration are the same, the definite integral is *always* zero.", "5"="There is still area under the curve for this interval", "6"="There is still area under the curve for this interval", "7"="There is still area under the curve for this interval", "8"="There is still area under the curve for this interval", right_one = 4,
   random_answer_order = FALSE
@@ -110,7 +101,7 @@ etude2::etudeQ(
 $$\mbox{Let}\ \ h(x) \equiv \int_0^x f(t) dt$$
 
 ```{r alim6}
-etude2::etudeQ(
+askMC(
   "At what value of $x$ is $h(x) \\approx 0$?",
   "1"="consider when positive and negative areas are equal in magnitude.", "2"="consider when positive and negative areas are equal in magnitude.", "3"="consider when positive and negative areas are equal in magnitude.", 4, "5"="consider when positive and negative areas are equal in magnitude.", "6"="consider when positive and negative areas are equal in magnitude.", right_one = 4,
   random_answer_order = FALSE
@@ -120,7 +111,7 @@ etude2::etudeQ(
 $\partial_x h(x)$ is a function. When we write $\partial_x h(3)$ we mean to evaluate that function for an input value of $x=3$.
 
 ```{r alim7}
-etude2::etudeQ(
+askMC(
   "Which is bigger, $\\partial_x h(3)$ or $\\partial_x h(4)$?",
   "$\\partial_x h(3)$"="remember $f(t) is essentially the derivative of $h(x)$ with respect to x.","+$\\partial_x h(4)$+", "Can't tell."
 )
@@ -142,7 +133,7 @@ slice_plot(abs(F(4) - F(x)) ~ x, domain(x=c(0:10))) %>%
 ```
 
 ```{r alim8}
-etude2::etudeQ(
+askMC(
   "Which of the graphs shows $y(x)$?",
   "A", "B"="Should it increase or decrease after the point crosses the x-axis?", "C"="Should it increase or decrease after the point crosses the x-axis?", "D"="When should the graph equal 0?", right_one = "A",
   random_answer_order = FALSE

@@ -1,19 +1,9 @@
 ---
-title: "Heat engines"
+id: "heat-engine"
 author: "Daniel Kaplan"
-output: learnr::tutorial
-runtime: shiny_prerendered
 ---
 
 ```{r include=FALSE}
-etude2::load_learnr_safely()
-library(gradethis)
-knitr::opts_chunk$set(echo = FALSE)
-learnr::tutorial_options(exercise.timelimit = 60,
-                 exercise.checker = gradethis::grade_learnr)
-```
-
-```{r heat-engine-setup, context="setup", include=FALSE}
 library("mosaic")
 library("mosaicCalc")
 ```
@@ -30,7 +20,7 @@ $$R = 8.314  \mbox{J}/(\mbox{K}\ \mbox{mol})$$
 The "mol" cancels out the dimension of $n$, the $K$ cancels out the dimension of $T$, leaving us with $PV$ having the dimension of energy (Joules). The temperature $T$ is measured in degrees Kelvin, which is just like Celsius but moving the location of 0 from freezing to ... well ... the hypothetical temperature when $PV=0$, which can be estimated by extrapolating measurements of $PV(T)$ (that is, $PV$ as a function of $T$) to the $T$ where $PV = 0$. 
 
 ```{r PV-units, echo=FALSE}
-etude2::etudeQ(
+askMC(
   "It's convenient to have specific units in mind for pressure and volume. Since $P V$ gives energy, let's arrange $P$ and $V$ to have units such that when multiplied the result is Joules. What is the expression of the dimension Joule in terms of the SI system, that is, time in seconds, length in meters, and mass in kg? Hint: use the above paragraph and knowing that the units for energy are consistent for potential, kinetic, or other types of energy.",
   '+$kg  m^2 s^{-2}$+',
   "$kg m / s$" = "This is the units of momentum.",
@@ -40,7 +30,7 @@ etude2::etudeQ(
 ```
 
 ```{r PV_units2, echo=FALSE}
-etude2::etudeQ(
+askMC(
   "In the SI units system, volume has units of cubic meters: $m^3$. What are the SI units for pressure in terms of kg, m, and s? The units of your answer to this question times the units for pressure should be equivilent to your answer from the previous question.",
   "+$kg m^{-1} s^{-2}$+",
   "$kg m^1 s^{-2}$" = "This is the units of force",
@@ -81,7 +71,7 @@ If you start in a high-volume, low-pressure state and push the piston to move to
 
 The "area" of each little box in the graph, that is, pressure times volume, 
 ```{r PV3, echo=FALSE}
-etude2::etudeQ(
+askMC(
   "How much energy (in Joules) corresponds to one small rectangle of area in the graph?",
   "500 J"="pick a gray box, what are its dimensions?",
   "+625 J+",
@@ -92,7 +82,7 @@ etude2::etudeQ(
 ```
 
 ```{r PV4, echo=FALSE}
-etude2::etudeQ(
+askMC(
   "By counting rectangles in the graph, estimate how much energy needs to be put into the machine when the  volume changes from 7.5 m$^3$ to 2.5 m$^3$ at a temperature of 300 K?",
   "1000 J",
   "+3000 J+",
@@ -105,7 +95,7 @@ etude2::etudeQ(
 Now that you have compressed the gas in the cylinder, by doing work on it, let's heat up the machine to 1200K.
 
 ```{r PV5, echo=FALSE}
-etude2::etudeQ(
+askMC(
   "What will be the pressure of the gas when the volume of the machine is 2.5 m$^3$ at temperature 1200 K? (The units will be kg m$^{-1} $s^{-2}$)",
   "1000",
   "2000",
@@ -116,7 +106,7 @@ etude2::etudeQ(
 ```
 
 ```{r PV6, echo=FALSE}
-etude2::etudeQ(
+askMC(
   "Starting with the machine at 1200K and a volume of 2.5 m$^3$, how much energy will the machine transfer to you when it expands to 7.5 m$^3$? Estimate this by counting squares in the graph.",
   "about 5000 J",
   "+about 10,000 J+",

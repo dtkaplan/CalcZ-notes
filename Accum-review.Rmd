@@ -1,4 +1,4 @@
-## Review of anti-differentiation methods {#antidiff-review}
+# Review of anti-differentiation methods {#antidiff-review}
 
 
 Whenever you undertake to study a field, it's helpful to be able to figure out when you have already learned enough and can apply what you know with confidence to solve the analysis and design tasks you encounter. In academia, we sidestep the heart of this important question and define "enough" in procedural terms: "enough" is when the semester has ended and you have passed the final exam. For academic institutions, especially ones based on the liberal arts, there's little point in trying to be more definitive. After all, the "analysis and design tasks you [will] encounter" are as yet unknown, even though we can make reasonable guesses what many of them will be.
@@ -49,56 +49,79 @@ We're going to use `antiD()` in this daily digital simply because we want to foc
 **Example**: Find the numerical value of this definite integral.
 
 $$\int^{7}_{3} e^{x^{2}} dx$$
-**Example Solution in R**: 
-`F<-antiD(exp(x^2)~x)`
-`F(7)-F(3)`
+<details>
+<summary>Example Solution in R</summary>
+```{r}
+F <- antiD(exp(x^2)~x)
+F(7) - F(3)
+```
+</details>
 
-**Problem 1**: Find the numerical value of this definite integral.
+
+-----
+
+<details>
+<summary>`r ex.mark(15.3, ACD4Z)`</summary>
+Using whatever computational tool you like, find the numerical value of this definite integral.
 
 $$\int^{5}_{2} x^{1.5} dx$$
 
 Recall that for a definite integral of function $f()$, you find the anti-derivative $F(x) \equiv \int f(x) dx$ and evaluate it at the limits of integration. Here that will be $F(5) - F(2)$.
+</details>
 
+Trying to get to Exercise \@ref(exr:ex-label).
 
-```{r tbf1, exercise=TRUE, exercise.cap="Sandbox for Problems", eval=FALSE}
-
-```
-
+<details>
+<summary>Solution</summary>
 ```{r tbf1-solution}
 f <- antiD( x^1.5 ~ x )
 f(5) - f(2)
 ```
+</details>
+</details>
 
 
+<details>
+<summary>`r ex.mark(15.4, "H2eu2")`</summary>
 ```{r tbf-a, echo=FALSE, results="markup"}
-etude2::etudeQ(
-  "**Problem 1**: What's the numerical value of $$\\int_2^5 x^{1.5} dx  ?$$",
+askMC(
+  "What's the numerical value of $$\\int_2^5 x^{1.5} dx  ?$$",
   0.58,6.32,"+20.10+",27.29,53.60,107.9,1486.8,
   random_answer_order = FALSE,
   id = knitr::opts_current$get()$label
 )
 ```
+</details>
 
-
+<details>
+<summary>`r ex.mark(15.5, "H2l32")`</summary>
 ```{r tbf-b, echo=FALSE, results="markup"}
-etude2::etudeQ(
-  "**Problem 2**: What's the numerical value of $$\\int^{10}_{0} \\sin( x^2 ) dx ?$$",
+askMC(
+  "What's the numerical value of $$\\int^{10}_{0} \\sin( x^2 ) dx ?$$",
   "+0.58+",6.32,20.10,27.29,53.60,107.9,1486.8,
   random_answer_order = FALSE,
   id = knitr::opts_current$get()$label
 )
 ```
+</details>
 
 
+```{exercise}
+```
 
-
-
+<details>
+<summary>`r ex.mark(15.6, "H2l33")`</summary>
 ```{r tbf-c, echo=FALSE, results="markup"}
-etude2::etudeQ(
-  "**Problem 3**: What's the numerical value of $$\\int^{4}_{1} e^{2x} dx ?$$",
+askMC(
+  "What's the numerical value of $$\\int^{4}_{1} e^{2x} dx ?$$",
   0.58,6.32,20.10,27.29,53.60,107.9,"+1486.8+",
   random_answer_order = FALSE,
   id = knitr::opts_current$get()$label
 )
 ```
+</details>
 
+
+::: {.todo}
+Include the mortgage problem
+:::

@@ -32,7 +32,7 @@ The function `windspeed(t)` records wind speed at the site of a wind-turbine far
 
 Your task, find the *total energy* generated over the 24-hour period by the turbine. Reminder: energy $E$ is electric power multiplied by time. Or, more usefully for this problem, the increment energy $dE$ generated at time $t$ is the product of power at time $t$ multiplied by the increment of time $dt$, that is, $dE = p(t) dt$. Consequently, $$E = \int_\mbox{morning}^\mbox{night} p(t) dt$$ where "morning" should really be 00:00 h and night 24:00 h on the day in question. 
 
-We don't have an algebraic formula for `windspeed(t)` even though it is a function. You can use `antiD()` to find the anti-derivative of the electric power function. See the section on "Computing and anti-differentiation" further on in this document.
+We don't have an algebraic formula for `windspeed(t)` even though it is a function. You can use `antiD()` to find the anti-derivative of the electric power function. 
 
 The answer you compute should be saved to the name `result`. The units will be in kWh -- kilowatt hours.
 
@@ -45,7 +45,7 @@ slice_plot(windspeed(t) ~ t, domain(t=c(0, 24)))
 # result # this prints out the result
 ```
 
-```{r wind2-check, echo=FALSE}
+```{r wind2-check, echo=FALSE, eval=FALSE}
 gradethis::grade_result(
   #fail_if( ~ ! "result" %in% names(.env), message="Your result should be stored under the name `result`."),
   fail_if( ~ ! is.numeric(.env$result), message = "Your result should be a number."),
@@ -57,7 +57,7 @@ gradethis::grade_result(
 ```
 
 ```{r wind3, echo=FALSE}
-etude2::etudeQ(
+askMC(
   "Wind turbines of this type have a maximum power rating of 5000 kilowatts. Was this rating exceeded at any point during the day?",
   "The maximum instantaneous power was about 3500 kilowatts",
   "The maximum instantaneous power was about 1100 kilowatts",
@@ -69,7 +69,7 @@ etude2::etudeQ(
 ```
 
 ```{r wind4, echo=FALSE}
-etude2::etudeQ(
+askMC(
   "At the maximum power rating of 5000 kilowatts, what's the theoretical maximum amount of energy produced by the turbine over a 24-hour day?",
   "+5000 * 24 kilowatt-hours+",
   "5000 / 24 kilowatt-hours" = "The units, kilowatt hours, should remind you that power is multiplied by time.",
@@ -79,7 +79,7 @@ etude2::etudeQ(
 ```
 
 ```{r wind5, echo=FALSE}
-etude2::etudeQ(
+askMC(
   "About what fraction of the theoretical maximum energy did the wind turbine generate over the 24-hour period?",
   "About 2.5%",
   "+About 10%+", 
@@ -91,7 +91,7 @@ etude2::etudeQ(
 ```
 
 ```{r wind6, echo=FALSE}
-etude2::etudeQ(
+askMC(
   "A peak time for residential energy consumption is from 7 am to 9 am. The price at which you can sell electrical energy to the grid operator is $0.09 per kilowatt-hour. At that price, how much would the energy produced from 7-9 am be worth?",
   "About 20 cents." = "That would be the answer if the turbine generated only 1 kilowatt of power during that period.",
   "About $150", 
@@ -102,7 +102,7 @@ etude2::etudeQ(
 ```
 
 ```{r wind7, echo=FALSE}
-etude2::etudeQ(
+askMC(
   "What's the average wind speed over the 24-hour period?",
   "+About 5 mph+",
   "About 7 mph",
@@ -111,7 +111,7 @@ etude2::etudeQ(
 ```
 
 ```{r wind8, echo=FALSE}
-etude2::etudeQ(
+askMC(
   "Wind speed fluctuates a lot, but imagine that the wind blew steadily at the average wind speed from the previous problem. How much energy would be generated over the 24-hour period?",
   "+0 kilowatt hours+" = "That wind wouldn't be strong enough to turn the turbine.",
   "500 kilowatt hours",

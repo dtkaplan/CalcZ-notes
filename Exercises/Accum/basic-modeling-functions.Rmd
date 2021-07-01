@@ -1,16 +1,11 @@
 ---
-title: "Basic modeling functions"
+id: "Basic modeling functions"
 author: "Daniel Kaplan"
-output: learnr::tutorial
-runtime: shiny_prerendered
 ---
 
 ```{r include=FALSE}
-library(gradethis)
 library(etude2)
 knitr::opts_chunk$set(echo = FALSE)
-learnr::tutorial_options(exercise.timelimit = 60,
-                 exercise.checker = gradethis::grade_learnr)
 ```
 
 
@@ -57,7 +52,7 @@ Here are some examples of functions that are *not* basic modeling functions:
 We'll encounter such functions, and they can be important in specific situations. But the basic modeling functions are so widely encountered that learning their anti-derivatives by heart will pay off throughout your studies in numerous fields.
 
 ```{r TF1}
-etude2::etudeQ(
+askMC(
   "Is $e^{-0.3 t}$ a basic modeling function with a linear interior function?",
   "+Yes+" = "The linear interior function has general form $ax + b$. Here, $b=0$ and $a= -0.3$.", 
   "No",
@@ -66,7 +61,7 @@ etude2::etudeQ(
 ```
 
 ```{r TF2}
-etude2::etudeQ(
+askMC(
   "Is $2 x \\sin(x/4)$ a basic modeling function with a linear interior function?",
   "Yes" = "This is a *product* of two functions: $x$ and $\\sin(x/4)$. Each of those is a basic modeling function with a linear interior function, but the product of the two is an entirely different family of functions.", 
   "+No+" = "The *product* of two basic modeling functions, here $x$ and $\\sin(x/4)$, is generally *not* a basic modeling function. (Exceptions: A power law times a power law is still a power-law function. An exponential times an exponential is still an exponential function.)",
@@ -75,7 +70,7 @@ etude2::etudeQ(
 ```
 
 ```{r TF3}
-etude2::etudeQ(
+askMC(
   "Is $\\sqrt{x}$ a basic modeling function with a linear interior function?",
   "+Yes+" = "$\\sqrt{x}$ is a power-law function, which might equally well be written as $(x)^{1/2}$. The interior function here is very simple: $x$. That is indeed of the linear form $ax +b$, with $a=1$ and $b=0$", 
   "No",
