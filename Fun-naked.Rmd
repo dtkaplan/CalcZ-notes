@@ -1,19 +1,36 @@
-# Naked modeling functions {#naked-intro}
+# Modeling functions {#naked-intro}
 
-Experience allows us to make a short list of mathematical functions that provide a large majority of the tools for representing the real world as a mathematical object. Think of this list as different actors, each of whom is skilled in portraying an archetypical character: hero, outlaw, lover, fool, comic. A play brings together different characters, costumes them, builds on dialog.`r mark(300)`
+When mathematics is used to understand or analyze or predict a real world situation, the pattern of work is often in three stages: `r mark(200)`
 
-A mathematical modeler is a kind of playwright. She combines mathematical character types to tell a story about relationships. But there is only a handful of archetypical mathematical functions, the analog of the character actors in drama and comedy. We are calling these the ***naked modeling functions***. In writing a mathematical model, you will clothe the actors to suit the era and location and assemble them together in harmony or discord.
+1. Translate the real-world situation into a mathematical form. This translation is called ***mathematical modeling***. For instance, Newton was trying to make sense of the motion of planets in light of his novel theory that gravity is a universal force of attraction between masses, rather than something special to Earth. He modeled force as a quantity that can be measured, simplified the planets to mere masses (another measurable quantity), and supposed that position and motion were related in a particular way: velocity being the rate of change with respect to time of position, and acceleration being the rate of change of velocity with respect to time. His theory of the motion of planets was based on two fundamental mathematical models: First
+$$F = ma\ \ \ \text{(Newton's Second Law)}$$ which relates force, mass, and acceleration. Second, the  
+$$F = \frac{G m_1 m_2}{d^2}\ \ \ \text{(Law of Universal Gravitation)}$$
+(sometimes called the inverse square law), which relates the mass of two objects ($m_1$ and $m_2$), and the distance between them to the force of gravitation. (We'll get to the purpose of the $G$ in Chapter \@ref(dimensions).)
 
-## The list
+**In this book** the objective of the modeling phase will almost always be choose or construct one or more  ***function***s that represent the relationships involved in the system being studied. You'll learn several strategies for turning what you know about the system into appropriate functions. And you'll learn some standard ***frameworks*** for organizing your ideas to help you determine how functions will be related, for instance Newton's framework relating position, velocity, and acceleration as rates of change of one another. `r mark(210)`
 
-Here is a list of our basic, unadorned functions, the naked model function,
+2. Do mathematical work on the model to shape it into a form that can directly answer the modeler's question of interest. For instance, Newton knew from previous astronomical observations and Kepler's theorizing that planets' orbits are elliptical in shape. He needed to do some work on his two models in order to deduce the orbital shapes consistent with his Second Law and Universal Gravitation. 
+
+**In this book** you'll learn to use several key tools for doing mathematical work on functions. We might as well name them now: ***differentiation***, ***anti-differentiation***, ***optimization***, and ***zero-finding***. Computers make each tool easy to use. Your job is to learn enough about them that you'll know when to use each tool and why.
+
+3. Evaluate the model to figure out the extent to which to rely on the answer it gives and to see if the consequences of the model are consistent with what happens in the real world. The evaluation often leads to a re-assessment of the model and a return to stage 1 to improve things. The resulting loop is called the ***modeling cycle***. For example, it seems likely that Newton did not start out knowing that gravitation follows an inverse square law. Perhaps he went through several ***modeling cycles*** until he found the form that was consistent with Kepler's elliptical orbits.
+
+**In this book** you'll learn techniques for comparing models to data and for making predictions from models that can be compared to observations. You'll also see examples of when the evaluation of a function suggests revisions that might improve the model.
+
+## A list of functions
+
+Experience allows us to make a short list of simple mathematical functions that provide a large majority of the tools for representing the real world as a mathematical object. Think of the items in this list as different actors, each of whom is skilled in portraying an archetypical character: hero, outlaw, lover, fool, comic. A play brings together different characters, costumes them, builds on dialog.`r mark(230)`
+
+A mathematical modeler is a kind of playwright. She combines mathematical character types to tell a story about relationships. But there is only a handful of archetypal mathematical functions, the analog of the character actors in drama and comedy. We are calling these the ***naked modeling functions***. In writing a mathematical model, you will clothe the actors to suit the era and location and assemble them together in harmony or discord.
+
+Here is a list of our basic, unadorned functions, the naked model functions,
 
 ```{r child="naked-list.Rmd"}
 ```
      
 
 
-We've written these here in a traditional formula notation so that you can see the connections to the math you've already studied. We've used $x$ to stand for the single input to these functions just because that's traditional.  `r mark(310)`
+We've written these here in a traditional formula notation so that you can see the connections to the math you've already studied. We've used $x$ to stand for the single input to these functions just because that's traditional.  `r mark(240)`
 
 It's good to refer to the functions by their word name---exponential, logarithm, square, sinusoid, reciprocal, etc. This helps to avoid the source of common confusion. For example, the mathematical expressions $e^x$ and $x^e$ are easily confused, but they are notation for ***utterly different patterns***. You won't so easily mistake "exponential" and "power-law."
 
@@ -28,7 +45,7 @@ Over the next several chapters, we will introduce several features of functions.
 - vertical asymptotes
 - periodicity
 
-By the end of Block 1, you should be able to list all nine basic modeling functions and say which of these features are relevant to each. `r mark(320)`
+By the end of Block 1, you should be able to list all nine basic modeling functions and say which of these features are relevant to each. `r mark(250)`
 
 :::
 
@@ -55,15 +72,33 @@ The constant function might as well be written $1$ or `1`. But in use in modelin
 
 You noticed that the section heading is "The naked modeling functions." We mean "naked" in a metaphorical sense, and chose the metaphor to make it easy to remember. Think of this list of nine functions as the celebrities of the world of calculus. Unlike human celebrities who appear and wane over the years, and marry and divorce each other frequently, these celebrities have been with us for generations and maintain intimate connections with one another that reflect the nature of mathematics rather than the fads and fancies of celebrities. (Mastering calculus is largely a matter of becoming familiar with the mathematical connections. You'll see these in due time.)
 
-These (basic) celebrity functions appear in many mathematical settings, just as a human celebrity strives to maintain a public image. The human celebrity is a human organism and that organism is naturally naked. In public appearance, however, the celebrity always is clothed in one way or another. (OK ... Rarely some of them appear unclothed and the same is true in mathematics.) In other words, in order to interact with the world at large, the celebrities need attire. `r mark(330)`
+These (basic) celebrity functions appear in many mathematical settings, just as a human celebrity strives to maintain a public image. The human celebrity is a human organism and that organism is naturally naked. In public appearance, however, the celebrity always is clothed in one way or another. (OK ... Rarely some of them appear unclothed and the same is true in mathematics.) In other words, in order to interact with the world at large, the celebrities need attire. `r mark(260)`
 
 Similarly, the mathematical functions that appear in real-world applications---as opposed to most math textbooks---always wear clothes, they are adorned with what we call ***parameters***. Parameters help them deal with the units and dimension of quantities. And just as there are standard elements of clothing: shirt, skirt, trousers, ... there are standard ways of clothing the naked modeling function. The process of decorating basic modeling functions is called the ***parameterization*** of the function, and there are often multiple ways of paremeterizing the same function.
 
-Once we dress the naked functions---that is, *parameterize* them---they will become the superheroes of calculus. We'll call this league of superheroes the ***basic modeling functions***..
+Once we dress the naked functions---that is, *parameterize* them---they will become the superheroes of calculus. We'll call this league of superheroes the ***basic modeling functions***.
 
-##  Function shapes
+## Constructing functions
 
-You are going to be building models by selecting an appropriate function or by putting functions together in various ways. This might remind you of Lego blocks. As you know, these come in different shapes: $6\times 2$, $4\times 2$, $2\times 2$, and so on. Similarly, each of the naked modeling function has a distinctively shaped graph. Knowing the shapes by name will help you when you need to build a model. `r mark(340)`
+Often, modeling involves building a complicated function out of the simple shapes provided by the naked modeling functions. This is not yet the time to say much about this, but we do want to show you what such a construction looks like in both a traditional style of notation and the style used for programming computers. As you'll see later, to make complicated functions we generally combine simpler functions in one or more of three different ways: ***linear combinations***, ***products***, and ***composition***. `r mark(270)`
+
+For instance, a linear combination of simple functions called "monomials" can look like this in traditional notation:
+$$g(x) \equiv 2 + 3 x - 7x^2$$
+and like this in the R/mosaic computer notation we will be using:
+```{r}
+g <- makeFun(2 + 3*x - 7*x^2 ~ x)
+```
+
+Functions constructed as a product of simple functions can look like this in tradition notation:
+$$h(t) \equiv \sin(t) e^{-t}$$
+and like this in computer notation:
+```{r}
+h <- makeFun(sin(t)*exp(-t) ~ t)
+```
+
+## Function shapes
+
+You are going to be building models by selecting an appropriate function or by putting functions together in various ways. This might remind you of Lego blocks. As you know, these come in different shapes: $6\times 2$, $4\times 2$, $2\times 2$, and so on. Similarly, each of the naked modeling function has a distinctively shaped graph. Knowing the shapes by name will help you when you need to build a model. `r mark(280)`
 
 
 ```{r echo=FALSE, out.width="50%", fig.show="hold", warning=FALSE}
@@ -96,7 +131,7 @@ It's tempting to deny that the constant function is a function. After all, the o
 
 ## The power-law family
 
-Three of the naked modeling functions---$1/x$, $x$, $x^2$---belong to a infinite family called the ***power-law functions***.  Some other examples, $x^3, x^4, \ldots$ as well as $x^{1/2}$ (also written $\sqrt{x}$), $x^{1.36}$, and so on. All of these can be written $x^p$, where $p$ is a number. `r mark(350)`
+Three of the naked modeling functions---$1/x$, $x$, $x^2$---belong to a infinite family called the ***power-law functions***.  Some other examples, $x^3, x^4, \ldots$ as well as $x^{1/2}$ (also written $\sqrt{x}$), $x^{1.36}$, and so on. All of these can be written $x^p$, where $p$ is a number. `r mark(290)`
 
 Even within the power-law family, it's helpful to consider different but overlapping groups:
 
@@ -153,11 +188,49 @@ slice_plot(x^pi ~ x, domain=dom, npts=500) %>%
   slice_plot(-x^pi ~ x, alpha=0)
 ```
 
+------
+
 <details>
 <summary>`r ex.mark(3.1, "H2eu2", fname="Fun/naked-descriptions.Rmd")` </summary>
 `r MC_counter$reset()` `r knitr::knit_child("Exercises/Fun/naked-descriptions.Rmd")`
 </details>
 
-::: {.todo}
-We need questions about asymptotes.
+ADD MORE PROBLEMS Draw graphs of the functions and identify important features. E.g. does log have a horizontal asymptote? A vertical asymptote?
+
+::: {.forinstructor}
+It would be a huge coincidence if one of the naked modeling functions was a match for a particular relationship, such as one shown in data. We'll need to dress the naked functions and combine them in various ways to capture a real-world relationship. `r mark(295)`
+
+A helpful demonstration for students can be to display some real-world data, ask which naked modeling function seems the best of the lot, and then ask students how they would shift or shrink that function to correspond better to the data.
+
+To start, here are the data relating pressure and volume of a gas at constant temperature s collected by Robert Boyle (1627-1691) that led him to formulate "Boyle's Law." The correct naked modeling function for these data is $\recip(x) \equiv 1/x$. This is plotted but it doesn't match the data. (Try scaling the function from $1/x$ to $1000/x$. Then home in on the correct value.)
+
+```{r}
+gf_point(pressure ~ volume, data = Boyle) %>%
+  slice_plot(1/volume ~ volume)
+```
+
+
+To illustrate, here's a graph of month-to-month utility data from a house in Minnesota plotted along with the naked modeling function $x$.
+
+```{r}
+gf_point(kwh ~ elecbill, data = Utilities) %>%
+  slice_plot(x ~ x, domain(x=c(0,140)))
+```
+
+Ask students why a straight-line pattern is appropriate for modeling these data and why $x$ isn't, on its own, a good model.
+
+Here is monthly use of natural gas (mainly for heating) versus average outdoor temperature for the month. We'll plot it next to an exponential function. 
+
+```{r out.width="50%", fig.show="hold"}
+gf_point(ccf ~ temp, data = Home_utilities) 
+slice_plot(exp(temp) ~ temp, domain(temp=c(0,80)))
+```
+Flipping the exponential left for right and scaling it would help:
+```{r}
+gf_point(ccf ~ temp, data = Home_utilities) %>%
+slice_plot(300*exp(-temp/20) ~ temp, domain(temp=c(0,80)))
+```
+Do the data suggest a function that has a horizontal asymptote for large temperature? If so, where is it and why?
+
 :::
+
