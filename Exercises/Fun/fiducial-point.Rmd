@@ -1,0 +1,140 @@
+---
+id: "fiducial-point"
+author: "Daniel Kaplan"
+---
+
+Recall that each ***basic modeling functions*** are constructed from the corresponding naked modeling functions by scaling the input.
+
+$$\text{naked modeling function}\ \ \underset{x\rightarrow a(x-x_0)}{\overset{\text{input scaling}}{\Large\Longrightarrow}} \ \ \text{basic modeling function}$$
+
+Recognizing the axis crossings (y is blue, x is red) and asymptotes (orange) for the naked modeling functions can help you figure out the parameters $a$ and $x_0$ in the input scaling $a(x-x_0)$ for the basic modeling functions. Here's a reference: 
+
+
+
+```{r echo=FALSE, warning=FALSE, out.width="50%", fig.show="hold"}
+dom1 <- list(x=c(-5,5))
+dom2 <- list(x=c(0.1,3))
+dom3 <- list(x=c(-2, 2))
+slice_plot(exp(x) ~ x, dom3) %>%
+  gf_point(1 ~ 0, color="purple", size=5, alpha = 0.1) %>%
+  gf_vline(xintercept = ~ 0, color="red") %>%
+  gf_hline(yintercept = ~ 1, color="blue") %>%
+  gf_refine(scale_y_continuous(breaks=c(0,1,2,4,6))) %>%
+  gf_segment(0 + 0 ~ 0 + (-2), color="orange", arrow=arrow(ends="last", type="closed")) %>%
+  slice_plot(exp(x) ~ x, dom3) %>%
+  gf_labs(title = "Naked exponential")
+slice_plot(sin(x) ~ x, dom1) %>%
+  gf_point(0 ~ 0, color="purple", size=5, alpha = 0.1) %>%
+  gf_point(0 ~ pi, color="purple", size=5, alpha = 0.1) %>%
+  gf_vline(xintercept = ~ 0, color="red") %>%
+  gf_vline(xintercept = ~ pi, color="red") %>%
+  gf_hline(yintercept = ~ 0, color="blue") %>%
+  gf_refine(scale_x_continuous(breaks = c(-pi, 0, pi), labels=c("-\u03c0", 0, "\u03c0"))) %>%
+  gf_labs(title = "Naked sine")
+slice_plot(log(x) ~ x, dom2) %>%
+  gf_point(0 ~ 1, color="purple", size=5, alpha = 0.1) %>%
+  gf_vline(xintercept = ~ 1, color="red") %>%
+  gf_hline(yintercept = ~ 0, color="blue") %>%
+  gf_segment(1 + (-2) ~ 0 + 0, color="orange", arrow=arrow(ends="last", type="closed")) %>%
+  gf_labs(title = "Naked logarithm")
+slice_plot(pnorm(x) ~ x, dom3) %>%
+  gf_segment(1 + 1 ~ 0 + 2, color="orange", arrow=arrow(ends="last", type="closed")) %>%
+  gf_segment(0 + 0 ~ 0 + (-2), color="orange", arrow=arrow(ends="last", type="closed")) %>%
+  slice_plot(pnorm(x) ~ x, dom3) %>%
+  gf_point(0.5 ~ 0, color="purple", size=5, alpha = 0.2) %>%
+  gf_vline(xintercept = ~ 0, color="red") %>%
+  gf_hline(yintercept = ~ .5, color="blue") %>%
+  gf_labs(title = "Naked sigmoid (pnorm())") %>%
+  gf_refine(scale_y_continuous(breaks=c(0, .5, 1), labels=c(0, "1/2", 1)))
+
+slice_plot(dnorm(x) ~ x, dom1) %>%
+  gf_segment(0 + 0 ~ 0 + 5, color="orange", arrow=arrow(ends="last", type="closed")) %>%
+  gf_segment(0 + 0 ~ 0 + (-5), color="orange", arrow=arrow(ends="last", type="closed")) %>%
+  slice_plot(dnorm(x) ~ x, dom1) %>%
+  gf_point(0.4 ~ 0, color="purple", size=5, alpha = 0.2) %>%
+  gf_vline(xintercept = ~ 0, color="red") %>%
+  gf_hline(yintercept = ~ .4, color="blue") %>%
+  gf_labs(title = "Naked hump (dnorm())") %>%
+  gf_lims(y=c(0,.5))
+slice_plot(x^2 ~ x, domain(x=c(-1.2, 1.2))) %>%
+  slice_plot(x^5 ~ x, color="gray") %>%
+  gf_point(0.0 ~ 0, color="purple", size=5, alpha = 0.2) %>%
+  gf_point(1 ~ 1, color="purple", size=5, alpha = 0.2) %>%
+  gf_vline(xintercept = ~ 0, color="red") %>%
+  gf_hline(yintercept = ~ 0, color="blue") %>%
+   gf_vline(xintercept = ~ 1, color="red") %>%
+  gf_hline(yintercept = ~ 1, color="blue") %>%
+  gf_labs(title = "Power law (positive integer exponent)") 
+slice_plot(1/x ~ x, domain(x=c(.01, 1.5))) %>%
+  slice_plot(1/x ~ x, domain(x=-c(.01, 1.5))) %>%
+  gf_segment(0 + 0 ~ -1.5 + 1.5, color="orange", arrow=arrow(ends="both", type="closed")) %>%
+  gf_segment(6 + -6 ~ 0 + 0, color="orange", arrow=arrow(ends="both", type="closed")) %>%
+  gf_point(1 ~ 1, color="purple", size=5, alpha = 0.2) %>%
+  gf_vline(xintercept = ~ 1, color="red") %>%
+  gf_hline(yintercept = ~ 1, color="blue") %>%
+  gf_labs(title = "Reciprocal (1/x)") %>%
+  gf_refine(scale_y_continuous(breaks=c(-5, -3, -1, 0, 1, 3, 5), lim=c(-6,6)))
+```
+
+Each of the following plots shows a basic modeling function whose input scaling has the form $x - x_0$. Your job is to figure out from the graph what is the numerical value of $x_0$. (Hint: For simplicity, $x_0$ in the questions will always be an integer.)
+
+```{r echo=FALSE}
+slice_plot(dnorm(x-2) ~ x, domain(x=c(-3,3))) %>% gf_labs(title="(A)")
+```
+
+```{r fp-dnorm, echo=FALSE, results="markup"}
+askMC(
+  "In plot (A), what is $x_0$?",
+  -2, -1, 0, 1, "+2+" = "Right. Look for the input that generates the peak output value.", random_answer_order = FALSE
+)
+```
+
+```{r echo=FALSE}
+slice_plot(sin(x+1) ~ x, domain(x=c(-3,3))) %>% gf_labs(title="(B)")
+```
+
+
+```{r fp-sin, echo=FALSE, results="markup"}
+askMC(
+  "In plot (B), what is $x_0$?",
+  "-2", "+-1+"= "Good. Look for an input that generates a positive going zero crossing.", 0, 1, "2" , random_answer_order = FALSE
+)
+```
+
+```{r echo=FALSE}
+slice_plot(log(x -1) ~ x, domain(x=c(-2,5)), npts=500) %>% gf_labs(title="(C)") 
+```
+
+
+```{r fp-log, echo=FALSE, results="markup"}
+askMC(
+  "In plot (C), what is $x_0$?",
+  -2, "+-1+"= "Right. The location of the vertical asymtote is the clue.", 0, 1, "2" , random_answer_order = FALSE
+)
+```
+
+```{r echo=FALSE}
+slice_plot(pnorm(x -1) ~ x, domain(x=c(-3,3))) %>% gf_labs(title="(D)")
+```
+
+
+```{r fp-pnorm, echo=FALSE, results="markup"}
+askMC(
+  "In plot (D), what is $x_0$?",
+  -2, "-1", 0, "+1+"="The input where the output is half way between the two horizontal asymptotes", "2" , random_answer_order = FALSE
+)
+```
+
+```{r echo=FALSE}
+slice_plot(1/(x+2) ~ x, domain(x=c(-1.9,2))) %>% gf_labs(title="(E)") %>%
+  slice_plot(1/(x+2) ~ x, domain(x=c(-3,-2.1)))
+```
+
+```{r fp-recip, echo=FALSE, results="markup"}
+askMC(
+  "In plot (E), what is $x_0$?",
+  "+-2+" = "Right. The location of the vertical asymtote is the clue.", "-1", 0, "1", "2" , random_answer_order = FALSE
+)
+```
+
+

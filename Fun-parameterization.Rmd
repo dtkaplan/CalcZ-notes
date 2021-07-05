@@ -173,9 +173,11 @@ slice_plot(sin(x) ~ x, domain(x=c(-1, 12))) %>%
   geom_errorbarh(aes(y=1/2, xmin=0, xmax=2*pi), color="green", size=.5)
 ```
 
-```{r show-exp-baseline, echo=FALSE, warning=FALSE, fig.cap="The baseline for the exponential is the horizontal asymptote."}
+```{r show-exp-baseline, echo=FALSE, warning=FALSE, fig.cap="The baseline for the exponential is the horizontal asymptote. There is no vertical asymptote."}
 slice_plot(exp(x) ~ x, domain(x=c(-2, 2))) %>%
   gf_hline(yintercept=0, color = "blue") %>%
+  gf_segment(0 + 0 ~ 0 + (-2), color="orange", arrow=arrow(ends="last", type="closed")) %>%
+
   gf_refine(theme_void())
 ```
 :::
@@ -193,9 +195,17 @@ slice_plot(exp(x) ~ x, domain(x=c(-2, 2))) %>%
 </details>
 
 
-::: {.todo}
-Each graph shows a basic modeling function written in this style: $\sin(r(t-t_0))$. Your job is to estimate $t_0$ and $r$. 
+<details>
+<summary>`r ex.mark(7.11, "MWLCS", fname="Exercises/Fun/fiducial-point.Rmd")` </summary>
+`r MC_counter$reset()` `r knitr::knit_child("Exercises/Fun/fiducial-point.Rmd")`
+</details>
 
-Remember exercise VIW7T where we looked at where the various naked modeling functions crossed the horizontal or vertical axis. These will often be clues for finding $t_0$ from the graph of a function.
-:::
+<details>
+<summary>`r ex.mark(7.13, "HMLCT", fname="inline")` </summary>
+Similar to MWLCS but with input scaling of the form $ax$.
+</details>
 
+<details>
+<summary>`r ex.mark(7.13, "TCYES", fname="inline")` </summary>
+Similar to MWLCS and HMLCT but with input scaling of the form $a(x-x_0)$. Keep it simple.
+</details>
