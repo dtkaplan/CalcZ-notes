@@ -69,8 +69,8 @@
 <li class="book-part">Block 1: Functions and quantity</li>
 <li><a class="" href="outline-of-block-1.html">Outline of Block 1</a></li>
 <li><a class="" href="change.html"><span class="header-section-number">1</span> Change</a></li>
-<li><a class="" href="structure-of-a-function.html"><span class="header-section-number">2</span> Structure of a function</a></li>
-<li><a class="" href="naked-intro.html"><span class="header-section-number">3</span> Naked modeling functions</a></li>
+<li><a class="" href="naked-intro.html"><span class="header-section-number">2</span> Modeling functions</a></li>
+<li><a class="" href="structure-of-a-function.html"><span class="header-section-number">3</span> Structure of a function</a></li>
 <li><a class="" href="fun-describing.html"><span class="header-section-number">4</span> Describing functions</a></li>
 <li><a class="" href="fun-notation.html"><span class="header-section-number">5</span> Notation for functions</a></li>
 <li><a class="" href="graphs-and-graphics.html"><span class="header-section-number">6</span> Graphics &amp; function graphs</a></li>
@@ -459,12 +459,12 @@ For the civil engineers, introduce the words stress and strain and talk about th
 <p>In traditional notation, the trigonometric functions such as <span class="math inline">\(\sin()\)</span> and <span class="math inline">\(\tan()\)</span> can be written with an argument either in degrees or radians. For instance, <span class="math inline">\(\sin(90^\circ) = \sin\left(\frac{\pi}{2}\right)\)</span>. Similarly, for the inverse functions like <span class="math inline">\(\arccos()\)</span> the units of the output are not specified. This works because there is always a human to intervene between the written expression and the eventual computation. With the computer, there is no valid expression like <code>sin(90 deg)</code> (although it would be good if there were!). The angles are always given in radians. Such consistency is admirable, but people are not always so consistent. It is a common source of computer bugs that angles in degrees are handed off to functions like <span class="math inline">\(\sin()\)</span> and that the output of <span class="math inline">\(\acos()\)</span> is (wrongly) interpreted as degrees rather than radians. <span style="float: right; padding-left: 50px;"><a name="1780" href="#1780"><img src="www/icons8-signpost.png" title="Location: 1780" width="12px"></a><span style="color: red; font-size: 6pt;">1780</span></span></p>
 </div>
 <p>Function composition to the rescue!</p>
-<p>Consider this function given in the [Wikipedia article on the position of the sun] (as seen from Earth)<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content="&lt;p&gt;Article accessed on May 30, 2021&lt;/p&gt;"><sup>18</sup></a>.
+<p>Consider this function given in the [Wikipedia article on the position of the sun] (as seen from Earth)<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content="&lt;p&gt;Article accessed on May 30, 2021&lt;/p&gt;"><sup>17</sup></a>.
 <span class="math display">\[\delta_\odot(n) \equiv - 23.44^\circ \cdot \cos \left [ \frac{360^\circ}{365} \cdot \left ( n + 10 \right ) \right ]\]</span>
 Where <span class="math inline">\(n\)</span> is zero at the midnight marking New Years and increases by 1 per day. (The <span class="math inline">\(n+10\)</span> translates New Years back 10 days, to the day of the winter solstice.) <span class="math inline">\(\delta_\odot()\)</span> gives the declination of the sun: the latitude pieced by an imagined line connecting the centers of the earth and the sun.</p>
 <p>The Wikipedia formula is well written in that it uses some familiar numbers to help the reader see where the formula comes from. 365 is recognizably the length of the year in days. <span class="math inline">\(360^\circ\)</span> is the angle traversed when making a full cycle around a circle. <span class="math inline">\(23.44^\circ\)</span> is less familiar, but the student of geography might recognize it as the latitude of the Tropic of Cancer, the latitude farthest north where the sun is directly overhead at noon (on the day of the summer solstice).</p>
 <p>But there’s a world of trouble for programmer who implements the formula as</p>
-<div class="sourceCode" id="cb110"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb129"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">dec_sun</span> <span class="op">&lt;-</span> <span class="fu">makeFun</span><span class="op">(</span><span class="op">-</span><span class="fl">23.44</span> <span class="op">*</span> <span class="fu"><a href="https://rdrr.io/r/base/Trig.html">cos</a></span><span class="op">(</span><span class="op">(</span><span class="fl">360</span><span class="op">/</span><span class="fl">365</span><span class="op">)</span><span class="op">*</span><span class="op">(</span><span class="va">n</span><span class="op">-</span><span class="fl">10</span><span class="op">)</span><span class="op">)</span> <span class="op">~</span> <span class="va">n</span><span class="op">)</span></code></pre></div>
 <p>:::</p>
 <details><summary><strong>Exercise 15.3</strong>: <span><a name="File:%20Exercises/Dimension/dim-formulas.Rmd" href="#UGDKY"><img src="www/icons8-signpost.png" title="Location: Exercises/Dimension/dim-formulas.Rmd" width="12px"></a><span style="color: red; font-size: 6pt;">UGDKY</span>
@@ -562,7 +562,8 @@ In order to render the quantity both dimensionless and </em>unitless<em>, <span 
 </ol></details><div class="todo">
 <p>More exercises to include …</p>
 <ul>
-<li>Exercises/Dimension/Boyd-1.html</li>
+<li><p>Exercises/Dimension/Boyd-1.html</p></li>
+<li><p>Dimension and units of G in Newton’s Law of Universal Gravitation.</p></li>
 </ul>
 </div>
 
@@ -606,7 +607,7 @@ In order to render the quantity both dimensionless and </em>unitless<em>, <span 
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>CalcZ Student Notes</strong>" was written by Daniel Kaplan. It was last built on 2021-07-01.</p>
+    <p>"<strong>CalcZ Student Notes</strong>" was written by Daniel Kaplan. It was last built on 2021-07-05.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

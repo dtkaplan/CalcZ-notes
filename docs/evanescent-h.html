@@ -69,8 +69,8 @@
 <li class="book-part">Block 1: Functions and quantity</li>
 <li><a class="" href="outline-of-block-1.html">Outline of Block 1</a></li>
 <li><a class="" href="change.html"><span class="header-section-number">1</span> Change</a></li>
-<li><a class="" href="structure-of-a-function.html"><span class="header-section-number">2</span> Structure of a function</a></li>
-<li><a class="" href="naked-intro.html"><span class="header-section-number">3</span> Naked modeling functions</a></li>
+<li><a class="" href="naked-intro.html"><span class="header-section-number">2</span> Modeling functions</a></li>
+<li><a class="" href="structure-of-a-function.html"><span class="header-section-number">3</span> Structure of a function</a></li>
 <li><a class="" href="fun-describing.html"><span class="header-section-number">4</span> Describing functions</a></li>
 <li><a class="" href="fun-notation.html"><span class="header-section-number">5</span> Notation for functions</a></li>
 <li><a class="" href="graphs-and-graphics.html"><span class="header-section-number">6</span> Graphics &amp; function graphs</a></li>
@@ -115,7 +115,7 @@
 </h1>
 <p>Our goal in this chapter is to motivate the differentiation rules presented in Chapter <a href="computing-derivs.html#computing-derivs">17</a> for the naked modeling functions. Recall that the slope-function operator can be written as a ratio of rise-over-run:
 <span class="math display">\[{\cal D}_t f(t) \equiv \frac{f(t+h) - f(t)}{h}\]</span> where <span class="math inline">\(h\)</span> is the length of the “run.” The idea of the <strong><em>instantaneous slope function</em></strong> is to make <span class="math inline">\(h\)</span> as small as possible.</p>
-<p>In the very early days of calculus, the vanishing <span class="math inline">\(h\)</span> was described as “evanescent.” (Dictionary definition: “tending to vanish like vapor.”<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content='&lt;p&gt;&lt;a href="https://www.merriam-webster.com/dictionary/evanescent"&gt;Source&lt;/a&gt;&lt;/p&gt;'><sup>21</sup></a>) Another good image of <span class="math inline">\(h\)</span> becoming as small as possible comes from the same University of Oxford mathematician whose poem <em>The Jabberwocky</em> we considered earlier. In <em>Alice in Wonderland</em>, Dodgson introduced the character of the Cheshire Cat.</p>
+<p>In the very early days of calculus, the vanishing <span class="math inline">\(h\)</span> was described as “evanescent.” (Dictionary definition: “tending to vanish like vapor.”<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content='&lt;p&gt;&lt;a href="https://www.merriam-webster.com/dictionary/evanescent"&gt;Source&lt;/a&gt;&lt;/p&gt;'><sup>20</sup></a>) Another good image of <span class="math inline">\(h\)</span> becoming as small as possible comes from the same University of Oxford mathematician whose poem <em>The Jabberwocky</em> we considered earlier. In <em>Alice in Wonderland</em>, Dodgson introduced the character of the Cheshire Cat.</p>
 <div class="figure" style="text-align: center">
 <span id="fig:cheshire-cat"></span>
 <img src="images/cheshire-cat.jpeg" alt="Vanishing $h$ in the form of the Chesire Cat from *Alice in Wonderland*." width="90%"><p class="caption">
@@ -136,15 +136,15 @@ Figure 20.2: The naked sinusoid and sigmoidal functions. A vertical blue line ha
 </p>
 </div>
 <p>The computer can easily construct the slope functions for the sinusoid and sigmoid, which we’ll call <code>Dsin()</code> and <code>Dsigma()</code> respectively.</p>
-<div class="sourceCode" id="cb158"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb177"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">Dsin</span>   <span class="op">&lt;-</span> <span class="fu">makeFun</span><span class="op">(</span><span class="op">(</span>  <span class="fu"><a href="https://rdrr.io/r/base/Trig.html">sin</a></span><span class="op">(</span><span class="va">t</span><span class="op">+</span><span class="va">h</span><span class="op">)</span> <span class="op">-</span>   <span class="fu"><a href="https://rdrr.io/r/base/Trig.html">sin</a></span><span class="op">(</span><span class="va">t</span><span class="op">)</span><span class="op">)</span><span class="op">/</span><span class="va">h</span> <span class="op">~</span> <span class="va">t</span>, h<span class="op">=</span><span class="fl">0.1</span><span class="op">)</span>
 <span class="va">Dsigma</span> <span class="op">&lt;-</span> <span class="fu">makeFun</span><span class="op">(</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">pnorm</a></span><span class="op">(</span><span class="va">t</span><span class="op">+</span><span class="va">h</span><span class="op">)</span> <span class="op">-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">pnorm</a></span><span class="op">(</span><span class="va">t</span><span class="op">)</span><span class="op">)</span><span class="op">/</span><span class="va">h</span> <span class="op">~</span> <span class="va">t</span>, h<span class="op">=</span><span class="fl">0.1</span><span class="op">)</span></code></pre></div>
 <p>In the tilde expression handed to <code>makeFun()</code>, we’ve identified <code>t</code> as the name of the input and given a “small” default value to the <code>h</code> parameter. But R recognizes that both <code>Dsin()</code> and <code>Dsigma()</code> are functions of two variables, <code>t</code> and <code>h</code>, as you can see in the parenthesized argument list for the functions.</p>
-<div class="sourceCode" id="cb159"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb178"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">Dsin</span></code></pre></div>
 <pre><code>## function (t, h = 0.1) 
 ## (sin(t + h) - sin(t))/h</code></pre>
-<div class="sourceCode" id="cb161"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb180"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">Dsigma</span></code></pre></div>
 <pre><code>## function (t, h = 0.1) 
 ## (pnorm(t + h) - pnorm(t))/h</code></pre>
@@ -192,7 +192,7 @@ Figure 20.4: The slope functions of the logarithm and exponential.
 </h2>
 <p>In motivating differentiation of the naked modeling functions, we introduced a quantity <span class="math inline">\(h\)</span> and then ignored it, saying that it doesn’t really matter so long as it is “small.” A reasonable person might wonder what “small” really means, and why we needed to introduce <span class="math inline">\(h\)</span> in the first place if we were eventually going to ignore it.</p>
 <p>One reason is that “small” and “zero,” although related, are different. For example, refering to the slope functions <code>Dsin()</code> and <code>Dsigma()</code> that we created in an early example in this chapter, we see that setting <span class="math inline">\(h\)</span> to zero does not get us where we need to be:</p>
-<div class="sourceCode" id="cb163"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb182"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">Dsin</span><span class="op">(</span>t<span class="op">=</span><span class="fl">1</span>, h<span class="op">=</span><span class="fl">0</span><span class="op">)</span>
 <span class="fu">Dsigma</span><span class="op">(</span>t<span class="op">=</span><span class="fl">0</span>, h<span class="op">=</span><span class="fl">0</span><span class="op">)</span></code></pre></div>
 <p>In <code>NaN</code>, you can hear the echo of your fourth-grade teacher reminding you that it is illegal to divide by zero.</p>
@@ -236,11 +236,11 @@ In other words, if we know the derivative <span class="math inline">\(\partial_x
 </div>
 
 <div class="exercise">
-<span id="exr:unnamed-chunk-134" class="exercise"><strong>Exercise 20.1  </strong></span>See tree harvesting in <code>Diffs/tree-harvest.Rmd</code>
+<span id="exr:unnamed-chunk-143" class="exercise"><strong>Exercise 20.1  </strong></span>See tree harvesting in <code>Diffs/tree-harvest.Rmd</code>
 </div>
 
 <div class="exercise">
-<span id="exr:unnamed-chunk-135" class="exercise"><strong>Exercise 20.2  </strong></span>Show that the derivative of <code><a href="https://rdrr.io/r/stats/Normal.html">dnorm(x)</a></code> is <code>- x *dnorm(x)</code> by using the differencing operator with small <span class="math inline">\(h\)</span>.
+<span id="exr:unnamed-chunk-144" class="exercise"><strong>Exercise 20.2  </strong></span>Show that the derivative of <code><a href="https://rdrr.io/r/stats/Normal.html">dnorm(x)</a></code> is <code>- x *dnorm(x)</code> by using the differencing operator with small <span class="math inline">\(h\)</span>.
 </div>
 </div>
 <div id="derivatives-of-the-basic-modeling-functions" class="section level2" number="20.3">
@@ -284,7 +284,7 @@ $$</p>
 </div>
 
 <div class="exercise">
-<span id="exr:unnamed-chunk-136" class="exercise"><strong>Exercise 20.3  </strong></span>Check the “general rule” numerically. Divide the finite-difference derivative by the “theoretical” derivative and show that they are 1.
+<span id="exr:unnamed-chunk-145" class="exercise"><strong>Exercise 20.3  </strong></span>Check the “general rule” numerically. Divide the finite-difference derivative by the “theoretical” derivative and show that they are 1.
 </div>
 
 </div>
@@ -317,7 +317,7 @@ $$</p>
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>CalcZ Student Notes</strong>" was written by Daniel Kaplan. It was last built on 2021-07-01.</p>
+    <p>"<strong>CalcZ Student Notes</strong>" was written by Daniel Kaplan. It was last built on 2021-07-05.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

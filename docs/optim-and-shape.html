@@ -69,8 +69,8 @@
 <li class="book-part">Block 1: Functions and quantity</li>
 <li><a class="" href="outline-of-block-1.html">Outline of Block 1</a></li>
 <li><a class="" href="change.html"><span class="header-section-number">1</span> Change</a></li>
-<li><a class="" href="structure-of-a-function.html"><span class="header-section-number">2</span> Structure of a function</a></li>
-<li><a class="" href="naked-intro.html"><span class="header-section-number">3</span> Naked modeling functions</a></li>
+<li><a class="" href="naked-intro.html"><span class="header-section-number">2</span> Modeling functions</a></li>
+<li><a class="" href="structure-of-a-function.html"><span class="header-section-number">3</span> Structure of a function</a></li>
 <li><a class="" href="fun-describing.html"><span class="header-section-number">4</span> Describing functions</a></li>
 <li><a class="" href="fun-notation.html"><span class="header-section-number">5</span> Notation for functions</a></li>
 <li><a class="" href="graphs-and-graphics.html"><span class="header-section-number">6</span> Graphics &amp; function graphs</a></li>
@@ -146,7 +146,7 @@
 Our objective function is hdist(), and we seek to find the argmax. The input <span class="math inline">\(v_0\)</span> is (we have assumed) fixed, so the decision quantity is the angle <span class="math inline">\(\theta\)</span>.</p>
 <p>The best choice of <span class="math inline">\(\theta\)</span> will make the quantity <span class="math inline">\(\cos(\theta)\sin(\theta)\)</span> as large as possible. So in finding the argmax, we don’t need to be concerned with <span class="math inline">\(v_0\)</span> or <span class="math inline">\(g\)</span>.</p>
 <p>Finding the argmax can be accomplished simply by plotting the function <span class="math inline">\(\cos(\theta)\sin(\theta)\)</span>. We’ll implement the function so that the input is in units of <em>degrees</em>.</p>
-<div class="sourceCode" id="cb164"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb183"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">f</span> <span class="op">&lt;-</span> <span class="fu">makeFun</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Trig.html">cos</a></span><span class="op">(</span><span class="va">pi</span><span class="op">*</span><span class="va">theta</span><span class="op">/</span><span class="fl">180</span><span class="op">)</span><span class="op">*</span><span class="fu"><a href="https://rdrr.io/r/base/Trig.html">sin</a></span><span class="op">(</span><span class="va">pi</span><span class="op">*</span><span class="va">theta</span><span class="op">/</span><span class="fl">180</span><span class="op">)</span> <span class="op">~</span> <span class="va">theta</span><span class="op">)</span>
 <span class="fu">slice_plot</span><span class="op">(</span><span class="fu">f</span><span class="op">(</span><span class="va">theta</span><span class="op">)</span> <span class="op">~</span> <span class="va">theta</span>, <span class="fu">domain</span><span class="op">(</span>theta<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">90</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
 <span class="fu">slice_plot</span><span class="op">(</span><span class="fu">f</span><span class="op">(</span><span class="va">theta</span><span class="op">)</span> <span class="op">~</span> <span class="va">theta</span>, <span class="fu">domain</span><span class="op">(</span>theta <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">40</span>, <span class="fl">50</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></code></pre></div>
@@ -266,11 +266,11 @@ neither| 0 | 0</p>
 <p><strong>Question G</strong> Where is the function steepest?</p>
     <span class="math inline">\(t = A\)</span><span class="mcanswer"> ✓ </span>       <span class="math inline">\(t=B\)</span><span class="mcanswer"> ☹︎ </span>       <span class="math inline">\(t=C\)</span><span class="mcanswer"> ☹︎ </span>       <span class="math inline">\(t=D\)</span><span class="mcanswer"> ☹︎ </span>
 </details><div class="exercise">
-<span id="exr:unnamed-chunk-142" class="exercise"><strong>Exercise 22.2  (tree-loves-fish)  </strong></span>
+<span id="exr:unnamed-chunk-151" class="exercise"><strong>Exercise 22.2  (tree-loves-fish)  </strong></span>
 </div>
 <details><p>Here is a smooth function marked at a few points. Your task is, at each point, to estimate the value of the derivative, the sign of the second derivative, and the radius of the circle that would nicely match the function in a small region around each point. (Remember, we’re asking for the <em>radius</em> of the circle, which is half the <em>diameter</em>.)</p>
 <p>To simplify things, here is a table giving seven different combinations of the quantities you are to estimate. Some of them correctly match one of the labeled points, some do not. All you need to do is choose which is the correct set of quantities for each labeled point.</p>
-<div class="inline-figure"><img src="CalcZ-notes_files/figure-html/unnamed-chunk-346-1.png" width="90%" style="display: block; margin: auto;"></div>
+<div class="inline-figure"><img src="CalcZ-notes_files/figure-html/unnamed-chunk-369-1.png" width="90%" style="display: block; margin: auto;"></div>
 <table class="table table-sm">
 <colgroup>
 <col width="13%">
@@ -358,12 +358,12 @@ The above is an equation, not a definition. It says that whatever <span class="m
 </div>
 
 <div class="exercise">
-<span id="exr:unnamed-chunk-143" class="exercise"><strong>Exercise 22.3  (optim-violet)  </strong></span>
+<span id="exr:unnamed-chunk-152" class="exercise"><strong>Exercise 22.3  (optim-violet)  </strong></span>
 </div>
 <details><p>You’re very proud of your pet dog, Swimmer. You often go to the beach and walk along the water’s edge. You throw a ball down the beach, but at an angle so it lands in the water. Swimmer goes to work. She runs down the beach (fast) and then plunges into the water, heading toward the ball. She can run fast on the beach: 400 m/minute. But she swims rather slower: 50 m/min.</p>
 <p>Suppose you threw the ball to a point 50 meters down the beach and 10 meters out in the water. The overall distance to the ball is therefore <span class="math inline">\(\sqrt{50^2 + 10^2} = 51\)</span> meters. If Swimmer entered the water immediately, she would take about minute to reach the ball (51 m / 50 m/min). Swimmer can get to the ball faster by running down the beach a big and then turning into the water. If Swimmer ran all 50 meters down the beach and then turned to swim the 10 meters, it would take her (50/400 + 10/50) minutes, about one-third of a minute.</p>
 <p>Can Swimmer do better? You can set up the calculation like this. Imagine <span class="math inline">\(x\)</span> to be the distance down the beach that Swimmer runs. The time to run this distance will be <span class="math inline">\(x/400\)</span>. The distance remaining to the ball can be found by the pythagorean theorem. One leg of the triangle has length <span class="math inline">\((50-x)\)</span>, the other has length 10 m. So if <span class="math inline">\(x\)</span> were 45, the distance to swim in the water would be <span class="math inline">\(\sqrt{(50-45)^2 + 10^2}\)</span>. Divide this distance by 50 m/min to get the time spent in the water.</p>
-<div class="sourceCode" id="cb166"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb185"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">distance_in_water</span> <span class="op">&lt;-</span> <span class="fu">makeFun</span><span class="op">(</span> <span class="va">your_pythagorus_calculation</span> <span class="op">~</span> <span class="va">x</span><span class="op">)</span>
 <span class="va">time_to_ball</span> <span class="op">&lt;-</span> <span class="fu">makeFun</span><span class="op">(</span><span class="va">x</span><span class="op">/</span><span class="fl">400</span> <span class="op">+</span> <span class="va">distance_in_water</span><span class="op">/</span><span class="fl">50</span> <span class="op">~</span> <span class="va">x</span><span class="op">)</span></code></pre></div>
 <p><code>Time_to_ball()</code> takes one argument, the distance <span class="math inline">\(x\)</span> Swimmer runs down the beach before turning into the water. Use a <a href="https://maa-statprep.shinyapps.io/CalcZ-Sandbox/">SANDBOX</a> to find the distance that calculus-savvy Swimmer runs down the beach before turning into the water, if Swimmer’s goal is to get to the ball as fast as possible.</p>
@@ -371,7 +371,7 @@ The above is an equation, not a definition. It says that whatever <span class="m
 <p>    47.25<span class="mcanswer"> ☹︎ </span>       47.5<span class="mcanswer"> ☹︎ </span>       48.25<span class="mcanswer"> ☹︎ </span>       48.75<span class="mcanswer"> ✓ </span>       49.25<span class="mcanswer"> ☹︎ </span>       49.75<span class="mcanswer"> ☹︎ </span></p>
 <a href="https://abcnews.go.com/Technology/story?id=97628&amp;page=1">Here’s a news story</a> about a mathematician’s dog on the shore of Lake Michigan. It’s not plausible that Swimmer has been trained in calculus. Perhaps the way Swimmer solves the running distance problem is simply to graph <code>time_to_ball(x) ~ x</code> over a suitable domain and find the argmax by eye!
 </details><div class="exercise">
-<span id="exr:unnamed-chunk-144" class="exercise"><strong>Exercise 22.4  (optim-pink)  </strong></span>
+<span id="exr:unnamed-chunk-153" class="exercise"><strong>Exercise 22.4  (optim-pink)  </strong></span>
 </div>
 <details><p>If you’re skeptical that a dog might do a calculus problem before running to fetch a ball, consider the path taken by a photon. “Fermat’s Principle” is that light takes the path of least time. To illustrate, consider the problem of a photon travelling from a point A to a point B, as in the diagram. The shortest path between the two points is a straight line. Along this straight-line path, the time taken by the photon will be the distance divided by the speed of light.</p>
 <p>The diagram shows another path consisting of two segments, one of length <span class="math inline">\(l_1\)</span> and the other <span class="math inline">\(l_2\)</span>. Obviously, the two-segment path is longer than the straight-line path. But Fermat’s principle would lead light to “prefer” the longer path if the time taken to traverse it is shorter.</p>
@@ -395,7 +395,7 @@ The above is an equation, not a definition. It says that whatever <span class="m
 </ol>
 <p>Implement the calculation of <code>total_time()</code> in R, then use a graph to find the argmin.</p>
 <div class="scaffolding">
-<div class="sourceCode" id="cb168"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb187"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">total_time</span> <span class="op">&lt;-</span> <span class="fu">makeFun</span><span class="op">(</span> <span class="va">your_formula</span> <span class="op">~</span> <span class="va">x</span><span class="op">)</span>
 <span class="fu">slice_plot</span><span class="op">(</span><span class="fu">total_time</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">~</span> <span class="va">x</span>, <span class="fu">domain</span><span class="op">(</span>x<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">20</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
 
@@ -487,7 +487,7 @@ The above is an equation, not a definition. It says that whatever <span class="m
 <li>14.7<span class="mcanswer"> ☹︎ </span>
 </li>
 </ol></details><div class="exercise">
-<span id="exr:unnamed-chunk-145" class="exercise"><strong>Exercise 22.5  (optim-red)  </strong></span>
+<span id="exr:unnamed-chunk-154" class="exercise"><strong>Exercise 22.5  (optim-red)  </strong></span>
 </div>
 <details><div class="todo">
 <p>Turn this into a problem about algebra.</p>
@@ -497,11 +497,11 @@ The above is an equation, not a definition. It says that whatever <span class="m
 <p>Suppose you have a function <span class="math inline">\(f(x)\)</span> whose graph represents the path of a road through the jungle. There is a lion at coordinates <span class="math inline">\((3, 2)\)</span> in the jungle. At what point as you travel along the road will you be closest to the lion.</p>
 <p>The trick here is to see that your position on the road at any value of <span class="math inline">\(x\)</span> is <span class="math inline">\((x, f(x))\)</span>. The distance to the lion as a function of <span class="math inline">\(x\)</span> is <span class="math display">\[ \text{lion_dist}(x) \equiv \sqrt{(x - 3)^2 + (f(x)-2)^2} .\]</span></p>
 <p>The road and the lion are graphed in the sandbox for the road <span class="math inline">\(f(x) \equiv x^2 e^{-x}\)</span>. You can see that the road comes closest to the lion at roughly <span class="math inline">\(x=3\)</span>. When you implement the <span class="math inline">\(\text{lion_dist}(x)\)</span> function, you’ll be able to find the <em>argmin</em>, that is, the value of the input <span class="math inline">\(x\)</span> for which the output <span class="math inline">\(\text{lion_dist}(x)\)</span> is minimal. The value of the function <span class="math inline">\(\text{lion_dist}(x)\)</span> at the argmin is the <em>min</em> of the function.</p>
-<div class="sourceCode" id="cb169"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb188"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">slice_plot</span><span class="op">(</span><span class="va">x</span><span class="op">^</span><span class="fl">2</span> <span class="op">*</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html">exp</a></span><span class="op">(</span><span class="op">-</span><span class="va">x</span><span class="op">)</span> <span class="op">~</span> <span class="va">x</span>, <span class="fu">domain</span><span class="op">(</span>x<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">5</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu">gf_label</span><span class="op">(</span><span class="fl">2</span> <span class="op">~</span> <span class="fl">3</span>, label<span class="op">=</span><span class="st">"lion"</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu">gf_refine</span><span class="op">(</span><span class="fu">coord_fixed</span><span class="op">(</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<div class="inline-figure"><img src="CalcZ-notes_files/figure-html/unnamed-chunk-354-1.png" width="90%" style="display: block; margin: auto;"></div>
+<div class="inline-figure"><img src="CalcZ-notes_files/figure-html/unnamed-chunk-377-1.png" width="90%" style="display: block; margin: auto;"></div>
 <p>To find the argmin of the distance to the lion more precisely, implement the <span class="math inline">\(\text{lion_dist}(x)\)</span> function in the sandbox. Plot this out and look for the minimum. Alternatively, find <span class="math inline">\(\partial_x \text{lion_dist}(x)\)</span> and find the <span class="math inline">\(x\)</span> of the zero crossing.</p>
 <p><strong>Question A</strong> Using the sandbox above, find the argmin for which the graph of the function <span class="math inline">\(g(x) \equiv x^2 \exp(-x)\)</span> comes closest to the point <span class="math inline">\((3, 2)\)</span>? (Choose the best answer.)</p>
 <ol style="list-style-type: lower-roman">
@@ -534,7 +534,7 @@ The above is an equation, not a definition. It says that whatever <span class="m
 <li>2.94<span class="mcanswer"> ☹︎ </span>
 </li>
 </ol></details><div class="exercise">
-<span id="exr:unnamed-chunk-146" class="exercise"><strong>Exercise 22.6  (optim-blue)  </strong></span>
+<span id="exr:unnamed-chunk-155" class="exercise"><strong>Exercise 22.6  (optim-blue)  </strong></span>
 </div>
 <details><p>In the previous problem, you used graphics to find the argmin of a function. You can, of course, successively reset the domain of the graphing window to zoom in on the location of the argmin.</p>
 <p>To find the argmin numerically, you start with a (pretty good) guess for the argmin. Recall that a function (such as <code>total_time()</code>) can be modeled with a low-order polynomial. When the function has an extreme point the polynomial should include a quadratic term. Suppose you have guessed that <span class="math inline">\(x=10\)</span> is a good starting guess for the argmin of the air-to-water problem. You can compute the first and second derivatives of <code>total_time(x)</code> with respect to <code>x</code> and evaluate those derivative functions at <span class="math inline">\(x=10\)</span>. (Use the <code><a href="https://rdrr.io/r/stats/deriv.html">D()</a></code> function to construct the derivatives.) In the sandbox, use the value of those two derivatives at the <span class="math inline">\(x=10\)</span> guess to find the approximation to the minimum of the function.</p>
@@ -641,12 +641,12 @@ Find the derivative <span class="math inline">\(\partial_x q(x)\)</span> and set
 </h2>
 <p>Your uncle Bob is writing a business plan for a tree farm for lumber. Having heard that you are taking Math 141Z, he emails you giving some information asking for some numbers. In particular, Bob sends you a report saying that, for the species of tree he plans to plant, the amount of usable lumber is a function of growth time <span class="math inline">\(t\)</span> looking like the function defined in the sandbox:</p>
 <div class="scaffolding">
-<div class="sourceCode" id="cb170"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb189"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">lumber</span> <span class="op">&lt;-</span> <span class="fu">makeFun</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="va">t</span><span class="op">&lt;</span><span class="fl">10</span>, <span class="fl">0</span>, <span class="fl">100</span><span class="op">*</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html">exp</a></span><span class="op">(</span><span class="op">(</span><span class="va">t</span><span class="op">-</span><span class="fl">25</span><span class="op">)</span><span class="op">/</span><span class="fl">8</span><span class="op">)</span><span class="op">/</span><span class="op">(</span><span class="fl">1</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html">exp</a></span><span class="op">(</span><span class="op">(</span><span class="va">t</span><span class="op">-</span><span class="fl">25</span><span class="op">)</span><span class="op">/</span><span class="fl">8</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">~</span> <span class="va">t</span><span class="op">)</span>
 <span class="va">dt_lumber</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/deriv.html">D</a></span><span class="op">(</span><span class="fu">lumber</span><span class="op">(</span><span class="va">t</span><span class="op">)</span> <span class="op">~</span> <span class="va">t</span><span class="op">)</span>
 <span class="va">ave_growth_rate</span> <span class="op">&lt;-</span> <span class="fu">makeFun</span><span class="op">(</span> <span class="va">your_expression_here</span> <span class="op">~</span> <span class="va">t</span><span class="op">)</span>
 <span class="fu">slice_plot</span><span class="op">(</span><span class="fu">lumber</span><span class="op">(</span><span class="va">t</span><span class="op">)</span> <span class="op">~</span> <span class="va">t</span>, <span class="fu">domain</span><span class="op">(</span>t<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">100</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<div class="inline-figure"><img src="CalcZ-notes_files/figure-html/unnamed-chunk-356-1.png" width="90%" style="display: block; margin: auto;"></div>
+<div class="inline-figure"><img src="CalcZ-notes_files/figure-html/unnamed-chunk-379-1.png" width="90%" style="display: block; margin: auto;"></div>
 </div>
 <p>Bob has heard that the time to harvest is when the tree is growing fastest.</p>
 <p><strong>Question C</strong> A) What is the value of <code>t</code> (in years) at which <span class="math inline">\(\partial_t\)</span> <code>lumber(t)</code> is largest?</p>
@@ -657,14 +657,14 @@ Find the derivative <span class="math inline">\(\partial_x q(x)\)</span> and set
 
 
 <div class="exercise">
-<span id="exr:unnamed-chunk-147" class="exercise"><strong>Exercise 22.7  (optim-purple)  </strong></span>This is probably misplaced. and the <code>plot_lens()</code> function would have to be provided.
+<span id="exr:unnamed-chunk-156" class="exercise"><strong>Exercise 22.7  (optim-purple)  </strong></span>This is probably misplaced. and the <code>plot_lens()</code> function would have to be provided.
 </div>
 <details><p>Figure 1 shows a lens together with a source and target point. Light passing through the lens is refracted. The path followed by the light will be the one with the shortest time of transit from source to target.</p>
 <p>The light enters the lens at some point <span class="math inline">\(P_{in} = (x_{in}\ , \ -\mbox{Lens}(x_{in}))\)</span> and leaves at <span class="math inline">\(P_{out} = (x_{out}\ ,\  \mbox{Lens}(x_{out}))\)</span>. We don’t know either <span class="math inline">\(x_{in}\)</span> or <span class="math inline">\(x_{out}\)</span>. but we can find them by optimization.</p>
 <p>To do this, we find the distance from the source to <span class="math inline">\(P_{in}\)</span>, and from <span class="math inline">\(P_{out}\)</span> to the target. These two legs of the route are through air, so the time of transit on each leg is proportional to the refractive index 1.03 times the distance.</p>
 <p>Of course, light also has to travel through the lens. We’ll make the lens out of glass with a high refractive index, so the transit time will be the distance from <span class="math inline">\(P_{in}\)</span> to <span class="math inline">\(P_{out}\)</span> multiplied by the lens’s refractive index of 1.8.</p>
 <p>The objective function will be the sum of the three legs’ transit times. It’s already programmed for you in the sandbox. So is the command to make a contour plot of the output of the objective function over a domain of <span class="math inline">\(x_{in}\)</span> and <span class="math inline">\(x_{out}\)</span>. Finally, the last line in the sandbox draws a picture of the lens and the light path, but you will have to insert the argmins <span class="math inline">\(x_{in}\)</span> and <span class="math inline">\(x_{out}\)</span> that you pick from the contour plot of the objective function. (The <span class="math inline">\(x_{in}\)</span> and <span class="math inline">\(x_{out}\)</span> shown in the initial code of the sandbox are not right!)</p>
-<div class="sourceCode" id="cb171"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb190"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Describe the shape of the lens</span>
 <span class="va">Lens_top</span> <span class="op">&lt;-</span> <span class="fu">makeFun</span><span class="op">(</span><span class="op">-</span><span class="fl">90</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">sqrt</a></span><span class="op">(</span><span class="fl">100</span><span class="op">^</span><span class="fl">2</span> <span class="op">-</span> <span class="va">x</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span>  <span class="op">~</span> <span class="va">x</span><span class="op">)</span>
 <span class="va">Lens_bottom</span> <span class="op">&lt;-</span> <span class="fu">makeFun</span><span class="op">(</span><span class="op">-</span><span class="fu">Lens_top</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">~</span> <span class="va">x</span><span class="op">)</span>
@@ -678,11 +678,11 @@ Find the derivative <span class="math inline">\(\partial_x q(x)\)</span> and set
 <span class="co"># Graph the objective function</span>
 <span class="fu">contour_plot</span><span class="op">(</span><span class="fu">transit_time</span><span class="op">(</span><span class="va">x_in</span>, <span class="va">x_out</span><span class="op">)</span> <span class="op">~</span> <span class="va">x_in</span> <span class="op">+</span> <span class="va">x_out</span>, 
              <span class="fu">domain</span><span class="op">(</span>x_in <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">40</span>,<span class="fl">40</span><span class="op">)</span>, x_out <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">40</span>,<span class="fl">40</span><span class="op">)</span><span class="op">)</span>, npts<span class="op">=</span><span class="fl">200</span><span class="op">)</span></code></pre></div>
-<div class="inline-figure"><img src="CalcZ-notes_files/figure-html/unnamed-chunk-359-1.png" width="90%" style="display: block; margin: auto;"></div>
-<div class="sourceCode" id="cb172"><pre class="downlit sourceCode r">
+<div class="inline-figure"><img src="CalcZ-notes_files/figure-html/unnamed-chunk-382-1.png" width="90%" style="display: block; margin: auto;"></div>
+<div class="sourceCode" id="cb191"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Insert argmax from contour plot</span>
 <span class="fu">plot_lens</span><span class="op">(</span><span class="fl">10</span>, <span class="op">-</span><span class="fl">5</span>, <span class="va">Lens_top</span>, <span class="va">Lens_bottom</span><span class="op">)</span></code></pre></div>
-<div class="inline-figure"><img src="CalcZ-notes_files/figure-html/unnamed-chunk-359-2.png" width="90%" style="display: block; margin: auto;"></div>
+<div class="inline-figure"><img src="CalcZ-notes_files/figure-html/unnamed-chunk-382-2.png" width="90%" style="display: block; margin: auto;"></div>
 <p><strong>Question A</strong> When the index of refraction of the lens is 1.80, what are the optimal values for <span class="math inline">\(x_{in}\)</span> and <span class="math inline">\(x_{out}\)</span>? (Choose the best answer.)</p>
 <ol style="list-style-type: lower-roman">
 <li>
@@ -786,7 +786,7 @@ Find the derivative <span class="math inline">\(\partial_x q(x)\)</span> and set
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>CalcZ Student Notes</strong>" was written by Daniel Kaplan. It was last built on 2021-07-01.</p>
+    <p>"<strong>CalcZ Student Notes</strong>" was written by Daniel Kaplan. It was last built on 2021-07-05.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

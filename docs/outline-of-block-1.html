@@ -69,8 +69,8 @@
 <li class="book-part">Block 1: Functions and quantity</li>
 <li><a class="active" href="outline-of-block-1.html">Outline of Block 1</a></li>
 <li><a class="" href="change.html"><span class="header-section-number">1</span> Change</a></li>
-<li><a class="" href="structure-of-a-function.html"><span class="header-section-number">2</span> Structure of a function</a></li>
-<li><a class="" href="naked-intro.html"><span class="header-section-number">3</span> Naked modeling functions</a></li>
+<li><a class="" href="naked-intro.html"><span class="header-section-number">2</span> Modeling functions</a></li>
+<li><a class="" href="structure-of-a-function.html"><span class="header-section-number">3</span> Structure of a function</a></li>
 <li><a class="" href="fun-describing.html"><span class="header-section-number">4</span> Describing functions</a></li>
 <li><a class="" href="fun-notation.html"><span class="header-section-number">5</span> Notation for functions</a></li>
 <li><a class="" href="graphs-and-graphics.html"><span class="header-section-number">6</span> Graphics &amp; function graphs</a></li>
@@ -118,8 +118,7 @@
 <p>This outline was that established during the May 17-19, 2021 working sessions at USAFA. It’s copied directly from the Teams document. I’ve made some modifications which are noted in [[square brackets]] for deletions and <strong>bold face</strong> for additions..</p>
 <p>Block 1 Functions and Mathematical Modeling</p>
 <ol style="list-style-type: decimal">
-<li>
-<p>Intro to the course</p>
+<li>Intro to the course
 <ol style="list-style-type: lower-alpha">
 <li>NTI
 <ol style="list-style-type: lower-roman">
@@ -164,31 +163,32 @@
 </li>
 </ol>
 </li>
-<li>
-<p>Basics of modeling functions</p>
+<li>Basics of modeling functions
 <ol style="list-style-type: lower-alpha">
 <li>NTI
 <ol style="list-style-type: lower-roman">
 <li>Emphasize that functions map inputs to outputs, but the naked functions are (by themselves) not flexible enough for most circumstances</li>
-<li>Show students graph of 5 naked functions, have them pick which is which</li>
-<li>Points out that a <em>truly</em> naked straight-line is just <span class="math inline">\(x\)</span>, and use that as the introduction to parameterization</li>
-<li>Show scatter plot of <span class="math inline">\(f(x)\equiv -x+2\)</span> and explain why <span class="math inline">\(f(x)\equiv x\)</span> is not a good model to motivate basic modeling function</li>
+<li>Show students graph of 5 naked functions, have them pick which is which. (Use e.g. <code>slice_plot(sin(x) ~ x), domain(x=c(-5,5)))</code>)</li>
+<li>Point out that a <em>truly</em> naked straight-line is just <span class="math inline">\(x\)</span>, and use that as the introduction to parameterization</li>
+<li>Show scatter plot of <span class="math inline">\(f(x)\equiv -x+2\)</span> and explain why <span class="math inline">\(f(x)\equiv x\)</span> is not a good model to motivate basic modeling function. [[[Do we want to make up data for this scatter plot? If so, <code>Mydata &lt;- tibble(x = rnorm(100), y = -2*x + rnorm(100)/10)</code>]]] See <a href="https://dtkaplan.github.io/CalcZ-notes/naked-intro.html#295">book position 295</a> for some actual data.</li>
 </ol>
 </li>
 <li>Lecture Topics
 <ol style="list-style-type: lower-roman">
 <li>Naked modeling functions</li>
-<li>Basic Modeling functions and their behaviors based on their parameters</li>
+<li>
+<strong>Basic shapes and features</strong> such as zero crossings, maxima, slope, curvature, horizontal/vertical asymptote (if any). (It’s the vocabulary that we want them to know at this point.)</li>
+<li>[[Basic Modeling functions and their behaviors based on their parameters]]-save this for another day.</li>
 </ol>
 </li>
 <li>Outcomes
 <ol style="list-style-type: lower-roman">
-<li>Know graphs, domains, ranges, horizonal/veritcal intercepts &amp; asymptotes (if any) for all the naked modeling functions</li>
-<li>Recognize that functions are a way of modeling relationship in the real-world</li>
-<li>Given parameters, describe how those parameters affect the shape of the function</li>
+<li>Know graphs, domains, ranges, horizonal/vertical intercepts &amp; asymptotes (if any) for all the naked modeling functions</li>
+<li>Recognize that functions are a way of modeling relationships in the real-world</li>
+<li>[Given parameters, describe how those parameters affect the shape of the function]]-save this for another day</li>
 </ol>
 </li>
-<li>Readings: Section <a href="naked-intro.html#naked-intro">3</a> and Chapter <a href="structure-of-a-function.html#structure-of-a-function">2</a>
+<li>Readings: Chapter <a href="naked-intro.html#naked-intro">2</a>
 </li>
 <li>Additional Resources
 <ol style="list-style-type: lower-roman">
@@ -200,13 +200,13 @@
 </li>
 <li>Assignments
 <ol style="list-style-type: lower-roman">
-<li>DD02</li>
+<li>Problems at end of chapter (to be written)</li>
 </ol>
 </li>
+<li>Quiz question: Which of these functions have horizontal asymptotes? [Give a list, ask them to circle.] Similar for vertical asymptote.</li>
 </ol>
 </li>
-<li>
-<p>Functions as I/O and Notational Structure of functions (R&lt;&gt;Math)</p>
+<li>Functions as I/O and Notational Structure of functions (R&lt;&gt;Math)
 <ol style="list-style-type: lower-alpha">
 <li>NTI
 <ol style="list-style-type: lower-roman">
@@ -257,6 +257,9 @@
 </li>
 </ol>
 </li>
+</ol>
+<p>QUIZ: Draw reasonable sketches of all nine naked modeling functions. In addition to the overall shape of the function, label one point on the graph with its exact output value. (Hint: for <span class="math inline">\(\dnorm(x)\)</span>, the highest possible output is 0.3989423.)</p>
+<ol start="4" style="list-style-type: decimal">
 <li>
 <p>Parameterized functions as models</p>
 <ol style="list-style-type: lower-alpha">
@@ -264,7 +267,7 @@
 <ol style="list-style-type: lower-roman">
 <li>Introduce idea that input has meaning, and output has meaning relative to the input</li>
 <li>Give students a function. Then change the units of input to a different unit (e.g. feet go to Meters)</li>
-<li>Logarithms are not necessarily used as the end model; they are the lever which seperate power from exponential functions
+<li>Logarithms are not necessarily used as the end model; they are the lever which separate power from exponential functions
 <ul>
 <li>TODO: Think about physical phenomenon that would appropriately be modeled by a Logarithmic function or power with <span class="math inline">\(p&lt;1\)</span>
 </li>
@@ -295,6 +298,7 @@
 </li>
 <li>Reading: Chapter <a href="params-intro.html#params-intro">7</a>
 </li>
+<li>Quiz questions: Draw from MWLCS</li>
 </ol>
 </li>
 <li>
@@ -488,7 +492,7 @@ d: Reading: NEED LINK TO CHAPTER</li>
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>CalcZ Student Notes</strong>" was written by Daniel Kaplan. It was last built on 2021-07-01.</p>
+    <p>"<strong>CalcZ Student Notes</strong>" was written by Daniel Kaplan. It was last built on 2021-07-05.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">
