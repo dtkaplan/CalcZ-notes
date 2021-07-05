@@ -92,20 +92,9 @@ Often, functions can be parameterized in other ways. For instance, you likely le
 We can call $m(x - x_0)$ the "x-intercept parameterization" and $m x + b$ the "y-intercept parameterization. They are equivalent and equally good ways of parameterizing the straight line. There are still other ways of parameterizing, each style reflecting its own format for specifying the two points that make up a line. 
 :::
 
+## Scaling the input
+
 To turn a naked modeling function into a ***basic modeling function*** all we do is use $\line()$ to convert the input *before* applying the naked function.  `r mark(840)`
-
-Basic modeling function^[We're leaving the log function out of the list, simply because it's rarely used with $h()$.] | formula
-------------------------|----------------------
-Exponential             | $e^{\line(x)}$
-Power-law               | $\left[\line(x)\right]^p$
-Sinusoid                | $\sin(\line(x))$
-Hump                    | $\text{dnorm}(\line(x))$
-Sigmoid                 | $\text{pnorm}(\line(x))$
-Proportional            | $\line(x)$
-Reciprocal              | $1/\line(x)$
-
-
-As you can see, the straight-line function is a fundamental part of modeling. 
 
 To illustrate the link between basic modeling functions and their naked progenitors, Figure \@ref(fig:covid-scale) shows the model we fit to the COVID-19 data:
 
@@ -182,19 +171,7 @@ slice_plot(exp(x) ~ x, domain(x=c(-2, 2))) %>%
 ```
 :::
 
------
 
-<details>
-<summary>`r ex.mark(7.3, "uKCIE", fname="Exercises/Fun/scale-input-1.Rmd")` </summary>
-`r MC_counter$reset()` `r knitr::knit_child("Exercises/Fun/scale-input-1.Rmd")`
-</details>
-
------
-
-<details>
-<summary>`r ex.mark(7.7, "BLECL", fname="Exercises/Fun/scale-input-2.Rmd")` </summary>
-`r MC_counter$reset()` `r knitr::knit_child("Exercises/Fun/scale-input-2.Rmd")`
-</details>
 
 -----
 
@@ -213,6 +190,77 @@ Similar to MWLCS but with input scaling of the form $ax$.
 -----
 
 <details>
-<summary>`r ex.mark(7.13, "TCYES", fname="inline")` </summary>
+<summary>`r ex.mark(7.15, "TCYES", fname="inline")` </summary>
 Similar to MWLCS and HMLCT but with input scaling of the form $a(x-x_0)$. Keep it simple.
 </details>
+
+-----
+
+<details>
+<summary>`r ex.mark(7.17, "uKCIE", fname="Exercises/Fun/scale-input-1.Rmd")` </summary>
+`r MC_counter$reset()` `r knitr::knit_child("Exercises/Fun/scale-input-1.Rmd")`
+</details>
+
+-----
+
+<details>
+<summary>`r ex.mark(7.10, "BLECL", fname="Exercises/Fun/scale-input-2.Rmd")` </summary>
+`r MC_counter$reset()` `r knitr::knit_child("Exercises/Fun/scale-input-2.Rmd")`
+</details>
+
+
+
+
+## Linear combinations
+
+We've discussed ***shifting the baseline*** of the exponential and sinusoid functions by adding a constant to the basic modeling function, like this:
+
+$$f(t) \equiv A e^{kt} + C\\
+\ \\
+g(t) \equiv A \sin(\frac{2\pi}{P} t) + C$$
+
+We've called this output scaling. It's an example of a much more general and powerful way of contructing modeling functions called ***linear combinations***.
+
+In a linear combination, you start with one or more basic functions. For discussion, let's call these $f_1(t)$, $f_2(t)$, $f_3(t)$ and so on. In making a linear combination, multiply each of the basic functions by some quantity and add the results together:
+
+$$\text{linear combination of}\ f_1(t)\ \text{and}\ f_2(t): \ \ A_1 f_1(t) + A_2 f_2(t)$$
+The quantities $A_1$ and $A_2$ are called ***scalars*** because they **scale** the functions. (In Chapter \@ref(vectors) you will see that we make a distinction between a **scalar**, which is a single quantity, and a **vector**, which is a set of scalars.)
+
+It's common to take linear combinations of functions with different inputs, for example
+$$h(x, y, t) \equiv 4 e^{-kt} + 7 y + 2\pnorm(x-3) - 19$$
+
+In fields like statistics and economics and other social sciences, as well as clinical medical research, a great number of modeling techniques involve such combinations of functions of various inputs. 
+
+In engineering and physics, an important class of functions involves a linear combination of many sinusoids of different periods, e.g. 
+
+$$\text{signal}(t) \equiv A_1 \sin\left(\frac{2 \pi}{P_1}t\right) + 
+A_2 \sin\left(\frac{2 \pi}{P_2}t\right) + 
+A_3 \sin\left(\frac{2 \pi}{P_3}t\right) + \cdots$$
+
+Linear combination of functions provides a powerful and flexible general-purpose modeling technique in part because many physical systems seem to work this way and in part because the methods for finding the scalars---$A_1$, $A_2$, and so on---have an extremely strong theory and fast computer implementations that automatically solve the problem once the modeler has selected the functions she wants to combine. In Block 4, we use the name ***target problem*** to refer the problem of finding scalars to match as well as possible a linear combination to data.
+
+An expression like $A e^{kx} + C$ combines the exponential (obviously!) and a second function that isn't immediately obvious: the constant function $\text{constant}(x) \equiv 1$. It might be overkill to re-write the expression as $A e^{kx} + C\, \text{constant}(x)$ but get in the habit of seeing the constant function as a constant presence in linear combinations!
+
+Polynomials are an important example of linear combinations. Something like $p(x) \equiv a + b t + c t^2$ is a linear combination of the constant function, the proportionality function, and the square function. 
+
+<details>
+<summary>`r ex.mark(7.21, "AVNOW", fname="Exercises/Fun/bumpy-road-1.Rmd")` <summary>
+`r MC_counter$reset()` `r knitr::knit_child("Exercises/Fun/bumpy-road-1.Rmd")`
+</details>
+
+
+<details>
+<summary>`r ex.mark(7.21, "WAVES", fname="Exercises/Fun/bumpy-road-2.Rmd")` <summary>
+`r MC_counter$reset()` `r knitr::knit_child("Exercises/Fun/bumpy-road-2.Rmd")`
+</details>
+
+<details>
+<summary>`r ex.mark(7.21, "FISHU", fname="Exercises/Fun/two-gaussians.Rmd")` <summary>
+`r MC_counter$reset()` `r knitr::knit_child("Exercises/Fun/two-gaussians.Rmd")`
+</details>
+
+<details>
+<summary>`r ex.mark(7.21, "FKLEU", fname="Exercises/Fun/two-sines.Rmd")` <summary>
+`r MC_counter$reset()` `r knitr::knit_child("Exercises/Fun/two-sines.Rmd")`
+</details>
+

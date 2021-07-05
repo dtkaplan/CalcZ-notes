@@ -12,6 +12,7 @@ Open a `r sandbox_link()` and construct the linear combination function for the 
 ```{r eval=FALSE}
 female <- makeFun(dnorm(height, mean = 157, sd=17) ~ height)
 male   <- makeFun(dnorm(height, mean = 167, sd=22) ~ height)
+overall <- makeFun(female(height)/2 + male(height)/2 ~ height)
 #overall <- makeFun( __your_linear_combination_here__)
 
 slice_plot(female(height) ~ height, domain(height=c(100,220)), color="red",
