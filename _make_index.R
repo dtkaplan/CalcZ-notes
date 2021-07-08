@@ -5,8 +5,6 @@ Chapters <- yaml::read_yaml("_bookdown.yml")$rmd_files
 toss_out <- grepl("part-marker|index|outline", Chapters)
 Chapters <- Chapters[!toss_out]
 
-#Chapters <- Chapters[1]
-
 
 Res <- NULL
 for (k in 1:length(Chapters)) {
@@ -21,5 +19,11 @@ for (k in 1:length(Chapters)) {
   This_file <- mapply(make_entry, matches, 1:length(matches)) %>% bind_rows()
   Res <- bind_rows(Res, This_file)
 }
+
+Res %>%
+  mutate(phrase=tolower(phrase)) %>%
+  arrange(phrase, chap_num, line) -> Index
+
+readr::write_csv(Index, file="~/Downloads/CalcZ-index.csv")
 
   #rmarkdown::yaml_front_matter("_bookdown.yml")
