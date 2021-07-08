@@ -1,16 +1,16 @@
 # Continuity and smoothness {#cont-and-smooth}
 
-You've seen how various properties of a functions---whether it is monotonic, how it slopes, whether it is concave up or down (or not at all), curvature, etc.---can be related to the first and second derivatives of the function.
+You've seen how various properties of a functions---whether it is monotonic, how it slopes, whether it is concave up or down (or not at all), curvature, etc.---can be related to the first and second derivatives of the function. `r mark(2300)`
 
-It's time to introduce two new ways of describing functions that can be useful for determining whether a given function is fit for the purpose intended for it. These are ***continuity*** and ***smoothness***.
+It's time to introduce two new ways of describing functions that can be useful for determining whether a given function is fit for the purpose intended for it. These are ***continuity*** and ***smoothness***. `r mark(2305)`
 
 ## Continuity
 
 The intuition behind continuity is simple: If you can draw the graph of a function without lifting the pencil from the paper, the graph is continuous.
 
-Continuity can be an important attribute of a modeling function. Often, we are modeling phenomena where a ***small change in input*** is expected to produce a ***small change in output***. For instance, if your income changes by one penny, you would expect your lifestyle not to change by much. If the temperature of an oven changes by 1 degree, you don't expect the quality of the cake you are baking to change in any noticeable way. 
+Continuity can be an important attribute of a modeling function. Often, we are modeling phenomena where a ***small change in input*** is expected to produce a ***small change in output***. For instance, if your income changes by one penny, you would expect your lifestyle not to change by much. If the temperature of an oven changes by 1 degree, you don't expect the quality of the cake you are baking to change in any noticeable way.  `r mark(2310)`
 
-All of our basic modeling functions are continuous over their entire input domain (with one exception). To illustrate ***discontinuity*** we'll consider piecewise functions, as introduced in Chapter \@ref(fun-piecewise). The ***Heaviside function***, graphed in Figure \@ref(fig:heaviside2) is discontinuous.
+All of our basic modeling functions are continuous over their entire input domain (with one exception). To illustrate ***discontinuity*** we'll consider piecewise functions, as introduced in Chapter \@ref(fun-piecewise). The ***Heaviside function***, graphed in Figure \@ref(fig:heaviside2) is discontinuous. `r mark(2315)`
 
 ```{r heaviside2, echo=FALSE}
 slice_plot(0 ~ x, domain(x = c(-10, 0)), size=2) %>%
@@ -29,29 +29,29 @@ slice_plot(ramp(x) ~ x, domain(x=c(-3, 3)), size=2, npts=1000) %>%
   gf_labs(title="The ramp function.")
 ```
 
-Imagine that you were using a Heaviside function, say $H(W-20)$, as a model of plant growth as a function of the amount of water (in cc) provided each day. The model implies that if you provide 20.001 cc of water, the plant will thrive. But if you are stingy, and provide only 19.999 cc of water, the plant will die. In other words, a very small change in the input can lead to a large change in the output.
+Imagine that you were using a Heaviside function, say $H(W-20)$, as a model of plant growth as a function of the amount of water (in cc) provided each day. The model implies that if you provide 20.001 cc of water, the plant will thrive. But if you are stingy, and provide only 19.999 cc of water, the plant will die. In other words, a very small change in the input can lead to a large change in the output. `r mark(2320)`
 
-Common sense suggests that a change of 0.002 cc in the amount of water---that's a small fraction of a drop, 2 cubic millimeters of volume, is not going to lead to a qualitative change in output. So you might prefer to use a sigmoidal function as your model rather than a Heaviside function.
+Common sense suggests that a change of 0.002 cc in the amount of water---that's a small fraction of a drop, 2 cubic millimeters of volume, is not going to lead to a qualitative change in output. So you might prefer to use a sigmoidal function as your model rather than a Heaviside function. `r mark(2325)`
 
-On the other hand, sometimes a very small change in input does lead to a large change in output. For instance, a model of the hardness of water as a function of temperature sensibly would include a discontinuity at $32^\circ$F, the temperature at which water turns to ice.
+On the other hand, sometimes a very small change in input does lead to a large change in output. For instance, a model of the hardness of water as a function of temperature sensibly would include a discontinuity at $32^\circ$F, the temperature at which water turns to ice. `r mark(2330)`
 
 One of author Charles Dicken's famous characters, Mr. Macawber, described the relationship between income, expenditure, and happiness this way:
 
 > "*Annual income 20 pounds, annual expenditure 19 [pounds] 19 [shillings] and six [pence], result happiness. Annual income 20 pounds, annual expenditure 20 pounds ought and six, result misery."*
 
-Macawber was referring to the common situation in pre-20th century England of putting debtors in prison, regardless of the size of their debt. Macawber statement suggests he would model happiness as a Heaviside function $H(\text{income}- \text{expenditure})$.
+Macawber was referring to the common situation in pre-20th century England of putting debtors in prison, regardless of the size of their debt. Macawber statement suggests he would model happiness as a Heaviside function $H(\text{income}- \text{expenditure})$. `r mark(2335)`
 
 Whenever the output of a function is a yes-or-no value, you can anticipate that a model will involve a discontinuous function. 
 
 ## Smoothness
 
-***Smoothness*** is a different concept than continuity, although the two are related. Most simply, any discontinuous function is not smooth at any input where a discontinuity occurs. But even the continuous ramp function is not smooth at the start of the ramp. Intuitively, imagine you were sliding your hand along the ramp function. You would feel the crease at $x=0$. 
+***Smoothness*** is a different concept than continuity, although the two are related. Most simply, any discontinuous function is not smooth at any input where a discontinuity occurs. But even the continuous ramp function is not smooth at the start of the ramp. Intuitively, imagine you were sliding your hand along the ramp function. You would feel the crease at $x=0$.  `r mark(2340)`
 
 A function is not smooth if the derivative of that function is discontinuous. For instance, the derivative of the ramp function is the Heaviside function, so the ramp is not smooth at $x=0$.
 
-All of our basic modeling functions (with one exception!) are smooth everywhere in their domain. In particular, the derivatives of the basic modeling functions are continuous, as are the second derivative, third derivative, and so on down the line. Such functions are called ***C-infinity***, written $C^\infty$. The superscript $\infty$ means that every order of derivative is continuous.
+All of our basic modeling functions (with one exception!) are smooth everywhere in their domain. In particular, the derivatives of the basic modeling functions are continuous, as are the second derivative, third derivative, and so on down the line. Such functions are called ***C-infinity***, written $C^\infty$. The superscript $\infty$ means that every order of derivative is continuous. `r mark(2345)`
 
-For piecewise functions, it can be useful to consider other orders of smoothness. For example $C^0$ means that the function is continuous but its derivative is not, as with the ramp function. Figure \@ref(fig:C1-function) shows a $C^1$ function, which has a continuous first derivative but a discontinuous second derivative. 
+For piecewise functions, it can be useful to consider other orders of smoothness. For example $C^0$ means that the function is continuous but its derivative is not, as with the ramp function. Figure \@ref(fig:C1-function) shows a $C^1$ function, which has a continuous first derivative but a discontinuous second derivative.  `r mark(2350)`
 
 ```{r C1-function, echo=FALSE, fig.cap="A function whose derivative is the ramp function (hence continous) and whose second derivative is the Heaviside function (discontinous). Since the first derivative is continuous, this function has $C^1$ smoothness."}
 options(digits=5)
@@ -85,11 +85,11 @@ slice_plot(DH01(x) ~ x, domain(x=c(-0.02, 0.02)), npts=500,
   slice_plot(DH0001(x) ~ x,
            color="blue", npts=500, alpha=0.5) 
 ```
-Differencing the Heaviside function produces very different functions depending on the value of $h$. Since there is no convergence as $h$ gets smaller, it's fair to say that the Heaviside function does not have a derivative. Perhaps a more useful way to think of it is that the "derivative" of the Heaviside function at $x=0$ is unaccountably large as $h\rightarrow 0$. 
+Differencing the Heaviside function produces very different functions depending on the value of $h$. Since there is no convergence as $h$ gets smaller, it's fair to say that the Heaviside function does not have a derivative. Perhaps a more useful way to think of it is that the "derivative" of the Heaviside function at $x=0$ is unaccountably large as $h\rightarrow 0$.  `r mark(2355)`
 
-We know that when a function has a large derivative, a small difference in the input will make a large difference in the output. This brings us back to the definition of ***discontinuous*** at the start of the chapter. So I like to think of the "derivative" of the Heaviside function as discontinuous.
+We know that when a function has a large derivative, a small difference in the input will make a large difference in the output. This brings us back to the definition of ***discontinuous*** at the start of the chapter. So I like to think of the "derivative" of the Heaviside function as discontinuous. `r mark(2360)`
 
-A strictly logical thinker would rebel at the conflict between the previous two paragraphs: The first saying that the Heaviside function does not have a derivative, the second saying that the derivative is discontinuous. The resolution is to point out that away from $x=0$, the Heaviside function has a perfectly sensible derivative: $\partial_x H(x) = 0$ for $x\neq 0$. But there is no derivative at $x=0$.
+A strictly logical thinker would rebel at the conflict between the previous two paragraphs: The first saying that the Heaviside function does not have a derivative, the second saying that the derivative is discontinuous. The resolution is to point out that away from $x=0$, the Heaviside function has a perfectly sensible derivative: $\partial_x H(x) = 0$ for $x\neq 0$. But there is no derivative at $x=0$. `r mark(2365)`
 
 
 ::: {.objectives latex-data=""}

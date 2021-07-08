@@ -30,15 +30,15 @@ This chapter examines the possibilities for extending the formula a bit, to incl
 We'll consider two possible applications:
 
 1. Creating an arithmetically simple approximation to a function whose formula is already known. Such approximations are known as ***Taylor polynomials***.
-2. Creating a function to capture the patterns in data, as in Chapter \@ref(local-approximations). It turns out that this is a dubious practice. We discuss the reasons why so that you can know to avoid using high-order polynomials to fit data.
+2. Creating a function to capture the patterns in data, as in Chapter \@ref(local-approximations). It turns out that this is a dubious practice. We discuss the reasons why so that you can know to avoid using high-order polynomials to fit data. `r mark(2915)`
  
 ## The reference point
 
-Since this is all about ***approximations***, we need to have a way to specify the neighborhood of the function domain in which the approximation is intended to be good enough for use. We can use the same approach that turned the naked modeling functions (e.g., $x$, $x^2$, ...) into the basic modeling functions: replacing $x$ in the polynomial with $\line(x)$.  But unlike the basic modeling functions, where the useful form of $\line()$ was usually $ax + b$, here, we'll use just a ***shift form*** of line, where the slope is 1: 
+Since this is all about ***approximations***, we need to have a way to specify the neighborhood of the function domain in which the approximation is intended to be good enough for use. We can use the same approach that turned the naked modeling functions (e.g., $x$, $x^2$, ...) into the basic modeling functions: replacing $x$ in the polynomial with $\line(x)$.  But unlike the basic modeling functions, where the useful form of $\line()$ was usually $ax + b$, here, we'll use just a ***shift form*** of line, where the slope is 1:  `r mark(2920)`
 
 $$\text{shift}(x) \equiv \left[\strut x - x_0\right]$$
 The parameter $x_0$ is called the ***reference point***. For a power-law function, $$\left[\strut\text{shift}(x)\right]^n =  \left[\strut x - x_0\right]^n$$
-the output is always zero when $x=x_0$, which will be a matter of considerable importance as we go on. Also, note that we're using square braces $\left[\ \ \right]$ simply to make it completely unambiguous what is being exponentiated.
+the output is always zero when $x=x_0$, which will be a matter of considerable importance as we go on. Also, note that we're using square braces $\left[\ \ \right]$ simply to make it completely unambiguous what is being exponentiated. `r mark(2925)`
 
 
 ```{exercise, name="locate-shift"}
@@ -51,7 +51,7 @@ Several exercises of this sort:
 
 With the reference point $x_0$ we will re-write the approximating polynomial as 
 $$h(x) \equiv a_0 + a_1 [x-x_0] + a_2 [x - x_0]^2 + a_3 [x - x_0]^3 + \cdots$$
-This format is convenient because in finding the $a_0$, $a_1$, $\ldots$ for approximating a function $f(x)$ in the neighborhood of $x_0$, we have a way to calculate quickly the value of $a_0$.  Note that at $x=x_0$, all the terms in the polynomial go to zero except the first, so we know $a_0 = f(x_0)$.
+This format is convenient because in finding the $a_0$, $a_1$, $\ldots$ for approximating a function $f(x)$ in the neighborhood of $x_0$, we have a way to calculate quickly the value of $a_0$.  Note that at $x=x_0$, all the terms in the polynomial go to zero except the first, so we know $a_0 = f(x_0)$. `r mark(2930)`
 
 Now consider the derivative of the approximating polynomial. This is
 $$\partial_x h(x) = a_1 + 2 \times a_2 [x-x_0] + 3 \times a_3 [x-x_0] + \cdots$$
@@ -96,7 +96,7 @@ $$f(x) \approx f(x_0) + \frac{\partial_x f(x_0)}{1!} [x - x_0]^1
 + \frac{\partial_{xxx} f(x_0)}{3!} [x - x_0]^3
 + \ldots
 $$
-This is the ***Taylor polynomial***. A Taylor polynomial that terminates with the $[x-x_0]^2$ term is a ***second-order Taylor polynomial***, one that terminates with the $[x-x_0]^3$ term is a ***third-order Taylor polynomial***. Mathematicians are particularly interested in the $n$th-order Taylor polynomial where $n \rightarrow \infty$.
+This is the ***Taylor polynomial***. A Taylor polynomial that terminates with the $[x-x_0]^2$ term is a ***second-order Taylor polynomial***, one that terminates with the $[x-x_0]^3$ term is a ***third-order Taylor polynomial***. Mathematicians are particularly interested in the $n$th-order Taylor polynomial where $n \rightarrow \infty$. `r mark(2935)`
 
 Construction of a Taylor polynomial involves finding the various orders of derivatives. There are some cases where this is simple, especially if a felicitous choice of $x_0$ can be made.
 
@@ -107,7 +107,7 @@ $$\sin(x) \approx 0 + \frac{1}{1!}[x] + \frac{0}{2!} [x]^2 - \frac{1}{3!} [x]^3 
 ::: {.why}
 Why say "smooth, continuous function" instead of just function when talking about the kinds of functions Taylor polynomials can approximate?
 
-Keep in mind that each of the terms in the polynomial has the form $a_n [x-x_0]^n$ for $n=1,2,3, \ldots$. Each of these is a power-law function and therefore smooth and continuous. So the polynomial---the sum of the individual terms---will always be smooth and continous. If $f()$ is not, no promises can be given about the quality of the approximation.
+Keep in mind that each of the terms in the polynomial has the form $a_n [x-x_0]^n$ for $n=1,2,3, \ldots$. Each of these is a power-law function and therefore smooth and continuous. So the polynomial---the sum of the individual terms---will always be smooth and continous. If $f()$ is not, no promises can be given about the quality of the approximation. `r mark(2940)`
 :::
 
 ## Polynomials and data
