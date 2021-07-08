@@ -1,8 +1,8 @@
 # Insert marks in a chapter file
 
-remark_chapter <- function(fname, start, skip=10) {
+remark_chapter <- function(fname, start, skip=5) {
   text <- readLines(fname)
-  long_lines <- nchar(text) > 100
+  long_lines <- nchar(text) > 200
   blank_lines <- !grepl("[a-zA-Z0-9`]", text)
   chunk_lines <- grepl("^[```|:::]", text)
 
@@ -19,6 +19,6 @@ remark_chapter <- function(fname, start, skip=10) {
     text[candidate_lines[k]] <- paste(text[candidate_lines[k]], mark_text)
   }
 
-  writeLines(text, con="~/Downloads/marked-up.Rmd")
-  return(candidate_lines)
+  writeLines(text, con=fname)
+  return(start + skip*length(candidate_lines))
 }
