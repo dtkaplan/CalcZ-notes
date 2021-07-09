@@ -149,8 +149,10 @@ Let's look at one where we already know the result: The straight line function $
 $$\diff{x}\line(x) = \frac{a (x+h) + b - (a x + b)}{h} = \frac{ah}{h} = a$$
 The derivative is the slope function with $h$ made as small as possible. It's tempting to think of this as $h = 0$, but that would imply dividing by zero in the differencing operator. Being cautious about this, we write that differentiation is differencing with $h \rightarrow 0$, or `r mark(2220)`
 
-$$\partial_x \line(x) \equiv \lim_{h\rightarrow 0} \frac{\line(x+h) - 
-\line(x)}{h} = \lim_{h\rightarrow 0$ \frac{a h}{h} = a$$
+$$\partial_x \line(x) \equiv \lim_{h\rightarrow 0} \frac{\line(x+h) - \line(x)}{h} =\\
+\ \\
+= \lim_{h\rightarrow 0} \frac{a h}{h} = a$$
+
 This derivation is unarguably correct for any non-zero $h$. 
 
 This short derivation gives us a basic differentiation rule which we can divide into 3 special cases. 
@@ -215,7 +217,11 @@ Since $\lim_{h\rightarrow 0} (e^h-1)/h = 1$, we have
 
 Still another example: the reciprocal function, written equivalently as $1/x$ or $x^{-1}$
 
-$$\partial x^{-1} = \lim_{h\rightarrow 0}\frac{1/(x+h) - 1/x}{h} = \lim_{h\rightarrow 0}\frac{x - x+h}{x(x+h)h} = -\lim_{h\rightarrow 0}\frac{h}{x(x+h)h} = -\lim_{h\rightarrow 0}\frac{1}{x^2 + hx}$$
+$$\partial x^{-1} = \lim_{h\rightarrow 0}\frac{1/(x+h) - 1/x}{h} =\\
+\ \\
+= \lim_{h\rightarrow 0}\frac{x - x+h}{x(x+h)h} = -\lim_{h\rightarrow 0}\frac{h}{x(x+h)h} =\\
+\ \\
+= -\lim_{h\rightarrow 0}\frac{1}{x^2 + hx}$$
 So long as $x \neq 0$, there is no divide-by-zero problem, but let's see what the computer thinks:
 
 ```{r}
@@ -242,9 +248,9 @@ logarithm   | $\ln(x)$  | $1/x$  | not yet
 sinusoid    | $\sin(x)$ | $\cos(x)$ | not yet
 square | $x^2$  | $2x$ | yes
 proportional | $x$   | $1$ | yes
-constant | | 0 | yes
+constant | 1  | 0 | yes
 reciprocal | $1/x$ or $x^{-1}$   | $-1/x^2$ | yes
-hump     |  $\dnorm(x)$           |  $-x \dnorm(x)$ | not yet
+hump     |  $\dnorm(x)$           |  $-x\, \dnorm(x)$ | not yet
 sigmoid  |  $\pnorm(x)$            |  $\dnorm(x)$ | by definition
 
 ::: {.todo}
