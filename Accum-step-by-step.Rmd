@@ -36,17 +36,11 @@ How long to continue this step-by-step process? The original problem involved so
 Exercises like this:
 ```
 <details>
-  
-Using the Euler method find $\int f(t) dt$ over the interval $t_0=0$ to $t_{end}=1$. The $t$ quantity is in steps of $h=0.01$.
-
-$t$  | $\partial_t f(t)$ | $\int f(t) dt$
------|-------------------|-----------------
-0    | `r round(dnorm(0)   , 3)`   |    0.5
-0.01 | `r round(dnorm(0,01), 3)`   |  
-0.02 | `r round(dnorm(0,02), 3)`   |  
-0.03 | `r round(dnorm(0.03), 3)`   |  
-
+<summary>`r ex.mark(XX.3, "9W6VB", fname="Exercises/Accum/euler-step.Rmd")`
+</summary> 
+`r MC_counter$reset()` `r knitr::knit_child("Exercises/Accum/euler-step.Rmd")`
 </details>
+
 
 ## Automating Euler
 
@@ -111,12 +105,8 @@ With numerical methods, there will almost always be some error introduced by rou
 
 It might seem odd to use 3 lines of R/mosaic commands to confirm an answer that was calculated in one line. That's a pretty good representation of how much effort a professional will put into **testing** the result compared to **getting** the result.
 
-```{exercise}
-Try another strategy for confirming that `antiD()` is giving a good answer. Compare `f()` from the `antiD()` calculation to `pnorm()`.
-```
 
-
-### Using `cumsum()`
+### Using `cumsum()` {#using-cumsum}
 
 `antiD()` produces a function that can be evaluated at any input. In contrast,
 the Euler method as described here produces a data table of values as, for example, seen in the spreadsheet implementation of Euler.
@@ -152,15 +142,11 @@ n
 sum(n)
 cumsum(n)
 ```
-```{exercise, name="cumsum"}
-Consider this sequence: 4, 5, 3, 1, 2
 
-What is the sum?
-  
-What is the cumulative sum?
-  
-Which entry in the cumulative sum matches the sum?
-```
+<details>
+<summary>`r ex.mark(22.5, "3IU9R", fname="Exercises/Accum/cumsum.Rmd")`</summary>
+`r MC_counter$reset()` `r knitr::knit_child("Exercises/Accum/cumsum.Rmd")`
+</details>
 
 A good practice with numerical methods is to package them as a ***function***, so that you can easily apply the same method in many different contexts. This is the best way to arrange a calculation so it can be debugged and verified. This is what such a function would look like in R:
 
@@ -179,7 +165,7 @@ accumulate <- function(tilde_expr, t_0=0, t_end=1, h=(t_end-t_0)/100) {
 Let's test `accumulate()`. Since `dnorm()` is the derivative of `pnorm()`, accumulating `dnorm()` should give a function that has the same shape as `pnorm()`.
 
 ```{r}
-Pts <- accumulate(dnorm(t) ~ t, t_0=-1, t_end=3, h=0.01)
+Pts <- accumulate(dnorm(t) ~ t, t_0=0, t_end=3, h=0.01)
 gf_point(euler ~ t, data = Pts) %>%
   slice_plot(pnorm(t) ~ t, color="red")
 ```
@@ -196,10 +182,12 @@ gf_point(diff ~ t, data = For_plot) %>%
 
 The Euler method gives results that are roughly 0.16 units less than the true answer, `pnorm()`. Notice that the error is practically the same for all $t$. This shows that the Euler accumulated `dnorm()` is practically `pnorm(t) - 0.16`: a pure vertical shift. (If you look very closely, you'll see that `diff` is not exactly a constant. That's the result of using finite $h$ in the Euler accumulation.)
 
+<details>
+<summary>`r ex.mark(22.5, "3IUVB", fname="Exercises/Accum/accumulate-R.Rmd")`
+</summary>
+`r MC_counter$reset()` `r knitr::knit_child("Exercises/Accum/accumulate-R.Rmd")`
+</details>
 
-```{exercise}
-Implement `accumulate()` in a sandbox. Show that the vertical difference between the accumulated points and `pnorm()` gets smaller as you move $t_0$ to the left. 
-```
 
 ## Iteration
 
