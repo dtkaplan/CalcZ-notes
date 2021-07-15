@@ -32,7 +32,7 @@ readQfile <- function(fname) {
            " are invalid. Non-MC item lines must be blank or comment (#)."
       )
     }
-    lines <- strsplit(this_question[valid_lines], "[", fixed=TRUE)
+    lines <- this_question[valid_lines]
     Choices[[k]] <- parse_choices(lines)
     Choices[[k]]$question <- Questions$unique[k]
   }
@@ -58,9 +58,9 @@ test1 <- c(
 parse_choices <- function(lines) {
   right_wrong_pattern <- "^\\s?\\[\\s?(.?)\\s?\\].*"
   mark <- gsub(right_wrong_pattern, "\\1", lines)
-  content_pattern <- "\\[.?\\]\\s?"
-  content_pattern <- "\\[.?\\]\\s?([^\\[]*).*"
-  content <- gsub(content_pattern, "\\1", lines)
+  # Strip off leading and trailing [] blocks
+  content <- gsub("\\[.?\\]\\s?", "", lines)
+  content <- gsub("\\[.*$", "", content)
   content <- gsub("\\s+$", "", content)
   feedback_pattern <- ".*\\[(.*)\\]\\s?$"
   feedback <- gsub(feedback_pattern, "\\1", lines)

@@ -15,3 +15,17 @@ regrets <- c(
   "False.",
   "Nope"
 )
+
+#' @export
+random_success <- function() {
+  sample(success, size=1)
+}
+
+success <- c(
+  "Right!",
+  "Excellent!",
+  "Good.",
+  "Correct.",
+  "Right-o!"
+
+)

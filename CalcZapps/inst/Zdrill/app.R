@@ -58,7 +58,6 @@ server <- function(input, output) {
     feedback <- reactiveValues(message="")
 
     observeEvent(input$check_answer, {
-      cat("Selected answer is", input$answers, "\n")
       if (is.null(input$answers)) feedback$message <- ""
       else feedback$message <- this_question$feedback[as.integer(input$answers)]
     })
@@ -89,7 +88,7 @@ server <- function(input, output) {
           } else {
           sample((State$next_q+1):n_qs, size=1)
           }
-        cat("Current position : ", State$next_q, "Insertion point: ", index, "\n")
+
         if (index <= length(State$q_ids)) {
           tmp <- State$q_ids[index]
           State$q_ids[index] <- this_id
@@ -111,7 +110,6 @@ server <- function(input, output) {
     })
 
     next_question <- reactive({
-        cat("Getting next question\n")
         input$nextQ # for the dependency
         input$topic_choice # ditto
         # Get the next item
@@ -130,9 +128,10 @@ server <- function(input, output) {
         prompt_info <- Qbank$Q %>% filter(unique == State$q_ids[k])
         this_question$prompt <- prompt_info$prompt
         choices <- Qbank$C %>% filter(question == State$q_ids[k])
-        this_question$choices <- choices$prompt
-        this_question$correct <- which(choices$correct == "+")
+        this_question$choices <- choices$choice_text
+        this_question$correct <- which(choices$correct)
         this_question$feedback <- choices$feedback
+        this_question$random_order <- !any(choices$mark == "a")
         list(unique = prompt_info$unique, name = prompt_info$qname)
 
     })
@@ -145,17 +144,21 @@ server <- function(input, output) {
     prompts <- this_question$choices
     choice_set <- as.list(1:length(prompts))
     names(choice_set) <- prompts
+    if (this_question$random_order) {
+      #randomize order of choices
+      inds <- 1:length(choice_set)
+      choice_set <- choice_set[sample(inds)]
+    }
     withMathJax(
       radioButtons("answers", "Choose one", choice_set, selected=character(0))
     )
   })
   output$Feedback <- renderUI({
-    cat("Printing feedback\n")
     if (nchar(feedback$message)==0) return(" ") # for the dependency
     isolate({
       if (!is.null(input$answers)) message <- feedback$message
       else return(NULL)
-      correct_sign <- ifelse(this_question$correct == input$answers, "+", random_regret())
+      correct_sign <- ifelse(this_question$correct == input$answers, random_success(), random_regret())
       shinyjs::hide("check_answer")
       shinyjs::show("nextQ")
     })
