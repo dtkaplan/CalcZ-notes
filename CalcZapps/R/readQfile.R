@@ -20,7 +20,7 @@ readQfile <- function(fname) {
   for (k in 1:sum(start_lines)) {
     these_line_nums <- (start_line_num[k]+1):(start_line_num[k+1] - 1)
     this_question <- content[these_line_nums]
-    valid_lines <- grepl("^-\\s*", this_question)
+    valid_lines <- grepl("^\\s?\\[", this_question)
     invalid_lines <- which(!valid_lines)
     wrong_start <- !grepl("^ {0,}\\#", this_question[!valid_lines]) & nchar(this_question[!valid_lines]) > 0
 
@@ -33,13 +33,44 @@ readQfile <- function(fname) {
       )
     }
     lines <- strsplit(this_question[valid_lines], "[", fixed=TRUE)
-    Choices[[k]] <- tibble::tibble(
-      prompt = sapply(lines, function(x) gsub("^-\\s*", "", x[1])),
-      correct = sapply(lines, function(x) gsub("\\]\\s*$", "", x[2])),
-      feedback = sapply(lines, function(x) gsub("\\]$\\s*", "", x[3])),
-      question = Questions$unique[k]
-    )
+    Choices[[k]] <- parse_choices(lines)
+    Choices[[k]]$question <- Questions$unique[k]
   }
 
   list(Q = Questions, C = dplyr::bind_rows(Choices))
 }
+
+#' test lines for development
+test1 <- c(
+  "[] Mercury [Too close to the sun for me!]",
+  "[] Venus",
+  "[a] Earth  [Home, sweet home]",
+  "[] Mars  [In the movies, maybe]"
+)
+
+
+#' Accepted syntax
+#' Line starts with [a] or [+] means correct, with [a] meaning "keep order" and "+"
+#' meaning "randomize order" [] or [ ] or [-] means incorrect
+#' Next characters until open bracket are the choice text itself
+#' Optionally [feedback] {param=whatever, param2=whatever}
+#' @export
+parse_choices <- function(lines) {
+  right_wrong_pattern <- "^\\s?\\[\\s?(.?)\\s?\\].*"
+  mark <- gsub(right_wrong_pattern, "\\1", lines)
+  content_pattern <- "\\[.?\\]\\s?"
+  content_pattern <- "\\[.?\\]\\s?([^\\[]*).*"
+  content <- gsub(content_pattern, "\\1", lines)
+  content <- gsub("\\s+$", "", content)
+  feedback_pattern <- ".*\\[(.*)\\]\\s?$"
+  feedback <- gsub(feedback_pattern, "\\1", lines)
+  has_feedback <- grepl("\\]\\s?$", lines)
+  feedback[!has_feedback] <- " "
+
+  tibble::tibble(choice_text = content,
+                 feedback = feedback,
+                 mark = mark,
+                 correct =  mark %in% c("+", "a")
+  )
+}
+
