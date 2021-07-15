@@ -21,7 +21,7 @@ The two exceptions are:
     - When $p$ is negative, the output of the function is undefined when $x=0$. You can see why with a simple example: $g(x) \equiv x^{-2}$. Most students had it drilled into them that "division by zero is illegal," and $g(0) = \frac{1}{0} \frac{1}{0}$, a double law breaker. 
     - When $p$ is not an integer, that is $p \neq 1, 2, 3, \cdots$ the domain of the power-law function does not include negative inputs. To see why, consider the function $h(x) \equiv x^{1/3}$. 
     
-It can be tedious to make sure that you are on the right side of the law when dealing with functions whose domain is not the whole number line. The designers of the hardware that does computer arithmetic, after several decades of work, found a clever system to make it easier. It's a standard part of such hardware that whenever ta function is handed an input that is not part of that function's domain, one of two special "numbers" is returned. To illustrate:
+It can be tedious to make sure that you are on the right side of the law when dealing with functions whose domain is not the whole number line. The designers of the hardware that does computer arithmetic, after several decades of work, found a clever system to make it easier. It's a standard part of such hardware that whenever a function is handed an input that is not part of that function's domain, one of two special "numbers" is returned. To illustrate:
 ```{r warning=FALSE}
 sqrt(-3)
 (-2)^0.9999
@@ -54,7 +54,7 @@ slice_plot(log(x) ~ x, domain(x=c(-5,5)))
 
 In a purely mathematical sense, the problem with functions being undefined over an extended part of a domain has been handled with cunning and imagination. But the solution---the invention of complex numbers---is not our concern here. Instead, we're going to embrace functions that have a domain smaller than the whole number line and see what we can do with them. 
 
-To illustrate, let's use computer notation to create a function whose domain is $x < 1$. To do this, we need a way to write "if," as in, "If $x$ is 1 or greater, return `NaN`." We'll use a function in R that let's ask a TRUE/FALSE question and, depending on the answer, do one or another calculation. The question-answering R function is `ifelse()` whose name is remarkably descriptive. The `ifelse()` function takes three arguments. The first is the question to be asked, the second is the value to return if the answer is "yes," and the third is the value to return for a "no" answer.
+To illustrate, let's use computer notation to create a function whose domain is $x < 1$. To do this, we need a way to write "if," as in, "If $x$ is 1 or greater, return `NaN`." We'll use a function in R that let's us ask a TRUE/FALSE question and, depending on the answer, do one or another calculation. The question-answering R function is `ifelse()` whose name is remarkably descriptive. The `ifelse()` function takes three arguments. The first is the question to be asked, the second is the value to return if the answer is "yes," and the third is the value to return for a "no" answer.
 
 ```{r warning=FALSE}
 g <- makeFun( ifelse(x < 1, x, NaN) ~ x)
@@ -78,7 +78,7 @@ R notation              | English
 
 Having an ability to split up the domain of a function and provide different formula for each of the pieces allows us to
 construct ***piecewise functions***. To illustrate, the function $h(x) \equiv |x|$. You'll recognize this as the "absolute value" function. The intuitive algorithm is to "strip the negative sign, if any" from the input. But with the ability to divide the domain into pieces, we gain access to a less mysterious sort of arithmetic operation and can re-write $$h(x) \equiv \left\{ 
-\begin{array}{cl} x & \text{for}\ 0 \leq x\\-x & \mbox{otherwise}\end{array}
+\begin{array}{cl} x & \text{for}\ 0 \leq x\\ -x & \mbox{otherwise}\end{array}
 \right.$$ 
 Or, in computer notation
 ```{r}
@@ -104,7 +104,7 @@ slice_plot(0 ~ x, domain(x = c(-10, 0)), size=2) %>%
 ```
 The vertical gap between the two pieces is called a ***discontinuity***. Intuitively, you cannot draw a discontinuous function ***without lifting the pencil from the paper***. The Heaviside function has a discontinuity at $x=0$.
 
-Similarly, the ***ramp function*** is a kind of one-sided absolute value:
+Similarly, the ***ramp function*** (aka "ReLU") is a kind of one-sided absolute value:
 $$\mbox{ramp}(x) \equiv \left\{ 
 \begin{array}{cl} x & \text{for}\ 0 \leq x\\0 & \mbox{otherwise}\end{array}
 \right.$$
