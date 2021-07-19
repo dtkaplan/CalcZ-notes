@@ -432,7 +432,7 @@ $$\underbrace{\left[\begin{array}{c}x_{n+1}\\y_{n+1}\end{array}\right]}_\mbox{ne
 
 `r insert_calcZ_exercise("XX.XX", "PTn8Yk", "Exercises/Dynamics/aspen-take-cotton.Rmd")`
 
-
+`r insert_calcZ_exercise("XX.XX", "JcqzZA", "Exercises/Dynamics/camel-dig-fridge.Rmd")`
 
 
 
@@ -447,7 +447,535 @@ state_objective("Dyn-4b", "Understand sequences as steps through discrete time")
 ```
 :::
 
+We're focusing now on the behavior of discrete-time dynamical systems near fixed points. Recall that we've defined $x$ and $y$ scales that have the fixed point at (0, 0) and that the dynamics can be approximated by linear functions which we write with a matrix. We'll call the matrix ${\mathbf A}$ and use ${\mathbf X}_n$ to denote the two-dimensional state at time $n$.  So the dynamics are: $${\mathbf X}_{n+1} = {\mathbf A}\, {\mathbf X}_n\ \ \ \mbox{where}\ \ {\mathbf A} = \left[\begin{array}{cc}a & b\\c & d\end{array}\right]\  \mbox{for instance}\ \ \left[\begin{array}{rr}1.1 & -0.4\\0.3 & 0.9\end{array}\right]$$
+This is all just a matter of arithmetic. Suppose we start at the initial condition ${\mathbf X}_0 = \left[\begin{array}{r}1.3\\0.5\end{array}\right]$. Using the example matrix from above, the value of ${\mathbf X}_{1}$ will be ${\mathbf A}\, {\mathbf X}_0$, or
+$$
+{\mathbf X}_1 = \underbrace{\left[\begin{array}{rr}1.1 & -0.4\\0.3 & 0.9\end{array}\right]}_{\mathbf A} \cdot \underbrace{\left[\begin{array}{r}1.3\\0.5\end{array}\right]}_{{\mathbf X}_0} = 1.3 \left[\begin{array}{r}1.1\\0.3\end{array}\right] + 0.5 \left[\begin{array}{r}-0.4\\0.9\end{array}\right] = \left[\begin{array}{r}1.23\\0.84\end{array}\right]
+$$
+Over the next few class sessions, you'll see why such systems are important in practice. For now, however, we want to see the behavior of such systems as they are iterated to higher $n$. We can obviously construct an infinite number of make-work exercises about matrix arithmetic. And we could have you push off the arithmetic labor onto the computer. But instead, we take heed of a famous epigram that's painted onto the wall in the Math Department offices (by the window overlooking the chapel):
+
+> *The purpose of computing is insight, not numbers.* --- Richard Hamming
+
+If we were to have you calculate and display numerically sequences of vectors, it would be hard to extract insight into the patterns of matrix iteration. Instead, we'll use a graphical display, actually two:
+
+1. The trajectory as it moves from step to step through state space, that is, the space $y$ versus $x$.
+2. The "time series" for the variable $y$, that is, $y_n$ versus $n$. Think of this as a graph of $y$ versus time, while the state-space graph is $y$ versus $x$.
+
+We'll let the computer do the arithmetic and graphing. Your job is to experiment with various matrices, explore the patterns of motion they produce, and gain some insight. Click on the picture of the app to bring it up in another tab of your browser, then arrange that tab and this one side by side.
+
+<a href="https://maa-statprep.shinyapps.io/142Z-Matrix-iteration/" target="_blank"><img src="www/app-snapshot.png" width="70%"></a>
+
+**Slow and fast motion**
+
+Each trajectory consists of a series of dots. The dots are connected with a thin line to help you see easily consecutive points, but these are discrete-time dynamics so only the dots are "real."
+
+The spacing between consecutive dots is something like the "speed" of the motion, but perhaps "distance jumped" is a better metaphor to correspond to discrete time. For convenience, we'll say the motion is "slow" when consecutive dots are close together and "fast" when they are far apart.
+
+One general pattern seen in linear dynamics near a fixed point is that the motion is slow near the fixed point and fast far from it. 
+
+Sometimes the speed of motion is systematically faster for trajectories heading in some directions and slower for trajectories in other directions. But on any one trajectory, the motion will be faster far from the fixed point and slower near to it. Of course, the speed of motion is zero right at the fixed point: it's fixed!
+
+
+**The saddle** Start with the matrix $${\mathbf A} = \left[\begin{array}{rr}0.90 & 0.05\\0.05 & 1.01\end{array}\right]$$
+Set the number of iterations to, say, 100. Then click in the graph to start trajectories for many places near the perimeter of the graphic frame. You can just do this randomly at first, but then clear the graph and do it systematically to make the pattern of motion clear.
+
+This pattern is called a "saddle," because the dynamics are analogous to the movement of a drop of water rolling down a horse saddle.
+
+```{r sts-1, echo=FALSE, results="markup"}
+askMC(
+  "From initial conditions in a particular direction from the origin (that is, the fixed point), the trajectories head in straight to the origin. What direction is that? (Use the notation of the clock. So 6:00 is straight down, 9:00 is to the left, and so on.) Hint: Use the y versus n graph to determine where the trajectory started.",
+  "+4:00 & 10:00+",
+  "2:00 & 8:00",
+  "6:00 & 12:00",
+  "1:00 & 7:00",
+  random_answer_order = TRUE
+)
+```
+
+```{r sts-2, echo=FALSE, results="markup"}
+askMC(
+  "The trajectories that head in almost straight to the fixed point, turn left or right and head away from the fixed point in another direction. What direction is that? Hint: Use the y versus n graph to determine where the trajectory started.",
+  "4:00 & 10:00",
+  "2:00 & 8:00",
+  "6:00 & 12:00",
+  "+1:00 & 7:00+",
+  random_answer_order = TRUE
+)
+```
+
+The two directions you found in the previous two questions are called "characteristic directions," or, more generally, **characteristic vectors**. But in mathematics and the sciences, these are usually called **eigenvectors**. We denote the eigenvectors as ${\mathbf \Lambda}_1$ and ${\mathbf \Lambda}_2$, pronouced "lambda-one" and "lambda-two." Perhaps one way to remember that the ${\mathbf \Lambda}$s are each telling part of the story of the A matrix is to see that ${\mathbf \Lambda}$ is only part of A.
+
+Associated with each eigenvector is a number called a **characteristic value** or **eigenvalue**. The two eigenvalues are displayed as $\lambda_1$ and $\lambda_2$ underneath the matrix. We'll defer for the present how these are calculated.
+
+The dynamics have an extremely simple solution when they start on an eigenvector: motion right along that eigenvector. Suppose the initial condition is $m {\mathbf \Lambda}_1$
+The solution is $${\mathbf X}_n = \lambda_1^n\ \  m {\mathbf \Lambda}_1$$ with the same for $\lambda_2$ and ${\mathbf \Lambda}_2$. 
+Such motion is either stable ($|\lambda | < 1$) or unstable ($|\lambda| > 1$).
+
+```{r sts-3, echo=FALSE, results="markup"}
+askMC(
+  "Which is the eigenvalue corresponding to the direction of stable motion?",
+  "+0.88+",
+   "0.9",
+  "1.01",
+  "1.03",
+  random_answer_order = FALSE
+)
+```
+
+```{r sts-4, echo=FALSE, results="markup"}
+askMC(
+  "Which is the eigenvalue corresponding to the direction of **unstable** motion?",
+  "0.88",
+   "0.9",
+  "1.01",
+  "+1.03+",
+  random_answer_order = FALSE
+)
+```
+
+The saddle behavior is "generic" in the sense that a small change to the numbers composing the matrix will still produce saddle motion.
+
+**The source** In the app, change the matrix to $${\mathbf A} = \left[\begin{array}{rr}1.1 & 0.05\\0.05 & 1.1\end{array}\right]$$ and construct trajectories starting from all around the fixed point.
+
+```{r sts-5, echo=FALSE, results="markup"}
+askMC(
+  "Which is the **stable** eigenvector?",
+  "${\\mathbf \\Lambda}_1$",
+  "${\\mathbf \\Lambda}_2$",
+  "Both ${\\mathbf \\Lambda}_1$ and ${\\mathbf \\Lambda}_2$",
+  "+There is no stable direction.+",
+  random_answer_order = FALSE
+)
+```
+
+```{r sts-6, echo=FALSE, results="markup"}
+askMC(
+  "Which is the **unstable** eigenvector?",
+  "${\\mathbf \\Lambda}_1$",
+  "${\\mathbf \\Lambda}_2$",
+  "+Both ${\\mathbf \\Lambda}_1$ and ${\\mathbf \\Lambda}_2$+",
+  "There is no stable direction.",
+  random_answer_order = FALSE
+)
+```
+
+```{r sts-7, echo=FALSE, results="markup"}
+askMC(
+  "Since motion along both eigenvectors is unstable, the trajectory moves away from the origin. Motion along one of the eigenvectors is relatively \"fast\" and motion along the other is \"slow\". (You can see the speed by looking at the spacing between dots on a trajectory) What is the eigenvalue for the **slow** direction?",
+  "0.95",
+  "+1.05+",
+  "1.15",
+  "1.25",
+  random_answer_order = FALSE
+)
+```
+
+```{r sts-8, echo=FALSE, results="markup"}
+askMC(
+  "Which direction does the \"slow\" eigenvector point in? (You may need to create many trajectories before you find one that is straight.)",
+  "+4:30 - 10:30+",
+  "1:30 - 7:30",
+  "2:30 - 8:30",
+  "There is no slow eigenvector.",
+  random_answer_order = TRUE
+)
+```
+
+**The spiral node** In the app, change the matrix to $${\mathbf A} = \left[\begin{array}{rr}1.0 & -0.5\\0.5 & 0.9\end{array}\right]$$ and construct a single trajectory of 100 or so steps starting near the fixed point. (Why a single trajectory? You'll see.)
+
+```{r sts-9, echo=FALSE, results="markup"}
+askMC(
+  "What phrase best describes the trajectory?",
+  "Clockwise spiral toward the fixed point",
+  "Clockwise spiral away from the fixed point",
+  "Counter-clockwise spiral toward the fixed point",
+  "+Counter-clockwise spiral away from the fixed point+",
+  random_answer_order = FALSE
+)
+```
+
+```{r sts-10, echo=FALSE, results="markup"}
+askMC(
+  "What phrase best describes the time series $y_n$ versus $n$?",
+  "exponential growth",
+  "a sinusoid",
+  "+a sinusoid whose amplitude grows exponentially+",
+  "a sinusoid whose baseline is shifted away from zero",
+  random_answer_order = FALSE
+)
+```
+
+```{r sts-11, echo=FALSE, results="markup"}
+askMC(
+  "The eigenvalues have a different form in the spiral motion than they did in the saddle or source. What's that difference?",
+  "They are negative numbers.",
+  "They are integers.",
+  "They are real numbers.",
+  "They are rational numbers (e.g. 15/32).",
+  "They are irrational numbers (e.g, $\\pi$).",
+  "+They are complex numbers.+" = "Numbers written like 0.3i are called \"imaginary\". Numbers with both a real and an imaginary part are called \"complex\" numbers." 
+)  
+```
+
+**String art** This isn't an actual term in dynamics, but it is an apt description of the sorts of trajectories seen when one or both of the diagonal elements of the ${\mathbf A}$ matrix are negative. For instance, set the matrix in the app to $${\mathbf A} = \left[\begin{array}{rr}-1.00 & -0.02\\-0.01 & -1.00\end{array}\right]$$ and construct a trajectory with 100 or more steps. 
+
+The trajectories are pretty complicated looking, but the time series of an individual component are not.
+
+```{r sts-12, echo=FALSE, results="markup"}
+askMC(
+  "Which of these phrases best describes the **time series** $y_n$ versus $n$?",
+  "exponential growth",
+  "exponential decay", 
+  "+exponential growth but alternating signs+",
+  "exponential decay but alternating signs",
+  random_answer_order = FALSE
+)  
+```
+
+**Curved trajectories and curved time series** It's tempting---**but wrong**--- to look at the curves in trajectories as something like exponential growth. But keep in mind that the growth is exponential only in the time series. When a trajectory is sharply curved that corresponds to the motion starting in the direction of the slow eigenvector and then curving onto the fast eigenvector. Often this appears in the trajectory as an down-then-up kind of graph.
+
+
+
+`r insert_calcZ_exercise("XX.XX", "pbnVGt", "Exercises/Dynamics/wolf-meet-screen.Rmd")`
+
+
+`r insert_calcZ_exercise("XX.XX", "3D9C7d", "Exercises/Dynamics/maple-think-ring.Rmd")`
+
+
+
+
+
+
 # Continuous-Time differential equation in 1 dimension
+
+We are now switching over to another formalism for describing dynamics: differential equations. Differential equations are used to describe dynamics that take place in continuous time or space, as opposed to the one-step-at-a-time, discrete-time situation for finite-difference equations. 
+
+It may help, even before getting into differential equations, to highlight some of the similarities and differences from discrete-time dynamics.
+
+. | Differential Equations | Difference Equations
+--|------------------------|---------------------
+Trajectory | continuous functions $x(t)$ | discrete sets of numbers ${x_0, x_1, x_2, \ldots}$
+Dynamics | instantaneous change is a function of current state | state at next step is a function of previous state.
+
+Difference equations are analogous to football and baseball. In both these sports, action takes place in discrete steps: one down at a time in football, one batter at a time in baseball. (Base stealing is the exception in baseball, since that can happen at any time.)
+
+Differential equations are like soccer or ice hockey or basketball: the play proceeds continually (although interrupted by goals and penalties).
+
+We are going to start with differential equation systems where the *state space* is a wire-like number line: a single quantity.  The state at any instant (the "instantaneous state") can be well imagined as a bead sliding along the wire. 
+
+Newcomers understandably endow this bead-on-wire analogy with other familiar properties of the real world. For instance, a real-world wire has friction which needs to be overcome by applying a force. A real-world bead has momentum which prolongs motion even after force has been applied. As you will see, a differential equation system that involves force and momentum requires a two-dimensional (or higher) state space.
+
+An exact physical analogy to a one-dimensional differential equation system will always be somewhat artificial, since the physical laws of motion can't be implemented with a one-dimensional state. Here's one such contrived analogy:
+
+> The state space is represented by a road, the instantaneous state being the location of a car along that road. But instead of the car's motion being set by the accelerator and brakes, the velocity of the car is strictly dictated by an authoritarian government law: no exceptions. When the dictated speed is zero, the car will stand still and cannot start moving again. Ultimately, depending on the shape of the law, the car will head off to infinity or come to an eternal standstill at a stable fixed point. Two different cars can never collide on this road: if the cars are close together, they must be travelling at similar velocities. Cars can't pass one another in different directions. Passing requires that the two cars have opposite velocities: one positive and one negative.  If the mandated velocity at a point along the road is positive, every car that comes to that point must have the same positive velocity.
+
+The diagram shows such a road as a grey line. The red numbers are mile-markers alongside the road. The curve shows the mandated speed at any point: you can read off the numerical value of the mandated speed on the y-axis.
+
+```{r echo=FALSE, warning=FALSE}
+f <- rfun( ~ x, seed=999)
+xpts <- seq(-5,5,length=500)
+offset <- mean(f(xpts))
+scale <- sd(xpts)
+speed  <- function(x) 20*(f(x-10) - offset)/scale
+Signs <- tibble::tibble(
+  x = seq(0,20, by=2),
+  y = 13,
+  label = paste("Mile", x),
+  angle = -sign(x - 9)*90
+)
+slice_plot(speed(x) ~ x, domain(x=c(0,20)), color="blue") %>%
+  gf_text(y ~ x, label = ~ label, color="red", data = Signs, angle=~ angle) %>%
+  gf_text(-30 ~ 1, label=c("West"), inherit=FALSE ) %>%
+  gf_text(30 ~ 19, label=c("East"), inherit=FALSE ) %>%
+  gf_hline(yintercept=0, color="black", alpha=0.3, size=3) %>%
+  gf_labs(y = "Mandated speed (mph)", x="", title="County Road B") %>%
+  gf_theme(panel.grid = element_blank(), axis.text.x = element_blank())
+```
+
+
+```{r drive1-1, echo=FALSE, results="markup"}
+askMC(
+  "At mile marker 4, which way is the car going?",
+  "+West+" = "A negative velocity means heading west.",
+  "East",
+  "At a standstill"
+)
+```
+
+```{r drive1-2, echo=FALSE, results="markup"}
+askMC(
+  "How long will it take for the car to go from mile marker 4 to mile marker 0? (Choose the closest answer.)",
+  "5 minutes",
+  "15 minutes",
+  "+25 minutes+" = "The velocity is about -10 mph over that segment of the road. To go 4 miles at 10 mph takes 24 minutes.", 
+  "45 minutes",
+  "Can't be done.",
+  random_answer_order = FALSE
+)
+```
+
+```{r drive1-3, echo=FALSE, results="markup"}
+askMC(
+  "A car starts at mile marker 8. Where will it end up?",
+  "+All the way west+",
+  "About mile 9",
+  "About mile 10",
+  "About mile 13",
+  "All the way east",
+  random_answer_order = FALSE
+)
+```
+
+```{r drive1-4, echo=FALSE, results="markup"}
+askMC(
+  "A car starts at mile marker 10. Where will it end up?",
+  "All the way west",
+  "About mile 9",
+  "About mile 10",
+  "+About mile 13+",
+  "All the way east",
+  random_answer_order = FALSE
+)
+```
+
+
+```{r drive1-5, echo=FALSE, results="markup"}
+askMC(
+  "You and your friend plan to bike along the road. (Bikes are not covered by the speed mandate.) You'll stop at a point where you can sell snacks to motorists through their car windows. What's the most profitable point for you to set up your business.",
+  "All the way west",
+  "About mile 9",
+  "About mile 10",
+  "+About mile 13+",
+  "All the way east",
+  random_answer_order = FALSE
+)
+```
+
+A government commission is exploring ways to improve road use by changing the speed mandate. They will add a constant to the existing speed mandate. 
+
+```{r drive1-6, echo=FALSE, results="markup"}
+askMC(
+  "One group of citizens wants to facilitate east-to-west travel. Which of these would be a suitable value of the constant to add to the speed mandate?",
+  "+-75 mph+",
+  "-25 mph",
+  "15 mph",
+  "35 mph",
+  "60 mph",
+  random_answer_order = FALSE
+)
+```
+
+```{r drive1-7, echo=FALSE, results="markup"}
+askMC(
+  "Another group of citizens wants to facilitate west-to-east travel. Which of these would be a suitable value of the constant to add to the speed mandate?",
+  "-75 mph",
+  "-25 mph",
+  "15 mph",
+  "35 mph",
+  "+60 mph+",
+  random_answer_order = FALSE
+)
+```
+
+```{r drive1-8, echo=FALSE, results="markup"}
+askMC(
+  "An angry chef has a road-side hamburger stand at mile 5. His business has been non-existent since the current speed mandate was implemented. To give his stand the best chance at success, which policy should he advocate?",
+  "-75 mph",
+  "-25 mph",
+  "+15 mph+",
+  "35 mph",
+  "60 mph",
+  random_answer_order = FALSE
+)
+```
+
+
+-----
+
+
+
+A familiar task from high-school math is to "solve" an equation. For instance, if given the equation $a x^2 + b x + c = 0$ and asked to "solve for $x$," you might remember to invoke some procedure such as the quadratic formula:$$x = \frac{1}{2a}\left[-b \pm \sqrt{\strut b^2 - 4 a c}\right]$$ From experience, you would know that $x$ will be a number (although the situation gets a little sketchy when $4ac > b^2$). 
+
+In CalcZ, rather than emphasize "equations," we've built on the notion of **functions**. For instance, in the language of calculus, we would define a function such as $f(x) \equiv a x^2 + b x + c$. The task of "solving" is re-framed as "finding a zero of $f(x)$," that is, finding a value $x_0$ for which $f(x_0) = 0$. A similar sort of task is "finding an *argmax* of $f(x)$." This means to find an $x^\star$ such that $f(x^\star) \geq f(x)$ for all $x$. We have used several notations, e.g. $x_0$, $x^\star$, etc., to indicate that a task is to find a specific numerical value that, when put as an input to a function, gives an output that has some specified property, e.g. the output is zero or the output is maximized.
+
+We have also studied operators that, when given a *function* as input, produce as output *another function*. The most famous of these are *differentiation* and *anti-differentiation*. 
+
+With finite-difference equations, we have returned to mathematical objects in the form of *equations*, and to the task of *solving*. For instance, a one-dimensional finite-difference equation looks like $$x_{n+1} = f(x_n)$$ The equation sets the relationship between the future ($n+1$) state and the present ($n$) state. To find a *solution* to the finite-difference equation does not mean finding a numerical value for $x$. Instead, it means finding a *function*  $x_n$ that satisfies the relationship specified by the equation. 
+
+Calling $x_n$ a "function" drops (for good reason) some conventions we have used throughout the course:
+
+1. We have used *parentheses* rather than subscripts, so $x(n)$ instead of $x_n$.
+2. We have used names like $f()$ and $g()$ and $\exp()$ and $\sin()$ for functions, and used names like $x$ and $y$ and $t$ for *numerical inputs to functions*.
+3. We have been concerned with functions where the input can be varied continuously, say $\infty < x < \infty$ rather than functions where the input is discrete, e.g. $n=0, 1, 2, \ldots$. 
+
+Differential equations---as opposed to *difference equations*---also involve an equation. As we start out, that equation will involve **three** different functions, typically a function of time $g(t)$, the derivative $\partial_t g(t)$ of that function with respect to time and still another function $\mbox{dynamic}()$. So a differential equation might look like $$\underbrace{\partial_t g(t)}_\mbox{function 3} = \underbrace{\mbox{dynamic}}_\mbox{function 2}(\ \underbrace{g(t)}_\mbox{function 1}\ )$$ 
+
+The equation mandates a particular relationship between the functions $g(t)$ and $\partial_t g(t)$. To *solve* this equation means to find a particular function $g(t)$ that is faithful to the mandate set by the equation. And, of course, whatever $g(t)$ is, $\partial_t g(t)$ is its derivative with respect to time.
+
+As a form of contrast, consider this equation: $$\partial_t g(t) = \sin(\omega\, t)$$
+We already learned a technique to solve such an equation, namely take the anti-derivative with respect to time of both sides:
+$$g(t) + C \equiv \int \partial_t g(t) dt = \int \sin(\omega t) dt \equiv - \frac{1}{\omega} \cos(\omega\, t) + D$$
+
+Notice that I've used $\equiv$ in two places in the above line. To say $\partial_t g(t) = \sin(\omega t)$ is to impose a mandate. This won't be true for any $g(t)$ that comes along, the equation is giving specific information about what kind of function $g(t)$ has to be. One the other hand, $g(t) - C \equiv \int \partial_t g(t) dt$ is something that has to be true for *any* $g(t)$ that someone happens to provide. Similarly, $\int \sin(\omega t)dt \equiv - \frac{1}{\omega} \cos(\omega\, t) + D$ is a mathematical *fact*, not a modeling statement about the world.
+
+In a differential equation, the unknown function $g(t)$ appears on *both* sides of the equation, once in the form of $\partial_t g(t)$ ("function 3") and once as $g(t)$ ("function 1"). Although it's tempting to apply anti-differentiation, that will not do the job of finding $g(t)$, since $g(t)$ itself appears as part of the broader function $\mbox{dynamics}(\ g(t)\ )$ to which we're tempted to apply anti-differentiation. 
+
+We will need other approaches to *solve* the differential equation for $g(t)$. We will use two good approaches, one that always works (for any function $\mbox{dynamics}()$ and the second that only works sometimes.
+
+1. A numerical method that approximates the differential equation with a finite-difference equation, enabling it to be solved simply by *iteration*. This is Euler's method.
+2. A algebraic method that works only if we already know the functional form of the solution. As you'll see, for many differential equations important in modeling, there is such an *ansatz*: a function we already know where all we have to do is fill in the details.
+
+Interestingly, traditionally calculus courses have featured a third method for solving differential equations:
+
+3. An algebraic method that sometimes allows the solver to translate the differential equation into a form that looks like this: $h(g(t)) = \int f(t) dt$ and enables standard anti-differentiation of $f(t)$ to be the central step. We won't dwell on this because it only works sometimes, often requires an algebraic superpower that not all students possess, and, in the cases most commonly encountered in modeling has already been done giving us an *ansatz* that we can use in method (2). 
+
+```{r sff1, echo=FALSE, results="markup"}
+askMC(
+  "Consider the differential equation $$\\partial_t g(t) = 0.2 g(t) \\left(1 - g(t)/200\\right)$$ Which of these is the function $\\mbox{dynamics}()$ in the differential equation?",
+  "+$\\mbox{dynamics}(x) \\equiv 0.2 x (1 - x/200)$+" = "When you give as input the function $g(t)$ you get the right-hand side of the differential equation.",
+  "$\\mbox{dynamics}(t) \\equiv 0.2 g(t) (1-g(t)/200)$" = "The input to dynamics() should be the function $g(t)$, not the whole right side of the differential equation.",
+  "$\\mbox{dynamics}(x) \\equiv 0.2 x$",
+  "$\\mbox{dynamics}(x) \\equiv 1 - x/200$"
+)
+```
+
+Differential equations are often written in a kind of shorthand which makes it easier for those in the know but can be confusing to newcomers. We're going to use that shorthand *since you will encounter it in your downstream courses*. But we want to lay it out in parallel with the highly explicit notation we have been using thus far.
+
+The differential equation in the previous exercise is
+$$\partial_t g(t) = 0.2 g(t) \left(1 - g(t)/200\right)$$
+The shorthand makes some substitutions:
+
+i. The function $g(t)$ is written simply $x$. You will need to force yourself to remember that $x$ is really $x(t)$: a function of time.
+ii. The derivative notation $\partial_t g(t)$ is replaced with $\dot{x}$. That tiny dot over the $x$ is entirely equivalent to $\partial_t$.
+
+Let's write it a little bigger to be sure you can spot it:
+
+<div style="font-size: 45px; text-align:center;">$$\dot{x}$$</div>
+
+In the shorthand the equation is rendered 
+
+<div style="font-size: 30px; text-align:center;">$$\dot{x} = 0.2\, x\ (1-x/200)$$</div> Although we've saved having to write $(t)$ multiple times and having to write $\partial_t$ at all, until you get used to it you will forget that $t$ has anything to do with $\dot{x} = 0.2\, x\ (1-x/200)$. Keep your eyes out for that little speck of a dot, $\dot{\ }$, because it is the only thing to remind you about the essential role of $t$ as the input to the sought-after $x(t)$.
+
+```{r sff2, echo=FALSE, results="markup"}
+askMC(
+  "Which of the following is the x-shorthand for the differential equation $$\\partial_t g(t) = a g(t) + b \\ \\mbox{?}$$",
+  "+$\\dot{x} = a x + b$+",
+  "$x = a \\dot{x} + b$" = "Dot on the wrong side.",
+  "$\\dot{x} = a \\dot{x} + b$" = "Too many dots.",
+  "$\\dot{x}(t) = a x(t) + b$" = "Remember, the $t$ is implicit in the dot."
+)
+```
+
+```{r sff3, echo=FALSE, results="markup"}
+askMC(
+  "What is the function dynamics() in $\\dot{x} = a x + b$?",
+  "+dynamics$(x) \\equiv a x + b$+",
+  "dynamics$(t) \\equiv a x + b$" = "Don't put a $t$ where it's not needed.",
+  "dynamics$(x) \\equiv x + b$",
+  "dynamics$(x) \\equiv a x$"
+)
+```
+
+
+-----
+
+There are a few differential-equation forms that show up again and again in modeling problems. We're going to introduce them to you here and, later, show you the solutions.
+
+**The proportional growth/decay model**: $\dot{x} = a x$
+
+* Simple population growth. The population is a function of time: $x(t)$. Growth at any instant is proportional to the instantaneous population. For instance a population growing at 3% per year will have $a \approx 0.03$ with units 1/year.
+* Radioactive decay. The amount of the radioactive substance is a function of time: $x(t)$. For example, phosphorus-32 (that is, $^{32}$P) has a half life of 14 days. The differential equation is $\dot{x} = -a x$ with $a \approx 0.049$ with units 1/day.
+
+**Change proportional to  difference**: $\dot{x} = - a (x - x_\mbox{fixed})$
+
+* Newton's Law of Cooling is about how a hot (or cold) object comes into equilibrium with the ambient temperature. For instance, you might have a cup of coffee at $200^\circ$F in a room at $70^\circ$F. Unless you drink it, the coffee will cool with time until it reaches the room's temperature. In this setting, $x_\mbox{fixed} = 70^\circ$F. The value of $a$ depends on how insulated the cup is (and details of evaporation, etc.). But if the coffee reaches very near to room temperature in 60 minutes, $a \approx 0.5$ with units 1/minute.
+
+
+```{r basic2a, echo=FALSE, results="markup"}
+askMC(
+  "What are the units of the output of $x(t)$?",
+  "degrees F per minute",
+  "+degrees F+",
+  "1/minute",
+  "1/degrees F"
+)
+```
+
+```{r basic2b, echo=FALSE, results="markup"}
+askMC(
+  "What are the units of $\\dot{x}$?",
+  "+degrees F per minute+",
+  "degrees F",
+  "1/minute",
+  "1/degrees F"
+)
+```
+
+```{r basic2c, echo=FALSE, results="markup"}
+askMC(
+  "What is $x$?",
+  "the room temperature",
+  "the initial temperature of the coffee",
+  "+the instantaneous coffee temperature as a function of time+",
+  "the fixed rate at which the coffee cools",
+  "the instantaneous rate at which the coffee cools as a function of time"
+)
+```
+
+```{r basic2d, echo=FALSE, results="markup"}
+askMC(
+  "What is $\\dot{x}$?",
+  "the room temperature",
+  "the initial temperature of the coffee",
+  "the instantaneous coffee temperature as a function of time",
+  "+the instantaneous rate at which the coffee cools as a function of time+"
+)
+```
+
+**Limited growth**, e.g. $\dot{x} = r x (1-x/k)$
+
+The proportional-growth model will lead to $x(t)$ increasing without limit. Sometimes that's a good model over short times, before $x(t)$ has a chance to get unrealistically big. But over long periods of time, something's gotta give.
+
+* Population with a "carrying capacity." For $t$ when $x(t)$ is very small, the population growth is well approximated by the usual proportion-growth model.  For intermediate $t$, the population has grown to a large enough size that it is consuming a substantial fraction of the available resources and population growth slows. When the population reaches the "carrying capacity" the growth stops (e.g. birth rate = death rate).
+
+```{r basic3a, echo=FALSE, results="markup"}
+askMC(
+  "If the units of $x(t)$ is, say, rabbits, what is the units of $k$?",
+  "+rabbits+",
+  "rabbits per day",
+  "rabbits per week",
+  "rabbits per year"
+)
+```
+
+```{r basic3b, echo=FALSE, results="markup"}
+askMC(
+  "Suppose the units of $\\dot{x}$ is, rabbits per month, what is the units of $r$?",
+  "+1/month+",
+  "rabbits per month",
+  "months per rabbit", 
+  "rabbits per month-squared"
+)
+```
+
+```{r basic3c, echo=FALSE, results="markup"}
+askMC(
+  "Even without finding the full solution $x(t)$ to the differential equation, you can figure out how big the population will be when growth falls to zero. How big?",
+  "+$k$+",
+  "$k/r$",
+  "$r/k$", 
+  "$1/r$"
+)
+```
+
+
+
+`r insert_calcZ_exercise("XX.XX", "5DVPWG", "Exercises/Dynamics/spruce-make-lamp.Rmd")`
+
+`r insert_calcZ_exercise("XX.XX", "L6hTUu", "Exercises/Dynamics/pine-win-oven.Rmd")`
+
+`r insert_calcZ_exercise("XX.XX", "VCWRBs", "Exercises/Dynamics/seal-fly-socks.Rmd")`
+
 
 
 ::: {.objectives}

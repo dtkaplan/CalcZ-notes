@@ -1,0 +1,865 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+
+
+<meta name="progressive" content="false" />
+<meta name="allow-skip" content="false" />
+
+<title>Daily Digital 18</title>
+
+
+<!-- highlightjs -->
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+<!-- taken from https://github.com/rstudio/rmarkdown/blob/67b7f5fc779e4cfdfd0f021d3d7745b6b6e17149/inst/rmd/h/default.html#L296-L362 -->
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("section-TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+<!-- end tabsets -->
+
+
+
+</head>
+
+<body>
+
+
+
+<div class="pageContent band">
+<div class="bandContent page">
+
+<div class="topics">
+
+<div id="section-objectives" class="section level2">
+<h2>Objectives</h2>
+<ol style="list-style-type: decimal">
+<li>Learn the mechanics of iterating a two-dimensional finite-difference equation by hand and on the computer for linear systems.</li>
+<li>Meet eigenvalues for the first time and see how their values correspond to the characteristic patterns of motion in linear systems.</li>
+<li>Associate the shape of a trajectory in state-space to the graph of a time series of a component of the state.</li>
+</ol>
+</div>
+<div id="section-iterate-with-2-dim-systems" class="section level2">
+<h2><code>Iterate()</code> with 2-dim systems</h2>
+<!--
+We've examined the behavior of the dynamics of $\xi_{t+1} = g(\xi_t)$ near a fixed point $\xi^\star$. Our strategy was:
+
+1. Define a new variable $x$ whose zero value is centered on the fixed point: $x = \xi - \xi^\star$.
+2. Near the fixed point, approximate $g()$ as a straight-line function: $x_{n+1} = \alpha x_n + \beta$. But noticing thaat $x=0$ is a fixed point, we can simplify this to $x_{n+1} = \alpha x_n$. Calculating the numerical value of $\alpha$ is easy; it's $\partial_\xi\, g(\xi^\star)$
+3. Look for different behaviors for the trajectory for different values of $\alpha$. We found only four such behaviors.
+
+
+
+-->
+<p>In the two-dimensional finite-difference system, the state <span class="math inline">\({\mathbf X}_n\)</span> has two components: <span class="math inline">\((x_n, y_n)\)</span>. For instance, <span class="math inline">\(x_n\)</span> might be the population of adult rabbits at generation <span class="math inline">\(n\)</span> and <span class="math inline">\(y_n\)</span> the population of baby rabbits at generation <span class="math inline">\(n\)</span>. The system will have two dynamical functions. We’re going to start with one of the functions being extremely simple. <span class="math display">\[\left( \begin{array}{c}x_{n+1}\\y_{n+1}\end{array}\right) = \underbrace{\left(\begin{array}{rcc}a x_n &amp; + &amp; b y_n\\ x_n&amp; + &amp; 0\end{array}\right)}_\mbox{explicit form} = \underbrace{\left(\begin{array}{cc}a &amp; b\\1 &amp; 0\end{array}\right) 
+\left(\begin{array}{c}x_n \\ y_n\end{array}\right)}_\mbox{matrix/vector form}\]</span> The two forms are entirely equivalent.</p>
+<p><strong>Problem 1</strong> In the above system, set <span class="math inline">\(a=1\)</span> and <span class="math inline">\(b=1\)</span>. Start an initial condition <span class="math inline">\((x_0=1, y_0 = 0)^T\)</span>. Iterate the system by hand, since this is such simple arithmetic, writing down your trajectory in this format:</p>
+<table>
+<thead>
+<tr class="header">
+<th>n</th>
+<th><span class="math inline">\(x\)</span></th>
+<th><span class="math inline">\(y\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>0</td>
+<td><span class="math inline">\(x_0 = 1\)</span></td>
+<td><span class="math inline">\(y_0 = 0\)</span></td>
+</tr>
+<tr class="even">
+<td>1</td>
+<td><span class="math inline">\(x_1 = \_\_\_\)</span></td>
+<td><span class="math inline">\(y_1 = \_\_\_\)</span></td>
+</tr>
+<tr class="odd">
+<td>2</td>
+<td><span class="math inline">\(x_2 = \_\_\_\)</span></td>
+<td><span class="math inline">\(y_2 = \_\_\_\)</span></td>
+</tr>
+<tr class="even">
+<td>3</td>
+<td><span class="math inline">\(x_3 = \_\_\_\)</span></td>
+<td><span class="math inline">\(y_3 = \_\_\_\)</span></td>
+</tr>
+<tr class="odd">
+<td>4</td>
+<td><span class="math inline">\(x_4 = \_\_\_\)</span></td>
+<td><span class="math inline">\(y_4 = \_\_\_\)</span></td>
+</tr>
+<tr class="even">
+<td>5</td>
+<td><span class="math inline">\(x_5 = \_\_\_\)</span></td>
+<td><span class="math inline">\(y_5 = \_\_\_\)</span></td>
+</tr>
+</tbody>
+</table>
+<div class="panel panel-default">
+<div data-label="abcd1-1" class="tutorial-question panel-body">
+<div id="abcd1-1-answer_container" class="shiny-html-output"></div>
+<div id="abcd1-1-message_container" class="shiny-html-output"></div>
+<div id="abcd1-1-action_button_container" class="shiny-html-output"></div>
+<script>if (Tutorial.triggerMathJax) Tutorial.triggerMathJax()</script>
+</div>
+</div>
+<div class="panel panel-default">
+<div data-label="abcd1-2" class="tutorial-question panel-body">
+<div id="abcd1-2-answer_container" class="shiny-html-output"></div>
+<div id="abcd1-2-message_container" class="shiny-html-output"></div>
+<div id="abcd1-2-action_button_container" class="shiny-html-output"></div>
+<script>if (Tutorial.triggerMathJax) Tutorial.triggerMathJax()</script>
+</div>
+</div>
+<div class="panel panel-default">
+<div data-label="abcd1-3" class="tutorial-question panel-body">
+<div id="abcd1-3-answer_container" class="shiny-html-output"></div>
+<div id="abcd1-3-message_container" class="shiny-html-output"></div>
+<div id="abcd1-3-action_button_container" class="shiny-html-output"></div>
+<script>if (Tutorial.triggerMathJax) Tutorial.triggerMathJax()</script>
+</div>
+</div>
+<p><strong>Problem 2</strong> It will be convenient to be able to perform such iterations on the computer. Among other things, this makes it easy to graph the results. You can use the <code>Iterate()</code> operator to do this.</p>
+<p>The dynamical function used in <code>Iterate()</code> has to take two inputs. We’re familiar with such functions in R, for example,</p>
+<p><code>makeFun(a*x + b*y ~ x + y)</code></p>
+<p>But we also need the dynamic function to return <em>two</em> outputs. In R, multiple outputs need to be packaged up into a vector. The R <code>c()</code> function accomplishes this. Here’s an implementation of the system you just iterated by hand.</p>
+<div class="tutorial-exercise" data-label="abcd1-4" data-caption="Iterating an AB10 system" data-completion="1" data-diagnostics="1" data-startover="1" data-lines="0">
+<pre class="text"><code>G &lt;- makeFun(c(a*x + b*y, x) ~ x + y, a=1, b=1)
+Traj &lt;- Iterate(G, x0=c(1,0), n=5)
+Traj</code></pre>
+<script type="application/json" data-opts-chunk="1">{"fig.width":6.5,"fig.height":4,"fig.retina":2,"fig.align":"default","fig.keep":"high","fig.show":"asis","out.width":624,"warning":true,"error":false,"message":true,"exercise.df_print":"paged","exercise.timelimit":60,"exercise.checker":["function (label = NULL, solution_code = NULL, user_code = NULL, ","    check_code = NULL, envir_result = NULL, evaluate_result = NULL, ","    envir_prep = NULL, last_value = NULL, ...) ","{","    (utils::getFromNamespace(\"grade_learnr_\", \"gradethis\"))(label = label, ","        solution_code = solution_code, user_code = user_code, ","        check_code = check_code, envir_result = envir_result, ","        evaluate_result = evaluate_result, envir_prep = envir_prep, ","        last_value = last_value, ...)","}"]}</script>
+</div>
+<p><strong>Technique</strong> Plot the trajectory.</p>
+<p>The output of <code>Iterate()</code> has in this case three columns, one column for <span class="math inline">\(n\)</span> and one column for each of the state variables. There are three conventional ways to plot the trajectory.</p>
+<ol style="list-style-type: lower-roman">
+<li>Plot <code>x ~ n</code>. This shows how <code>x</code> changes step-by-step. This graph is called the “time series of <span class="math inline">\(x\)</span>.”</li>
+<li>Plot <code>y ~ n</code>. Similar to (i), but for <span class="math inline">\(y\)</span>. This graph is called the “time series of <span class="math inline">\(y\)</span>.”</li>
+<li>Plot <code>y ~ x</code>. This graph is called a “trajectory plot” or a “state-space plot” because it shows the full <span class="math inline">\((x,y)\)</span> state at each <span class="math inline">\(n\)</span>.</li>
+</ol>
+<p>You can make any of these plots in the sandbox. The basic structure of the plotting command will be the same in each case, just the tilde_expression will vary between (i), (ii), and (iii).</p>
+<pre class="r"><code>gf_point( tilde_expression, data = Traj) %&gt;%
+  gf_path(alpha = 0.2)</code></pre>
+<p>For a trajectory plot, it can be nice to add a little label to each dot to remind you what was the value of <span class="math inline">\(n\)</span>. You would do this in the following way:</p>
+<p>Make all three kinds of plot—the two different time series and the state-space plot—and make sure you understand the differences. Both styles of plot are useful.</p>
+<p><strong>Problem 3</strong> Here is a plot of a trajectory of a system with <span class="math inline">\(a=0.64\)</span> and <span class="math inline">\(b=0.38\)</span>. The initial condition for this trajectory is <span class="math inline">\((x_0 = 0.3, y_0 = 0.9)\)</span>.</p>
+<div class="tutorial-exercise" data-label="ab10-5" data-caption="An AB10 system." data-completion="1" data-diagnostics="1" data-startover="1" data-lines="0">
+<pre class="text"><code>G &lt;- makeFun(c(a*x + b*y, x) ~ x + y, a=0.64, b=0.38)
+Traj &lt;- Iterate(G, x0=c(0.3, 0.9), 10)
+gf_point(x ~ n, data = Traj) %&gt;% gf_path(alpha=0.2) %&gt;%
+  gf_text(label = ~ n, hjust=2, vjust=1)</code></pre>
+<script type="application/json" data-opts-chunk="1">{"fig.width":6.5,"fig.height":4,"fig.retina":2,"fig.align":"default","fig.keep":"high","fig.show":"asis","out.width":624,"warning":true,"error":false,"message":true,"exercise.df_print":"paged","exercise.timelimit":60,"exercise.checker":["function (label = NULL, solution_code = NULL, user_code = NULL, ","    check_code = NULL, envir_result = NULL, evaluate_result = NULL, ","    envir_prep = NULL, last_value = NULL, ...) ","{","    (utils::getFromNamespace(\"grade_learnr_\", \"gradethis\"))(label = label, ","        solution_code = solution_code, user_code = user_code, ","        check_code = check_code, envir_result = envir_result, ","        evaluate_result = evaluate_result, envir_prep = envir_prep, ","        last_value = last_value, ...)","}"]}</script>
+</div>
+<div class="panel panel-default">
+<div data-label="ab10-6" class="tutorial-question panel-body">
+<div id="ab10-6-answer_container" class="shiny-html-output"></div>
+<div id="ab10-6-message_container" class="shiny-html-output"></div>
+<div id="ab10-6-action_button_container" class="shiny-html-output"></div>
+<script>if (Tutorial.triggerMathJax) Tutorial.triggerMathJax()</script>
+</div>
+</div>
+<div class="panel panel-default">
+<div data-label="ab10-7" class="tutorial-question panel-body">
+<div id="ab10-7-answer_container" class="shiny-html-output"></div>
+<div id="ab10-7-message_container" class="shiny-html-output"></div>
+<div id="ab10-7-action_button_container" class="shiny-html-output"></div>
+<script>if (Tutorial.triggerMathJax) Tutorial.triggerMathJax()</script>
+</div>
+</div>
+<div class="panel panel-default">
+<div data-label="ab10-8" class="tutorial-question panel-body">
+<div id="ab10-8-answer_container" class="shiny-html-output"></div>
+<div id="ab10-8-message_container" class="shiny-html-output"></div>
+<div id="ab10-8-action_button_container" class="shiny-html-output"></div>
+<script>if (Tutorial.triggerMathJax) Tutorial.triggerMathJax()</script>
+</div>
+</div>
+<div class="panel panel-default">
+<div data-label="ab10-9" class="tutorial-question panel-body">
+<div id="ab10-9-answer_container" class="shiny-html-output"></div>
+<div id="ab10-9-message_container" class="shiny-html-output"></div>
+<div id="ab10-9-action_button_container" class="shiny-html-output"></div>
+<script>if (Tutorial.triggerMathJax) Tutorial.triggerMathJax()</script>
+</div>
+</div>
+<p>The <code>Iterate()</code> function comes with a shortcut for when the dynamics are linear near a fixed point: <span class="math inline">\({\mathbf X}_{n+1} = {\mathbf A}\, {\mathbf X}_n\)</span> You just need to specify the matrix <span class="math inline">\({\mathbf A}\)</span>, not give a function that explicitly does the arithmetic. For instance:</p>
+<div class="tutorial-exercise" data-label="ab10-10" data-caption="A different kind of input." data-completion="1" data-diagnostics="1" data-startover="1" data-lines="0">
+<pre class="text"><code>A &lt;- matrix(c(1, 1, 1, 0), nrow=2, byrow=TRUE)
+Iterate(A=A, x0=c(1,0), n=5)</code></pre>
+<script type="application/json" data-opts-chunk="1">{"fig.width":6.5,"fig.height":4,"fig.retina":2,"fig.align":"default","fig.keep":"high","fig.show":"asis","out.width":624,"warning":true,"error":false,"message":true,"exercise.df_print":"paged","exercise.timelimit":60,"exercise.checker":["function (label = NULL, solution_code = NULL, user_code = NULL, ","    check_code = NULL, envir_result = NULL, evaluate_result = NULL, ","    envir_prep = NULL, last_value = NULL, ...) ","{","    (utils::getFromNamespace(\"grade_learnr_\", \"gradethis\"))(label = label, ","        solution_code = solution_code, user_code = user_code, ","        check_code = check_code, envir_result = envir_result, ","        evaluate_result = evaluate_result, envir_prep = envir_prep, ","        last_value = last_value, ...)","}"]}</script>
+</div>
+</div>
+<div id="section-stepping-through-space" class="section level2">
+<h2>Stepping through space</h2>
+<p>We’re focusing now on the behavior of discrete-time dynamical systems near fixed points. Recall that we’ve defined <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span> scales that have the fixed point at (0, 0) and that the dynamics can be approximated by linear functions which we write with a matrix. We’ll call the matrix <span class="math inline">\({\mathbf A}\)</span> and use <span class="math inline">\({\mathbf X}_n\)</span> to denote the two-dimensional state at time <span class="math inline">\(n\)</span>. So the dynamics are: <span class="math display">\[{\mathbf X}_{n+1} = {\mathbf A}\, {\mathbf X}_n\ \ \ \mbox{where}\ \ {\mathbf A} = \left[\begin{array}{cc}a &amp; b\\c &amp; d\end{array}\right]\  \mbox{for instance}\ \ \left[\begin{array}{rr}1.1 &amp; -0.4\\0.3 &amp; 0.9\end{array}\right]\]</span> This is all just a matter of arithmetic. Suppose we start at the initial condition <span class="math inline">\({\mathbf X}_0 = \left[\begin{array}{r}1.3\\0.5\end{array}\right]\)</span>. Using the example matrix from above, the value of <span class="math inline">\({\mathbf X}_{1}\)</span> will be <span class="math inline">\({\mathbf A}\, {\mathbf X}_0\)</span>, or <span class="math display">\[
+{\mathbf X}_1 = \underbrace{\left[\begin{array}{rr}1.1 &amp; -0.4\\0.3 &amp; 0.9\end{array}\right]}_{\mathbf A} \cdot \underbrace{\left[\begin{array}{r}1.3\\0.5\end{array}\right]}_{{\mathbf X}_0} = 1.3 \left[\begin{array}{r}1.1\\0.3\end{array}\right] + 0.5 \left[\begin{array}{r}-0.4\\0.9\end{array}\right] = \left[\begin{array}{r}1.23\\0.84\end{array}\right]
+\]</span> Over the next few class sessions, you’ll see why such systems are important in practice. For now, however, we want to see the behavior of such systems as they are iterated to higher <span class="math inline">\(n\)</span>. We can obviously construct an infinite number of make-work exercises about matrix arithmetic. And we could have you push off the arithmetic labor onto the computer. But instead, we take heed of a famous epigram that’s painted onto the wall in the Math Department offices (by the window overlooking the chapel):</p>
+<blockquote>
+<p><em>The purpose of computing is insight, not numbers.</em> — Richard Hamming</p>
+</blockquote>
+<p>If we were to have you calculate and display numerically sequences of vectors, it would be hard to extract insight into the patterns of matrix iteration. Instead, we’ll use a graphical display, actually two:</p>
+<ol style="list-style-type: decimal">
+<li>The trajectory as it moves from step to step through state space, that is, the space <span class="math inline">\(y\)</span> versus <span class="math inline">\(x\)</span>.</li>
+<li>The “time series” for the variable <span class="math inline">\(y\)</span>, that is, <span class="math inline">\(y_n\)</span> versus <span class="math inline">\(n\)</span>. Think of this as a graph of <span class="math inline">\(y\)</span> versus time, while the state-space graph is <span class="math inline">\(y\)</span> versus <span class="math inline">\(x\)</span>.</li>
+</ol>
+<p>We’ll let the computer do the arithmetic and graphing. Your job is to experiment with various matrices, explore the patterns of motion they produce, and gain some insight. Click on the picture of the app to bring it up in another tab of your browser, then arrange that tab and this one side by side.</p>
+<p><a href="https://maa-statprep.shinyapps.io/142Z-Matrix-iteration/" target="_blank"><img src="www/app-snapshot.png" width="70%"></a></p>
+<p><strong>Slow and fast motion</strong></p>
+<p>Each trajectory consists of a series of dots. The dots are connected with a thin line to help you see easily consecutive points, but these are discrete-time dynamics so only the dots are “real.”</p>
+<p>The spacing between consecutive dots is something like the “speed” of the motion, but perhaps “distance jumped” is a better metaphor to correspond to discrete time. For convenience, we’ll say the motion is “slow” when consecutive dots are close together and “fast” when they are far apart.</p>
+<p>One general pattern seen in linear dynamics near a fixed point is that the motion is slow near the fixed point and fast far from it.</p>
+<p>Sometimes the speed of motion is systematically faster for trajectories heading in some directions and slower for trajectories in other directions. But on any one trajectory, the motion will be faster far from the fixed point and slower near to it. Of course, the speed of motion is zero right at the fixed point: it’s fixed!</p>
+<p><strong>The saddle</strong> Start with the matrix <span class="math display">\[{\mathbf A} = \left[\begin{array}{rr}0.90 &amp; 0.05\\0.05 &amp; 1.01\end{array}\right]\]</span> Set the number of iterations to, say, 100. Then click in the graph to start trajectories for many places near the perimeter of the graphic frame. You can just do this randomly at first, but then clear the graph and do it systematically to make the pattern of motion clear.</p>
+<p>This pattern is called a “saddle,” because the dynamics are analogous to the movement of a drop of water rolling down a horse saddle.</p>
+<div class="panel panel-default">
+<div data-label="sts-1" class="tutorial-question panel-body">
+<div id="sts-1-answer_container" class="shiny-html-output"></div>
+<div id="sts-1-message_container" class="shiny-html-output"></div>
+<div id="sts-1-action_button_container" class="shiny-html-output"></div>
+<script>if (Tutorial.triggerMathJax) Tutorial.triggerMathJax()</script>
+</div>
+</div>
+<div class="panel panel-default">
+<div data-label="sts-2" class="tutorial-question panel-body">
+<div id="sts-2-answer_container" class="shiny-html-output"></div>
+<div id="sts-2-message_container" class="shiny-html-output"></div>
+<div id="sts-2-action_button_container" class="shiny-html-output"></div>
+<script>if (Tutorial.triggerMathJax) Tutorial.triggerMathJax()</script>
+</div>
+</div>
+<p>The two directions you found in the previous two questions are called “characteristic directions,” or, more generally, <strong>characteristic vectors</strong>. But in mathematics and the sciences, these are usually called <strong>eigenvectors</strong>. We denote the eigenvectors as <span class="math inline">\({\mathbf \Lambda}_1\)</span> and <span class="math inline">\({\mathbf \Lambda}_2\)</span>, pronouced “lambda-one” and “lambda-two.” Perhaps one way to remember that the <span class="math inline">\({\mathbf \Lambda}\)</span>s are each telling part of the story of the A matrix is to see that <span class="math inline">\({\mathbf \Lambda}\)</span> is only part of A.</p>
+<p>Associated with each eigenvector is a number called a <strong>characteristic value</strong> or <strong>eigenvalue</strong>. The two eigenvalues are displayed as <span class="math inline">\(\lambda_1\)</span> and <span class="math inline">\(\lambda_2\)</span> underneath the matrix. We’ll defer for the present how these are calculated.</p>
+<p>The dynamics have an extremely simple solution when they start on an eigenvector: motion right along that eigenvector. Suppose the initial condition is <span class="math inline">\(m {\mathbf \Lambda}_1\)</span> The solution is <span class="math display">\[{\mathbf X}_n = \lambda_1^n\ \  m {\mathbf \Lambda}_1\]</span> with the same for <span class="math inline">\(\lambda_2\)</span> and <span class="math inline">\({\mathbf \Lambda}_2\)</span>. Such motion is either stable (<span class="math inline">\(|\lambda | &lt; 1\)</span>) or unstable (<span class="math inline">\(|\lambda| &gt; 1\)</span>).</p>
+<div class="panel panel-default">
+<div data-label="sts-3" class="tutorial-question panel-body">
+<div id="sts-3-answer_container" class="shiny-html-output"></div>
+<div id="sts-3-message_container" class="shiny-html-output"></div>
+<div id="sts-3-action_button_container" class="shiny-html-output"></div>
+<script>if (Tutorial.triggerMathJax) Tutorial.triggerMathJax()</script>
+</div>
+</div>
+<div class="panel panel-default">
+<div data-label="sts-4" class="tutorial-question panel-body">
+<div id="sts-4-answer_container" class="shiny-html-output"></div>
+<div id="sts-4-message_container" class="shiny-html-output"></div>
+<div id="sts-4-action_button_container" class="shiny-html-output"></div>
+<script>if (Tutorial.triggerMathJax) Tutorial.triggerMathJax()</script>
+</div>
+</div>
+<p>The saddle behavior is “generic” in the sense that a small change to the numbers composing the matrix will still produce saddle motion.</p>
+<p><strong>The source</strong> In the app, change the matrix to <span class="math display">\[{\mathbf A} = \left[\begin{array}{rr}1.1 &amp; 0.05\\0.05 &amp; 1.1\end{array}\right]\]</span> and construct trajectories starting from all around the fixed point.</p>
+<div class="panel panel-default">
+<div data-label="sts-5" class="tutorial-question panel-body">
+<div id="sts-5-answer_container" class="shiny-html-output"></div>
+<div id="sts-5-message_container" class="shiny-html-output"></div>
+<div id="sts-5-action_button_container" class="shiny-html-output"></div>
+<script>if (Tutorial.triggerMathJax) Tutorial.triggerMathJax()</script>
+</div>
+</div>
+<div class="panel panel-default">
+<div data-label="sts-6" class="tutorial-question panel-body">
+<div id="sts-6-answer_container" class="shiny-html-output"></div>
+<div id="sts-6-message_container" class="shiny-html-output"></div>
+<div id="sts-6-action_button_container" class="shiny-html-output"></div>
+<script>if (Tutorial.triggerMathJax) Tutorial.triggerMathJax()</script>
+</div>
+</div>
+<div class="panel panel-default">
+<div data-label="sts-7" class="tutorial-question panel-body">
+<div id="sts-7-answer_container" class="shiny-html-output"></div>
+<div id="sts-7-message_container" class="shiny-html-output"></div>
+<div id="sts-7-action_button_container" class="shiny-html-output"></div>
+<script>if (Tutorial.triggerMathJax) Tutorial.triggerMathJax()</script>
+</div>
+</div>
+<div class="panel panel-default">
+<div data-label="sts-8" class="tutorial-question panel-body">
+<div id="sts-8-answer_container" class="shiny-html-output"></div>
+<div id="sts-8-message_container" class="shiny-html-output"></div>
+<div id="sts-8-action_button_container" class="shiny-html-output"></div>
+<script>if (Tutorial.triggerMathJax) Tutorial.triggerMathJax()</script>
+</div>
+</div>
+<p><strong>The spiral node</strong> In the app, change the matrix to <span class="math display">\[{\mathbf A} = \left[\begin{array}{rr}1.0 &amp; -0.5\\0.5 &amp; 0.9\end{array}\right]\]</span> and construct a single trajectory of 100 or so steps starting near the fixed point. (Why a single trajectory? You’ll see.)</p>
+<div class="panel panel-default">
+<div data-label="sts-9" class="tutorial-question panel-body">
+<div id="sts-9-answer_container" class="shiny-html-output"></div>
+<div id="sts-9-message_container" class="shiny-html-output"></div>
+<div id="sts-9-action_button_container" class="shiny-html-output"></div>
+<script>if (Tutorial.triggerMathJax) Tutorial.triggerMathJax()</script>
+</div>
+</div>
+<div class="panel panel-default">
+<div data-label="sts-10" class="tutorial-question panel-body">
+<div id="sts-10-answer_container" class="shiny-html-output"></div>
+<div id="sts-10-message_container" class="shiny-html-output"></div>
+<div id="sts-10-action_button_container" class="shiny-html-output"></div>
+<script>if (Tutorial.triggerMathJax) Tutorial.triggerMathJax()</script>
+</div>
+</div>
+<div class="panel panel-default">
+<div data-label="sts-11" class="tutorial-question panel-body">
+<div id="sts-11-answer_container" class="shiny-html-output"></div>
+<div id="sts-11-message_container" class="shiny-html-output"></div>
+<div id="sts-11-action_button_container" class="shiny-html-output"></div>
+<script>if (Tutorial.triggerMathJax) Tutorial.triggerMathJax()</script>
+</div>
+</div>
+<p><strong>String art</strong> This isn’t an actual term in dynamics, but it is an apt description of the sorts of trajectories seen when one or both of the diagonal elements of the <span class="math inline">\({\mathbf A}\)</span> matrix are negative. For instance, set the matrix in the app to <span class="math display">\[{\mathbf A} = \left[\begin{array}{rr}-1.00 &amp; -0.02\\-0.01 &amp; -1.00\end{array}\right]\]</span> and construct a trajectory with 100 or more steps.</p>
+<p>The trajectories are pretty complicated looking, but the time series of an individual component are not.</p>
+<div class="panel panel-default">
+<div data-label="sts-12" class="tutorial-question panel-body">
+<div id="sts-12-answer_container" class="shiny-html-output"></div>
+<div id="sts-12-message_container" class="shiny-html-output"></div>
+<div id="sts-12-action_button_container" class="shiny-html-output"></div>
+<script>if (Tutorial.triggerMathJax) Tutorial.triggerMathJax()</script>
+</div>
+</div>
+<p><strong>Curved trajectories and curved time series</strong> It’s tempting—<strong>but wrong</strong>— to look at the curves in trajectories as something like exponential growth. But keep in mind that the growth is exponential only in the time series. When a trajectory is sharply curved that corresponds to the motion starting in the direction of the slow eigenvector and then curving onto the fast eigenvector. Often this appears in the trajectory as an down-then-up kind of graph.</p>
+</div>
+<div id="section-characterizing-matrix-patterns" class="section level2">
+<h2>Characterizing matrix patterns</h2>
+<p>This app pictured below allowed you to trace trajectories of the system</p>
+<p><span class="math inline">\({\mathbf X}_{n+1} = {\mathbf A}\, {\mathbf X}_n\)</span> <a href="https://maa-statprep.shinyapps.io/142Z-Matrix-iteration/" target="_blank"><img src="www/app-snapshot.png" width="40%"></a></p>
+<p>With that app, you could construct a picture of the movement induced by <span class="math inline">\({\mathbf A}\)</span> by comparing several trajectories from different initial conditions.</p>
+<p>Now we’re going to look at the movement due to <span class="math inline">\({\mathbf A}\)</span> by looking at things in a different, but closely related way. The difference is that the graphs will <em>automatically start many trajectories</em> at a grid of points in state space.</p>
+<p>But showing lots and lots of trajectories creates a very busy and hard-to-interpret picture. So in addition to automatically starting at a grid of initial conditions, we’re going to simplify each trajectory. I should say, “drastically simplifying” each trajectory. Instead of following the trajectory for many steps, we’re going to plot only the very first step from each initial condition. And only a small part of that first step. Rather than connecting <span class="math inline">\({\mathbf X}_0\)</span> and <span class="math inline">\({\mathbf X}_{1}\)</span> with a line segment, we’re going to draw only a small <em>fraction</em> of that segment starting at <span class="math inline">\({\mathbf X}_0\)</span> and pointing in the direction of <span class="math inline">\({\mathbf X}_1\)</span>. This is called a “flow field plot” (or, sometimes, a “phase plot”) and it will be an essential tool for moving from discrete-time dynamics onward to <strong>continuous-time dynamics</strong>.</p>
+<p>Run the code in the sandbox and refer to the resulting graph to understand the following points.</p>
+<ol style="list-style-type: decimal">
+<li>Each short segment consists of a starting point and an ending point. The segment points in the direction that they dynamics take the starting point as induced by <span class="math inline">\({\mathbf A}\)</span>.</li>
+<li>There is a dot at the ending point just to make it clear which way the segment points.</li>
+<li>Because the dynamics are <span class="math display">\[{\mathbf X}_{n+1} = {\mathbf A}\cdot {\mathbf X}_n\]</span> there is a fixed point at (0,0). You can see this fixed point as a dot associated with a <em>zero-length</em> segment.</li>
+<li>Because the dynamics are <em>linear</em> the segments get longer the further the starting point is from the fixed point.</li>
+<li>Another sign of linearity has to do with the parallel nature of the segments. If you consider all the segments on a straight-line path passing through the fixed point, you’ll see that they are all parallel to each other (On the opposite side of the fixed point, the segments point in exactly opposite directions.) Looking at a second such straight-line path through the origin, you’ll see that those segments are also parallel, although pointing in a different direction than on the first path.</li>
+</ol>
+<div class="tutorial-exercise" data-label="mp1-1" data-caption="Seeing matrix flows" data-completion="1" data-diagnostics="1" data-startover="1" data-lines="0">
+<pre class="text"><code>A &lt;- matrix(c(1, 1, 1, 0), nrow=2, byrow=TRUE) #the first argument is the matrix, the second argument is the number of rows, and the third argument specifies the order of the numbers (for instance, the second number of the matrix as the end of row 1 instead of the beginning of row 2)
+A
+show_matrix_dynamics(A)</code></pre>
+<script type="application/json" data-opts-chunk="1">{"fig.width":6.5,"fig.height":4,"fig.retina":2,"fig.align":"default","fig.keep":"high","fig.show":"asis","out.width":624,"warning":true,"error":false,"message":true,"exercise.df_print":"paged","exercise.timelimit":60,"exercise.checker":["function (label = NULL, solution_code = NULL, user_code = NULL, ","    check_code = NULL, envir_result = NULL, evaluate_result = NULL, ","    envir_prep = NULL, last_value = NULL, ...) ","{","    (utils::getFromNamespace(\"grade_learnr_\", \"gradethis\"))(label = label, ","        solution_code = solution_code, user_code = user_code, ","        check_code = check_code, envir_result = envir_result, ","        evaluate_result = evaluate_result, envir_prep = envir_prep, ","        last_value = last_value, ...)","}"]}</script>
+</div>
+<div class="panel panel-default">
+<div data-label="mp1-2" class="tutorial-question panel-body">
+<div id="mp1-2-answer_container" class="shiny-html-output"></div>
+<div id="mp1-2-message_container" class="shiny-html-output"></div>
+<div id="mp1-2-action_button_container" class="shiny-html-output"></div>
+<script>if (Tutorial.triggerMathJax) Tutorial.triggerMathJax()</script>
+</div>
+</div>
+<p>Use the sandbox to examine the motion induced by each of these matrices:</p>
+<p><span class="math display">\[{\mathbf B} = \left[ \begin{array}{rc}1.1 &amp; -1\\1 &amp; -1\end{array} \right] \ \ \ \ \ {\mathbf C} = \left[ \begin{array}{rr}-.95 &amp; 0.00\\.30 &amp; -0.95\end{array} \right] \ \ \ \ \ {\mathbf D} = \left[ \begin{array}{rr}0.8 &amp; 0.9\\0 &amp; 0.3\end{array} \right]  \]</span></p>
+<div class="panel panel-default">
+<div data-label="mp1-3" class="tutorial-question panel-body">
+<div id="mp1-3-answer_container" class="shiny-html-output"></div>
+<div id="mp1-3-message_container" class="shiny-html-output"></div>
+<div id="mp1-3-action_button_container" class="shiny-html-output"></div>
+<script>if (Tutorial.triggerMathJax) Tutorial.triggerMathJax()</script>
+</div>
+</div>
+<div class="panel panel-default">
+<div data-label="mp1-4" class="tutorial-question panel-body">
+<div id="mp1-4-answer_container" class="shiny-html-output"></div>
+<div id="mp1-4-message_container" class="shiny-html-output"></div>
+<div id="mp1-4-action_button_container" class="shiny-html-output"></div>
+<script>if (Tutorial.triggerMathJax) Tutorial.triggerMathJax()</script>
+</div>
+</div>
+<div class="panel panel-default">
+<div data-label="mp1-5" class="tutorial-question panel-body">
+<div id="mp1-5-answer_container" class="shiny-html-output"></div>
+<div id="mp1-5-message_container" class="shiny-html-output"></div>
+<div id="mp1-5-action_button_container" class="shiny-html-output"></div>
+<script>if (Tutorial.triggerMathJax) Tutorial.triggerMathJax()</script>
+</div>
+</div>
+</div>
+<div id="section-eigenvectors" class="section level2">
+<h2>Eigenvectors</h2>
+<p>It would be hard to overstate the importance of the ideas of eigenvectors and their associated eigenvalues. They are used in engineering, for instance, to determine the modes of vibration of structures (such as an airplane fuselage). In chemistry, electron orbits are studied using eigenvectors. They are used throughout physics. In quantum physics, <strong>any quantity that is observable</strong> (e.g. energy, position) is an eigenvector of a quantum wave function. In data science, they underlie one of the principle means of contructing machine learning models of complex, multivariate data. They are the foundation of the original Google algorithm for ranking web pages and the “latent semantic indexing” that enables you to give a search term and find closely related articles even if they don’t happen to include that specific term.</p>
+<p>Eigenvectors are important in dynamics. Indeed, the importance of eigenvectors and eigenvalues to science generally is related to the use of differential equations as a fundamental way of describing the universe from the very fine scale (electrons) to the most massive scales (relativistic bending of space-time).</p>
+<p>In a traditional university calculus curriculum, eigenvectors and eigenvalues are introduced in a <em>4th-semester</em> calculus course called “linear algebra.” Especially in recent decades, eigenvectors and eigenvalues are used by people who never came close to a linear algebra course. For instance, <a href="https://www.analyticsvidhya.com/blog/2019/07/10-applications-linear-algebra-data-science/">data science blogs</a> are full of discussion about how to learn linear algebra if you’ve never had it in college.</p>
+<p>In this course, the context in which we introduce eigenvectors is as part of powerful calculus strategy: break seemingly complex wholes into simple parts (differentials! linear approximations!), operate on the parts in simple ways, then put together the parts into a whole (integration! iteration!).</p>
+<p>So what are the “simple parts” involved in eigenvectors? In dynamics, the “complex whole” is the state-space and the dynamical functions that govern motion in the state-space. (We’re restricting ourselves to state spaces with two components so that you can see what’s going on graphically. But two dimensions is enough to shows most of the sorts of phenomena that can be produced by dynamical systems.)</p>
+<p>What are the parts of a two-dimensional state space? Recall from the first semester of CalcZ our studies of linear geometry, matrices, etc. There we defined a <strong>vector sub-space</strong> as all the places that can be reached by taking linear combinations of a set of vectors. A plane is a vector sub-space defined by any two vectors that aren’t aligned.</p>
+<p>Eigenvectors are specific vectors that can compose through linear combinations the whole of a state space in linear dynamics. The dynamics are <strong>radically simpler</strong> along an eigenvector than elsewhere in a state space. How simpler?</p>
+<p>Consider the dynamics induced by the matrix <span class="math display">\[{\mathbf A} = \left[\begin{array}{cr}6 &amp; -\frac{11}{4}\\1 &amp; 0\ \end{array}\right]\]</span> The eigenvalues of <span class="math inline">\({\mathbf A}\)</span> are <span class="math display">\[\lambda_1 = \frac{11}{2}\ \ \mbox{and}\ \ \lambda_2 = \frac{1}{2}\]</span> To get nice fractions like this is the reason we’re using this particular matrix. We’ll deal with the way to calculate the eigenvalues of any matrix on a later day, when we will do it with a simpler formula than the following one. (Don’t incur anxiety trying to understand the formula.) For an [abcd] matrix the eigenvalues are <span class="math display">\[\lambda_{1, 2} = \frac{1}{2} \left[(a - d)^2 \pm \sqrt{(a+d)^2 - 4bc}\strut\right]\]</span> For larger matrices, for instance the billion-by-billion sized ones used in web indexing, there are no formulas but there are ways to calculate the eigenvalues numerically.</p>
+<p>The eigenvectors corresponding to matrix <span class="math inline">\({\mathbf A}\)</span> are very closely related to the eigenvalues. (Again, you don’t need to memorize this, even if it is a whole lot simpler than the formula above.) <span class="math display">\[{\mathbf \Lambda}_1 = \left[\begin{array}{c}\lambda_1\\1\end{array}\right] = 
+\left[\begin{array}{c}\frac{11}{2}\\1\end{array}\right]\ \ \ \mbox{and}\ \ \ {\mathbf \Lambda}_2 = \left[\begin{array}{c}\lambda_2\\1\end{array}\right] = 
+\left[\begin{array}{c}\frac{1}{2}\\1\end{array}\right]\]</span> Let’s see what happens when we multiply and eigenvector (or any scalar multiple of an eigenvector) by the matrix <span class="math inline">\({\mathbf A}\)</span> from which it was derived: <span class="math display">\[{\mathbf A} \cdot {\mathbf \Lambda_2} = \left[\begin{array}{cr}6 &amp; -\frac{11}{4}\\1 &amp; 0\ \end{array}\right] \cdot \left[\begin{array}{r} \frac{1}{2}\\1\ \end{array}\right] = 
+\frac{1}{2} \left[\begin{array}{c}6\strut\\1\strut\end{array}\right] + 
+1 \left[\begin{array}{r}-\frac{11}{4}\\0\ \end{array}\right] = \left[\begin{array}{r}?\strut\\?\strut\end{array}\right]\]</span></p>
+<div class="panel panel-default">
+<div data-label="ev1-1" class="tutorial-question panel-body">
+<div id="ev1-1-answer_container" class="shiny-html-output"></div>
+<div id="ev1-1-message_container" class="shiny-html-output"></div>
+<div id="ev1-1-action_button_container" class="shiny-html-output"></div>
+<script>if (Tutorial.triggerMathJax) Tutorial.triggerMathJax()</script>
+</div>
+</div>
+<p>If you found the arithmetic tedious, here’s a shortcut:</p>
+<div style="font-size: 36px; text-align:center;">
+<p><span class="math inline">\({\mathbf A}\cdot{\mathbf \Lambda}_2 = \lambda_2\ {\mathbf \Lambda}_2\)</span></p>
+</div>
+<p>In English, “Multiplying an eigenvector of a matrix <span class="math inline">\({\mathbf A}\)</span> by <span class="math inline">\({\mathbf A}\)</span> produces a multiple of the eigenvector. The multiple is the eigenvalue.”</p>
+<div class="panel panel-default">
+<div data-label="ev1-2" class="tutorial-question panel-body">
+<div id="ev1-2-answer_container" class="shiny-html-output"></div>
+<div id="ev1-2-message_container" class="shiny-html-output"></div>
+<div id="ev1-2-action_button_container" class="shiny-html-output"></div>
+<script>if (Tutorial.triggerMathJax) Tutorial.triggerMathJax()</script>
+</div>
+</div>
+<p>The dynamics along an eigenvector are particularly simple:</p>
+<ul>
+<li>If you start (exactly) on the 1-dimensional line defined by the eigenvector, the future state will stay on that eigenvector.</li>
+<li>Suppose the initial condition <span class="math inline">\({\mathbf X}_0 = m {\mathbf \Lambda}\)</span>. Then the solution will be</li>
+</ul>
+<div style="font-size: 36px; text-align:center;">
+<p><span class="math inline">\({\mathbf X}_n = \lambda_i^{n\strut}\, {\mathbf X}_0 \ \ \mbox{when}\ \  {\mathbf X}_0 = m {\mathbf \Lambda}_i\)</span></p>
+</div>
+<div class="panel panel-default">
+<div data-label="ev1-3" class="tutorial-question panel-body">
+<div id="ev1-3-answer_container" class="shiny-html-output"></div>
+<div id="ev1-3-message_container" class="shiny-html-output"></div>
+<div id="ev1-3-action_button_container" class="shiny-html-output"></div>
+<script>if (Tutorial.triggerMathJax) Tutorial.triggerMathJax()</script>
+</div>
+</div>
+<!--
+## Time lag format
+
+
+
+
+
+There is another format, called an **auto-regressive equation** for writing two dimensional finite-difference system. The auto-regressive format is widely used fields such as econometrics. Here is a system in [abcd]-matrix format and it's equivalent in auto-regressive format.
+
+$$\underbrace{\left( \begin{array}{c}x_{n+1}\\y_{n+1}\end{array} \right) = 
+\left( \begin{array}{cc}a & b \\1 &  0 \end{array} \right) \left( \begin{array}{c}x_{n}\\y_{n}\end{array} \right)}_\mbox{state-space format}\ \ \ \ \ \ \ \ 
+\underbrace{x_{n+1} = a x_{n} + b y_{n}\strut}_{\mbox{auto-regressive format}\strut}$$
+
+To see the equivalence, look to the equation for $y_{n+1}$ in the state-space format: $y_{n+1} = x_{n}$. In English, this translates to something like, "Tomorrow's y-component of the  state will be the same as today's x-component." But, unlike the usual situation in everyday life where a rule that applies this week might not apply the next week, the rules of finite difference equations apply for all $n$ without changing from one "week" to another or one "month" or "year" to another. Thus, the English statement is equivalent to, "Today's y-component will be the same as yesterday's x-component." Or, going back to mathematical notation, $y_n = x_{n-1}$. Substitute this relationship into the equation for $x_{n+1}$ in the state-space format to get the "auto-regressive" format:
+
+$$x_{n+1} = \underbrace{a x_n + b y_n}_\mbox{state-space format} = \underbrace{a x_n + b x_{n-1}}_\mbox{auto-regressive format}$$
+You can work with whatever format you prefer; they are exactly the same dynamics. As you will see, we'll mostly use the state-space format because that's easier to display graphically and makes explicit the connection to the math of linear combinations. For some algebraic operations, the auto-regressive format can be more straightforward and is the more common format in fields such as economics. Some kinds of engineers use mainly one format, other kinds the other.
+
+We're going to use the auto-regressive format to examine an *ansatz* to the AB10 discrete-time system. Recall the one-dimensional linear system with a fixed point at $x_n=0$. This had a simple solution: 
+$$\underbrace{x_{n+1} = \alpha x_n}_\mbox{dynamics}\ \ \ \ \implies\ \ \ \ \underbrace{x_n = \alpha^n x_0}_\mbox{solution}$$ 
+
+Let's try an *ansatz* of this form in the two-dimensional equation. But instead of $\alpha$ we'll use another Greek letter, lambda: $\lambda$. The ansatz will be: $$x_n = x_0 \lambda^n \ \ \mbox(ansatz)$$
+
+Following the usual procedure we plug the ansatz into the dynamics to see if things work out.
+$$x_0 \lambda^{n+1} = a x_0 \lambda^{n} + b x_0 \lambda^{n-1}$$
+Dividing both sides of the equation by $x_0 \lambda^{n-1}$ gives
+$$\lambda^2 = a \lambda + b$$
+
+Since $a$ and $b$ will be what they will (depending on the system being modeled), not just any value of $\lambda$ will satisfy the relationship. But you can translate the relationship into one familiar from high-school, $\lambda^2 - a \lambda - b = 0$ and recall the formula for values of $\lambda$ that satisfy the relationship. There are two:
+
+$$\lambda_1 = \frac{a + \sqrt{a^2 + 4b\strut}}{2}\\
+\lambda_2 = \frac{a - \sqrt{a^2 + 4b\strut}}{2}$$
+For good reasons that we haven't explained yet, $\lambda_1$ and $\lambda_2$ are called "characteristic values" of the AB10 system.
+
+**Problem 1**: Consider the simple system $x_{t+1} = x_t + x_{t-1}$. This system is famous as the generator of the Fibonacci numbers. 
+
+
+
+
+
+
+
+
+
+Notice that the $\lambda$ for the Fibonacci dynamics is the same as the ratio of successive elements (for large enough $n$) in the numerical Fibonacci sequence.
+
+Using the sandbox, iterate the Fibonacci system (in state-space format) starting at $x_0 = 52.57$ and $y_0 = -85.07$.
+
+<div class="tutorial-exercise" data-label="lt1-5" data-caption="Fibonacci dynamics" data-completion="1" data-diagnostics="1" data-startover="1" data-lines="0">
+
+```text
+fib_dyn <- makeFun(c(x + y, x) ~ x + y)
+Iterate(fib_dyn, x0=c(52.57, -85.07), n=10)
+```
+
+<script type="application/json" data-opts-chunk="1">{"fig.width":6.5,"fig.height":4,"fig.retina":2,"fig.align":"default","fig.keep":"high","fig.show":"asis","out.width":624,"warning":true,"error":false,"message":true,"exercise.df_print":"paged","exercise.timelimit":60,"exercise.checker":["function (label = NULL, solution_code = NULL, user_code = NULL, ","    check_code = NULL, envir_result = NULL, evaluate_result = NULL, ","    envir_prep = NULL, last_value = NULL, ...) ","{","    (utils::getFromNamespace(\"grade_learnr_\", \"gradethis\"))(label = label, ","        solution_code = solution_code, user_code = user_code, ","        check_code = check_code, envir_result = envir_result, ","        evaluate_result = evaluate_result, envir_prep = envir_prep, ","        last_value = last_value, ...)","}"]}</script></div>
+Perhaps strangely, the x-value gets smaller and smaller (and oscillates positive and negative), in contrast to the famous Fibonacci numbers which get bigger and bigger. But the underlying dynamics are the same.
+
+
+
+
+
+-->
+<!-- 
+## Word meanings (DRAFT)
+
+
+
+
+
+
+We are working with two-dimensional discrete-time dynamical systems---"finite-difference equations"---that are centered at a fixed point.
+
+What does it mean that the system is *two-dimensional*?
+- two state variables
+- the state space is a plane
+- 
+
+What does it mean that the system is *discrete-time*?
+
+What does *dynamical system* mean?
+
+What is a *fixed point*?
+
+
+What does *centered at a fixed point* mean?
+
+What does *finite-difference equation* mean?
+
+Mostly in this course we have been talking about *functions*, mathematical objects that take one or more inputs and produce an output. But most high-school curricula focus on *equations*. Why do we call the dynamical systems finite-difference **equations** rather than finite-difference **functions**?
+
+We keep writing the finite-difference equations using *vectors* and *matrices*? Like this:
+$$\left[\begin{array}{c}x_{n+1}\\y_{n+1} \end{array}\right] = 
+\left[\begin{array}{cc}a & b \\ 1 & 0\end{array}\right] \cdot
+\left[\begin{array}{c}x_n\\y_n \end{array}\right]$$
+
+How are these related to formulas (things like like $3x - 2 y$)?
+
+Where is the fixed point of the [abcd] system?
+-->
+</div>
+<div id="section-hand-in-your-work" class="section level2">
+<h2><del>Hand in your work</del></h2>
+<div style="color: red;">
+USAFA CalcZ students will hand in their work via GradeScope
+</div>
+<!--
+REMEMBER: Press the REFRESH button before copying the hash code and submitting it at the <a href="https://forms.microsoft.com/Pages/ResponsePage.aspx?id=Bgq4einwwEWE0X2tGc48YcCKijCKVrhDla481YPh1UJUMVdERUtVT0VOSEpMMEdPQU1aWlpYTTA0RS4u" target = "_blank">USAFA Math 142Z site</a>
+
+
+
+
+
+
+-->
+<hr />
+<p>Location: CalcZ/_DailyDigitals/DailyDocuments/inst/DD-142Z-18/142Z-DD-18.Rmd DD-142Z-18</p>
+
+<script type="application/shiny-prerendered" data-context="server-start">
+### Boilerplate: Packages relating to `{learnr}` and 
+### submission functionality.
+library(learnr)
+library(gradethis)
+library(etude2)
+library(learnrhash)
+library(math141Z)
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+learnr:::register_http_handlers(session, metadata = NULL)
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+learnr:::clear_exercise_setup_chunks()
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+session$onSessionEnded(function() {
+        learnr:::session_stop_event(session)
+      })
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server-start">
+# Good practice to include these in any document bringing
+# with the answer submission system
+etude2::set_master_id("DD-18") # Add the DD number
+etude2::etude_document_name("DD-142Z-18") # Add the DD number
+# Fill this data frame in when document is completed. See etude2 documentation
+document_roster <- tibble::tribble(
+  ~ id,
+)
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "DD-18-1-abcd1-1",     question = structure("What is \\((x_1, y_1)\\)?", html = TRUE, class = c("html",     "character")), answers = list(structure(list(id = "lnr_ans_4679a80",         option = "(0, 0)", value = "(0, 0)", label = structure("(0, 0)", html = TRUE, class = c("html",         "character")), correct = FALSE, message = structure("", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer")), structure(list(id = "lnr_ans_3bd3cca",         option = "(1, 0)", value = "(1, 0)", label = structure("(1, 0)", html = TRUE, class = c("html",         "character")), correct = FALSE, message = structure("", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer")), structure(list(id = "lnr_ans_17c42e7",         option = "(0, 1)", value = "(0, 1)", label = structure("(0, 1)", html = TRUE, class = c("html",         "character")), correct = FALSE, message = structure("", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer")), structure(list(id = "lnr_ans_7469ab8",         option = "(1, 1)", value = "(1, 1)", label = structure("(1, 1)", html = TRUE, class = c("html",         "character")), correct = TRUE, message = structure("", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer"))), button_labels = list(submit = structure("Check answer (ID: DD-18-1)", html = TRUE, class = c("html",     "character")), try_again = structure("Try again (ID: DD-18-1)", html = TRUE, class = c("html",     "character"))), messages = list(correct = structure("Right!", html = TRUE, class = c("html",     "character")), try_again = structure("Sorry.", html = TRUE, class = c("html",     "character")), incorrect = structure("Sorry.", html = TRUE, class = c("html",     "character")), message = NULL, post_message = NULL), ids = list(        answer = "abcd1-1-answer", question = "abcd1-1"), loading = structure("<strong>Loading:<\u002fstrong> \nWhat is \\((x_1, y_1)\\)?\n<br/><br/><br/>", html = TRUE, class = c("html",     "character")), random_answer_order = FALSE, allow_retry = TRUE,     seed = 727928041.661032, options = list(id = "DD-18-1")), class = c("learnr_radio", "tutorial_question")))
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "DD-18-2-abcd1-2",     question = structure("What is \\((x_2, y_2)\\)?", html = TRUE, class = c("html",     "character")), answers = list(structure(list(id = "lnr_ans_1cb948c",         option = "(1, 0)", value = "(1, 0)", label = structure("(1, 0)", html = TRUE, class = c("html",         "character")), correct = FALSE, message = structure("", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer")), structure(list(id = "lnr_ans_62f5d64",         option = "(2, 0)", value = "(2, 0)", label = structure("(2, 0)", html = TRUE, class = c("html",         "character")), correct = FALSE, message = structure("", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer")), structure(list(id = "lnr_ans_ef43a6d",         option = "(2, 1)", value = "(2, 1)", label = structure("(2, 1)", html = TRUE, class = c("html",         "character")), correct = TRUE, message = structure("", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer")), structure(list(id = "lnr_ans_2010002",         option = "(2, 2)", value = "(2, 2)", label = structure("(2, 2)", html = TRUE, class = c("html",         "character")), correct = FALSE, message = structure("", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer"))), button_labels = list(submit = structure("Check answer (ID: DD-18-2)", html = TRUE, class = c("html",     "character")), try_again = structure("Try again (ID: DD-18-2)", html = TRUE, class = c("html",     "character"))), messages = list(correct = structure("Right!", html = TRUE, class = c("html",     "character")), try_again = structure("Sorry.", html = TRUE, class = c("html",     "character")), incorrect = structure("Sorry.", html = TRUE, class = c("html",     "character")), message = NULL, post_message = NULL), ids = list(        answer = "abcd1-2-answer", question = "abcd1-2"), loading = structure("<strong>Loading:<\u002fstrong> \nWhat is \\((x_2, y_2)\\)?\n<br/><br/><br/>", html = TRUE, class = c("html",     "character")), random_answer_order = FALSE, allow_retry = TRUE,     seed = 1613768565.24853, options = list(id = "DD-18-2")), class = c("learnr_radio", "tutorial_question")))
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "DD-18-3-abcd1-3",     question = structure("What is \\((x_5, y_5)\\)?", html = TRUE, class = c("html",     "character")), answers = list(structure(list(id = "lnr_ans_39d2352",         option = "(6, 4)", value = "(6, 4)", label = structure("(6, 4)", html = TRUE, class = c("html",         "character")), correct = FALSE, message = structure("", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer")), structure(list(id = "lnr_ans_928b1ac",         option = "(8, 4)", value = "(8, 4)", label = structure("(8, 4)", html = TRUE, class = c("html",         "character")), correct = FALSE, message = structure("", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer")), structure(list(id = "lnr_ans_dd34bdb",         option = "(8, 5)", value = "(8, 5)", label = structure("(8, 5)", html = TRUE, class = c("html",         "character")), correct = TRUE, message = structure("", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer")), structure(list(id = "lnr_ans_c22b3ed",         option = "(9, 6)", value = "(9, 6)", label = structure("(9, 6)", html = TRUE, class = c("html",         "character")), correct = FALSE, message = structure("", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer"))), button_labels = list(submit = structure("Check answer (ID: DD-18-3)", html = TRUE, class = c("html",     "character")), try_again = structure("Try again (ID: DD-18-3)", html = TRUE, class = c("html",     "character"))), messages = list(correct = structure("Right!", html = TRUE, class = c("html",     "character")), try_again = structure("Sorry.", html = TRUE, class = c("html",     "character")), incorrect = structure("Sorry.", html = TRUE, class = c("html",     "character")), message = NULL, post_message = NULL), ids = list(        answer = "abcd1-3-answer", question = "abcd1-3"), loading = structure("<strong>Loading:<\u002fstrong> \nWhat is \\((x_5, y_5)\\)?\n<br/><br/><br/>", html = TRUE, class = c("html",     "character")), random_answer_order = FALSE, allow_retry = TRUE,     seed = 1090180517.99235, options = list(id = "DD-18-3")), class = c("learnr_radio", "tutorial_question")))
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+`tutorial-exercise-abcd1-4-result` <- learnr:::setup_exercise_handler(reactive(req(input$`tutorial-exercise-abcd1-4-code-editor`)), session)
+output$`tutorial-exercise-abcd1-4-output` <- renderUI({
+  `tutorial-exercise-abcd1-4-result`()
+})
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+`tutorial-exercise-ab10-5-result` <- learnr:::setup_exercise_handler(reactive(req(input$`tutorial-exercise-ab10-5-code-editor`)), session)
+output$`tutorial-exercise-ab10-5-output` <- renderUI({
+  `tutorial-exercise-ab10-5-result`()
+})
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "DD-18-4-ab10-6",     question = structure("Which type of plot is this?", html = TRUE, class = c("html",     "character")), answers = list(structure(list(id = "lnr_ans_43e3d20",         option = "A state-space plot", value = "A state-space plot",         label = structure("A state-space plot", html = TRUE, class = c("html",         "character")), correct = FALSE, message = structure("", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer")), structure(list(id = "lnr_ans_a381e00",         option = "The time series of $y$", value = "The time series of $y$",         label = structure("The time series of \\(y\\)", html = TRUE, class = c("html",         "character")), correct = FALSE, message = structure("", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer")), structure(list(id = "lnr_ans_8409ae7",         option = "The time series of $x$", value = "The time series of $x$",         label = structure("The time series of \\(x\\)", html = TRUE, class = c("html",         "character")), correct = TRUE, message = structure("Yes, \\(x\\) is on the vertical axis and \\(n\\) on the horizontal axis.", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer")), structure(list(id = "lnr_ans_6b58757",         option = "None of the above.", value = "None of the above.",         label = structure("None of the above.", html = TRUE, class = c("html",         "character")), correct = FALSE, message = structure("", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer"))), button_labels = list(submit = structure("Check answer (ID: DD-18-4)", html = TRUE, class = c("html",     "character")), try_again = structure("Try again (ID: DD-18-4)", html = TRUE, class = c("html",     "character"))), messages = list(correct = structure("Right!", html = TRUE, class = c("html",     "character")), try_again = structure("Sorry.", html = TRUE, class = c("html",     "character")), incorrect = structure("Sorry.", html = TRUE, class = c("html",     "character")), message = NULL, post_message = NULL), ids = list(        answer = "ab10-6-answer", question = "ab10-6"), loading = structure("<strong>Loading:<\u002fstrong> \nWhich type of plot is this?\n<br/><br/><br/>", html = TRUE, class = c("html",     "character")), random_answer_order = FALSE, allow_retry = TRUE,     seed = 99318405.4537513, options = list(id = "DD-18-4")), class = c("learnr_radio", "tutorial_question")))
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "DD-18-5-ab10-7",     question = structure("What type of behavior does the trajectory show?", html = TRUE, class = c("html",     "character")), answers = list(structure(list(id = "lnr_ans_7f0ca13",         option = "Steady exponential convergence to the fixed point at (0,0)",         value = "Steady exponential convergence to the fixed point at (0,0)",         label = structure("Steady exponential convergence to the fixed point at (0,0)", html = TRUE, class = c("html",         "character")), correct = FALSE, message = structure("", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer")), structure(list(id = "lnr_ans_b71b983",         option = "Oscillatory exponential convergence to the fixed point",         value = "Oscillatory exponential convergence to the fixed point",         label = structure("Oscillatory exponential convergence to the fixed point", html = TRUE, class = c("html",         "character")), correct = FALSE, message = structure("", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer")), structure(list(id = "lnr_ans_4ba52d9",         option = "Oscillatory exponential divergence from the fixed point",         value = "Oscillatory exponential divergence from the fixed point",         label = structure("Oscillatory exponential divergence from the fixed point", html = TRUE, class = c("html",         "character")), correct = FALSE, message = structure("", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer")), structure(list(id = "lnr_ans_5e78961",         option = "Steady exponential divergence from the fixed point",         value = "Steady exponential divergence from the fixed point",         label = structure("Steady exponential divergence from the fixed point", html = TRUE, class = c("html",         "character")), correct = FALSE, message = structure("", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer")), structure(list(id = "lnr_ans_17453c9",         option = "None of the above", value = "None of the above",         label = structure("None of the above", html = TRUE, class = c("html",         "character")), correct = TRUE, message = structure("The oscillations shrink, but the movement is <strong>away<\u002fstrong> from the fixed point.", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer"))), button_labels = list(submit = structure("Check answer (ID: DD-18-5)", html = TRUE, class = c("html",     "character")), try_again = structure("Try again (ID: DD-18-5)", html = TRUE, class = c("html",     "character"))), messages = list(correct = structure("Right!", html = TRUE, class = c("html",     "character")), try_again = structure("Sorry.", html = TRUE, class = c("html",     "character")), incorrect = structure("Sorry.", html = TRUE, class = c("html",     "character")), message = NULL, post_message = NULL), ids = list(        answer = "ab10-7-answer", question = "ab10-7"), loading = structure("<strong>Loading:<\u002fstrong> \nWhat type of behavior does the trajectory show?\n<br/><br/><br/>", html = TRUE, class = c("html",     "character")), random_answer_order = FALSE, allow_retry = TRUE,     seed = 1858227676.1347, options = list(id = "DD-18-5")), class = c("learnr_radio", "tutorial_question")))
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "DD-18-6-ab10-8",     question = structure("Using the sandbox, change the parameters of the system to \\(a=0.4\\) and \\(b=-0.28\\). What kind of behavior does the time series of \\(x\\) show?", html = TRUE, class = c("html",     "character")), answers = list(structure(list(id = "lnr_ans_2605e74",         option = "Steady exponential convergence to the fixed point at (0,0)",         value = "Steady exponential convergence to the fixed point at (0,0)",         label = structure("Steady exponential convergence to the fixed point at (0,0)", html = TRUE, class = c("html",         "character")), correct = FALSE, message = structure("", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer")), structure(list(id = "lnr_ans_c1d91a4",         option = "Oscillatory exponential convergence to the fixed point",         value = "Oscillatory exponential convergence to the fixed point",         label = structure("Oscillatory exponential convergence to the fixed point", html = TRUE, class = c("html",         "character")), correct = TRUE, message = structure("But here the oscillation has a longer period than we have seen before.", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer")), structure(list(id = "lnr_ans_b9b802b",         option = "Oscillatory exponential divergence from the fixed point",         value = "Oscillatory exponential divergence from the fixed point",         label = structure("Oscillatory exponential divergence from the fixed point", html = TRUE, class = c("html",         "character")), correct = FALSE, message = structure("", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer")), structure(list(id = "lnr_ans_23b96a",         option = "Steady exponential divergence from the fixed point",         value = "Steady exponential divergence from the fixed point",         label = structure("Steady exponential divergence from the fixed point", html = TRUE, class = c("html",         "character")), correct = FALSE, message = structure("", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer")), structure(list(id = "lnr_ans_54921ad",         option = "None of the above.", value = "None of the above.",         label = structure("None of the above.", html = TRUE, class = c("html",         "character")), correct = FALSE, message = structure("", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer"))), button_labels = list(submit = structure("Check answer (ID: DD-18-6)", html = TRUE, class = c("html",     "character")), try_again = structure("Try again (ID: DD-18-6)", html = TRUE, class = c("html",     "character"))), messages = list(correct = structure("Right!", html = TRUE, class = c("html",     "character")), try_again = structure("Sorry.", html = TRUE, class = c("html",     "character")), incorrect = structure("Sorry.", html = TRUE, class = c("html",     "character")), message = NULL, post_message = NULL), ids = list(        answer = "ab10-8-answer", question = "ab10-8"), loading = structure("<strong>Loading:<\u002fstrong> \nUsing the sandbox, change the parameters of the system to \\(a=0.4\\) and \\(b=-0.28\\). What kind of behavior does the time series of \\(x\\) show?\n<br/><br/><br/>", html = TRUE, class = c("html",     "character")), random_answer_order = FALSE, allow_retry = TRUE,     seed = 586353149.226958, options = list(id = "DD-18-6")), class = c("learnr_radio", "tutorial_question")))
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "DD-18-7-ab10-9",     question = structure("Using the sandbox, and keeping the parameters of the system at \\(a=0.4\\) and \\(b=-0.28\\), make a state-space plot of the trajectory. What&#39;s the pattern seen in the state-space plot?", html = TRUE, class = c("html",     "character")), answers = list(structure(list(id = "lnr_ans_d473c32",         option = "A straight in path to the fixed point", value = "A straight in path to the fixed point",         label = structure("A straight in path to the fixed point", html = TRUE, class = c("html",         "character")), correct = FALSE, message = structure("", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer")), structure(list(id = "lnr_ans_909d39",         option = "A spiral in toward the fixed point", value = "A spiral in toward the fixed point",         label = structure("A spiral in toward the fixed point", html = TRUE, class = c("html",         "character")), correct = TRUE, message = structure("", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer")), structure(list(id = "lnr_ans_84e31fb",         option = "A random walk toward the fixed point", value = "A random walk toward the fixed point",         label = structure("A random walk toward the fixed point", html = TRUE, class = c("html",         "character")), correct = FALSE, message = structure("", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer")), structure(list(id = "lnr_ans_1b48bf7",         option = "Circling the fixed point at a constant distance from it",         value = "Circling the fixed point at a constant distance from it",         label = structure("Circling the fixed point at a constant distance from it", html = TRUE, class = c("html",         "character")), correct = FALSE, message = structure("", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer"))), button_labels = list(submit = structure("Check answer (ID: DD-18-7)", html = TRUE, class = c("html",     "character")), try_again = structure("Try again (ID: DD-18-7)", html = TRUE, class = c("html",     "character"))), messages = list(correct = structure("Right!", html = TRUE, class = c("html",     "character")), try_again = structure("Sorry.", html = TRUE, class = c("html",     "character")), incorrect = structure("Sorry.", html = TRUE, class = c("html",     "character")), message = NULL, post_message = NULL), ids = list(        answer = "ab10-9-answer", question = "ab10-9"), loading = structure("<strong>Loading:<\u002fstrong> \nUsing the sandbox, and keeping the parameters of the system at \\(a=0.4\\) and \\(b=-0.28\\), make a state-space plot of the trajectory. What&#39;s the pattern seen in the state-space plot?\n<br/><br/><br/>", html = TRUE, class = c("html",     "character")), random_answer_order = FALSE, allow_retry = TRUE,     seed = 1126642768.47537, options = list(id = "DD-18-7")), class = c("learnr_radio", "tutorial_question")))
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+`tutorial-exercise-ab10-10-result` <- learnr:::setup_exercise_handler(reactive(req(input$`tutorial-exercise-ab10-10-code-editor`)), session)
+output$`tutorial-exercise-ab10-10-output` <- renderUI({
+  `tutorial-exercise-ab10-10-result`()
+})
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "DD-18-8-sts-1",     question = structure("From initial conditions in a particular direction from the origin (that is, the fixed point), the trajectories head in straight to the origin. What direction is that? (Use the notation of the clock. So 6:00 is straight down, 9:00 is to the left, and so on.) Hint: Use the y versus n graph to determine where the trajectory started.", html = TRUE, class = c("html",     "character")), answers = list(structure(list(id = "lnr_ans_a6e8455",         option = "4:00 & 10:00", value = "4:00 & 10:00", label = structure("4:00 &amp; 10:00", html = TRUE, class = c("html",         "character")), correct = TRUE, message = structure("", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer")), structure(list(id = "lnr_ans_7434f20",         option = "2:00 & 8:00", value = "2:00 & 8:00", label = structure("2:00 &amp; 8:00", html = TRUE, class = c("html",         "character")), correct = FALSE, message = structure("", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer")), structure(list(id = "lnr_ans_1cb80ef",         option = "6:00 & 12:00", value = "6:00 & 12:00", label = structure("6:00 &amp; 12:00", html = TRUE, class = c("html",         "character")), correct = FALSE, message = structure("", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer")), structure(list(id = "lnr_ans_f13f831",         option = "1:00 & 7:00", value = "1:00 & 7:00", label = structure("1:00 &amp; 7:00", html = TRUE, class = c("html",         "character")), correct = FALSE, message = structure("", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer"))), button_labels = list(submit = structure("Check answer (ID: DD-18-8)", html = TRUE, class = c("html",     "character")), try_again = structure("Try again (ID: DD-18-8)", html = TRUE, class = c("html",     "character"))), messages = list(correct = structure("Right!", html = TRUE, class = c("html",     "character")), try_again = structure("Sorry.", html = TRUE, class = c("html",     "character")), incorrect = structure("Sorry.", html = TRUE, class = c("html",     "character")), message = NULL, post_message = NULL), ids = list(        answer = "sts-1-answer", question = "sts-1"), loading = structure("<strong>Loading:<\u002fstrong> \nFrom initial conditions in a particular direction from the origin (that is, the fixed point), the trajectories head in straight to the origin. What direction is that? (Use the notation of the clock. So 6:00 is straight down, 9:00 is to the left, and so on.) Hint: Use the y versus n graph to determine where the trajectory started.\n<br/><br/><br/>", html = TRUE, class = c("html",     "character")), random_answer_order = TRUE, allow_retry = TRUE,     seed = 1470063651.81545, options = list(id = "DD-18-8")), class = c("learnr_radio", "tutorial_question")))
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "DD-18-9-sts-2",     question = structure("The trajectories that head in almost straight to the fixed point, turn left or right and head away from the fixed point in another direction. What direction is that? Hint: Use the y versus n graph to determine where the trajectory started.", html = TRUE, class = c("html",     "character")), answers = list(structure(list(id = "lnr_ans_ca7ddd8",         option = "4:00 & 10:00", value = "4:00 & 10:00", label = structure("4:00 &amp; 10:00", html = TRUE, class = c("html",         "character")), correct = FALSE, message = structure("", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer")), structure(list(id = "lnr_ans_46930e",         option = "2:00 & 8:00", value = "2:00 & 8:00", label = structure("2:00 &amp; 8:00", html = TRUE, class = c("html",         "character")), correct = FALSE, message = structure("", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer")), structure(list(id = "lnr_ans_b8d80d7",         option = "6:00 & 12:00", value = "6:00 & 12:00", label = structure("6:00 &amp; 12:00", html = TRUE, class = c("html",         "character")), correct = FALSE, message = structure("", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer")), structure(list(id = "lnr_ans_63189bf",         option = "1:00 & 7:00", value = "1:00 & 7:00", label = structure("1:00 &amp; 7:00", html = TRUE, class = c("html",         "character")), correct = TRUE, message = structure("", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer"))), button_labels = list(submit = structure("Check answer (ID: DD-18-9)", html = TRUE, class = c("html",     "character")), try_again = structure("Try again (ID: DD-18-9)", html = TRUE, class = c("html",     "character"))), messages = list(correct = structure("Right!", html = TRUE, class = c("html",     "character")), try_again = structure("Sorry.", html = TRUE, class = c("html",     "character")), incorrect = structure("Sorry.", html = TRUE, class = c("html",     "character")), message = NULL, post_message = NULL), ids = list(        answer = "sts-2-answer", question = "sts-2"), loading = structure("<strong>Loading:<\u002fstrong> \nThe trajectories that head in almost straight to the fixed point, turn left or right and head away from the fixed point in another direction. What direction is that? Hint: Use the y versus n graph to determine where the trajectory started.\n<br/><br/><br/>", html = TRUE, class = c("html",     "character")), random_answer_order = TRUE, allow_retry = TRUE,     seed = 295556425.862371, options = list(id = "DD-18-9")), class = c("learnr_radio", "tutorial_question")))
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "DD-18-10-sts-3",     question = structure("Which is the eigenvalue corresponding to the direction of stable motion?", html = TRUE, class = c("html",     "character")), answers = list(structure(list(id = "lnr_ans_61c0588",         option = "0.88", value = "0.88", label = structure("0.88", html = TRUE, class = c("html",         "character")), correct = TRUE, message = structure("", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer")), structure(list(id = "lnr_ans_f4af67",         option = "0.9", value = "0.9", label = structure("0.9", html = TRUE, class = c("html",         "character")), correct = FALSE, message = structure("", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer")), structure(list(id = "lnr_ans_85872e3",         option = "1.01", value = "1.01", label = structure("1.01", html = TRUE, class = c("html",         "character")), correct = FALSE, message = structure("", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer")), structure(list(id = "lnr_ans_a82dd7d",         option = "1.03", value = "1.03", label = structure("1.03", html = TRUE, class = c("html",         "character")), correct = FALSE, message = structure("", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer"))), button_labels = list(submit = structure("Check answer (ID: DD-18-10)", html = TRUE, class = c("html",     "character")), try_again = structure("Try again (ID: DD-18-10)", html = TRUE, class = c("html",     "character"))), messages = list(correct = structure("Right!", html = TRUE, class = c("html",     "character")), try_again = structure("Sorry.", html = TRUE, class = c("html",     "character")), incorrect = structure("Sorry.", html = TRUE, class = c("html",     "character")), message = NULL, post_message = NULL), ids = list(        answer = "sts-3-answer", question = "sts-3"), loading = structure("<strong>Loading:<\u002fstrong> \nWhich is the eigenvalue corresponding to the direction of stable motion?\n<br/><br/><br/>", html = TRUE, class = c("html",     "character")), random_answer_order = FALSE, allow_retry = TRUE,     seed = 2016225501.56112, options = list(id = "DD-18-10")), class = c("learnr_radio", "tutorial_question")))
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "DD-18-11-sts-4",     question = structure("Which is the eigenvalue corresponding to the direction of <strong>unstable<\u002fstrong> motion?", html = TRUE, class = c("html",     "character")), answers = list(structure(list(id = "lnr_ans_cc13af",         option = "0.88", value = "0.88", label = structure("0.88", html = TRUE, class = c("html",         "character")), correct = FALSE, message = structure("", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer")), structure(list(id = "lnr_ans_b3d93c6",         option = "0.9", value = "0.9", label = structure("0.9", html = TRUE, class = c("html",         "character")), correct = FALSE, message = structure("", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer")), structure(list(id = "lnr_ans_9403e48",         option = "1.01", value = "1.01", label = structure("1.01", html = TRUE, class = c("html",         "character")), correct = FALSE, message = structure("", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer")), structure(list(id = "lnr_ans_3f69d4f",         option = "1.03", value = "1.03", label = structure("1.03", html = TRUE, class = c("html",         "character")), correct = TRUE, message = structure("", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer"))), button_labels = list(submit = structure("Check answer (ID: DD-18-11)", html = TRUE, class = c("html",     "character")), try_again = structure("Try again (ID: DD-18-11)", html = TRUE, class = c("html",     "character"))), messages = list(correct = structure("Right!", html = TRUE, class = c("html",     "character")), try_again = structure("Sorry.", html = TRUE, class = c("html",     "character")), incorrect = structure("Sorry.", html = TRUE, class = c("html",     "character")), message = NULL, post_message = NULL), ids = list(        answer = "sts-4-answer", question = "sts-4"), loading = structure("<strong>Loading:<\u002fstrong> \nWhich is the eigenvalue corresponding to the direction of <strong>unstable<\u002fstrong> motion?\n<br/><br/><br/>", html = TRUE, class = c("html",     "character")), random_answer_order = FALSE, allow_retry = TRUE,     seed = 658112332.193543, options = list(id = "DD-18-11")), class = c("learnr_radio", "tutorial_question")))
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "DD-18-12-sts-5",     question = structure("Which is the <strong>stable<\u002fstrong> eigenvector?", html = TRUE, class = c("html",     "character")), answers = list(structure(list(id = "lnr_ans_6195e9c",         option = "${\\mathbf \\Lambda}_1$", value = "${\\mathbf \\Lambda}_1$",         label = structure("\\({\\mathbf \\Lambda}_1\\)", html = TRUE, class = c("html",         "character")), correct = FALSE, message = structure("", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer")), structure(list(id = "lnr_ans_b3ad73",         option = "${\\mathbf \\Lambda}_2$", value = "${\\mathbf \\Lambda}_2$",         label = structure("\\({\\mathbf \\Lambda}_2\\)", html = TRUE, class = c("html",         "character")), correct = FALSE, message = structure("", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer")), structure(list(id = "lnr_ans_45f9187",         option = "Both ${\\mathbf \\Lambda}_1$ and ${\\mathbf \\Lambda}_2$",         value = "Both ${\\mathbf \\Lambda}_1$ and ${\\mathbf \\Lambda}_2$",         label = structure("Both \\({\\mathbf \\Lambda}_1\\) and \\({\\mathbf \\Lambda}_2\\)", html = TRUE, class = c("html",         "character")), correct = FALSE, message = structure("", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer")), structure(list(id = "lnr_ans_a7d7614",         option = "There is no stable direction.", value = "There is no stable direction.",         label = structure("There is no stable direction.", html = TRUE, class = c("html",         "character")), correct = TRUE, message = structure("", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer"))), button_labels = list(submit = structure("Check answer (ID: DD-18-12)", html = TRUE, class = c("html",     "character")), try_again = structure("Try again (ID: DD-18-12)", html = TRUE, class = c("html",     "character"))), messages = list(correct = structure("Right!", html = TRUE, class = c("html",     "character")), try_again = structure("Sorry.", html = TRUE, class = c("html",     "character")), incorrect = structure("Sorry.", html = TRUE, class = c("html",     "character")), message = NULL, post_message = NULL), ids = list(        answer = "sts-5-answer", question = "sts-5"), loading = structure("<strong>Loading:<\u002fstrong> \nWhich is the <strong>stable<\u002fstrong> eigenvector?\n<br/><br/><br/>", html = TRUE, class = c("html",     "character")), random_answer_order = FALSE, allow_retry = TRUE,     seed = 726114771.661876, options = list(id = "DD-18-12")), class = c("learnr_radio", "tutorial_question")))
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "DD-18-13-sts-6",     question = structure("Which is the <strong>unstable<\u002fstrong> eigenvector?", html = TRUE, class = c("html",     "character")), answers = list(structure(list(id = "lnr_ans_84271c2",         option = "${\\mathbf \\Lambda}_1$", value = "${\\mathbf \\Lambda}_1$",         label = structure("\\({\\mathbf \\Lambda}_1\\)", html = TRUE, class = c("html",         "character")), correct = FALSE, message = structure("", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer")), structure(list(id = "lnr_ans_a19ebff",         option = "${\\mathbf \\Lambda}_2$", value = "${\\mathbf \\Lambda}_2$",         label = structure("\\({\\mathbf \\Lambda}_2\\)", html = TRUE, class = c("html",         "character")), correct = FALSE, message = structure("", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer")), structure(list(id = "lnr_ans_b85f541",         option = "Both ${\\mathbf \\Lambda}_1$ and ${\\mathbf \\Lambda}_2$",         value = "Both ${\\mathbf \\Lambda}_1$ and ${\\mathbf \\Lambda}_2$",         label = structure("Both \\({\\mathbf \\Lambda}_1\\) and \\({\\mathbf \\Lambda}_2\\)", html = TRUE, class = c("html",         "character")), correct = TRUE, message = structure("", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer")), structure(list(id = "lnr_ans_2340772",         option = "There is no stable direction.", value = "There is no stable direction.",         label = structure("There is no stable direction.", html = TRUE, class = c("html",         "character")), correct = FALSE, message = structure("", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer"))), button_labels = list(submit = structure("Check answer (ID: DD-18-13)", html = TRUE, class = c("html",     "character")), try_again = structure("Try again (ID: DD-18-13)", html = TRUE, class = c("html",     "character"))), messages = list(correct = structure("Right!", html = TRUE, class = c("html",     "character")), try_again = structure("Sorry.", html = TRUE, class = c("html",     "character")), incorrect = structure("Sorry.", html = TRUE, class = c("html",     "character")), message = NULL, post_message = NULL), ids = list(        answer = "sts-6-answer", question = "sts-6"), loading = structure("<strong>Loading:<\u002fstrong> \nWhich is the <strong>unstable<\u002fstrong> eigenvector?\n<br/><br/><br/>", html = TRUE, class = c("html",     "character")), random_answer_order = FALSE, allow_retry = TRUE,     seed = 793333613.130575, options = list(id = "DD-18-13")), class = c("learnr_radio", "tutorial_question")))
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "DD-18-14-sts-7",     question = structure("Since motion along both eigenvectors is unstable, the trajectory moves away from the origin. Motion along one of the eigenvectors is relatively &quot;fast&quot; and motion along the other is &quot;slow&quot;. (You can see the speed by looking at the spacing between dots on a trajectory) What is the eigenvalue for the <strong>slow<\u002fstrong> direction?", html = TRUE, class = c("html",     "character")), answers = list(structure(list(id = "lnr_ans_d1e2cb5",         option = "0.95", value = "0.95", label = structure("0.95", html = TRUE, class = c("html",         "character")), correct = FALSE, message = structure("", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer")), structure(list(id = "lnr_ans_23869f1",         option = "1.05", value = "1.05", label = structure("1.05", html = TRUE, class = c("html",         "character")), correct = TRUE, message = structure("", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer")), structure(list(id = "lnr_ans_6f73231",         option = "1.15", value = "1.15", label = structure("1.15", html = TRUE, class = c("html",         "character")), correct = FALSE, message = structure("", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer")), structure(list(id = "lnr_ans_5fcc530",         option = "1.25", value = "1.25", label = structure("1.25", html = TRUE, class = c("html",         "character")), correct = FALSE, message = structure("", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer"))), button_labels = list(submit = structure("Check answer (ID: DD-18-14)", html = TRUE, class = c("html",     "character")), try_again = structure("Try again (ID: DD-18-14)", html = TRUE, class = c("html",     "character"))), messages = list(correct = structure("Right!", html = TRUE, class = c("html",     "character")), try_again = structure("Sorry.", html = TRUE, class = c("html",     "character")), incorrect = structure("Sorry.", html = TRUE, class = c("html",     "character")), message = NULL, post_message = NULL), ids = list(        answer = "sts-7-answer", question = "sts-7"), loading = structure("<strong>Loading:<\u002fstrong> \nSince motion along both eigenvectors is unstable, the trajectory moves away from the origin. Motion along one of the eigenvectors is relatively &quot;fast&quot; and motion along the other is &quot;slow&quot;. (You can see the speed by looking at the spacing between dots on a trajectory) What is the eigenvalue for the <strong>slow<\u002fstrong> direction?\n<br/><br/><br/>", html = TRUE, class = c("html",     "character")), random_answer_order = FALSE, allow_retry = TRUE,     seed = 1868149264.63008, options = list(id = "DD-18-14")), class = c("learnr_radio", "tutorial_question")))
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "DD-18-15-sts-8",     question = structure("Which direction does the &quot;slow&quot; eigenvector point in? (You may need to create many trajectories before you find one that is straight.)", html = TRUE, class = c("html",     "character")), answers = list(structure(list(id = "lnr_ans_4f0dd99",         option = "4:30 - 10:30", value = "4:30 - 10:30", label = structure("4:30 - 10:30", html = TRUE, class = c("html",         "character")), correct = TRUE, message = structure("", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer")), structure(list(id = "lnr_ans_736ef68",         option = "1:30 - 7:30", value = "1:30 - 7:30", label = structure("1:30 - 7:30", html = TRUE, class = c("html",         "character")), correct = FALSE, message = structure("", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer")), structure(list(id = "lnr_ans_b36ceab",         option = "2:30 - 8:30", value = "2:30 - 8:30", label = structure("2:30 - 8:30", html = TRUE, class = c("html",         "character")), correct = FALSE, message = structure("", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer")), structure(list(id = "lnr_ans_33c61a7",         option = "There is no slow eigenvector.", value = "There is no slow eigenvector.",         label = structure("There is no slow eigenvector.", html = TRUE, class = c("html",         "character")), correct = FALSE, message = structure("", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer"))), button_labels = list(submit = structure("Check answer (ID: DD-18-15)", html = TRUE, class = c("html",     "character")), try_again = structure("Try again (ID: DD-18-15)", html = TRUE, class = c("html",     "character"))), messages = list(correct = structure("Right!", html = TRUE, class = c("html",     "character")), try_again = structure("Sorry.", html = TRUE, class = c("html",     "character")), incorrect = structure("Sorry.", html = TRUE, class = c("html",     "character")), message = NULL, post_message = NULL), ids = list(        answer = "sts-8-answer", question = "sts-8"), loading = structure("<strong>Loading:<\u002fstrong> \nWhich direction does the &quot;slow&quot; eigenvector point in? (You may need to create many trajectories before you find one that is straight.)\n<br/><br/><br/>", html = TRUE, class = c("html",     "character")), random_answer_order = TRUE, allow_retry = TRUE,     seed = 363511888.830727, options = list(id = "DD-18-15")), class = c("learnr_radio", "tutorial_question")))
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "DD-18-16-sts-9",     question = structure("What phrase best describes the trajectory?", html = TRUE, class = c("html",     "character")), answers = list(structure(list(id = "lnr_ans_b1fb0e3",         option = "Clockwise spiral toward the fixed point", value = "Clockwise spiral toward the fixed point",         label = structure("Clockwise spiral toward the fixed point", html = TRUE, class = c("html",         "character")), correct = FALSE, message = structure("", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer")), structure(list(id = "lnr_ans_234273e",         option = "Clockwise spiral away from the fixed point",         value = "Clockwise spiral away from the fixed point",         label = structure("Clockwise spiral away from the fixed point", html = TRUE, class = c("html",         "character")), correct = FALSE, message = structure("", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer")), structure(list(id = "lnr_ans_d91e5a6",         option = "Counter-clockwise spiral toward the fixed point",         value = "Counter-clockwise spiral toward the fixed point",         label = structure("Counter-clockwise spiral toward the fixed point", html = TRUE, class = c("html",         "character")), correct = FALSE, message = structure("", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer")), structure(list(id = "lnr_ans_e4b7e5b",         option = "Counter-clockwise spiral away from the fixed point",         value = "Counter-clockwise spiral away from the fixed point",         label = structure("Counter-clockwise spiral away from the fixed point", html = TRUE, class = c("html",         "character")), correct = TRUE, message = structure("", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer"))), button_labels = list(submit = structure("Check answer (ID: DD-18-16)", html = TRUE, class = c("html",     "character")), try_again = structure("Try again (ID: DD-18-16)", html = TRUE, class = c("html",     "character"))), messages = list(correct = structure("Right!", html = TRUE, class = c("html",     "character")), try_again = structure("Sorry.", html = TRUE, class = c("html",     "character")), incorrect = structure("Sorry.", html = TRUE, class = c("html",     "character")), message = NULL, post_message = NULL), ids = list(        answer = "sts-9-answer", question = "sts-9"), loading = structure("<strong>Loading:<\u002fstrong> \nWhat phrase best describes the trajectory?\n<br/><br/><br/>", html = TRUE, class = c("html",     "character")), random_answer_order = FALSE, allow_retry = TRUE,     seed = 1999035577.06913, options = list(id = "DD-18-16")), class = c("learnr_radio", "tutorial_question")))
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "DD-18-17-sts-10",     question = structure("What phrase best describes the time series \\(y_n\\) versus \\(n\\)?", html = TRUE, class = c("html",     "character")), answers = list(structure(list(id = "lnr_ans_52de95c",         option = "exponential growth", value = "exponential growth",         label = structure("exponential growth", html = TRUE, class = c("html",         "character")), correct = FALSE, message = structure("", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer")), structure(list(id = "lnr_ans_48fc434",         option = "a sinusoid", value = "a sinusoid", label = structure("a sinusoid", html = TRUE, class = c("html",         "character")), correct = FALSE, message = structure("", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer")), structure(list(id = "lnr_ans_7079e17",         option = "a sinusoid whose amplitude grows exponentially",         value = "a sinusoid whose amplitude grows exponentially",         label = structure("a sinusoid whose amplitude grows exponentially", html = TRUE, class = c("html",         "character")), correct = TRUE, message = structure("", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer")), structure(list(id = "lnr_ans_e393724",         option = "a sinusoid whose baseline is shifted away from zero",         value = "a sinusoid whose baseline is shifted away from zero",         label = structure("a sinusoid whose baseline is shifted away from zero", html = TRUE, class = c("html",         "character")), correct = FALSE, message = structure("", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer"))), button_labels = list(submit = structure("Check answer (ID: DD-18-17)", html = TRUE, class = c("html",     "character")), try_again = structure("Try again (ID: DD-18-17)", html = TRUE, class = c("html",     "character"))), messages = list(correct = structure("Right!", html = TRUE, class = c("html",     "character")), try_again = structure("Sorry.", html = TRUE, class = c("html",     "character")), incorrect = structure("Sorry.", html = TRUE, class = c("html",     "character")), message = NULL, post_message = NULL), ids = list(        answer = "sts-10-answer", question = "sts-10"), loading = structure("<strong>Loading:<\u002fstrong> \nWhat phrase best describes the time series \\(y_n\\) versus \\(n\\)?\n<br/><br/><br/>", html = TRUE, class = c("html",     "character")), random_answer_order = FALSE, allow_retry = TRUE,     seed = 140264381.934684, options = list(id = "DD-18-17")), class = c("learnr_radio", "tutorial_question")))
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "DD-18-18-sts-11",     question = structure("The eigenvalues have a different form in the spiral motion than they did in the saddle or source. What&#39;s that difference?", html = TRUE, class = c("html",     "character")), answers = list(structure(list(id = "lnr_ans_3bae03e",         option = "They are negative numbers.", value = "They are negative numbers.",         label = structure("They are negative numbers.", html = TRUE, class = c("html",         "character")), correct = FALSE, message = structure("", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer")), structure(list(id = "lnr_ans_e951202",         option = "They are integers.", value = "They are integers.",         label = structure("They are integers.", html = TRUE, class = c("html",         "character")), correct = FALSE, message = structure("", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer")), structure(list(id = "lnr_ans_3005d0e",         option = "They are real numbers.", value = "They are real numbers.",         label = structure("They are real numbers.", html = TRUE, class = c("html",         "character")), correct = FALSE, message = structure("", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer")), structure(list(id = "lnr_ans_650210b",         option = "They are rational numbers (e.g. 15/32).", value = "They are rational numbers (e.g. 15/32).",         label = structure("They are rational numbers (e.g. 15/32).", html = TRUE, class = c("html",         "character")), correct = FALSE, message = structure("", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer")), structure(list(id = "lnr_ans_975d137",         option = "They are irrational numbers (e.g, $\\pi$).",         value = "They are irrational numbers (e.g, $\\pi$).",         label = structure("They are irrational numbers (e.g, \\(\\pi\\)).", html = TRUE, class = c("html",         "character")), correct = FALSE, message = structure("", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer")), structure(list(id = "lnr_ans_dde524a",         option = "They are complex numbers.", value = "They are complex numbers.",         label = structure("They are complex numbers.", html = TRUE, class = c("html",         "character")), correct = TRUE, message = structure("Numbers written like 0.3i are called &quot;imaginary&quot;. Numbers with both a real and an imaginary part are called &quot;complex&quot; numbers.", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer"))), button_labels = list(submit = structure("Check answer (ID: DD-18-18)", html = TRUE, class = c("html",     "character")), try_again = structure("Try again (ID: DD-18-18)", html = TRUE, class = c("html",     "character"))), messages = list(correct = structure("Right!", html = TRUE, class = c("html",     "character")), try_again = structure("Sorry.", html = TRUE, class = c("html",     "character")), incorrect = structure("Sorry.", html = TRUE, class = c("html",     "character")), message = NULL, post_message = NULL), ids = list(        answer = "sts-11-answer", question = "sts-11"), loading = structure("<strong>Loading:<\u002fstrong> \nThe eigenvalues have a different form in the spiral motion than they did in the saddle or source. What&#39;s that difference?\n<br/><br/><br/>", html = TRUE, class = c("html",     "character")), random_answer_order = FALSE, allow_retry = TRUE,     seed = 1985966246.57521, options = list(id = "DD-18-18")), class = c("learnr_radio", "tutorial_question")))
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "DD-18-19-sts-12",     question = structure("Which of these phrases best describes the <strong>time series<\u002fstrong> \\(y_n\\) versus \\(n\\)?", html = TRUE, class = c("html",     "character")), answers = list(structure(list(id = "lnr_ans_7e3e2ed",         option = "exponential growth", value = "exponential growth",         label = structure("exponential growth", html = TRUE, class = c("html",         "character")), correct = FALSE, message = structure("", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer")), structure(list(id = "lnr_ans_d7dc2c9",         option = "exponential decay", value = "exponential decay",         label = structure("exponential decay", html = TRUE, class = c("html",         "character")), correct = FALSE, message = structure("", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer")), structure(list(id = "lnr_ans_a6816f6",         option = "exponential growth but alternating signs",         value = "exponential growth but alternating signs", label = structure("exponential growth but alternating signs", html = TRUE, class = c("html",         "character")), correct = TRUE, message = structure("", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer")), structure(list(id = "lnr_ans_a7f8126",         option = "exponential decay but alternating signs", value = "exponential decay but alternating signs",         label = structure("exponential decay but alternating signs", html = TRUE, class = c("html",         "character")), correct = FALSE, message = structure("", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer"))), button_labels = list(submit = structure("Check answer (ID: DD-18-19)", html = TRUE, class = c("html",     "character")), try_again = structure("Try again (ID: DD-18-19)", html = TRUE, class = c("html",     "character"))), messages = list(correct = structure("Right!", html = TRUE, class = c("html",     "character")), try_again = structure("Sorry.", html = TRUE, class = c("html",     "character")), incorrect = structure("Sorry.", html = TRUE, class = c("html",     "character")), message = NULL, post_message = NULL), ids = list(        answer = "sts-12-answer", question = "sts-12"), loading = structure("<strong>Loading:<\u002fstrong> \nWhich of these phrases best describes the <strong>time series<\u002fstrong> \\(y_n\\) versus \\(n\\)?\n<br/><br/><br/>", html = TRUE, class = c("html",     "character")), random_answer_order = FALSE, allow_retry = TRUE,     seed = 42401108.4802554, options = list(id = "DD-18-19")), class = c("learnr_radio", "tutorial_question")))
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+`tutorial-exercise-mp1-1-result` <- learnr:::setup_exercise_handler(reactive(req(input$`tutorial-exercise-mp1-1-code-editor`)), session)
+output$`tutorial-exercise-mp1-1-output` <- renderUI({
+  `tutorial-exercise-mp1-1-result`()
+})
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "DD-18-20-mp1-2",     question = structure("Which of these everyday terms is the best description of the movement pattern due to the rabbit dynamics?", html = TRUE, class = c("html",     "character")), answers = list(structure(list(id = "lnr_ans_ededd78",         option = "whirlwind", value = "whirlwind", label = structure("whirlwind", html = TRUE, class = c("html",         "character")), correct = FALSE, message = structure("", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer")), structure(list(id = "lnr_ans_253f38c",         option = "drain", value = "drain", label = structure("drain", html = TRUE, class = c("html",         "character")), correct = FALSE, message = structure("", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer")), structure(list(id = "lnr_ans_d11d8ee",         option = "two-way street", value = "two-way street",         label = structure("two-way street", html = TRUE, class = c("html",         "character")), correct = FALSE, message = structure("", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer")), structure(list(id = "lnr_ans_30beeab",         option = "highway entrance ramps", value = "highway entrance ramps",         label = structure("highway entrance ramps", html = TRUE, class = c("html",         "character")), correct = TRUE, message = structure("", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer"))), button_labels = list(submit = structure("Check answer (ID: DD-18-20)", html = TRUE, class = c("html",     "character")), try_again = structure("Try again (ID: DD-18-20)", html = TRUE, class = c("html",     "character"))), messages = list(correct = structure("Right!", html = TRUE, class = c("html",     "character")), try_again = structure("Sorry.", html = TRUE, class = c("html",     "character")), incorrect = structure("Sorry.", html = TRUE, class = c("html",     "character")), message = NULL, post_message = NULL), ids = list(        answer = "mp1-2-answer", question = "mp1-2"), loading = structure("<strong>Loading:<\u002fstrong> \nWhich of these everyday terms is the best description of the movement pattern due to the rabbit dynamics?\n<br/><br/><br/>", html = TRUE, class = c("html",     "character")), random_answer_order = FALSE, allow_retry = TRUE,     seed = 1218112044.93277, options = list(id = "DD-18-20")), class = c("learnr_radio", "tutorial_question")))
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "DD-18-21-mp1-3",     question = structure("Which of these everyday terms is the best description of the movement pattern due to \\({\\mathbf B}\\)?", html = TRUE, class = c("html",     "character")), answers = list(structure(list(id = "lnr_ans_b55c589",         option = "whirlwind", value = "whirlwind", label = structure("whirlwind", html = TRUE, class = c("html",         "character")), correct = FALSE, message = structure("", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer")), structure(list(id = "lnr_ans_659046a",         option = "drain", value = "drain", label = structure("drain", html = TRUE, class = c("html",         "character")), correct = FALSE, message = structure("", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer")), structure(list(id = "lnr_ans_a3ec637",         option = "two-way street", value = "two-way street",         label = structure("two-way street", html = TRUE, class = c("html",         "character")), correct = TRUE, message = structure("", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer")), structure(list(id = "lnr_ans_1e1e711",         option = "highway interchange", value = "highway interchange",         label = structure("highway interchange", html = TRUE, class = c("html",         "character")), correct = FALSE, message = structure("", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer"))), button_labels = list(submit = structure("Check answer (ID: DD-18-21)", html = TRUE, class = c("html",     "character")), try_again = structure("Try again (ID: DD-18-21)", html = TRUE, class = c("html",     "character"))), messages = list(correct = structure("Right!", html = TRUE, class = c("html",     "character")), try_again = structure("Sorry.", html = TRUE, class = c("html",     "character")), incorrect = structure("Sorry.", html = TRUE, class = c("html",     "character")), message = NULL, post_message = NULL), ids = list(        answer = "mp1-3-answer", question = "mp1-3"), loading = structure("<strong>Loading:<\u002fstrong> \nWhich of these everyday terms is the best description of the movement pattern due to \\({\\mathbf B}\\)?\n<br/><br/><br/>", html = TRUE, class = c("html",     "character")), random_answer_order = FALSE, allow_retry = TRUE,     seed = 2096339398.52382, options = list(id = "DD-18-21")), class = c("learnr_radio", "tutorial_question")))
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "DD-18-22-mp1-4",     question = structure("Which of these everyday terms is the best description of the movement pattern due to \\({\\mathbf C}\\)?", html = TRUE, class = c("html",     "character")), answers = list(structure(list(id = "lnr_ans_f9f7da",         option = "whirlwind", value = "whirlwind", label = structure("whirlwind", html = TRUE, class = c("html",         "character")), correct = FALSE, message = structure("", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer")), structure(list(id = "lnr_ans_9f499f6",         option = "drain", value = "drain", label = structure("drain", html = TRUE, class = c("html",         "character")), correct = TRUE, message = structure("", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer")), structure(list(id = "lnr_ans_e0c2da6",         option = "two-way street", value = "two-way street",         label = structure("two-way street", html = TRUE, class = c("html",         "character")), correct = FALSE, message = structure("", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer")), structure(list(id = "lnr_ans_c9fdc0a",         option = "highway interchange", value = "highway interchange",         label = structure("highway interchange", html = TRUE, class = c("html",         "character")), correct = FALSE, message = structure("", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer"))), button_labels = list(submit = structure("Check answer (ID: DD-18-22)", html = TRUE, class = c("html",     "character")), try_again = structure("Try again (ID: DD-18-22)", html = TRUE, class = c("html",     "character"))), messages = list(correct = structure("Right!", html = TRUE, class = c("html",     "character")), try_again = structure("Sorry.", html = TRUE, class = c("html",     "character")), incorrect = structure("Sorry.", html = TRUE, class = c("html",     "character")), message = NULL, post_message = NULL), ids = list(        answer = "mp1-4-answer", question = "mp1-4"), loading = structure("<strong>Loading:<\u002fstrong> \nWhich of these everyday terms is the best description of the movement pattern due to \\({\\mathbf C}\\)?\n<br/><br/><br/>", html = TRUE, class = c("html",     "character")), random_answer_order = FALSE, allow_retry = TRUE,     seed = 186251168.41327, options = list(id = "DD-18-22")), class = c("learnr_radio", "tutorial_question")))
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "DD-18-23-mp1-5",     question = structure("Which of these everyday terms is the best description of the movement pattern due to \\({\\mathbf D}\\)?", html = TRUE, class = c("html",     "character")), answers = list(structure(list(id = "lnr_ans_84d96f3",         option = "whirlwind", value = "whirlwind", label = structure("whirlwind", html = TRUE, class = c("html",         "character")), correct = TRUE, message = structure("", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer")), structure(list(id = "lnr_ans_8cf073e",         option = "drain", value = "drain", label = structure("drain", html = TRUE, class = c("html",         "character")), correct = FALSE, message = structure("", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer")), structure(list(id = "lnr_ans_e18b335",         option = "two-way street", value = "two-way street",         label = structure("two-way street", html = TRUE, class = c("html",         "character")), correct = FALSE, message = structure("", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer")), structure(list(id = "lnr_ans_e80de42",         option = "highway interchange", value = "highway interchange",         label = structure("highway interchange", html = TRUE, class = c("html",         "character")), correct = FALSE, message = structure("", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer"))), button_labels = list(submit = structure("Check answer (ID: DD-18-23)", html = TRUE, class = c("html",     "character")), try_again = structure("Try again (ID: DD-18-23)", html = TRUE, class = c("html",     "character"))), messages = list(correct = structure("Right!", html = TRUE, class = c("html",     "character")), try_again = structure("Sorry.", html = TRUE, class = c("html",     "character")), incorrect = structure("Sorry.", html = TRUE, class = c("html",     "character")), message = NULL, post_message = NULL), ids = list(        answer = "mp1-5-answer", question = "mp1-5"), loading = structure("<strong>Loading:<\u002fstrong> \nWhich of these everyday terms is the best description of the movement pattern due to \\({\\mathbf D}\\)?\n<br/><br/><br/>", html = TRUE, class = c("html",     "character")), random_answer_order = FALSE, allow_retry = TRUE,     seed = 853713449.102459, options = list(id = "DD-18-23")), class = c("learnr_radio", "tutorial_question")))
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "DD-18-24-ev1-1",     question = structure("Do the arithmetic in the above equation to find the numerical value of \\({\\mathbf A}\\cdot{\\mathbf \\Lambda}_2\\). What is it?", html = TRUE, class = c("html",     "character")), answers = list(structure(list(id = "lnr_ans_7123003",         option = "$\\left[\\begin{array}{r}\\frac{1}{4}\\\\\\frac{1}{2}\\end{array}\\right]$",         value = "$\\left[\\begin{array}{r}\\frac{1}{4}\\\\\\frac{1}{2}\\end{array}\\right]$",         label = structure("\\(\\left[\\begin{array}{r}\\frac{1}{4}\\\\\\frac{1}{2}\\end{array}\\right]\\)", html = TRUE, class = c("html",         "character")), correct = TRUE, message = structure("", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer")), structure(list(id = "lnr_ans_f98c1e9",         option = "$\\left[\\begin{array}{r}\\frac{1}{2}\\\\\\frac{1}{2}\\end{array}\\right]$",         value = "$\\left[\\begin{array}{r}\\frac{1}{2}\\\\\\frac{1}{2}\\end{array}\\right]$",         label = structure("\\(\\left[\\begin{array}{r}\\frac{1}{2}\\\\\\frac{1}{2}\\end{array}\\right]\\)", html = TRUE, class = c("html",         "character")), correct = FALSE, message = structure("", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer")), structure(list(id = "lnr_ans_39e04ca",         option = "$\\left[\\begin{array}{r}1\\\\\\frac{1}{2}\\end{array}\\right]$",         value = "$\\left[\\begin{array}{r}1\\\\\\frac{1}{2}\\end{array}\\right]$",         label = structure("\\(\\left[\\begin{array}{r}1\\\\\\frac{1}{2}\\end{array}\\right]\\)", html = TRUE, class = c("html",         "character")), correct = FALSE, message = structure("", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer")), structure(list(id = "lnr_ans_ffa0ec8",         option = "$\\left[\\begin{array}{r}2\\\\\\frac{3}{2}\\end{array}\\right]$",         value = "$\\left[\\begin{array}{r}2\\\\\\frac{3}{2}\\end{array}\\right]$",         label = structure("\\(\\left[\\begin{array}{r}2\\\\\\frac{3}{2}\\end{array}\\right]\\)", html = TRUE, class = c("html",         "character")), correct = FALSE, message = structure("", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer"))), button_labels = list(submit = structure("Check answer (ID: DD-18-24)", html = TRUE, class = c("html",     "character")), try_again = structure("Try again (ID: DD-18-24)", html = TRUE, class = c("html",     "character"))), messages = list(correct = structure("Right!", html = TRUE, class = c("html",     "character")), try_again = structure("Sorry.", html = TRUE, class = c("html",     "character")), incorrect = structure("Sorry.", html = TRUE, class = c("html",     "character")), message = NULL, post_message = NULL), ids = list(        answer = "ev1-1-answer", question = "ev1-1"), loading = structure("<strong>Loading:<\u002fstrong> \nDo the arithmetic in the above equation to find the numerical value of \\({\\mathbf A}\\cdot{\\mathbf \\Lambda}_2\\). What is it?\n<br/><br/><br/>", html = TRUE, class = c("html",     "character")), random_answer_order = FALSE, allow_retry = TRUE,     seed = 1171917011.95428, options = list(id = "DD-18-24")), class = c("learnr_radio", "tutorial_question")))
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "DD-18-25-ev1-2",     question = structure("What is the numerical value of \\({\\mathbf A}\\cdot{\\mathbf \\Lambda}_1\\)?", html = TRUE, class = c("html",     "character")), answers = list(structure(list(id = "lnr_ans_447fe87",         option = "$\\left[\\begin{array}{r}\\frac{121}{4}\\\\\\frac{11}{2}\\end{array}\\right]$",         value = "$\\left[\\begin{array}{r}\\frac{121}{4}\\\\\\frac{11}{2}\\end{array}\\right]$",         label = structure("\\(\\left[\\begin{array}{r}\\frac{121}{4}\\\\\\frac{11}{2}\\end{array}\\right]\\)", html = TRUE, class = c("html",         "character")), correct = TRUE, message = structure("", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer")), structure(list(id = "lnr_ans_4fb79ef",         option = "$\\left[\\begin{array}{r}\\frac{11}{4}\\\\\\frac{11}{2}\\end{array}\\right]$",         value = "$\\left[\\begin{array}{r}\\frac{11}{4}\\\\\\frac{11}{2}\\end{array}\\right]$",         label = structure("\\(\\left[\\begin{array}{r}\\frac{11}{4}\\\\\\frac{11}{2}\\end{array}\\right]\\)", html = TRUE, class = c("html",         "character")), correct = FALSE, message = structure("", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer")), structure(list(id = "lnr_ans_be7dc93",         option = "$\\left[\\begin{array}{r}\\frac{11}{4}\\\\\\frac{1}{2}\\end{array}\\right]$",         value = "$\\left[\\begin{array}{r}\\frac{11}{4}\\\\\\frac{1}{2}\\end{array}\\right]$",         label = structure("\\(\\left[\\begin{array}{r}\\frac{11}{4}\\\\\\frac{1}{2}\\end{array}\\right]\\)", html = TRUE, class = c("html",         "character")), correct = FALSE, message = structure("", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer")), structure(list(id = "lnr_ans_9055e68",         option = "$\\left[\\begin{array}{r}\\frac{121}{4}\\\\\\frac{3}{2}\\end{array}\\right]$",         value = "$\\left[\\begin{array}{r}\\frac{121}{4}\\\\\\frac{3}{2}\\end{array}\\right]$",         label = structure("\\(\\left[\\begin{array}{r}\\frac{121}{4}\\\\\\frac{3}{2}\\end{array}\\right]\\)", html = TRUE, class = c("html",         "character")), correct = FALSE, message = structure("", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer"))), button_labels = list(submit = structure("Check answer (ID: DD-18-25)", html = TRUE, class = c("html",     "character")), try_again = structure("Try again (ID: DD-18-25)", html = TRUE, class = c("html",     "character"))), messages = list(correct = structure("Right!", html = TRUE, class = c("html",     "character")), try_again = structure("Sorry.", html = TRUE, class = c("html",     "character")), incorrect = structure("Sorry.", html = TRUE, class = c("html",     "character")), message = NULL, post_message = NULL), ids = list(        answer = "ev1-2-answer", question = "ev1-2"), loading = structure("<strong>Loading:<\u002fstrong> \nWhat is the numerical value of \\({\\mathbf A}\\cdot{\\mathbf \\Lambda}_1\\)?\n<br/><br/><br/>", html = TRUE, class = c("html",     "character")), random_answer_order = FALSE, allow_retry = TRUE,     seed = 1838382275.64394, options = list(id = "DD-18-25")), class = c("learnr_radio", "tutorial_question")))
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "DD-18-26-ev1-3",     question = structure("Suppose \\({\\mathbf X}_0 = 3 {\\mathbf \\Lambda}_2\\) in the dynamical system defined by \\({\\mathbf A}\\). What will be \\({\\mathbf X}_5\\)?", html = TRUE, class = c("html",     "character")), answers = list(structure(list(id = "lnr_ans_eae1f50",         option = "$\\left[\\begin{array}{r}\\frac{3}{16}\\\\\\frac{3}{32}\\end{array}\\right]$",         value = "$\\left[\\begin{array}{r}\\frac{3}{16}\\\\\\frac{3}{32}\\end{array}\\right]$",         label = structure("\\(\\left[\\begin{array}{r}\\frac{3}{16}\\\\\\frac{3}{32}\\end{array}\\right]\\)", html = TRUE, class = c("html",         "character")), correct = TRUE, message = structure("", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer")), structure(list(id = "lnr_ans_5f4abf3",         option = "$\\left[\\begin{array}{r}\\frac{3}{32}\\\\\\frac{3}{16}\\end{array}\\right]$",         value = "$\\left[\\begin{array}{r}\\frac{3}{32}\\\\\\frac{3}{16}\\end{array}\\right]$",         label = structure("\\(\\left[\\begin{array}{r}\\frac{3}{32}\\\\\\frac{3}{16}\\end{array}\\right]\\)", html = TRUE, class = c("html",         "character")), correct = FALSE, message = structure("", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer")), structure(list(id = "lnr_ans_f0ac79d",         option = "$\\left[\\begin{array}{r}\\frac{3}{64}\\\\\\frac{3}{64}\\end{array}\\right]$",         value = "$\\left[\\begin{array}{r}\\frac{3}{64}\\\\\\frac{3}{64}\\end{array}\\right]$",         label = structure("\\(\\left[\\begin{array}{r}\\frac{3}{64}\\\\\\frac{3}{64}\\end{array}\\right]\\)", html = TRUE, class = c("html",         "character")), correct = FALSE, message = structure("", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer")), structure(list(id = "lnr_ans_ece10ec",         option = "$\\left[\\begin{array}{r}\\frac{3}{4}\\\\\\frac{3}{16}\\end{array}\\right]$",         value = "$\\left[\\begin{array}{r}\\frac{3}{4}\\\\\\frac{3}{16}\\end{array}\\right]$",         label = structure("\\(\\left[\\begin{array}{r}\\frac{3}{4}\\\\\\frac{3}{16}\\end{array}\\right]\\)", html = TRUE, class = c("html",         "character")), correct = FALSE, message = structure("", html = TRUE, class = c("html",         "character"))), class = c("tutorial_question_answer",     "tutorial_quiz_answer"))), button_labels = list(submit = structure("Check answer (ID: DD-18-26)", html = TRUE, class = c("html",     "character")), try_again = structure("Try again (ID: DD-18-26)", html = TRUE, class = c("html",     "character"))), messages = list(correct = structure("Right!", html = TRUE, class = c("html",     "character")), try_again = structure("Sorry.", html = TRUE, class = c("html",     "character")), incorrect = structure("Sorry.", html = TRUE, class = c("html",     "character")), message = NULL, post_message = NULL), ids = list(        answer = "ev1-3-answer", question = "ev1-3"), loading = structure("<strong>Loading:<\u002fstrong> \nSuppose \\({\\mathbf X}_0 = 3 {\\mathbf \\Lambda}_2\\) in the dynamical system defined by \\({\\mathbf A}\\). What will be \\({\\mathbf X}_5\\)?\n<br/><br/><br/>", html = TRUE, class = c("html",     "character")), random_answer_order = FALSE, allow_retry = TRUE,     seed = 866181746.096653, options = list(id = "DD-18-26")), class = c("learnr_radio", "tutorial_question")))
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+`tutorial-exercise-lt1-5-result` <- learnr:::setup_exercise_handler(reactive(req(input$`tutorial-exercise-lt1-5-code-editor`)), session)
+output$`tutorial-exercise-lt1-5-output` <- renderUI({
+  `tutorial-exercise-lt1-5-result`()
+})
+</script>
+ <!--html_preserve-->
+<script type="application/shiny-prerendered" data-context="dependencies">
+{"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["jquery"]},{"type":"character","attributes":{},"value":["1.11.3"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["rmd/h/jquery"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["jquery.min.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["rmarkdown"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["2.4"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["bootstrap"]},{"type":"character","attributes":{},"value":["3.3.5"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["rmd/h/bootstrap"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["viewport"]}},"value":[{"type":"character","attributes":{},"value":["width=device-width, initial-scale=1"]}]},{"type":"character","attributes":{},"value":["js/bootstrap.min.js","shim/html5shiv.min.js","shim/respond.min.js"]},{"type":"character","attributes":{},"value":["css/cerulean.min.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["rmarkdown"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["2.4"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["pagedtable"]},{"type":"character","attributes":{},"value":["1.1"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["rmd/h/pagedtable-1.1"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["js/pagedtable.js"]},{"type":"character","attributes":{},"value":["css/pagedtable.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["rmarkdown"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["2.4"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["highlightjs"]},{"type":"character","attributes":{},"value":["9.12.0"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["rmd/h/highlightjs"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["highlight.js"]},{"type":"character","attributes":{},"value":["textmate.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["rmarkdown"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["2.4"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["tutorial"]},{"type":"character","attributes":{},"value":["0.10.1.9004"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/tutorial"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["tutorial.js"]},{"type":"character","attributes":{},"value":["tutorial.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.10.1.9004"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["tutorial-autocompletion"]},{"type":"character","attributes":{},"value":["0.10.1.9004"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/tutorial"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["tutorial-autocompletion.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.10.1.9004"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["tutorial-diagnostics"]},{"type":"character","attributes":{},"value":["0.10.1.9004"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/tutorial"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["tutorial-diagnostics.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.10.1.9004"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["tutorial-format"]},{"type":"character","attributes":{},"value":["0.10.1.9004"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["rmarkdown/templates/tutorial/resources"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["tutorial-format.js"]},{"type":"character","attributes":{},"value":["tutorial-format.css","rstudio-theme.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.10.1.9004"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["jquery"]},{"type":"character","attributes":{},"value":["1.11.3"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["rmd/h/jquery"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["jquery.min.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["rmarkdown"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["2.4"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["navigation"]},{"type":"character","attributes":{},"value":["1.1"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["rmd/h/navigation-1.1"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["tabsets.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["rmarkdown"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["2.4"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["highlightjs"]},{"type":"character","attributes":{},"value":["9.12.0"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["rmd/h/highlightjs"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["highlight.js"]},{"type":"character","attributes":{},"value":["default.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["rmarkdown"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["2.4"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["jquery"]},{"type":"character","attributes":{},"value":["1.11.3"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["rmd/h/jquery"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["jquery.min.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["rmarkdown"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["2.4"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["font-awesome"]},{"type":"character","attributes":{},"value":["5.1.0"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["rmd/h/fontawesome"]}]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["css/all.css","css/v4-shims.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["rmarkdown"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["2.4"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["bootbox"]},{"type":"character","attributes":{},"value":["4.4.0"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/bootbox"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["bootbox.min.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.10.1.9004"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["idb-keyvalue"]},{"type":"character","attributes":{},"value":["3.2.0"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/idb-keyval"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["idb-keyval-iife-compat.min.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[false]},{"type":"character","attributes":{},"value":["0.10.1.9004"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["tutorial"]},{"type":"character","attributes":{},"value":["0.10.1.9004"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/tutorial"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["tutorial.js"]},{"type":"character","attributes":{},"value":["tutorial.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.10.1.9004"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["tutorial-autocompletion"]},{"type":"character","attributes":{},"value":["0.10.1.9004"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/tutorial"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["tutorial-autocompletion.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.10.1.9004"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["tutorial-diagnostics"]},{"type":"character","attributes":{},"value":["0.10.1.9004"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/tutorial"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["tutorial-diagnostics.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.10.1.9004"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["ace"]},{"type":"character","attributes":{},"value":["1.2.6"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/ace"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["ace.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.10.1.9004"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["clipboardjs"]},{"type":"character","attributes":{},"value":["1.5.15"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/clipboardjs"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["clipboard.min.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.10.1.9004"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["ace"]},{"type":"character","attributes":{},"value":["1.2.6"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/ace"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["ace.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.10.1.9004"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["clipboardjs"]},{"type":"character","attributes":{},"value":["1.5.15"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/clipboardjs"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["clipboard.min.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.10.1.9004"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["ace"]},{"type":"character","attributes":{},"value":["1.2.6"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/ace"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["ace.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.10.1.9004"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["clipboardjs"]},{"type":"character","attributes":{},"value":["1.5.15"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/clipboardjs"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["clipboard.min.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.10.1.9004"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["ace"]},{"type":"character","attributes":{},"value":["1.2.6"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/ace"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["ace.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.10.1.9004"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["clipboardjs"]},{"type":"character","attributes":{},"value":["1.5.15"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/clipboardjs"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["clipboard.min.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.10.1.9004"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["ace"]},{"type":"character","attributes":{},"value":["1.2.6"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/ace"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["ace.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.10.1.9004"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["clipboardjs"]},{"type":"character","attributes":{},"value":["1.5.15"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/clipboardjs"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["clipboard.min.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.10.1.9004"]}]}]}
+</script>
+<!--/html_preserve-->
+<!--html_preserve-->
+<script type="application/shiny-prerendered" data-context="execution_dependencies">
+{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["packages"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["packages","version"]},"class":{"type":"character","attributes":{},"value":["data.frame"]},"row.names":{"type":"integer","attributes":{},"value":[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,91,92,93,94,95,96,97,98,99,100]}},"value":[{"type":"character","attributes":{},"value":["backports","base","broom","checkmate","colorspace","compiler","crayon","crosstalk","curl","data.table","datasets","DBI","debugme","digest","dplyr","DT","ellipsis","etude2","evaluate","fansi","farver","fastmap","forcats","generics","ggdendro","ggforce","ggformula","ggplot2","ggrepel","ggridges","ggstance","glue","gradethis","graphics","grDevices","grid","gridExtra","gtable","haven","hms","htmltools","htmlwidgets","httpuv","httr","jsonlite","knitr","labelled","later","lattice","lazyeval","leaflet","learnr","learnrhash","lifecycle","lubridate","magrittr","markdown","MASS","math141Z","Matrix","methods","metR","mime","mosaic","mosaicCalc","mosaicCore","mosaicData","munsell","pillar","pkgconfig","plotly","plyr","polyclip","promises","purrr","R6","Rcpp","readr","rlang","rmarkdown","rprojroot","scales","shiny","splines","stats","stringi","stringr","tibble","tidyr","tidyselect","tools","tweenr","utf8","utils","vctrs","viridisLite","withr","xfun","xtable","yaml"]},{"type":"character","attributes":{},"value":["1.2.1","3.6.3","0.7.5","2.0.0","2.0-0","3.6.3","1.4.1.9000","1.1.1","4.3","1.13.6","3.6.3","1.1.0","1.1.0","0.6.27","1.0.4","0.12","0.3.1","0.1.0","0.14","0.4.2","2.0.3","1.1.0","0.5.1","0.1.0","0.1.22","0.3.2","0.10.1","3.3.3","0.9.1","0.5.3","0.3.5","1.4.2","0.2.0.9000","3.6.3","3.6.3","3.6.3","2.3","0.3.0","2.3.1","1.0.0","0.5.1.1","1.5.3","1.5.4","1.4.2","1.7.2","1.30","2.7.0","1.1.0.1","0.20-38","0.2.2","2.0.4.1","0.10.1.9004","0.1.0.9000","1.0.0","1.7.9.2","2.0.1","1.1","7.3-51.5","0.3.0","1.2-18","3.6.3","0.9.1","0.10","1.8.3.9000","0.5.2.9000","0.9.0","0.20.2","0.5.0","1.5.0","2.0.3","4.9.3","1.8.6","1.10-0","1.2.0.1","0.3.4","2.5.0","1.0.6","1.4.0","0.4.10","2.4","2.0.2","1.1.1","1.5.0","3.6.3","3.6.3","1.5.3","1.4.0","3.0.6","1.1.2","1.1.0","3.6.3","1.0.1","1.1.4","3.6.3","0.3.6","0.3.0","2.4.1","0.21","1.8-4","2.2.1"]}]}]}
+</script>
+<!--/html_preserve-->
+</div>
+
+</div> <!-- topics -->
+
+<div class="topicsContainer">
+<div class="topicsPositioner">
+<div class="band">
+<div class="bandContent topicsListContainer">
+
+<!-- begin doc-metadata -->
+<div id="doc-metadata">
+<h2 class="title toc-ignore" style="display:none;">Daily Digital 18</h2>
+<h3 class="subtitle"><em>Math 142Z</em></h3>
+</div>
+<!-- end doc-metadata -->
+
+</div> <!-- bandContent.topicsListContainer -->
+</div> <!-- band -->
+</div> <!-- topicsPositioner -->
+</div> <!-- topicsContainer -->
+
+
+</div> <!-- bandContent page -->
+</div> <!-- pageContent band -->
+
+
+
+
+<script>
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+</script>
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+
+</body>
+
+</html>
