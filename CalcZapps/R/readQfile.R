@@ -5,9 +5,9 @@ readQfile <- function(fname) {
   content <- readLines(fname)
   start_lines <- grepl("^\\*\\*", content)
   Headers <- content[start_lines]
-  qname <- gsub("\\*+([a-zA-Z0-9\\.]*)\\*+.*$", "\\1", Headers)
-  prompt <- gsub("\\*+[a-zA-Z0-9\\.]*\\*+\\s*(.*)\\s*\\[(.*)\\]\\w*$", "\\1", Headers)
-  topic <- gsub("\\*+[a-zA-Z0-9\\.]*\\*+\\s*(.*)\\s*\\[(.*)\\]\\w*$", "\\2", Headers)
+  qname <- gsub("\\*+([a-zA-Z0-9\\.-_]*)\\*+.*$", "\\1", Headers)
+  prompt <- gsub("\\*+[a-zA-Z0-9\\.-_\\?,!\\$\\|\\\\'\"]*\\*+\\s*(.*)\\s*\\[(.*)\\]\\w*$", "\\1", Headers)
+  topic <- gsub("\\*+[a-zA-Z0-9\\.-_]*\\*+\\s*(.*)\\s*\\[(.*)\\]\\w*$", "\\2", Headers)
 
   start_line_num <- c(which(start_lines), length(content) + 1)
 
