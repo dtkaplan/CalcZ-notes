@@ -34,10 +34,10 @@ new_calcZ_exercise <- function(directory = ".", exercise_id = NULL, save=TRUE) {
   target_path <- if (nchar(relative_path) == 0) exercise_id
   else paste(relative_path, exercise_id, sep="/")
 
-  insert_exercise <- glue::glue("`r insert_calcZ_exercise(\"XX.XX\", \"{perm_id}\", \"{target_path}.Rmd\")`")
+  insert_exercise <- glue::glue("`r insert_calcZ_exercise(\"XX.XX\", \"{global_id}\", \"{target_path}.Rmd\")`")
 
   contents <- paste0( contents, "\n\n", insert_exercise, "\n\n")
-  new_file_name <- paste0(target_path, ".Rmd")
+  new_file_name <- paste0(exercise_id, ".Rmd")
 
   tmp <- list.files(path = new_file_name)
   if (length(tmp) == 0) { # clear to create the file
