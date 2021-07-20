@@ -1,0 +1,69 @@
+---
+title: "Sailing over time"
+author: "Daniel Kaplan"
+date: "7/20/2021"
+output: html_document
+runtime: shiny
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(mosaic)
+library(mosaicCalc)
+library(shiny)
+```
+
+```{r define-velocity, echo=FALSE}
+tmp <- rfun(~ t, seed=638)
+vel <- makeFun(1+(10+tmp(30*(t-0.08)))/4 ~ t)
+# must match the definitions in the app, below
+```
+
+```{r echo=FALSE}
+plotOutput("boat_velocity")
+```
+
+```{r echo=FALSE}
+library(mosaic)
+tmp <- rfun(~ t, seed=638)
+vel <- makeFun(1+(10+tmp(30*(t-0.08)))/4 ~ t)
+
+output$boat_velocity <- renderPlot({
+  dt <- as.numeric(input$dt)
+  nsegs = ceiling(0.2/dt)
+  palette <- topo.colors(nsegs)
+  v_data <- tibble::tibble(
+    tstart = dt*(0:(nsegs-1)),
+    tmid = tstart + dt/2,
+    tend = tstart + dt,
+    v = vel(tstart),
+    seg = palette,
+    vlabs = paste0(" vel(t=", tstart, ")")
+  )
+  P <- slice_plot(vel(t) ~ t, domain(t = c(0,0.2))) %>%
+    gf_labs(y = "Velocity (mph)", x = "Time (hours)") %>%
+    gf_lims(y=c(0, NA), x = c(0,0.22)) %>%
+    gf_errorbarh(0 ~ tstart + tend, data = v_data,
+                 color = ~ seg, inherit = FALSE, size=2) %>%
+    gf_errorbarh(v ~ tstart + tend, data = v_data,
+                 color = ~ seg, inherit=FALSE)
+  if (input$show_area) {
+    P <- P %>% gf_rect(0 + v ~ tstart + tend, data = v_data, inherit=FALSE,
+                       fill = ~ seg, alpha = 0.5)
+  }
+
+    if (nsegs < 25) {
+      P <- P %>% gf_text(.3 ~ tmid, data = v_data,
+                       label = 1:nsegs - 1, color = ~ seg, inherit=FALSE) %>%
+           gf_text(v ~ tend, data = v_data, label = ~vlabs,
+                   color= ~ seg, hjust="left", inherit=FALSE)
+    }
+
+    P  + theme(legend.position = "none")
+})
+```
+
+`r selectInput("dt", "Select the length dt", choices = c(0.005, 0.01, 0.02, 0.05), selected = 0.05)`
+
+`r checkboxInput("show_area", "Show the multiplication as an area.", value=FALSE)`
+

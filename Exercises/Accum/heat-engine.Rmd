@@ -118,13 +118,13 @@ askMC(
 
 The net work done by the machine in completing the cycle, shifting from compression at low temperature to expansion at high temperature, is the difference between the energy put out by the machine when expanding and the energy put into the machine to compress the gas. Such a machine is called a "heat engine" since it turns a source of high temperature and a source of low temperature into energy.
 
-In the sandbox, you have been given a function $P(V, T)$ with default $n=1$ mole of gas. Anti-differentiate $P()$ with respect to $V$ then calculate the energy needed to compress the cylinder at the low temperature, that is $$\int_{7.5}^{2.5} P(V, T=300) dV .$$ Call this numerical result `compress_energy`. 
+In a `r sandbox_link()`, evaluate the code below. The first line defines a function $P(V, T)$ with default $n=1$ mole of gas. Anti-differentiate $P()$ with respect to $V$ then calculate the energy needed to compress the cylinder at the low temperature, that is $$\int_{7.5}^{2.5} P(V, T=300) dV .$$ Call this numerical result `compress_energy`. 
 
 Similarly, calculate the energy done by the machine in the high-temperature expansion $$\int_{2.5}^{7.5} P(V, T=1200) dV .$$ Call this numerical result `expand_energy`. 
 
 You may want to make a graph of your $P(V, T)$ function to check that it is right. Also, check that the integrals are right by comparing them to the rough estimate you made earlier by counting squares.
 
-```{r PV7, exercise=TRUE, exercise.cap="Sandbox for integration.", exercise.nlines = 7}
+```{r eval=FALSE}
 P <- makeFun( n*8.314*T/V ~ V + T, n=1)
 antiP <- makeFun(n*8.314*T*log(V) ~ V + T, n=1)
 
