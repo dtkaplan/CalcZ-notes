@@ -52,11 +52,33 @@ new_calcZ_exercise <- function(directory = ".", exercise_id = NULL, save=TRUE) {
   }
 }
 
+letter_counter <- function() {
+  counter <- 0
+  names <- c(LETTERS, paste0(LETTERS, 1), paste0(LETTERS, 2),
+             paste0(LETTERS, 3), paste0(LETTERS, 4), paste0(LETTERS, 5))
+  res <- list()
+  res$reset <- function(s = 0) {
+    counter <<- s
+  }
+  res$get   <- function() {
+    counter <<- counter+1
+    names[counter %% length(names)] # never run out
+  }
+  res
+}
+MC_counter <- letter_counter()
+
+
 #' @export
 insert_calcZ_exercise <- function(number, hash, file_name) {
+  nav_point <- exercise_navpoint(number, hash, fname=file_name)
+  contents <- {
+    MC_counter$reset()
+    knitr::knit_child(file_name)
+  }
   html_text <- '<details>
-    <summary>`r exercise_navpoint({number}, "{hash}", fname="{file_name}")` </summary>
-    `r MC_counter$reset()` `r knitr::knit_child("{file_name}")`</details>'
+    <summary>{nav_point}</summary>
+    {contents}</details>'
 
   glue::glue(html_text)
 }
@@ -64,7 +86,6 @@ insert_calcZ_exercise <- function(number, hash, file_name) {
 # Permanently mark the exercise for navigation, regardless of exercise number
 #' @export
 exercise_navpoint <- ex.mark <- function(num, perm_id, fname="no file specified") {
-  perm_id <- as.character(substitute(perm_id))
   glue::glue('**Exercise {num}**: <span><a name="File: {fname}" href="#{perm_id}"><img src="www/icons8-signpost.png" title="Location: {fname}" width="12px"/></a><span style="color: red; font-size: 9pt;">{perm_id}</red></span>')
 }
 

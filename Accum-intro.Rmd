@@ -28,8 +28,8 @@ Many of the student readers of this book will have children who will be about 70
 
 From the graph itself, you might just sketch out what you think is the trend. Or, more formally, and based on the ideas introduced in Block 1, you might seek an exponential or power-law function, fit it to the data, and extrapolate out to year 2100. The next figure does exactly that, but you'll have to click on "Show model prediction" to see the results.
 
-<details>
-<summary>Show model prediction</summary>
+
+Show model prediction
 ```{r pop-prediction-bad, echo=FALSE, warning=FALSE, fig.cap="Predicted US population using an exponential function (red) and a power-law function (green)"}
 powermod <- fitModel(population ~ A * ((year-1750)/100)^b, data = USPop, start=list(b=2))
 expmod <- fitModel(population ~ A*exp(k*(year-1750)/100), data = USPop, start=list(k=0.2))
@@ -52,7 +52,7 @@ gf_point(population ~ year, data = USPop) %>%
 ```
 
 The power-law function with power 2.56 is an excellent match to the historical data up through the present. But ...
-</details>
+
 
 There are occasions where the modeler has no alternative to curve fitting. However, it's best when the modeler knows as much as possible about the mechanisms of the process being modeled and can somehow incorporate those processes into the model.
 
@@ -240,6 +240,13 @@ But unlike differentiation, anti-differentiation has no easy equivalents of the 
 
 Recall that every smooth, continuous function has a derivative defined everywhere in the function's domain. Similarly, every function has an anti-derivative, and even discontinuous, un-smooth functions have nicely behaved anti-derivatives. In this sense anti-differentiation is easy. It's only the algebra of anti-differentiation that can be hard or often literally impossible.
 
+`r insert_calcZ_exercise("XX.XX", "KEsll","Exercises/Accum/what-is.Rmd")`
+
+`r insert_calcZ_exercise("XX.XX", "9k3s","Exercises/Accum/MMAC-1.Rmd")`
+
+`r insert_calcZ_exercise("XX.XX", "Rr2ds","Exercises/Accum/ups-and-downs.Rmd")`
+
+`r insert_calcZ_exercise("XX.XX", "JKLes","Exercises/Accum/u-on-the-bottom.Rmd")`
 
 
 ::: {.objectives}
@@ -273,12 +280,107 @@ Pick up on the Lorenz curve `{.intheworld}` in Blocks 1 and 2. Integrate to find
 
 -----
 
-<details>
-<summary>`r ex.mark(XX.3, "NYPDR", fname="Exercises/Accum/horse-takes-pillow.Rmd")` </summary>
-`r MC_counter$reset()` `r knitr::knit_child("Exercises/Accum/horse-takes-pillow.Rmd")`</details>
 
-<details>
-<summary>`r ex.mark(XX.3, "GHNDR", fname="Exercises/Accum/integrals-of-the-day.Rmd")` </summary>
-`r MC_counter$reset()` `r knitr::knit_child("Exercises/Accum/integrals-of-the-day.Rmd")`</details>
+`r insert_calcZ_exercise("XX.XX", "NYPDR", "Exercises/Accum/horse-takes-pillow.Rmd")`
 
 
+`r insert_calcZ_exercise("XX.XX", "GHNDR", "Exercises/Accum/integrals-of-the-day.Rmd")`
+
+## Numerical anti-derivatives
+
+We will devote about a third of this block on accumulation to algebraic techniques for calculating anti-derivatives. You will see these techniques in use in some of your future classes and work in science and engineering. 
+
+It's the nature of things that some people master the algebraic techniques and many do not. But it's easy to make mistakes. Even more fundamentally, there are many accumulation problems where the functions to be integrated do not have an algebraic form for the anti-derivative. In such cases, professionals use numerical techniques such as the Euler method.
+
+In order to give you a simple way to construct the anti-derivative of (just about) any function, while minimizing the amount of computer programming, we have packaged up anti-differentiation techniques into one, easy to use R function. This is `antiD()`.
+
+The `antiD()` function has the same interface as `D()` or `makeFun()`: the argument is a tilde expression of the sort `sqrt(x*sin(3*x)) ~ x`. The result returned from `antiD()` is a new R function that takes as its argument the "with respect to" variable. The sandbox provides a space to play with `antiD()` so that you feel comfortable using it.
+
+```{r antiD1, exercise=TRUE, exercise.cap="Using antiD()", exercise.nlines=6, eval=FALSE}
+antiD(x^-2 ~ x)
+
+f <- makeFun(sqrt(x*sin(3*x)) ~ x)
+antiD(f(x) ~ x)
+```
+
+As you can see from the output of the sandbox, `antiD()` returns an R `function()`. The variable on the right of the tilde expression in the argument becomes the first of the arguments to that function. There is also a `C` argument: the constant of integration.
+
+`antiD()` knows a few of the algebraic integration techniques, roughly at the level of the basic modeling functions part of the course. When `antiD()` identifies the tilde expression as something it can handle, it returns a function whose body is the algebraic formula for the anti-derivative (although sometimes written in a cumbersome way).
+
+When `antiD()` does not recognize its argument as a basic modeling function, the result is still an R function with the "with respect to" variable and `C` as arguments. But the body of the function is  unintelligible to a human reader (except perhaps for the `numerical_integration()`). The method of numerical integration is more sophisticated than Euler, and is highly precise and reliable.
+
+We're going to use `antiD()` in this daily digital simply because we want to focus on the process of differential modeling. The integrals you encounter will sometimes be ones you know how to handle algebraically. It's a good idea to do such integrals by hand and then compare to the results of `antiD()` to check your work.
+
+**Example**: Find the numerical value of this definite integral.
+
+$$\int^{7}_{3} e^{x^{2}} dx$$
+**Example Solution in R**: 
+`F<-antiD(exp(x^2)~x)`
+`F(7)-F(3)`
+
+**Problem 1**: Find the numerical value of this definite integral.
+
+$$\int^{5}_{2} x^{1.5} dx$$
+
+Recall that for a definite integral of function $f()$, you find the anti-derivative $F(x) \equiv \int f(x) dx$ and evaluate it at the limits of integration. Here that will be $F(5) - F(2)$.
+
+
+```{r tbf1, exercise=TRUE, exercise.cap="Sandbox for Problems", eval=FALSE}
+
+```
+
+```{r tbf1-solution}
+f <- antiD( x^1.5 ~ x )
+f(5) - f(2)
+```
+
+
+```{r tbf-a, echo=FALSE, results="markup"}
+askMC(
+  "**Problem 1**: What's the numerical value of $$\\int_2^5 x^{1.5} dx  ?$$",
+  0.58,6.32,"+20.10+",27.29,53.60,107.9,1486.8,
+  random_answer_order = FALSE,
+  id = knitr::opts_current$get()$label
+)
+```
+
+
+```{r tbf-b, echo=FALSE, results="markup"}
+askMC(
+  "**Problem 2**: What's the numerical value of $$\\int^{10}_{0} \\sin( x^2 ) dx ?$$",
+  "+0.58+",6.32,20.10,27.29,53.60,107.9,1486.8,
+  random_answer_order = FALSE,
+  id = knitr::opts_current$get()$label
+)
+```
+
+
+
+
+
+```{r tbf-c, echo=FALSE, results="markup"}
+askMC(
+  "**Problem 3**: What's the numerical value of $$\\int^{4}_{1} e^{2x} dx ?$$",
+  0.58,6.32,20.10,27.29,53.60,107.9,"+1486.8+",
+  random_answer_order = FALSE,
+  id = knitr::opts_current$get()$label
+)
+```
+
+`r insert_calcZ_exercise("XX.XX", "iLeSB", "Exercises/Accum/sailing-over-time.Rmd")`
+
+
+`r insert_calcZ_exercise("XX.XX", "Hd5zsE", "Exercises/Accum/panda-tear-cotton.Rmd")`
+
+`r insert_calcZ_exercise("XX.XX", "YLELSE", "Exercises/Accum/falcon-tell-mug.Rmd")`
+
+
+`r insert_calcZ_exercise("XX.XX", "ady5Fh", "Exercises/Accum/monkey-light-stove.Rmd")`
+
+`r insert_calcZ_exercise("XX.XX", "JEslw", "Exercises/Accum/chain-of-differentiation.Rmd")`
+
+::: {.todo}
+This needs to be reconfigured to match the new pattern-book function/basic modeling function dicotomy.
+:::
+
+`r insert_calcZ_exercise("XX.XX", "EOSLE", "Exercises/Accum/basic-modeling-functions.Rmd")`

@@ -1,0 +1,166 @@
+---
+title: "Solar Panel App"
+author: "Daniel Kaplan"
+date: "7/20/2021"
+output: html_document
+runtime: shiny
+---
+
+```{r include=FALSE}
+library(mosaic)
+library(mosaicCalc)
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+The graphs show the situation over the course of a single day.The top graph shows net power produced as a function of time of day. The bottom graph shows net energy accumulated in the battery since 00:00.  
+
+Since you are obsessed with your solar system, you have installed an app on your phone. It beeps each time the stored energy in the battery changes by one kW-minute (that is 1/60 of a kWh). The beeps are recorded in the middle graph. The beeps have a low, sad tone when the energy stored is falling (shown as a red line). The beeps have a high, happy tone when the energy stored is rising (shown as a black line). 
+
+Note that by click-dragging the mouse over the beep graph---the one in the middle---you can highlight an interval of time. The top and bottom graphs will then show the information corresponding to the beeps during that interval.
+
+```{r  echo=FALSE}
+# construct the f(t) function
+make_rand_fun <- function(seed = NULL , center=0, width=5, aveval=0) {
+  rawf <- rfun(~ x, seed = seed)
+  offset <- mean(rawf(seq(-3,3,100)))
+  function(x) { rawf((x - center)/(width/7)) - offset + aveval}
+}
+
+cone_diagram <- function(f,
+                         dom=list(x=c(0,10)), # endpoints of plot
+                         total_area = 10,
+                         events_per_unit_area = 60,
+                         startx = 0,
+                         startn=0, #initial stock at time startx
+                         left = NA, # limits of integration
+                         right = NA
+                         ) {
+  xmin <- dom[[1]][1] # for convenience
+  xmax <- dom[[1]][2]
+  total_events = total_area * events_per_unit_area
+  # find total number of events, positive or negative
+  Fabs <- antiD(abs(f(x)) ~ x)
+  # number of actual events, according to f(x)
+  n_events <- diff(Fabs(dom[[1]]))
+
+  # scaling the derivative to produce the specified
+  # total number of events
+  Points <- tibble::tibble(
+    x = seq(xmin, xmax, length = 200),
+    y = f(x),
+    absy = abs(y))
+  top <- mean(Points$absy)
+  unsigned_area_under_curve <- top*diff(dom[[1]])
+  rate_fun <- function(x) (total_area*f(x)/unsigned_area_under_curve)
+  Points$bigY <- Points$y * total_events/n_events
+  rect_area <- top * diff(dom[[1]])
+  # How many random numbers to generate to get
+  # a total of <total_events> (roughly)
+  npts <- ceiling(unsigned_area_under_curve * events_per_unit_area)
+  ## Generate the actual events
+  Points <- tibble::tibble(
+    x = seq(xmin, xmax, length = npts),
+    y = f(x),
+    absy = abs(y),
+    yval = top * runif(npts)
+  ) %>%
+    filter(yval <= absy) %>%
+    mutate(val = sign(y),
+           color = ifelse(val < 0, "red", "black"),
+           shape = ifelse(val < 0, "-", "+"))
+  # the anti-derivative to be plotted
+  F <- antiD(rate_fun(x) ~ x)
+
+  # make the plots
+  P1 <- slice_plot(rate_fun(x) ~ x, dom, npts = 500)
+  if (!(is.null(left) || is.na(left) ||
+        is.null(right) || is.na(right))) {
+    Keepers <- tibble::tibble(
+      x = seq(left, right, length = 500),
+      y = rate_fun(x))
+    P1 <- P1 %>% gf_ribbon(0 + y ~ x, data = Keepers, inherit=FALSE,
+                           fill = "blue", color=NA, alpha = 0.3) %>%
+      gf_ribbon(0 + y ~ x, data = Keepers %>% filter(y < 0),
+                color = NA, fill = "red", alpha = 0.3, inherit = FALSE)
+  }
+
+    # gf_labs(y = fname) %>%
+    # gf_theme( axis.title.x = element_blank(),
+    #           axis.text.x = element_blank())
+
+  P2 <- gf_vline(xintercept = ~ x, data = Points,
+                 color = ~ color,
+                 alpha = 0.3) %>%
+    gf_refine(scale_color_identity(),
+              scale_shape_identity(),
+              scale_y_continuous(limits = c(-1,1),
+                                 breaks=0, labels="00")) %>%
+    gf_theme( axis.title.x = element_blank(),
+              axis.text.x = element_blank(),
+              panel.grid = element_blank()
+    )
+
+
+  F2 <- function(x) F(x) - F(startx) + startn
+
+  P3 <- slice_plot(F2(x) ~ x, dom)
+    if (!(is.null(left) || is.na(left) ||
+          is.null(right) || is.na(right))) {
+     Dots <- tibble::tibble(x = c(left, right),
+                            y = F2(x))
+     P3 <- P3 %>% gf_point(y ~ x, data = Dots, color="blue")
+    }
+
+    return(list(fplot = P1, eplot = P2, Fplot = P3, f = rate_fun,
+                F = F))
+}
+
+
+```
+
+```{r echo=FALSE}
+raw <- make_rand_fun(3222, center = 12, width = 4, aveval =4)
+solar <- function(x) raw(x) * dnorm(x, 13, 2)
+consumption <- make_rand_fun(231, center = 12, width =8)
+total <- function(x) 1.9*solar(x) - abs(consumption(x)/3)
+
+```
+```{r, echo=FALSE}
+plotOutput("fplot", height="200px")
+plotOutput("eplot", height="50px", brush = brushOpts("interval", direction="x",
+                                                     opacity=0.5))
+plotOutput("Fplot", height="200px")
+```
+
+```{r echo=FALSE}
+create_plots <- reactive({
+  suppressWarnings(
+    cone_diagram(total, dom=list(x=c(0, 24)), 
+                 total_area = 11, 
+                 events_per_unit_area = 60,
+                 left = input$interval$xmin , 
+                 right = input$interval$xmax)
+  )
+})
+
+output$fplot <- renderPlot({
+  tmp <- create_plots()
+  tmp$fplot  %>%
+    gf_hline(yintercept = 0, color = "blue") %>%
+    gf_labs(y = "Net power production (kW)", x = "") %>%
+    gf_theme( axis.title.x = element_blank(),
+              axis.text.x = element_blank())
+
+})
+output$eplot <- renderPlot({
+  isolate({tmp <- create_plots()
+  tmp$eplot %>%
+    gf_labs(y = "Beeps")})
+})
+output$Fplot <- renderPlot({
+  tmp <- create_plots()
+  tmp$Fplot  %>%
+    gf_hline(yintercept = 0, color = "blue") %>%
+    gf_labs(y = "Battery level (kWh)", x = "Hour of day")
+})
+```

@@ -14,147 +14,16 @@ We will write the rules in terms of two function names, $f()$ and $g()$, which c
 
 In general, $f()$ and $g()$ might be complicated functions, themselves involving linear combinations, products, and composition. But to get started, we'll practice with cases where they are simple, pattern-book functions. `r mark(2405)`
 
-
-```{exercise name="decompose-drill1"}
-```
-For each of the following, say whether the function is a composition $f(g(x))$ or a product $f(x) g(x)$, or neither. Then identify $f()$. For a product, take $f()$ as the function on the left.
-
-- $h_1(x) \equiv \ln(x) e^x$
-
-```{r dedr1, echo=FALSE, results="markup"}
-askMC("What is $h_1(x)$?","+product+", "composition", "neither", random_answer_order=FALSE)
-```
-```{r dedr1b, echo=FALSE, results="markup"}
-askMC("In $h_1()$, which of these is $f(x)$?",
-      "$\\sin()$", "$\\cos()$", "$\\exp()$", "+$\\ln()$+", "$\\recip()$",
-      "$\\pnorm()$", "$\\dnorm()$", random_answer_order=FALSE)
-```
-
-- $h_2(x) \equiv \sin(x) \cos(x)$
-
-<details>
-```{r dedr2, echo=FALSE, results="markup"}
-askMC("What is $h_2(x)$?","+product+", "composition", "neither", random_answer_order=FALSE)
-```
-```{r dedr2b, echo=FALSE, results="markup"}
-askMC("In $h_2()$, which of these is $f(x)$?",
-      "+$\\sin()$+", "$\\cos()$", "$\\exp()$", "$\\ln()$", "$\\recip()$",
-      "$\\pnorm()$", "$\\dnorm()$", random_answer_order=FALSE)
-```
-</details>
-
-- $h_3(x) \equiv \sin(\cos(x))$
-
-<details>
-```{r dedr3, echo=FALSE, results="markup"}
-askMC("What is $h_3(x)$?","product", "+composition+", "neither", random_answer_order=FALSE)
-```
-```{r dedr3b, echo=FALSE, results="markup"}
-askMC("In $h_3()$, which of these is $f(x)$?",
-      "+$\\sin()$+", "$\\cos()$", "$\\exp()$", "$\\ln()$", "$\\recip()$",
-      "$\\pnorm()$", "$\\dnorm()$", random_answer_order=FALSE)
-```
-</details>
-
-- $h_4(x) \equiv e^{\ln(x)}$
-
-<details>
-```{r dedr4, echo=FALSE, results="markup"}
-askMC("What is $h_4(x)$?","product", "+composition+", "neither", random_answer_order=FALSE)
-```
-```{r dedr4b, echo=FALSE, results="markup"}
-askMC("In $h_4()$, which of these is $f(x)$?",
-      "$\\sin()$", "$\\cos()$", "+$\\exp()$+", "$\\ln()$", "$\\recip()$",
-      "$\\pnorm()$", "$\\dnorm()$", random_answer_order=FALSE)
-```
-</details>
-
-- $h_5(x) \equiv \sin(x) - \cos(x)$
-
-<details>
-```{r dedr5, echo=FALSE, results="markup"}
-askMC("What is $h_5(x)$?","product", "composition", "+neither+", random_answer_order=FALSE)
-```
-```{r dedr5b, echo=FALSE, results="markup"}
-askMC("In $h_5()$, which of these is $f(x)$?",
-      "+$\\sin()$+", "$\\cos()$", "$\\exp()$", "$\\ln()$", "$\\recip()$",
-      "$\\pnorm()$", "$\\dnorm()$", random_answer_order=FALSE)
-```
-</details>
-
-- $h_6(x) \equiv e^{x^2}$
-
-<details>
-```{r dedr6, echo=FALSE, results="markup"}
-askMC("What is $h_2(x)$?","product", "+composition+", "neither", random_answer_order=FALSE)
-```
-```{r dedr6b, echo=FALSE, results="markup"}
-askMC("In $h_6()$, which of these is $f(x)$?",
-      "$\\sin()$", "$\\cos()$", "+$\\exp()$+", "$\\ln()$", "$\\recip()$",
-      "$\\pnorm()$", "$\\dnorm()$", random_answer_order=FALSE)
-```
-</details>
-
-- $h_7(x) \equiv \pnorm(x^2)$
-
-<details>
-```{r dedr7, echo=FALSE, results="markup"}
-askMC("What is $h_7(x)$?","product", "+composition+", "neither", random_answer_order=FALSE)
-```
-```{r dedr7b, echo=FALSE, results="markup"}
-askMC("In $h_7()$, which of these is $f(x)$?",
-      "$\\sin()$", "$\\cos()$", "$\\exp()$", "$\\ln()$", "$\\recip()$",
-      "+$\\pnorm()$+", "$\\dnorm()$", random_answer_order=FALSE)
-```
-</details>
-
-- $h_8(x) \equiv \pnorm(x) \dnorm(x)$
-
-<details>
-```{r dedr8, echo=FALSE, results="markup"}
-askMC("What is $h_8(x)$?","+product+", "composition", "neither", random_answer_order=FALSE)
-```
-```{r dedr8b, echo=FALSE, results="markup"}
-askMC("In $h_8()$, which of these is $f(x)$?",
-      "$\\sin()$", "$\\cos()$", "$\\exp()$", "$\\ln()$", "$\\recip()$",
-      "+$\\pnorm()$+", "$\\dnorm()$", random_answer_order=FALSE)
-```
-</details>
-
-- $h_9(x) \equiv 1/\sin(x)$
-
-<details>
-```{r dedr9, echo=FALSE, results="markup"}
-askMC("What is $h_9(x)$?","product", "+composition+", "neither", random_answer_order=FALSE)
-```
-```{r dedr9b, echo=FALSE, results="markup"}
-askMC("In $h_9()$, which of these is $f(x)$?",
-      "$\\sin()$", "$\\cos()$", "$\\exp()$", "$\\ln()$", "+$\\recip()$+",
-      "$\\pnorm()$", "$\\dnorm()$", random_answer_order=FALSE)
-```
-</details>
+`r insert_calcZ_exercise("XX.XX", "3ICCCz", "Exercises/Diff/lamb-rise-sofa.Rmd")`
 
 ## Step 2: Find f'() and g'()
 
 For differentiating either products or compositions, you will need to identify both $f()$ and $g()$ (the first step) and then compute the derivatives $\partial_x f()$ and $\partial_x g()$. That is, you'll write down four functions. `r mark(2410)`
 
-```{exercise, name="product-table"}
-```
-<details>
-For each of the $h_i()$ in the previous section, fill in a row of the following table. (The row for $h_1()$ is already entered.)
 
-Name    | $f()$    | $g()$    | $\partial_x f()$  | $\partial_x g()$ 
---------|----------|----------|-------------------|-----------------------
-$h_1()$ | $\ln(x)$ | $e^x$ | $\recip$ (that is $1/x$) | $e^x$           
-$h_2()$ |          |          |                   |           
-$h_3()$ |          |          |                   |           
-$h_4()$ |          |          |                   |           
-$h_5()$ |          |          |                   |           
-$h_6()$ |          |          |                   |           
-$h_7()$ |          |          |                   |           
-$h_8()$ |          |          |                   |           
-$h_9()$ |          |          |                   |           
-</details>
+`r insert_calcZ_exercise("XX.XX", "jYXYTF", "Exercises/Diff/ant-give-room.Rmd")`
+
+
 
 ## Product rule
 
@@ -208,12 +77,7 @@ The derivatives of the basic modeling functions can be shown using the chain rul
 
 ## Step 3: Apply the relevant rule
 
-```{exercise, name="product-table-1"}
-Go back to the table in the previous section. For those rows involving a product of functions, add a column giving the derivative of the product according to the product rule.
-```
-
-
-
+`r insert_calcZ_exercise("XX.XX", "YbPAf1", "Exercises/Diff/sheep-draw-clock.Rmd")`
 
 ::: {.todo}
 See 141 DD 31 for drill problems

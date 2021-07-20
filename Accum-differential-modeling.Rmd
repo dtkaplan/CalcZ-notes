@@ -8,6 +8,110 @@ You've already seen differential modeling at work in calculating areas and other
 
 You've also learned some techniques for doing the calculation called for by $\int_a^b f(x) dx$. One such technique is anti-differentiation to construct a new function $F(x)$ such that $\partial_x F(x) = f(x)$. Then, following the "fundamental theorem of calculus," we can solve the integral by evaluating $F(b) - F(a)$. Another technique is Euler integration (And there are numerical techniques that improve on Euler, either by reducing the number of numerical calculations or improving the precision of the result). Still another techique is to draw on the collective memory of mathematicians of the last 350 years and look up $f(x)$ in a "table of integrals" to find an anti-derivative that you might not have been to construct on your own.
 
+
+## Differentials
+
+The notation we have been using in this course for "the derivative of $f()$ with respect to $x$ is $$\partial_x f$$ The subscript on the $\partial$ indicates the "with respect to" variable, the curly-d $\partial$ itself signals "the derivative." The identification of the "with respect to" variable is particularly important when the function $f()$ has more than one input, for example with $f(x, t) \equiv e^{-k x} \sin(\omega t)$.
+
+With anti-differentiation (also called "integration"), we write things differently, for example $$\int f(x, t) dx$$ where the $dx$ signals the "with respect to" variable. And just as $\partial_x f(x, t)$ and $\partial_t f(x,t)$ are different functions, so are $\int f(x, t) dx$ and $\int f(x, t) dt$. Writing anti-differentiation/integration this way follows a convention of long standing.
+
+In interpreting a sequence of symbols like $\int f(x,t) dx$, it's natural to think of the sequence as three parts:
+
+$$\underbrace{\int}_{\mbox{integral sign}} \overbrace{f(x, t)}^{\mbox{function to be anti-differentiated}} \underbrace{dx}_{\mbox{identifies 'with respect to' variable}}$$
+
+By analogy, the sentence 
+
+$$\mbox{We loaded up on snacks.}$$ 
+
+consists of five parts: the five words in the sentence.
+
+But you can also see "We loaded up on snacks" as having *three* parts:
+
+$$\underbrace{\mbox{We}}_{\mbox{subject}}\  
+\overbrace{\mbox{loaded up on}}^{\mbox{verb}}\ \ \ 
+\underbrace{\mbox{snacks}}_{\mbox{object}}$$
+
+Likewise, the integrate sentence can be seen as consisting of just two parts:
+
+$$\underbrace{\int}_{\mbox{integral sign}} \overbrace{f(x, t) dx}^{\mbox{differential}}$$
+
+A differential corresponds to the little rectangles that we add up when calculuting a definite integral numerically. That is
+$$\underbrace{\int}_{\mbox{Sum}} \underbrace{\overbrace{f(x,t)}^\mbox{height} \overbrace{dx}^\mbox{width}}_\mbox{area of box}$$
+
+A differential is a genuine mathematical object and is used, for example, in analyzing the geometry of curved spaces, as in the Theory of General Relativity. But this is well beyond the scope of this introductory calculus course.
+
+There is one place in introductory calculus where you need to manipulate differentials: carrying out anti-differentiation of some functions that are not basic modeling functions with a linear interior function but which nonetheless have an anti-derivative that can be expressed in algebra. 
+
+You should be thinking in terms of differentials when you see a sentence like the following:
+
+> "In $\int \sin(x) \cos(x) dx$, make the substitution $u = \sin(x)$, implying that $du = \cos(x) dx$ and getting $\int u du$, which is simple to integrate."
+
+The table gives some examples of functions and their differentials. "w.r.t" means "with respect to."
+
+Function | derivative | w.r.t. |differential
+---------|------------|--------|-------------
+$v(x) \equiv x$      |    1       | x |   $dv = dx$
+$u(x) \equiv x^2$    |   $2x$     | x | $du = 2x dx$
+$f(x) \equiv \sin(x)$ | $\cos(x)$ | x | $df = \cos(x)dx$
+$u(x) \equiv e^{3 x}$ | $3 e^{3 x}$ | x | $du = 3 e^{3 x} dx$ 
+$g(x) \equiv t^3$     | $3 t^2$     | t | $dg = 3 t^2 dt$
+
+As you can see, the *differential* of a function is simply the derivative of that function followed by the little $dx$ or $dt$ or whatever is appropriate for the "with respect to" variable.
+
+Note: Tradition is to write something like $u \equiv e^{3 x}$ rather than $u(x) \equiv e^{3 x}$. The traditional notation is what we'll use in the following exercises.
+
+```{r diff1, echo=FALSE}
+askMC(
+  "What is the differential of $u = x + 5$?",
+  "+$du = dx$+" = "Since $\\partial_x (x+5) = 1$.",
+  "$du = (x+5)dx$" = "You should have used $\\partial_x (x+5)$ instead of $(x+5)$ on the right side.",
+  "$du = 5 dx$" = "Is $\\partial_x (x+5) = 5$? No!",
+  "$du = x dx$" = "You should have used $\\partial_x (x+5) = 1$ instead of $x$ on the right side."
+)
+```
+
+```{r diff2, echo=FALSE}
+askMC(
+  "What is the differential of $u = \\sin(2x + 5)$?",
+  "+$du = 2 \\cos(2x + 5) dx$+" = "Since $\\partial_x \\sin(2x + 5) = 2 \\cos(2x + 5)$.",
+  "$du = (2x+5)dx$" = "You should have used $\\partial_x \\sin(2x+5)$ instead of $(2x+5)$ on the right side.",
+  "$du = 5 dx$" = "Is $\\partial_x \\sin(2x+5) = 5$? No!",
+  "$du = 2x dx$" = "You should have used $\\partial_x \\sin(2x+5) = 2 \\cos(2x + 5)$ instead of $2x$ on the right side."
+)
+```
+
+```{r diff3, echo=FALSE}
+askMC(
+  "What is the differential of $v = e^x$?",
+  "$du = e^x dx$" = "The name of the function here is $v()$, not $u$. So the differential should be written $dv$.",
+  "+$dv = e^x dx$+" = "Since $\\partial_x e^x = 1$.",
+  "$du = x dx$" = "The name of the function here is $v()$, not $u$. So the differential should be written $dv$.",
+  "$dv = x dx$" = "But $\\partial e^x = e^x$, not $x$."
+)
+```
+
+```{r diff4, echo=FALSE}
+askMC(
+  "What is the differential of $f = \\cos(\\ln(t))$?",
+  "+$df = -\\sin(\\ln(t))/t dt$+" = "Since the chain rule tells us $\\partial_t\\cos(\\ln(t)) = -\\sin(\\ln(t))/x$.",
+    "$du = -\\sin(\\ln(t))/t dt$" = "There's no $u$ in sight in this problem. It's $f$.",
+    "$dv = -\\sin(\\ln(t))/t dt$" = "There's no $v$ being used in this problem. It's $f$ that we're asking about.",
+    "$df = -\\sin(\\ln(x))/x dx$" = "$f$ is a function of $t$, not $x$."
+)
+```
+
+## Modeling with differentials
+
+We've already seen several calculus-related strategies that address important modeling scenarios, for example translating a setting into a "target problem" in linear algebra, modeling using low-order polynomials, using power transformations (e.g. $\sqrt()$ or $\ln()$) to refine models, and so on.
+
+We're going to elaborate on a strategy called "differential modeling" that has already appeared implicitly in many problems.
+
+You've already seen differential modeling at work in calculating areas and other sorts of accumulation. The setting should be familiar at this point. We have a function $f(x)$ and we wish to accumulate it over some interval in $x$, say $a \leq x \leq b$. Such accumulation problems are very simply stated: $$\int_a^b f(x) dx$$ This is really just a matter of notation; the use of the integral sign doesn't convey any more information than the phrase "accumulate $f(x)$."
+
+You've also learned some techniques for doing the calculation called for by $\int_a^b f(x) dx$. One such technique is anti-differentiation to construct a new function $F(x)$ such that $\partial_x F(x) = f(x)$. Then, following the "fundamental theorem of calculus," we can solve the integral by evaluating $F(b) - F(a)$. Another technique is Euler integration (And there are numerical techniques that improve on Euler, either by reducing the number of numerical calculations or improving the precision of the result). Still another techique is to draw on the collective memory of mathematicians of the last 350 years and look up $f(x)$ in a "table of integrals" to find an anti-derivative that you might not have been to construct on your own.
+
+
+
 ## Lengths
 
 Imagine you have a curve on a plane. We'll look at curves that can be represented by functions of one variable, $f(x)$, so the curve is simply the graph of $f(x)$ versus $x$.
@@ -110,9 +214,7 @@ etude2::etudeQ(
 )
 ```
 
-```{exercise}
-[Exercises/Accum/curve-length.Rmd]
-```
+`r insert_calcZ_exercise(10.2, "8jelxe","Exercises/Accum/curve-length.Rmd")`
 
 ## Volumes
 
