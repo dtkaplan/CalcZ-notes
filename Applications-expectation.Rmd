@@ -1,8 +1,8 @@
 # Risk and expectation
 
-The Powerball is a weekly lottery famous for its outsized payoff. For instance, for the week of April 7, 2021, the jackpot payout is officially described as $43,000,000. There is a limited sense in which this might be true, but in a far more meaningful sense it is not. The winner has a choice between a one-time cash payout of $29,300,000 or an annuity of 30 annual payments of $1,433,333. However, the winnings are taxable income and the lottery's administration (a not-for-profit, government benefit organization) withhold applicable federal and state taxes. According to the [usmega site](https://www.usamega.com/powerball/jackpot), in Colorado the cash payment would amount to $17,161,778 while the annuity would be 30 payments of $873,711.
+The Powerball is a weekly lottery famous for its outsized payoff. For instance, for the week of April 7, 2021, the jackpot payout is officially described as $43,000,000. There is a limited sense in which this might be true, but in a far more meaningful sense it is not. The winner has a choice between a one-time cash payout of $29,300,000 or an annuity of 30 annual payments of $1,433,333. However, the winnings are taxable income and the lottery's administration (a not-for-profit, government benefit organization) withhold applicable federal and state taxes. According to the [usmega site](https://www.usamega.com/powerball/jackpot), in Colorado the cash payment would amount to $17,161,778 while the annuity would be 30 payments of $873,711. `r mark(4300)`
 
-This will sound silly, but we know the value of $17,161,778 paid today: it is $17,161,778. But what is the value of $873,711 paid out over 30 years? The answer depends on the *discount rate*, that is, the present value of future money. When the discount rate is $r$, the current value of money due to be paid in $n$ years is $(1-r)^n$. For instance, at $r = 5\%$, the current value of $1000 to be paid 10 years in the future is $599. The table shows the net present value of the $873,711 paid out yearly over 30 years.
+This will sound silly, but we know the value of $17,161,778 paid today: it is $17,161,778. But what is the value of $873,711 paid out over 30 years? The answer depends on the *discount rate*, that is, the present value of future money. When the discount rate is $r$, the current value of money due to be paid in $n$ years is $(1-r)^n$. For instance, at $r = 5\%$, the current value of $1000 to be paid 10 years in the future is $599. The table shows the net present value of the $873,711 paid out yearly over 30 years. `r mark(4305)`
 
 Discount rate | Net Present Value
 --------------|------------------:
@@ -17,11 +17,11 @@ Discount rate | Net Present Value
 
 The formula behind this table is $$873711 \sum_{k=0}^{29} (1-r)^k$$
 
-What discount rate to use is a judgement call, and will reasonably depend on a person's situation. For example, a 90-year old might reasonably discount future money at $r=20\%$, whereas the discount rate for a person owing money next month to the mafia might be considerably higher. 
+What discount rate to use is a judgement call, and will reasonably depend on a person's situation. For example, a 90-year old might reasonably discount future money at $r=20\%$, whereas the discount rate for a person owing money next month to the mafia might be considerably higher.  `r mark(4310)`
 
-As a placeholder, we can look to the auctions of inflation-adjusted US Treasury Inflation Protected Securities (TIPS). As of this writing, a TIPS with a nominal payout of $1000 in 30 years is for sale at $100.70 (as of April 6, 2021), corresponding to a discount rate of 8% per year. With some justification, one might assert that the nominal $43,000,000 Powerball prize is really worth about $10 million.
+As a placeholder, we can look to the auctions of inflation-adjusted US Treasury Inflation Protected Securities (TIPS). As of this writing, a TIPS with a nominal payout of $1000 in 30 years is for sale at $100.70 (as of April 6, 2021), corresponding to a discount rate of 8% per year. With some justification, one might assert that the nominal $43,000,000 Powerball prize is really worth about $10 million. `r mark(4315)`
 
-Let's turn the problem of calculating a net present value into a calculus problem. Rather than summing over the discounted yearly dollar payout, we'll consider a continuous payout rate in dollars per year. 
+Let's turn the problem of calculating a net present value into a calculus problem. Rather than summing over the discounted yearly dollar payout, we'll consider a continuous payout rate in dollars per year.  `r mark(4320)`
 
 ```{r pb1-1, echo=FALSE, results="markup"}
 askMC(
@@ -96,13 +96,13 @@ askMC(
 )
 ```
 
-There is a joke that makes sense only to the financially savvy: When the Powerball claims a $1 million payout, they mean $1 per year over a million years. We can do this calculation using numerical evaluation of the definite integral but there is a catastrophic loss of numerical precision for the 1-million year calculation. Instead, do the calculation for a $10/year payout over 100,000 years.
+There is a joke that makes sense only to the financially savvy: When the Powerball claims a $1 million payout, they mean $1 per year over a million years. We can do this calculation using numerical evaluation of the definite integral but there is a catastrophic loss of numerical precision for the 1-million year calculation. Instead, do the calculation for a $10/year payout over 100,000 years. `r mark(4325)`
 
 First, answer the following **ungraded** question with utter honesty.
 
 ```{r pb1-6a, echo=FALSE, results="markup"}
 etude2::etudeEssay(
-  "**Before doing the actual calculation**, form an intuitive answer to the question of what is the net present value of $10/year over 100,000 years. Don't try to be strategic in anticipating the answer, just give your gut feeling. The instructors are curious about what sorts of numbers will come to mind."
+  "**Before doing the actual calculation**, form an intuitive answer to the question of what is the net present value of $10/year over 100,000 years. Don't try to be strategic in anticipating the answer, just give your gut feeling. The instructors are curious about what sorts of numbers will come to mind." `r mark(4330)`
 )
 ```
 
@@ -117,34 +117,34 @@ askMC(
 )
 ```
 
-Finally, and this has nothing to do with net present value *per se*, try out the calculation of the net present value of $1 per year over a million years. This is worth doing if only to see a compelling example of how far off computer numerics can be when using very large or very small numbers.
+Finally, and this has nothing to do with net present value *per se*, try out the calculation of the net present value of $1 per year over a million years. This is worth doing if only to see a compelling example of how far off computer numerics can be when using very large or very small numbers. `r mark(4335)`
 
-A professional will always have at hand some method for checking the reasonableness of an answer in order to detect when something is wrong. For example, here you might look at a sequence of calculations: $100,000 per year over 10 years, $10,000 per year over 100 years, and so on. You would expect the numbers in this sequence to approach some sort of limit as the number of years increases. It does, but as the number of years gets larger that limit goes awry.
+A professional will always have at hand some method for checking the reasonableness of an answer in order to detect when something is wrong. For example, here you might look at a sequence of calculations: $100,000 per year over 10 years, $10,000 per year over 100 years, and so on. You would expect the numbers in this sequence to approach some sort of limit as the number of years increases. It does, but as the number of years gets larger that limit goes awry. `r mark(4340)`
 
 
 
 ## Expecting an earthquake
 
-We have records of large earthquakes going back 1000's of years, at least in those parts of the world that kept written records. In regions with mainly oral traditions, stories of historical earthquakes are treated with skepticism. 
+We have records of large earthquakes going back 1000's of years, at least in those parts of the world that kept written records. In regions with mainly oral traditions, stories of historical earthquakes are treated with skepticism.  `r mark(4345)`
 
-For instance, in California written records reach about 400 years into the past. Anticipating a future earthquakes is an everyday matter in California and governments in seismically active zones have prepared by means of building codes and emergency precautions. A bit further up the US West Coast, in the Cascadia region of Oregon, there is a shorter written record and, until the last 30-40 years, little realization that the [area has been subject to profoundly powerful earthquakes](https://www.oregon.gov/oem/Documents/01_ORP_Cascadia.pdf) called "great quakes." There are great quakes in living memory: the 2004 Boxing Day earthquake centered on Sumatra that led to the deaths of hundreds of thousands of people, and the 2011 Tohoku earthquake in Japan that killed tens of thousands and led to the meltdown of nuclear power plants in Fukashima. Both of these were magnitude 9.1. Even larger were the 1964  9.2 magnitude quake in southern Alaska and the magnitude 9.5 Valdivia earthquake in Chile in 1960. The local magnitude scale is logarithmic, so a 9.5 magnitude quake releases about 3 times the energy of a 9.1 magnitude quake. 
+For instance, in California written records reach about 400 years into the past. Anticipating a future earthquakes is an everyday matter in California and governments in seismically active zones have prepared by means of building codes and emergency precautions. A bit further up the US West Coast, in the Cascadia region of Oregon, there is a shorter written record and, until the last 30-40 years, little realization that the [area has been subject to profoundly powerful earthquakes](https://www.oregon.gov/oem/Documents/01_ORP_Cascadia.pdf) called "great quakes." There are great quakes in living memory: the 2004 Boxing Day earthquake centered on Sumatra that led to the deaths of hundreds of thousands of people, and the 2011 Tohoku earthquake in Japan that killed tens of thousands and led to the meltdown of nuclear power plants in Fukashima. Both of these were magnitude 9.1. Even larger were the 1964  9.2 magnitude quake in southern Alaska and the magnitude 9.5 Valdivia earthquake in Chile in 1960. The local magnitude scale is logarithmic, so a 9.5 magnitude quake releases about 3 times the energy of a 9.1 magnitude quake.  `r mark(4350)`
 
-This exercise explores a model to inform the extent to which it's worth preparing for such quakes in order to prevent material damage. The risk to life is another important matter. But feasible investments in the build environment can minimize the direct impact of earthquakes to human life. Tsunamis generated by quakes are another matter, for which the only effective mitigating precautions are the development of evacuation routes and procedures and relocation of building away from the affected zone. 
+This exercise explores a model to inform the extent to which it's worth preparing for such quakes in order to prevent material damage. The risk to life is another important matter. But feasible investments in the build environment can minimize the direct impact of earthquakes to human life. Tsunamis generated by quakes are another matter, for which the only effective mitigating precautions are the development of evacuation routes and procedures and relocation of building away from the affected zone.  `r mark(4355)`
 
-Let's imagine a situation in which $100 spent in precautions such as strengthening building construction would generate $1000 in savings in the event of a major earthquake. (This ratio is made up for demonstration purposes, but you can easily substitute a better substantiated estimate.) From a societal point of view, many people would see the investment as clearly worthwhile. But we're going to take a more technical point of view that incorporates two factors:
+Let's imagine a situation in which $100 spent in precautions such as strengthening building construction would generate $1000 in savings in the event of a major earthquake. (This ratio is made up for demonstration purposes, but you can easily substitute a better substantiated estimate.) From a societal point of view, many people would see the investment as clearly worthwhile. But we're going to take a more technical point of view that incorporates two factors: `r mark(4360)`
 
 - The $100 is to be spent today, while the $1000 savings will occur in the future. This can be handled by simple discounting.
 - The time until the earthquake is unknown, although reasonable probability models are available.
 
-The time of the last great Cascadia Zone earthquake is known with surprising precision: January 26, 1700. Before this, dates are estimated from geologic evidence. The figure shows the known history of Cascadia Zone earthquakes. [Source](https://www.oregon.gov/oem/Documents/01_ORP_Cascadia.pdf)
+The time of the last great Cascadia Zone earthquake is known with surprising precision: January 26, 1700. Before this, dates are estimated from geologic evidence. The figure shows the known history of Cascadia Zone earthquakes. [Source](https://www.oregon.gov/oem/Documents/01_ORP_Cascadia.pdf) `r mark(4365)`
 
 ```{r echo=FALSE, out.width="90%", fig.align="center"}
 knitr::include_graphics("www/earthquake-timeline.png")
 ```
 
-A standard model for the interval between earthquakes of a given magnitude is the exponential distribution. For the great quakes in the Cascadia Zone, the average interval between consecutive quakes is about 300 years and the corresponding exponential probability distribution is $$\frac{e^{t/300}}{300}$$ The sandbox is set up to make a graph of this distribution and enables other calculations you will need later.
+A standard model for the interval between earthquakes of a given magnitude is the exponential distribution. For the great quakes in the Cascadia Zone, the average interval between consecutive quakes is about 300 years and the corresponding exponential probability distribution is $$\frac{e^{t/300}}{300}$$ The sandbox is set up to make a graph of this distribution and enables other calculations you will need later. `r mark(4370)`
 
-As shown by the definite integral already coded in the sandbox, the total probability of an earthquake at some point in the future is, according to the model, 100%. So this is a model of *when* an earthquake will occur, not *whether* one will occur. 
+As shown by the definite integral already coded in the sandbox, the total probability of an earthquake at some point in the future is, according to the model, 100%. So this is a model of *when* an earthquake will occur, not *whether* one will occur.  `r mark(4375)`
 
 ```{r ep2-1, exercise=TRUE, exercise.cap="Earthquake interval probability", exercise.nlines=8, eval=FALSE}
 prob <- makeFun(exp(-t/300)/300 ~ t)
@@ -188,13 +188,13 @@ askMC(
 )
 ```
 
-An astounding and counter-intuitive aspect of the exponential model is that the same probability density describes the time from **now** to the eventual earthquake. In other words, it doesn't matter how long it's been since the last earthquake. 
+An astounding and counter-intuitive aspect of the exponential model is that the same probability density describes the time from **now** to the eventual earthquake. In other words, it doesn't matter how long it's been since the last earthquake.  `r mark(4380)`
 
-Now let's put together our model of the net present value of an expenditure on earthquake preparedness. As you recall, the net present value of $\$10$ to be paid $t$ years from the present is $10 e^{-r t}$, where $r$ is the continuously compounded interest rate. For the example, we'll set $r=7.8\%$, as we did in the Powerball example. 
+Now let's put together our model of the net present value of an expenditure on earthquake preparedness. As you recall, the net present value of $\$10$ to be paid $t$ years from the present is $10 e^{-r t}$, where $r$ is the continuously compounded interest rate. For the example, we'll set $r=7.8\%$, as we did in the Powerball example.  `r mark(4385)`
 
-Of course $t$ is uncertain, so there's no definite answer for the net present value of earthquake preparedness. However, since we have a model of the probability of the earthquake occuring as a function of the interval $t$, we can find the **expectation value** of the net present value of earthquake preparedness. 
+Of course $t$ is uncertain, so there's no definite answer for the net present value of earthquake preparedness. However, since we have a model of the probability of the earthquake occuring as a function of the interval $t$, we can find the **expectation value** of the net present value of earthquake preparedness.  `r mark(4390)`
 
-For continuous probability densities (such as the exponential earthquake interval model) an expectation value is the definite integral over all possibilities of the probability density times the eventual outcome. 
+For continuous probability densities (such as the exponential earthquake interval model) an expectation value is the definite integral over all possibilities of the probability density times the eventual outcome.  `r mark(4395)`
 
 ```{r ep1-3, echo=FALSE, results="markup"}
 askMC(
@@ -219,7 +219,7 @@ askMC(
 )
 ```
 
-We used an average time between earthquakes of 300 years, as seem appropriate for the Cascadia Zone earthquake history. The net present value of the eventual reduction in damages was small, too small to justify the expenditure on economic grounds.
+We used an average time between earthquakes of 300 years, as seem appropriate for the Cascadia Zone earthquake history. The net present value of the eventual reduction in damages was small, too small to justify the expenditure on economic grounds. `r mark(4400)`
 
 Modify the code in the above sandbox to perform the calculation for different earthquakes, say with an average interval of 50 years or 100 years. 
 
@@ -234,9 +234,9 @@ askMC(
 )
 ```
 
-WARNING. You should not come away from this exercise with the idea that $r = 0.078$ is the "right" discount rate. We used that rate in this exercise only because there is documented evidence that some group of people---the sorts of investors who buy 30-year TIPS---currently act as if that were their discount rate. An individual is entitled to set his or her own discount rate based on any rationale whatsoever. (That said, the interest rate you could make long term on an investment readily available to you can reasonably be taken as the baseline.)
+WARNING. You should not come away from this exercise with the idea that $r = 0.078$ is the "right" discount rate. We used that rate in this exercise only because there is documented evidence that some group of people---the sorts of investors who buy 30-year TIPS---currently act as if that were their discount rate. An individual is entitled to set his or her own discount rate based on any rationale whatsoever. (That said, the interest rate you could make long term on an investment readily available to you can reasonably be taken as the baseline.) `r mark(4405)`
 
-When it comes to groups of people, the appropriate discount rate becomes a matter of opinion and disagreement. In particular, there is a concept called the ["social discount rate"](https://en.wikipedia.org/wiki/Social_discount_rate). Regretably, there is no clear basis for picking this other than to put it in the range 0 to about 7%. Net present value is therefore a dubious criterion for making decisions whose impact will be felt in the long term, over generations. This is the case, for instance, with global warming.
+When it comes to groups of people, the appropriate discount rate becomes a matter of opinion and disagreement. In particular, there is a concept called the ["social discount rate"](https://en.wikipedia.org/wiki/Social_discount_rate). Regretably, there is no clear basis for picking this other than to put it in the range 0 to about 7%. Net present value is therefore a dubious criterion for making decisions whose impact will be felt in the long term, over generations. This is the case, for instance, with global warming. `r mark(4410)`
 
 
 
