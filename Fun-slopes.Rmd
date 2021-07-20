@@ -318,7 +318,7 @@ meaning, evaluate the "slope function of f()" at $t_0$.
 
 To formalize this, we'll define the ***slope function of f()*** as 
 $${\cal D}f(t) \equiv \frac{f(t + 0.1) - f(t)}{0.1}$$
-Let's look at the slope functions that correspond to some of naked modeling functions: $e^x$, $\sin(x)$, $x^{-1}$ and $\ln(x)$. We can define them easily enough in R:
+Let's look at the slope functions that correspond to some of pattern-book functions: $e^x$, $\sin(x)$, $x^{-1}$ and $\ln(x)$. We can define them easily enough in R:
 
 ```{r}
 Dexp <- makeFun((exp(t+0.1) - exp(t))/0.1 ~ t)
@@ -328,7 +328,7 @@ Dlog <- makeFun((log(t+0.1) - log(t))/0.1 ~ t)
 ```
 
 
-```{r compare-naked-slopes, echo=FALSE, out.width="50%", fig.show="hold", fig.cap="Comparing the naked modeling function (blue) to it's slope function (red)",warning=FALSE}
+```{r compare-pattern-book-slopes, echo=FALSE, out.width="50%", fig.show="hold", fig.cap="Comparing the pattern-book function (blue) to it's slope function (red)",warning=FALSE}
 slice_plot(sin(x) ~ x, domain(x=c(-10,10)), color="blue") %>%
   slice_plot(Dsin(x) ~ x, color="red", alpha=0.25, size=2) %>%
   gf_labs(title="Sinusoid")
@@ -362,7 +362,7 @@ Why did you plot both the function and the slope function in the same graphics f
 
 Excellent question! In general, it is illegitimate to plot a function and it's slope function on the same vertical axis. The reason is the units of the two functions will be different. For instance, the output of a function position(t) might have units of "miles," while the output of the slope function of position (that is, ${\cal D}$position(t) would have units such as miles-per-hour.)  So, as a general rule, never plot a function and its corresponding slope function on the same scale. 
 
-An exception is for the naked modeling functions. These always take a number as input and produce a number as output. The slope function of a naked modeling function also produces a number as output. 
+An exception is for the pattern-book functions. These always take a number as input and produce a number as output. The slope function of a pattern-book function also produces a number as output. 
 
 This exception is not a good excuse for indulging a bad practice. Perhaps you'll forgive me if I point out that I wanted to emphasize the point by demonstrating it.
 :::
@@ -413,7 +413,7 @@ The best time to harvest is when the annual "interest rate" paid by the growing 
 
 <details>
 <summary>Exercise: Still a draft</summary>
-Calculate the slope function of the naked sigmoidal function. What is its value at x=0. Do some other functions as well.
+Calculate the slope function of the pattern-book sigmoidal function. What is its value at x=0. Do some other functions as well.
 
 Also, some where we change the 0.1 to something smaller.
 
