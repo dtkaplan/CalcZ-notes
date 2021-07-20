@@ -1,6 +1,6 @@
 # Evanescent h {#evanescent-h}
 
-Our goal in this chapter is to motivate the differentiation rules presented in Chapter \@ref(computing-derivs) for the naked modeling functions.  Recall that the slope-function operator can be written as a ratio of rise-over-run:
+Our goal in this chapter is to motivate the differentiation rules presented in Chapter \@ref(computing-derivs) for the pattern-book functions.  Recall that the slope-function operator can be written as a ratio of rise-over-run:
 $${\cal D}_t f(t) \equiv \frac{f(t+h) - f(t)}{h}$$ where $h$ is the length of the "run." The idea of the ***instantaneous slope function*** is to make $h$ as small as possible. 
 
 In the very early days of calculus, the vanishing $h$ was described as "evanescent." (Dictionary definition: "tending to vanish like vapor."^[[Source](https://www.merriam-webster.com/dictionary/evanescent)]) Another good image of $h$ becoming as small as possible comes from the same University of Oxford mathematician whose poem *The Jabberwocky* we considered earlier. In *Alice in Wonderland*, Dodgson introduced the character of the Cheshire Cat. `r mark(2370)`
@@ -17,7 +17,7 @@ knitr::include_graphics(normalizePath("images/cheshire-cat.jpeg"))
 
 Start our story with two of the basic modeling functions that, like the characters from *Alice in Wonderland*, have considerable "personality": the sinusoid (`sin()`) and the sigmoid (`pnorm()`).
 
-```{r sign-sig, echo=FALSE, out.width="50%", fig.show = "hold", fig.cap="The naked sinusoid and sigmoidal functions. A vertical blue line has been added to mark the input $t=0$", warning=FALSE, message=FALSE}
+```{r sign-sig, echo=FALSE, out.width="50%", fig.show = "hold", fig.cap="The pattern-book sinusoid and sigmoidal functions. A vertical blue line has been added to mark the input $t=0$", warning=FALSE, message=FALSE}
 slice_plot(sin(t) ~ t, domain(t=c(-5, 2*pi))) %>%
   gf_labs(title="Sinusoid") %>%
   gf_vline(xintercept=0, color="blue", alpha=0.5)
@@ -71,7 +71,7 @@ Some observations from this numerical experiment:
     This will provide a way for us, eventually, to discard $h$ so that the slope function will not need an $h$ argument.
     
 2. For small $h$, we have ${\cal D}_t \sin(t) = \sin(t + \pi/2) = \cos(t)$. That is, taking the slope function of a sinusoid gives another sinusoid, shifted left by $\pi/2$ from the original. Or, in plain words, for small $h$H the cosine is the slope function of the sine.
-3. For small $h$, we have ${\cal D}_t \text{pnorm}(t) = \text{dnorm(t)}$. That is, for small $h$ the hump function is the slope function of the sigmoid function.
+3. For small $h$, we have ${\cal D}_t \pnorm(t) = \dnorm(t)$. That is, for small $h$ the hump function is the slope function of the sigmoid function.
 
 You can confirm these last two statements by comparison with the original functions, especially the alignment of the peaks of the slope functions with respect to the peak of the sinusoid and the half-way point of the sigmoid. `r mark(2374)`
 
@@ -125,12 +125,12 @@ These numerical experiments with the logarithm and exponential functions are mor
 
 You can confirm these by evaluating the slope function of the exponential at $t=0$ and $t=1$, and the slope function of the logarithm at $t= 2, 1, 1/2, 1/4, 1/8.$
 
-Such numerical experiments on the other naked modeling functions reveal the patterns presented in Chapter \@ref(computing-derivs)
+Such numerical experiments on the other pattern-book functions reveal the patterns presented in Chapter \@ref(computing-derivs)
 
 
 ## Role of h
 
-In motivating differentiation of the naked modeling functions, we introduced a quantity $h$ and then ignored it, saying that it doesn't really matter so long as it is "small." A reasonable person might wonder what "small" really means, and why we needed to introduce $h$ in the first place if we were eventually going to ignore it.  `r mark(2382)`
+In motivating differentiation of the pattern-book functions, we introduced a quantity $h$ and then ignored it, saying that it doesn't really matter so long as it is "small." A reasonable person might wonder what "small" really means, and why we needed to introduce $h$ in the first place if we were eventually going to ignore it.  `r mark(2382)`
 
 One reason is that "small" and "zero," although related, are different. For example, refering to the slope functions `Dsin()` and `Dsigma()` that we created in an early example in this chapter, we see that setting $h$ to zero does not get us where we need to be: `r mark(2384)`
 
@@ -143,7 +143,7 @@ In `NaN`, you can hear the echo of your fourth-grade teacher reminding you that 
 
 Think of evanescent $h$ as the vapor in the definition of "evanescent": "tending to vanish like vapor." This vapor is the solvent in paint. You don't want the solvent once the paint is on the wall; wet paint is a nuisance. But getting the paint from the can to the wall absolutely needs the solvent.  `r mark(2386)`
 
-We used the solvent $h$ earlier in the chapter in the numerical experiments that led us to the derivatives of the naked modeling functions, for instance $\partial_x e^x = e^x$ or $\partial_x \sin(x) = \cos(x)$.  Eventually, we'll construct an $h$-free theory of differentiation, reducing the process to a set of algebraic rules in which $h$ never appears. With this as our goal, let's continue using $h$ for a while to find some additional useful facts about derivatives. `r mark(2388)`
+We used the solvent $h$ earlier in the chapter in the numerical experiments that led us to the derivatives of the pattern-book functions, for instance $\partial_x e^x = e^x$ or $\partial_x \sin(x) = \cos(x)$.  Eventually, we'll construct an $h$-free theory of differentiation, reducing the process to a set of algebraic rules in which $h$ never appears. With this as our goal, let's continue using $h$ for a while to find some additional useful facts about derivatives. `r mark(2388)`
 
 ## Derivatives of linear combinations
 
@@ -189,29 +189,26 @@ Berkeley was saying that calculus had not yet been put on a solid logical founda
 :::
 
 
-```{exercise}
-See tree harvesting in `Diffs/tree-harvest.Rmd`
-```
+`r insert_calcZ_exercise("XX.XX", "qyOuQF", "Exercises/Diff/giraffe-sit-piano.Rmd")`
 
-```{exercise}
-Show that the derivative of `dnorm(x)` is `- x *dnorm(x)` by using the differencing operator with small $h$.
-```
+`r insert_calcZ_exercise("XX.XX", "yT2BkB", "Exercises/Diff/ant-bite-bed.Rmd")`
+
+`r insert_calcZ_exercise("XX.XX", "Z7MY4I", "Exercises/Diff/goat-pay-pantry.Rmd")`
+
 
 ## Derivatives of the basic modeling functions
 
-The basic modeling functions are the same as the naked modeling functions, but with bare $x$ replaced by $\line(x)$. By convention, there are different ways of writing $\line(x)$ for the different naked functions, for instance: `r mark(2396)`
+The basic modeling functions are the same as the pattern-book functions, but with bare $x$ replaced by $\line(x)$. By convention, there are different ways of writing $\line(x)$ for the different naked functions, for instance: `r mark(2396)`
 
-$$\text{Naked}  \ \ \ \longrightarrow\ \ \ \text{Basic}\\
+$$\text{Pattern-book}  \ \ \ \longrightarrow\ \ \ \text{Basic}\\
 \ \\
-
-\sin(x)\ \ \ \longrightarrow\ \ \ \sin\left(\strut2 \pi (x-x_0)/P\right)\\
+\sin(x)\ \ \ \longrightarrow\ \ \ \sin\left(\strut2 \pi \left[x-x_0\right]/P\right)\\
 \exp(x)\ \ \ \longrightarrow\ \ \ \exp(k x)\\
-x^2 \ \ \ \longrightarrow\ \ \ (mx + b)^2\\
-1/x \ \ \ \longrightarrow\ \ \ 1/(mx + b)\\
-\ln(x) \ \ \ \longrightarrow\ \ \ \ln(a x + b)\\
-$$
+x^2 \ \ \ \longrightarrow\ \ \ \left[mx + b\right]^2\\
+1/x \ \ \ \longrightarrow\ \ \ 1/\left[mx + b\right]\\
+\ln(x) \ \ \ \longrightarrow\ \ \ \ln(a x + b)\\$$
 
-The general rule for the derivatives of the basic modeling functions is $$\partial f(\line(x)) = \partial_x \line(x) \times [\partial_x f]\left(\strut\line(x)\right)$$
+The rule for the derivative of any basic modeling function $f(\line(x))$ is $$\partial f(\line(x)) = \partial_x \line(x) \times [\partial_x f]\left(\strut\line(x)\right)$$
 
 To illustrate:
 
@@ -220,23 +217,36 @@ To illustrate:
 - $\partial_x (mx + b)^2 = m\, 2 (m x + b) = 2 m^2 x + m^2 b$
 - $\partial_x \frac{1}{mx + b} = - \frac{m}{(mx + b)^2}$
 - $\partial_x \ln(a x + b) = a/(ax+b)$ 
-- $\partial_x \text(dnorm)(x, mn, sd) =  - \frac{x}{sd} \text(dnorm)(x, mn, sd)$
+- $\partial_x \dnorm(x, mn, sd) =  - \frac{x}{sd} \dnorm(x, mn, sd)$
 
 ::: {.takenote}
-The notation for the basic hump and sigmoidal functions has two equivalent formulations:
+The sigmoidal function can be written in the general $f(\line(x))$ fashion:
 
-- hump: $\dnorm\left(\frac{x-mn}{sd}\right)$ or $\dnorm(x, mn, sd)$
-- sigmoid: $\pnorm\left(\frac{x-mn}{sd}\right)$ or $\pnorm(x, mn, sd)$
+- sigmoid: $\pnorm\left(\frac{x-mn}{sd}\right)$ 
 
-The derivative of the sigmoid can be written in either of two equivalent ways:
+But it's also common to write it in the manner of statistics software where the parameters are given as separate arguments:
 
-i. $\partial_x \pnorm\left(\frac{x-mn}{sd}\right) = \frac{1}{sd}\, \pnorm\left(\frac{x-mn}{sd}\right)$
-ii. $\partial_x \pnorm(x, mn, sd) = \dnorm(x, mn, sd)$
+- sigmoid: $\pnorm(x, mn, sd)$ which is completely equivalent to  $\pnorm\left(\frac{x-mn}{sd}\right)$
 
-It's very easy to get confused by this.
+It's natural, but wrong, to assume that the same holds true for $\dnorm(x, mn, sd)$, that is, that it could be written with a single input of the form $(x-mn)/sd$. That's not true. In fact,
 
+$$\dnorm\left(\frac{x-mn}{sd}\right) = sd\, \dnorm(x, mn, sd)$$
+Failing to remember the $sd$ is a common pitfall, even among experienced modelers.
+
+Even for seemingly simple tasks like computing $\partial_x \pnorm\left(\left[x-mn\right] / sd\right)$, responsible practice calls for having a way to verify your result. For instance, you can compute the derivative of $\pnorm(x, mn, sd)$ using the slope function with a small but finite $h$ and compare that to your symbolic result.
 :::
 
-```{exercise}
-Check the "general rule" numerically. Divide the finite-difference derivative by the "theoretical" derivative and show that they are 1.
-```
+------
+
+`r insert_calcZ_exercise("XX.XX", "bEC6C4", "Exercises/Diff/spider-sail-bottle.Rmd")`
+
+------
+
+`r insert_calcZ_exercise(12.3, "QIELS", "Exercises/Diff/dnorm.Rmd")`
+
+
+-----
+
+`r insert_calcZ_exercise(12.3, "HCILW", "Exercises/Diff/descent-path.Rmd")`
+
+

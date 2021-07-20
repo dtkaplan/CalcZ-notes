@@ -121,38 +121,33 @@ For all except straight-line models, the average rate of change depends on the i
 
 -----
 
-<details>
-<summary>`r ex.mark(9.3, "KEWIX", fname="Fun/snail-tear-blanket.Rmd")`</summary>
-`r MC_counter$reset()` `r knitr::knit_child("Exercises/Fun/snail-tear-blanket.Rmd")`
-</details>
+
+`r insert_calcZ_exercise(9.3, "KEWIX", "Exercises/Fun/snail-tear-blanket.Rmd")`
+
 
 -----
 
-<details>
-<summary>`r ex.mark(9.7, "WRWIX", fname="Fun/goat-dive-saucer.Rmd")`</summary>
-`r MC_counter$reset()` `r knitr::knit_child("Exercises/Fun/goat-dive-saucer.Rmd")`
-</details>
+
+`r insert_calcZ_exercise(9.7, "WRWIX", "Exercises/Fun/goat-dive-saucer.Rmd")`
+
 
 -----
 
-<details>
-<summary>`r ex.mark(9.11, "YQCLE", fname="Fun/chicken-show-map.Rmd")`</summary>
-`r MC_counter$reset()` `r knitr::knit_child("Exercises/Fun/chicken-show-map.Rmd")`
-</details>
+
+`r insert_calcZ_exercise(9.11, "YQCLE", "Exercises/Fun/chicken-show-map.Rmd")`
+
 
 -----
 
-<details>
-<summary>`r ex.mark(9.15, "KEWIX", fname="Fun/eagle-bring-car.Rmd")`</summary>
-`r MC_counter$reset()` `r knitr::knit_child("Exercises/Fun/eagle-bring-car.Rmd")`
-</details>
+
+`r insert_calcZ_exercise(9.15, "KEWIX", "Exercises/Fun/eagle-bring-car.Rmd")`
+
 
 -----
 
-<details>
-<summary>`r ex.mark(9.19, "URIMX", fname="Fun/pig-look-rug.Rmd")`</summary>
-`r MC_counter$reset()` `r knitr::knit_child("Exercises/Fun/pig-look-rug.Rmd")`
-</details>
+
+`r insert_calcZ_exercise(9.19, "URIMX", "Exercises/Fun/pig-look-rug.Rmd")`
+
 
 
 
@@ -272,9 +267,8 @@ The graph of ave_growth(year) makes it clear that the maximum average growth fro
 
 -----
 
-<details>
-<summary>`r ex.mark(9.23, "HRTIX", fname="Fun/lion-find-bowl.Rmd")`</summary>
-`r MC_counter$reset()` `r knitr::knit_child("Exercises/Fun/lion-find-bowl.Rmd")`</details>
+
+`r insert_calcZ_exercise(9.23, "HRTIX", "Exercises/Fun/lion-find-bowl.Rmd")`
 
 -----
 
@@ -318,7 +312,7 @@ meaning, evaluate the "slope function of f()" at $t_0$.
 
 To formalize this, we'll define the ***slope function of f()*** as 
 $${\cal D}f(t) \equiv \frac{f(t + 0.1) - f(t)}{0.1}$$
-Let's look at the slope functions that correspond to some of naked modeling functions: $e^x$, $\sin(x)$, $x^{-1}$ and $\ln(x)$. We can define them easily enough in R:
+Let's look at the slope functions that correspond to some of pattern-book functions: $e^x$, $\sin(x)$, $x^{-1}$ and $\ln(x)$. We can define them easily enough in R:
 
 ```{r}
 Dexp <- makeFun((exp(t+0.1) - exp(t))/0.1 ~ t)
@@ -328,7 +322,7 @@ Dlog <- makeFun((log(t+0.1) - log(t))/0.1 ~ t)
 ```
 
 
-```{r compare-naked-slopes, echo=FALSE, out.width="50%", fig.show="hold", fig.cap="Comparing the naked modeling function (blue) to it's slope function (red)",warning=FALSE}
+```{r compare-pattern-book-slopes, echo=FALSE, out.width="50%", fig.show="hold", fig.cap="Comparing the pattern-book function (blue) to it's slope function (red)",warning=FALSE}
 slice_plot(sin(x) ~ x, domain(x=c(-10,10)), color="blue") %>%
   slice_plot(Dsin(x) ~ x, color="red", alpha=0.25, size=2) %>%
   gf_labs(title="Sinusoid")
@@ -350,10 +344,9 @@ slice_plot(1/x ~ x, domain(x=c(0.1,5)), color="blue", npts=500) %>%
 
 -----
 
-<details>
-<summary>`r ex.mark(9.27, "CUXLR", fname="Fun/slope-web-1.Rmd")`</summary>
-`r MC_counter$reset()` `r knitr::knit_child("Exercises/Fun/slope-web-1.Rmd")`
-</details>
+
+`r insert_calcZ_exercise(9.27, "CUXLR", "Exercises/Fun/slope-web-1.Rmd")`
+
 
 -----
 
@@ -363,7 +356,7 @@ Why did you plot both the function and the slope function in the same graphics f
 
 Excellent question! In general, it is illegitimate to plot a function and it's slope function on the same vertical axis. The reason is the units of the two functions will be different. For instance, the output of a function position(t) might have units of "miles," while the output of the slope function of position (that is, ${\cal D}$position(t) would have units such as miles-per-hour.)  So, as a general rule, never plot a function and its corresponding slope function on the same scale. 
 
-An exception is for the naked modeling functions. These always take a number as input and produce a number as output. The slope function of a naked modeling function also produces a number as output. 
+An exception is for the pattern-book functions. These always take a number as input and produce a number as output. The slope function of a pattern-book function also produces a number as output. 
 
 This exception is not a good excuse for indulging a bad practice. Perhaps you'll forgive me if I point out that I wanted to emphasize the point by demonstrating it.
 :::
@@ -404,17 +397,5 @@ Early in the tree's life, the growth is high compared to the volume of the tree.
 
 The best time to harvest is when the annual "interest rate" paid by the growing tree falls to the level of the next best available investment. Suppose that investment would pay 10% per year. Then harvest the tree when the function values falls below 10%. That happens at year 24. If the next best investment paid only 5% (blue horizontal line), the harvest should be made at about year 29. If money could be borrowed at 2%, it would be worthwhile to harvest the tree still later.
 :::
-
-
-
-<details>
-<summary>Exercise: Still a draft</summary>
-Calculate the slope function of the naked sigmoidal function. What is its value at x=0. Do some other functions as well.
-
-Also, some where we change the 0.1 to something smaller.
-
-Maybe a "What is small?" `{intheworld}`
-
--->
 
 

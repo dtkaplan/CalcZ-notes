@@ -22,3 +22,8 @@ remark_chapter <- function(fname, start, skip=5) {
   writeLines(text, con=fname)
   return(start + skip*length(candidate_lines))
 }
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> shared

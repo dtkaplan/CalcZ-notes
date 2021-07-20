@@ -1,4 +1,4 @@
-# Process of modeling
+# Process of modeling {#process-of-modeling}
 
 Seen very abstractly, a mathematical model, as we are using the term, is a set of ***functions*** that represent the relationships between inputs and outputs.  `r mark(900)`
 
@@ -19,12 +19,12 @@ We'll start then with empirical modeling: finding functions that are a good summ
 
 ## Variations from scaling
 
-A good place to start building a model is to pick one of the basic modeling functions. This works surprisingly often. To remind you, here are our nine ***naked*** modeling functions:   `r mark(910)`
+A good place to start building a model is to pick one of the basic modeling functions. This works surprisingly often. To remind you, here are our nine ***pattern-book*** functions:   `r mark(910)`
 
-```{r child="naked-list.Rmd"}
+```{r child="pattern-book-list.Rmd"}
 ```
      
-The basic modeling functions are the same, but replace the plain $x$ in the naked function with a straight-line function, for instance $ax + b$ or, equivalently $a(x - x_0)$.  In use, the parameter $a$ is often written with some other letter and, often, the $b$ or $-x_0$ part is not needed. 
+The basic modeling functions are the same, but replace the plain $x$ in the pattern-book function with a straight-line function, for instance $ax + b$ or, equivalently $a(x - x_0)$.  In use, the parameter $a$ is often written with some other letter and, often, the $b$ or $-x_0$ part is not needed. 
 
 
 Here are some of the common forms of the basic modeling functions you will encounter:
@@ -69,10 +69,9 @@ slice_plot(-exp(-x) ~ x, domain(x=c(-2,2))) %>%
 
 ```
 
-<details>
-<summary>`r ex.mark(8.3, "ds4e7", fname="Exercises/DD-141Z-04/exponential-bases.Rmd")` </summary>
-`r MC_counter$reset()` `r knitr::knit_child("Exercises/DD-141Z-04/exponential-bases.Rmd")`
-</details>
+
+`r insert_calcZ_exercise(8.3, "ds4e7",  "Exercises/DD-141Z-04/exponential-bases.Rmd")`
+
 
 ## Curve fitting an exponential function {#fit-exponential}
 
@@ -170,23 +169,20 @@ gf_point(temp ~ time, data=CoolingWater %>% sample_n(20)) %>%
 ```
 
 
-<details>
-<summary>`r ex.mark(8.7, "vkwl4", fname=exercise_file("05", "chicken-choose-vase.Rmd"))` </summary>
-`r MC_counter$reset()` `r knitr::knit_child(exercise_file("05", "chicken-choose-vase.Rmd"))`
-</details>
+
+`r insert_calcZ_exercise(8.7, "vkwl4", exercise_file("05", "chicken-choose-vase.Rmd"))`
 
 
 
-<details>
-<summary>`r ex.mark(8.11, "asevss", fname=exercise_file("05", "cow-type-kayak-new.Rmd"))` </summary>
-`r MC_counter$reset()` `r knitr::knit_child(exercise_file("05", "cow-type-kayak-new.Rmd"))`
-</details>
 
 
-<details>
-<summary>`r ex.mark(8.15, "j3xe", fname="Exercises/Fun/maple-hit-saucer.Rmd")` </summary>
-`r MC_counter$reset()` `r knitr::knit_child("Exercises/Fun/maple-hit-saucer.Rmd")`
-</details>
+`r insert_calcZ_exercise(8.11, "asevss", exercise_file("05", "cow-type-kayak-new.Rmd"))`
+
+
+
+
+`r insert_calcZ_exercise(8.15, "j3xe", "Exercises/Fun/maple-hit-saucer.Rmd")`
+
 
 
 ## Curve fitting a periodic function {#fit-periodic}
@@ -202,11 +198,11 @@ gf_line(level ~ hour, data = math141Z::RI_tide) %>%
 
 It's not too hard to see what's going on. The tide rises and falls about every 12 hours. The difference between high tide and low tide is a little more than one meter. The tide gauge is calibrated so that a typical reading is 1 meter, although we don't know what that is respect to. (Certainly not sea level, since then the typical reading would be around zero.)
 
-This simple description tells almost everything needed to construct an A/B model of the tide level using a sinusoid, that is, a function of the form $$A + B \sin(2\pi t/P)$$ The procedure is straightforward:
+This simple description tells almost everything needed to construct an A/B model of the tide level using a sinusoid, that is, a function of the form $$A \sin(2\pi t/P) + B$$ The procedure is straightforward:
 
 **Step 0**: Determine whether a sinusoid model is appropriate. As you know, sinusoids oscillate up and down repeatedly with a steady ***period***. That certainly seems the case here. But sinusoids are also steady in the ***peak*** and ***trough*** values for each cycle. That's only approximately true in the Providence data. Models inevitably involve approximation. We'll have to keep an eye on whether the ***fixed amplitude*** feature of sinusoids 
 
-**Step 1**: Choose a sensible value to represent the low point repeatedly reached. 0.5 m seems appropriate here, but obviously the exact position of the trough of each cycle varies over the 4.5 day duration of the data.  Similarly, the peak is near 1.6 m. Parameter $A$ is the mean of the peak and trough values: $\frac{1.6 + 0.5}{2} = 1.05$ m here. Parameter $B$ is half the difference between the peak and trough values: $\frac{1.6 - 0.5}{2} = 0.55$. Parameter $A$ is called the ***baseline*** of the sinusoid. Paramter $B$ is the ***amplitude***. (Note that by convention, the amplitude is always *half* the high-to-low range of the sinusoid.)
+**Step 1**: Choose a sensible value to represent the low point repeatedly reached. 0.5 m seems appropriate here, but obviously the exact position of the trough of each cycle varies over the 4.5 day duration of the data.  Similarly, the peak is near 1.6 m. Parameter $B$ is the mean of the peak and trough values: $\frac{1.6 + 0.5}{2} = 1.05$ m here. Parameter $A$ is half the difference between the peak and trough values: $\frac{1.6 - 0.5}{2} = 0.55$. Parameter $B$ is called the ***baseline*** of the sinusoid. Paramter $A$ is the ***amplitude***. (Note that by convention, the amplitude is always *half* the high-to-low range of the sinusoid.)
 
 **Step 2**: Estimate the period $P$ of the sinusoid. This can be done with a ruler: the horizontal duration of a complete cycle. I like to use the time between peaks, but the time between troughs would work just as well. Another good choice is the time between positive sloping crossings of the baseline. (But be careful. The time between *successive* baseline crossings, one positive sloping and the other negative, give just *half* the period.) 
 
@@ -252,16 +248,11 @@ gf_line(level ~ hour,
 
 
 
-<details>
-<summary>`r ex.mark(8.19, "YELXG", fname="Exercises/Fun/lamb-talk-gloves.Rmd")` </summary>
-`r MC_counter$reset()` `r knitr::knit_child("Exercises/Fun/lamb-talk-gloves.Rmd")`
-</details>
 
+`r insert_calcZ_exercise(8.19, "YELXG", "Exercises/Fun/lamb-talk-gloves.Rmd")`
 
-<details>
-<summary>`r ex.mark(8.23, "VBWD", fname="Exercises/Fun/spirometer.Rmd")` </summary>
-`r MC_counter$reset()` `r knitr::knit_child("Exercises/Fun/spirometer.Rmd")`
-</details>
+`r insert_calcZ_exercise(8.23, "VBWD", "Exercises/Fun/spirometer.Rmd")`
+
 
 ## Curve fitting a power-law function
 
@@ -344,40 +335,26 @@ In R, the name of the sigmoid function is `pnorm()`. The hump is `dnorm()`. The 
 :::
 
 
-<details>
-<summary>`r ex.mark(8.25, "IELWV", fname="Exercises/Fun/hump-intro.Rmd")` </summary>
-`r MC_counter$reset()` `r knitr::knit_child("Exercises/Fun/hump-intro.Rmd")`</details>
+
+`r insert_calcZ_exercise(8.25, "IELWV", "Exercises/Fun/hump-intro.Rmd")`
 
 
-<details>
-<summary>`r ex.mark(8.29, "CKSLE", fname="Exercises/Fun/sigmoid-intro.Rmd")` </summary>
-`r MC_counter$reset()` `r knitr::knit_child("Exercises/Fun/sigmoid-intro.Rmd")`</details>
 
+`r insert_calcZ_exercise(8.29, "CKSLE", "Exercises/Fun/sigmoid-intro.Rmd")`
 
-<details>
-<summary>`r ex.mark(8.33, "bllKR", fname="Exercises/Fun/sigmoid-bath.Rmd")` </summary>
-`r MC_counter$reset()` `r knitr::knit_child("Exercises/Fun/sigmoid-bath.Rmd")`
-</details>
+`r insert_calcZ_exercise(8.33, "bllKR", "Exercises/Fun/sigmoid-bath.Rmd")`
 
-<details>
-<summary>`r ex.mark(8.37, "EKCIE", fname="Exercises/Fun/ebola-sigmoid.Rmd")` </summary>
-`r MC_counter$reset()` `r knitr::knit_child("Exercises/Fun/ebola-sigmoid.Rmd")`
-</details>
-
+`r insert_calcZ_exercise(8.37, "EKCIE", "Exercises/Fun/ebola-sigmoid.Rmd")`
 
 -----
 
-<details>
-<summary>`r ex.mark(8.36, "YLWP1", fname="Exercises/Fun/flipping-1.Rmd")` </summary>
-`r MC_counter$reset()` `r knitr::knit_child("Exercises/Fun/flipping-1.Rmd")`
-</details>
+`r insert_calcZ_exercise(8.36, "YLWP1", "Exercises/Fun/flipping-1.Rmd")`
 
 -----
 
-<details>
-<summary>`r ex.mark(8.39, "YLWP2", fname="Exercises/Fun/flipping-2.Rmd")` </summary>
-`r MC_counter$reset()` `r knitr::knit_child("Exercises/Fun/flipping-2.Rmd")`
-</details>
+
+`r insert_calcZ_exercise(8.39, "YLWP2", "Exercises/Fun/flipping-2.Rmd")`
+
 
 
 

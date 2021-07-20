@@ -1,0 +1,134 @@
+---
+id: "daisy-mean-clock"
+created: "Mon Jul 19 19:16:37 2021"
+global_id: "iqek0m"
+---
+
+Here's a simple, everyday situation that illustrates many basic principles of multi-objective decision making. But first, a heads up: People are so adept at applying heuristics to this sort of problem---perhaps because it is so common---that it can be difficult at first to see that there is actually a difficulty involved.
+
+The situation is this: there is a pot of money that you and I are going to split up. You and I have similar objectives. For each of us, getting more money is better than getting less. And our objectives conflict. If you get more, I get less. The concepts we'll introduce apply equally well when there are three, four, or any number of people splitting the pot.
+
+For simplicity and for generalizability to other, less obvious situations,  we'll imagine that we need to choose between several discrete **policy alternatives**, that is, configurations of the split. "Policy" may seem like a high-fallutin word to use for splitting the pot, but in other situations it can be exactly the right word. Moreover, the etymology of the word is right on target for the problem. A contemporary dictionary definition of "policy" is: 
+
+> *Policy: a course or principle of action adopted or proposed by a government, party, business, or individual*
+
+The root of the word is "city" in Greek, "polis" (πόλις---you can recognize the $\pi$ at the beginning of the word and the "lambda" ($\lambda$) in the middle. The last letter is "sigma" ($\sigma$) although you might not recognize it since a somewhat different form is used when the letter is at the end of a word.) From "polis" comes our words "politics," "policy," and "police,"  all of which have to do with relations among people. 
+
+For reference, here is a graph showing some policy alternatives in the yours-and-mine problem.
+
+```{r echo=FALSE, warning=FALSE}
+set.seed(101)
+Policies <- tibble::tibble(
+  mine = runif(26, 20,100),
+  yours = runif(26, 20, 100)
+) %>% 
+  filter(mine + yours < 100) %>%
+  mutate(label = LETTERS[1:nrow(.)])
+Frontier <- Policies %>%
+  filter(label %in% c("A", "C", "D")) %>%
+  arrange(mine)
+gf_path(mine ~ yours, data = Frontier, color="blue", size=2, alpha=0.5) %>%
+  gf_text(mine ~ yours, data = Policies, label=~label) %>%
+  gf_labs(y="My share of pot ($)", x = "Your share of pot ($)") %>%
+  gf_refine(coord_fixed()) %>%
+  gf_abline(yintercept=0,slope=1)
+  
+```
+For example, in policy alternative A, I would get $50 and you would get $25. Under policy F, I get $38 and you get $47. (We'll get to the blue line in a bit.)
+
+A **dominated solution** is one which both you and I would turn down in favor of a specific alternative (called the **dominating solution**). For instance, C dominates G: we're both better off under C than G.
+
+```{r ym1-1, echo=FALSE, results="markup"}
+askMC(
+  "Which solution dominates F?",
+  "A" = "I would be better off under A, but you would be worse off than under F.", "B", "+C+", "D", "E",
+  random_answer_order = FALSE
+)
+```
+
+```{r ym1-2, echo=FALSE, results="markup"}
+askMC(
+  "Which solutions dominate G?",
+  "+BCDF+",
+  "CDF",
+  "ACD",
+  "CB"
+)
+```
+
+```{r ym1-3, echo=FALSE, results="markup"}
+askMC(
+  "Which solutions dominate E?",
+  "C",
+  "CDF",
+  "CD",
+  "+None+"
+)
+```
+
+```{r ym1-4, echo=FALSE, results="markup"}
+askMC(
+  "Which solutions dominate B?",
+  "+C+",
+  "CDF",
+  "CD",
+  "None"
+)
+```
+
+A mathematical, but not psychological, principle is that a dominated solution is never optimal. So, we can rule out any dominated solution.
+
+```{r ym1-5, echo=FALSE, results="markup"}
+askMC(
+  "Which solutions can be ruled out as dominated by some other solution?",
+  "+BFG+",
+  "BG",
+  "ABFG",
+  "AFG"
+)
+```
+
+An important **heuristic** for making a decision is *fairness*. In this case, fairness might be interpreted as "split the pot as evenly as possible." 
+
+The diagonal line shows exactly even splits: you and I each get the same amount. There is no policy alternative that is exactly even, but D is the closest. So many people will claim that D is the best of all the policy alternatives, that other alternatives are "greedy" or "unethical." 
+
+Fairness is a very attractive property of a selected policy solution, but it's relatively easy to see that fairness is not essential.
+
+```{r ym1-6, echo=FALSE, results="markup"}
+askMC(
+  "Suppose that policy alternative D does not exist. Of the other policy alternatives, which is the fairest?",
+  "A",
+  "C",
+  "+F+", 
+  random_answer_order = FALSE
+)
+```
+
+```{r ym1-7, echo=FALSE, results="markup"}
+askMC(
+  "Suppose that policy alternative D does not exist. Does any policy alternative dominate the fairest solution?",
+  "Yes, A",
+  "+Yes, C+" = "So we both would prefer C to F. That means that F is not the optimal solution for either of us.",
+  "No", 
+  random_answer_order = FALSE
+)
+```
+
+The answers to the previous two questions point to the reasoning behind calling "fairness" a heuristic rather than a coherent basis for policy choice. To make fairness coherent, we would have to change the rule, "Be fair!" to one like, "If there's a fairer, non-dominated solution, go for that."
+
+Another heuristic is can be applied if it's possible to average between policy alternatives. Imagine if we were making the decision not just for one payout, but for many payouts in series. We might agree to pick solution D most of the time but every once in a while pick solution A to let me catch up with you. 
+
+The blue line shows the non-dominated solutions when such averaging is available. This set of non-dominated solutions is sometimes called the **solution frontier**. Notice that solution E, which is not dominated by any other solution, is dominated by an average between A and F.
+
+Still other heuristics are available. Under **compensation**, we could agree to a choice that enables one of us to pay the other in order to balance out the take. The trajectory of a compensatory solution is along the lines of slope -1 from the non-dominated solutions.
+
+```{r ym1-8, echo=FALSE, results="markup"}
+askMC(
+  "One of the following is the best solution when compensation is possible. Which one?",
+  "A", "+C+"="Since both parties will walk away with more money than D", "D", 
+  random_answer_order = FALSE
+)
+```
+
+In some settings, for instance the "economic theory of law," the best solution under compensation is also the right choice *even if compensation is not paid*.
+

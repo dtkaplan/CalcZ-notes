@@ -1,0 +1,63 @@
+---
+id: "descent-path"
+author: "Daniel Kaplan"
+---
+
+Pilots of commercial passenger aircraft take the comfort of their passengers into account when flying. In transitioning from level flight onto the descent path for landing, for example, pilots take care that the vertical component of acceleration isn't so great that passengers feel the plane "falling out from under them."
+
+A simple model of the descent path is a sigmoid function. Suppose that the descent starts from an altitude of $A = 20,000$ feet at a distance of 30,000 feet from the end of the runway. A reasonable model for the path is $$\text{alt}(x) \equiv A\,\pnorm(x,\ \  mn=30000/2,\ \  sd=30000/6)$$
+The vertical acceleration is the second derivative of alt() with respect to time: $\partial_{tt} \text{alt}(t)$. But notice that the definition of alt() is in terms of distance from the runway, $x$, not $t$. It's the plane's velocity that relates $x$ and $t$. For instance, $$x = v (t - t_0)$$
+
+Suppose that the aircraft is flying at 200 miles-per-hour (the "speed limit" for aircraft at or below 10,000 feet).
+
+```{r dp3-1, echo=FALSE, results="markup"}
+askMC(
+  "What is the equivalent of 200 miles-per-hour in feet-per-second?",
+  "$200\times 3600/5280$ ft/s",
+  "+$200\times 5280/3600$ ft/s+",
+  "$5280\times 3600/200$ ft/s",
+  "$5280/(3600 \times 200)$ ft/s"
+)
+```
+
+In a sandbox, re-write $\text{alt}(x)$ as $f(t) \equiv \text{alt}\left(-v \left[t - t_0\right]\right)$. Set $v$ to the plane's velocity in feet per second. For our purposes, it doesn't matter what $t_0$ is; you can set it to zero. ($t_0$ is the plane's arrival time at the foot of the runway.) Plot out the function choosing a domain for $t$ that lets you see the whole descent path.
+```{r eval=FALSE}
+f <- makeFun(pnorm(- 20000* v* t, 30000/2, 30000/6) ~ t, v = __your_velocity_here__)
+slice_plot(f(t) ~ t, domain(t=__your_domain_here__))
+```
+
+
+
+Compute the second derivative $\partial_{tt} f(t)$ to find the vertical component of acceleration of the aircraft. (Important note: Due to a bug in R, use `numD()` rather than `D()` to compute the second derivative.)
+Graph the second derivative over the appropriate domain and look for the most extreme values of acceleration.
+
+```{r eval=FALSE}
+ddf <- numD(f(t) ~ t + t)
+slice_plot(ddf(t) ~ t, domain(t=__your_domain_here__))
+```
+
+```{r echo=FALSE, results="hide"}
+f <- makeFun(20000*pnorm(- v* t, 50000/2, 50000/6) ~ t, v = 293.33)
+slice_plot(f(t) ~ t, domain(t=c(-100,0)))
+ddf <- numD(f(t) ~ t + t)
+slice_plot(ddf(t) ~ t, domain(t=c(-300,0)))
+```
+
+A rule of thumb is that a vertical acceleration of $5\, \text{ft}\, \text{s}^{-2}$ is not discomfiting. Regrettably, the descent path we described doesn't meet the standard! So we have to re-design the descent path. Since both the altitude and velocity are set, the only parameter you can change is the distance from the foot of the runway where descent commences. 
+
+```{r dp3-2, echo=FALSE, results="markup"}
+askMC(
+  "How far from the foot of the runway should descent begin in order to stay within the $5\\, \\text{ft}\\, \\text{s}^{-2}$ acceleration constraint? Pick the shortest distance that satisfies the constraint.",
+  "40,000 ft",
+  "50,000 ft",
+  "+60,000 ft+",
+  "70,000 ft",
+  "80,000 ft",
+  random_answer_order = FALSE
+)
+```
+
+**For reflection**: A new hire at the airline's operations center proposes to model the descent as a straight-line function rather than a sigmoid. He points out that the second derivative of a straight-line function is always 0, so the passengers would feel no acceleration at all! Explain to this newbie what's wrong with his idea.
+
+
+

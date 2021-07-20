@@ -6,12 +6,12 @@ Let's review the concept of an ***Euler step***.
 **Problem statement**:
 
 1. You seek to find a function, e.g. $f(t)$ which you do not yet know.
-2. You already know $\partial_t f(t)$. (In the following chapters we'll show you some of the many instances of this unlikely-sounding situation, where you don't know $f(t)$ but you do know $\partial_t f(t)$.) This relationship, $\partial_t f(t) \longrightarrow f(t)$ is, of course, revealed by ***anti-differentiation***.
+2. You already know $\partial_t f(t)$. (In the following chapters we'll show you some of the many instances of this unlikely-sounding situation, where you don't know $f(t)$ but you do know $\partial_t f(t)$.) This relationship, $\partial_t f(t) \longrightarrow f(t)$ is, of course, revealed by ***anti-differentiation***. `r mark(3300)`
 
 **Setup**:
 
 3. You know or make up a value for $f(t)$ at a particular time of interest $t=t_0$. "Making up" is a perfectly legitimate practice here to get started in creating an an anti-derivative. The reason is hard to explain until you see the whole process of anti-differentiation by the ***Euler method***, so hang on. In the population modeling problem in Chapter \@ref(change-accumulation), we were interested in forecasting the population into the future, so we chose $t_0$ to be the most recent year for which we have information: $t_0 = 2020$. (In polite mathematical conversation, "making up" is pronounced "assuming.")
-4. Consider a quantity $h$ which is to be regarded as a little bit of $t$: they have the same dimension. $h$ should be "small," but "small" compared to what? Often, the modeling problem at hand involves a domain of interest. For instance, the population modeling problem in Chapter \@ref(change-accumulation) involved a forecast over the time interval from year 2020 to 2100. Provisionally, take small to mean 1% or 0.1% of the extent of the domain of interest. (In the population modeling problem, we chose $h=1$ year.)
+4. Consider a quantity $h$ which is to be regarded as a little bit of $t$: they have the same dimension. $h$ should be "small," but "small" compared to what? Often, the modeling problem at hand involves a domain of interest. For instance, the population modeling problem in Chapter \@ref(change-accumulation) involved a forecast over the time interval from year 2020 to 2100. Provisionally, take small to mean 1% or 0.1% of the extent of the domain of interest. (In the population modeling problem, we chose $h=1$ year.) `r mark(3305)`
 
 **The Step**
 
@@ -22,7 +22,7 @@ Now you know a little bit more about $f(t)$, namely, its value at $t_0 + h$.
 
 Since the original problem was to figure out $f(t)$ over some domain of interest (starting at $t=t_0$), we are not finished. We have taken but one step of our journey and have many more to go.
 
-To continue on the journey, we take what we just found out, namely $f(t_0 + h)$. We use this as the starting point in a new step. We don't have to make anything up because we already know $f(t_0 + h)$.
+To continue on the journey, we take what we just found out, namely $f(t_0 + h)$. We use this as the starting point in a new step. We don't have to make anything up because we already know $f(t_0 + h)$. `r mark(3310)`
 
 The second step brings us to $f(t_0 + 2h)$
 
@@ -30,75 +30,65 @@ $$f(t_0+2h) = f(t_0+h) + h \times \partial_t f(t+h)$$
 And the third:
 $$f(t_0+3h) = f(t_0+2h) + h \times \partial_t f(t+2h)$$
 
-How long to continue this step-by-step process? The original problem involved some domain of interest, and we selected $h$ as 1% or 0.1% of the extent of this domain. For $h$ as 1%, taking 100 steps will get us to the far end of the domain. For $h$ as 0.1%, we would need to take 1000 steps. 
+How long to continue this step-by-step process? The original problem involved some domain of interest, and we selected $h$ as 1% or 0.1% of the extent of this domain. For $h$ as 1%, taking 100 steps will get us to the far end of the domain. For $h$ as 0.1%, we would need to take 1000 steps.  `r mark(3315)`
 
-```{exercise, name="euler-step"}
-Exercises like this:
-```
-<details>
-  
-Using the Euler method find $\int f(t) dt$ over the interval $t_0=0$ to $t_{end}=1$. The $t$ quantity is in steps of $h=0.01$.
 
-$t$  | $\partial_t f(t)$ | $\int f(t) dt$
------|-------------------|-----------------
-0    | `r round(dnorm(0)   , 3)`   |    0.5
-0.01 | `r round(dnorm(0,01), 3)`   |  
-0.02 | `r round(dnorm(0,02), 3)`   |  
-0.03 | `r round(dnorm(0.03), 3)`   |  
 
-</details>
+`r insert_calcZ_exercise("XX.XX", "9W6VB", "Exercises/Accum/euler-step.Rmd")`
+
+
 
 ## Automating Euler
 
-Although the Euler method was invented in the 18th century, it only became a practicable way of accumulating in the 1930s with the advent of analog computing and then in the 1940s when electronic computing was first becoming available. In those days, a primary mission for computers was accumulating the trajectories of artillery shells, a problem that was inaccessible to symbolic anti-differentiation because of the complexities of air resistence and the varying density of air at different altitudes, with different humidity, and so on. 
+Although the Euler method was invented in the 18th century, it only became a practicable way of accumulating in the 1930s with the advent of analog computing and then in the 1940s when electronic computing was first becoming available. In those days, a primary mission for computers was accumulating the trajectories of artillery shells, a problem that was inaccessible to symbolic anti-differentiation because of the complexities of air resistence and the varying density of air at different altitudes, with different humidity, and so on.  `r mark(3320)`
 
-Nowadays computing is roughly one-billionth the cost that it was the World War II era, and we use computers for just about every task imaginable. But in those early days, the huge costs involved in developing early computers was justified only by the prospect of improved gunnery in war. And those problems were all about accumulation and, more specifically, Euler methods. 
+Nowadays computing is roughly one-billionth the cost that it was the World War II era, and we use computers for just about every task imaginable. But in those early days, the huge costs involved in developing early computers was justified only by the prospect of improved gunnery in war. And those problems were all about accumulation and, more specifically, Euler methods.  `r mark(3325)`
 
 What today seems an esoteric use for computers was in fact the prime motivation for their development. This section introduces various ways of programming the Euler method on a computer. 
 
 ::: {.takenote}
-The Euler method has been supplanted by other, more modern methods whose inner workings are based on a deeper knowledge of calculus than we have covered to date and programming methods that automatically check and adapt the size of $h$. 
+The Euler method has been supplanted by other, more modern methods whose inner workings are based on a deeper knowledge of calculus than we have covered to date and programming methods that automatically check and adapt the size of $h$.  `r mark(3330)`
 
 However sophisticated these methods may be, they are always easy to use. For example, the R/mosaic `antiD()` operator draws on one of these methods.
 :::
 
 ### Euler as a spreadsheet
 
-Spreadsheets are popular for certain simple kinds of computer programming. The Euler method is a case in point. Figure \@ref(fig:euler-spreadsheet1) shows the formula layer of a Google Sheet implementing the Euler method for $\int \dnorm(t) dt$. In the spreadsheet, `NORMDIST()` is the equivalent of $\dnorm()$.
+Spreadsheets are popular for certain simple kinds of computer programming. The Euler method is a case in point. Figure \@ref(fig:euler-spreadsheet1) shows the formula layer of a Google Sheet implementing the Euler method for $\int \dnorm(t) dt$. In the spreadsheet, `NORMDIST()` is the equivalent of $\dnorm()$. `r mark(3335)`
 
 ```{r euler-spreadsheet1, echo=FALSE, fig.cap="The formula layer of a spreadsheet implementing the Euler method for $\\int \\dnorm(x) dx$. The whole spreadsheet is viewable [here](https://docs.google.com/spreadsheets/d/1e3SwcNLQxoYCUedALia6XxzIlh5kY_dTohFroewbNR8/edit?usp=sharing)"}
 knitr::include_graphics("www/Euler-spreadsheet1.png")
 ```
 
-The first argument to `NORMDIST()` is a reference to a cell in column B which stores the sequence $t_0$, $t_0 + h$, $t_0 + 2h, \ldots$. (The value of $h$ is stored in cell `H2` (not shown).) Column D contains the results of the Euler calculation. It starts at time $t_0=0$ by referencing cell `H4` (not shown) which contains the starting value $f(t_0)$. Each successive cell in that column refers to the one immediately above that, adding in the appropriate value from the `NORMDIST()` column and multiplying it by $h$ (that is, `H2`). 
+The first argument to `NORMDIST()` is a reference to a cell in column B which stores the sequence $t_0$, $t_0 + h$, $t_0 + 2h, \ldots$. (The value of $h$ is stored in cell `H2` (not shown).) Column D contains the results of the Euler calculation. It starts at time $t_0=0$ by referencing cell `H4` (not shown) which contains the starting value $f(t_0)$. Each successive cell in that column refers to the one immediately above that, adding in the appropriate value from the `NORMDIST()` column and multiplying it by $h$ (that is, `H2`).  `r mark(3340)`
 
-Only about 10 Euler steps are shown, out of 100 altogether. Typically in viewing a spreadsheet you don't see the formula layer. Instead, the results of the calculation in each cell are presented. (Figure \@ref(fig:euler-spreadsheet2)). 
+Only about 10 Euler steps are shown, out of 100 altogether. Typically in viewing a spreadsheet you don't see the formula layer. Instead, the results of the calculation in each cell are presented. (Figure \@ref(fig:euler-spreadsheet2)).  `r mark(3345)`
 
 ```{r euler-spreadsheet2, echo=FALSE, fig.cap="Results from the formula layer shown in Figure \\@ref(fig:euler-spreadsheet1)."}
 knitr::include_graphics("www/Euler-spreadsheet2.png")
 ```
 
-Plotting column `D` against column `B` gives a graph of $\int \dnorm(t) dt$ versus $t$. Notice that the output of the Euler method is a function stored as a ***table*** rather than as a function formula. And even though $\int \dnorm(t) dt$ has a pretty simple form, namely, $\pnorm(t)$, the spreadsheet makes it look like something more elaborate.
+Plotting column `D` against column `B` gives a graph of $\int \dnorm(t) dt$ versus $t$. Notice that the output of the Euler method is a function stored as a ***table*** rather than as a function formula. And even though $\int \dnorm(t) dt$ has a pretty simple form, namely, $\pnorm(t)$, the spreadsheet makes it look like something more elaborate. `r mark(3350)`
 
-Spreadsheets are rightly criticized for being verbose. This can make it extremely challenging for the human programmer to create a spreadsheet that does what is claimed for it, let alone to demonstrate that the result is correct. 
+Spreadsheets are rightly criticized for being verbose. This can make it extremely challenging for the human programmer to create a spreadsheet that does what is claimed for it, let alone to demonstrate that the result is correct.  `r mark(3355)`
 
-Worse, it's hard to generalize a spreadsheet to handle any given function rather than the one (here, `NORMDIST()`) hard-coded into the sheet. A usual practice is to copy a spreadsheet and then customize it to use the function whose anti-derivative is sought. This introduces the potential for human error in a way that can be hard to detect down the line.
+Worse, it's hard to generalize a spreadsheet to handle any given function rather than the one (here, `NORMDIST()`) hard-coded into the sheet. A usual practice is to copy a spreadsheet and then customize it to use the function whose anti-derivative is sought. This introduces the potential for human error in a way that can be hard to detect down the line. `r mark(3360)`
 
 ### Using `antiD()`
 
-The R/mosaic `antiD()` operator uses symbolic differentiation if it can. Otherwise it uses numerical methods in the spirit of Euler. Here is the same anti-differentiation as in the spreadsheet but done with `antiD()`:
+The R/mosaic `antiD()` operator uses symbolic differentiation if it can. Otherwise it uses numerical methods in the spirit of Euler. Here is the same anti-differentiation as in the spreadsheet but done with `antiD()`: `r mark(3365)`
 
 ```{r}
 f <- antiD(dnorm(t) ~ t)
 ```
 
-It happens that $\dnorm(t)$ is one of those many functions where the anti-derivative cannot be calculated symbolically. (We already know that $\int \dnorm(t) dt = \pnorm(t)$, but this in fact the *definition* of $\pnorm()$, which is only known from numerical calculations like Euler.)
+It happens that $\dnorm(t)$ is one of those many functions where the anti-derivative cannot be calculated symbolically. (We already know that $\int \dnorm(t) dt = \pnorm(t)$, but this in fact the *definition* of $\pnorm()$, which is only known from numerical calculations like Euler.) `r mark(3370)`
 
-An advantage of using programming systems like R/mosaic is that they provide a way to do something with the result of the calculation. You could of course plot `f()` with `slice_plot()`, but let's show something much more fundamental ... 
+An advantage of using programming systems like R/mosaic is that they provide a way to do something with the result of the calculation. You could of course plot `f()` with `slice_plot()`, but let's show something much more fundamental ...  `r mark(3375)`
 
 > **How do we know that `antiD()` is giving the result it should give?**
 
-Whenever you do a calculation, you should ask a similar question: "How do I know that [*my calculation*] is giving the result it should?" In general, it takes considerable experience to provide an answer to such a question, but in the case of `antiD()`, the approach is simple: If `f()` is really the anti-derivative of `dnorm()`, then differentiating `f()` should give us something that's the same as `dnorm()`.
+Whenever you do a calculation, you should ask a similar question: "How do I know that [*my calculation*] is giving the result it should?" In general, it takes considerable experience to provide an answer to such a question, but in the case of `antiD()`, the approach is simple: If `f()` is really the anti-derivative of `dnorm()`, then differentiating `f()` should give us something that's the same as `dnorm()`. `r mark(3380)`
 
 Here's the actual calculation:
 ```{r}
@@ -107,16 +97,12 @@ deviation <- makeFun(dnorm(t) - fprime(t) ~ t)
 slice_plot(deviation(t) ~ t, domain(t=c(-5,5)))
 ```
 
-With numerical methods, there will almost always be some error introduced by round-off in the calculations, so we should never expect the deviation to be zero. You can see from the plot of the deviation (Look carefully at the vertical axis!) that it is smaller than 0.0000000001, which is a tiny, tiny part of the size of the output from $\dnorm()$.
+With numerical methods, there will almost always be some error introduced by round-off in the calculations, so we should never expect the deviation to be zero. You can see from the plot of the deviation (Look carefully at the vertical axis!) that it is smaller than 0.0000000001, which is a tiny, tiny part of the size of the output from $\dnorm()$. `r mark(3385)`
 
-It might seem odd to use 3 lines of R/mosaic commands to confirm an answer that was calculated in one line. That's a pretty good representation of how much effort a professional will put into **testing** the result compared to **getting** the result.
-
-```{exercise}
-Try another strategy for confirming that `antiD()` is giving a good answer. Compare `f()` from the `antiD()` calculation to `pnorm()`.
-```
+It might seem odd to use 3 lines of R/mosaic commands to confirm an answer that was calculated in one line. That's a pretty good representation of how much effort a professional will put into **testing** the result compared to **getting** the result. `r mark(3390)`
 
 
-### Using `cumsum()`
+### Using `cumsum()` {#using-cumsum}
 
 `antiD()` produces a function that can be evaluated at any input. In contrast,
 the Euler method as described here produces a data table of values as, for example, seen in the spreadsheet implementation of Euler.
@@ -125,7 +111,7 @@ In R, a data table can be created with the `data.table()` function. Here' we'll 
 
 - $t_0$ and $t_\text{end}$, the start and end of the input interval over which you want to do the accumulation.
 - Your choice of $h$. We'll set this to 1/100 of the length of the input interval.
-- The function that you want to accumulate. We'll represent that with a tilde expression in exactly the same manner as `makeFun()`, `D()`, and other operators in the R/mosaic suite of software. We'll implement the method as a series of steps that make a data table whose `t` and `accum` columns describe the accumulated function.
+- The function that you want to accumulate. We'll represent that with a tilde expression in exactly the same manner as `makeFun()`, `D()`, and other operators in the R/mosaic suite of software. We'll implement the method as a series of steps that make a data table whose `t` and `accum` columns describe the accumulated function. `r mark(3395)`
 
 ```{r}
 # Setup the incredients
@@ -144,7 +130,7 @@ Results <- tibble(
 )
 ```
 
-The `cumsum()` function is easy to understand. First, know that `sum()` adds together a set of numbers. For instance, here's a data frame with the numbers 0, 1, 2, 3, ..., 10. The sum of these is 55. The cumulative sum is also known as the "running sum."
+The `cumsum()` function is easy to understand. First, know that `sum()` adds together a set of numbers. For instance, here's a data frame with the numbers 0, 1, 2, 3, ..., 10. The sum of these is 55. The cumulative sum is also known as the "running sum." `r mark(3400)`
 
 ```{r}
 n <- seq(0, 10, by=1)
@@ -152,17 +138,12 @@ n
 sum(n)
 cumsum(n)
 ```
-```{exercise, name="cumsum"}
-Consider this sequence: 4, 5, 3, 1, 2
 
-What is the sum?
-  
-What is the cumulative sum?
-  
-Which entry in the cumulative sum matches the sum?
-```
 
-A good practice with numerical methods is to package them as a ***function***, so that you can easily apply the same method in many different contexts. This is the best way to arrange a calculation so it can be debugged and verified. This is what such a function would look like in R:
+`r insert_calcZ_exercise(22.5, "3IU9R", "Exercises/Accum/cumsum.Rmd")`
+
+
+A good practice with numerical methods is to package them as a ***function***, so that you can easily apply the same method in many different contexts. This is the best way to arrange a calculation so it can be debugged and verified. This is what such a function would look like in R: `r mark(3405)`
 
 ```{r}
 accumulate <- function(tilde_expr, t_0=0, t_end=1, h=(t_end-t_0)/100) {
@@ -179,7 +160,7 @@ accumulate <- function(tilde_expr, t_0=0, t_end=1, h=(t_end-t_0)/100) {
 Let's test `accumulate()`. Since `dnorm()` is the derivative of `pnorm()`, accumulating `dnorm()` should give a function that has the same shape as `pnorm()`.
 
 ```{r}
-Pts <- accumulate(dnorm(t) ~ t, t_0=-1, t_end=3, h=0.01)
+Pts <- accumulate(dnorm(t) ~ t, t_0=0, t_end=3, h=0.01)
 gf_point(euler ~ t, data = Pts) %>%
   slice_plot(pnorm(t) ~ t, color="red")
 ```
@@ -194,12 +175,12 @@ gf_point(diff ~ t, data = For_plot) %>%
   gf_lims(y = c(0, NA))
 ```
 
-The Euler method gives results that are roughly 0.16 units less than the true answer, `pnorm()`. Notice that the error is practically the same for all $t$. This shows that the Euler accumulated `dnorm()` is practically `pnorm(t) - 0.16`: a pure vertical shift. (If you look very closely, you'll see that `diff` is not exactly a constant. That's the result of using finite $h$ in the Euler accumulation.)
+The Euler method gives results that are roughly 0.16 units less than the true answer, `pnorm()`. Notice that the error is practically the same for all $t$. This shows that the Euler accumulated `dnorm()` is practically `pnorm(t) - 0.16`: a pure vertical shift. (If you look very closely, you'll see that `diff` is not exactly a constant. That's the result of using finite $h$ in the Euler accumulation.) `r mark(3410)`
 
 
-```{exercise}
-Implement `accumulate()` in a sandbox. Show that the vertical difference between the accumulated points and `pnorm()` gets smaller as you move $t_0$ to the left. 
-```
+`r insert_calcZ_exercise(22.5, "3IUVB", "Exercises/Accum/accumulate-R.Rmd")`
+
+
 
 ## Iteration
 
@@ -209,7 +190,7 @@ There is an important computational strategy behind the Euler method, whether it
 
 > *repetition of a mathematical or computational procedure applied to the result of a previous application*
 
-You saw iteration at work in Section \@ref(anti-diff-viz) when we turned the discrete sloping segments of the ***slope-function visualization*** into continuous, joined line segments. We started with the right endpoint of segment (a). Then we applied a procedure: change the vertical position of segment (b) so that the left end of (b) joins with the right end of (a). Now repeat that, but starting not with the original segment (a) but the joined (a)-(b) segments: move segment (c) vertically until its left end is joined with the rightmost point of the (a)-(b) segments. This produces a continuous (a)-(b)-(c) structure. Repeat again, using (a)-(b)-(c) and joining (d) to that. And so on. Iteration.
+You saw iteration at work in Section \@ref(anti-diff-viz) when we turned the discrete sloping segments of the ***slope-function visualization*** into continuous, joined line segments. We started with the right endpoint of segment (a). Then we applied a procedure: change the vertical position of segment (b) so that the left end of (b) joins with the right end of (a). Now repeat that, but starting not with the original segment (a) but the joined (a)-(b) segments: move segment (c) vertically until its left end is joined with the rightmost point of the (a)-(b) segments. This produces a continuous (a)-(b)-(c) structure. Repeat again, using (a)-(b)-(c) and joining (d) to that. And so on. Iteration. `r mark(3415)`
 
 Iteration is behind many of the algorithms used throughout mathematics and computation generally. The fundamental structure of iteration involves three things:
 
@@ -217,7 +198,7 @@ Iteration is behind many of the algorithms used throughout mathematics and compu
 2. An object, called the ***accumulator*** to hold the result of the accumulation. This might be in the shape of a single number, or it might be a sequence of things, more or less like the set in (1).
 3. A ***procedure*** that takes the accumulator as well as an item from (1) and calculates something, with which to augment the accumulator.
 
-To carry out the iteration, you initialize the accumulator in a way that's appropriate, then apply the procedure to the first item of the set (1), thereby updating the accumulator. Next, move to the second item in the set (1) and update the accumulator. Repeat this for each of the items in the set (1). When you've processed each of those items the accumulator holds the result.
+To carry out the iteration, you initialize the accumulator in a way that's appropriate, then apply the procedure to the first item of the set (1), thereby updating the accumulator. Next, move to the second item in the set (1) and update the accumulator. Repeat this for each of the items in the set (1). When you've processed each of those items the accumulator holds the result. `r mark(3420)`
 
 **Example 1**: Summing a set of numbers. 
 
@@ -225,7 +206,7 @@ To carry out the iteration, you initialize the accumulator in a way that's appro
 - The accumulator is a single number, which we initialize to 0.
 - The procedure takes the item from the iteration set and updates the accumulator by adding that item to the accumulator.
 
-The accumulator starts out as 0. Then 3 is added to it and the accumulator becomes 3. Then 5 is added to it and the accumulator becomes 8. Next, -2 is added to it and the accumulator becomes 6. The 1 in the iteration set updates the accumulator to 7 and, finally, the last item in the iteration set---4---updates the accumulator to 11. The final result: 11.
+The accumulator starts out as 0. Then 3 is added to it and the accumulator becomes 3. Then 5 is added to it and the accumulator becomes 8. Next, -2 is added to it and the accumulator becomes 6. The 1 in the iteration set updates the accumulator to 7 and, finally, the last item in the iteration set---4---updates the accumulator to 11. The final result: 11. `r mark(3425)`
 
 Let's look at how this might be written in base R, even though the R/mosaic software allows you to avoid such constructions.
 
@@ -243,7 +224,7 @@ Almost all computer languages have a structure like the ***for loop*** in R for 
 
 **Example 2**: The cumulative sum
 
-We'll use the same iteration set as in the previous example. But the accumulator will have two parts, a `running_sum` and a set of numbers. As in the summation iteration, we'll initialize `running_sum` to zero. The set of numbers will be initialized to the empty set.  In addition to updating `running_sum`,  the update procedure will append the running sum to the end of the set of numbers. The process of appending is called ***concatenation***. One of the many ways in R to concatenate the most recent result looks like
+We'll use the same iteration set as in the previous example. But the accumulator will have two parts, a `running_sum` and a set of numbers. As in the summation iteration, we'll initialize `running_sum` to zero. The set of numbers will be initialized to the empty set.  In addition to updating `running_sum`,  the update procedure will append the running sum to the end of the set of numbers. The process of appending is called ***concatenation***. One of the many ways in R to concatenate the most recent result looks like `r mark(3430)`
 
     set_of_numbers <- c(set_of_numbers, running_sum)
     
@@ -264,7 +245,7 @@ set_of_numbers
 ```
 
 ::: {.takenote}
-To experienced programmers, the cumulative-sum iteration code listed above will seem odd. That's because in learning to program they mastered additional features of the programming language like ***indexing***, which enables you to refer to a specific item in a set. Many, many bugs in programs originate in faulty indexing; it's not always so easy to do right. 
+To experienced programmers, the cumulative-sum iteration code listed above will seem odd. That's because in learning to program they mastered additional features of the programming language like ***indexing***, which enables you to refer to a specific item in a set. Many, many bugs in programs originate in faulty indexing; it's not always so easy to do right.  `r mark(3435)`
 
 Here's the cumulative-sum iteration in a way that will seem more familiar to experienced programmers:
 
@@ -282,7 +263,7 @@ iteration_set <- c(3, 5, -2, 1, 4)
 cumsum(iteration_set)
 ```
 
-Since functions like `cumsum()` have been carefully debugged and validated by their authors, they are much more reliable than home-brew loops. In addition, they are programmed to run close to the hardware and are therefore very fast. That's not an issue with an iteration set containing five numbers, but such sets might well be 100,000 times longer, or more.
+Since functions like `cumsum()` have been carefully debugged and validated by their authors, they are much more reliable than home-brew loops. In addition, they are programmed to run close to the hardware and are therefore very fast. That's not an issue with an iteration set containing five numbers, but such sets might well be 100,000 times longer, or more. `r mark(3440)`
 
 
 
@@ -290,13 +271,13 @@ Since functions like `cumsum()` have been carefully debugged and validated by th
 
 ## Accumulating population change
 
-Let's return to the prediction of future population to show how it was done. Recall that we started with the total population of the US as estimated by the Census Bureau every ten years from 1790 on.^[The Census estimate was a particular and somewhat peculiar way of counting people. For instance, Native Americans were excluded from the count. So the census numbers give a false impression of a small population growing on an empty continent.] 
+Let's return to the prediction of future population to show how it was done. Recall that we started with the total population of the US as estimated by the Census Bureau every ten years from 1790 on.^[The Census estimate was a particular and somewhat peculiar way of counting people. For instance, Native Americans were excluded from the count. So the census numbers give a false impression of a small population growing on an empty continent.]  `r mark(3445)`
 
-Those numbers are monotonically increasing, so a projection into the future based just on those numbers is bound to give an ever-increasing value. Augmenting the data with our understanding of the mechanisms of population growth, and bringing in additional information from other sources---families are getting smaller on average, people are living longer---we decided to process the census numbers to give us a better representation of growth: the annual per-capita population growth. 
+Those numbers are monotonically increasing, so a projection into the future based just on those numbers is bound to give an ever-increasing value. Augmenting the data with our understanding of the mechanisms of population growth, and bringing in additional information from other sources---families are getting smaller on average, people are living longer---we decided to process the census numbers to give us a better representation of growth: the annual per-capita population growth.  `r mark(3450)`
 
-Writing "annual per-capita population growth" in explicit units gives "change in population per year per person." We observed from the historical record that this quantity is decreasing over time in a way that's reasonably extrapolated into the future by a straight-line function. 
+Writing "annual per-capita population growth" in explicit units gives "change in population per year per person." We observed from the historical record that this quantity is decreasing over time in a way that's reasonably extrapolated into the future by a straight-line function.  `r mark(3455)`
 
-That part of the quantity which is "change in population per year" has the units of the derivative with respect to time of population: $\partial_t P(t)$. In other words, the information that we're taking as informative for predicting future population growth, the extrapolation of the growth rate, has the form of a derivative. We're going to transform that derivative into the the population function itself $P(t)$. This is an absolutely typical use of anti-differentiation. 
+That part of the quantity which is "change in population per year" has the units of the derivative with respect to time of population: $\partial_t P(t)$. In other words, the information that we're taking as informative for predicting future population growth, the extrapolation of the growth rate, has the form of a derivative. We're going to transform that derivative into the the population function itself $P(t)$. This is an absolutely typical use of anti-differentiation.  `r mark(3460)`
 
 The annual growth rate in population $\partial_t P(t)$ can be approximated from the once-per-decade data by finite differencing:
 $$\diff{t} P(\text{year}) = \frac{P(\text{year} + 10) - P(\text{year})}{10}$$
@@ -309,7 +290,7 @@ In other words, our modeling of the data has told us the derivative not of $P(t)
 
 The growth rate model is $$\text{Growth rate model:}\ \ \ \partial_t \ln(P(t)) = 0.0071 - 0.000120(t-2020)$$
 
-We'll start in 2020, when we know $P(t) = 331$ million, so $\ln(P(2020)) = 19.618$. According to the growth rate model, for the year to 2021, the growth rate will be  $0.0071 - 0.000120(2021-2020)n= 0.00698$$ per year. This means that $\ln(P(2021)) = 19.619 + 0.00698 = 19.6247$. 
+We'll start in 2020, when we know $P(t) = 331$ million, so $\ln(P(2020)) = 19.618$. According to the growth rate model, for the year to 2021, the growth rate will be  $0.0071 - 0.000120(2021-2020)n= 0.00698$$ per year. This means that $\ln(P(2021)) = 19.619 + 0.00698 = 19.6247$.  `r mark(3465)`
 
 Year $t$ | $P(t)$ | $\ln(P(t))$ | $\partial_t \ln(P(t))$ (from model)
 ---------|--------|-------------|----------------------------------
@@ -325,7 +306,7 @@ Year $t$ | $P(t)$ | $\ln(P(t))$ | $\partial_t \ln(P(t))$ (from model)
 2029     | 351M   | 19.677      | 0.00590
 
 
-Performing the accumulation is simply accounting. Our model has told us the 4th column of the table for each year. We the first row of the table: $P(2020) = 331$M and therefore $\ln(P(2020)) = 19.618$. To get the $\ln(P(2021)$ row, add the number in the fourth column of previous row. Continue on from each row to the next. Once we have accumulated $\ln(P(t))$, we can convert it through exponentiation to $P(t)$.
+Performing the accumulation is simply accounting. Our model has told us the 4th column of the table for each year. We the first row of the table: $P(2020) = 331$M and therefore $\ln(P(2020)) = 19.618$. To get the $\ln(P(2021)$ row, add the number in the fourth column of previous row. Continue on from each row to the next. Once we have accumulated $\ln(P(t))$, we can convert it through exponentiation to $P(t)$. `r mark(3470)`
 
 
 
@@ -351,5 +332,78 @@ state_objective("Int-2a", "Utilize Euler’s Method to approximate anti-derivati
 :::
 
 
+`r insert_calcZ_exercise("XX.XX", "ljCxcH", "Exercises/Accum/rhinosaurus-mute-tv.Rmd")`
 
 
+`r insert_calcZ_exercise("XX.XX", "rfO0EG", "Exercises/Accum/falcon-hurt-pot.Rmd")`
+
+
+`r insert_calcZ_exercise("XX.XX", "ikgl","Exercises/Accum/wind-power.Rmd")`
+
+`r insert_calcZ_exercise("XX.XX", "DKwksA","Exercises/Accum/heat-engine.Rmd")`
+
+
+`r insert_calcZ_exercise("XX.XX", "HJWsexj","Exercises/Accum/Graph-anti.Rmd")`
+
+`r insert_calcZ_exercise("XX.XX", "exkews","Exercises/Accum/computing-and-antiD.Rmd")`
+
+`r insert_calcZ_exercise("XX.XX", "KELSE","Exercises/Accum/lessons-from-euler.Rmd")`
+
+## Any use for this?
+
+To construct an anti-derivative with the Euler Method, you need:
+
+1. Obviously ... The function to be anti-differentiated, which we'll call $f(t)$ in the example.
+2. Specific numerical values for all parameters of the function, e.g. the $k$ in $e^{kt}$ or the $P$ in $\sin(2\pi t/P)$.
+3. The domain over which you want to know the anti-derivative.
+4. A numerical value for a "step size" $h$. This should be "small," but "small" depends on the problem being tackled, just as you saw with the graphics in the previous problem.
+
+To see where the Euler Method comes from, recall that anti-differentiation is "undoing" differentiation and remember the discrete time version of differentiation:
+$$\partial_x f(x) \approx \frac{f(x+h) - f(x)}{h}$$
+To make it clear where the anti-derivative comes in to this, let's rewrite the finite-difference formula using a different notation: $f(x)$ will be the function to be anti-differentiated and $F(x)$ will be the result of the anti-differentiation of $f(x)$. Using this notation:
+$$f(x) \approx \frac{F(x+h) - F(x)}{h}$$
+You can see that $f(x)$ is the derivative of $F(x)$, but here we know $f(x)$ but do not (yet) know $F(x)$. To find $F(x)$ at a series of discrete values of $x$ spaced by $h$, re-arrange the equation:
+$$F(x + h) \approx F(x) + h f(x)\ \ \  \ \ \mbox{Euler method formula}$$
+
+As an example of using this formula, let's anti-differentiate $\sin(2\pi x/0.3)$ over the domain $1 \leq x \leq 21$ with a step size of $h=0.01$
+
+We start at $x=1$ and
+
+i. Since we don't yet know $F(x)$, let's make our life simple and assume that $F(x=1) \equiv 0$. (You will see why this choice works later on. In fact, you could use any value you like for $F(x=1)$.)
+ii. We do know $f(x)$. Calculate $f(x=1)$. This comes out to be `sin(2*pi*1 / 0.3)` or 0.866.
+iii. Plug in the value of $f(x=1)$ from step (ii) to the Euler method formula in order to calculate $F(1 + 0.01)$. The formula, and our assumed value $F(1) = 0$,  gives $$F(1 + 0.01) = 0 + 0.01 \times 0.866 = 0.00866$$
+iv. Now move on to the next time step. We know $f(1.01) = 0.743$ and $F(1.01) = 0.00866$. We use the Euler method formula to find
+$$F(1.02) = F(1.01) + 0.01\times 0.743 =  0.00866 + 0.00743 = 0.01609$$
+
+```{r eulersandbox, exercise = TRUE, exercise.cap="Sandbox for Euler calculations", exercise.nlines=5}
+
+```
+
+```{r euler1}
+askMC(
+  "What is the value of $F(1.03)$?",
+  "+`0.01609 + 0.01*0.588`+",
+  "`0.01609 + 0.01*0.743`" = "You should be using $f(1.02)$, not $f(1.01)$.",
+  "`0.00866 + 0.01*0.743`"="You should be using $F(1.02)$, not $F(1.01)$.",
+  "`0.00866 + 0.01*0.588`" = "You should be using $F(1.02)$ and  $f(1.02)$, not $F(1.01)$ and $f(1.01)$."
+)
+```
+
+```{r euler2}
+askMC(
+  "How many steps will it take from $x=1.03$ to reach $x=1.05$?",
+  1, 2, 3, 4, 5, right_one = 2,
+  random_answer_order = FALSE
+)
+```
+
+```{r euler3}
+askMC(
+  "What is $F(1.05)$?",
+  "0.028" = "That's $F(1.04)$.",
+  "+0.030+",
+  "0.032",
+  "0.033",
+  random_answer_order = FALSE
+)
+```

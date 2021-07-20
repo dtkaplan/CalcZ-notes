@@ -176,7 +176,7 @@ gf_point(temp ~ time, data = Stans_data, color="orange") %>%
 
 Symbolic differentiation is a **mechanical** process. Some people are good at working like a machine. And some people aren't. It helps to be very organized and to have a really good short-term memory. For decades, computers have been programmed to calculate symbolic differentiation. What's required is the systematic and reliable application of a small set of rules. Computer's excel at this.
 
-A set of about a dozen rules will handle all the formulas we'll encounter in this ook or that are commonly used for modeling. In this chapter, we're going to derive only a handful of the rules---those related to the straight-line function. Then we will introduce, without motivation, the rules for the naked and basic modeling functions. In Chapter \@ref(evanescent-h) we'll motivate the rules for the naked modeling functions. In Chapters XXX we'll develop the three rules that correspond to the three forms of creating new functions out of old: linear combinations (the ***sum*** rule), function multiplication (the ***product rule***) and function composition (the ***chain rule***).
+A set of about a dozen rules will handle all the formulas we'll encounter in this ook or that are commonly used for modeling. In this chapter, we're going to derive only a handful of the rules---those related to the straight-line function. Then we will introduce, without motivation, the rules for the pattern-book and basic modeling functions. In Chapter \@ref(evanescent-h) we'll motivate the rules for the pattern-book functions. In Chapters XXX we'll develop the three rules that correspond to the three forms of creating new functions out of old: linear combinations (the ***sum*** rule), function multiplication (the ***product rule***) and function composition (the ***chain rule***).
 
 Recall that for a function $f(x)$, the derivative $\partial_x f(x)$ corresponds to the ***instantaneous slope*** of $f(x)$. There is a small set of functions for which the instantaneous slope is the same for all $x$. These are the straight-line function $g(x) \equiv a x + b$ and the constant function $h(x) \equiv b$. 
 
@@ -210,7 +210,7 @@ A few drill problems on the above three rules but with other variables
 
 ## Symbolic derivatives of modeling functions
 
-For a human training to be a symbolic differentiator, it's best simply to memorize the patterns for derivatives of the other naked modeling functions. They are:
+For a human training to be a symbolic differentiator, it's best simply to memorize the patterns for derivatives of the other pattern-book functions. They are:
 
 $f(x)$      | $\partial_x f(x)$
 ------------|------------------
@@ -221,7 +221,7 @@ $x^p$       | $p\, x^{p-1}$
 sigmoid, that is, pnorm(x)    | hump, that is, dnorm(x)
 hump, that is dnorm(x)        | $-x \text{dnorm}(x)$
 
-Note that some of the naked modeling functions have derivatives which are simply naked modeling functions
+Note that some of the pattern-book functions have derivatives which are simply pattern-book functions
 
 Name $f(x)$|           $f(x)$  | $\partial f(x)$ | name $\partial_x f(x)$
 :---------:|:----------------:|:----------------:|:------:
@@ -230,7 +230,7 @@ logarithm  | $\ln(x)$           | $1/x$          | power-law
 sigmoid    | $\text{pnorm(x)}$ |$\text{dnorm(x)}$| hump
 
 
-Another couple of naked modeling functions involve division or division by $x$ and multiplication by a scalar. (The second one, $\partial_x \text{hump}(x)$, was not in the original short list)
+Another couple of pattern-book functions involve division or division by $x$ and multiplication by a scalar. (The second one, $\partial_x \text{hump}(x)$, was not in the original short list)
 
 Name $f(x)$|           $f(x)$  | $\partial f(x)$ | name $\partial_x f(x)$
 :---------:|:----------------:|:----------------:|:------:
@@ -245,13 +245,13 @@ sinusoid   | $\sin(x)$  | $\cos(x) = \sin(x+\pi/2)$ | sinusoid
 sinusoid   | $\cos(x)$  | $-\sin(x) = \cos(x + \pi/2) =  \sin(x+\pi)$ | sinusoid
 
 ::: {.takenote}
-Memorizing the derivatives of the short list of naked modeling functions will make it much easier to follow the rest of the section. Do that now.
+Memorizing the derivatives of the short list of pattern-book functions will make it much easier to follow the rest of the section. Do that now.
 :::
 
-Recall that the ***basic modeling functions*** are just the naked functions with clothes on the input. The clothing is can be a simple a scaling function, such as $a\, x$ or $k\, x$  or $\frac{2\pi}{P} x$. As well, the clothing can involve both a scaling and a ***shift***, for instance $a x + b$ or $a (x-x_0)$
-Let's give a name to the clothing function and recognize the several varients:
+Recall that the ***basic modeling functions*** are just the pattern-book functions which have been tailored to match the type of input. The tailoring can be a simple a scaling function, such as $a\, x$ or $k\, x$  or $\frac{2\pi}{P} x$. As well, the tailoring can involve both a scaling and a ***shift***, for instance $a x + b$ or $a (x-x_0)$
+Let's give a name to the tailoring function and recognize the several varients:
 
-Variations of clothing$(x)$ |    | $\partial_x \text{clothing}(x)$
+Variations of tailoring$(x)$ |    | $\partial_x \text{tailoring}(x)$
 -----------------------|---------|
 $ax$  | scaling | $a$
 $kx$  | scaling | $k$
@@ -261,19 +261,19 @@ $a(x-x_0)$ shift and scale   | $a$
 $\frac{x - \text{mn}}{\text{sd}}$ | shift and scale | $\frac{1}{\text{sd}}$}
 
 
-Every basic modeling function is a composition of the corresponding naked function with the clothing function:
+Every basic modeling function is a composition of the corresponding pattern-book function with the tailoring function:
 
-naked    | clothed   | typically written
+pattern-book    | tailored   | typically written
 ---------|-----------|------------------
-`exp(x)` | `exp(clothing(x))` | $e^{kx}$
-`sin(x)` | `sin(clothing(x))` | $\sin\left(\frac{2\pi}{P} x\right)$
-`pnorm(x)` | `pnorm(clothing(x))` | `pnorm(x, mn, sd)`
-`dnorm(x)` | `dnorm(clothing(x))` | `dnorm(x, mn, sd)`
+`exp(x)` | `exp(tailoring(x))` | $e^{kx}$
+`sin(x)` | `sin(tailoring(x))` | $\sin\left(\frac{2\pi}{P} x\right)$
+`pnorm(x)` | `pnorm(tailoring(x))` | `pnorm(x, mn, sd)`
+`dnorm(x)` | `dnorm(tailoring(x))` | `dnorm(x, mn, sd)`
 
-To differentiate the basic modeling functions, follow exactly the same rules as for the naked modeling functions, but instead of $x$, write the clothed form of $x$. And then, multiply the whole thing by the derivative with respect to $x$ of the clothing function.
+To differentiate the basic modeling functions, follow exactly the same rules as for the pattern-book functions, but instead of $x$, write the tailored form of $x$. And then, multiply the whole thing by the derivative with respect to $x$ of the tailoring function.
 
-$$\partial_x \left[ f(\text{clothing}(x))\right] = [\partial_x]\left(\strut\text{clothing}(x)\right) \times 
-\partial_x \text{clothing}(x)$$
+$$\partial_x \left[ f(\text{tailoring}(x))\right] = [\partial_x]\left(\strut\text{tailoring}(x)\right) \times 
+\partial_x \text{tailoring}(x)$$
 
 Some examples:
 
@@ -386,7 +386,7 @@ sum_rule((a+b)*x + c*x^2)
 
 ## Re-writing the basic modeling functions
 
-We're going to extend the pattern table to include the basic modeling functions. Recall that every basic modeling function is a composition of a naked modeling function with an $ax + b$ scaling function.
+We're going to extend the pattern table to include the basic modeling functions. Recall that every basic modeling function is a composition of a pattern-book function with an $ax + b$ scaling function.
 
 pattern name  | Original             |  Derivative w.r.t. $x$
 --------------|----------------------|-------------
@@ -469,7 +469,7 @@ bmf_rule(ax + b)
 
 # h and derivatives {#h-and-derivatives}
 
-We already established, by numerical experiment, the result of differentiating the naked modelings functions. To summarize,
+We already established, by numerical experiment, the result of differentiating the pattern-books functions. To summarize,
 
 ```{r child="D-naked-functions.Rmd"}
 ```
@@ -483,7 +483,7 @@ Dsin <- makeFun((sin(x+h) - sin(x))/h  ~ x)
 In justifying the entry for $\sin()$ in the table, we plotted `Dsin()` using small `h`, for instance, `h=0.000001`. It would be comforting to continue the experiment with even smaller `h`. Doing so, we discover a problem.
 
 
-```{r Dsin-small-h, echo=FALSE, fig.cap="Graphing the computer's slope function of $\\sin(x)$ for small enough $h$ produces a result inconsistent with the table for the naked modeling functions. Instead of producing a $\\cos(x)$, we get a ragged function."}
+```{r Dsin-small-h, echo=FALSE, fig.cap="Graphing the computer's slope function of $\\sin(x)$ for small enough $h$ produces a result inconsistent with the table for the pattern-book functions. Instead of producing a $\\cos(x)$, we get a ragged function."}
 slice_plot(Dsin(t, h=0.000000000000001) ~ t, domain(t=c(-5,2*pi)))
 ```
 Things get even worse for smaller $h$ still, as you can confirm for yourself using a computing sandbox.
@@ -498,7 +498,7 @@ options(digits=20)
 1 + 0.000000000000000000000001 - 1
 ```
 
-Using technical computing successfully at a professional level requires some understanding of the ways in which computer arithmetic differs from mathematical arithmetic, And the R/mosaic `D()` operator has been constructed with these considerations in mind. But our purpose here is not to push the computer beyond it's arithmetic limits but to demonstrate that the differentiation table for the naked modeling functions is correct.
+Using technical computing successfully at a professional level requires some understanding of the ways in which computer arithmetic differs from mathematical arithmetic, And the R/mosaic `D()` operator has been constructed with these considerations in mind. But our purpose here is not to push the computer beyond it's arithmetic limits but to demonstrate that the differentiation table for the pattern-book functions is correct.
 
 ## The $h$ framework
 
@@ -560,9 +560,9 @@ In the last step, an $h$ appears. But we are entitled to take the result of the 
 
 At it's most basic, you're entitled to state $$\lim_{h\rightarrow 0} h = 0$$ which, to be honest, looks like nothing more than common sense.
 
-## Approximations to naked modeling functions
+## Approximations to pattern-book functions
 
-Let's take a close look at two of our naked modeling functions: $e^x$ and $\sin(x)$. By "close" I mean very near to $x=0$. You already know that $e^0 = 1$ and $\sin(0) = 0$. But consider "very small" $x$, in the spirit of $\lim_{x\rightarrow 0}$. 
+Let's take a close look at two of our pattern-book functions: $e^x$ and $\sin(x)$. By "close" I mean very near to $x=0$. You already know that $e^0 = 1$ and $\sin(0) = 0$. But consider "very small" $x$, in the spirit of $\lim_{x\rightarrow 0}$. 
 
 The fundamental approximations are these:
 
@@ -572,9 +572,9 @@ $$e^x \approx 1 + x\\
 \ \\
 \cos(x) \approx 1 - x^2$$
 
-Figure \@ref(fig:small-x-naked} shows the naked functions along with the approximations. We're interested in "small" $x$. The left panel shows the functions for $-1 \leq x \leq 1$ and the right panel zooms in for small $x$, taking "small" in an arbitrary but everyday sense of, say, less than 0.01.
+Figure \@ref(fig:small-x-pattern-book} shows the naked functions along with the approximations. We're interested in "small" $x$. The left panel shows the functions for $-1 \leq x \leq 1$ and the right panel zooms in for small $x$, taking "small" in an arbitrary but everyday sense of, say, less than 0.01.
 
-```{r small-x-naked, echo=FALSE, fig.show="hold", out.width="50%", fig.cap="Comparing the naked modeling functions exp(x), sin(x), and cos(x) to their simple approximations for small x. The functions are drawn as a broad gray line; the approximations are a thin blue line."}
+```{r small-x-pattern-book, echo=FALSE, fig.show="hold", out.width="50%", fig.cap="Comparing the pattern-book functions exp(x), sin(x), and cos(x) to their simple approximations for small x. The functions are drawn as a broad gray line; the approximations are a thin blue line."}
 options(digits=5)
 slice_plot(exp(x) ~ x, domain(x=c(-1, 1)), size=3, alpha=0.25) %>%
   slice_plot(1 + x ~ x, color="blue") %>%
@@ -595,7 +595,7 @@ slice_plot(cos(x) ~ x, domain(x=c(-0.01, 0.01)), size=2, alpha = 0.25) %>%
   slice_plot(1 - x^2 ~ x, color = "blue")
 ```
 
-Near $x=0$, the graph of the approximation is dead on center of the corresponding naked modeling function.
+Near $x=0$, the graph of the approximation is dead on center of the corresponding pattern-book function.
 
 The approximations will not break down for very small $x$ because none of the approximations involve dividing by $x$. And remember that the approximations are only good when $x$ is small!
 
@@ -634,15 +634,15 @@ In practice, however, we perform differentiation whenever possible not with the 
 
 ```{exercise, name="low-low-rates"}
 ```
-<details>`r MC_counter$reset()` `r knitr::knit_child("Exercises/Diff/low-low-rates.Rmd")`</details>
+"Exercises/Diff/low-low-rates.Rmd")`
 
 ```{exercise, name="singularity-numerics"}
 ```
-<details>`r MC_counter$reset()` `r knitr::knit_child("Exercises/Diff/singularity-numerics.Rmd")`</details>
+"Exercises/Diff/singularity-numerics.Rmd")`
 
 ```{exercise, name="NaN-numerics"}
 ```
-<details>`r MC_counter$reset()` `r knitr::knit_child("Exercises/Diff/NaN-numerics.Rmd")`</details>
+"Exercises/Diff/NaN-numerics.Rmd")`
 
 ::: {.todo}
 In the limits section or an exercise, ask about $x^0$? Is that the same as 1? What about when $x=0$. Zero raised to any positive power is 0. But any positive number raised to 0 is 1. So two ways of thinking about it give different answers.
@@ -729,7 +729,7 @@ $h$ | $\frac{e^h - 1}{h}$
 
 ```{exercise, name="finch-trim-kayak"}
 ```
-<details>`r MC_counter$reset()` `r knitr::knit_child("Exercises/Diff/finch-trim-kayak.Rmd")`</details>
+"Exercises/Diff/finch-trim-kayak.Rmd")`
 
 ## Derivatives of linear combinations
 
@@ -808,6 +808,6 @@ In calculus, there are a handful of celebrity functions that take a function as 
 
 ```{exercise, name="SIR-dimensions"}
 ```
-<details>`r MC_counter$reset()` `r knitr::knit_child("Exercises/Diff/SIR-dimensions.Rmd")`</details>
+"Exercises/Diff/SIR-dimensions.Rmd")`
 
 

@@ -1,0 +1,35 @@
+```
+antiD_basic <- function() {
+  direction <- "forward"
+  tibble::tribble(
+    ~ question,  ~ answer,  ~ group,
+    "$$\\exp(x)$$", "$$\\exp(x)$$", "basic",
+    "$$x^n, (n \\neq -1)$$", "$$\\frac{1}{n+1} x^{n+1}$$", "basic",
+    "$$1/x$$", "$$\\ln(x)$$", "basic",
+    "$$\\sin(x)$$", "$$-\\cos(x)$$", "basic-s",
+    "$$\\cos(x)$$", "$$\\sin(x)$$", "basic-s",
+    "$$\\mbox{hump}(x)$$", "$$\\mbox{sigmoid}(x)$$", "basic",
+    "$$1$$", "$$x$$", "basic",
+    "$$a$$", "$$ax$$", "basic",
+    "$$- 2\\exp(x)$$", "$$- 2\\exp(x)$$", "basic",
+    "$$3\\exp(x)$$", "$$3\\exp(x)$$", "basic",
+    "$$a \\exp(x)$$", "$$a \\exp(x)$$", "basic",
+    "$$7/x$$", "$$7\\ln(x)$$", "basic",
+    "$$a/x$$", "$$a\\ln(x)$$", "basic",
+    "$$- 4 \\sin(x)$$", "$$4\\cos(x)$$", "basic-s",
+    "$$\\sin(x)/2$$", "$$-\\cos(x)/2$$", "basic-s",
+    "$$\\cos(x)/5$$", "$$\\sin(x)/5$$", "basic-s",
+    "$$\\sin(x)/3$$", "$$-\\cos(x)/3$$", "basic",
+    "$$8\\cos(x)$$", "$$8\\sin(x)$$", "basic",
+    "$$x^2$$", "$$x^3 / 3$$", "basic",
+    "$$x^4$$", "$$x^5 / 5$$", "basic",
+    "$$7 x^3$$", "$$\\frac{7}{4} x^4$$", "basic"
+
+
+  ) %>%
+    mutate(id = "antiD_simple",
+           direction = direction,
+           forward = "What is the ANTI-derivative w.r.t. x?",
+           backward = "What is the derivative w.r.t. x?")
+}
+```

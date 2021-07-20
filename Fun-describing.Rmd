@@ -14,20 +14,20 @@ We will need to communicate about functions to your fellow humans and to compute
 * Computer function name
 * Mathematical notation
 
-In this chapter, we'll illustrate these five different modes using the naked modeling functions. It's important to become proficient at all five.
+In this chapter, we'll illustrate these five different modes using the pattern-book functions. It's important to become proficient at all five.
 
 
 
 ## Computer commands
 
-Since we've already introduced the naked modeling functions, this is a good time to show you how to draw a graph of them. After this short introduction, we'll discuss graphics more generally and look at graphics of functions that have *two* inputs.
+Since we've already introduced the pattern-book functions, this is a good time to show you how to draw a graph of them. After this short introduction, we'll discuss graphics more generally and look at graphics of functions that have *two* inputs.
 
-All the naked modeling functions have just a single input. You can draw graphs of single-input functions using the `slice_plot()` R/mosaic operator. You need to specify two pieces of information to `slice_plot()`:
+All the pattern-book functions have just a single input. You can draw graphs of single-input functions using the `slice_plot()` R/mosaic operator. You need to specify two pieces of information to `slice_plot()`:
 
 1. Which function to graph. In R/mosaic, You state this with what's called a ***tilde expression***. A couple of examples will suffice for the moment.
     a. When the function has a name, like `exp()` or `log()` or `sin()`, the tilde expression looks like `exp(x) ~ x`. There's a squiggle called "tilde" in the middle: <span style="font-size: 24pt;">~</span>. On the left side of the tilde you put the name of the function you want to graph followed by an input name. You can choose any input name you like: here we are using `x`. On the right side of the tilde, place the input name again. We'll explain why the name appears in two places later.
     b. When the function is being written as a formula, for instance `1/z` or `t^2`, put the formula on the left side of the tilde and the input name on the right side, like `1/z ~ z` or `1/t ~ t`.
-2. The ***graphics domain***. As you know, the ***domain*** of a function is the collection of all possible legitimate inputs. For most of the naked modeling functions, the domain is $-\infty < x < \infty$. As you might expect, it's impractical to have a graphical axis that is infinitely long. So you have to choose some finite interval of the function domain to use. This finite interval is called the "graphics domain." You specify the domain with a statement like `domain(x = c(-5,5))`, which is setting the graphics domain to $-5 \leq x \leq 5$. Note that the input name used in `domain()` must match the input name you selected in the tilde expression.
+2. The ***graphics domain***. As you know, the ***domain*** of a function is the collection of all possible legitimate inputs. For most of the pattern-book functions, the domain is $-\infty < x < \infty$. As you might expect, it's impractical to have a graphical axis that is infinitely long. So you have to choose some finite interval of the function domain to use. This finite interval is called the "graphics domain." You specify the domain with a statement like `domain(x = c(-5,5))`, which is setting the graphics domain to $-5 \leq x \leq 5$. Note that the input name used in `domain()` must match the input name you selected in the tilde expression.
 
 The tilde expression and the graphics domain specifier are the two arguments to `slice_plot()`. All of these are correct commands for drawing a graph:
 
@@ -56,7 +56,7 @@ With computers, we have better and faster ways to get the output of a function f
 
 Even today, a table can be a nice way to describe a function when we are interested in the output from only a handful of the possible inputs. 
 
-Conceptually, it's helpful to keep in mind that every naked modeling function is just a way of organizing information that could have been stored in a table. 
+Conceptually, it's helpful to keep in mind that every pattern-book function is just a way of organizing information that could have been stored in a table. 
 
 You will not have to generate tabular descriptions of functions to follow this book. It's much more convient to implement the function in software so that the output can easily be displayed for any given inputs. On the other hand, in this book we'll often use data in tabular form to create a modeling function. There's little point in introducing this until you have some additional calculus concepts, so be patient.
 
@@ -68,9 +68,9 @@ Sometimes the words are used in everyday speech but the casual person isn't sure
 
 Still other words are best understood by those who learn calculus. "Concave up," "concave down", "approaching 0 asymptotically," "continuous", "discontinuous", "smooth", "having a minimum **at** ...," "having a minimum **of** ...", "approaching $\infty$ asymptotically," "having a vertical asymptote."
 
-To illustrate the patterns described by these phrases, consider the three naked modeling functions in Figure \@ref(fig:for-words):
+To illustrate the patterns described by these phrases, consider the three pattern-book functions in Figure \@ref(fig:for-words):
 
-```{r for-words, echo=FALSE, out.width="50%", fig.show="hold", fig.cap="Three of the naked modeling functions: (a) exponential, (b) sinusoid, (c) power-law $x^{-1}$."}
+```{r for-words, echo=FALSE, out.width="50%", fig.show="hold", fig.cap="Three of the pattern-book functions: (a) exponential, (b) sinusoid, (c) power-law $x^{-1}$."}
 slice_plot(exp(x) ~ x, domain(x=c(-3,3))) %>%
   gf_labs(title="(a) exponential")
 slice_plot(sin(x) ~ x, domain(x=c(-5,5))) %>%
@@ -98,24 +98,15 @@ slice_plot(1/x ~ x, domain(x=c(.01, 1.25))) %>%
 
 ## Computer function names
 
-As you might expect, computer programmers and language developers have written software implementing several of the ***naked modeling functions***: `exp()`, `log()`, `sin()`, `dnorm()`, and `pnorm()`. For these functions, the name tells everying, so far as the computer is concerned, that is needed to calculate the output from any given input. `r mark(440)`
+As you might expect, computer programmers and language developers have written software implementing several of the ***pattern-book functions***: `exp()`, `log()`, `sin()`, `dnorm()`, and `pnorm()`. For these functions, the name tells everying, so far as the computer is concerned, that is needed to calculate the output from any given input. `r mark(440)`
 
-Computer notation for the power-law and straight-line functions is different. It will be much easier to understand once you have seen how to create and name your own functions. The reason for this difference is that the power-law and straight-line functions are not quite naked. Both of them have parameters: the exponent in the power-law function and the slope and intercept in the straight-line function.
+Computer notation for the power-law and proportional functions is different because the body of these functions is so short. So instead of using parentheses to apply a named function, invoking the power-law or proportional functions is done using a syntax like $x^p$ or $x$ or $z^4$.^[If you insist on using a named function for power-law and proportional functions, there is `` `^`() `` and `I()`.] 
 
-::: {.why}
-**Why do you include the power-law and straight-line functions in the list of naked modeling functions when they are not naked?**
 
-We're using the "naked modeling function" list to accomplish two things at the same time:
-
-i. To emphasize that in modeling real-world situations you should always expect that your functions will have parameters.
-ii. To point out that a large fraction modeling situations can be handled by just a few function "shapes."  
-
-To make the list of shapes in (ii) comprehensive, we've had to stretch the "naked" metaphor a bit.
-:::
 
 ## Mathematical notation
 
-You have grown up with traditional mathematical notation and have are likely familiar with the notation for several of the naked modeling functions: $\ln x$, $\sin x$, $e^x$, $x^p$ (as in $x^2$ where $p=2$ or $\sqrt{x}$ where $p=1/2$). `r mark(450)`
+You have grown up with traditional mathematical notation and have are likely familiar with the notation for several of the pattern-book functions: $\ln x$, $\sin x$, $e^x$, $x^p$ (as in $x^2$ where $p=2$ or $\sqrt{x}$ where $p=1/2$). `r mark(450)`
 
 Traditional notation mixes up several things that computer notation sensibly keeps separate. From the computer programmer's point of view, traditional notation is idiosyncratic rather than systematic. 
 

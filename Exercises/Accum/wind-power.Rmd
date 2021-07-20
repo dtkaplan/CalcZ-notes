@@ -1,19 +1,12 @@
 ---
+id: "wind-power"
 title: "Accumulating Wind Power"
 author: "Daniel Kaplan"
-output: learnr::tutorial
-runtime: shiny_prerendered
 ---
 
-```{r include=FALSE}
-library(gradethis)
-knitr::opts_chunk$set(echo = FALSE)
-learnr::tutorial_options(exercise.timelimit = 60,
-                 exercise.checker = gradethis::grade_learnr)
-```
 
-```{r wind-power-setup, context="setup", include=FALSE}
-library("learnr")
+
+```{r include=FALSE}
 library("mosaic")
 library("mosaicCalc")
 tmp <- rfun(~ t, seed=982)
@@ -37,6 +30,20 @@ We don't have an algebraic formula for `windspeed(t)` even though it is a functi
 The answer you compute should be saved to the name `result`. The units will be in kWh -- kilowatt hours.
 
 ```{r wind2, exercise = TRUE, exercise.nlines=6, exercise.cap="Find the energy produced"}
+# ignore these definitions. They are setting up the 
+# functions for you to use
+tmp <- rfun(~ t, seed=982)
+tmp2 <- rfun(~ t, seed = 2932)
+tmp3 <- rfun(~ t, seed = 43)
+windspeed <- function(t) {
+  abs(tmp((t - 5)*3) + tmp2((t - 10)*2) + tmp3((t - 15)*4))
+}
+speed2power <- function(s) {
+  pmin(ifelse(s < 5, 0, (s-2)^3), 5000)
+}
+
+#Your work starts here
+
 slice_plot(windspeed(t) ~ t, domain(t=c(0, 24)))
 
 # # Uncomment the next lines as you figure out how to fill in the "...blanks..."
@@ -45,16 +52,7 @@ slice_plot(windspeed(t) ~ t, domain(t=c(0, 24)))
 # result # this prints out the result
 ```
 
-```{r wind2-check, echo=FALSE, eval=FALSE}
-gradethis::grade_result(
-  #fail_if( ~ ! "result" %in% names(.env), message="Your result should be stored under the name `result`."),
-  fail_if( ~ ! is.numeric(.env$result), message = "Your result should be a number."),
-  fail_if( ~ .env$result < 110 && .env$result > 109, message = "It looks like you are integrating the wind speed over the 24-hour period. But you were asked to find the total *energy* produced. For this, you need to integrate *power*."),
-  pass_if( ~ abs(.env$result - 10786.4) < 100, message="In other words, about 11 kilowatt hours (Kwh)."),
-  fail_if( ~ .env$result < 1, "Are you sure you have `windspeed()` and `speed2power()` in the right order?"),
-  fail_if( ~ TRUE)
-)  
-```
+
 
 ```{r wind3, echo=FALSE}
 askMC(

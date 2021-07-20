@@ -1,0 +1,30 @@
+---
+id: "horse-takes-pillow"
+author: "Daniel Kaplan"
+---
+
+```{r echo=FALSE}
+f1 <- rfun(~ x, seed=782)
+df1 <- D(f1(x) ~ x)
+slice_plot(df1(x) ~ x, domain(x=c(-5,5)))
+```
+
+The graph shows a function. Like all functions, it has an anti-derivative. Here are several functions, of which one is the anti-derivative of the function shown in the graph. Your job is to figure out which one.
+
+```{r}
+f1 <- rfun(~ x, seed = 782)
+f2 <- rfun(~ x, seed = 934)
+f3 <- rfun(~ x, seed = 297)
+f4 <- rfun(~ x, seed = 892)
+```
+
+Don't worry about how `rfun()` makes a function. Once you run those four lines, you can use `slice_plot()` in the usual way to plot out any of the four functions over the domain $-5 \leq x \leq 5$. 
+
+```{r horse-takes-pillow-1, echo=FALSE, results="markup"}
+askMC(
+  "Which one of the functions is an anti-derivative of the function graphed above? (Hint: Make your life easy and do something to the `f1()` through `f4()` functions before you plot them, so that they are easy to compare to the graph.)",
+  "+`f1()`+", "`f2()`", "`f3()`", "`f4()`",
+  random_answer_order = FALSE
+)
+```
+

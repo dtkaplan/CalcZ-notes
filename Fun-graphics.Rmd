@@ -89,7 +89,7 @@ Before you can use `gf_point()` to plot a pair of columns from a data frame, you
 You will often want to compare to functions, or compare a function to data, or something more elaborage. You can do this using the ordinary graphics functions, e.g. `slice_plot()` or `gf_point()`. Each such command would generates a ***graphics layer***. You can stack layers on top of one another by connecting the commands with a ***pipe***, which is written `%>%` in R. The pipe token should always come at the end of a line, never at the beginning. The last command in the ***pipeline*** should not be followed by `%>%`. `r mark(720)`
 
 ::: {.workedexample}
-Here is an ugly plot made of three layers, each layer displaying one of the naked modeling functions. When a `slice_plot()` is the first layer, the `domain()` must be given explicitly. You're welcome to do so in the later layers, but if you don't the original `domain()` will be passed down the pipeline.
+Here is an ugly plot made of three layers, each layer displaying one of the pattern-book functions. When a `slice_plot()` is the first layer, the `domain()` must be given explicitly. You're welcome to do so in the later layers, but if you don't the original `domain()` will be passed down the pipeline.
 
 ```{r echo=TRUE}
 slice_plot(dnorm(x) ~ x, domain(x=c(-4,4))) %>%
@@ -254,14 +254,10 @@ Austin has a `surface_plot_with_contours()` function. Add that in to mosaicCalc.
 :::
 
 
-<details>
-<summary>`r ex.mark(6.3, "drawing", fname=exercise_file("03", "drawing.Rmd"))` </summary>
-`r MC_counter$reset()` `r knitr::knit_child(exercise_file("03", "drawing.Rmd"))`
-</details>
+
+`r insert_calcZ_exercise(6.3, "drawing", exercise_file("03", "drawing.Rmd"))`
 
 
-<details>
-<summary>`r ex.mark(6.8, "daylength", fname="Fun/length-of-day.Rmd")` </summary>
-`r MC_counter$reset()` `r knitr::knit_child("Exercises/Fun/length-of-day.Rmd")`
-</details>
+`r insert_calcZ_exercise(6.8, "daylength", "Exercises/Fun/length-of-day.Rmd")`
+
 

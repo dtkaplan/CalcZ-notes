@@ -4,11 +4,11 @@ We can use ***linear combination*** and ***function multiplication*** to build u
 
 ## f(x) times g(t)
 
-For example, soon after a guitar string is plucked it conforms to a sinusoid pattern of **displacement** from the straight-line connecting the two fixed ends of the string: one set by finger pressure on the fret and the other at the bridge.
+For example, when a guitar string is at rest it forms a straight line connecting its two fixed ends: one set by finger pressure along the neck of the guitar and the other at the bridge near the center of the guitar body. When a guitar string is plucked, its oscillations follow a sinusoid pattern of **displacement**. With the right camera and lighting setup, we can see these oscillations in action:
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/F0NsJ7J8rYM" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
-For a string of length $L$, the string displacement is a function of position $x$ along the string and is a linear combination of functions $$g_k(x) \equiv \sin(k \pi x /L)$$ where $k$ is an integer.  A few of these functions are graphed in Figure \@ref(fig:guitar-string-modes).
+For a string of length $L$, the string displacement is a function of position $x$ along the string and is a linear combination of functions of the form $$g_k(x) \equiv \sin(k \pi x /L)$$ where $k$ is an integer.  A few of these functions are graphed in Figure \@ref(fig:guitar-string-modes) with $k=1$, $k=2$, and $k=3$.
 
 ```{r guitar-string-modes, echo=FALSE, fig.height=3, fig.width=7, fig.show="hold", fig.cap="Vibrational modes of a guitar string."}
 slice_plot(sin(pi*x/100) ~ x, domain(x=c(0, 100)), 
@@ -16,7 +16,7 @@ slice_plot(sin(pi*x/100) ~ x, domain(x=c(0, 100)),
   slice_plot(sin(2* pi*x/100) ~ x, color="blue",
              label_text="k=2", label_x = 0.95) %>%
   slice_plot(sin(3* pi*x/100) ~ x, color="green",
-             label_text="k=2", label_x = 0.90) %>%
+             label_text="k=3", label_x = 0.90) %>%
   gf_labs(x="", y="", title="Three modes of a guitar string.")
 string_shape <- function(x, t) {
   sin(pi*x/100)*sin(pi*t) - 2*sin(2*pi*x/100)*sin(2*pi*t) - 1.5*sin(3*pi*x/100)*sin(3*pi*t)
@@ -87,19 +87,12 @@ In Section \@ref(function-composition) you saw a function giving the declination
 Give function. DRAW CONTOUR PLOT, take slices. Day length as seen by a migrating bird. [Plug in a simple sinusoid for latitude to reduce the function to day-length versus day-of-year.]
 
 
-<details>
-<summary>`r ex.mark(12.3, "NOAA", fname=exercise_file("01", "NOAA.Rmd"))` </summary>
-`r MC_counter$reset()` `r knitr::knit_child(exercise_file("01", "NOAA.Rmd"))`
-</details>
 
-<details>
-<summary>`r ex.mark(12.7, "EDKKW", fname="Exercises/Fun/pythagorus-two.Rmd")` </summary>
-`r MC_counter$reset()` `r knitr::knit_child("Exercises/Fun/pythagorus-two.Rmd")`
-</details>
+`r insert_calcZ_exercise(12.3, "NOAA", exercise_file("01", "NOAA.Rmd"))`
 
-<details>
-<summary>`r ex.mark(12.11, "EDKYV", fname="Exercises/Fun/bigger-two.Rmd")`</summary>
-`r MC_counter$reset()` `r knitr::knit_child("Exercises/Fun/bigger-two.Rmd")`
-</details>
+`r insert_calcZ_exercise(12.7, "EDKKW", "Exercises/Fun/pythagorus-two.Rmd")`
+
+`r insert_calcZ_exercise(12.11, "EDKYV", "Exercises/Fun/bigger-two.Rmd")`
+
 
 

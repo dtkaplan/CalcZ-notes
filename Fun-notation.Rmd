@@ -114,8 +114,8 @@ A slightly more detailed definition of "algorithm" highlights that algorithms ar
 
 > An ***algorithm*** is a set of instructions for performing a computation written in terms of other algorithms that we already know how to perform.
 
-For our purposes, the "algorithms that we already know how to perform" will be taken to be arithmetic---addition, subtraction, multiplication, division---as well as the evaluation of the naked modeling functions. Admittedly, people cannot compute logarithms as fluently as they can add numbers, but you already have the R implementations of the basic modeling functions: `exp()`, `log()`, `sin()`, power-law, `dnorm()`, and `pnorm()`. 
-The vast majority of functions you will see in this book (and in mathematical modeling in general) can be constructed out of basic arithmetic and the application of the naked modeling functions. `r mark(560)`
+For our purposes, the "algorithms that we already know how to perform" will be taken to be arithmetic---addition, subtraction, multiplication, division---as well as the evaluation of the pattern-book functions. Admittedly, people cannot compute logarithms as fluently as they can add numbers, but you already have the R implementations of the basic modeling functions: `exp()`, `log()`, `sin()`, power-law, `dnorm()`, and `pnorm()`. 
+The vast majority of functions you will see in this book (and in mathematical modeling in general) can be constructed out of basic arithmetic and the application of the pattern-book functions. `r mark(560)`
 
 ## Algorithms without formulas
 
@@ -177,7 +177,7 @@ state_objective("F-33", "Master the conventions used in CalcZ for giving names t
 
 ## CalcZ naming conventions
 
-We're going to be using and creating a lot of functions in CalcZ. Some of these functions already have ***proper names***, usually written using short sequences of letters: for instance the naked modeling functions $\sin()$, $\ln()$, $\exp()$. `r mark(600)`
+We're going to be using and creating a lot of functions in CalcZ. Some of these functions already have ***proper names***, usually written using short sequences of letters: for instance the pattern-book functions $\sin()$, $\ln()$, $\exp()$. `r mark(600)`
 
 Other functions will be needed just for a sentence or a paragraph or a section, perhaps being used in an example or to lay out the steps of an algorithm. In ***natural languages*** such as English, we often use ***pronouns*** for such purposes: she, he, it, they, we, I, .... We also will use pronouns for identifying functions. Our policy is this:
 
@@ -212,9 +212,8 @@ It is essential that you can apply these conventions reflexively. Being able to 
 :::
 
 
-<details>
-<summary>`r ex.mark(5.1, "TKWEW", fname="Fun/convention-drill.Rmd")` </summary>
-`r MC_counter$reset()` `r knitr::knit_child("Exercises/Fun/convention-drill.Rmd")`</details>
+
+`r insert_calcZ_exercise(5.1, "TKWEW", "Exercises/Fun/convention-drill.Rmd")`
 
 ## Functions in R
 
@@ -297,29 +296,12 @@ In reading math, take care to notice which of $=$, $\rightarrow$, or $\equiv$ is
 
 ---------
 
-<details>
-<summary>`r ex.mark(5.7, "LDNE", fname="Fun/function-notation.Rmd")` </summary>
-`r MC_counter$reset()` `r` knitr::knit_child(exercise_file("02", "function-notation.Rmd"))`
-</details>
 
+`r insert_calcZ_exercise(5.7, "LDNE", exercise_file("02", "function-notation.Rmd"))`
 
 ---------
 
-<details>
-<summary>`r ex.mark(5.11, "OCSP2", fname="inline.Rmd")` </summary>
-The following traditional-style notation is intended to define a function that is 2 times the naked sinusoid. But something is wrong.
+`r insert_calcZ_exercise("XX.XX", "kZG5Fj", "Exercises/Fun/puppy-build-radio.Rmd")`
 
-$$g(t) \equiv 2 \sin(x)$$
 
-```{r OCSP2, echo=FALSE, results="markup"}
-askMC(
-  "What's wrong with the definition?",
-  "$g()$ isn't an appropriate name" = "You can name functions what you like.",
-  "The formula should be written $2 \\times \\sin(x)$" = "You are welcome to write things that way if you want to emphasize the multiplication, but you don't have to. On the other hand, in R it would be absolutely required to write the multiplication operator: `2 * sin(x)`.",
-  "$t$ is not a good choice for the input name." = "It's a fine choice, especially when the input is time.",
-  "+The input name in the formula doesn't match the input name on the left side of $\\equiv$.+" = "That's it. Once you choose an input name (here, $t$), make sure to write the formula in terms of that name."
-)
-```
-
-</details>
-
+`r insert_calcZ_exercise("XX.XX", "aeOnO5", "Exercises/Fun/horse-sing-drawer.Rmd")`

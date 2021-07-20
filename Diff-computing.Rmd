@@ -51,9 +51,7 @@ In the same spirit as `makeFun()`, which translates a tilde-expression into the 
 D(f_description)
 ```
 
-```{exercise name="tilde-function.Rmd"}
-```
-<details>`r MC_counter$reset()` `r knitr::knit_child("Exercises/Diff/tilde-function.Rmd")`</details>
+`r insert_calcZ_exercise("XX.XX", "kelwx", "Exercises/Diff/tilde-function.Rmd")`
 
 
 ## Finite differencing
@@ -78,19 +76,13 @@ slice_plot(g(x) ~ x, domain(x=c(-5,5)), npts=500) %>%
 Look very closely at Figure \@ref(fig:check-dg), particularly at the places where the blue vertical markers cross the function $g(x)$ (black). They should cross exactly at the flat zone, but they are a little shifted to the left. That's the sense in which the finite-difference approach gives an approximation. This left-shift stems from the use of 0.1 in the definition of the zero function. Use a smaller value, say 0.01 or 0.001, and you won't be able to see the shift at all. `r mark(2185)`
 
 ::: {.takenote}
-In modeling work, there's nothing wrong with an approximation so long as it is good enough for your purposes. We picked the value 0.1 for our definition of the slope function because it works very well with the naked modeling functions. Here, "very well" means you can't easily see in the graph any deviation compared the the exact derivative. `r mark(2190)`
+In modeling work, there's nothing wrong with an approximation so long as it is good enough for your purposes. We picked the value 0.1 for our definition of the slope function because it works very well with the pattern-book functions. Here, "very well" means you can't easily see in the graph any deviation compared the the exact derivative. `r mark(2190)`
 
 When a calculation can be done exactly (without outrageous effort) it certainly makes sense to use the exact method. However:
 
 1. It's useful to have an easy, approximate method always at hand. This lets you check the results of other methods against the possibility of some blunder or mis-conception. The slope function approach to differentiation is certainly easy, and if you think the approximation isn't good enough, then instead of 0.1 use something smaller. (Chapter \@ref(evanescent-h) discusses how small is **too** small.)
 2. The computer makes it practical to employ the slope function as a useful approximation to the derivative. There are many other mathematical methods that the computer has made feasible, for instance the methods of ***machine learning***. These methods create functions that sometimes cannot be handled by the traditional ("exact") methods of differentiation.  `r mark(2195)`
 :::
-
-```{exercise name="check-h"}
-Put this in Chapter \@ref(evanescent-h).
-
-An exercise given a function $g(x)$ for which 0.1 isn't good enough. Vary $h$ by factors of 10 until a change by 10 doesn't make any discernable difference.
-```
 
 ## The slope-function operator
 
@@ -127,11 +119,7 @@ slice_plot(dx_sin(x, h = 0.00000000001) ~ x, domain(x=c(-5,5)), size=2) %>%
 ::: {.scaffolding}
 You can decide for yourself whether the red and black curves in Figure \@ref(fig:slope-quick-check) are similar enough for your purposes. Even better, do some exploring yourself in a `r sandbox_link()`. You'll have to copy and paste into your sandbox both the code defining `slopeFun()` and the graphics statements. Start by replacing `dx_sin(x, h=0.1)` by `dx_sin(x, h=0.0001)` `r mark(2210)`
 
-```{exercise name="h-too-small"}
-```
-<details>`r MC_counter$reset()` `r knitr::knit_child("Exercises/Diff/h-too-small.Rmd")`</details>
-
-
+`r insert_calcZ_exercise("XX.XX", "l2ksw", "Exercises/Diff/h-too-small.Rmd")`
 
 
 In practice, you won't need to use `slopeFun()`. You'll use `D()` instead, which gives the "exact" results whenever it can.
@@ -149,8 +137,10 @@ Let's look at one where we already know the result: The straight line function $
 $$\diff{x}\line(x) = \frac{a (x+h) + b - (a x + b)}{h} = \frac{ah}{h} = a$$
 The derivative is the slope function with $h$ made as small as possible. It's tempting to think of this as $h = 0$, but that would imply dividing by zero in the differencing operator. Being cautious about this, we write that differentiation is differencing with $h \rightarrow 0$, or `r mark(2220)`
 
-$$\partial_x \line(x) \equiv \lim_{h\rightarrow 0} \frac{\line(x+h) - 
-\line(x)}{h} = \lim_{h\rightarrow 0$ \frac{a h}{h} = a$$
+$$\partial_x \line(x) \equiv \lim_{h\rightarrow 0} \frac{\line(x+h) - \line(x)}{h} =\\
+\ \\
+= \lim_{h\rightarrow 0} \frac{a h}{h} = a$$
+
 This derivation is unarguably correct for any non-zero $h$. 
 
 This short derivation gives us a basic differentiation rule which we can divide into 3 special cases. 
@@ -215,7 +205,11 @@ Since $\lim_{h\rightarrow 0} (e^h-1)/h = 1$, we have
 
 Still another example: the reciprocal function, written equivalently as $1/x$ or $x^{-1}$
 
-$$\partial x^{-1} = \lim_{h\rightarrow 0}\frac{1/(x+h) - 1/x}{h} = \lim_{h\rightarrow 0}\frac{x - x+h}{x(x+h)h} = -\lim_{h\rightarrow 0}\frac{h}{x(x+h)h} = -\lim_{h\rightarrow 0}\frac{1}{x^2 + hx}$$
+$$\partial x^{-1} = \lim_{h\rightarrow 0}\frac{1/(x+h) - 1/x}{h} =\\
+\ \\
+= \lim_{h\rightarrow 0}\frac{x - x+h}{x(x+h)h} = -\lim_{h\rightarrow 0}\frac{h}{x(x+h)h} =\\
+\ \\
+= -\lim_{h\rightarrow 0}\frac{1}{x^2 + hx}$$
 So long as $x \neq 0$, there is no divide-by-zero problem, but let's see what the computer thinks:
 
 ```{r}
@@ -233,7 +227,7 @@ Setting $h$ to zero in the last expression gives another differentiation rule:
 
 * **Reciprocal rule**: $\partial_x \frac{1}{x} = -\frac{1}{x^2}$
 
-We'll save for later the derivation of the derivatives of the other naked modeling functions, but note that the hump function is **defined** to be the derivative of the sigmoidal function.
+We'll save for later the derivation of the derivatives of the other pattern-book functions, but note that the hump function is **defined** to be the derivative of the sigmoidal function.
 
 Name | $f(x)$ | $\partial_x f(x)$   | demonstrated already
 -----|---------------|------------------
@@ -242,9 +236,9 @@ logarithm   | $\ln(x)$  | $1/x$  | not yet
 sinusoid    | $\sin(x)$ | $\cos(x)$ | not yet
 square | $x^2$  | $2x$ | yes
 proportional | $x$   | $1$ | yes
-constant | | 0 | yes
+constant | 1  | 0 | yes
 reciprocal | $1/x$ or $x^{-1}$   | $-1/x^2$ | yes
-hump     |  $\dnorm(x)$           |  $-x \dnorm(x)$ | not yet
+hump     |  $\dnorm(x)$           |  $-x\, \dnorm(x)$ | not yet
 sigmoid  |  $\pnorm(x)$            |  $\dnorm(x)$ | by definition
 
 ::: {.todo}
@@ -253,8 +247,5 @@ When doing the basic modeling functions, show that the derivative of the cosine 
 Also, derive $\partial_x x^p = \partial_x e^{p\ln(x)} = e^{p\ln(x)} \times \frac{p}{x} = \frac{p}{x} x^p = p\, x^{p-1}$
 :::
 
-```{exercise, name="finch-trim-kayak"}
-Is this the right placement?
-```
-<details>`r MC_counter$reset()` `r knitr::knit_child("Exercises/Diff/finch-trim-kayak.Rmd")`</details>
+`r insert_calcZ_exercise("XX.XX", "ykels", "Exercises/Diff/finch-trim-kayak.Rmd")`
  
