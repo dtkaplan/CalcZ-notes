@@ -4,6 +4,12 @@ library(glue)
 library(math141Z) # REPLACE THIS WHEN PACKAGES ARE RE-ALIGNED
 library(CalcZapps)
 library(here) # for file locations
+library(thematic)
+
+# theme the plots to match the document
+thematic_rmd()
+ggplot2::theme_set(theme_bw(base_size = 16))
+
 
 knitr::opts_chunk$set(out.width="90%", fig.align="center")
 

@@ -68,7 +68,9 @@ Sometimes the words are used in everyday speech but the casual person isn't sure
 
 Still other words are best understood by those who learn calculus. "Concave up," "concave down", "approaching 0 asymptotically," "continuous", "discontinuous", "smooth", "having a minimum **at** ...," "having a minimum **of** ...", "approaching $\infty$ asymptotically," "having a vertical asymptote."
 
-To illustrate the patterns described by these phrases, consider the three pattern-book functions in Figure \@ref(fig:for-words):
+The next short sections describe five simple shape concepts: concavity, continuity, periodicity, asymptotes, and local extrema.
+
+I'll illustrate these concepts using three pattern-book functions graphed in Figure \@ref(for-words).
 
 ```{r for-words, echo=FALSE, out.width="50%", fig.show="hold", fig.cap="Three of the pattern-book functions: (a) exponential, (b) sinusoid, (c) power-law $x^{-1}$."}
 slice_plot(exp(x) ~ x, domain(x=c(-3,3))) %>%
@@ -77,23 +79,71 @@ slice_plot(sin(x) ~ x, domain(x=c(-5,5))) %>%
   gf_labs(title="(b) sinusoid")
 slice_plot(1/x ~ x, domain(x=c(.01, 1.25))) %>%
   slice_plot(1/x ~ x, domain(x=c(-1.25, -.01))) %>%
-  gf_labs(title="(c) power-law")
+  gf_labs(title="(c) power-law with negative exponent")
 ```
 
-* **Concave**
-    a. The exponential is ***concave up*** everywhere in its domain.
-    b. The sinusoid alternates back and forth between ***concave up*** and ***concave down***.
-    c. This particular power law $x^{-1}$ is ***concave up*** for $x > 0$ and ***concave down*** for $x < 0$.
-* **Continuous**
-    a. The exponential is continuous everywhere in its domain.
-    b. The sinusoid is continuous everywhere in its domain.
-    c. The power law $x^{-1}$ is discontinuous at $x = 0$
-* **Periodic**. Only the sinusoid is periodic, that is, repeating the same shape over and over again.
-* **Asymptote**. 
+## Concavity
+
+The slope of a function at a given input tells how fast the function output is increasing or decreasing as the input changes slightly. Slope is about how output change.
+
+***Concavity*** is about how slope changes. For instance, a function might be growing slowly in some region of the domain and then gradually shift to larger growth in an adjacent region. Or, a function might be decaying steeply and then gradually shift to a slower decay. Both of these are instances of ***positive concavity***. The opposite pattern of change in slope is called ***negative concavity***. If the slope doesn't change at all---only straight-line functions are this way--- the concavity is zero.
+
+Concavity has a very clear appearance in a function graph. If a function is positive concave in a region, the graph looks like a smile. Negative concavity looks like a frown. Zero concavity is a straight line.
+
+Referring to the three function examples in Figure \@ref(fig:for-words) ...
+
+a. The exponential is ***concave up*** everywhere in its domain.
+b. The sinusoid alternates back and forth between ***concave up*** and ***concave down***.
+c. This particular power law $x^{-1}$ is ***concave up*** for $x > 0$ and ***concave down*** for $x < 0$.
+    
+## Continuity
+
+A function is ***continuous*** if you can trace out the graph of the function without lifting your finger from the page. All of the pattern-law functions are continuous except for the reciprocal function and the power law functions with negative exponents (of which the reciprocal is one example: $1/x = x^{-1}$.)
+
+Consider the power-law function graphed in Figure \@ref(fig:for-words). This is continuous almost everywhere. There's just one input where the continuity fails, $x=0$. For inputs $x < 0$, the function is negative. For inputs $0 < x$, the function is positive. A continuous function whose value switches from positive to negative must, at some input value, be zero. But the function $1/x$ is not zero at $x=0$; it is undefined. In other words, $1/x$ is discontinuous at $x=0$,
+    
+## Periodic
+
+A phenomenon is ***periodic*** if it repeats the same pattern over and over again. The pattern that is repeated is called a **cycle**; the periodic function as a whole is one cycle placed next to the previous one and so forth. The day-night cycle is an example of a periodic process, as is the march of the seasons. The ***period*** is the duration of one complete cycle; the period of the day-night cycle is 24 hours, the period of the seasonal progression is 1 year. 
+
+Real-world periodic phenomena often show some slight variation from one cycle to the next. 
+Of the pattern-book functions, only the sinusoid is periodic. And it is exactly periodic, repeating exactly the same cycle over and over again. The period---that is, the length of an input interval that contains exactly one cycle---has a value of $2\pi$ for the pattern-book sinusoid. When used to model a periodic phenomenon, the model function needs to be tailored to match the period of the phenomena.
+
+The idea of representing with sinusoids phenomena that are almost but not exactly periodic, for instance a communications signal or a vibration, is fundamental to to many areas of physics and engineering.
+
+## Asymptotic behavior
+
+***Asymptotic*** refers to two possible situations:
+
+1. When the **input** to a function gets bigger and bigger in size, going to $\infty$ or $-\infty$. If, as the input changes in this way the output gets closer and closer to a specific value, the function is said to have a ***horizontal asymptote*** of that value.
+
+An example in Figure \@ref(fig:for-words) is the exponential function. As $x \rightarrow -\infty$, that is, as $x$ goes more and more to the left of the domain, the output tends asymptotically to zero.
+
+2. When the **output** of a function gets bigger and bigger in size, going to $\infty$ or $-\infty$ without the input doing likewise. The visual appearance on a graph is like a sky-rocket: the output changes tremendously fast even though the input changes only a little.  This is called a ***vertical asymptote***. The power-law function $x^{-1}$ has a ***vertical asymptote*** of $\infty$ as $x \rightarrow 0$ from the right, and another vertical asymptote of $-\infty$ as $x \rightarrow 0$ from the left. 
+
+Several of the pattern-book functions have horizontal or vertical asymptotes or both. For instance, the function $x^{-1}$ has a horizontal asymptote of zero for both $x \rightarrow \infty$ and $x \rightarrow -\infty$.
+
+The sinusoid has neither a vertical nor a horizontal asymptote. As input $x$ increases either to $-\infty$ or $\infty$, the output of the sinusoid continues to oscillate, never settling down to a single value. And, of course, the output of the sinusoid is everywhere $-1 \leq \sin(x) \leq 1$, so there is no possibility for a vertical asymptote.
+
+* ***Asymptote*** 
     a. The exponential has a ***horizontal asymptote*** of zero as $x \rightarrow -\infty$
     b. The sinusoid has neither a vertical nor a horizontal asymptote.
     c. The power law $x^{-1}$ has a ***vertical asymptote*** of $\infty$ as $x \rightarrow 0$ from the right, and of $-\infty$ as $x \rightarrow 0$ from the left. 
-* **Maximum**. Only the sinusoid has a maximum, that is, an input for which the output is larger than for any other nearby input. The sinusoid similarly has a minimum.
+
+## Locally extreme points
+
+Many continous functions have a region of the input domain where the output is gradually growing, then reaches a peak, then gradually diminishes. This is called a ***local maximum***. "Maximum" because the output reaches a peak at a particular input, "local" because in the neighborhood of the peak the function output is smaller than at the peak.
+
+Likewise, functions can have a ***local minimum***: the bottom of a bowl rather than the top of a peak.
+
+Of these three pattern-book functions in Figure \@ref(fig:for-words), only the sinusoid has a local maximum, and, being periodic, it repeats that every cycle. The sinusoid similarly has a local minimum in every cycle..
+
+Many modeling applications involve finding an input where the function output is maximized. Such an input is called an ***argmax***. "Argument" is a synonym for "input" in mathematical and computer functions, so "argmax" refers to the input at which the function reaches a maximum output. For instance, businesses attempt to set prices to maximize profit. At too low a price, sales are good but income is low. At too high a price, sales are too low to bring in much income. There's a sweet spot in the middle. 
+
+Other modeling applications involve finding an ***argmin***, the input for which the output is minimized. For instance, aircraft have a speed at which fuel consumption is at a minimum for the distance travelled. All other things being equal, it's best to operate at this speed.
+
+The process of finding an argmin or an argmax is called ***optimization***. And since maxima and minima are very much the same mathematically, collectively they are called ***extrema***.
+
 
 
 ## Computer function names
@@ -116,9 +166,9 @@ If you are interested in these things, three concepts from computing may help yo
 - ***Infix notation*** For functions with two inputs, computing languages often support a different arrangement of the function name and the inputs where the name comes between the arguments. You've seen this in parts of traditional arithmetic notation, for instance, $3 + 5$ or $8/2$. Infix notation is sometimes used in place of functional notation as in `3^2` or `x^3`. 
 - ***Markup notation*** You are undoubtedly familar with word processing and, particularly, a style of word processing called What-you-see-is-what-you-get (WYSIWYG). In WYSIWYG, you can enter plain text just using the keyboard, but if you want to make something **boldface** or **italics**, you use the mouse to select the text involved and select a style from a menu. Typically, WYSIWYG mathematical content involves a similar mouse-based process. In contrast, in mainstream computer languages, the mouse is not needed at all. The computer commands are constructed from plain, linear sequences of letters and other characters. 
 
-    Computer programmers helpfully observed that the word-processing process can be constructed as simple plain text input to computer program that interprets the input in well-defined ways and carries out ***typesetting***. To illustrate, consider the next couple of lines. The first shows an ordinary looking word-processor formatted sentence. The second shows the way this was encoded so that a typesetter can produce the formatted content. `r mark(460)`
+Computer programmers helpfully observed that the word-processing process can be constructed as simple plain text input to computer program that interprets the input in well-defined ways and carries out ***typesetting***. To illustrate, consider the next couple of lines. The first shows an ordinary looking word-processor formatted sentence. The second shows the way this was encoded so that a typesetter can produce the formatted content. `r mark(460)`
     
-    > $e^x$, $\sqrt{x^2}$ and $\int_0^\infty \frac{1}{x^2} dx$ are examples of *traditional* notation.^[A footnote]
+> $e^x$, $\sqrt{x^2}$ and $\int_0^\infty \frac{1}{x^2} dx$ are examples of *traditional* notation.^[A footnote]
     
     > `$e^x$, $\sqrt{x^2}$ and $\int_0^\infty \frac{1}{x^2} dx$ are examples of *traditional* notation.^[A footnote]`
 
