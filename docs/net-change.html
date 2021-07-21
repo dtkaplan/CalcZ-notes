@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>Chapter 28 Accumulation as net change | CalcZ Student Notes</title>
+<meta name="author" content="Daniel Kaplan">
+<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.2"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/header-attrs-2.8/header-attrs.js"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.2.5.1/tabs.js"></script><script src="libs/bs3compat-0.2.5.1/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="libs/kePrint-0.0.1/kePrint.js"></script><link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet">
+<script src="libs/htmlwidgets-1.5.3/htmlwidgets.js"></script><script src="libs/plotly-binding-4.9.4/plotly.js"></script><script src="libs/typedarray-0.1/typedarray.min.js"></script><link href="libs/crosstalk-1.1.1/css/crosstalk.css" rel="stylesheet">
+<script src="libs/crosstalk-1.1.1/js/crosstalk.min.js"></script><link href="libs/plotly-htmlwidgets-css-1.57.1/plotly-htmlwidgets.css" rel="stylesheet">
+<script src="libs/plotly-main-1.57.1/plotly-latest.min.js"></script><link href="libs/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet">
+<script src="libs/datatables-binding-0.18/datatables.js"></script><link href="libs/dt-core-1.10.20/css/jquery.dataTables.min.css" rel="stylesheet">
+<link href="libs/dt-core-1.10.20/css/jquery.dataTables.extra.css" rel="stylesheet">
+<script src="libs/dt-core-1.10.20/js/jquery.dataTables.min.js"></script><script type="text/x-mathjax-config">
+    const popovers = document.querySelectorAll('a.footnote-ref[data-toggle="popover"]');
+    for (let popover of popovers){
+      const div = document.createElement('div');
+      div.setAttribute('style', 'position: absolute; top: 0, left:0; width:0, height:0, overflow: hidden; visibility: hidden;');
+      div.innerHTML = popover.getAttribute('data-content');
+      
+      // Will this work with TeX on its own line?
+      var has_math = div.querySelector("span.math");
+      if (has_math) {
+        document.body.appendChild(div);
+      	MathJax.Hub.Queue(["Typeset", MathJax.Hub, div]);
+      	MathJax.Hub.Queue(function(){
+          popover.setAttribute('data-content', div.innerHTML);
+      	})
+      }
+    }
+    </script>
+</head>
+<body>
+<span class="math inline">
+    \(\newcommand{\line}{\text{line}}
+    \newcommand{\hump}{\text{hump}}
+    \newcommand{\sigmoid}{\text{sigmoid}}
+    \newcommand{\recip}{\text{recip}}
+    \newcommand{\diff}[1]{{\cal D}_#1}
+    \newcommand{\pnorm}{\text{pnorm}}
+    \newcommand{\dnorm}{\text{dnorm}}\)
+    </span>
+
+    <!-- see https://www.homepages.ucl.ac.uk/~ucahmto/elearning/2019/09/14/bookdown.html-->
+    <script src="https://cdn.jsdelivr.net/autocomplete.js/0/autocomplete.jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/mark.js@8.11.1/dist/mark.min.js"></script><!-- CSS --><link rel="stylesheet" href="css/CalcZ-style.css">
+<div class="container-fluid">
+<div class="row">
+  <header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
+
+    <div class="d-flex align-items-start justify-content-between">
+      <h1>
+        <a href="index.html" title="">CalcZ Student Notes</a>
+      </h1>
+      <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
+    </div>
+
+    <div id="main-nav" class="collapse-lg">
+      <form role="search">
+        <input id="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
+</form>
+
+      <nav aria-label="Table of contents"><h2>Table of contents</h2>
+        <ul class="book-toc list-unstyled">
+<li><a class="" href="index.html">Welcome to calculus</a></li>
+<li class="book-part">Block 1: Functions and quantity</li>
+<li><a class="" href="outline-of-block-1.html">Outline of Block 1</a></li>
+<li><a class="" href="change.html"><span class="header-section-number">1</span> Change</a></li>
+<li><a class="" href="pattern-book.html"><span class="header-section-number">2</span> Modeling functions</a></li>
+<li><a class="" href="structure-of-a-function.html"><span class="header-section-number">3</span> Structure of a function</a></li>
+<li><a class="" href="fun-describing.html"><span class="header-section-number">4</span> Describing functions</a></li>
+<li><a class="" href="fun-notation.html"><span class="header-section-number">5</span> Notation for functions</a></li>
+<li><a class="" href="graphs-and-graphics.html"><span class="header-section-number">6</span> Graphics &amp; function graphs</a></li>
+<li><a class="" href="params-intro.html"><span class="header-section-number">7</span> Parameters for functions</a></li>
+<li><a class="" href="fun-slopes.html"><span class="header-section-number">8</span> Slope function</a></li>
+<li><a class="" href="function-inverses-and-solving.html"><span class="header-section-number">9</span> Function inverses and “solving”</a></li>
+<li><a class="" href="fun-assembling.html"><span class="header-section-number">10</span> Assembling functions</a></li>
+<li><a class="" href="fun-multiple-inputs.html"><span class="header-section-number">11</span> Functions with multiple inputs</a></li>
+<li><a class="" href="fun-piecewise.html"><span class="header-section-number">12</span> Piecewise functions</a></li>
+<li><a class="" href="modeling-cycle.html"><span class="header-section-number">13</span> Modeling cycle</a></li>
+<li><a class="" href="magnitudes.html"><span class="header-section-number">14</span> Magnitudes</a></li>
+<li><a class="" href="dimensions.html"><span class="header-section-number">15</span> Dimensions</a></li>
+<li class="book-part">Block 2: Differentiation</li>
+<li><a class="" href="outline-of-block-2.html">Outline of Block 2</a></li>
+<li><a class="" href="change-relationships.html"><span class="header-section-number">16</span> Change relationships</a></li>
+<li><a class="" href="computing-derivs.html"><span class="header-section-number">17</span> Computing derivatives</a></li>
+<li><a class="" href="convexity-and-curvature.html"><span class="header-section-number">18</span> Convexity and curvature</a></li>
+<li><a class="" href="cont-and-smooth.html"><span class="header-section-number">19</span> Continuity and smoothness</a></li>
+<li><a class="" href="evanescent-h.html"><span class="header-section-number">20</span> Evanescent h</a></li>
+<li><a class="" href="prod-comp-rules.html"><span class="header-section-number">21</span> Differentiation of assembled functions</a></li>
+<li><a class="" href="optim-and-shape.html"><span class="header-section-number">22</span> Optimization</a></li>
+<li><a class="" href="partial-change.html"><span class="header-section-number">23</span> Partial change</a></li>
+<li><a class="" href="local-approximations.html"><span class="header-section-number">24</span> Local approximations</a></li>
+<li><a class="" href="approximation-near-a-reference-input.html"><span class="header-section-number">25</span> Approximation near a reference input</a></li>
+<li class="book-part">Block 3: Accumulation</li>
+<li><a class="" href="outline-of-block-3.html">Outline of Block 3</a></li>
+<li><a class="" href="change-accumulation.html"><span class="header-section-number">26</span> Change and accumulation</a></li>
+<li><a class="" href="iteration-and-accumulation.html"><span class="header-section-number">27</span> Iteration and accumulation</a></li>
+<li><a class="active" href="net-change.html"><span class="header-section-number">28</span> Accumulation as net change</a></li>
+<li><a class="" href="integration.html"><span class="header-section-number">29</span> Integration</a></li>
+<li><a class="" href="accum-advanced-algebra.html"><span class="header-section-number">30</span> Advanced algebraic methods</a></li>
+<li><a class="" href="antidiff-review.html"><span class="header-section-number">31</span> Review of anti-differentiation methods</a></li>
+</ul>
+
+        <div class="book-extra">
+          <p><a id="book-repo" href="https://github.com/dtkaplan/CalcZ-notes">View book source <i class="fab fa-github"></i></a></p>
+        </div>
+      </nav>
+</div>
+  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="net-change" class="section level1" number="28">
+<h1>
+<span class="header-section-number">28</span> Accumulation as net change<a class="anchor" aria-label="anchor" href="#net-change"><i class="fas fa-link"></i></a>
+</h1>
+<p>The derivative function <span class="math inline">\(\partial_t F(t)\)</span> tells us, for any input <span class="math inline">\(t\)</span>, what was the <strong><em>instantaneous rate of change</em></strong> of some mother function <span class="math inline">\(F(t)\)</span>. Suppose <span class="math inline">\(F(t)\)</span> is the position of a car along a city street, perhaps measured in miles from a marked starting point. The car, slowing down, stopping, and speeding up in traffic, has a velocity (instantaneous rate of change of position) that changes in time, so <span class="math inline">\(\partial_t F(t)\)</span> will have different outputs for different values of the input <span class="math inline">\(t\)</span>. <span style="float: right; padding-left: 50px;"><a name="3500" href="#3500"><img src="www/icons8-signpost.png" title="Location: 3500" width="12px"></a><span style="color: red; font-size: 6pt;">3500</span></span></p>
+<p>By accumulating <span class="math inline">\(\partial_t F(t)\)</span>, that is, by anti-differentiation, we recover <span class="math inline">\(F(t)\)</span>. The value of <span class="math inline">\(F(t)\)</span> at any <span class="math inline">\(t\)</span> tells us the amount of distance covered by the car since … well, since when? Since the beginning of the month? Since the morning? Since the car was first manufactured? Any of these questions might be legitimate for some purpose or another, but we need to be careful about using <span class="math inline">\(F(t)\)</span> to make sure that the result we get answers the question that’s relevant. So after we’ve built <span class="math inline">\(F(t)\)</span>, we need to be specific about the answer to “Starting from where?” <span style="float: right; padding-left: 50px;"><a name="3505" href="#3505"><img src="www/icons8-signpost.png" title="Location: 3505" width="12px"></a><span style="color: red; font-size: 6pt;">3505</span></span></p>
+<p>An important way in which the anti-derivative is used involves specifying the “Starting from where?” input. Let’s call this <span class="math inline">\(t_a\)</span>. Perhaps our interest in accumulating the velocity is to know how far we’ve traveled since starting on the present trip. So set <span class="math inline">\(t_a\)</span> to be the start time. <span style="float: right; padding-left: 50px;"><a name="3510" href="#3510"><img src="www/icons8-signpost.png" title="Location: 3510" width="12px"></a><span style="color: red; font-size: 6pt;">3510</span></span></p>
+<p>The word “net” has several meanings, including a means of fishing or trapping butterflies. Here, our use of “net” reflects the usage in <strong>accounting</strong>. The net of a quantity is that quantity minus some deduction. Without taking into account the deduction, the quantity is called a “gross” quantity. For instance, you can find the gross weight of a bottle of pickles by putting the sealed bottle on a scale. The resulting gross quantity might be important to a trucker who has to carry a load of 10,000 such bottles. But to the consumer, the weight of the pickles themselves is what matters. So from the gross weight subtract the weight of the brine and of the glass in the bottle. This gives the <strong><em>net</em></strong> weight. <span style="float: right; padding-left: 50px;"><a name="3515" href="#3515"><img src="www/icons8-signpost.png" title="Location: 3515" width="12px"></a><span style="color: red; font-size: 6pt;">3515</span></span></p>
+<div class="figure" style="text-align: center">
+<span id="fig:unnamed-chunk-162"></span>
+<img src="www/pickle-label.jpg" alt="32 ounces of pickles (net) come in a package with a larger gross weight that includes the brine and bottle." width="60%"><p class="caption">
+Figure 28.1: 32 ounces of pickles (net) come in a package with a larger gross weight that includes the brine and bottle.
+</p>
+</div>
+<p>The position at <span class="math inline">\(t_a\)</span> can be written as the accumulation up to <span class="math inline">\(F(t_a)\)</span>. The <strong>net</strong> distance traveled up to time <span class="math inline">\(t\)</span> is then the difference <span class="math display">\[F(t) - F(t_a)\]</span> our position now at time <span class="math inline">\(t\)</span> minus our starting position. <span style="float: right; padding-left: 50px;"><a name="3520" href="#3520"><img src="www/icons8-signpost.png" title="Location: 3520" width="12px"></a><span style="color: red; font-size: 6pt;">3520</span></span></p>
+<p>As it happens, every car has a feature to display the anti-derivative of the velocity evaluated at the current time. The speedometer reads off the instantaneous velocity; the anti-derivative is shown on the odometer. You’re about to set out on a trip and want to keep track of how far you’ve gone. So you look at the odometer at the start and write that down. Later in your trip, to know how far you’ve gone, read the odometer again and subtract the value you wrote down at the start. <span class="math inline">\(F(t) - F(t_a)\)</span>. <span style="float: right; padding-left: 50px;"><a name="3525" href="#3525"><img src="www/icons8-signpost.png" title="Location: 3525" width="12px"></a><span style="color: red; font-size: 6pt;">3525</span></span></p>
+<details><summary><strong>Exercise XX.XX</strong>: <span><a name="File:%20Exercises/Accum/Glorias-family.Rmd" href="#ELSLE"><img src="www/icons8-signpost.png" title="Location: Exercises/Accum/Glorias-family.Rmd" width="12px"></a><span style="color: red; font-size: 9pt;">ELSLE</span>
+</span></summary><p>We have developed a notation that relates a function <span class="math inline">\(f(x)\)</span> to two other functions:</p>
+<ol style="list-style-type: decimal">
+<li>The <em>derivative</em> of <span class="math inline">\(f(x)\)</span> with respect to <span class="math inline">\(x\)</span>, denoted <span class="math inline">\(\partial_x f(x)\)</span>.</li>
+<li>The *anti-derivative of <span class="math inline">\(f(x)\)</span> with respect to <span class="math inline">\(x\)</span>, denoted <span class="math inline">\(\int f(x) dx\)</span>.</li>
+</ol>
+<p>There is a longer chain of derivatives and anti-derivatives of <span class="math inline">\(g(x)\)</span>:</p>
+<p><span class="math display">\[\ldots,\  \partial_{xxx} g(x), \ \ \partial_{xx} g(x), \ \ \partial_x g(x),\ \ g(x), \ \ \int g(x)dx, \ \ \int\! \int g(x) dxdx, \ \ \ldots\]</span>
+Pick one of these functions as a reference point and imagine that it is a person. The operation of differentiation is analogous to giving birth, that is, it produces another person, the child. Giving birth moves you to the left on the chain. Anti-differentiation moves you to the right. If <span class="math inline">\(g(x)\)</span> is Gloria, then <span class="math inline">\(\partial_x g(x)\)</span> is Gloria’s child and <span class="math inline">\(\partial_{xx}\! g(x)\)</span> is Gloria’s child’s child, in other words, Gloria’s grandchild.</p>
+<p>To illustrate: suppose “Gloria” is <span class="math inline">\(g(x)\equiv x^2\)</span>. Here are the successive generations of Gloria’s family:</p>
+<table class="table table-sm">
+<thead><tr class="header">
+<th>Function</th>
+<th>Using <span class="math inline">\(\int\)</span> and <span class="math inline">\(\partial_x\)</span>
+</th>
+<th>Family connection</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td><span class="math inline">\(x^4 / 12\)</span></td>
+<td><span class="math inline">\(\int\! \int g(x) dx dx\)</span></td>
+<td>Gloria’s grandparent</td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(x^3 / 3\)</span></td>
+<td><span class="math inline">\(\int g(x) dx\)</span></td>
+<td>Gloria’s parent</td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(x^2\)</span></td>
+<td><span class="math inline">\(g(x)\)</span></td>
+<td>Gloria</td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(2 x\)</span></td>
+<td><span class="math inline">\(\partial_x g(x)\)</span></td>
+<td>Gloria’s child</td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(2\)</span></td>
+<td><span class="math inline">\(\partial_{xx} g(x)\)</span></td>
+<td>Gloria’s grandchild</td>
+</tr>
+</tbody>
+</table>
+<p><span class="math inline">\(G(x) = \int g(x)dx\)</span> is Gloria’s mother. If we apply the give-birth-to operator to Gloria’s mother, who is produced? Gloria! In other words, <span class="math display">\[\partial_x\! \int g(x) dx = g(x)\]</span>
+Gloria’s mother giving birth produces Gloria. (Mothers can give birth to multiple children and that breaks the analogy to differentiation. Differentiation is like giving birth if a mother can have only one child.)</p>
+<p><strong>Question A</strong> Suppose that Gloria is <span class="math inline">\(g(x) \equiv e^{(-2x + 3)}\)</span>. Which one of these is Gloria’s parent?</p>
+<ol style="list-style-type: lower-roman">
+<li>
+<span class="math inline">\(-2 e^{(-2x + 3)}\)</span><span class="mcanswer"> ︎✘ This is Gloria’s child. </span><br>
+</li>
+<li>
+<span class="math inline">\(4 e^{(-2x + 3)}\)</span><span class="mcanswer"> ︎✘ This is Gloria’s grandchild. </span><br>
+</li>
+<li>
+<span class="math inline">\(-\frac{1}{2} e^{(-2x + 3)}\)</span><span class="mcanswer"> ✔︎ </span><br>
+</li>
+<li>
+<span class="math inline">\(\frac{1}{4} e^{(-2x + 3)}\)</span><span class="mcanswer"> ︎✘ This is Gloria’s grandmother. </span><br>
+</li>
+<li>
+<span class="math inline">\(\frac{1}{4} e^{(3 x - 2)}\)</span><span class="mcanswer"> ︎✘ The characteristic trait of Gloria, her ancestors and her descendents is <span class="math inline">\(e^{(-2x +3)}\)</span>. We can’t place this person anywhere in Gloria’s family line. </span><br>
+</li>
+<li>
+<span class="math inline">\(4 x^3\)</span><span class="mcanswer"> ︎✘ This person is from an entirely different tribe than Gloria. </span>
+</li>
+</ol>
+<p><strong>Question B</strong> Suppose Susan is <span class="math inline">\(s(t) = 4 \sin(4 t - 7)\)</span>. Which of these is Susan’s grandparent?</p>
+<ol style="list-style-type: lower-roman">
+<li>
+<span class="math inline">\(-\frac{1}{4} \sin(4 t - 7)\)</span><span class="mcanswer"> ✔︎ </span><br>
+</li>
+<li>
+<span class="math inline">\(-\frac{1}{16} \cos(4 t - 7)\)</span><span class="mcanswer"> ︎✘ Don’t forget that the 4 in <span class="math inline">\(4\sin()\)</span> is part of who Susan is. </span><br>
+</li>
+<li>
+<span class="math inline">\(16 \cos(4 t + 7)\)</span><span class="mcanswer"> ︎✘ Susan’s child </span><br>
+</li>
+<li>
+<span class="math inline">\(-64 \sin(4 t - 7)\)</span><span class="mcanswer"> ︎✘ Susan’s grandchild. </span><br>
+</li>
+<li>
+<span class="math inline">\(\sin(4 t - 7)\)</span><span class="mcanswer"> ︎✘ Not in Susan’s line, even though a family similarity is evident. </span>
+</li>
+</ol></details>
+</div>
+  <div class="chapter-nav">
+<div class="prev"><a href="iteration-and-accumulation.html"><span class="header-section-number">27</span> Iteration and accumulation</a></div>
+<div class="next"><a href="integration.html"><span class="header-section-number">29</span> Integration</a></div>
+</div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
+    <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
+      <ul class="nav navbar-nav"><li><a class="nav-link" href="#net-change"><span class="header-section-number">28</span> Accumulation as net change</a></li></ul>
+
+      <div class="book-extra">
+        <ul class="list-unstyled">
+<li><a id="book-source" href="https://github.com/dtkaplan/CalcZ-notes/blob/master/Accum-net-change.Rmd">View source <i class="fab fa-github"></i></a></li>
+          <li><a id="book-edit" href="https://github.com/dtkaplan/CalcZ-notes/edit/master/Accum-net-change.Rmd">Edit this page <i class="fab fa-github"></i></a></li>
+        </ul>
+</div>
+    </nav>
+</div>
+
+</div>
+</div> <!-- .container -->
+
+<footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>"<strong>CalcZ Student Notes</strong>" was written by Daniel Kaplan. It was last built on 2021-07-21.</p>
+  </div>
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
+  </div>
+
+</div></div>
+</footer><!-- dynamically load mathjax for compatibility with self-contained --><script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+</html>
