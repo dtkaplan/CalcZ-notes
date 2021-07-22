@@ -151,7 +151,7 @@ Invertible or not, it is a common procedure for working with functions to find *
 
 We can draw graphs of functions with two inputs. Now the points need to be marked in a 3-dimensional space: one axis for each of the two inputs and another axis for the output. Like this: `r mark(760)`
 
-```{r fun-1b-1.2, echo=FALSE, fig.cap="A graph of a function of two inputs is a surface."}
+```{r fun-1b-1-2, echo=FALSE, fig.cap="A graph of a function of two inputs is a surface."}
 f2 <- rfun( ~ input_1 + input_2, seed=932)
 interactive_plot(f2(input_1, input_2) ~ input_1 + input_2,
                  domain(input_1=c(-5, 5), input_2 = c(0, 4)))
@@ -161,23 +161,17 @@ It is very hard to read a graph of a function with two inputs. Think of the grap
 
 ## Contour plots
 
-::: {.objectives latex-data=""}
-
-```{r echo=FALSE, results="asis"}
-state_objective("F-21", "Interpret a contour plot of a function of two input variables, to include estimating function values and locations of peaks and valleys.")
-```
-:::
 
 A mathematical graph is just one way to draw a picture of a function with two inputs. There are other ways. One helpful mode of picture is called a ***contour plot***, familiar to many non-mathematicians in the form of topgraphical maps showing landscape elevation as a function of latitude and longitude. Here's a contour plot of the same function shown in the previous graph: `r mark(770)`
 
-```{r Fig-1b-2.1, echo=FALSE, fig.cap="A contour plot displays the surface in the same manner as a topographical map shows the terrain."}
+```{r Fig-1b-2.1, echo=FALSE, fig.cap="A contour plot displays the surface in the same manner as a topographical map shows the terrain. This contour plot is a topographical map of the mathematical graph in Figure \\@ref(fig:fun-1b-1-2)."}
 f2 <- rfun( ~ input_1 + input_2, seed=932)
 contour_plot(f2(input_1, input_2) ~ input_1 + input_2,
                  domain(input_1=c(-5, 5), input_2 = c(0, 4)),
              skip=0)
 ```
 
-This contour plot is a topographical map of the mathematical graph in Figure \@ref(fig:fun-1b-1.2)
+
 
 It may take some practice to learn to read contour plots fluently but it is a skill that's worthwhile to have. Note that the graphics frame is the Cartesian space of the two inputs. The output is presented as ***contour lines***. Each contour line has a label giving the numerical value of the function output. Each of the input value pairs on a given contour line corresponds to an output at the level labeling that contour line. To find the output for an input pair that is *not* on a contour line, you ***interpolate*** between the contours on either side of that point.
 
@@ -187,21 +181,23 @@ Often, the specific numerical value at a point is not of primary interest. Inste
 
 Another common task for interpreting contour plots is to locate the input pair that's at a local high point or low point: the top of a hill or the bottom of a hollow. Such points are called ***local argmax*** or ***local argmin*** respectively. The *output* of the function at a local argmax is called the ***local maximum***; similarly for a local argmin, where the output is called a ***local minimum***. (The word "argmax" is a contraction of "argument of the maximum." We will tend to use the word "input" instead of "argument", but it means exactly the same thing to say "the inputs to a function" as to says "the arguments of a function.")
 
-Still other common tasks for reading contour plots are to start at a given input pair and figure out 1) the direction to move which is most steeply uphill, or 2) the direction to move which will keep the function output the same. `r mark(780)`
+::: {.takenote}
+Here are some additional tasks which you should learn to perform at a glance when reading a contour plot:
 
-It can be helpful to look at a contour map and interpret the contours as representing geographical features: hills, valleys, crests, coves, hollows, and so on.
+1. Start at a given input pair and determine two directions:
 
-Then, for (Fun-1c) translate between a contour plot and a graph of a function with one input. (We can think about this as a function of two inputs, where we hold one of the inputs constant, that is, always the same. )
+    a.  the direction to move which is most steeply uphill, 
+    b. the direction to move which will keep the function output the same. 
+    
+2. Translate a small region of a contour plot into the word for a corresponding geographical feature with that topology: hills, valleys, crests, coves, hollows, and so on.
+
+:::
+
+`r insert_calcZ_exercise("6.1", "dB1r5F", "Exercises/Fun/spider-tear-plant.Rmd")`
 
 ## Slice plots
 
-::: {.objectives data-latex=""}
-```{r echo=FALSE, results="asis"}
-state_objective("F-23", "Know what is meant by a slice of function of two variables.  Be able to determine if a function is increasing, decreasing, or constant when moving horizontally or vertically on the contour plot.")
-```
-:::
-
-As mentioned before, ***mathematical modeling*** is the process of constructing mathematical representations of situations or phenomena of interest. In CalcZ, we are primarily interested in using ***functions*** as such representations.
+As mentioned before, ***mathematical modeling*** is the process of constructing mathematical representations of situations or phenomena of interest. In CalcZ, we are primarily interested in using ***functions*** as such representations. `r mark(780)`
 
 Almost always, when mathematically modeling a real-world situation or phenomenon, we do not try to capture every nuance of every relationship that might exist in the real world. We leave some things out. Such simplifications make modeling problems tractable and encourage us to identify the most important features of the most important relationships.
 
@@ -211,7 +207,7 @@ In this spirit, it's useful always to assume that our models are leaving somethi
 
 To illustrate this, suppose that we have a "more complete model" in the form of a function of two inputs, as shown in the contour plot below.
 
-```{r (Fig-1c.1), echo=FALSE}
+```{r Fig-1c1, echo=FALSE}
 f2 <- rfun( ~ input_1 + input_2, seed=96)
 contour_plot(f2(input_1, input_2) ~ input_1 + input_2,
                  domain(input_1=c(-5, 5), input_2 = c(0, 4)),
@@ -222,9 +218,9 @@ As you become practiced reading contour plots, you might prefer to read this one
 
 The most common forms of ***slice*** involve constructing a simpler function that has one input but not the other. For example, our simpler function might ignore input #2. There are different ways of collapsing the function of two inputs into a function of one input. An especially useful way in calculus is to take the two-input function and set one of the inputs to a ***constant value***.
 
-For instance, suppose we set input #2 to the constant value 1.5. This means that we can consider any value of input #1, but input #2 has been replaced by 1.5. In Figure Fig-1c.2, we've marked in red the points in the contour plot that give the output of the simplified function. `r mark(795)`
+For instance, suppose we set input #2 to the constant value 1.5. This means that we can consider any value of input #1, but input #2 has been replaced by 1.5. In Figure \@ref(fig:Fig-1c2), we've marked in red the points in the contour plot that give the output of the simplified function. `r mark(795)`
 
-```{r (Fig-1c.2), echo=FALSE, out.width="50%", fig.show="hold", warning=FALSE}
+```{r Fig-1c2, echo=FALSE, out.width="50%", fig.show="hold", warning=FALSE}
 f2 <- rfun( ~ input_1 + input_2, seed=96)
 contour_plot(f2(input_1, input_2) ~ input_1 + input_2,
                  domain(input_1=c(-5, 5), input_2 = c(0, 4)),
@@ -239,7 +235,7 @@ Each point along the red line corresponds to a specific value of input #1. From 
 
 Slices can be taken in any direction or even along a curved path! The blue line below the slice constructed by letting input #2 vary and holding input #1 and the constant value 0.
 
-```{r (Fig-1c.3), echo=FALSE, out.width="50%", fig.show="hold", warning=FALSE}
+```{r Fig-1c3, echo=FALSE, out.width="50%", fig.show="hold", warning=FALSE}
 contour_plot(f2(input_1, input_2) ~ input_1 + input_2,
                  domain(input_1=c(-5, 5), input_2 = c(0, 4)),
              skip=0) %>%
@@ -249,15 +245,9 @@ slice_plot(f2(input_1 = 0 , input_2) ~ input_2, domain(input_2=c(0, 5))) %>%
   gf_labs(title="Graph of function output versus input 2")
 ```
 
-::: {.todo}
-Austin has a `surface_plot_with_contours()` function. Add that in to mosaicCalc.
-:::
 
+`r insert_calcZ_exercise(6.2, "drawing", "Exercises/Fun/drawing.Rmd")`
 
-
-`r insert_calcZ_exercise(6.3, "drawing", exercise_file("03", "drawing.Rmd"))`
-
-
-`r insert_calcZ_exercise(6.8, "daylength", "Exercises/Fun/length-of-day.Rmd")`
+`r insert_calcZ_exercise(6.3, "daylength", "Exercises/Fun/length-of-day.Rmd")`
 
 
