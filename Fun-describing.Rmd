@@ -31,7 +31,7 @@ All the pattern-book functions have just a single input. You can draw graphs of 
 
 The tilde expression and the graphics domain specifier are the two arguments to `slice_plot()`. All of these are correct commands for drawing a graph:
 
-```{r}
+```{r warning=FALSE}
 slice_plot(sin(t) ~ t, domain(t=c(-5,5)))
 slice_plot(exp(x) ~ x, domain(x=c(-3,2)))
 slice_plot(log(z) ~ z, domain(z=c(-0.5, 10)))
@@ -102,7 +102,7 @@ A function is ***continuous*** if you can trace out the graph of the function wi
 
 Consider the power-law function graphed in Figure \@ref(fig:for-words). This is continuous almost everywhere. There's just one input where the continuity fails, $x=0$. For inputs $x < 0$, the function is negative. For inputs $0 < x$, the function is positive. A continuous function whose value switches from positive to negative must, at some input value, be zero. But the function $1/x$ is not zero at $x=0$; it is undefined. In other words, $1/x$ is discontinuous at $x=0$,
     
-## Periodic
+## Periodicity
 
 A phenomenon is ***periodic*** if it repeats the same pattern over and over again. The pattern that is repeated is called a **cycle**; the periodic function as a whole is one cycle placed next to the previous one and so forth. The day-night cycle is an example of a periodic process, as is the march of the seasons. The ***period*** is the duration of one complete cycle; the period of the day-night cycle is 24 hours, the period of the seasonal progression is 1 year. 
 
@@ -125,18 +125,13 @@ Several of the pattern-book functions have horizontal or vertical asymptotes or 
 
 The sinusoid has neither a vertical nor a horizontal asymptote. As input $x$ increases either to $-\infty$ or $\infty$, the output of the sinusoid continues to oscillate, never settling down to a single value. And, of course, the output of the sinusoid is everywhere $-1 \leq \sin(x) \leq 1$, so there is no possibility for a vertical asymptote.
 
-* ***Asymptote*** 
-    a. The exponential has a ***horizontal asymptote*** of zero as $x \rightarrow -\infty$
-    b. The sinusoid has neither a vertical nor a horizontal asymptote.
-    c. The power law $x^{-1}$ has a ***vertical asymptote*** of $\infty$ as $x \rightarrow 0$ from the right, and of $-\infty$ as $x \rightarrow 0$ from the left. 
-
 ## Locally extreme points
 
 Many continous functions have a region of the input domain where the output is gradually growing, then reaches a peak, then gradually diminishes. This is called a ***local maximum***. "Maximum" because the output reaches a peak at a particular input, "local" because in the neighborhood of the peak the function output is smaller than at the peak.
 
 Likewise, functions can have a ***local minimum***: the bottom of a bowl rather than the top of a peak.
 
-Of these three pattern-book functions in Figure \@ref(fig:for-words), only the sinusoid has a local maximum, and, being periodic, it repeats that every cycle. The sinusoid similarly has a local minimum in every cycle..
+Of the three pattern-book functions in Figure \@ref(fig:for-words), only the sinusoid has a local maximum, and, being periodic, it repeats that every cycle. The sinusoid similarly has a local minimum in every cycle..
 
 Many modeling applications involve finding an input where the function output is maximized. Such an input is called an ***argmax***. "Argument" is a synonym for "input" in mathematical and computer functions, so "argmax" refers to the input at which the function reaches a maximum output. For instance, businesses attempt to set prices to maximize profit. At too low a price, sales are good but income is low. At too high a price, sales are too low to bring in much income. There's a sweet spot in the middle. 
 
@@ -150,7 +145,7 @@ The process of finding an argmin or an argmax is called ***optimization***. And 
 
 As you might expect, computer programmers and language developers have written software implementing several of the ***pattern-book functions***: `exp()`, `log()`, `sin()`, `dnorm()`, and `pnorm()`. For these functions, the name tells everying, so far as the computer is concerned, that is needed to calculate the output from any given input. `r mark(440)`
 
-Computer notation for the power-law and proportional functions is different because the body of these functions is so short. So instead of using parentheses to apply a named function, invoking the power-law or proportional functions is done using a syntax like $x^p$ or $x$ or $z^4$.^[If you insist on using a named function for power-law and proportional functions, there is `` `^`() `` and `I()`.] 
+Computer notation for the power-law and proportional functions is different because the body of these functions is so short. So instead of using parentheses to apply a named function, invoking the power-law or proportional functions is done using a syntax like `x^p` or `x` or `z^4`.^[If you insist on using a named function for power-law and proportional functions, there is `` `^`() `` and `I()`.] 
 
 
 
