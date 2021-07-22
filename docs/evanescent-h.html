@@ -46,7 +46,7 @@
     </span>
 
     <!-- see https://www.homepages.ucl.ac.uk/~ucahmto/elearning/2019/09/14/bookdown.html-->
-    <script src="https://cdn.jsdelivr.net/autocomplete.js/0/autocomplete.jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/mark.js@8.11.1/dist/mark.min.js"></script><!-- CSS --><link rel="stylesheet" href="css/CalcZ-style.css">
+    <script src="https://cdn.jsdelivr.net/autocomplete.js/0/autocomplete.jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/mark.js@8.11.1/dist/mark.min.js"></script><!-- CSS --><link rel="stylesheet" href="CalcZ-style.css">
 <div class="container-fluid">
 <div class="row">
   <header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
@@ -137,15 +137,15 @@ Figure 20.2: The pattern-book sinusoid and sigmoidal functions. A vertical blue 
 </p>
 </div>
 <p>The computer can easily construct the slope functions for the sinusoid and sigmoid, which we’ll call <code>Dsin()</code> and <code>Dsigma()</code> respectively.</p>
-<div class="sourceCode" id="cb181"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb179"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">Dsin</span>   <span class="op">&lt;-</span> <span class="fu">makeFun</span><span class="op">(</span><span class="op">(</span>  <span class="fu"><a href="https://rdrr.io/r/base/Trig.html">sin</a></span><span class="op">(</span><span class="va">t</span><span class="op">+</span><span class="va">h</span><span class="op">)</span> <span class="op">-</span>   <span class="fu"><a href="https://rdrr.io/r/base/Trig.html">sin</a></span><span class="op">(</span><span class="va">t</span><span class="op">)</span><span class="op">)</span><span class="op">/</span><span class="va">h</span> <span class="op">~</span> <span class="va">t</span>, h<span class="op">=</span><span class="fl">0.1</span><span class="op">)</span>
 <span class="va">Dsigma</span> <span class="op">&lt;-</span> <span class="fu">makeFun</span><span class="op">(</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">pnorm</a></span><span class="op">(</span><span class="va">t</span><span class="op">+</span><span class="va">h</span><span class="op">)</span> <span class="op">-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">pnorm</a></span><span class="op">(</span><span class="va">t</span><span class="op">)</span><span class="op">)</span><span class="op">/</span><span class="va">h</span> <span class="op">~</span> <span class="va">t</span>, h<span class="op">=</span><span class="fl">0.1</span><span class="op">)</span></code></pre></div>
 <p>In the tilde expression handed to <code>makeFun()</code>, we’ve identified <code>t</code> as the name of the input and given a “small” default value to the <code>h</code> parameter. But R recognizes that both <code>Dsin()</code> and <code>Dsigma()</code> are functions of two variables, <code>t</code> and <code>h</code>, as you can see in the parenthesized argument list for the functions.</p>
-<div class="sourceCode" id="cb182"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb180"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">Dsin</span></code></pre></div>
 <pre><code>## function (t, h = 0.1) 
 ## (sin(t + h) - sin(t))/h</code></pre>
-<div class="sourceCode" id="cb184"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb182"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">Dsigma</span></code></pre></div>
 <pre><code>## function (t, h = 0.1) 
 ## (pnorm(t + h) - pnorm(t))/h</code></pre>
@@ -193,7 +193,7 @@ Figure 20.4: The slope functions of the logarithm and exponential.
 </h2>
 <p>In motivating differentiation of the pattern-book functions, we introduced a quantity <span class="math inline">\(h\)</span> and then ignored it, saying that it doesn’t really matter so long as it is “small.” A reasonable person might wonder what “small” really means, and why we needed to introduce <span class="math inline">\(h\)</span> in the first place if we were eventually going to ignore it. <span style="float: right; padding-left: 50px;"><a name="2382" href="#2382"><img src="www/icons8-signpost.png" title="Location: 2382" width="12px"></a><span style="color: red; font-size: 6pt;">2382</span></span></p>
 <p>One reason is that “small” and “zero,” although related, are different. For example, refering to the slope functions <code>Dsin()</code> and <code>Dsigma()</code> that we created in an early example in this chapter, we see that setting <span class="math inline">\(h\)</span> to zero does not get us where we need to be: <span style="float: right; padding-left: 50px;"><a name="2384" href="#2384"><img src="www/icons8-signpost.png" title="Location: 2384" width="12px"></a><span style="color: red; font-size: 6pt;">2384</span></span></p>
-<div class="sourceCode" id="cb186"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb184"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">Dsin</span><span class="op">(</span>t<span class="op">=</span><span class="fl">1</span>, h<span class="op">=</span><span class="fl">0</span><span class="op">)</span>
 <span class="fu">Dsigma</span><span class="op">(</span>t<span class="op">=</span><span class="fl">0</span>, h<span class="op">=</span><span class="fl">0</span><span class="op">)</span></code></pre></div>
 <p>In <code>NaN</code>, you can hear the echo of your fourth-grade teacher reminding you that it is illegal to divide by zero.</p>
@@ -340,13 +340,13 @@ The vertical acceleration is the second derivative of alt() with respect to time
 </li>
 </ol>
 <p>In a sandbox, re-write <span class="math inline">\(\text{alt}(x)\)</span> as <span class="math inline">\(f(t) \equiv \text{alt}\left(-v \left[t - t_0\right]\right)\)</span>. Set <span class="math inline">\(v\)</span> to the plane’s velocity in feet per second. For our purposes, it doesn’t matter what <span class="math inline">\(t_0\)</span> is; you can set it to zero. (<span class="math inline">\(t_0\)</span> is the plane’s arrival time at the foot of the runway.) Plot out the function choosing a domain for <span class="math inline">\(t\)</span> that lets you see the whole descent path.</p>
-<div class="sourceCode" id="cb187"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb187-1"><a href="evanescent-h.html#cb187-1" aria-hidden="true" tabindex="-1"></a>f <span class="ot">&lt;-</span> <span class="fu">makeFun</span>(<span class="fu">pnorm</span>(<span class="sc">-</span> <span class="dv">20000</span><span class="sc">*</span> v<span class="sc">*</span> t, <span class="dv">30000</span><span class="sc">/</span><span class="dv">2</span>, <span class="dv">30000</span><span class="sc">/</span><span class="dv">6</span>) <span class="sc">~</span> t, <span class="at">v =</span> __your_velocity_here__)</span>
-<span id="cb187-2"><a href="evanescent-h.html#cb187-2" aria-hidden="true" tabindex="-1"></a><span class="fu">slice_plot</span>(<span class="fu">f</span>(t) <span class="sc">~</span> t, <span class="fu">domain</span>(<span class="at">t=</span>__your_domain_here__))</span></code></pre></div>
+<div class="sourceCode" id="cb185"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb185-1"><a href="evanescent-h.html#cb185-1" aria-hidden="true" tabindex="-1"></a>f <span class="ot">&lt;-</span> <span class="fu">makeFun</span>(<span class="fu">pnorm</span>(<span class="sc">-</span> <span class="dv">20000</span><span class="sc">*</span> v<span class="sc">*</span> t, <span class="dv">30000</span><span class="sc">/</span><span class="dv">2</span>, <span class="dv">30000</span><span class="sc">/</span><span class="dv">6</span>) <span class="sc">~</span> t, <span class="at">v =</span> __your_velocity_here__)</span>
+<span id="cb185-2"><a href="evanescent-h.html#cb185-2" aria-hidden="true" tabindex="-1"></a><span class="fu">slice_plot</span>(<span class="fu">f</span>(t) <span class="sc">~</span> t, <span class="fu">domain</span>(<span class="at">t=</span>__your_domain_here__))</span></code></pre></div>
 <p>Compute the second derivative <span class="math inline">\(\partial_{tt} f(t)\)</span> to find the vertical component of acceleration of the aircraft. (Important note: Due to a bug in R, use <code>numD()</code> rather than <code><a href="https://rdrr.io/r/stats/deriv.html">D()</a></code> to compute the second derivative.)
 Graph the second derivative over the appropriate domain and look for the most extreme values of acceleration.</p>
-<div class="sourceCode" id="cb188"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb188-1"><a href="evanescent-h.html#cb188-1" aria-hidden="true" tabindex="-1"></a>ddf <span class="ot">&lt;-</span> <span class="fu">numD</span>(<span class="fu">f</span>(t) <span class="sc">~</span> t <span class="sc">+</span> t)</span>
-<span id="cb188-2"><a href="evanescent-h.html#cb188-2" aria-hidden="true" tabindex="-1"></a><span class="fu">slice_plot</span>(<span class="fu">ddf</span>(t) <span class="sc">~</span> t, <span class="fu">domain</span>(<span class="at">t=</span>__your_domain_here__))</span></code></pre></div>
-<p><img src="CalcZ-notes_files/figure-html/unnamed-chunk-310-1.png" width="90%" style="display: block; margin: auto;"><img src="CalcZ-notes_files/figure-html/unnamed-chunk-310-2.png" width="90%" style="display: block; margin: auto;"></p>
+<div class="sourceCode" id="cb186"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb186-1"><a href="evanescent-h.html#cb186-1" aria-hidden="true" tabindex="-1"></a>ddf <span class="ot">&lt;-</span> <span class="fu">numD</span>(<span class="fu">f</span>(t) <span class="sc">~</span> t <span class="sc">+</span> t)</span>
+<span id="cb186-2"><a href="evanescent-h.html#cb186-2" aria-hidden="true" tabindex="-1"></a><span class="fu">slice_plot</span>(<span class="fu">ddf</span>(t) <span class="sc">~</span> t, <span class="fu">domain</span>(<span class="at">t=</span>__your_domain_here__))</span></code></pre></div>
+<p><img src="CalcZ-notes_files/figure-html/unnamed-chunk-308-1.png" width="90%" style="display: block; margin: auto;"><img src="CalcZ-notes_files/figure-html/unnamed-chunk-308-2.png" width="90%" style="display: block; margin: auto;"></p>
 <p>A rule of thumb is that a vertical acceleration of <span class="math inline">\(5\, \text{ft}\, \text{s}^{-2}\)</span> is not discomfiting. Regrettably, the descent path we described doesn’t meet the standard! So we have to re-design the descent path. Since both the altitude and velocity are set, the only parameter you can change is the distance from the foot of the runway where descent commences.</p>
 <p><strong>Question B</strong> How far from the foot of the runway should descent begin in order to stay within the <span class="math inline">\(5\, \text{ft}\, \text{s}^{-2}\)</span> acceleration constraint? Pick the shortest distance that satisfies the constraint.</p>
 <ol style="list-style-type: lower-roman">
@@ -393,7 +393,7 @@ Graph the second derivative over the appropriate domain and look for the most ex
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>CalcZ Student Notes</strong>" was written by Daniel Kaplan. It was last built on 2021-07-21.</p>
+    <p>"<strong>CalcZ Student Notes</strong>" was written by Daniel Kaplan. It was last built on 2021-07-22.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

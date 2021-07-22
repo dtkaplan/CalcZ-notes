@@ -46,7 +46,7 @@
     </span>
 
     <!-- see https://www.homepages.ucl.ac.uk/~ucahmto/elearning/2019/09/14/bookdown.html-->
-    <script src="https://cdn.jsdelivr.net/autocomplete.js/0/autocomplete.jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/mark.js@8.11.1/dist/mark.min.js"></script><!-- CSS --><link rel="stylesheet" href="css/CalcZ-style.css">
+    <script src="https://cdn.jsdelivr.net/autocomplete.js/0/autocomplete.jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/mark.js@8.11.1/dist/mark.min.js"></script><!-- CSS --><link rel="stylesheet" href="CalcZ-style.css">
 <div class="container-fluid">
 <div class="row">
   <header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
@@ -214,7 +214,7 @@ Figure 27.2: Results from the formula layer shown in Figure <a href="iteration-a
 </blockquote>
 <p>Whenever you do a calculation, you should ask a similar question: “How do I know that [<em>my calculation</em>] is giving the result it should?” In general, it takes considerable experience to provide an answer to such a question, but in the case of <code>antiD()</code>, the approach is simple: If <code>f()</code> is really the anti-derivative of <code><a href="https://rdrr.io/r/stats/Normal.html">dnorm()</a></code>, then differentiating <code>f()</code> should give us something that’s the same as <code><a href="https://rdrr.io/r/stats/Normal.html">dnorm()</a></code>. <span style="float: right; padding-left: 50px;"><a name="3380" href="#3380"><img src="www/icons8-signpost.png" title="Location: 3380" width="12px"></a><span style="color: red; font-size: 6pt;">3380</span></span></p>
 <div class="inline-figure">Here’s the actual calculation:
-<img src="CalcZ-notes_files/figure-html/unnamed-chunk-148-1.png" width="90%" style="display: block; margin: auto;">
+<img src="CalcZ-notes_files/figure-html/unnamed-chunk-146-1.png" width="90%" style="display: block; margin: auto;">
 </div>
 <p>With numerical methods, there will almost always be some error introduced by round-off in the calculations, so we should never expect the deviation to be zero. You can see from the plot of the deviation (Look carefully at the vertical axis!) that it is smaller than 0.0000000001, which is a tiny, tiny part of the size of the output from <span class="math inline">\(\dnorm()\)</span>. <span style="float: right; padding-left: 50px;"><a name="3385" href="#3385"><img src="www/icons8-signpost.png" title="Location: 3385" width="12px"></a><span style="color: red; font-size: 6pt;">3385</span></span></p>
 <p>It might seem odd to use 3 lines of R/mosaic commands to confirm an answer that was calculated in one line. That’s a pretty good representation of how much effort a professional will put into <strong>testing</strong> the result compared to <strong>getting</strong> the result. <span style="float: right; padding-left: 50px;"><a name="3390" href="#3390"><img src="www/icons8-signpost.png" title="Location: 3390" width="12px"></a><span style="color: red; font-size: 6pt;">3390</span></span></p>
@@ -262,13 +262,13 @@ the Euler method as described here produces a data table of values as, for examp
 </li>
 </ol></details><p>A good practice with numerical methods is to package them as a <strong><em>function</em></strong>, so that you can easily apply the same method in many different contexts. This is the best way to arrange a calculation so it can be debugged and verified. This is what such a function would look like in R: <span style="float: right; padding-left: 50px;"><a name="3405" href="#3405"><img src="www/icons8-signpost.png" title="Location: 3405" width="12px"></a><span style="color: red; font-size: 6pt;">3405</span></span></p>
 <p>Let’s test <code>accumulate()</code>. Since <code><a href="https://rdrr.io/r/stats/Normal.html">dnorm()</a></code> is the derivative of <code><a href="https://rdrr.io/r/stats/Normal.html">pnorm()</a></code>, accumulating <code><a href="https://rdrr.io/r/stats/Normal.html">dnorm()</a></code> should give a function that has the same shape as <code><a href="https://rdrr.io/r/stats/Normal.html">pnorm()</a></code>.</p>
-<div class="inline-figure"><img src="CalcZ-notes_files/figure-html/unnamed-chunk-152-1.png" width="90%" style="display: block; margin: auto;"></div>
+<div class="inline-figure"><img src="CalcZ-notes_files/figure-html/unnamed-chunk-150-1.png" width="90%" style="display: block; margin: auto;"></div>
 <p>From the plot, you can see that accumulated version of <code><a href="https://rdrr.io/r/stats/Normal.html">dnorm()</a></code> has the same shape as <code><a href="https://rdrr.io/r/stats/Normal.html">pnorm()</a></code>. But the two functions are shifted vertically. By how much?</p>
-<div class="inline-figure"><img src="CalcZ-notes_files/figure-html/unnamed-chunk-153-1.png" width="90%" style="display: block; margin: auto;"></div>
+<div class="inline-figure"><img src="CalcZ-notes_files/figure-html/unnamed-chunk-151-1.png" width="90%" style="display: block; margin: auto;"></div>
 <p>The Euler method gives results that are roughly 0.16 units less than the true answer, <code><a href="https://rdrr.io/r/stats/Normal.html">pnorm()</a></code>. Notice that the error is practically the same for all <span class="math inline">\(t\)</span>. This shows that the Euler accumulated <code><a href="https://rdrr.io/r/stats/Normal.html">dnorm()</a></code> is practically <code>pnorm(t) - 0.16</code>: a pure vertical shift. (If you look very closely, you’ll see that <code>diff</code> is not exactly a constant. That’s the result of using finite <span class="math inline">\(h\)</span> in the Euler accumulation.) <span style="float: right; padding-left: 50px;"><a name="3410" href="#3410"><img src="www/icons8-signpost.png" title="Location: 3410" width="12px"></a><span style="color: red; font-size: 6pt;">3410</span></span></p>
-<details><summary><strong>Exercise 22.5</strong>: <span><a name="File:%20Exercises/Accum/accumulate-R.Rmd" href="#3IUVB"><img src="www/icons8-signpost.png" title="Location: Exercises/Accum/accumulate-R.Rmd" width="12px"></a><span style="color: red; font-size: 9pt;">3IUVB</span>
+<details><summary><strong>Exercise 22.5</strong>: <span><a name="File:%20Exercises/Accum/accumulate-R.Rmd" href="#3VBHW"><img src="www/icons8-signpost.png" title="Location: Exercises/Accum/accumulate-R.Rmd" width="12px"></a><span style="color: red; font-size: 9pt;">3VBHW</span>
 </span></summary><p>Copy the <code>accumulate()</code> function from Section <a href="iteration-and-accumulation.html#using-cumsum">27.1.3</a> into a <a href="https://maa-statprep.shinyapps.io/CalcZ-Sandbox/">SANDBOX</a> and make the following plot:
-<img src="CalcZ-notes_files/figure-html/unnamed-chunk-391-1.png" width="90%" style="display: block; margin: auto;">
+<img src="CalcZ-notes_files/figure-html/unnamed-chunk-389-1.png" width="90%" style="display: block; margin: auto;">
 There is a vertical difference between the accumulated points and <code><a href="https://rdrr.io/r/stats/Normal.html">pnorm()</a></code>.</p>
 <p><strong>Question A</strong> What happens to this vertical difference if you make <span class="math inline">\(t_0\)</span> smaller (more negative) than <span class="math inline">\(-1\)</span>?</p>
 <ol style="list-style-type: lower-roman">
@@ -459,7 +459,7 @@ In other words, our modeling of the data has told us the derivative not of <span
 </span></summary><p>Methods such as Euler are tedious, ideal for the computer. So let’s look at some basic R functions for implementing the Euler Method when we know the function to be anti-differentiated <span class="math inline">\(f(x)\)</span>, the step size <span class="math inline">\(h\)</span>, and the domain <span class="math inline">\(a \leq x \leq b\)</span>. At the heart of the implementation is a function <code><a href="https://rdrr.io/r/base/cumsum.html">cumsum()</a></code>, the “cumulative sum.” This does something very simple. The cumulative sum of the sequence 1, 2, 3, 4 is another sequence: 1, 3, 6, 10.</p>
 <p>The following code has commands for using <code><a href="https://rdrr.io/r/base/cumsum.html">cumsum()</a></code> to approximate the anti-derivative of a function <span class="math inline">\(f()\)</span> over the domain <span class="math inline">\(a \leq x \leq b\)</span></p>
 <p>Here is a function:</p>
-<div class="sourceCode" id="cb267"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb265"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">g</span> <span class="op">&lt;-</span> <span class="fu">makeFun</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html">exp</a></span><span class="op">(</span><span class="op">-</span><span class="fl">0.2</span><span class="op">*</span><span class="op">(</span><span class="va">x</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span><span class="op">)</span><span class="op">~</span><span class="va">x</span><span class="op">)</span></code></pre></div>
 <p>Using a <a href="https://maa-statprep.shinyapps.io/CalcZ-Sandbox/">SANDBOX</a>, find and plot the anti-derivative of <span class="math inline">\(g(x)\)</span> over the domain <span class="math inline">\(-6 \leq x \leq 6\)</span>.</p>
 Your task: Describe the shape of <span class="math inline">\(G(x)\)</span>. Your description can be one word from earlier in the book, if you choose it carefully. If your graph looks like a straight line, you did not appropriately change the domain above.
@@ -577,7 +577,7 @@ Now consider a very simple machine consisting of a cylinder, closed on one end a
 <p>Our machine has no valves and no pipes. The cylinder is charged with gas when it is manufactured. After that, nothing material goes in or out of the closed cylinder/piston system.</p>
 <p>When you push on the cylinder, the volume available for the gas gets smaller and the pressure increases. When you let the cylinder push on you, the volume available gets bigger and the pressure decreases. The amount of gas, <span class="math inline">\(n\)</span>, never changes. For simplicity, we’ll imagine that <span class="math inline">\(n=1\)</span> and that the gas is N<span class="math inline">\(_2\)</span>. This means the mass of the gas is 0.028 kg.</p>
 <p>And, to simplify even more, let’s insist that the temperature of the cylinder and its gaseous content does not change from room temperature: 293<span class="math inline">\(^\circ\)</span> Kelvin.</p>
-<div class="inline-figure"><img src="CalcZ-notes_files/figure-html/unnamed-chunk-397-1.png" width="90%" style="display: block; margin: auto;"></div>
+<div class="inline-figure"><img src="CalcZ-notes_files/figure-html/unnamed-chunk-395-1.png" width="90%" style="display: block; margin: auto;"></div>
 <p>If you start in a high-volume, low-pressure state and push the piston to move to a low-volume, high-pressure state at the same temperature, you will be putting energy into the machine.</p>
 <p>The “area” of each little box in the graph, that is, pressure times volume,
 <strong>Question C</strong> How much energy (in Joules) corresponds to one small rectangle of area in the graph?</p>
@@ -627,42 +627,42 @@ Now consider a very simple machine consisting of a cylinder, closed on one end a
 <p>An important idea in computing is “abstraction.” Abstraction means, in computer science, that you don’t need to know the internal details of an operation in order to use it. For instance, in computing <code><a href="https://rdrr.io/r/base/Trig.html">sin(x)</a></code>, all you need to know is that <code>x</code> should be numeric. The particular algorithm used to do the calculation is, ideally, irrelevant to the user.</p>
 <p>We have abstracted anti-differentiation into a single R function, called <code>antiD()</code>. As you know mathematically, anti-differentiation is an operation performed on a function with respect to one of the arguments to the function. It’s the same with <code>antiD()</code>: you need to specify the function and the “with respect to” variable. You do that in exactly the same way as you do with the <code><a href="https://rdrr.io/r/stats/deriv.html">D()</a></code> operator used for differentiation, with a <em>tilde expression</em>. (<code>makeFun()</code> also uses tilde expressions.)</p>
 <p>For example:</p>
-<div class="sourceCode" id="cb268"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb266"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">f1</span> <span class="op">&lt;-</span> <span class="fu">antiD</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Trig.html">sin</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">~</span> <span class="va">x</span><span class="op">)</span>
 <span class="va">f2</span> <span class="op">&lt;-</span> <span class="fu">antiD</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html">exp</a></span><span class="op">(</span><span class="op">-</span><span class="va">k</span><span class="op">*</span><span class="va">x</span><span class="op">)</span><span class="op">*</span><span class="fu"><a href="https://rdrr.io/r/base/Trig.html">sin</a></span><span class="op">(</span><span class="fl">2</span><span class="op">*</span><span class="va">pi</span><span class="op">*</span><span class="va">x</span><span class="op">/</span><span class="va">P</span><span class="op">)</span> <span class="op">~</span> <span class="va">x</span>, k<span class="op">=</span><span class="fl">2</span>, P<span class="op">=</span><span class="fl">4</span><span class="op">)</span>
 <span class="va">f3</span> <span class="op">&lt;-</span> <span class="fu">antiD</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="va">t</span> <span class="op">&gt;</span> <span class="fl">0</span>, <span class="va">t</span><span class="op">^</span><span class="fl">2</span>, <span class="op">-</span><span class="va">t</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span> <span class="op">~</span> <span class="va">t</span><span class="op">)</span></code></pre></div>
 <p>As you expect, <code>f1</code>, <code>f2</code>, and <code>f3</code> are all functions. You evaluate them in the usual way, reducing the calculation of a definite integral to a difference of two evaluations of the functions, for instance:</p>
-<div class="sourceCode" id="cb269"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb267"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">f1</span><span class="op">(</span><span class="va">pi</span><span class="op">/</span><span class="fl">2</span><span class="op">)</span> <span class="op">-</span> <span class="fu">f1</span><span class="op">(</span><span class="fl">0</span><span class="op">)</span></code></pre></div>
 <pre><code>## [1] 1</code></pre>
-<div class="sourceCode" id="cb271"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb269"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">f2</span><span class="op">(</span><span class="fl">12</span>, k<span class="op">=</span><span class="fl">2</span>, P<span class="op">=</span><span class="fl">4</span> <span class="op">)</span> <span class="op">-</span> <span class="fu">f2</span><span class="op">(</span><span class="fl">5</span>, k<span class="op">=</span><span class="fl">2</span>, P<span class="op">=</span><span class="fl">4</span><span class="op">)</span></code></pre></div>
 <pre><code>## [1] 1.404e-05</code></pre>
-<div class="sourceCode" id="cb273"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb271"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">f3</span><span class="op">(</span><span class="fl">5</span><span class="op">)</span> <span class="op">-</span> <span class="fu">f3</span><span class="op">(</span><span class="op">-</span><span class="fl">4</span><span class="op">)</span></code></pre></div>
 <pre><code>## [1] 20.333</code></pre>
 <p><code>antiD()</code> is an example of computing abstraction because you do not need to know what is going on internally. All you need to know is how to hand a function and a with-respect-to variable as arguments, and that the returned result will be a function of the with-respect-to variable (as well as any other variables in the original function).</p>
 <p>For some very simple functions, like <code><a href="https://rdrr.io/r/base/Trig.html">sin(x)</a></code>, the function returned by <code>antiD()</code> will be familiar:</p>
-<div class="sourceCode" id="cb275"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb273"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">f1</span></code></pre></div>
 <pre><code>## function (x, C = 0) 
 ## -cos(x) + C
-## &lt;bytecode: 0x7fee90b87ee8&gt;</code></pre>
+## &lt;bytecode: 0x7ff241e91868&gt;</code></pre>
 <p>For functions with symbolic parameters, such as in <code>f2()</code>, the anti-derivative function will have the with-respect-to variable as the first argument and any remaining variables as named arguments in no particular order.</p>
-<div class="sourceCode" id="cb277"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb275"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">f2</span></code></pre></div>
 <pre><code>## function (x, k = 2, P = 4, C = 0) 
 ## {
 ##     numerical_integration(.newf, .wrt, as.list(match.call())[-1], 
 ##         formals(), from, ciName = intC, .tol)
 ## }
-## &lt;environment: 0x7fee92be3c90&gt;</code></pre>
+## &lt;environment: 0x7ff23f6f7ad0&gt;</code></pre>
 <p>For such functions with parameters, to evaluate the anti-derivative for at a numerical input <code>x</code> requires that all the parameters also be given numerical values. In <code>f2()</code>, defaults for these numerical parameters were assigned at the time of creation, but you can use other values for them whenever you evaluate the anti-derivative.</p>
 <p>The function returned by <code>antiD()</code> often will appear mysterious, as in <code>f2()</code>. Following the principle of abstraction, you don’t have to know or understand the internal details of the function’s algorithm. You only need to know how to use the function. One way to use it is to evaluate it at specific numerical inputs. Another way to use it is to construct other functions, as in this entirely made up and probably useless example:</p>
-<div class="sourceCode" id="cb279"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb277"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">g</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/deriv.html">D</a></span><span class="op">(</span> <span class="fu"><a href="https://rdrr.io/r/base/Trig.html">cos</a></span><span class="op">(</span><span class="fu">f2</span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">^</span><span class="fl">2</span> <span class="op">+</span> <span class="fu">f2</span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span> <span class="op">~</span> <span class="va">x</span><span class="op">)</span>
 <span class="fu">slice_plot</span><span class="op">(</span><span class="fu">g</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">~</span> <span class="va">x</span>, <span class="fu">domain</span><span class="op">(</span>x<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">1</span>,<span class="fl">1</span><span class="op">)</span><span class="op">)</span>, npts<span class="op">=</span><span class="fl">500</span><span class="op">)</span></code></pre></div>
-<div class="inline-figure"><img src="CalcZ-notes_files/figure-html/unnamed-chunk-404-1.png" width="90%" style="display: block; margin: auto;"></div>
+<div class="inline-figure"><img src="CalcZ-notes_files/figure-html/unnamed-chunk-402-1.png" width="90%" style="display: block; margin: auto;"></div>
 The abstraction built in to <code>antiD()</code> function is not perfect. <code>antiD()</code> knows about certain pathologies of functions, such as <span class="math inline">\(g(x) = 1/x\)</span>, which isn’t defined at <span class="math inline">\(x=0\)</span>, but doesn’t necessarily handle them in the way a skilled, thinking person would. Still, when you need an anti-derivative and don’t see any way to get an algebraic expression for it, <code>antiD()</code> often lets you get on with your work.
 </details><details><summary><strong>Exercise XX.XX</strong>: <span><a name="File:%20Exercises/Accum/lessons-from-euler.Rmd" href="#KELSE"><img src="www/icons8-signpost.png" title="Location: Exercises/Accum/lessons-from-euler.Rmd" width="12px"></a><span style="color: red; font-size: 9pt;">KELSE</span>
 </span></summary><p>Some things to learn from the Euler Method:</p>
@@ -774,7 +774,7 @@ You can see that <span class="math inline">\(f(x)\)</span> is the derivative of 
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>CalcZ Student Notes</strong>" was written by Daniel Kaplan. It was last built on 2021-07-21.</p>
+    <p>"<strong>CalcZ Student Notes</strong>" was written by Daniel Kaplan. It was last built on 2021-07-22.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

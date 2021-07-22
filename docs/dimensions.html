@@ -46,7 +46,7 @@
     </span>
 
     <!-- see https://www.homepages.ucl.ac.uk/~ucahmto/elearning/2019/09/14/bookdown.html-->
-    <script src="https://cdn.jsdelivr.net/autocomplete.js/0/autocomplete.jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/mark.js@8.11.1/dist/mark.min.js"></script><!-- CSS --><link rel="stylesheet" href="css/CalcZ-style.css">
+    <script src="https://cdn.jsdelivr.net/autocomplete.js/0/autocomplete.jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/mark.js@8.11.1/dist/mark.min.js"></script><!-- CSS --><link rel="stylesheet" href="CalcZ-style.css">
 <div class="container-fluid">
 <div class="row">
   <header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
@@ -465,7 +465,7 @@ For the civil engineers, introduce the words stress and strain and talk about th
 Where <span class="math inline">\(n\)</span> is zero at the midnight marking New Years and increases by 1 per day. (The <span class="math inline">\(n+10\)</span> translates New Years back 10 days, to the day of the winter solstice.) <span class="math inline">\(\delta_\odot()\)</span> gives the declination of the sun: the latitude pieced by an imagined line connecting the centers of the earth and the sun.</p>
 <p>The Wikipedia formula is well written in that it uses some familiar numbers to help the reader see where the formula comes from. 365 is recognizably the length of the year in days. <span class="math inline">\(360^\circ\)</span> is the angle traversed when making a full cycle around a circle. <span class="math inline">\(23.44^\circ\)</span> is less familiar, but the student of geography might recognize it as the latitude of the Tropic of Cancer, the latitude farthest north where the sun is directly overhead at noon (on the day of the summer solstice).</p>
 <p>But there’s a world of trouble for programmer who implements the formula as</p>
-<div class="sourceCode" id="cb131"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb129"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">dec_sun</span> <span class="op">&lt;-</span> <span class="fu">makeFun</span><span class="op">(</span><span class="op">-</span><span class="fl">23.44</span> <span class="op">*</span> <span class="fu"><a href="https://rdrr.io/r/base/Trig.html">cos</a></span><span class="op">(</span><span class="op">(</span><span class="fl">360</span><span class="op">/</span><span class="fl">365</span><span class="op">)</span><span class="op">*</span><span class="op">(</span><span class="va">n</span><span class="op">-</span><span class="fl">10</span><span class="op">)</span><span class="op">)</span> <span class="op">~</span> <span class="va">n</span><span class="op">)</span></code></pre></div>
 <p>:::</p>
 <details><summary><strong>Exercise 15.3</strong>: <span><a name="File:%20Exercises/Dimension/dim-formulas.Rmd" href="#UGDKY"><img src="www/icons8-signpost.png" title="Location: Exercises/Dimension/dim-formulas.Rmd" width="12px"></a><span style="color: red; font-size: 9pt;">UGDKY</span>
@@ -575,7 +575,7 @@ In order to render the quantity both dimensionless and </em>unitless<em>, <span 
 <li><p>Energy has dimension [Force] <span class="math inline">\(\times\  L\)</span></p></li>
 <li><p>Power has dimension [Energy] <span class="math inline">\(\times\  T^{-1}\)</span></p></li>
 </ul>
-<div class="sourceCode" id="cb132"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb130"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">etude2</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/etude2/man/etudeQ.html">etudeQ</a></span><span class="op">(</span>
   prompt <span class="op">=</span> <span class="st">"What is the dimension of $P_s$ in E-M Theory?"</span>,
   <span class="st">"+[Power] $\\times\\ M^{-1}$+"</span> <span class="op">=</span> <span class="st">"In other words, specific power"</span>,
@@ -591,7 +591,7 @@ In order to render the quantity both dimensionless and </em>unitless<em>, <span 
 <li><p>[Power] []</p></li>
 </ol>
 <p>If you multiply <span class="math inline">\(P_s\)</span> (specific power) times the duration of a flight segment, the result has dimension [Energy]<span class="math inline">\(\times M^{-1}\)</span> which is energy per mass: so-called “specific energy.” In practice, all of the quantities in the E-M Theory formula change with time, often very quickly in a fighter aircraft. In order to know the aircraft specific energy at any instant, we need to accumulate the changing specific power over time. This amounts to finding the anti-derivative of specific power with respect to time: <span class="math display">\[\mbox{specific energy} \equiv \int P_s(t) dt\]</span> You can think of the <span class="math inline">\(dt\)</span> as a short interval of time. <span class="math inline">\(P_s(t) dt\)</span> is multiplying specific power at instant <span class="math inline">\(t\)</span> by the duration of that short interval of time which produces a small amount of specific energy at instant <span class="math inline">\(t\)</span>. The <span class="math inline">\(\int\)</span> means “accumulate” these small bits of specific energy from each instant in time over a longer time interval.</p>
-<div class="sourceCode" id="cb133"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb131"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">etude2</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/etude2/man/etudeQ.html">etudeQ</a></span><span class="op">(</span>
   prompt <span class="op">=</span> <span class="st">"What is the dimension of $dt$ within the context of this problem?"</span>,
   <span class="st">"+[dt] = T+"</span> <span class="op">=</span> <span class="st">"Correct"</span>,
@@ -655,7 +655,7 @@ In order to render the quantity both dimensionless and </em>unitless<em>, <span 
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>CalcZ Student Notes</strong>" was written by Daniel Kaplan. It was last built on 2021-07-21.</p>
+    <p>"<strong>CalcZ Student Notes</strong>" was written by Daniel Kaplan. It was last built on 2021-07-22.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

@@ -46,7 +46,7 @@
     </span>
 
     <!-- see https://www.homepages.ucl.ac.uk/~ucahmto/elearning/2019/09/14/bookdown.html-->
-    <script src="https://cdn.jsdelivr.net/autocomplete.js/0/autocomplete.jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/mark.js@8.11.1/dist/mark.min.js"></script><!-- CSS --><link rel="stylesheet" href="css/CalcZ-style.css">
+    <script src="https://cdn.jsdelivr.net/autocomplete.js/0/autocomplete.jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/mark.js@8.11.1/dist/mark.min.js"></script><!-- CSS --><link rel="stylesheet" href="CalcZ-style.css">
 <div class="container-fluid">
 <div class="row">
   <header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
@@ -116,9 +116,9 @@
 </h1>
 <p>You’ve seen how various properties of a functions—whether it is monotonic, how it slopes, whether it is concave up or down (or not at all), curvature, etc.—can be related to the first and second derivatives of the function. <span style="float: right; padding-left: 50px;"><a name="2300" href="#2300"><img src="www/icons8-signpost.png" title="Location: 2300" width="12px"></a><span style="color: red; font-size: 6pt;">2300</span></span></p>
 <p>It’s time to introduce two new ways of describing functions that can be useful for determining whether a given function is fit for the purpose intended for it. These are <strong><em>continuity</em></strong> and <strong><em>smoothness</em></strong>. <span style="float: right; padding-left: 50px;"><a name="2305" href="#2305"><img src="www/icons8-signpost.png" title="Location: 2305" width="12px"></a><span style="color: red; font-size: 6pt;">2305</span></span></p>
-<div id="continuity" class="section level2" number="19.1">
+<div id="continuity-1" class="section level2" number="19.1">
 <h2>
-<span class="header-section-number">19.1</span> Continuity<a class="anchor" aria-label="anchor" href="#continuity"><i class="fas fa-link"></i></a>
+<span class="header-section-number">19.1</span> Continuity<a class="anchor" aria-label="anchor" href="#continuity-1"><i class="fas fa-link"></i></a>
 </h2>
 <p>The intuition behind continuity is simple: If you can draw the graph of a function without lifting the pencil from the paper, the graph is continuous.</p>
 <p>Continuity can be an important attribute of a modeling function. Often, we are modeling phenomena where a <strong><em>small change in input</em></strong> is expected to produce a <strong><em>small change in output</em></strong>. For instance, if your income changes by one penny, you would expect your lifestyle not to change by much. If the temperature of an oven changes by 1 degree, you don’t expect the quality of the cake you are baking to change in any noticeable way. <span style="float: right; padding-left: 50px;"><a name="2310" href="#2310"><img src="www/icons8-signpost.png" title="Location: 2310" width="12px"></a><span style="color: red; font-size: 6pt;">2310</span></span></p>
@@ -163,7 +163,7 @@ Then, through algebraic manipulation and numerical experiments we found that, on
 <span class="math display">\[\partial_x f(x) \equiv \lim_{h\rightarrow 0} \frac{f(x+h) - f(x)}{h}\]</span>
 Conveniently, we found that the derivatives of the pattern-book functions can be written in terms of the pattern-book functions <em>without making any reference to <span class="math inline">\(h\)</span></em>.</p>
 <p>With discontinuous functions, we have no such luck. Here’s what happens if we compute <span class="math inline">\({\cal D}_x H(x)\)</span>, the derivative of the Heaviside function, for smaller and smaller <span class="math inline">\(h\)</span>.</p>
-<div class="sourceCode" id="cb180"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb178"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">H</span> <span class="op">&lt;-</span> <span class="fu">makeFun</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="va">x</span> <span class="op">&gt;=</span><span class="fl">0</span>, <span class="fl">1</span>, <span class="fl">0</span><span class="op">)</span> <span class="op">~</span> <span class="va">x</span><span class="op">)</span>
 <span class="va">DH01</span>   <span class="op">&lt;-</span> <span class="fu">makeFun</span><span class="op">(</span><span class="op">(</span><span class="fu">H</span><span class="op">(</span><span class="va">x</span> <span class="op">+</span> <span class="fl">0.01</span><span class="op">)</span> <span class="op">-</span> <span class="fu">H</span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span><span class="op">/</span><span class="fl">0.01</span> <span class="op">~</span> <span class="va">x</span><span class="op">)</span>
 <span class="va">DH001</span>  <span class="op">&lt;-</span> <span class="fu">makeFun</span><span class="op">(</span><span class="op">(</span><span class="fu">H</span><span class="op">(</span><span class="va">x</span> <span class="op">+</span> <span class="fl">0.001</span><span class="op">)</span> <span class="op">-</span> <span class="fu">H</span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span><span class="op">/</span><span class="fl">0.001</span> <span class="op">~</span> <span class="va">x</span><span class="op">)</span>
@@ -206,9 +206,9 @@ Differencing the Heaviside function produces very different functions depending 
 <p>Our foil for showing smoothness and continuity.</p>
 <p>See section in Fun-modeling.Rmd and connect to that.</p>
 </div>
-<div id="continuity-1" class="section level2" number="19.5">
+<div id="continuity-2" class="section level2" number="19.5">
 <h2>
-<span class="header-section-number">19.5</span> Continuity<a class="anchor" aria-label="anchor" href="#continuity-1"><i class="fas fa-link"></i></a>
+<span class="header-section-number">19.5</span> Continuity<a class="anchor" aria-label="anchor" href="#continuity-2"><i class="fas fa-link"></i></a>
 </h2>
 <p>Lift the pen.</p>
 </div>
@@ -435,11 +435,11 @@ Differencing the Heaviside function produces very different functions depending 
     <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
       <ul class="nav navbar-nav">
 <li><a class="nav-link" href="#cont-and-smooth"><span class="header-section-number">19</span> Continuity and smoothness</a></li>
-<li><a class="nav-link" href="#continuity"><span class="header-section-number">19.1</span> Continuity</a></li>
+<li><a class="nav-link" href="#continuity-1"><span class="header-section-number">19.1</span> Continuity</a></li>
 <li><a class="nav-link" href="#smoothness"><span class="header-section-number">19.2</span> Smoothness</a></li>
 <li><a class="nav-link" href="#doesnt-exist"><span class="header-section-number">19.3</span> Doesn’t exist?</a></li>
 <li><a class="nav-link" href="#piecewise-functions-1"><span class="header-section-number">19.4</span> Piecewise functions</a></li>
-<li><a class="nav-link" href="#continuity-1"><span class="header-section-number">19.5</span> Continuity</a></li>
+<li><a class="nav-link" href="#continuity-2"><span class="header-section-number">19.5</span> Continuity</a></li>
 <li><a class="nav-link" href="#differentiability"><span class="header-section-number">19.6</span> Differentiability</a></li>
 </ul>
 
@@ -458,7 +458,7 @@ Differencing the Heaviside function produces very different functions depending 
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>CalcZ Student Notes</strong>" was written by Daniel Kaplan. It was last built on 2021-07-21.</p>
+    <p>"<strong>CalcZ Student Notes</strong>" was written by Daniel Kaplan. It was last built on 2021-07-22.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">
