@@ -40,14 +40,6 @@ readQfile <- function(fname) {
   list(Q = Questions, C = dplyr::bind_rows(Choices))
 }
 
-#' test lines for development
-test1 <- c(
-  "[] Mercury [Too close to the sun for me!]",
-  "[] Venus",
-  "[a] Earth  [Home, sweet home]",
-  "[] Mars  [In the movies, maybe]"
-)
-
 
 #' Accepted syntax
 #' Line starts with [a] or [+] means correct, with [a] meaning "keep order" and "+"

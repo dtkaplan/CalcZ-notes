@@ -18,7 +18,8 @@ askMC(
   post_message = NULL,
   submit_button = "Check answer",
   try_again_button = "Try again",
-  allow_multiple_correct = FALSE
+  allow_multiple_correct = FALSE,
+  show_feedback = TRUE
 )
 }
 \description{

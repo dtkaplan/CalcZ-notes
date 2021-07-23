@@ -5,9 +5,25 @@ library(shinyjs)
 
 library(CalcZapps)
 
+# Success policy: 17 out of 20
+nright <- 3
+ntotal <- 20
+
 question_file <- system.file("Zdrill/www/text.Rmd", package="CalcZapps")
 Qbank <- CalcZapps::readQfile(question_file)
 Qbank_topics <- unique(Qbank$Q$topic)
+
+md2html <- function(s) {
+  backtick <- "`([^`]*)`"
+  dollar   <- "\\${1}([^\\$]*)\\${1}"
+  bold     <- "\\*{2}([^\\*]*)\\*{2}"
+  italics  <- "\\*{1}([^\\*]*)\\*{1}"
+  s %>%
+    gsub(backtick, "<code>\\1</code>", .) %>%
+    gsub(dollar, "\\(\\\\\\1\\\\)", .) %>%
+    gsub(bold, "<strong>\\1</strong>", .) %>%
+    gsub(italics, "<em>\\1</em>", .)
+}
 
 menu1 <- dropdownMenu(type = "messages", badgeStatus = "success",
                       messageItem("Support Team",
@@ -24,7 +40,9 @@ menu1 <- dropdownMenu(type = "messages", badgeStatus = "success",
                       )
 )
 
+
 ui <- dashboardPage(
+
     dashboardHeader(menu1, title="CalcZ Practice"),
     dashboardSidebar(
         p("Hello"),
@@ -34,18 +52,22 @@ ui <- dashboardPage(
     dashboardBody(
         fluidRow(
             column(width=8,
-                   uiOutput("Qprompt"),
-                   uiOutput("Choices"),
+                   div(uiOutput("Qprompt")),
+                   wellPanel(uiOutput("Choices")),
                    tags$hr(),
                    uiOutput("Feedback"),
                    actionButton("check_answer", "Check answer"),
                    actionButton("nextQ", "Next question"),
                    tags$hr(),
-                   textOutput("score")
+                   textOutput("score"),
+                   tags$hr(),
+                   textOutput("success_key")
                    ),
             column(width=2,
                    selectInput("topic_choice", "Topic:", Qbank_topics ),
-                   actionButton("startover", "Start Over")
+                   actionButton("startover", "Start Over"),
+                   tags$hr(),
+                   textOutput("question_name")
                    )
         )
     )
@@ -69,6 +91,7 @@ server <- function(input, output) {
       State$q_ids <- sample(Qbank$Q %>% dplyr::filter(topic == input$topic_choice) %>% .$unique)
       State$n_correct <- 0
       State$n_answered <- 0
+      State$success_code <- digest(input$topic_choice, "md5", serialize = FALSE)
       next_question()
     })
 
@@ -83,17 +106,17 @@ server <- function(input, output) {
         # Insert the question back into the queue
         this_id <- State$q_ids[State$next_q]
         n_qs <- length(State$q_ids)
-        index <-  if (State$next_q == n_qs) {
-            State$next_q
-          } else {
-          sample((State$next_q+1):n_qs, size=1)
-          }
+        if (n_qs - State$next_q <= 3 ) {
+          return(NULL) # do nothing
+        } else {
+          index <- sample((State$next_q+3):n_qs, size=1)
+        }
 
         if (index <= length(State$q_ids)) {
           tmp <- State$q_ids[index]
           State$q_ids[index] <- this_id
           State$q_ids[State$next_q] <- tmp
-          State$next_q <- State$next_q - 1
+          #State$next_q <- State$next_q - 1
         }
       }
     })
@@ -105,6 +128,20 @@ server <- function(input, output) {
       next_question()
     })
 
+    output$question_name <- renderText({
+      glue::glue("Question ID: {this_question$name}")
+    })
+    output$success_key <- renderText({
+      if (State$n_correct < nright ) {
+        glue::glue("Target: {nright} out of {ntotal}")
+      } else if (State$n_answered <= ntotal ) {
+        glue::glue("Success. Token: {State$success_code}")
+      } else {
+        State$n_correct <- 0
+        State$n_answered <- 0
+        "Sorry. Resetting to zero. Try again!"
+      }
+    })
     output$score <- renderText({
       paste(input$topic_choice, ": ", State$n_correct, "correct out of", State$n_answered, "attempts.")
     })
@@ -126,31 +163,35 @@ server <- function(input, output) {
         # Fill in the next question
         this_question$valid <- TRUE
         prompt_info <- Qbank$Q %>% filter(unique == State$q_ids[k])
-        this_question$prompt <- prompt_info$prompt
+        this_question$name   <- prompt_info$qname
+        this_question$prompt <- prompt_info$prompt %>% # handle backquotes
+          md2html()
         choices <- Qbank$C %>% filter(question == State$q_ids[k])
-        this_question$choices <- choices$choice_text
+        this_question$choices <- choices$choice_text # %>% md2html()
         this_question$correct <- which(choices$correct)
-        this_question$feedback <- choices$feedback
+        this_question$feedback <- choices$feedback %>%
+          md2html()
         this_question$random_order <- !any(choices$mark == "a")
         list(unique = prompt_info$unique, name = prompt_info$qname)
 
     })
   output$Qprompt <- renderUI({
     if (!this_question$valid) return(NULL)
-    withMathJax(HTML(this_question$prompt))
+    withMathJax(HTML(glue::glue("<div style=\"color: green; font-size: 1.3em;\">{this_question$prompt}</div>")))
     })
   output$Choices <- renderUI({
     if (!this_question$valid) return(NULL)
     prompts <- this_question$choices
     choice_set <- as.list(1:length(prompts))
-    names(choice_set) <- prompts
+    names(choice_set) <- lapply(prompts, HTML)
     if (this_question$random_order) {
       #randomize order of choices
       inds <- 1:length(choice_set)
       choice_set <- choice_set[sample(inds)]
     }
+    prompt <- "Choose one"
     withMathJax(
-      radioButtons("answers", "Choose one", choice_set, selected=character(0))
+      radioButtons("answers", prompt, choice_set, selected=character(0))
     )
   })
   output$Feedback <- renderUI({
@@ -167,3 +208,4 @@ server <- function(input, output) {
 }
 
 shinyApp(ui, server)
+
