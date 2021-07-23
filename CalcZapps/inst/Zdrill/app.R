@@ -6,13 +6,18 @@ library(shinyjs)
 library(CalcZapps)
 
 # Success policy: 17 out of 20
-nright <- 3
-ntotal <- 20
+nright <- 8
+ntotal <- 10
 
-question_file <- system.file("Zdrill/www/text.Rmd", package="CalcZapps")
-Qbank <- CalcZapps::readQfile(question_file)
+test_file <- system.file("Zdrill/www/text.Rmd", package="CalcZapps")
+source_files <- c(
+  "https://raw.githubusercontent.com/dtkaplan/Zdrill/main/Block_1.Rmd",
+  test_file
+)
+Qbank <- CalcZapps::readQfiles(source_files)
 Qbank_topics <- unique(Qbank$Q$topic)
 
+# an experiment to see if I can get markdown to render as HTML.
 md2html <- function(s) {
   backtick <- "`([^`]*)`"
   dollar   <- "\\${1}([^\\$]*)\\${1}"

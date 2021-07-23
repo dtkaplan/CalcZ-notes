@@ -1,4 +1,17 @@
-#' Read a question file
+#' Read question files
+#'
+#' @export
+readQfiles <- function(file_names) {
+  Q <- NULL
+  C <- NULL
+  for (k in 1:length(file_names)) {
+    this <- CalcZapps::readQfile(file_names[k])
+    Q <- dplyr::bind_rows(Q, this$Q)
+    C <- dplyr::bind_rows(C, this$C)
+  }
+
+  return(list(Q=Q, C=C))
+}
 #'
 #' @export
 readQfile <- function(fname) {
