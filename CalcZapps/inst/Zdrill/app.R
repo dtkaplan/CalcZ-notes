@@ -1,7 +1,8 @@
 library(shiny)
 library(dplyr)
 library(shinyjs)
-library(CalcZapps)
+#library(CalcZapps)
+library(digest)
 
 # Success policy: 17 out of 20
 nright <- 8
@@ -9,10 +10,64 @@ ntotal <- 10
 
 test_file <- system.file("Zdrill/www/text.Rmd", package="CalcZapps")
 source_files <- c(
-    # "https://raw.githubusercontent.com/dtkaplan/Zdrill/main/Block_1.Rmd",
+    "https://raw.githubusercontent.com/dtkaplan/Zdrill/main/Block_1.Rmd",
     test_file
 )
-Qbank <- CalcZapps::readQfiles(source_files)
+
+### DEFINING HERE AS KLUGE
+# I can't get shinyapps.io to recognize the CalcZapps package.
+readQfiles <- function(file_names) {
+    Q <- NULL
+    C <- NULL
+    for (k in 1:length(file_names)) {
+        this <- CalcZapps::readQfile(file_names[k])
+        Q <- dplyr::bind_rows(Q, this$Q)
+        C <- dplyr::bind_rows(C, this$C)
+    }
+
+    return(list(Q=Q, C=C))
+}
+bigRadioButtons <- function(id, label, choices) {
+    head <- glue::glue('
+  <div id="{id}" class="form-group shiny-input-radiogroup shiny-input-container" role="radiogroup" aria-labelledby="choices-label">
+  <label class="control-label" id="{id}-label" for="{id}">{label}</label>
+  <div class="shiny-options-group">
+')
+
+    buttons <- character(0)
+    for (k in 1:length(choices)) {
+        buttons[k] <- bigRadioButtonItem(id, k, choices[k])
+    }
+
+
+    tail <- '  </div>
+  </div>
+  '
+
+    paste(c(head, buttons, tail), collapse="\n")
+}
+
+
+bigRadioButtonItem <- function(id, value, string) {
+    item_template <- '
+    <div class="radio">
+      <label>
+        <input type="radio" name="{id}" value="{value}"/>
+        <div id="{id}{value}" class="shiny-html-output">{string}</div>
+      </label>
+    </div>
+  '
+
+    glue::glue(item_template)
+
+}
+
+# End of functions that should be imported from the CalcZapps package
+
+
+
+
+Qbank <- readQfiles(source_files)
 Qbank_topics <- unique(Qbank$Q$topic)
 
 # an experiment to see if I can get markdown to render as HTML.
@@ -83,7 +138,7 @@ server <- function(input, output) {
         State$q_ids <- sample(Qbank$Q %>% dplyr::filter(topic == input$topic_choice) %>% .$unique)
         State$n_correct <- 0
         State$n_answered <- 0
-        State$success_code <- digest(input$topic_choice, "md5", serialize = FALSE)
+        State$success_code <- digest::digest(input$topic_choice, "md5", serialize = FALSE)
         next_question()
     })
 
