@@ -14,68 +14,6 @@ source_files <- c(
     test_file
 )
 
-# I THINK THIS IS BECAUSE I EDITED (ERRONEOUSLY) THE MAIN BRANCH rather than shared. I'm fixing
-# that now.
-
-# KLUGE KLUGE KLUGE.  Defining here because I can't get shinyapps.io to install the package.
-readQfiles <- function(file_names) {
-    Q <- NULL
-    C <- NULL
-    for (k in 1:length(file_names)) {
-        this <- CalcZapps::readQfile(file_names[k])
-        Q <- dplyr::bind_rows(Q, this$Q)
-        C <- dplyr::bind_rows(C, this$C)
-    }
-
-    return(list(Q=Q, C=C))
-}
-bigRadioButtons <- function(id, label, choices) {
-    head <- glue::glue('
-  <div id="{id}" class="form-group shiny-input-radiogroup shiny-input-container" role="radiogroup" aria-labelledby="choices-label">
-  <label class="control-label" id="{id}-label" for="{id}">{label}</label>
-  <div class="shiny-options-group">
-')
-
-    buttons <- character(0)
-    for (k in 1:length(choices)) {
-        buttons[k] <- bigRadioButtonItem(id, k, choices[k])
-    }
-
-
-    tail <- '  </div>
-  </div>
-  '
-
-    paste(c(head, buttons, tail), collapse="\n")
-}
-
-bigRadioButtonItem <- function(id, value, string) {
-    item_template <- '
-    <div class="radio">
-      <label>
-        <input type="radio" name="{id}" value="{value}"/>
-        <div id="{id}{value}" class="shiny-html-output">{string}</div>
-      </label>
-    </div>
-  '
-
-    glue::glue(item_template)
-
-}
-random_success <- function() {
-    sample(success, size=1)
-}
-
-success <- c(
-    "Right!",
-    "Excellent!",
-    "Good.",
-    "Correct.",
-    "Right-oh! "
-
-)
-
-# End of kluge ######
 
 
 Qbank <- readQfiles(source_files)

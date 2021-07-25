@@ -27,7 +27,10 @@ All the pattern-book functions have just a single input. You can draw graphs of 
 1. Which function to graph. In R/mosaic, You state this with what's called a ***tilde expression***. A couple of examples will suffice for the moment.
     a. When the function has a name, like `exp()` or `log()` or `sin()`, the tilde expression looks like `exp(x) ~ x`. There's a squiggle called "tilde" in the middle: <span style="font-size: 24pt;">~</span>. On the left side of the tilde you put the name of the function you want to graph followed by an input name. You can choose any input name you like: here we are using `x`. On the right side of the tilde, place the input name again. We'll explain why the name appears in two places later.
     b. When the function is being written as a formula, for instance `1/z` or `t^2`, put the formula on the left side of the tilde and the input name on the right side, like `1/z ~ z` or `1/t ~ t`.
-2. The ***graphics domain***. As you know, the ***domain*** of a function is the collection of all possible legitimate inputs. For most of the pattern-book functions, the domain is $-\infty < x < \infty$. As you might expect, it's impractical to have a graphical axis that is infinitely long. So you have to choose some finite interval of the function domain to use. This finite interval is called the "graphics domain." You specify the domain with a statement like `domain(x = c(-5,5))`, which is setting the graphics domain to $-5 \leq x \leq 5$. Note that the input name used in `domain()` must match the input name you selected in the tilde expression.
+2. The ***graphics domain***. As you know, the ***domain*** of a function is the collection of all possible legitimate inputs. For most of the pattern-book functions, the domain is $-\infty < x < \infty$. As you might expect, it's impractical to have a graphical axis that is infinitely long. So you have to choose some finite interval of the function domain to use. This finite interval is called the "graphics domain." You specify the domain with a statement like `domain(x = c(-5,5))`, which is setting the graphics domain to $-5 \leq x \leq 5$. Note that the input name used in `domain()` must match the input name you selected in the tilde expression. 
+
+::: {.why}  R uses the `c()` function to collect together the two numbers that define the left and right borders of the domain. In traditional notation, we write an interval in formats like $(-5, 5)$ or $[-5, 5]$ or $-5 \leq x \leq 5$. None of these will work with the R language. For instance, the fragment `(-5, 5)` is not a complete expression in R; the opening parenthesis needs to be preceded by a function name. The `c()` function was invented for this purpose. It can combine any number of arguments, but two is enough for our purpose here: to specify an interval on the number line.^[Some other computer languages, like MATLAB and Python, do allow use of the concise notation `[-5, 5]`. R doesn't, so you will see an awful lot of the `c()` function.]
+:::
 
 The tilde expression and the graphics domain specifier are the two arguments to `slice_plot()`. All of these are correct commands for drawing a graph:
 
@@ -62,7 +65,7 @@ You will not have to generate tabular descriptions of functions to follow this b
 
 ## Word descriptions
 
-Knowing and correctly using a handful of phrases goes a long way in being able to communicate with other people about functions with a single input. Often, the words make sense in everyday speech ("steep", "growing", "decaying", "goes up", "goes down", "flat). `r mark(430)`
+Knowing and correctly using a handful of phrases goes a long way in being able to communicate with other people about functions with a single input. Often, the words make sense in everyday speech ("steep", "growing", "decaying", "goes up", "goes down", "flat"). `r mark(430)`
 
 Sometimes the words are used in everyday speech but the casual person isn't sure exactly what they mean. For instance, you will often hear the phrase "growing exponentially." The graph of the exponential function illustrates exactly this sort of growth: flat for small $x$ and growing steadily steeper and steeper as $x$ increases. 
 
@@ -70,7 +73,7 @@ Still other words are best understood by those who learn calculus. "Concave up,"
 
 The next short sections describe five simple shape concepts: concavity, continuity, periodicity, asymptotes, and local extrema.
 
-I'll illustrate these concepts using three pattern-book functions graphed in Figure \@ref(for-words).
+I'll illustrate these concepts using three pattern-book functions graphed in Figure \@ref(fig:for-words).
 
 ```{r for-words, echo=FALSE, out.width="50%", fig.show="hold", fig.cap="Three of the pattern-book functions: (a) exponential, (b) sinusoid, (c) power-law $x^{-1}$."}
 slice_plot(exp(x) ~ x, domain(x=c(-3,3))) %>%
@@ -95,6 +98,11 @@ Referring to the three function examples in Figure \@ref(fig:for-words) ...
 a. The exponential is ***concave up*** everywhere in its domain.
 b. The sinusoid alternates back and forth between ***concave up*** and ***concave down***.
 c. This particular power law $x^{-1}$ is ***concave up*** for $x > 0$ and ***concave down*** for $x < 0$.
+
+`r insert_calcZ_exercise(4.3, "H2eu2", "Exercises/Fun/pattern-book-descriptions.Rmd")`
+
+`r insert_calcZ_exercise(4.4, "PYKG5", "Exercises/Fun/pattern-book-concave.Rmd")`
+
     
 ## Continuity
 
@@ -169,5 +177,8 @@ Computer programmers helpfully observed that the word-processing process can be 
 
 Traditional mathematical notation includes features such as superscripts and special symbols that are easily written out with pencil in hand. Often this notation is beautiful and aesthetically cherished by mathematicians. But computer commands in most computer languages are straight sequences of characters using function or infix notation.^[Some computer languages use notation where the name of the function is contained inside the parentheses as in `(+ 2 3)`.]
 
+`r insert_calcZ_exercise("1.4", "3KEgLM", "Exercises/Fun/chicken-chew-screen.Rmd")`
+
+`r insert_calcZ_exercise("1.5", "zSgXP2", "Exercises/Fun/dolphin-toss-candy.Rmd")`
 
 

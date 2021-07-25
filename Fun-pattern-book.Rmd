@@ -1,13 +1,13 @@
-# Modeling functions {#pattern-book}
+# Functions for modeling {#pattern-book}
 
 When mathematics is used to understand or analyze or predict a real world situation, the pattern of work is often in three stages: `r mark(200)`
 
-1. Translate the real-world situation into a mathematical form. This translation is called ***mathematical modeling***. For instance, Newton was trying to make sense of the motion of planets in light of his novel theory that gravity is a universal force of attraction between masses, rather than something special to Earth. He modeled force as a quantity that can be measured, simplified the planets to mere masses (another measurable quantity), and supposed that position and motion were related in a particular way: velocity being the rate of change with respect to time of position, and acceleration being the rate of change of velocity with respect to time. His theory of the motion of planets was based on two fundamental mathematical models: First
+1. Translate the real-world situation into a mathematical form. This translation is called ***mathematical modeling***. For instance, Newton was trying to make sense of the motion of planets in light of his novel theory that gravity is a universal force of attraction between masses, rather than something special to Earth. He modeled force as a quantity that can be measured, simplified the planets to mere masses (another measurable quantity), and supposed that ***position*** and motion were related in a particular way: ***velocity*** being the rate of change of position with respect to time, and ***acceleration*** being the rate of change of velocity with respect to time. His theory of the motion of planets was based on two fundamental mathematical models: First
 $$F = ma\ \ \ \text{(Newton's Second Law)}$$ which relates force, mass, and acceleration. Second, the  
 $$F = \frac{G m_1 m_2}{d^2}\ \ \ \text{(Law of Universal Gravitation)}$$
 (sometimes called the inverse square law), which relates the mass of two objects ($m_1$ and $m_2$), and the distance between them to the force of gravitation. (We'll get to the purpose of the $G$ in Chapter \@ref(dimensions).)
 
-**In this book** the objective of the modeling phase will almost always be choose or construct one or more  ***function***s that represent the relationships involved in the system being studied. You'll learn several strategies for turning what you know about the system into appropriate functions. And you'll learn some standard ***frameworks*** for organizing your ideas to help you determine how functions will be related, for instance Newton's framework relating position, velocity, and acceleration as rates of change of one another. `r mark(210)`
+**In this book** the objective of the modeling phase will almost always be to choose or construct one or more  ***function***s that represent the relationships involved in the system being studied. You'll learn several strategies for turning what you know about the system into appropriate functions. And you'll learn some standard ***frameworks*** for organizing your ideas to help you determine how functions will be related, for instance Newton's framework relating position, velocity, and acceleration as rates of change of one another. `r mark(210)`
 
 2. Do mathematical work on the model to shape it into a form that can directly answer the modeler's question of interest. For instance, Newton knew from previous astronomical observations and Kepler's theorizing that planets' orbits are elliptical in shape. He needed to do some work on his two models in order to deduce the orbital shapes consistent with his Second Law and Universal Gravitation. 
 
@@ -79,6 +79,17 @@ and like this in the R/mosaic computer notation we will be using:
 g <- makeFun(2 + 3*x - 7*x^2 ~ x)
 ```
 
+You will notice that the R/mosaic notation has most elements in common with the traditional notation, but the order is somewhat different. 
+
+::: {.takenote}
+- `g <-` means to give the function the **name** $g$. (In this book, I usually write function names with a pair of parentheses as a suffix, e.g. $g(x)$, to remind you that the name refers to a function. But the R name is simply `g`, even though I often write it as `g()` in the text.) The `<-` is called the ***assignment operator***, the instruction in R to give a name to an object. Here, the object will be the R function created by `makeFun()`.
+- `2 + 3*x - 7*x^2` is the **formula** for the function, that is, the expression found on the right-hand side of $\equiv$ in the traditional notation.
+- `~ x` is the part of the R/mosaic notation that says, "The name of the input will be `x`." In traditional notation, the name of the input is in parentheses following the name of the function $g\,{\mathbf{(x)}}$.
+- The formula and the name of the input are always related in the R/mosaic notation, part of what's called a ***tilde expression***. The formula is on the left-hand side of the tilde (<span style="font-size: 24pt;"`~`</span>) and the argument name is on the right-hand side of the tilde. If there is more than one argument, all the names go on the right-hand side of the tilde expression, separated by `&`. (Some people prefer to use `+` as the separator. That's fine.)
+- `makeFun()` is the R/mosaic operator that takes the information contained in the tilde expression and turns it into an R function.
+:::
+
+
 Functions constructed as a product of simple functions can look like this in tradition notation:
 $$h(t) \equiv \sin(t) e^{-t}$$
 and like this in computer notation:
@@ -88,7 +99,7 @@ h <- makeFun(sin(t)*exp(-t) ~ t)
 
 ## Function shapes
 
-You are going to be building models by selecting an appropriate function or by putting functions together in various ways. This might remind you of Lego blocks. As you know, Legos come in different shapes: $6\times 2$, $4\times 2$, $2\times 2$, and so on. Similarly, each of the pattern-book functions has a distinctively shaped graph, just as different articles of clothing each have their own shape. Knowing the shapes by name will help you when you need to build a model. `r mark(280)`
+You are going to be building models by selecting an appropriate function or by putting functions together in various ways. This might remind you of Lego blocks. As you know, Legos come in different shapes: $6\times 2$, $4\times 2$, $2\times 2$, and so on. Similarly, each of the pattern-book functions has a distinctively shaped graph, just as different articles of clothing have their own shapes. Knowing the shapes by name will help you when you need to build a model. `r mark(280)`
 
 
 ```{r echo=FALSE, out.width="50%", fig.show="hold", warning=FALSE}
@@ -101,7 +112,7 @@ slice_plot(log(x) ~ x, domain=dom) %>%
 slice_plot(sin(x) ~ x, domain(x=c(-10,10)), npts=500) %>%
   gf_labs(title="Sinusoid")
 slice_plot(dnorm(x) ~ x, domain(x=c(-3,3))) %>%
-  gf_labs(title="Hump")
+  gf_labs(title="Gaussian (also called \"hump\")")
 slice_plot(pnorm(x) ~ x, domain(x=c(-3,3))) %>%
   gf_labs(title="Sigmoid")
 ```
@@ -121,13 +132,13 @@ It's tempting to deny that the constant function is a function. After all, the o
 
 ## The power-law family
 
-Three of the pattern-book functions---$1/x$, $x$, $x^2$---belong to a infinite family called the ***power-law functions***.  Some other examples of power-law functions are $x^3, x^4, \ldots$ as well as $x^{1/2}$ (also written $\sqrt{x}$), $x^{1.36}$, and so on. All of these can be written $x^p$, where $p$ is a number. `r mark(290)`
+Three of the pattern-book functions---$1/x$, $x$, $x^2$---belong to an infinite family called the ***power-law functions***.  Some other examples of power-law functions are $x^3, x^4, \ldots$ as well as $x^{1/2}$ (also written $\sqrt{x}$), $x^{1.36}$, and so on. All of these functions can be written $x^p$, where $x$ is the input and $p$ is a number. `r mark(290)`
 
 Even within the power-law family, it's helpful to consider different but overlapping groups:
 
-1. The ***monomials***: $m_0(x) \equiv x^0$, $m_1(x) \equiv x^1$, $m_2(x) \equiv x^2$, $\ldots$. Of course, $m_0()$ is exactly the same as the constant function, and $m_1(x)$ is the same as the identity function. As for the rest, they have just two general shapes: both arms up (for even powers); one arm up and the other down (for odd powers.)
+1. The ***monomials***: $m_0(x) \equiv x^0$, $m_1(x) \equiv x^1$, $m_2(x) \equiv x^2$, $\ldots$. Of course, $m_0()$ is exactly the same as the constant function since $x^0 = 1$. Likewise, $m_1(x)$ is the same as the identity function since $x^1 = x$. As for the rest, they have just two general shapes: both arms up (for even powers); one arm up and the other down (for odd powers.)
 
-```{r monomial-graphs, echo=FALSE, out.width="25%", fig.show="keep", warning=FALSE, fig.cap="Graphs of the monomial functions from order 2 to 5."}
+```{r monomial-graphs, echo=FALSE, out.width="50%", fig.show="keep", warning=FALSE, fig.cap="Graphs of the monomial functions from order 2 to 5."}
 dom <- domain(x=c(-1.25, 1.25))
 slice_plot(x^2 ~ x, domain=dom) %>% gf_labs(title=expression(x^2)) %>%
   slice_plot(-x^2 ~ x, alpha=0)
@@ -180,15 +191,7 @@ slice_plot(x^pi ~ x, domain=dom, npts=500) %>%
 
 ----------
 
-`r insert_calcZ_exercise(2.1, "H2eu2", "Exercises/Fun/pattern-book-descriptions.Rmd")`
-
-----------
-
 `r insert_calcZ_exercise(2.2, "H2KG3", "Exercises/Fun/pattern-book-zeros.Rmd")`
-
-----------
-
-`r insert_calcZ_exercise(2.3, "PYKG5", "Exercises/Fun/pattern-book-concave.Rmd")`
 
 ----------
 
@@ -198,6 +201,9 @@ slice_plot(x^pi ~ x, domain=dom, npts=500) %>%
 
 `r insert_calcZ_exercise(2.5, "VIW7T","Exercises/Fun/pattern-book-axis-crossing.Rmd")`
 
+---------
+
+`r insert_calcZ_exercise("2.6", "Qj0JAr", "Exercises/Fun/bear-lay-plant.Rmd")`
 
 ## Instructor notes
 
