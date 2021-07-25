@@ -1,7 +1,7 @@
 library(shiny)
 library(dplyr)
 library(shinyjs)
-#library(CalcZapps)
+library(CalcZapps)
 library(digest)
 
 # Success policy: 17 out of 20
@@ -14,8 +14,7 @@ source_files <- c(
     test_file
 )
 
-### DEFINING HERE AS KLUGE
-# I can't get shinyapps.io to recognize the CalcZapps package.
+# KLUGE KLUGE KLUGE.  Defining here because I can't get shinyapps.io to install the package.
 readQfiles <- function(file_names) {
     Q <- NULL
     C <- NULL
@@ -47,7 +46,6 @@ bigRadioButtons <- function(id, label, choices) {
     paste(c(head, buttons, tail), collapse="\n")
 }
 
-
 bigRadioButtonItem <- function(id, value, string) {
     item_template <- '
     <div class="radio">
@@ -61,10 +59,20 @@ bigRadioButtonItem <- function(id, value, string) {
     glue::glue(item_template)
 
 }
+random_success <- function() {
+    sample(success, size=1)
+}
 
-# End of functions that should be imported from the CalcZapps package
+success <- c(
+    "Right!",
+    "Excellent!",
+    "Good.",
+    "Correct.",
+    "Right-oh! "
 
+)
 
+# End of kluge ######
 
 
 Qbank <- readQfiles(source_files)
@@ -78,12 +86,12 @@ md2html <- function(s) {
     bold     <- "\\*{2}([^\\*]*)\\*{2}"
     italics  <- "\\*{1}([^\\*]*)\\*{1}"
     s %>%
-        gsub(backtick, "<code>\\1</code>", .) %>%
+        gsub(backtick, "<code>\\1</code>", ., perl=TRUE) %>%
         gsub(doubledollar, "QQQQQ\\1QQQQQ", ., perl=TRUE) %>% # re-encode the $$
         gsub(dollar, "\\(\\\\\\1\\\\)", ., perl=TRUE) %>%
-        gsub(bold, "<strong>\\1</strong>", .) %>%
-        gsub(italics, "<em>\\1</em>", .) %>%
-        gsub("QQQQQ", "\\$\\$", .) # put back the $$
+        gsub(bold, "<strong>\\1</strong>", ., perl=TRUE) %>%
+        gsub(italics, "<em>\\1</em>", ., perl=TRUE) %>%
+        gsub("QQQQQ", "\\$\\$", ., perl=TRUE) # put back the $$
 }
 
 ui <- fluidPage(

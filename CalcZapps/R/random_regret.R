@@ -26,6 +26,6 @@ success <- c(
   "Excellent!",
   "Good.",
   "Correct.",
-  "Right-o!"
+  "Right-oh! "
 
 )
