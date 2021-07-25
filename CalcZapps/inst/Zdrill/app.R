@@ -14,6 +14,9 @@ source_files <- c(
     test_file
 )
 
+# I THINK THIS IS BECAUSE I EDITED (ERRONEOUSLY) THE MAIN BRANCH rather than shared. I'm fixing
+# that now.
+
 # KLUGE KLUGE KLUGE.  Defining here because I can't get shinyapps.io to install the package.
 readQfiles <- function(file_names) {
     Q <- NULL
