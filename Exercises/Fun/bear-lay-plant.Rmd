@@ -1,0 +1,53 @@
+---
+id: "bear-lay-plant"
+created: "Sun Jul 25 12:57:19 2021"
+global_id: "Qj0JAr"
+topic: "Scale invariance"
+---
+
+Some of our pattern-book functions have a distinctive property called **scale invariance**. This means the graph of the function looks the same even when plotted on very different horizontal and vertical axes. The function $\ln(x)$ plotted on two different scales in Figure \@ref(fig:log-scale-invariance) shows that the graph of the function has practically the same shape. 
+
+```{r log-scale-invariance, out.width="50%", fig.show="hold", echo=FALSE}
+slice_plot(log(x) ~ x, domain(x=c(.1,10))) %>%
+  gf_labs(title="Logarithm on domain [0 < x < 10]")
+slice_plot(log(x) ~ x, domain(x=c(exp(8),1e6))) %>%
+  gf_labs(title="Logarithm on domain 0 < x < 1000000")
+```
+
+Figure \@ref(fig:square-invariance) shows a power-law function, $g(x) \equiv x^2$, which is also scale invariant.
+
+```{r square-invariance, out.width="50%", fig.show="hold", echo=FALSE}
+slice_plot(x^2 ~ x, domain(x=c(-10,10))) %>%
+  gf_labs(title="Square(x) on domain -10 < x < 10")
+slice_plot(x^2 ~ x, domain(x=c(-1000000,1000000))) %>%
+  gf_labs(title="Square(x) on domain -1000000 < x < 1000000")
+```
+
+Other pattern-book functions are not scale invariant, for example $\sin(x)$.
+
+```{r sin-invariance, out.width="50%", fig.show="hold", echo=FALSE}
+slice_plot(sin(x) ~ x, domain(x=c(-10,10))) %>%
+  gf_labs(title="sin(x) on domain -10 < x < 10")
+slice_plot(sin(x) ~ x, domain(x=c(-100,100)), npts=1000) %>%
+  gf_labs(title="sin(x) on domain -100 < x < 100")
+```
+
+In contrast to scale-invariant functions, some of our pattern-book functions have a ***characteristic scale***. This is a domain length over which the whole of a characteristic feature of the function is evident. Graphing on larger domains simply squashes down the characteristic feature to a small part of the graphic domain. For instance, in the $\sin()$ function the cycle is a characteristic feature. The cycle in the pattern-book function has a characteristic length of $2 \pi$, the length of the cycle. Consequently, the graph looks different depending on the length of the graphics domain in multiples of the characteristic length. You can see from Figure \@ref(fig:sin-invariance) that the graph on the domain $-10 < x < 10$, that is, about 3 times the characteristic scale, looks different from the graph on the larger domain that has a length 30 times the characteristic scale.
+
+You could equally well say that the $\sin()$ function has a characteristic scale of 360 ***degrees***, which is the same amount as $2 \pi$ ***radians***. Most people find it easiest to interpret angles as measured in degrees, but the usual practice in mathematics and computing is that the argument to $\sin()$ (and other trigonometric functions is interpreted) in radians. You might think the choice between using degrees and using radians is arbitrary. In Chapter \@ref(taylor-polynomial) you'll see a surprising reason why radians are the "natural" way to measure angles.
+
+```{r blp1-1, echo=FALSE, results="markup"}
+askMC(
+  "The gaussian (hump) function `dnorm()` has a characteristic scale. Which of these is a domain length that can encompass the characteristic shape of the gaussian?",
+  0.1, 1, "+4+" = "Almost all of the hump fits within the domain $-2 < x < 4$, having length 4.", 16, 256,
+  random_answer_order = FALSE
+)
+```
+
+```{r blp1-2, echo=FALSE, results="markup"}
+askMC(
+  "The sigmoid function `pnorm()` also has a characteristic scale. Which of these is a domain length that can encompass the characteristic shape of the sigmoid?",
+  0.1, 1, "+4+", 16, 256,
+  random_answer_order = FALSE
+)
+```

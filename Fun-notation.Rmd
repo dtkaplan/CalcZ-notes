@@ -40,7 +40,9 @@ y = sqrt(3)
 y - x = 0
 0 = (x+3)(x-2)
 ```
-Once you've made your guesses, open a `r sandbox_link()` to see if you got it right.
+Once you've made your choice, open a `r sandbox_link()` to see if you got it right.
+
+Try one line at a time, and erase it before trying another line.  If the code is invalid, pressing "Run code" will lead to an error message below the sandbox. The valid line will not lead to any error message.
 :::
 
 The student who knows how to make sense of math notation will find this not of much help in writing computer notation. It's like a well educated foreigner trying to make sense of how some of these sentences are meaningful and others not.
@@ -56,59 +58,48 @@ The student who knows how to make sense of math notation will find this not of m
 
 In this book, we're going to use a mathematical notation that corresponds to a usable computer notation. The first step is to stop using $=$ to mean so many different things. `r mark(530)`
 
-## Objects and actions
+## Words for using functions
 
-::: {.objectives data-latex=""}
-```{r echo=FALSE, results="asis"}
-state_objective("F-30", "Identify the structure of function notation when the function is defined by a formula.")
-```
-:::
+Throughout this course, I use the words ***inputs*** and ***output*** to refer to what is handed off to a function and what is received back as the result. But "handed off" is a metaphor and not a clear naming of what we mean when we use a function. This section simply gives some vocabulary to describe various aspects of using functions. The concept of functions is so fundamental in mathematics and computing, that there are many synonyms for each aspect. It helps to be aware of these synonyms since different people will write about functions in different---but equivalent!---ways.  `r mark(540)`
 
+In everyday speech, an "argument" is a discussion between people with differing views. But in computing, ***argument*** means something else entirely: it is a synonym for "input to a function." It's good to have a concrete image in mind, so I'll suggest thinking of a computer printer as an analogy for a function. A computer printer takes several different kinds of input: electricity, paper, ink or toner, instructions transmitted via cable or wireless connection. Each of these inputs arrives at the printer through a particular interface: the electrical supply cord, a tray for holding paper, a tank or cartridge for ink, a radio receiver. These interfaces are the different inputs---or, to use the other word, arguments---of the printer. 
 
-We're going to give names to mathematical "objects" and actions. In this introduction, we'll use **boldface for objects** and *italics for actions.*
+Common sense tells you that you shouldn't put toner in the paper tray, or connect the electrical supply cord to the ink tank. You have to provide the right kind of stuff to each input interface in order to get the anticipated output from the printer. 
 
-* A **function** is a mathematical object that gives instructions about how to transform one or more **inputs** into an **output**. Typically, but not always, we will give names to functions so that we can refer to them. You can think of a function like a recipe: it tells you what to do with the inputs to create the output. You're used to functions where the recipe is written as a ***formula*** using arithmetic and other operators. A more general term for the recipe in a function is ***algorithm***. (Section \@ref(algorithms) gives a definition of "algorithm" and shows examples that are not formulas.) `r mark(540)`
+Our pattern-book functions all have a single input. With such functions it's appropriate to speak of "the input to" or "the argument of" the function. In general, the functions we will construct for modeling purposes with have multiple inputs or arguments. For instance, the function $g(x, y) \equiv e^x \sin(y)$ has both an "x-input" and a "y-input". You can just as well say "the x-argument of g()" or the "y-argument of g()," or even the "first argument of g()" and the "second argument of g()." Whether you use the preposition "of" or "to" is a matter of personal style; either will do.
 
+The act of employing a function to produce the output that corresponds to a given set of inputs is much like "printing a file." Of course, the word "printing" is not the right choice for mathematical or computational functions. Instead, there are several equivalent phrases in common use:
 
-* An **argument** is a symbol that stands for an **input** in an **algorithm**.
+i. "***Apply*** a function to arguments.
+ii. "Invoke a function." 
+iii. "Evaluate a function." 
+iv. "Run a function."
 
-* *Applying a function to inputs* means to carry out the steps of the function's algorithm, inserting the appropriate quantity in place of the symbol. Recipes will use symbols like "rice" to describe the algorithm. In cooking, you apply a recipe to the incredients. Where the recipe says, "Add rice to the boiling water" you use the physical rice and the physical boiling water, instead of the symbols. Applying a function to inputs is so fundamental to computing, that you'll often hear other words for it than "apply": *run the function* or *evaluate the function* or *execute the function*.
-    
-To *define a function* in mathematical notation we will write something like this: $$g(x) \equiv 4 x^2 - 7$$ 
+In (ii) and (iv), there is an implicit "on its arguments." But any application/evaluation/running of a function necessarily involves giving specific values for the inputs. 
 
-* $g()$ is the name of the function. 
-* The function takes just one argument, which is being written with the symbol $x$ in the definition. To make double sure that the human reader sees the symbol being used for the argument, we are putting the list of symbols in the parentheses following the function name. The definition of a function with two inputs  looks like $h(x, y) \equiv 3y - 5 x^2 + x$ and functions with more than two inputs follow the same pattern.
-* The algorithm of $g()$  is presented as a formula. The formula in the example, $4 x^2 - 7$ says, "Take the input quantity. Multiply 4 by the input and then multiply by the input again. Subtract $7$ from that to produce the output of the function. 
-* We use $\equiv$ as the punctuation to distinguish the function name (and argument list) from the algorithm. The algorithm is always on the right of $\equiv$, the name of the function and argument list are to the left.
+The difference between "a function" and "applying a function" is much the same as the difference between a printer and "printing a document," or a screwdriver and "driving (or extracting) a screw, or, for wizard-world fans, the difference between a "spell" and the act of "casting a spell." 
 
-The command `g(3)`, applies the function named $g()$ to the value 3. Do this by replacing the $x$ in the algorithm by the $3$ and carry out the calculations in the algorithm. For $g(3)$, the output will be 29. 
+In R/mosaic, the application of a modeling function like `g()` (defined in an earlier paragraph) to its two arguments looks like `g(5, pi)` with the two arguments separated by a comma. It might also look like `g(z, pi)`, or even `g(x=z, y=pi)` or `g(y=pi, x=z)` where the use of the argument names save us the trouble of remembering which argument came first in the definition.  `r mark(550)`
 
-In R, a function is defined using a very similar expression. For the $g()$ we defined above, the R definition would be
-```{r}
-g <- makeFun(4*x^2 - 7 ~ x)
-```
+When applying a function of **one** argument, refrain from using the argument name. It's unnecessary since you can hardly get the order of arguments wrong and, depending on who wrote the software for the function, they might not have used `x` as the name of the argument.
 
-i. The name of the function, without parentheses, is on the left side of the ***assignment operator*** `<-`. 
-ii. We could use the name `g` to refer to anything, function or not. The R/mosaic operator `makeFun()` constructs functions and leading a command with `g <- ` gives the output from `makeFun()` a name. 
-iii. The text in the parentheses of `makeFun` is also an R expression. We call this sort of expression a ***tilde expression***. (The symbol `~` is called "tilde.") The tilde character is simply punctuation to separate the expression on the left side, `4*x^2 - 7`, from the expression on the right side. The right side of the tilde expression identifies which symbols are the arguments. (In this case, `x` is the only argument.) The left side of the tilde expression describes the algorithm for the function, using the argument names specified on the right side. `r mark(550)`
+It's another matter when you are ***defining*** a function. For instance, $$g(x, y) \equiv e^x \sin(y)$$ does **not** mean "apply $g()$ to the arguments $x$ and $y$." Instead, it means, "I'm setting up $g()$ as a function, a kind of promise in the future that whenever you write $g(3, \pi)$ or something similar, the defined function will be applied to those arguments. But for now, you don't need to do any arithmetic or other calculation, just remember that you've made a promise named $g()$."
 
-To *apply the function* $g()$ to an argument, we write an R expression with the value for the argument given in the parentheses. For instance, to apply $g()$ to the value 3, we write:
-```{r}
-g(3)
-```
+In R/mosaic, using a ***tilde-expression*** signals that you are asking for the same kind of promise to do something when the time for it comes. 
 
+Most of the time in this course, the functions you define will be described by either 
 
+i. A ***formula***, such as `3*x + 2` or $x^2 \sin(y)$ 
+ii. Another kind of computation of the sort not typically covered in high-school math: an iterative process, a branching process, a neural network, and so on. These processes are usually expressed using a computer programming language and so they are unfamiliar to many students.
 
 
 ## Formulas and algorithms {#algorithms}
-
-The algorithms for the example functions in the previous section involved only arithmetic. More generally, a formula will involve the invocation of another function. For example: $\sqrt{\strut m x + b}$ or $\sin(m x) + \ln(b)$.
     
 The idea of "algorithm" generalizes that of formulas. A starter definition is:
 
 > An ***algorithm*** is a set of instructions for performing a computation. 
 
-High-school math typically involves presenting algorithms as formula. You learned, maybe in middle school, how to follow the arithmetic steps involved in algorithms described as formulas. You also have likely used a calculator to perform some of the arithmetic or to evaluate functions such as $\sin()$ and $\ln()$ and $\sqrt{\strut}$ for which you don't know how to evaluate using simple arithmetic. The calculator is implementing an algorithm with which its been programmed to enable the calculation of $\sin()$ and $\ln()$ and such.
+High-school math typically involves presenting an algorithm as a formula. You learned, maybe in middle school, how to follow the arithmetic steps involved in algorithms described as formulas. You also have likely used a calculator to perform some of the arithmetic or to evaluate functions such as $\sin()$ and $\ln()$ and $\sqrt{\strut}$ for which you don't know how to evaluate using simple arithmetic. The calculator is implementing an algorithm with which its been programmed to enable the calculation of $\sin()$ and $\ln()$ and such.
 
 A slightly more detailed definition of "algorithm" highlights that algorithms are written in terms of other, simpler algorithms.
 
@@ -123,7 +114,7 @@ Many functions are described by algorithms that use concepts common in computer 
 
 > We are going to use the word ***algorithm*** to name the kind of expression to the right of $\equiv$ in a function definition. A ***formula*** is a specific kind of algorithm generally written in traditional math notation.
 
-Algorithms, including the ones that are formulas, are written in terms of a set of ***symbols*** that stand for inputs. This is a high-fallutin' way of saying something simple: in $mx + b$, the $x$, $m$, and $b$ are the names we give to the quantities being used in the calculation.
+Algorithms, including the ones that are formulas, are written in terms of a set of ***symbols*** that stand for inputs. For instance, in $mx + b$, the $x$, $m$, and $b$ are the names we give to the quantities being used in the calculation.
 
 The notation we are using for function definition lists some of these names in two places, and others in only one place. Again, look at $$g(x) \equiv m x + b$$
 The $x$ appears both in the algorithm and the list of input name $(x)$ to the left of $\equiv$.
@@ -203,7 +194,7 @@ One of the important techniques of calculus is to take something we often think 
 
 Here's an illustration that will only make sense to those who have already studied some calculus:
 
-$$\int_0^3\!\! f(x) dx\ \ \text{is a number, but }\int_0^x\!\! f(x) dx \ \ \text{is a function.}\ \ $$
+$$\int_0^3\!\! f(t) dt\ \ \text{is a number, but }\int_0^x\!\! f(t) dt \ \ \text{is a function.}\ \ $$
 
 In high-school math notation, it can be hard to tell if an expression is intended to be a function or a number. Careful attention to the CalcZ conventions will make it much easier to figure whether an expression resolves to a function or a number. When you first read a mathematical expression, a good first question to ask is, "What kind of thing is this? A function? A number?"
 
