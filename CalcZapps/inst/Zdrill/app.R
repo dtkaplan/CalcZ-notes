@@ -8,10 +8,13 @@ library(digest)
 nright <- 8
 ntotal <- 10
 
+draft_questions <- "/Users/kaplan/KaplanFiles/USAFA/Zdrill/testing.Rmd"
+if (is.na(file.info(draft_questions)$size)) draft_questions <- NULL
+
 test_file <- system.file("Zdrill/www/text.Rmd", package="CalcZapps")
 source_files <- c(
     "https://raw.githubusercontent.com/dtkaplan/Zdrill/main/Block_1.Rmd",
-    test_file
+    draft_questions
 )
 
 
@@ -29,7 +32,7 @@ md2html <- function(s) {
     s %>%
         gsub(backtick, "<code>\\1</code>", ., perl=TRUE) %>%
         gsub(doubledollar, "QQQQQ\\1QQQQQ", ., perl=TRUE) %>% # re-encode the $$
-        gsub(dollar, "\\(\\\\\\1\\\\)", ., perl=TRUE) %>%
+        gsub(dollar, "\\\\\\(\\1\\\\)", ., perl=TRUE) %>%
         gsub(bold, "<strong>\\1</strong>", ., perl=TRUE) %>%
         gsub(italics, "<em>\\1</em>", ., perl=TRUE) %>%
         gsub("QQQQQ", "\\$\\$", ., perl=TRUE) # put back the $$
@@ -44,10 +47,13 @@ ui <- fluidPage(
     sidebarLayout(
         sidebarPanel(
             useShinyjs(),
-            selectInput("topic_choice", "Topic:", Qbank_topics ),
+            selectInput("topic_choice", "Topic:", sort(Qbank_topics) ),
             actionButton("startover", "Start Over"),
             tags$hr(),
-            textOutput("question_name")
+            textOutput("question_name"),
+            tags$hr(),
+            textInput("passcode", "access code"),
+            selectInput("instructor_choice", "Choose question:", choices=1:3)
         ),
 
         # Show a plot of the generated distribution
@@ -69,7 +75,7 @@ ui <- fluidPage(
 )
 
 # Define server logic required to draw a histogram
-server <- function(input, output) {
+server <- function(input, output, session) {
     State <- reactiveValues()
     this_question <- reactiveValues(valid = FALSE)
     feedback <- reactiveValues(message="")
@@ -83,8 +89,10 @@ server <- function(input, output) {
 
     observeEvent(c(input$topic_choice, input$startover), {
         # Get the unique IDs, in random order of the questions matching the topic
+        Questions <- Qbank$Q %>% dplyr::filter(topic == input$topic_choice)
         State$next_q <- 0
-        State$q_ids <- sample(Qbank$Q %>% dplyr::filter(topic == input$topic_choice) %>% .$unique)
+        State$q_ids <- sample(Questions$unique)
+        State$q_names <- sort(Questions$qname)
         State$n_correct <- 0
         State$n_answered <- 0
         State$success_code <- digest::digest(input$topic_choice, "md5", serialize = FALSE)
@@ -150,23 +158,30 @@ server <- function(input, output) {
         input$nextQ # for the dependency
         input$topic_choice # ditto
         # Get the next item
-        # shuffle as we go around the loop
-        isolate({
+        if (instructor_chooses()) {
+          selected_question <- Qbank$Q %>%
+            filter(topic == input$topic_choice, qname == input$instructor_choice) %>% .$unique
+        } else {
+          # shuffle as we go around the loop
+          isolate({
             State$next_q <- State$next_q + 1
             if (State$next_q > length(State$q_ids)) {
-                State$next_q <- 1
-                State$q_ids <- sample(State$q_ids)
+              State$next_q <- 1
+              State$q_ids <- sample(State$q_ids)
             }
-        })
-        k <- State$next_q
+          })
+          k <- State$next_q
 
+          # Option for an instructor to set the question.
+          selected_question <- State$q_ids[k]
+        }
         # Fill in the next question
         this_question$valid <- TRUE
-        prompt_info <- Qbank$Q %>% filter(unique == State$q_ids[k])
+        prompt_info <- Qbank$Q %>% filter(unique == selected_question)
         this_question$name   <- prompt_info$qname
         this_question$prompt <- prompt_info$prompt %>% # handle backquotes
             md2html()
-        choices <- Qbank$C %>% filter(question == State$q_ids[k])
+        choices <- Qbank$C %>% filter(question == selected_question)
         this_question$choices <- choices$choice_text %>% md2html()
         this_question$correct <- which(choices$correct)
         this_question$feedback <- choices$feedback %>%
@@ -206,6 +221,22 @@ server <- function(input, output) {
             shinyjs::show("nextQ")
         })
         withMathJax(HTML(paste(correct_sign, message, sep=" ")))
+    })
+
+    instructor_chooses <- reactive({
+      input$passcode == "mouse-eats-corn"
+    })
+
+    observe({
+        if (instructor_chooses()) shinyjs::show("instructor_choice")
+        else shinyjs::hide("instructor_choice")
+    })
+
+    observeEvent(input$topic_choice, {
+        the_choices <- Qbank$Q %>%
+          filter(topic == input$topic_choice) %>% .$qname %>% sort()
+
+        updateSelectInput(session, "instructor_choice", choices = the_choices)
     })
 }
 
