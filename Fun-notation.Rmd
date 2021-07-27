@@ -217,7 +217,7 @@ Almost all the time we will create a function using `makeFun()`. So when you see
 As we get deeper into calculus, you will meet additional R operators that generate functions. We'll introduce these in good time, but for someone reviewing the course, these include `D()`, `antiD()`, `compose()` and `iterate()`.
 
 ::: {.why}
-Some readers may have encountered R previously in a statistics or data science course. Those readers will be wondering what this is with `makeFun()`. Experienced programmers know that the way you make functions in R is by using the `function` keyword. For instance:
+Some readers may have encountered R previously in a statistics or data science course. Those readers will be wondering what is the purpose of `makeFun()`. Experienced programmers know that the way you make functions in R is by using the `function` keyword. For instance:
 ```{r}
 f <- function(x) { 3 + 2*x }
 ```
@@ -230,9 +230,9 @@ g <- function(x) { m*x + b }
 ```
 In traditional math notation, $g(x) \equiv m x + b$, we are usually silent on where parameters like $m$ and $b$ are coming from. And, to be honest, you don't have to worry about this **until you try to evaluate the function**. `r mark(630)`
 
-If you evaluate, say, the command $g(3)$, the R system knows how to find the right values for $m$ and $b$. If there are no such objects in the appropriate places in the R system, an error message will be generated. The rules that computer languages follow in tracking down symbols that aren't in the argument list are called ***scoping rules***. Scoping is an advanced programming concept and different languages use different rules. That's a recipe for trouble and confusion for newbies. (And even for experts!)
+If you evaluate, say, the command $g(3)$, the R system knows how to find the right values for $m$ and $b$. If there are no such objects in the appropriate places in the R system, an error message will be generated. The rules that computer languages follow in tracking down symbols that aren't in the argument list are called ***scoping rules***. Scoping is an advanced programming concept and different languages use different rules. 
 
-`makeFun()` is arranged to impose its own scoping system, one that is dead easy and essentially the same in most every computer language. All that `makeFun()` does is to add any parameters in the function algorithm to the argument list. The `makeFun()` command creates a function with 3 arguments.
+For those few whose programming background includes an understanding of scoping here's an explanation. The ordinary scoping rules in R would make undefined parameters like $m$ and $b$ in a function definition have bindings in the environment in which the function was defined. This would typically be the global environment, an unsatisfactory arrangement it would be difficult to customize an individual function or invocation of a function to use a specific value for the parameters. `makeFun()` is arranged to add any parameters in the function algorithm to the argument list. The `makeFun()` command creates a function with 3 arguments.
 ```{r}
 makeFun(m*x + b ~ x)
 ```
@@ -265,7 +265,7 @@ We use $\equiv$ in mathematical notation and `<-` in R. The notation in R is a b
 ```r
 name <- something
 ```
-If the "something" is a function, you will see that on the left side of `<-`, for instance by use of the `makeFun()` operator qw in `h <- makeFun(x^2 ~ x)`. The left side is simply a name.
+If the "something" is a function, you will see that on the left side of `<-`, for instance by use of the `makeFun()` operator in `h <- makeFun(x^2 ~ x)`. The left side is simply a name.
 
 In math notation, the equivalent would be written $h(x) \equiv x^2$. The left side isn't exactly a name. It's a name followed by parentheses in which are the names being used in the algorithm.
 
