@@ -1,5 +1,5 @@
 ---
-title: "Combining hump functions"
+title: "Combining gaussian functions"
 author: "Daniel Kaplan"
 ---
 
@@ -9,7 +9,7 @@ library(mosaic)
 library(mosaicCalc)
 ```
 
-The graph shows two hump functions, hump1(t) and hump2(t)
+The graph shows two gaussian functions, hump1(t) and hump2(t)
 
 ```{r echo=FALSE}
 h1 <- makeFun(20*dnorm(t, 50, 20) ~ t)
@@ -20,7 +20,7 @@ slice_plot(h1(t) ~ t, domain(t=c(0,200)), color = "blue",
   slice_plot(h2(t) ~ t, color="red", label_text  = "hump2(t)", label_x=.7)
 ```
 
-A linear combination  of the hump functions is shown in Graph (A).
+A linear combination  of the gaussian functions is shown in Graph (A).
 
 ```{r echo=FALSE}
 slice_plot(0.5 *  h1(t) + h2(t) ~ t, domain(t=c(0,200)) ) %>%
@@ -38,7 +38,7 @@ askMC(
 )
 ```
 
-Another linear combination  of the hump functions is shown in Graph (B).
+Another linear combination  of the gaussian functions is shown in Graph (B).
 
 ```{r echo=FALSE}
 slice_plot(h1(t) - 2*h2(t) ~ t, domain(t=c(0,200)) ) %>%

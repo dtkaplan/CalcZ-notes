@@ -39,7 +39,7 @@ There are a few reasons for us to be introducing linear combinations here.
 Even better, there is an automatic, reliable, and fast algorithm for finding the scalars for a set of functions that are to be combined to match data as closely as possible. So the modeler just has to select the functions to be used, the computer can find the coefficients. (We'll explore the mathematics and methods of linear combinations, usually called ***linear algebra***, in Block 5.)
 
 
-`r insert_calcZ_exercise(11.3, "JWUVA", "Exercises/Fun/combining-hump-funs.Rmd")`
+`r insert_calcZ_exercise(11.3, "JWUVA", "Exercises/Fun/combining-gaussian-funs.Rmd")`
 
 
 
@@ -237,14 +237,14 @@ After plucking, the note fades away. An important model of this is a sinusoid (o
 
 Function multiplication is used so often in modeling that you'll see it in many modeling situations. Here's one example that is important in physics and communication: the ***wave packet***. Overall, the wave packet is a localized oscillation as in Figure \@ref{fig:wave-packet}. 
 
-```{r wave-packet, echo=FALSE, fig.cap="A *wave packet* constructed by multiplying a sinusoid by a hump function."}
+```{r wave-packet, echo=FALSE, fig.cap="A *wave packet* constructed by multiplying a sinusoid by a gaussian function."}
 wave_packet <- function(x, A=1, center = 0, width = 5, P=1, phase = 0) {
   A*sin(2*pi*x/P)*dnorm((x - center)/width)
 }
 slice_plot(wave_packet(x, A=2, center=3, width  = 4, P  = 10/5 ) ~ x, 
            domain(x = c(-15, 15)), npts = 500)
 ```
-This is the product of two simple functions: a hump times a sinusoid.
+This is the product of two simple functions: a gaussian times a sinusoid.
 
 ```{r making-wave-packet, echo=FALSE, out.width="50%", fig.show="hold", fig.cap="The two components of the wave packet in Figure \\@ref(fig:wave-packet)"}
 sinusoid <- makeFun(sin(2*pi*x/P) ~ x, P=10/5)
@@ -264,7 +264,7 @@ slice_plot(sin(2*pi*t/2.1)*sin(2*pi*t/20) ~ t, domain(t=c(-30, 40)), npts=500)
 etude2::etudeQ(
   "What are the two basic modeling functions being multiplied?",
   "+A sinusoid and another sinusoid with a faster period.+",
-  "A hump and a sinusoid.",
+  "A gaussian and a sinusoid.",
   "A sigmoidal function and a sinusoid.",
   ""
 )
@@ -283,7 +283,7 @@ random_answer_order = FALSE
 
 Other examples along the same lines.
 
-EXERCISE: Provide a sigmoid and a series of humps. Ask the student to sketch out the product.
+EXERCISE: Provide a sigmoid and a series of gaussians. Ask the student to sketch out the product.
 
 ## All together now!
 

@@ -32,11 +32,11 @@ Here are some of the common forms of the basic modeling functions you will encou
 Name | Common forms | note
 -----|--------------|------------
 Exponential | $e^{k t}$ or  $e^{-k t}$ or $e^{-t/ \tau}$
-Sinusoid | $\sin\left(\frac{2 \pi}{P} (t-t_0)\right)$, $\sin\left(\frac{2 \pi}{P} t\right)$, or $\sin(\omega t)$ | $P$ is "period", $\omega$ is "angular frequency"
+Sinusoid | $\sin\left(\frac{2 \pi}{P} (t-t_0)\right)$, $\sin\left(\frac{2 \pi}{P} t\right)$, or $\sin(\omega t)$ | $P$ is "period", $\omega$ is "angular frequency."
 Monomials | $[x-x_0]$ or $[x-x_0]^2$, and so on
-Power-law generally | $x^p$ or $[x-x_0]^p$ | $p$ is "power"
-Hump | $\dnorm(x, mn, sd)$ | $mn$ is "mean" or "center"
-Sigmoid | $\dnorm(x, mn, sd)$ | $sd$ is "standard deviation" or "spread"
+Power-law generally | $x^p$ or $[x-x_0]^p$ | $p$ is "power."
+Gaussian | $\dnorm(x, mean, sd)$ | Interpret "mean" as "center."
+Sigmoid | $\dnorm(x, mean, sd)$ | $sd$ is "standard deviation" or "spread."
 
 
 
@@ -49,7 +49,7 @@ Remember also that, in general, we scale the inputs and scale the output. This m
 - $-f(t)$, flipped top-for-bottom
 - $-f(-t)$, flipped both top-for-bottom and right-for-left
 
-For functions such as the sinusoid, flipping is not much use, since the flipped sinusoid curve is still a sinusoid, although with a shifted input. Similarly, a right-for-left flipped hump function has the same shape as the original. For the straight-line function, flipping of either sort accomplishes the same thing: changing the sign of the slope. 
+For functions such as the sinusoid, flipping is not much use, since the flipped sinusoid curve is still a sinusoid, although with a shifted input. Similarly, a right-for-left flipped gaussian function has the same shape as the original. For the straight-line function, flipping of either sort accomplishes the same thing: changing the sign of the slope. 
 
 For the exponential function, the two possible types of flipping---right-for-left and top-for-bottom---produce four different curves, all of which are exponential, shown in Figure \@ref(fig:four-variations).
 
@@ -270,36 +270,36 @@ As for finding the power law $f(x) \equiv A x^p$ that provides a good match to d
 
 
 
-## Hump and sigmoid functions
+## Gaussian and sigmoid functions
 
 Our last two basic modeling functions express an important idea in modeling: ***localness***. To put this in concrete terms, imagine creating a function to depict the elevation above sea level of a long road as a function of distance in miles, $x$, from the start of the road. If the road were level at 1200 feet elevation, a sensible model would be $\mbox{elevation}(x) = 1200 \text{ft}$. If the road were gently sloping, a better model would be $\mbox{elevation}(x) = 1200 + 3 x$.   `r mark(980)`
 
 Now let's add a bump to the road. A bump is a local feature, often only a few feet wide. Or, perhaps the road is crossing a mountain range. That's also a local feature, but unlike a bump in the road a mountain range extends for many miles.
 
-The basic modeling function suited to represent bumps in the road, or potholes, or mountain ranges is called a ***hump function***. 
+The basic modeling function suited to represent bumps in the road, or potholes, or mountain ranges is generically called a "hump function." In this book, we use a specific hump function called the ***gaussian*** function (`dnorm()`). 
 
-A hump function has two parameters: the location of the hump, which we'll call the ***center*** parameter, and the sideways extent of the hump, which we'll call the ***spread***. Figure \@ref(fig:Fun-3C-1) shows a few hump functions with different parameters.
+A gaussian function has two parameters: the location^[That is, the input value at which the function value is largest.] of the peak, which we'll call the ***center*** parameter, and the sideways extent of the gaussian, which we'll call the ***spread***. Figure \@ref(fig:Fun-3C-1) shows a few gaussian functions with different parameters.
 
 ```{r Fun-3C-1, echo=FALSE, warning=FALSE, fig.show="hold", fig.height=3, fig.width=6}
 slice_plot(dnorm(x, 1, 0.5) ~ x, domain(x=c(-3, 3))) %>%
-    gf_labs(title="(a) Hump with center=1, spread = 0.5")
+    gf_labs(title="(a) Gaussian with center=1, spread = 0.5")
 slice_plot(dnorm(x, -1, 0.05) ~ x, domain(x=c(-3, 3)), npts=500) %>%
-    gf_labs(title="(b) Hump with center=-1, spread = 0.05")
+    gf_labs(title="(b) Gaussian with center=-1, spread = 0.05")
 slice_plot(dnorm(x, 0.25, 1.2) ~ x, domain(x=c(-3, 3)), npts=500) %>%
-    gf_labs(title="(c) Hump with center=0.25, spread = 1.2") %>%
+    gf_labs(title="(c) Gaussian with center=0.25, spread = 1.2") %>%
   gf_hline(yintercept = dnorm(1.2+0.25, 0.25, 1.2), color="red") %>%
     gf_segment(0.2016 + 0.2016 ~ -0.95 + 1.45, color="red", size=3, alpha=.03)
 ```
 
-It's easy to read off the ***center*** parameter from a graph of a hump. It's the location of the top of the hump. (We mentioned before that a mathematical word for "the location of the top" is ***argmax***; the value for the input of the function that produces the maximum output.)
+It's easy to read off the ***center*** parameter from a graph of a gaussian. It's the location of the top of the function graph. (We mentioned before that a mathematical word for "the location of the top" is ***argmax***; the value for the input of the function that produces the maximum output.)
 
-The ***spread*** parameter is also pretty straightforward, but you first have to become familiar with an unusual feature of the hump function. The output of the hump function *far from the center* is practically zero. But it is not exactly zero. You can see from the graphs that the hump function has long flanks which approach zero output more or less in the manner of an exponential function. This means that we can't measure the spread of the hump function by the distance between the zeros on either side of the peak. Instead, we need a ***convention*** that will allow us to be precise in quantifying what is admittedly a vague concept of width.
+The ***spread*** parameter is also pretty straightforward, but you first have to become familiar with an unusual feature of the gaussian function. The output of the gaussian *far from the center* is practically zero. But it is not exactly zero. You can see from the graphs that the gaussian function has long flanks which approach zero output more or less in the manner of an exponential function. This means that we can't measure the spread of the gaussian function by the distance between the zeros on either side of the peak. Instead, we need a ***convention*** that will allow us to be precise in quantifying what is admittedly a vague concept of width.
 
-A simple convention is that the spread is the "half-width at half-height." Come down half-way from the peak of the hump. Panel (c) of Figure \@ref(fig:Fun-3C-1) marks that elevation with a thin, red, horizontal line. Along that line, measure the width of the hump, as marked by the thick red line in Panel (c). The ***spread*** parameter is half the width of the hump measured in this way.   `r mark(990)`
+A simple convention is that the spread is the "half-width at half-height." Come down half-way from the peak value of the output. Panel (c) of Figure \@ref(fig:Fun-3C-1) marks that elevation with a thin, red, horizontal line. Along that line, measure the width of the gaussian, as marked by the thick red line in Panel (c). The ***spread*** parameter is half the width of the gaussian measured in this way.   `r mark(990)`
 
-If you have a keen eye, you'll notice that the red line is not exactly half-way down from the peak. It's down 39.35% from the peak. The official definition of width of a hump is not actually half-width at half-height, but that simple formulation will do for us for the present.
+If you have a keen eye, you'll notice that the red line is not exactly half-way down from the peak. It's down 39.35% from the peak. The official definition of width of a gaussian is not actually half-width at half-height. Instead, it is the length of the interval from the argmax to the inflection point. 
 
-Another seeming oddity about the hump function is the value of the maximum. It would have seemed natural to define this as 1, so-called "unit height." The way it actually works is different: the maximum height is set so that the ***area*** under the hump function is 1.
+Another seeming oddity about the gaussian function is the value of the maximum. It would have seemed natural to define this as 1, so-called "unit height." The way it actually works is different: the maximum height is set so that the ***area*** under the gaussian function is 1.
 
 This business with the area will make more sense when you've learned some calculus tools, specifically "differentation" and "integration." For now though ...
 
@@ -315,19 +315,15 @@ slice_plot(pnorm(x, 0.25, 1.2) ~ x, domain(x=c(-3, 3)), npts=500) %>%
 ```
 The name "sigmoid" comes from vague resemblance of the graph to the letter S (which is "sigma" in Greek: ς). 
 
-The parameters of the sigmoid function are the same as for the hump function: ***center*** and ***width***. The center is easy to estimate from a graph. It's the value of the input that produces an output of 0.5, half-way between the max and min of the sigmoid. As with the hump function, the ***width*** is measured according to a convention. The width is the ***change in input*** needed to go from an output of 0.5 to an output of 0.8413. This use of 0.8413 must seem loony at first exposure, but there is a reason. We'll need more calculus tools before it can make sense.
+The parameters of the sigmoid function are the same as for the gaussian function: ***center*** and ***width***. The center is easy to estimate from a graph. It's the value of the input that produces an output of 0.5, half-way between the max and min of the sigmoid. As with the gaussian function, the ***width*** is measured according to a convention. The width is the ***change in input*** needed to go from an output of 0.5 to an output of 0.8413. This use of 0.8413 must seem loony at first exposure, but there is a reason. We'll need more calculus tools before it can make sense.
 
-Hump functions and sigmoid functions with the same center and width parameters have a very close relationship. The ***slope*** of the sigmoid function is the corresponding ***hump*** function. Figures \@ref(fig:Fun-3C-1) and \@ref(fig:Fun-3C-2) show corresponding hump and sigmoid functions. To the very far left, the sigmoid function is effectively flat: a slope near zero. Moving toward the center the sigmoid has a gentle slope: a low number. In the center, the sigmoid is steepest: a higher number. Then the slope of the sigmoid becomes gentle again before gradually falling off to zero. Near zero, then low, then higher, then low again, then falling off to zero: that's also the description of a hump function!
+Gaussian functions and sigmoid functions with the same center and width parameters have a very close relationship. The ***instantaneous rate of change*** of the sigmoid function is the corresponding ***gaussian*** function. Figures \@ref(fig:Fun-3C-1) and \@ref(fig:Fun-3C-2) show corresponding gaussian and sigmoid functions. To the very far left, the sigmoid function is effectively flat: a slope near zero. Moving toward the center the sigmoid has a gentle slope: a low number. In the center, the sigmoid is steepest: a higher number. Then the slope of the sigmoid becomes gentle again before gradually falling off to zero. Near zero, then low, then higher, then low again, then falling off to zero: that's also the description of a gaussian function!
 
-In R, the name of the sigmoid function is `pnorm()`. The hump is `dnorm()`. The parameters that specify center and spread are named `mean` and `sd`. The word "mean" accurately conveys the idea of "center." It would be nice to be able to say that `sd` comes from `s`prea`d`, but in fact `sd` is short for ***standard deviation***, a old-fashioned term familiar to students of statistics.   `r mark(1000)`
-
-
+In R, the name of the sigmoid function is `pnorm()`. The gaussian is `dnorm()`. The parameters that specify center and spread are named `mean` and `sd`. The word "mean" accurately conveys the idea of "center." It would be nice to be able to say that `sd` comes from `s`prea`d`, but in fact `sd` is short for ***standard deviation***, a old-fashioned term familiar to students of statistics.   `r mark(1000)`
 
 ::: {.why}
-"Standard deviation" is off-putting to many people and it really should be replaced with something less weird, perhaps ***typical spread***. The "standard" can be interpreted as "widely used convention." What about "deviation?" The hump function first appeared two-hundred years ago as part of a theory of measurement error. In the context of "error", "deviation" might have made sense. But the theory of measurement error long ago became a more general theory of ***variation***. Errors are just one source of variation. 
+"Standard deviation" is off-putting to many people and it really should be replaced with something less weird, perhaps ***typical spread***. The "standard" can be interpreted as "widely used convention." What about "deviation?" The gaussian function first appeared two-hundred years ago as part of a theory of measurement error. In the context of "error", "deviation" might have made sense. But the theory of measurement error long ago became a more general theory of ***variation***. Errors are just one source of variation. 
 :::
-
-
 
 `r insert_calcZ_exercise(8.25, "IELWV", "Exercises/Fun/hump-intro.Rmd")`
 
