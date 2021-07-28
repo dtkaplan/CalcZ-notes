@@ -9,7 +9,8 @@ nright <- 8
 ntotal <- 10
 
 draft_questions <- "/Users/kaplan/KaplanFiles/USAFA/Zdrill/testing.Rmd"
-if (is.na(file.info(draft_questions)$size)) draft_questions <- NULL
+dq_size <- file.info(draft_questions)$size
+if (is.na(dq_size) || dq_size < 10) draft_questions <- NULL
 
 test_file <- system.file("Zdrill/www/text.Rmd", package="CalcZapps")
 source_files <- c(
@@ -39,9 +40,16 @@ md2html <- function(s) {
 }
 
 ui <- fluidPage(
+  # make sure the answer elements are wide enough
+  tags$head(
+    tags$style(HTML("
+      @import url('https://fonts.googleapis.com/css2?family=Yusei+Magic&display=swap');
+      .MCchoice {
+        width: 50em;
+      }"))),
 
-    # Application title
-    titlePanel("CalcZ Quick Response"),
+  # Application title
+  titlePanel("CalcZ Quick Response"),
 
     # Sidebar with a slider input for number of bins
     sidebarLayout(
@@ -74,7 +82,6 @@ ui <- fluidPage(
     )
 )
 
-# Define server logic required to draw a histogram
 server <- function(input, output, session) {
     State <- reactiveValues()
     this_question <- reactiveValues(valid = FALSE)
@@ -197,16 +204,16 @@ server <- function(input, output, session) {
     output$Choices <- renderUI({
         if (!this_question$valid) return(NULL)
         prompts <- this_question$choices
-        choice_set <- as.list(1:length(prompts))
-        names(choice_set) <- lapply(prompts, HTML)
+        inds <- 1:length(prompts)
+        prompts <- lapply(prompts, HTML)
         if (this_question$random_order) {
             #randomize order of choices
-            inds <- 1:length(choice_set)
-            choice_set <- choice_set[sample(inds)]
+            inds <- sample(1:length(prompts))
+            #choice_set <- choice_set[inds]
+            prompts <- prompts[inds]
         }
 
-        choices <- paste("Choice", 1:4, "\\(x^2 + \\sqrt{\\strut y}\\)")
-        contents <- bigRadioButtons("answers", "", prompts)
+        contents <- bigRadioButtons("answers", "", prompts, inds)
         withMathJax(HTML(contents))
     })
 
