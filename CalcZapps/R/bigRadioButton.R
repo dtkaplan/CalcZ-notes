@@ -3,7 +3,7 @@
 #' @param choices a character vector, one for each choice
 #'
 #' @export
-bigRadioButtons <- function(id, label, choices) {
+bigRadioButtons <- function(id, label, choices, origNum) {
   head <- glue::glue('
   <div id="{id}" class="form-group shiny-input-radiogroup shiny-input-container" role="radiogroup" aria-labelledby="choices-label">
   <label class="control-label" id="{id}-label" for="{id}">{label}</label>
@@ -12,7 +12,7 @@ bigRadioButtons <- function(id, label, choices) {
 
   buttons <- character(0)
   for (k in 1:length(choices)) {
-    buttons[k] <- bigRadioButtonItem(id, k, choices[k])
+    buttons[k] <- bigRadioButtonItem(id, origNum[k], choices[k])
   }
 
 

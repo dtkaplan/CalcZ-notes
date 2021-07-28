@@ -197,16 +197,16 @@ server <- function(input, output, session) {
     output$Choices <- renderUI({
         if (!this_question$valid) return(NULL)
         prompts <- this_question$choices
-        choice_set <- as.list(1:length(prompts))
-        names(choice_set) <- lapply(prompts, HTML)
+        inds <- 1:length(prompts)
+        prompts <- lapply(prompts, HTML)
         if (this_question$random_order) {
             #randomize order of choices
-            inds <- 1:length(choice_set)
-            choice_set <- choice_set[sample(inds)]
+            inds <- sample(1:length(prompts))
+            #choice_set <- choice_set[inds]
+            prompts <- prompts[inds]
         }
 
-        choices <- paste("Choice", 1:4, "\\(x^2 + \\sqrt{\\strut y}\\)")
-        contents <- bigRadioButtons("answers", "", prompts)
+        contents <- bigRadioButtons("answers", "", prompts, inds)
         withMathJax(HTML(contents))
     })
 
