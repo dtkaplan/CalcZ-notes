@@ -89,8 +89,8 @@ Let's plot $e^{i\omega t}$ over the domain $0 < t < 10$ using $\omega = 2$. We n
 ```{r cn1, exercise=TRUE, exercise.cap="Complex arithmetic", exercise.nline=8, eval=FALSE}
 f <- makeFun(exp(1i * omega * t) ~ t, omega = 2)
 slice_plot(Re(f(t)) ~ t, 
-           domain(t=c(0, 10)), color = "red") %>%
-  slice_plot(Im(f(t)) ~ t, color="blue")
+           domain(t=c(0, 10)), color = "orange3") %>%
+  slice_plot(Im(f(t)) ~ t, color="dodgerblue")
 ```
 
 ```{r cn2, echo=FALSE, results="markup"}
@@ -107,8 +107,8 @@ The next sandbox defines a new function, $e^{(k + i\omega) t}$ and plots its rea
 ```{r cn3, exercise=TRUE, exercise.cap="Complex exponential functions", exercise.nline=8, eval=FALSE}
 g <- makeFun(exp((k + 1i * omega) * t) ~ t, omega = 2, k=-1)
 slice_plot(Re(g(t)) ~ t, 
-           domain(t=c(0, 10)), color = "red", npts=500) %>%
-  slice_plot(Im(g(t)) ~ t, color="blue", npts=500)
+           domain(t=c(0, 10)), color = "orange3", npts=500) %>%
+  slice_plot(Im(g(t)) ~ t, color="dodgerblue", npts=500)
 ```
 ```{r cn4, echo=FALSE, results="markup"}
 askMC(

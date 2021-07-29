@@ -18,9 +18,9 @@ temp <- rfun(~ x + y, seed = 12428)
 f <- makeFun(temp(y/2, x/2) ~ x + y)
 gradient_plot(f(x, y) ~ x + y, domain(x=c(-5,5), y=c(-5,5))) %>%
   gf_segment(4 + 4 ~ -5 + 5, color = "black", size=2, alpha=.5) %>% # 
-  gf_segment(-5 + 5 ~ 3 + -1, color = "orange", size=2, alpha=.5) %>% #2
-  gf_segment(-5 + 0 ~ -5 + 5, color = "red", size=2, alpha = .5) %>% #4
-  gf_segment(-2 + -5  ~ -5 + 5, color = "yellow", size=2, alpha=.5) %>% # 3
+  gf_segment(-5 + 5 ~ 3 + -1, color = "dodgerblue", size=2, alpha=.5) %>% #2
+  gf_segment(-5 + 0 ~ -5 + 5, color = "orange3", size=2, alpha = .5) %>% #4
+  gf_segment(-2 + -5  ~ -5 + 5, color = "yellow3", size=2, alpha=.5) %>% # 3
   gf_segment(5 + -5 ~ 4 + -2.5, color= "gray", size=2, alpha = .5) # 1
 ```
 
@@ -40,7 +40,7 @@ In the slice plots, the input $t$ reflects the position on the slice. At $t=0$, 
 ```{r daily-digital-33-QA30, echo=FALSE}
 askMC(
   prompt = "Which color line corresponds to slice 1?",
-  "black", "+gray+", "orange", "red", "yellow",
+  "black", "+gray+", "blue", "red", "yellow",
   inline = FALSE,
   random_answer_order = FALSE
 )
@@ -49,7 +49,7 @@ askMC(
 ```{r daily-digital-33-QA31, echo=FALSE}
 askMC(
   prompt = "Which color line corresponds to slice 2?",
-  "black", "gray", "+orange+", "red", "yellow",
+  "black", "gray", "+blue+", "red", "yellow",
   inline = FALSE,
   random_answer_order = FALSE
 )
@@ -58,7 +58,7 @@ askMC(
 ```{r daily-digital-33-QA32, echo=FALSE}
 askMC(
   prompt = "Which color line corresponds to slice 3?",
-  "black", "gray", "orange", "red", "+yellow+",
+  "black", "gray", "blue", "red", "+yellow+",
   inline = FALSE,
   random_answer_order = FALSE
 )
@@ -67,7 +67,7 @@ askMC(
 ```{r daily-digital-33-QA33, echo=FALSE}
 askMC(
   prompt = "Which color line corresponds to slice 4?",
-  "black", "gray", "orange", "+red+", "yellow",
+  "black", "gray", "blue", "+red+", "yellow",
   inline = FALSE,
   random_answer_order = FALSE
 )

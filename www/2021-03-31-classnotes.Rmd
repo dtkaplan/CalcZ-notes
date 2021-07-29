@@ -96,7 +96,7 @@ What kind of dynamics might be behind this time series?
 load("www/prices.rda")
 P <- gf_line(F ~ date, data = Prices) %>%
   gf_labs(y = "?") %>%
-gf_line(GM/3 ~ date, color="blue") %>%
+gf_line(GM/3 ~ date, color="dodgerblue") %>%
 gf_line(TSLA/40 ~ date, data = Prices, color="green") 
 P
 ```
@@ -142,9 +142,9 @@ g <- makeFun((1/sqrt(2*pi*sigma^2)) *
     
 slice_plot(g(x) ~ x, domain(x = c(-2, 6))) %>%
     gf_hline(yintercept = .3989/exp(1/2), alpha = 0.5, 
-             size=2, color="red") %>%
+             size=2, color="orange3") %>%
     gf_vline(xintercept = c(0, 1, 3, 4), 
-             color="blue", size=2, alpha = 0.35)
+             color="dodgerblue", size=2, alpha = 0.35)
 ```
 
 # 2. Two parameters
@@ -162,7 +162,7 @@ Particular in the social sciences
 ```{r warning=FALSE, out.width="50%", fig.align="center"}
 G <- antiD(g(x) ~ x, lower.bound = -Inf)
 slice_plot(G(x) ~ x, domain(x=c(-2, 6))) %>%
-  gf_vline(xintercept = c(0, 1, 3, 4), color="blue", size=2, alpha = 0.35)
+  gf_vline(xintercept = c(0, 1, 3, 4), color="dodgerblue", size=2, alpha = 0.35)
 ```
 
 # Differential dynamics of heat diffusion
@@ -226,8 +226,8 @@ show_gauss <- function(t, ytop= 0.2, mean=2, xlen=5) {
   )
   gf_line(y ~ x, data=Dat, alpha=0.5, size=2) %>%
     gf_hline(yintercept = g(2)/exp(1/2), alpha = 0.5, 
-             size=2, color="red") %>%
-    gf_vline(xintercept = 2 + sqrt(t)*c(-2, -1, 1, 2), color="blue", size=2, alpha = 0.35) %>%
+             size=2, color="orange3") %>%
+    gf_vline(xintercept = 2 + sqrt(t)*c(-2, -1, 1, 2), color="dodgerblue", size=2, alpha = 0.35) %>%
     gf_refine(
       coord_cartesian(xlim=c(mean-xlen, mean+xlen), 
                       ylim=c(0, ytop), 
@@ -400,7 +400,7 @@ deterministic <- tibble::tibble(
   t = tpts,
   x = S_0*exp(r*t),
   x_rand = S_0*exp(r -t*sigma^2/2),
-  color = "red",
+  color = "orange3",
   x_ave = x_sum/ntrajs
 )
 
@@ -408,7 +408,7 @@ P <- gf_line(x ~ t, data = bind_rows(Trajs),  color= ~ color, alpha=0.1) %>%
   gf_line(x ~ t, data = bind_rows(Trajs[c(1, round(ntrajs/2), ntrajs)]),
           color= ~ color) %>%
   gf_line(x ~ t, data = deterministic, color=~ color) %>%
-  gf_line(x_rand ~ t, data = deterministic, color="blue") %>%
+  gf_line(x_rand ~ t, data = deterministic, color="dodgerblue") %>%
   gf_refine(scale_color_identity()) %>%
   gf_labs(x="Time (years)", y="Value of investment") 
 P 
@@ -434,7 +434,7 @@ In 1997, Myron Sholes and Robert Merton won the Nobel Prize in Economics for thi
 ```{r echo=FALSE, out.width="70%", fig.align="center"}
 P <- gf_line(F ~ date, data = Prices) %>%
   gf_labs(y = "?") %>%
-  gf_line(GM/3 ~ date, color="blue") %>%
+  gf_line(GM/3 ~ date, color="dodgerblue") %>%
   gf_line(TSLA/40 ~ date, data = Prices, color="green")
 P %>%
   gf_refine(scale_y_log10())

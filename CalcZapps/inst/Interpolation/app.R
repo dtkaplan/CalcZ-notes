@@ -112,7 +112,7 @@ server <- function(input, output) {
                 mosaicCalc::slice_plot(funs$cubic(x) ~ x,
                                        npts = 500,
                                        size = 2, alpha = 0.5,
-                                       color="blue", domain=dom)
+                                       color="dodgerblue", domain=dom)
         }
         if (input$global) {
             P <- P %>%
@@ -140,7 +140,7 @@ server <- function(input, output) {
                 P <- P %>%
                     mosaicCalc::slice_plot(Jitters[[k]]$cubic(x) ~ x,
                                            npts=500,
-                                           color="blue", alpha=.5, domain=dom)
+                                           color="dodgerblue", alpha=.5, domain=dom)
             }
             if (input$global) {
                 P <- P %>%
@@ -173,7 +173,7 @@ server <- function(input, output) {
             P <- P %>%
                 mosaicCalc::slice_plot(dfuns$cubic(x) ~ x,
                                        size = 2, alpha = 0.5,
-                                       color="blue", domain=dom, npts=500)
+                                       color="dodgerblue", domain=dom, npts=500)
         }
         if (input$global) {
             P <- P %>%
@@ -207,7 +207,7 @@ server <- function(input, output) {
             P <- P %>%
                 mosaicCalc::slice_plot(ddfuns$cubic(x) ~ x,
                                        size = 2, alpha = 0.5,
-                                       color="blue", domain=dom, npts=500)
+                                       color="dodgerblue", domain=dom, npts=500)
         }
         if (input$global) {
             P <- P %>%

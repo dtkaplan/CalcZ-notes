@@ -60,7 +60,7 @@ Imagine that we have a long, thin pipe filled with still air and we inject at po
 top <- max(C_funs[[1]]$y)
 gf_line(y ~ x, data = C_funs[[1]] %>% filter(abs(x) < 25)) %>%
   gf_labs(y="Temperature (deg C)", x="Position along bar", title="Initial condition C(x,t=0)") %>%
-  gf_hline(yintercept = exp(-.5)*top, color="red")
+  gf_hline(yintercept = exp(-.5)*top, color="orange3")
 ```
 
 The red horizontal line is positioned to enable you to read off the standard deviation of the bell-shaped function.
@@ -93,12 +93,12 @@ draw_C <- function(n, compare_n=1, show_sd=TRUE, domain=5) {
   
   if (compare_n > 0) {
     P <- P %>% 
-      gf_line(y ~ x, alpha=0.5, color="blue", 
+      gf_line(y ~ x, alpha=0.5, color="dodgerblue", 
             data = C_funs[[compare_n]] %>% filter(abs(x) < domain)) 
   }
   
   if (show_sd) {
-    P %>% gf_hline(yintercept=redline, color="red")
+    P %>% gf_hline(yintercept=redline, color="orange3")
   } else {
     P
   }

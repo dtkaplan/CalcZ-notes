@@ -21,7 +21,7 @@ Stans_data <- CoolingWater %>% sample_n(20)
 # Plot the sample and overlay a model
 gf_point(temp ~ time, data=Stans_data) %>%
   gf_lims(y = c(20, NA)) %>%
-  slice_plot(25 + 83.3*exp(-.0277*time) ~ time, color="blue")
+  slice_plot(25 + 83.3*exp(-.0277*time) ~ time, color="dodgerblue")
 ```
 
 See if $k=-0.02$ provides a better fit to the model. (You can add another `slice_plot()` to be able to compare the original and $k=-0.02$ models.)
@@ -42,7 +42,7 @@ refined_params <-
 coef(refined_params)
 new_f <- makeFun(refined_params)
 gf_point(temp ~ time, data = Stans_data) %>%
-  slice_plot(new_f(time) ~ time, color="blue")
+  slice_plot(new_f(time) ~ time, color="dodgerblue")
 ```
 
 The refined parameters give a much better fit to the data than our original rough estimates by eye.
@@ -79,12 +79,12 @@ mod1 <- makeFun(1.05 + 0.55*sin(2*pi*hour/11) ~ hour)
 mod2 <- makeFun(1.05 + 0.55*sin(2*pi*(hour-17)/11) ~ hour)
 gf_line(level ~ hour,
          data = math141Z::RI_tide %>% filter(hour < 25)) %>%
-  slice_plot(mod2(hour) ~ hour, color="blue") %>%
+  slice_plot(mod2(hour) ~ hour, color="dodgerblue") %>%
   gf_labs(y="Water level (meters)", x="Time (hours)") %>%
   gf_lims(y =c(0, 2))
 gf_line(level ~ hour,
          data = math141Z::RI_tide %>% filter(hour > 90)) %>%
-  slice_plot(mod2(hour) ~ hour, color="blue") %>%
+  slice_plot(mod2(hour) ~ hour, color="dodgerblue") %>%
   gf_labs(y="Water level (meters)", x="Time (hours)")%>%
   gf_lims(y =c(0, 2))
 ```
@@ -113,7 +113,7 @@ coef(tide_mod)
 ```{r Fun-4-a-3-6, echo=FALSE, fig.cap="Polishing the parameters of the sinusoid"}
 mod4 <- makeFun(tide_mod)
 gf_line(level ~ hour, data = math141Z::RI_tide) %>%
-  slice_plot(mod4(hour) ~ hour, color="red", npts=200) %>%
+  slice_plot(mod4(hour) ~ hour, color="orange3", npts=200) %>%
   gf_labs(y="Water level (meters)", x="Time (hours)", title="After polishing by the computer") %>%
   gf_lims(y =c(0, 2))
 ```

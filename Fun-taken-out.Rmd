@@ -23,7 +23,7 @@ slice_plot((180/pi)*ha(pi/4, ang) ~ ang, domain(ang=pi*c(-23, 23)/180))
 # Length of day at latitude L, Julian day d
 dlen <- makeFun(2*(180/pi)*ha(L, (pi/180)*solar_dec(d))/15 ~ L + d)
 slice_plot(dlen(66.5*pi/180, d) ~ d, domain(d=c(0,365)), npts=5000) %>%
-  gf_hline(yintercept=c(0, 24), color="blue") %>%
+  gf_hline(yintercept=c(0, 24), color="dodgerblue") %>%
   gf_lims(y=c(0,24))
 ```
 
@@ -203,9 +203,9 @@ For use in modeling, we generally have to pick the right "shape" from the expone
 Figure \@ref(fig:Fun-2a-3) shows exponential functions with several different numerical values for the parameter $k$.
 
 ```{r Fun-2a-3, echo=FALSE}
-slice_plot(exp(1.5*x) ~ x, domain(x=c(-2, 2)), color="blue", label_text="k=1.5") %>%
+slice_plot(exp(1.5*x) ~ x, domain(x=c(-2, 2)), color="dodgerblue", label_text="k=1.5") %>%
   slice_plot(exp(0.5*x) ~ x, domain(x=c(-2, 2)), color="green", label_text="k=0.5") %>%
-  slice_plot(exp(-1.0*x) ~ x, domain(x=c(-2, 2)), color="red", label_text="k=-1.0") %>%
+  slice_plot(exp(-1.0*x) ~ x, domain(x=c(-2, 2)), color="orange3", label_text="k=-1.0") %>%
   slice_plot(exp(-1.3*x) ~ x, domain(x=c(-2, 2)), color="orange", label_text="k=-1.3", label_x = 0.01)
 ```
 Some features of the members of the exponential family $g(x) \equiv e^{kx}$:
@@ -277,13 +277,13 @@ There is a very different kind of function, called a ***power-law function***, w
 Figure \@ref(fig:Fun-2e-1) shows a few members of the power-law family with different exponents, both positive and negative. For contrast, one exponential function is also drawn (in green).
 
 ```{r Fun-2e-1, echo=FALSE, warning=FALSE}
-slice_plot(t^3 ~ t, domain(t=c(-2, 2)), color="blue", 
+slice_plot(t^3 ~ t, domain(t=c(-2, 2)), color="dodgerblue", 
            label_text = "t^3", label_x = 0.1) %>%
   slice_plot(t^ 1.5 ~ t, color="orange", label_text="t^{1.5}") %>%
   slice_plot(t^-.5 ~ t, color="black", label_text="sqrt(t)", 
              label_x = 0.51) %>%
-  slice_plot(t^-2 ~ t, color="red", label_text="t^{-2}", label_x=0.05, domain(t=c(.2,2))) %>%
-slice_plot(t^-2 ~ t, color="red", domain(t=-c(.2,2))) %>%
+  slice_plot(t^-2 ~ t, color="orange3", label_text="t^{-2}", label_x=0.05, domain(t=c(.2,2))) %>%
+slice_plot(t^-2 ~ t, color="orange3", domain(t=-c(.2,2))) %>%
   slice_plot(exp(t) ~ t, color="green", alpha=0.25, size=2, 
              domain(t=c(-2, 2)))
   
@@ -372,7 +372,7 @@ Including the sinusoid in our small set of basic modeling functions has nothing 
 ```{r Fun-3B-a, echo=FALSE, fig.show="hold", fig.height=3, fig.width=8}
 slice_plot(sin(2*pi*t/1) ~ t, domain(t=c(-2,2)), npts=500) %>%
   gf_labs(title="Sinusoid with period P=1")
-slice_plot(sin(2*pi*t/0.3) ~ t, domain(t=c(-2,2)), color="blue", npts=500) %>%
+slice_plot(sin(2*pi*t/0.3) ~ t, domain(t=c(-2,2)), color="dodgerblue", npts=500) %>%
   gf_labs(title="Sinusoid with period P=0.3")
 ```
 
@@ -413,8 +413,8 @@ slice_plot(dnorm(x, -1, 0.05) ~ x, domain(x=c(-3, 3)), npts=500) %>%
     gf_labs(title="(b) Hump with center=-1, spread = 0.05")
 slice_plot(dnorm(x, 0.25, 1.2) ~ x, domain(x=c(-3, 3)), npts=500) %>%
     gf_labs(title="(c) Hump with center=0.25, spread = 1.2") %>%
-  gf_hline(yintercept = dnorm(1.2+0.25, 0.25, 1.2), color="red") %>%
-    gf_segment(0.2016 + 0.2016 ~ -0.95 + 1.45, color="red", size=3, alpha=.03)
+  gf_hline(yintercept = dnorm(1.2+0.25, 0.25, 1.2), color="orange3") %>%
+    gf_segment(0.2016 + 0.2016 ~ -0.95 + 1.45, color="orange3", size=3, alpha=.03)
 ```
 
 It's easy to read off the ***center*** parameter from a graph of a hump. It's the location of the top of the hump. (We mentioned before that a mathematical word for "the location of the top" is ***argmax***; the value for the input of the function that produces the maximum output.)
@@ -458,13 +458,13 @@ logistic_hump <- D(logistic(t, k, t_0) ~ t, k=1, t_0 = 0)
 
 ```{r Fun-3C-3, echo=FALSE, out.width="50%", fig.show="hold"}
 slice_plot(logistic_hump(t, k=1.5/1, t_0=0.5) ~ t, domain(t=c(-3,3)),
-           color="red") %>% 
+           color="orange3") %>% 
   gf_labs(title = "Gaussian and logistic hump functions with center 0.5 and spread 1") %>%
-  slice_plot(dnorm(t, 0.5, 1) ~ t, color="blue")
+  slice_plot(dnorm(t, 0.5, 1) ~ t, color="dodgerblue")
 slice_plot(logistic(t, k=1.5/1, t_0=0.5) ~ t, domain(t=c(-3,3)),
-           color="red") %>% 
+           color="orange3") %>% 
   gf_labs(title = "Gaussian and logistic sigmoid functions with center 0.5 and spread 1") %>%
-  slice_plot(pnorm(t, 0.5, 1) ~ t, color="blue")
+  slice_plot(pnorm(t, 0.5, 1) ~ t, color="dodgerblue")
 ```
 
 The sigmoidal ***logistic function*** (drawn in red in Figure \@ref(fig:Fun-3C-3)) is a favorite among mathematicians. Its formula is $$\mbox{sigmoid}_\mbox{logistic}(x) \equiv  \frac{1}{1 + e^{-k(t-t_0)}}$$ The parameter $t_0$ is the ***center***. The ***spread*** (as we defined it earlier along the lines of half-width at half-height) is roughly $1.5/k$.
@@ -516,24 +516,24 @@ The shape of a power-law function $x^p$ depends on the exponent $p$.
 ```{r power-law-graphs, echo=FALSE, out.width="50%"}
 slice_plot(x^2.5 ~ x, domain(x=c(0,3))) %>%
   slice_plot(abs(x)^2.5 ~ x, domain(x=c(-3, 0)), size=2,
-             color="blue", alpha =0.2) %>%
+             color="dodgerblue", alpha =0.2) %>%
   gf_labs(title = "Power law with p > 0") %>%
-  gf_text(5 ~ -2, label="When p = 2, 4, 6, 8, ...", color="blue") 
+  gf_text(5 ~ -2, label="When p = 2, 4, 6, 8, ...", color="dodgerblue") 
   
 slice_plot(abs(x)^2.5 ~ x, domain(x=c(0,3))) %>%
   slice_plot(-abs(x)^2.5 ~ x, domain(x=c(-3, 0)), size=2,
-             color="blue", alpha =0.2) %>%
+             color="dodgerblue", alpha =0.2) %>%
   gf_labs(title = "Power law with p > 0") %>%
-  gf_text(5 ~ -2, label="When p = 1, 3, 5, 7, ...", color="blue") 
+  gf_text(5 ~ -2, label="When p = 1, 3, 5, 7, ...", color="dodgerblue") 
 
 slice_plot(x^-1 ~ x, domain(x=c(0.1,3))) %>%
-  slice_plot(1/abs(x) ~ x, domain(x=c(-3, -0.1)), size=2, alpha=0.2, color="blue") %>%
-  gf_text(5 ~ -2, label="When p = 2, 4, 6, 8, ...", color="blue") %>%
+  slice_plot(1/abs(x) ~ x, domain(x=c(-3, -0.1)), size=2, alpha=0.2, color="dodgerblue") %>%
+  gf_text(5 ~ -2, label="When p = 2, 4, 6, 8, ...", color="dodgerblue") %>%
   gf_labs(title = "Power law with p < 0")
 
 slice_plot(x^-1 ~ x, domain(x=c(0.1,3))) %>%
-  slice_plot(-1/abs(x) ~ x, domain(x=c(-3, -0.1)), size=2, alpha=0.2, color="blue") %>%
-  gf_text(-4.5 ~ -2, label="When p = -1, -3, -5, -7, ...", color="blue", alpha = 0.3) %>%
+  slice_plot(-1/abs(x) ~ x, domain(x=c(-3, -0.1)), size=2, alpha=0.2, color="dodgerblue") %>%
+  gf_text(-4.5 ~ -2, label="When p = -1, -3, -5, -7, ...", color="dodgerblue", alpha = 0.3) %>%
   gf_labs(title = "Power law with p < 0")
 ```
 

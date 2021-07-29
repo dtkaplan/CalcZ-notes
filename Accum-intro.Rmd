@@ -43,12 +43,12 @@ accum <- tibble(year = 2021:2100,
 gf_point(population ~ year, data = USPop) %>%
   gf_labs(y="Population (millions)") %>%
   gf_lims(x = c(1790, 2100), y=c(0,700)) %>%
-  slice_plot(fexp(year) ~ year, domain(year=c(1790, 2100)), color="red",
-             label_text = "Exponential", label_x=0.9, label_color="red") %>%
+  slice_plot(fexp(year) ~ year, domain(year=c(1790, 2100)), color="orange3",
+             label_text = "Exponential", label_x=0.9, label_color="orange3") %>%
   slice_plot(fpower(year) ~ year, domain(year=c(1790, 2100)), color="green",
              label_text = "\nPower-law\np=2.56", label_x=0.92, label_color="green") %>%
   gf_line(pop ~ year, data = accum, color="gray") %>%
-  gf_point(404.4 ~ 2060, color="blue", size=1)
+  gf_point(404.4 ~ 2060, color="dodgerblue", size=1)
 ```
 
 The power-law function with power 2.56 is an excellent match to the historical data up through the present. But ...

@@ -21,7 +21,7 @@ Slabs <- tibble::tibble(
   tend = t + dt,
   y = f(t),
   ymid = f(t + dt/2),
-  color = ifelse(y > 0, "orange", "blue")
+  color = ifelse(y > 0, "orange", "dodgerblue")
 )
 
   
@@ -29,7 +29,7 @@ Slabs <- tibble::tibble(
           fill = ~ color, color = NA, alpha = 0.3,
           inherit=FALSE) %>%
   gf_path(y ~ t, group=NA, size=1.5) %>%
-  gf_hline(yintercept = 0, color = "red") %>%
+  gf_hline(yintercept = 0, color = "orange3") %>%
     gf_refine(
       scale_y_continuous(
         breaks = c(0, -10, 10, 20), 

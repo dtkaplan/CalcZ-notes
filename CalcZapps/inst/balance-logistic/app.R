@@ -122,12 +122,12 @@ server <- function(input, output, server) {
         Pts <- points_to_plot()
         gf_path(x_scaled ~ t, data = Pts,
                 color="green", size=2, alpha = 0.5) %>%
-            gf_path(dx ~ t, color = "red") %>%
+            gf_path(dx ~ t, color = "orange3") %>%
             gf_labs(y = "Red function & green function")
     })
     output$ansatz_plot <- renderPlot({
         Pts <- points_to_plot()
-        gf_path(x ~ t, data = Pts, color="blue")
+        gf_path(x ~ t, data = Pts, color="dodgerblue")
     })
     output$status <- renderText({
         message <-

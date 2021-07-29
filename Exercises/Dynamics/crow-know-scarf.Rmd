@@ -16,10 +16,10 @@ Pts <- tibble::tibble(
   x = seq(0, 1, length=500),
   y = g(x)
 )
-gf_point(.4945 ~ .4945, color="red", alpha=0.3, size=3) %>% 
+gf_point(.4945 ~ .4945, color="orange3", alpha=0.3, size=3) %>% 
   gf_point(0.5340 ~ 0.5340, color="green", alpha=0.3, size=3) %>%
   gf_line(y ~ x, data = Pts) %>%
-  gf_abline(intercept=0, slope=1, color="blue", alpha=0.5) %>%
+  gf_abline(intercept=0, slope=1, color="dodgerblue", alpha=0.5) %>%
   gf_refine(coord_fixed(ylim=c(0,1))) %>%
   gf_labs(y = expression(xi[n+1]), x = expression(xi[n])) 
 ```
@@ -37,19 +37,19 @@ Pts <- tibble::tibble(
   x = seq(.46, .55, length=500),
   y = g(x)
 )
-gf_point(.4945 ~ .4945, color="red", alpha=0.3, size=3) %>% 
+gf_point(.4945 ~ .4945, color="orange3", alpha=0.3, size=3) %>% 
   gf_point(0.5340 ~ 0.5340, color="green", alpha=0.3, size=3) %>%
   gf_line(y ~ x, data = Pts) %>%
-  gf_abline(intercept=0, slope=1, color="blue", alpha=0.5) %>%
+  gf_abline(intercept=0, slope=1, color="dodgerblue", alpha=0.5) %>%
   gf_refine(coord_fixed(ylim=c(0.46, 0.55))) %>%
   gf_labs(y = expression(xi[n+1]), x = expression(xi[n]))
 Pts <- tibble::tibble(
   x = seq(.4925, .4975, length=500),
   y = g(x)
 )
-P <- gf_point(.4945 ~ .4945, color="red", alpha=0.3, size=3) %>% 
+P <- gf_point(.4945 ~ .4945, color="orange3", alpha=0.3, size=3) %>% 
   gf_line(y ~ x, data = Pts) %>%
-  gf_abline(intercept=0, slope=1, color="blue", alpha=0.5) %>%
+  gf_abline(intercept=0, slope=1, color="dodgerblue", alpha=0.5) %>%
   gf_refine(coord_fixed(ylim=c(0.4925, 0.4975))) %>%
   gf_labs(y = expression(xi[n+1]), x = expression(xi[n]))
 P
@@ -69,8 +69,8 @@ gf_refine(
     sec.axis = sec_axis( trans=~. - 0.4945, name=expression(x[n]))
   )
 ) %>%
-  gf_vline(xintercept=0.4945, color="red", alpha=0.2) %>%
-  gf_hline(yintercept=0.4945, color="red", alpha=0.2)
+  gf_vline(xintercept=0.4945, color="orange3", alpha=0.2) %>%
+  gf_hline(yintercept=0.4945, color="orange3", alpha=0.2)
 ```
 
 In terms of $x$, the dynamics and corresponding solution are approximately $$\underbrace{x_{n+1} = -0.3960\, x_n}_\mbox{dynamics}\ \ \ \ \implies\ \ \ \ \underbrace{x_n = x_0 (-0.3960)^n}_\mbox{solution}$$

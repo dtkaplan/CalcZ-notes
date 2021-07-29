@@ -39,7 +39,7 @@ There are a few reasons for us to be introducing linear combinations here.
 Even better, there is an automatic, reliable, and fast algorithm for finding the scalars for a set of functions that are to be combined to match data as closely as possible. So the modeler just has to select the functions to be used, the computer can find the coefficients. (We'll explore the mathematics and methods of linear combinations, usually called ***linear algebra***, in Block 5.)
 
 
-`r insert_calcZ_exercise(11.3, "JWUVA", "Exercises/Fun/combining-gaussian-funs.Rmd")`
+`r insert_calcZ_exercise(11.3, "JWUVA", "Exercises/Fun/combining-hump-funs.Rmd")`
 
 
 
@@ -155,8 +155,8 @@ Lq <- fitModel(income ~ 1 - (1-pop)^q, data = Income, start=list(q=0.5))
 Figure \@ref(fig:lorenz-1-fun) compares the polished functions to the data.
 ```{r lorenz-1-fun, echo=FALSE, fig.cap="Lorenz curves $L_b(p)$ (blue) and $L_q(p)$ (red) fitted to the household income data."}
 P %>%
-  slice_plot(Lb(pop) ~ pop, color="blue", npts=500) %>%
-  slice_plot(Lq(pop) ~ pop, color="red", npts=500) %>%
+  slice_plot(Lb(pop) ~ pop, color="dodgerblue", npts=500) %>%
+  slice_plot(Lq(pop) ~ pop, color="orange3", npts=500) %>%
   slice_plot(.55*Lb(pop) + .45*Lq(pop) ~ pop, color="white")
 ```
 Neither form $L_b(p)$ or $L_q(p)$ gives a compelling description of the data. What to do.
@@ -249,10 +249,10 @@ This is the product of two simple functions: a gaussian times a sinusoid.
 ```{r making-wave-packet, echo=FALSE, out.width="50%", fig.show="hold", fig.cap="The two components of the wave packet in Figure \\@ref(fig:wave-packet)"}
 sinusoid <- makeFun(sin(2*pi*x/P) ~ x, P=10/5)
 envelope <- makeFun(2*dnorm((x - center)/width) ~ x, center=3, width=4)
-slice_plot(envelope(x) ~ x, domain(x = c(-15, 15)), color="blue") %>%
+slice_plot(envelope(x) ~ x, domain(x = c(-15, 15)), color="dodgerblue") %>%
   gf_labs(title="The \"envelope\" of the wave packet")
 slice_plot(sinusoid(x) ~ x, domain(x = c(-15, 15)),
-           color="red", npts=500) %>%
+           color="orange3", npts=500) %>%
   gf_labs(title="The oscillation in the wave packet. ")
 ```
 EXERCISES: Say which two kinds of functions are being multiplied here.

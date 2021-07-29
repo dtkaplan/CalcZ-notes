@@ -52,7 +52,7 @@ output[["littlef"]] <- renderPlot({
   
   suppressWarnings({
     P <- slice_plot(f(t) ~ t, domain(t=c(-5, 5))) %>%
-      gf_hline(yintercept = 0, color="blue") %>%
+      gf_hline(yintercept = 0, color="dodgerblue") %>%
       gf_labs(y = paste("f(t) for seed", input$seed),
               title = "f(t), the derivative of F(t)") %>%
       gf_refine(scale_x_continuous(breaks = (-5):5))
@@ -64,11 +64,11 @@ output[["littlef"]] <- renderPlot({
     )
     Neg_area <- Area %>% filter(y < 0)
     P <- P %>% gf_ribbon(0 + y ~ t, data = Area, inherit=FALSE,
-                         fill = "blue", color=NA, alpha = 0.3) 
+                         fill = "dodgerblue", color=NA, alpha = 0.3) 
     if (nrow(Neg_area) > 0)
       P <- P %>%
       gf_ribbon(0 + y ~ t, data=Neg_area %>% filter(y < 0), inherit = FALSE,
-                fill = "red", color = NA, alpha = 0.3)
+                fill = "orange3", color = NA, alpha = 0.3)
   }
   P
 })

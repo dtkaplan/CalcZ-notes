@@ -20,11 +20,11 @@ dom <- list(x=c(-3, 3), y=c(-3, 3))
 contour_plot(real_part(x, y) ~ x + y, domain=dom,
              contours_at = 0.00, labels=FALSE) %>%
 contour_plot(imag_part(x, y) ~ x + y, domain=dom, contours_at = 0.00,
-             contour_color = "red", filled = FALSE, labels=FALSE) %>%
+             contour_color = "orange3", filled = FALSE, labels=FALSE) %>%
   gf_refine(coord_fixed())
 
 slice_plot(quad(x) ~ x, domain(x = c(-3,3))) %>%
-  gf_hline(yintercept=0, color="red") %>%
+  gf_hline(yintercept=0, color="orange3") %>%
   gf_lims(y=c(-5, 5))
 
 ## Need to display f(x) vs x for imag=0

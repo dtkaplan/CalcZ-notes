@@ -65,7 +65,7 @@ Pts <- tibble::tibble(
 )
 Intervals <- tibble::tribble(
     ~t0, ~ t1, ~color,
-    0, 1, "red",
+    0, 1, "orange3",
     # .54, .65, "orange",
     # .19, .4, "green",
     # .4, .54, "brown",
@@ -74,8 +74,8 @@ Intervals <- tibble::tribble(
 slice_plot(position(t) ~ t, domain(t = c(0, 1)), size=2) %>%
     gf_labs(y = "f(t): distance traveled (miles)",
             x = "Time since start (hours)") %>%
-    gf_text(0 ~ t, data = Pts, label=~label, color="blue") %>%
-    gf_segment(2 + y ~ t + t, data = Pts[-6,], color="blue") %>%
+    gf_text(0 ~ t, data = Pts, label=~label, color="dodgerblue") %>%
+    gf_segment(2 + y ~ t + t, data = Pts[-6,], color="dodgerblue") %>%
     gf_segment(y0 + y1 ~ t0 + t1, data = Intervals, color=~color, alpha=0.5, size=3) %>%
     gf_refine(scale_color_identity())
 ```
@@ -107,8 +107,8 @@ Pts <- tibble::tibble(
 slice_plot(speed(t) ~ t, domain(t=c(0,1)), npts=500) %>%
     gf_labs(y = "Instantaneous speed (miles/hour)", 
            x = "Time since start of trip.") %>%
-    gf_text(2 ~ t, data = Pts, label=~label, color="blue") %>%
-    gf_segment(5 + y ~ t + t, data = Pts[-1,], color="blue")
+    gf_text(2 ~ t, data = Pts, label=~label, color="dodgerblue") %>%
+    gf_segment(5 + y ~ t + t, data = Pts[-1,], color="dodgerblue")
 ```
 The two graphs in Figures \@ref(fig:stop-and-go) and \@ref(fig:instant-speed) show exactly the same car trip. The presentation of the data in the different graphs makes it easy to see some things and hard to see others. For instance, figuring out when the car is at a stand-still is harder in the position-vs-time graph than in the speed-vs-time graph. `r mark(2050)`
 
@@ -261,7 +261,7 @@ Segs <- segments(sin(x) ~ x, domain(x=c(-.1,pi)), nsegs=10)
 gf_segment(yf + yfend ~ x + xend, data = Segs, 
            color=~slope,size=2, alpha=.9) %>%
     gf_refine(scale_color_continuous(type="gradient")) %>%
-    slice_plot(sin(x) ~ x, color="red", domain(x=c(0, pi)),
+    slice_plot(sin(x) ~ x, color="orange3", domain(x=c(0, pi)),
                alpha = 0.5, size=1, inherit=FALSE) %>%
     gf_point(offset ~ start, size=1, color="green") %>%
     gf_segment(y + yend ~ x + xend, data = Segs, 

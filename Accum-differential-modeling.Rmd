@@ -240,7 +240,7 @@ show_slice <- function(g, x=0) {
 Pts <- tibble::tibble(
   y = seq(-5,5,length=101),
   z = g(x=x, y),
-  color=ifelse(z<0, "blue", "green")
+  color=ifelse(z<0, "dodgerblue", "green")
 )
 gf_segment(0 + z ~ y + y, data = Pts, color= ~ color, size = 2.5, alpha=.4) %>%
   gf_line(z ~ y, color="black", size=2) %>%

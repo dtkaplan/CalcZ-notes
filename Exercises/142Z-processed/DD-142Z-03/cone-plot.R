@@ -46,7 +46,7 @@ cone_diagram <- function(f,
   ) %>%
     filter(yval <= absy) %>%
     mutate(val = sign(y),
-           color = ifelse(val < 0, "red", "black"),
+           color = ifelse(val < 0, "orange3", "black"),
            shape = ifelse(val < 0, "-", "+"))
   # the anti-derivative to be plotted
   F <- antiD(rate_fun(x) ~ x)
@@ -59,9 +59,9 @@ cone_diagram <- function(f,
       x = seq(left, right, length = 500),
       y = rate_fun(x))
     P1 <- P1 %>% gf_ribbon(0 + y ~ x, data = Keepers, inherit=FALSE,
-                           fill = "blue", color=NA, alpha = 0.3) %>%
+                           fill = "dodgerblue", color=NA, alpha = 0.3) %>%
       gf_ribbon(0 + y ~ x, data = Keepers %>% filter(y < 0),
-                color = NA, fill = "red", alpha = 0.3, inherit = FALSE)
+                color = NA, fill = "orange3", alpha = 0.3, inherit = FALSE)
   }
 
     # gf_labs(y = fname) %>%
@@ -88,7 +88,7 @@ cone_diagram <- function(f,
           is.null(right) || is.na(right))) {
      Dots <- tibble::tibble(x = c(left, right),
                             y = F2(x))
-     P3 <- P3 %>% gf_point(y ~ x, data = Dots, color="blue")
+     P3 <- P3 %>% gf_point(y ~ x, data = Dots, color="dodgerblue")
     }
 
     return(list(fplot = P1, eplot = P2, Fplot = P3, f = rate_fun,

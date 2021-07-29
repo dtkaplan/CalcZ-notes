@@ -51,7 +51,7 @@ Points <- tibble::tibble(
 ) %>% 
   filter(yval <= absy) %>%
   mutate(val = sign(y),
-         color = ifelse(val < 0, "red", "black"),
+         color = ifelse(val < 0, "orange3", "black"),
          shape = ifelse(val < 0, "-", "+"))
 
 F <- antiD(rate_fun(x) ~ x)
@@ -64,7 +64,7 @@ xmax <- dom[[1]][2]
 ```{r}
 
 P1 <- slice_plot(rate_fun(x) ~ x, dom) %>%
-  gf_hline(yintercept = 0, color="blue") %>%
+  gf_hline(yintercept = 0, color="dodgerblue") %>%
   gf_labs(y = fname) %>%
   gf_theme( axis.title.x = element_blank(), 
             axis.text.x = element_blank()) 
@@ -85,7 +85,7 @@ P2 <- gf_vline(xintercept = ~ x, data = Points,
 
 F2 <- makeFun(F(x) - F(left) ~ x)
 P3 <- slice_plot(F2(x) ~ x, dom) %>% 
-  gf_hline(yintercept=0, color = "blue") %>%
+  gf_hline(yintercept=0, color = "dodgerblue") %>%
   gf_labs(y = Fname)
 gridExtra::grid.arrange(P3, P2, P1, nrow=3, heights=c(3, 1, 3))
 ```
