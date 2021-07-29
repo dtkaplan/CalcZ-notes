@@ -4,6 +4,7 @@ author: "Danny Kaplan"
 date: 2020-06-03 
 tags: [power-law, allometrics, third]
 id: crow-mean-dress
+global-id: "KGYKY"
 ---
 
 ```{r include = FALSE}
@@ -20,8 +21,8 @@ In order to render the quantity both dimensionless and *unitless*, $M$ should be
 
 You'll need to open a computing sandbox to do the calculations.
 
-```{r crow-mean-dress-Qinline1, echo=FALSE}
-etude2::etudeQ(
+```{r crow-mean-dress-Qinline1, echo=FALSE, results="markup"}
+askMC(
   prompt = "A) Consider a baby and an adult. The adult's mass is $8$ times greater than the baby's. Then the adult's surface area is ...?",
   "The same as the baby's", "1.5 times of the baby's", "+4 times the baby's+", "8 times the baby's",
   random_answer_order = FALSE,
@@ -32,9 +33,9 @@ etude2::etudeQ(
 
 
 
-```{r crow-mean-dress-QA1, echo=FALSE}
+```{r crow-mean-dress-QA1, echo=FALSE, results="markup"}
 # indicate correct choices with +_+ in the name of the list item.
-etude2::etudeQ(
+askMC(
   prompt = "B) Consider a human of body mass 70 kg with a skin surface area of 18,600 cm^2^. Which of the following units for the constant of proportionality $k$ is correct?",
     "+cm$^2$ kg$^{-2/3}$+" = "",
     "cm$^2$" = "What about the units of mass? What takes care of them?",
@@ -43,8 +44,8 @@ etude2::etudeQ(
 )
 ```
 
-```{r crow-mean-dress-Qinline2, echo=FALSE}
-etude2::etudeQ(
+```{r crow-mean-dress-Qinline2, echo=FALSE, results="markup"}
+askMC(
   prompt = "C)  In the units of part (B), which value is $k$ closest to?",
   1, 10, 100, "+1000+",
   random_answer_order = FALSE
@@ -53,8 +54,8 @@ etude2::etudeQ(
 
 The numerical value of the constant $k$ changes depending on what units you want to express it in. The value you found in part (C) works for masses stated in kg and skin areas in cm$^2$. Suppose you want to present $k$ in units that will make sense to people who are used to talking about skin area in square inches and mass in pounds. 1 inch $\approx$ 2.6 cm.  In the rough-and-ready way everyday people express themselves, 1 kg $\approx$ 2.2 lbs. (Of course, pounds is a measure of force, not mass. But people use it as if it were mass. A mass of 70 kg corresponds to about 4.8 slugs. In Earth's gravity, 4.8 slugs produces a force of 154 pounds.)
 
-```{r crow-mean-dress-QA2, echo=FALSE}
-etude2::etudeQ(
+```{r crow-mean-dress-QA2, echo=FALSE, results="markup"}
+askMC(
   prompt = "Optional challenge) What is the rough numerical value of the conversion factor which would produce a constant of proportionality that would be suitable for converting body mass in pounds to skin area in square-inches?",
   0.03, 
   "+0.3+" = "$k$ is about 1000 cm$^2$ kg$^{-2/3}$. To convert the cm to inches, we need to multiply by (1 in/2.6 cm)$^2$. To convert the kg to pounds, we need to multiply by (2.2 pounds/ 1 kg)$^{-2/3}$.",
