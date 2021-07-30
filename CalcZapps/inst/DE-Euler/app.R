@@ -124,9 +124,9 @@ server <- function(input, output) {
                    alpha = .3 + n/length(n))
         current_slope = Points$dx[nrow(Points)]
         gf_path(dt_x ~ x, data = Dyn) %>%
-            gf_hline(yintercept = 0, color="red") %>%
+            gf_hline(yintercept = 0, color="orange3") %>%
             gf_point(dx ~ x, data = Points, alpha = ~ alpha) %>%
-            gf_hline(yintercept = current_slope, color="blue")
+            gf_hline(yintercept = current_slope, color="dodgerblue")
 
         })
     output$solution <- renderPlot({
@@ -139,8 +139,8 @@ server <- function(input, output) {
         )
         gf_point(x ~ t, data = Traj) %>%
             gf_path(x ~ t) %>%
-            gf_path(x ~ t, data = Slope, color="blue") %>%
-            gf_hline(yintercept = 0, color="red") %>%
+            gf_path(x ~ t, data = Slope, color="dodgerblue") %>%
+            gf_hline(yintercept = 0, color="orange3") %>%
             gf_lims(y = c(minx(), maxx()), x = c(0,max_time))
     })
 

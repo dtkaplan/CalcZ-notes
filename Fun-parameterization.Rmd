@@ -18,7 +18,7 @@ gf_point(confirmed ~ day,
          data = March) %>%
   gf_labs(y = "Cumulative confirmed cases", x = "Day in March, 2020") %>%
   gf_lims(y=c(0,200000)) %>%
-  slice_plot(exp(x) ~ x, domain(x=c(0,15)), color="red", label_text = "exp(x)")
+  slice_plot(exp(x) ~ x, domain(x=c(0,15)), color="orange3", label_text = "exp(x)")
 ```
 
 There's an obvious mismatch between the data and the function $e^x$. Does this mean the COVID pattern is not exponential?
@@ -32,7 +32,7 @@ gf_point(confirmed ~ day, data = March) %>%
   gf_labs(y = "Cumulative confirmed cases", x = "Day in March, 2020") %>%
   gf_lims(y=c(0,200000)) %>%
   slice_plot(exp(x/2) ~ x, domain(x=c(0,30)), color="green", label_text = "exp(0.5*x)", label_x=.75) %>%
-  slice_plot(exp(0.4*x) ~ x, domain(x=c(0,30)), color="blue", label_text = "exp(0.4*x)", label_x=0.9) %>%
+  slice_plot(exp(0.4*x) ~ x, domain(x=c(0,30)), color="dodgerblue", label_text = "exp(0.4*x)", label_x=0.9) %>%
   slice_plot(exp(0.45*x) ~ x, domain(x=c(0,30)), color="orange", label_text = "exp(0.45*x)", label_x=0.9) %>%
     slice_plot(exp(0.30*x) ~ x, domain(x=c(0,35)), color="tomato", label_text = "exp(0.30*x)", label_x=0.95) %>%
   slice_plot(exp(0.20*x) ~ x, domain(x=c(0,35)), color="black", label_text = "exp(0.20*x)", label_x=0.95)
@@ -155,16 +155,16 @@ Of course, you're already familiar with $a$ and $b$: the slope and intercept of 
 ```{r show-sin-params, echo=FALSE, warning=FALSE, fig.cap="Baseline (blue), amplitude (red), and period (green) for the sinusoid."}
 # making waveforms for the figure
 slice_plot(sin(x) ~ x, domain(x=c(-1, 12))) %>%
-  gf_hline(yintercept=0, color="blue") %>%
+  gf_hline(yintercept=0, color="dodgerblue") %>%
   gf_refine(theme_void()) %>%
-  gf_errorbar(0 + 1 ~ pi/2, color="red") %>%
-  gf_errorbar(-1 + 0 ~ 3*pi/2, color="red") +
+  gf_errorbar(0 + 1 ~ pi/2, color="orange3") %>%
+  gf_errorbar(-1 + 0 ~ 3*pi/2, color="orange3") +
   geom_errorbarh(aes(y=1/2, xmin=0, xmax=2*pi), color="green", size=.5)
 ```
 
 ```{r show-exp-baseline, echo=FALSE, warning=FALSE, fig.cap="The baseline for the exponential is the horizontal asymptote. There is no vertical asymptote."}
 slice_plot(exp(x) ~ x, domain(x=c(-2, 2))) %>%
-  gf_hline(yintercept=0, color = "blue") %>%
+  gf_hline(yintercept=0, color = "dodgerblue") %>%
   gf_segment(0 + 0 ~ 0 + (-2), color="orange", arrow=arrow(ends="last", type="closed")) %>%
 
   gf_refine(theme_void())

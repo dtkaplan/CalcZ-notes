@@ -70,7 +70,7 @@ constraint <- makeFun(y^2 ~ x + y)
 contour_plot(V(x, y) ~ x + y, domain(x=c(0,10), y=c(20,30))) %>%
   gf_labs(title="Volume") %>%
   contour_plot(constraint(x, y) ~ x + y,
-               filled=FALSE, contour_color = "red",
+               filled=FALSE, contour_color = "orange3",
                contours_at = 600)
 ```
 
@@ -136,13 +136,13 @@ dom <- domain(x=c(-3, 3), y=c(-3, 3))
 contour_plot(f(x,y) ~ x + y, dom, skip=0) %>%
   contour_plot(g(x,y)  ~ x + y, filled=FALSE, 
                contours_at = 3, npts=300,
-               contour_color="red", size=2, labels=FALSE) %>%
+               contour_color="orange3", size=2, labels=FALSE) %>%
   contour_plot(h(x,y)  ~ x + y, dom, size=15, 
-               contour_color="blue", alpha=0.1,
+               contour_color="dodgerblue", alpha=0.1,
                contours_at = seq(-20, -11, length=60),
                labels=FALSE) %>%
   contour_plot(h(x,y)  ~ x + y, dom, size=3, 
-               contour_color="blue", alpha=0.75,
+               contour_color="dodgerblue", alpha=0.75,
                contours_at = -10,
                labels=FALSE) %>% 
   gf_labs(title="(A)")
@@ -157,13 +157,13 @@ dom <- domain(x=c(-3, 3), y=c(-3, 3))
 contour_plot(f(x,y) ~ x + y, dom, skip=0) %>%
   contour_plot(g(x,y)  ~ x + y, filled=FALSE, 
                contours_at = 0, npts=300,
-               contour_color="red", size=2, labels=FALSE) %>%
+               contour_color="orange3", size=2, labels=FALSE) %>%
   contour_plot(h(x,y)  ~ x + y, dom, size=15, 
-               contour_color="blue", alpha=0.1,
+               contour_color="dodgerblue", alpha=0.1,
                contours_at = seq(-20, -11, length=60),
                labels=FALSE) %>%
   contour_plot(h(x,y)  ~ x + y, dom, size=3, 
-               contour_color="blue", alpha=0.75,
+               contour_color="dodgerblue", alpha=0.75,
                contours_at = -10,
                labels=FALSE) %>% 
   gf_labs(title="(B)")
@@ -177,13 +177,13 @@ dom <- domain(x=c(-3, 3), y=c(-3, 3))
 contour_plot(f(x,y) ~ x + y, dom, skip=0) %>%
   contour_plot(g(x,y)  ~ x + y, filled=FALSE, 
                contours_at = 0, npts=300,
-               contour_color="red", size=2, labels=FALSE) %>%
+               contour_color="orange3", size=2, labels=FALSE) %>%
   contour_plot(h(x,y) +3  ~ x + y, dom, size=6, 
-               contour_color="blue", alpha=0.1,
+               contour_color="dodgerblue", alpha=0.1,
                contours_at = seq(14, 23, length=40),
                labels=FALSE) %>%
   contour_plot(h(x,y) +3  ~ x + y, dom, size=3, 
-               contour_color="blue", alpha=0.75,
+               contour_color="dodgerblue", alpha=0.75,
                contours_at = 14,
                labels=FALSE, filled=FALSE)%>% 
   gf_labs(title="(C)")
@@ -203,13 +203,13 @@ g_union <- makeFun(L ~ K + L)
 g_invest <- makeFun(K/L ~ K + L)
 contour_plot(P(K, L) ~ K + L, domain(K=c(0.01,1), L=c(0.01,1))) %>%
   contour_plot(budget_constraint(K, L) ~ K + L,
-               filled=FALSE, contour_color = "red",
+               filled=FALSE, contour_color = "orange3",
                contours_at = c(1, 1.01)) %>%
   # TAKE OUT THE FOLLOWING LINES BEFORE DEPLOYING
   ## TAKE OUT
   ### TAKE OUT
   contour_plot(g_union(K, L) >= 0.5 ~ K + L, contour_at = 0.5,
-              contour_color = "blue", n_fill=3,
+              contour_color = "dodgerblue", n_fill=3,
                fill_alpha = 0.25)  %>%
   contour_plot(K/L > 2 ~ K + L, contour_at = 0.5,
                contour_color = "green", n_fill=3,
@@ -265,7 +265,7 @@ Plotting the inequality constraints uses some special features of `contour_plot(
 ```r
 # Pipe the previous graphics into
 contour_plot(g_union(K, L) >= 0.5 ~ K + L, contour_at = 0.5,
-               contour_color = "blue", n_fill=3,
+               contour_color = "dodgerblue", n_fill=3,
                fill_alpha = 0.25)
 ```
 
@@ -331,7 +331,7 @@ P <- makeFun(b*L^a*K^(1-a) ~ K + L, a = 0.33, b=100)
 g_budget <- makeFun(K + L ~ K + L)
 contour_plot(P(K, L) ~ K + L, domain(K=c(.6,.7), L=c(.3,.4))) %>%
   contour_plot(g_budget(K, L) ~ K + L,
-               filled=FALSE, contour_color = "red",
+               filled=FALSE, contour_color = "orange3",
 ## GET RID OF THE 1.01 contour before deploying
                contours_at = c(1, 1.01))
 ```
@@ -490,7 +490,7 @@ constraint <- makeFun(y^2 ~ x + y)
 contour_plot(V(x, y) ~ x + y, domain(x=c(3,7), y=c(22,28))) %>%
   gf_labs(title="Volume") %>%
   contour_plot(constraint(x, y) ~ x + y, 
-               filled=FALSE, contour_color = "red", 
+               filled=FALSE, contour_color = "orange3", 
                contours_at = 600) 
 ```  
 
@@ -539,7 +539,7 @@ contour_plot(angle(gradf(x,y), gradg(x,y)) ~ x + y, dom,
   contour_plot(angle(gradf(x,y), gradg(x,y)) ~ x + y, 
              contours_at = c(.3), contour_color="green", npts=200, filled=FALSE, label_color=NA, size=2) %>%
   gf_refine(coord_fixed()) %>%
-  gradient_plot(constraint(x, y)+0.001*x ~ x + y, npts=10, color="blue") %>%
+  gradient_plot(constraint(x, y)+0.001*x ~ x + y, npts=10, color="dodgerblue") %>%
   gradient_plot(V(x, y)+0.001*x ~ x + y, npts=10, color="black") %>%
   gf_labs(title="Angle of alignment of objective and constraint function gradients")
 ```

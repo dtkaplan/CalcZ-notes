@@ -111,12 +111,12 @@ gf_line(flipper_length_mm/10 ~ body_mass_g/1000,
   gf_labs(y = "Flipper length (cm)", x = "Body mass (kg)") 
 gf_point(flipper_length_mm/10 ~ body_mass_g/1000, 
          data=penguins) %>%
-  gf_smooth(color="red") %>%
+  gf_smooth(color="orange3") %>%
   gf_labs(y = "Flipper length (cm)", x = "Body mass (kg)") 
 ```
 
 ::: {.intheworld}
-To create the model of flipper length as a function of body mass, we used one of a set of techniques called ***machine learning***. That is, we didn't specify that the form should be an exponential or a hump or a sigmoid or any other particular shape. We simply asked the computer to figure out a smooth function that stays close to the data. The result, as it happens, was a sigmoid. `r mark(730)`
+To create the model of flipper length as a function of body mass, we used one of a set of techniques called ***machine learning***. That is, we didn't specify that the form should be an exponential or a gaussian or a sigmoid or any other particular shape. We simply asked the computer to figure out a smooth function that stays close to the data. The result, as it happens, was a sigmoid. `r mark(730)`
 :::
 
 ## Inputs to output 
@@ -225,7 +225,7 @@ f2 <- rfun( ~ input_1 + input_2, seed=96)
 contour_plot(f2(input_1, input_2) ~ input_1 + input_2,
                  domain(input_1=c(-5, 5), input_2 = c(0, 4)),
              skip=0) %>%
-  gf_hline(yintercept=1.5, color="red", size=2) %>%
+  gf_hline(yintercept=1.5, color="orange3", size=2) %>%
   gf_labs(title="Contour plot of function of two inputs")
 slice_plot(f2(input_1, input_2=1.5) ~ input_1, domain(input_1=c(-5, 5))) %>%
   gf_labs(title="Graph of function output versus input #1")
@@ -239,7 +239,7 @@ Slices can be taken in any direction or even along a curved path! The blue line 
 contour_plot(f2(input_1, input_2) ~ input_1 + input_2,
                  domain(input_1=c(-5, 5), input_2 = c(0, 4)),
              skip=0) %>%
-  gf_vline(xintercept=0, color="blue", size=2) %>%
+  gf_vline(xintercept=0, color="dodgerblue", size=2) %>%
   gf_labs(title="Contour plot of function of two inputs")
 slice_plot(f2(input_1 = 0 , input_2) ~ input_2, domain(input_2=c(0, 5))) %>%
   gf_labs(title="Graph of function output versus input 2")

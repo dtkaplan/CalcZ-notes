@@ -20,10 +20,10 @@ draw_flow <- function(seed=1996, center = c(0,0), width=5,
   Arrows <- Grid %>%
     mutate(xend = xfun(x,y), yend=yfun(x,y))
   contour_plot(xfun(x,y) - x ~ x + y, dom,
-               contour_color="blue", contours_at = c(0),
+               contour_color="dodgerblue", contours_at = c(0),
                skip=0, labels=FALSE) %>%
     contour_plot(yfun(x,y) - y ~ x + y, dom,
-                 contour_color="red", contours_at = c(0),
+                 contour_color="orange3", contours_at = c(0),
                  skip=0, filled=FALSE, labels=FALSE) %>%
     gf_segment(y + yend ~ x + xend, data = Arrows, size=arrow*0.5) %>%
     gf_point(yend ~ xend, data = Arrows, size = arrow, alpha=0.3) %>%

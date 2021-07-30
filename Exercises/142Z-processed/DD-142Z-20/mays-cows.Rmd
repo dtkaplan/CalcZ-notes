@@ -201,14 +201,14 @@ server <- function(input, output) {
         function(v) grass_growth(v) - consumption()(v)
     })
     output$grassPlot <- renderPlot({
-        P <- gf_hline(yintercept=0, color="red")
+        P <- gf_hline(yintercept=0, color="orange3")
         dom <- domain(v=c(0, 25))
         if (input$growth) P <- P %>% slice_plot(grass_growth(v) ~ v, dom,
                                                 color="green", size=2, alpha=0.4)
         if (input$consumption) P <- P %>% slice_plot(consumption()(v) ~ v, dom,
                                                      color="brown", size=2, alpha=0.4)
         if (input$net) P <- P %>% slice_plot(net_growth()(v) ~ v, dom,
-                                             color="blue")
+                                             color="dodgerblue")
 
         P %>% gf_labs(x = "Biomass of grass", y = "Biomass growth/day")
     })

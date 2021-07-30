@@ -20,10 +20,10 @@ Start our story with two of the basic modeling functions that, like the characte
 ```{r sign-sig, echo=FALSE, out.width="50%", fig.show = "hold", fig.cap="The pattern-book sinusoid and sigmoidal functions. A vertical blue line has been added to mark the input $t=0$", warning=FALSE, message=FALSE}
 slice_plot(sin(t) ~ t, domain(t=c(-5, 2*pi))) %>%
   gf_labs(title="Sinusoid") %>%
-  gf_vline(xintercept=0, color="blue", alpha=0.5)
+  gf_vline(xintercept=0, color="dodgerblue", alpha=0.5)
 slice_plot(pnorm(t) ~ t, domain(t=c(-5, 2*pi))) %>%
   gf_labs(title="Sigmoid") %>%
-  gf_vline(xintercept=0, color="blue", alpha=0.5)
+  gf_vline(xintercept=0, color="dodgerblue", alpha=0.5)
 ```
 The computer can easily construct the slope functions for the sinusoid and sigmoid, which we'll call `Dsin()` and `Dsigma()` respectively.
 ```{r}
@@ -50,7 +50,7 @@ slice_plot(Dsin(t, h=1) ~ t, domain(t=c(-5, 2*pi)), color=rain[1], label_text="h
   slice_plot(Dsin(t, h=0.00001) ~ t, alpha = 1, color=rain[8], label_text="h=0.00001", label_x=.48) %>%
   slice_plot(Dsin(t, h=0.000001) ~ t, alpha = 1, color=rain[9], label_text="h=0.000001", label_x=.44) %>%
   gf_labs(title="Slope functions of sinusoid") %>%
-  gf_vline(xintercept=0, color="blue", alpha=0.5)
+  gf_vline(xintercept=0, color="dodgerblue", alpha=0.5)
 slice_plot(Dsigma(t, h=1) ~ t, domain(t=c(-5, 2*pi)), label_text="h=1", label_x=.28, color= rain[2]) %>%
   slice_plot(Dsigma(t, h=2) ~ t, alpha = 1, label_text="h=2", label_x=.24, color=rain[1]) %>%
   slice_plot(Dsigma(t, h=0.5) ~ t, alpha = 1, label_text="h=0.5", label_x=.54, color=rain[3]) %>%
@@ -61,7 +61,7 @@ slice_plot(Dsigma(t, h=1) ~ t, domain(t=c(-5, 2*pi)), label_text="h=1", label_x=
   slice_plot(Dsigma(t, h=0.00001) ~ t, alpha = 1, color=rain[8], label_text="h=0.00001", label_x=.48) %>%
   slice_plot(Dsigma(t, h=0.000001) ~ t, alpha = 1, color=rain[9], label_text="h=0.000001", label_x=.44) %>%
   gf_labs(title="Slope functions of sigmoid") %>%
-  gf_vline(xintercept=0, color="blue", alpha=0.5)
+  gf_vline(xintercept=0, color="dodgerblue", alpha=0.5)
 ```
 
 Some observations from this numerical experiment:
@@ -71,7 +71,7 @@ Some observations from this numerical experiment:
     This will provide a way for us, eventually, to discard $h$ so that the slope function will not need an $h$ argument.
     
 2. For small $h$, we have ${\cal D}_t \sin(t) = \sin(t + \pi/2) = \cos(t)$. That is, taking the slope function of a sinusoid gives another sinusoid, shifted left by $\pi/2$ from the original. Or, in plain words, for small $h$H the cosine is the slope function of the sine.
-3. For small $h$, we have ${\cal D}_t \pnorm(t) = \dnorm(t)$. That is, for small $h$ the hump function is the slope function of the sigmoid function.
+3. For small $h$, we have ${\cal D}_t \pnorm(t) = \dnorm(t)$. That is, for small $h$ the gaussian function is the slope function of the sigmoid function.
 
 You can confirm these last two statements by comparison with the original functions, especially the alignment of the peaks of the slope functions with respect to the peak of the sinusoid and the half-way point of the sigmoid. `r mark(2374)`
 
@@ -103,7 +103,7 @@ slice_plot(Dlog(t, h=1) ~ t, domain(t=c(0.01, 2)), color=rain[2], label_text="h=
   slice_plot(Dlog(t, h=0.00001) ~ t, domain(t=c(0.125, 2)), alpha = 1, color=rain[8], label_text="h=0.00001", label_x=.2) %>%
   slice_plot(Dlog(t, h=0.000001) ~ t, domain(t=c(0.125, 2)),alpha = 1, color=rain[9], label_text="h=0.000001", label_x=.1) %>%
   gf_labs(title="Slope functions of logarithm") %>%
-  gf_vline(xintercept=0, color="blue", alpha=0.5) %>%
+  gf_vline(xintercept=0, color="dodgerblue", alpha=0.5) %>%
   gf_lims(y=c(0,8))
 slice_plot(Dexp(t, h=1) ~ t, domain(t=c(-2, 2)), label_text="h=1", label_x=.4, color= rain[2]) %>%
   slice_plot(Dexp(t, h=2) ~ t, alpha = 1, label_text="h=2", label_x=.3, color=rain[1]) %>%
@@ -115,7 +115,7 @@ slice_plot(Dexp(t, h=1) ~ t, domain(t=c(-2, 2)), label_text="h=1", label_x=.4, c
   slice_plot(Dexp(t, h=0.00001) ~ t, alpha = 1, color=rain[8], label_text="h=0.00001", label_x=.85) %>%
   slice_plot(Dexp(t, h=0.000001) ~ t, alpha = 1, color=rain[9], label_text="h=0.000001", label_x=.9) %>%
   gf_labs(title="Slope functions of exponential") %>%
-  gf_vline(xintercept=0, color="blue", alpha=0.5) %>%
+  gf_vline(xintercept=0, color="dodgerblue", alpha=0.5) %>%
   gf_lims(y=c(0,8))
 ```
 These numerical experiments with the logarithm and exponential functions are more evidence that, as $h$ gets small, the slope function doesn't depend on $h$. And, we find that:

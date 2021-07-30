@@ -44,7 +44,7 @@ constraint <- makeFun(y^2 ~ x + y)
 contour_plot(V(x, y) ~ x + y, domain(x=c(3,7), y=c(22,28))) %>%
   gf_labs(title="Volume") %>%
   contour_plot(constraint(x, y) ~ x + y, 
-               filled=FALSE, contour_color = "red", 
+               filled=FALSE, contour_color = "orange3", 
                contours_at = 600) 
 ```  
 
@@ -93,7 +93,7 @@ contour_plot(angle(gradf(x,y), gradg(x,y)) ~ x + y, dom,
   contour_plot(angle(gradf(x,y), gradg(x,y)) ~ x + y, 
              contours_at = c(.3), contour_color="green", npts=200, filled=FALSE, label_color=NA, size=2) %>%
   gf_refine(coord_fixed()) %>%
-  gradient_plot(constraint(x, y)+0.001*x ~ x + y, npts=10, color="blue") %>%
+  gradient_plot(constraint(x, y)+0.001*x ~ x + y, npts=10, color="dodgerblue") %>%
   gradient_plot(V(x, y)+0.001*x ~ x + y, npts=10, color="black") %>%
   gf_labs(title="Angle of alignment of objective and constraint function gradients")
 ```

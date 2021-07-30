@@ -102,7 +102,7 @@ server <- function(input, output, session) {
       P <- make_flowplot()
 
       P %>%
-         gf_path(y ~ x, data = traj(), inherit = FALSE, color="red",
+         gf_path(y ~ x, data = traj(), inherit = FALSE, color="orange3",
                  alpha = ~ alpha, size = ~ size) %>%
         gf_abline(intercept=0,
                   slope = tan(traj_ang_start()),
@@ -137,7 +137,7 @@ server <- function(input, output, session) {
                             domain(x = c(-2.5, 2.5), y = c(-2.5, 2.5)),
                             n = 10) %>%
           # gf_segment(y + yend ~ x + xend, data = Vecs, inherit=FALSE,
-          #            color = c("green", "blue"), alpha = 0.4, size = 2) %>%
+          #            color = c("green", "dodgerblue"), alpha = 0.4, size = 2) %>%
           gf_refine(coord_fixed())
 
 

@@ -1,6 +1,6 @@
 # Diffusion
 
-## Origins of the hump function
+## Origins of the gaussian function
 
 From the start of CalcZ we have used a small set of basic modeling functions which will by now be familiar to you:
 
@@ -8,9 +8,9 @@ From the start of CalcZ we have used a small set of basic modeling functions whi
 - logarithm: inverse to exponentials
 - power-law
 - sinusoid
-- hump and sigmoid
+- gaussian and sigmoid
 
-This section gives a more detailed introduction to the hump function and provides a specific algebraic formula that composes an exponentials with a low-order polynomial.
+This section gives a more detailed introduction to the gaussian function and provides a specific algebraic formula that composes an exponentials with a low-order polynomial.
 
 Start with the low-order polynomial: $$h(x) = - \frac{(x-\mu)^2}{2 \sigma^2}$$ This is, of course a parabola with an argmax $x^\star = \mu$ and a maximum value 0. It is written this way by convention, the point of which is to give names to two features of the function: `r mark(7200)`
 
@@ -28,7 +28,7 @@ sigma <- 1
 mu <- 0
 h <- makeFun(  -(x-mu)^2/(2*sigma^2) ~ x, mu=mu, sigma=sigma)
 slice_plot(h(x) ~ x, domain(x=sigma*c(-1.5, 1.5))) %>%
-  gf_hline(yintercept = c(0,-0.5), color=c("blue", "red"))
+  gf_hline(yintercept = c(0,-0.5), color=c("dodgerblue", "orange3"))
 ```
 
 The *width* of the parabola is based on the length of the horizontal line segment between the two branches of the parabola. Specifically, the width is defined to be *half the length of this line segment*. In order to avoid confusion, we'll use "width" in the usual English sense and a special term, **standard deviation**, to refer to half the length of the line segment. ("Standard deviation" is a good candidate for the worst name ever for a simple concept: a length. Another, equivalent term you will hear for this length is "root mean square," which is almost as bad. Still, those are the standard terms and you should be careful to use instead of non-standard alternatives.) `r mark(7215)`
@@ -88,7 +88,7 @@ askMC(
 One of the features that make hump functions useful is that they are **local**, the function is practically zero except on a domain of limited width. 
 The parabola $h(x) \equiv - \frac{(x - \mu)^2}{2 \sigma^2}$ is non-zero everywhere except at $x = \mu$, so not at all local. 
 
-To produce our hump function, we compose an exponential function $e^x$ with the polynomial $h(x)$ to get $$f(x) \equiv e^{h(x)} = \exp\left(-\frac{(x - \mu)^2}{2 \sigma^2}\right)$$ This is not yet our "official" hump function, but are getting close! `r mark(7220)`
+To produce our pattern-book hump function, we compose an exponential function $e^x$ with the polynomial $h(x)$ to get $$f(x) \equiv e^{h(x)} = \exp\left(-\frac{(x - \mu)^2}{2 \sigma^2}\right)$$ This is not yet the "official" gaussian function, but are getting close! `r mark(7220)`
 
 The sandbox defines $f(x)$ and graphs it. As with the previous sandbox, the graph is annotated with a blue horizontal line that touches the curve at the argmax and a red horizontal line with a y-intercept at $e^{-1/2}$. `r mark(7225)`
 
@@ -97,15 +97,15 @@ sigma <- 1
 mu <- 0
 f <- makeFun(  exp( -(x-mu)^2/(2*sigma^2) ) ~ x, mu=mu, sigma=sigma)
 slice_plot(f(x) ~ x, domain(x=sigma*c(-3.5, 3.5))) %>%
-  gf_hline(yintercept = c(0,exp(-0.5)), color=c("blue", "red"))
+  gf_hline(yintercept = c(0,exp(-0.5)), color=c("dodgerblue", "orange3"))
 sigmoid <- antiD(g(x) ~ x, lower.bound = -Inf)
 # Graph the sigmoid on the domain -10 < x < 10
 
 ```
 
-Notice that the vertical range of the function is $0 <  f(x) \leq 1$. The argmax is $\mu$, so $f(\mu) = 1$. This seems easy and convenient, but one of the purposes of the standard hump function is to define a standard *sigmoid* function. It's the sigmoid that we want to have a range from 0 to 1.  `r mark(7230)`
+Notice that the vertical range of the function is $0 <  f(x) \leq 1$. The argmax is $\mu$, so $f(\mu) = 1$. This seems easy and convenient, but one of the purposes of the standard gaussian function is to define a standard *sigmoid* function. It's the sigmoid that we want to have a range from 0 to 1.  `r mark(7230)`
 
-How to scale the hump $f(x)$ to produce a sigmoid with the range 0 to 1? Recall that a sigmoid is the anti-derivative of the corresponding hump. In the sandbox, we use `antiD()` to compute $$\int_{-\infty}^x f(u) du$$, which we called `sigmoid()`. From the graph of `sigmoid()` you can read off the scaling factor that will make the vertical range of the resulting sigmoid zero to one. `r mark(7235)`
+How to scale the gaussian $f(x)$ to produce a sigmoid with the range 0 to 1? Recall that a sigmoid is the anti-derivative of the corresponding gaussian. In the sandbox, we use `antiD()` to compute $$\int_{-\infty}^x f(u) du$$, which we called `sigmoid()`. From the graph of `sigmoid()` you can read off the scaling factor that will make the vertical range of the resulting sigmoid zero to one. `r mark(7235)`
 
 ```{r hf1-9, echo=FALSE, results="markup"}
 askMC(
@@ -127,7 +127,7 @@ askMC(
 )
 ```
 
-Putting all this together, we arrive at our "official" standard hump function, called the *Gaussian* function:
+Putting all this together, we arrive at our "official" standard gaussian function, called the *Gaussian* function:
 
 $$g(x) \equiv \frac{1}{\sqrt{\strut2\pi\sigma^2}} e^{-(x-\mu)^2 / 2 \sigma^2}$$
 The Gaussian function is important to many quantitative disciplines and has a central role in statistics. The function is named after physicist and mathematician Carl Friedrick Gauss (1777-1855). But in the social sciences, it is usually called the "normal" function; that's how common it is. `r mark(7240)`
@@ -151,7 +151,7 @@ askMC(
 )
 ```
 
-**Optional background**. Now for a bit of irony. We've taken a lot of care to define a specific form of hump function with a formula that strikes many people as complicated. It must be that all these specifics are important, right? In reality, any function with a roughly similar shape would work in pretty much the same way. We could have defined our "official" hump function in any of a number of ways, some of which would be algebraically simpler. But the specific gaussian shape is a kind of fixed point in the differential equation that we'll study next. `r mark(7250)`
+**Optional background**. Now for a bit of irony. We've taken a lot of care to define a specific form of gaussian function with a formula that strikes many people as complicated. It must be that all these specifics are important, right? In reality, any function with a roughly similar shape would work in pretty much the same way. We could have defined our "official" gaussian function in any of a number of ways, some of which would be algebraically simpler. But the specific gaussian shape is a kind of fixed point in the differential equation that we'll study next. `r mark(7250)`
 
 <!--
 The Gaussian shape is preferred in much the same way as the "natural logarithm" is natural. The "natural" only makes sense in terms of the results of a specific operation, differentiation, which has a particularly simple form for $\ln(x)$. As you recall, $\partial_x \ln(x) = 1/x$. Although the derivatives of log-base 2 and log-base 10 (and any other log) are similar, they have slightly more complicated derivatives: `r mark(7255)`
@@ -378,7 +378,7 @@ Imagine that we have a long, thin pipe filled with still air and we inject at po
 top <- max(C_funs[[1]]$y)
 gf_line(y ~ x, data = C_funs[[1]] %>% filter(abs(x) < 25)) %>%
   gf_labs(y="Temperature (deg C)", x="Position along bar", title="Initial condition C(x,t=0)") %>%
-  gf_hline(yintercept = exp(-.5)*top, color="red")
+  gf_hline(yintercept = exp(-.5)*top, color="orange3")
 ```
 
 The red horizontal line is positioned to enable you to read off the standard deviation of the bell-shaped function.
@@ -411,12 +411,12 @@ draw_C <- function(n, compare_n=1, show_sd=TRUE, domain=5) {
   
   if (compare_n > 0) {
     P <- P %>% 
-      gf_line(y ~ x, alpha=0.5, color="blue", 
+      gf_line(y ~ x, alpha=0.5, color="dodgerblue", 
             data = C_funs[[compare_n]] %>% filter(abs(x) < domain)) 
   }
   
   if (show_sd) {
-    P %>% gf_hline(yintercept=redline, color="red")
+    P %>% gf_hline(yintercept=redline, color="orange3")
   } else {
     P
   }
@@ -575,7 +575,7 @@ for (k in 1:ntrajs) {
 deterministic <- tibble::tibble(
   t = tpts,
   x = S_0*exp(0.02*t),
-  color = "red",
+  color = "orange3",
   x_ave = x_sum/ntrajs,
   xrand = S_0 * exp((r - sigma^2/2)*t)
 )
@@ -584,7 +584,7 @@ gf_line(x ~ t, data = bind_rows(Trajs),  color= ~ color, alpha=0.1) %>%
   gf_line(x ~ t, data = bind_rows(Trajs[c(1, round(ntrajs/2), ntrajs)]),
           color= ~ color) %>%
   gf_line(x ~ t, data = deterministic, color=~ color) %>%
-  gf_line(xrand ~ t, data = deterministic, color="blue") %>%
+  gf_line(xrand ~ t, data = deterministic, color="dodgerblue") %>%
   gf_refine(scale_color_identity()) %>% #, scale_y_log10()) %>%
   gf_labs(x="Time (years)", y="Value of investment")
 ```

@@ -22,14 +22,14 @@ f3 <- makeFun( x/1.6 ~ x )
 Labels <-  tribble(
   ~ x, ~ y, ~  label, ~ color,
   1000, f1(1000) - 50, "f1", "black",
-  900, f2(1000), "f2", "red",
-  1050, f3(1000), "f3", "blue",
+  900, f2(1000), "f2", "orange3",
+  1050, f3(1000), "f3", "dodgerblue",
 )
 slice_plot( f1(money)~money, domain(money=c(0,1000)),lwd=3)  %>%
   gf_lims(y=c(0,700)) %>%
   gf_labs(x="Expenditure ($1000)", y="QALYs added") %>%
-  slice_plot( f2(money)~money, color = "red") %>%
-  slice_plot( f3(money)~money, color = "blue") %>%
+  slice_plot( f2(money)~money, color = "orange3") %>%
+  slice_plot( f3(money)~money, color = "dodgerblue") %>%
   gf_text(y  ~ x,  label = ~ label, data = Labels)
 ```
  

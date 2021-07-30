@@ -57,7 +57,7 @@ for (k in 1:ntrajs) {
 deterministic <- tibble::tibble(
   t = tpts,
   x = S_0*exp(0.02*t),
-  color = "red",
+  color = "orange3",
   x_ave = x_sum/ntrajs,
   xrand = S_0 * exp((r - sigma^2/2)*t)
 )
@@ -66,7 +66,7 @@ gf_line(x ~ t, data = bind_rows(Trajs),  color= ~ color, alpha=0.1) %>%
   gf_line(x ~ t, data = bind_rows(Trajs[c(1, round(ntrajs/2), ntrajs)]),
           color= ~ color) %>%
   gf_line(x ~ t, data = deterministic, color=~ color) %>%
-  gf_line(xrand ~ t, data = deterministic, color="blue") %>%
+  gf_line(xrand ~ t, data = deterministic, color="dodgerblue") %>%
   gf_refine(scale_color_identity()) %>% #, scale_y_log10()) %>%
   gf_labs(x="Time (years)", y="Value of investment")
 ```

@@ -240,13 +240,13 @@ The second-order approximation is a quadratic polynomial. Being quadratic, its g
 ::: {.workedexample}
 Consider the function $g(x)$ whose graph is shown in Figure \@ref(fig:ds-g).
 
-```{r ds-g, echo=FALSE}
+```{r ds-g, echo=FALSE, warning=FALSE}
 g <- rfun( ~ x, seed=973)
 slice_plot(g(x) ~ x, domain(x=c(-3, 3))) %>%
   gf_labs(title="g(x) vs x") %>%
-  gf_vline(xintercept=-1, color="blue", alpha=0.1, size=20) %>%
-  gf_vline(xintercept=-1, color="blue") %>%
-  gf_text(-5 ~ -1.1, label="x0 = -1", color="blue", angle=90) %>%
+  gf_vline(xintercept= ~ -1, color="dodgerblue", alpha=0.1, size=20) %>%
+  gf_vline(xintercept= ~ -1, color="dodgerblue") %>%
+  gf_text(-5 ~ -1.1, label="x0 = -1", color="dodgerblue", angle=90) %>%
   gf_theme(theme_minimal)
 ```
 We haven't given you a formula for $g(x)$, but you can see that it isn't any of the basic modeling functions but something more complicated. We're going to construct a first-order and second-order approximation to $g(x)$ in a neighborhood $x_0 = -1$ as marked by the blue shaded area.  `r mark(2890)`
@@ -271,20 +271,18 @@ tilde2_g <- makeFun(tilde1_g(x) + (7.8077/2) * (x-x0)^2 ~ x)
 
 Figure \@ref(fig:ds-g2) shows $\widetilde{g_1}(x)$ and $\widetilde{g_2}(x)$, zooming in around $x_0 = -1$.
 
-```{r ds-g2, echo=FALSE, fig.cap="The first-order (green) and second-order (red) approximations to $g(x)$ near $x_0=-1$."}
+```{r ds-g2, echo=FALSE, warning=FALSE, fig.cap="The first-order (green) and second-order (red) approximations to $g(x)$ near $x_0=-1$."}
 g <- rfun( ~ x, seed=973)
 slice_plot(tilde1_g(x) ~ x, domain(x=c(-2, 0)),
              color="green", size=2, alpha=0.25) %>%
   slice_plot(tilde2_g(x) ~ x, domain(x=c(-2, 0)),
-             color="red", size=2, alpha=0.25) %>%
+             color="orange3", size=2, alpha=0.25) %>%
 
 slice_plot(g(x) ~ x, domain(x=c(-2, 0))) %>%
-  
-  
   gf_labs(title="g(x) vs x") %>%
-  gf_vline(xintercept=-1, color="blue", alpha=0.1, size=50) %>%
-  gf_vline(xintercept=-1, color="blue") %>%
-  gf_text(-20 ~ -1.05, label="x0 = -1", color="blue", angle=90) %>%
+  gf_vline(xintercept= ~ -1, color="dodgerblue", alpha=0.1, size=50) %>%
+  gf_vline(xintercept= ~ -1, color="dodgerblue") %>%
+  gf_text(-20 ~ -1.05, label="x0 = -1", color="dodgerblue", angle=90) %>%
   gf_theme(theme_minimal())
 ```
 
@@ -331,10 +329,10 @@ In many modeling situations, the construction of a model function can be reduced
 
 ```{r}
 slice_plot((x+1)^0.5 ~ x, domain(x=c(0,1))) %>% 
-  slice_plot(2*log(x+1) ~ x, color="red") %>%
+  slice_plot(2*log(x+1) ~ x, color="orange3") %>%
   slice_plot(.2*exp(x+1) ~ x, color="green") %>%
   slice_plot(2*exp(-(x+1)) ~ x, color="orange") %>%
-  slice_plot(1/(x+2) ~ x, color="blue")
+  slice_plot(1/(x+2) ~ x, color="dodgerblue")
 ```
 
 2 1.5, 1, .5, log(), -.5, 

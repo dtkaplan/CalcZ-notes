@@ -257,13 +257,13 @@ A *trajectory* will be graphed such that each component of the state has its own
 y <- makeFun(exp(-t) * sin(3*t + 1) ~ t)
 x <- makeFun(exp(-t) * sin(3*t + 3) ~ t)
 slice_plot(x(t) ~ t, domain(t=c(0,5)), label_text = "x(t)", label_x = 0.1) %>%
-  slice_plot(y(t) ~ t, color="blue", label_text = "y(t)", label_x=0.3) %>%
+  slice_plot(y(t) ~ t, color="dodgerblue", label_text = "y(t)", label_x=0.3) %>%
   gf_labs(y="=x(t) and y(t)", title="Solutions x vs t and y vs t")
 Pts <- tibble::tibble(t = seq(0,5, by=0.01)) %>%
   mutate(x = x(t), y = y(t))
 gf_path(y ~ x, data = Pts) %>%
-  gf_label(y ~ x, label=~ paste0("t = ", t), data = Pts %>% filter(t %in% 0:4), color="blue", fill=NA, hjust=1) %>%
-  gf_point(y ~ x, color="blue", data = Pts %>% filter(t %in% 0:4)) %>%
+  gf_label(y ~ x, label=~ paste0("t = ", t), data = Pts %>% filter(t %in% 0:4), color="dodgerblue", fill=NA, hjust=1) %>%
+  gf_point(y ~ x, color="dodgerblue", data = Pts %>% filter(t %in% 0:4)) %>%
   gf_labs(y = "y(t)", x = "x(t)", title="Trajectory")
 ```
 

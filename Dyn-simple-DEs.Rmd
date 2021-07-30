@@ -35,8 +35,8 @@ Signs <- tibble::tibble(
   label = paste("Mile", x),
   angle = -sign(x - 9)*90
 )
-slice_plot(speed(x) ~ x, domain(x=c(0,20)), color="blue") %>%
-  gf_text(y ~ x, label = ~ label, color="red", data = Signs, angle=~ angle) %>%
+slice_plot(speed(x) ~ x, domain(x=c(0,20)), color="dodgerblue") %>%
+  gf_text(y ~ x, label = ~ label, color="orange3", data = Signs, angle=~ angle) %>%
   gf_text(-30 ~ 1, label=c("West"), inherit=FALSE ) %>%
   gf_text(30 ~ 19, label=c("East"), inherit=FALSE ) %>%
   gf_hline(yintercept=0, color="black", alpha=0.3, size=3) %>%

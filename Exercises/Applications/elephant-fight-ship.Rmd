@@ -24,7 +24,7 @@ global <- makeFun(lm(kepler.radius ~ poly(time, 19), data = Kepler))
 gf_point(kepler.radius ~ time, data = Kepler) %>%
   gf_labs(x = "Time (days after 9 March 1582)", y = "Distance from Sun (AU)") %>%
   slice_plot(mod(time) ~ time, npts=500, color="green") %>%
-  slice_plot(cubic(time) ~ time, npts=500, color="blue") %>%
+  slice_plot(cubic(time) ~ time, npts=500, color="dodgerblue") %>%
   slice_plot(global(time) ~ time, npts=500, color="black") %>%
   gf_lims(y=c(1,2))
 ```
@@ -33,7 +33,7 @@ gf_point(kepler.radius ~ time, data = Kepler) %>%
 askMC(
   "Which of the curves is the sinusoid?", 
   "black",
-  "blue", 
+  "dodgerblue", 
   "+green+",
   random_answer_order = FALSE
 )
@@ -43,7 +43,7 @@ askMC(
 askMC(
   "Which of the curves is the global polynomial?", 
   "+black+",
-  "blue", 
+  "dodgerblue", 
   "green",
   random_answer_order = FALSE
 )
@@ -86,7 +86,7 @@ cubic <- spliner(kepler.radius ~ phase, data = Kepler)
 global <- makeFun(lm(kepler.radius ~ poly(phase, 19), data = Kepler))
 gf_point(kepler.radius ~ phase, data = Kepler) %>%
   slice_plot(mod(phase) ~ phase, color="green") %>%
-  slice_plot(cubic(phase) ~ phase, color="blue", size=2, alpha=0.2) %>%
+  slice_plot(cubic(phase) ~ phase, color="dodgerblue", size=2, alpha=0.2) %>%
   slice_plot(global(phase) ~ phase)
 ```
 

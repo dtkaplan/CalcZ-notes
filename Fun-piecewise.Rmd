@@ -128,7 +128,7 @@ Figure \@ref(fig:gas-use-2) is a graph of monthly natural gas use in the author'
 gf_point(ccf ~ temp, data = Home_utilities, alpha=0.5) %>%
   gf_labs(title="Household natural gas use", x = "Average temperature for the month (deg. F)", y = "Volume of gas used (cubic feet)") %>%
   gf_lims(x = c(0, 85)) %>%
-  slice_plot(4.3*ramp(62 - temp) + 15 ~ temp, color="blue", size=2, alpha=0.5)
+  slice_plot(4.3*ramp(62 - temp) + 15 ~ temp, color="dodgerblue", size=2, alpha=0.5)
 ```
 The graph looks somewhat like a hockey stick. A sloping straight-line dependence of ccf on temperature for temperatures below $60^\circ$F and constant for higher temperatures.  The shape originates from the dual uses of natural gas. Gas is used for cooking and domestic hot water, the demand for which is more of less independent of outdoor temperature at about 15 ccf per month. Gas is also used for heating the house, but that's needed only when the temperature is less than about $60^\circ$F.  
 
@@ -144,9 +144,9 @@ Do heating degree days in integration.
 Similarly with power from wind turbines
 :::
 
-Our last example concerns a bit of familiar technology: music synthesis. Generating a pure tone electronically is easy done using a sinusoid. Generating a note with rich instrumental timbre can be accomplished by a linear combination of sinusoids. Of course, the note will be localized in time. This could be accomplished by multiplying the sinusoids by a hump function envelope.  `r mark(1540)` 
+Our last example concerns a bit of familiar technology: music synthesis. Generating a pure tone electronically is easy done using a sinusoid. Generating a note with rich instrumental timbre can be accomplished by a linear combination of sinusoids. Of course, the note will be localized in time. This could be accomplished by multiplying the sinusoids by a gaussian function envelope.  `r mark(1540)` 
 
-It turns out that our standard hump function, `dnorm()`, does not generate a realistic sound. Instead, a more complicated envelope is used, such as the [ADSR function](https://en.wikipedia.org/wiki/Envelope_(music)) shown in Figure \@ref(fig:ADSR). The function has six (!) parameters: the time the key is pressed, the duration A of the "attack" phase when the sound amplitude is increasing in response to the impulse imposed on the key, a decay of duration D to an output level S that lasts until the key is released, then a decay to zero over duration R. It's reasonable to think of the D and S phases as a piecewise linear approximation to exponential decay.
+It turns out that the gaussian function, `dnorm()`, does not generate a realistic sound. Instead, a more complicated envelope is used, such as the [ADSR function](https://en.wikipedia.org/wiki/Envelope_(music)) shown in Figure \@ref(fig:ADSR). The function has six (!) parameters: the time the key is pressed, the duration A of the "attack" phase when the sound amplitude is increasing in response to the impulse imposed on the key, a decay of duration D to an output level S that lasts until the key is released, then a decay to zero over duration R. It's reasonable to think of the D and S phases as a piecewise linear approximation to exponential decay.
 
 ```{r ADSR, echo=FALSE, out.width="65%", fig.align="center", fig.cap="The ADSR envelope function used in music synthesis consists of 6 pieces including zero output before the key is pressed and after the pulse ends. [Source](https://en.wikipedia.org/wiki/Envelope_(music))"}
 knitr::include_graphics("www/adsr.png")

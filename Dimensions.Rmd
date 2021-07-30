@@ -262,13 +262,11 @@ For the civil engineers, introduce the words stress and strain and talk about th
 In everyday communication as well as in most domains such as construction, geography, navigation, and astronomy we measure angles in ***degrees***. 90 degrees is a right angle. But in mathematics, the unit of angle is ***radians*** where a right angle is 1.5708 radians. (1.5708 is the decimal version of $\pi/2$.) The conversion function, which we'll call raddeg(), is $$\mbox{raddeg}(r) \equiv \frac{180}{\pi} r$$ The function that converts degrees to radians, which we'll call degrad() is very similar: $$\mbox{degrad}(d) \equiv \frac{\pi}{180} d$$
 (Incidentally, $\frac{180}{\pi} = 57.296$ while $\frac{\pi}{180} = 0.017453$.)
 
-In traditional notation, the trigonometric functions such as $\sin()$ and $\tan()$ can be written with an argument either in degrees or radians. For instance, $\sin(90^\circ) = \sin\left(\frac{\pi}{2}\right)$. Similarly, for the inverse functions like $\arccos()$ the units of the output are not specified. This works because there is always a human to intervene between the written expression and the eventual computation. With the computer, there is no valid expression like `sin(90 deg)` (although it would be good if there were!). The angles are always given in radians. Such consistency is admirable, but people are not always so consistent. It is a common source of computer bugs that angles in degrees are handed off to functions like $\sin()$ and that the output of $\acos()$ is (wrongly) interpreted  as degrees rather than radians.  `r mark(1780)` 
-
-:::
+In traditional notation, the trigonometric functions such as $\sin()$ and $\tan()$ can be written with an argument either in degrees or radians. For instance, $\sin(90^\circ) = \sin\left(\frac{\pi}{2}\right)$. Similarly, for the inverse functions like $\arccos()$ the units of the output are not specified. This works because there is always a human to intervene between the written expression and the eventual computation. With the computer, there is no valid expression like `sin(90 deg)` (although it would be good if there were!). The angles are always given in radians. Such consistency is admirable, but people are not always so consistent. It is a common source of computer bugs that angles in degrees are handed off to functions like $\sin()$ and that the output of $\arccos()$ is (wrongly) interpreted  as degrees rather than radians.  `r mark(1780)` 
 
 Function composition to the rescue!
 
-Consider this function given in the [Wikipedia article on the position of the sun] (as seen from Earth)^[Article accessed on May 30, 2021].
+Consider this function given in the [Wikipedia article on the position of the sun](https://en.wikipedia.org/wiki/Position_of_the_Sun) as seen from Earth.^[Article accessed on May 30, 2021]
 $$\delta_\odot(n) \equiv - 23.44^\circ \cdot \cos \left [ \frac{360^\circ}{365} \cdot \left ( n + 10 \right ) \right ]$$
 Where $n$ is zero at the midnight marking New Years and increases by 1 per day. (The $n+10$ translates New Years back 10 days, to the day of the winter solstice.) $\delta_\odot()$ gives the declination of the sun: the latitude pieced by an imagined line connecting the centers of the earth and the sun.
 
@@ -283,21 +281,11 @@ dec_sun <- makeFun(-23.44 * cos((360/365)*(n-10)) ~ n)
 
 `r insert_calcZ_exercise(15.3, "UGDKY", "Exercises/Dimension/dim-formulas.Rmd")`
 
-
-
 `r insert_calcZ_exercise(15.7, "DVGKY", "Exercises/Dimension/dim-params.Rmd")`
-
-
 
 `r insert_calcZ_exercise(15.11, "KGYKY", "Exercises/Dimension/crow-mean-dress.Rmd")`
 
 `r insert_calcZ_exercise(15.11, "JELCI", "Exercises/Dimension/Boyd-1.Rmd")`
 
+`r insert_calcZ_exercise("XX.XX", "aNEcW1", "Exercises/Fun/snake-leave-candy.Rmd")`
 
-::: {.todo}
-More exercises to include ...
-
-- Exercises/Dimension/Boyd-1.html
-
-- Dimension and units of G in Newton's Law of Universal Gravitation.
-:::

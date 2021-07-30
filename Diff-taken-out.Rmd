@@ -160,14 +160,14 @@ gf_point(temp ~ time, data = Stans_data, color="orange") %>%
   slice_plot(water(time) ~ time, domain(time=c(0, 200)), color="gray", size=2, alpha = 0.5) %>%
   slice_plot(tangent(time) ~ time, color = "sienna", 
              domain(time=c(0,80)))  %>%
-   gf_point(y ~ t, data = Pts, color="red", alpha=0.25, size=4, inherit=FALSE) %>%
-  gf_line(y ~ t, data = Pts, color="red") %>%
-  gf_point(25 ~ t, data = Pts, color="blue", alpha=0.25, size=4) %>%
+   gf_point(y ~ t, data = Pts, color="orange3", alpha=0.25, size=4, inherit=FALSE) %>%
+  gf_line(y ~ t, data = Pts, color="orange3") %>%
+  gf_point(25 ~ t, data = Pts, color="dodgerblue", alpha=0.25, size=4) %>%
   gf_point(y ~ t, data=Pt,
            color="sienna", alpha = 0.25, size=4) %>%
   gf_point(25 ~ t, data = Pt, color="tomato", alpha=0.25, size=4) %>%
   gf_segment(25 + y ~ t+t, data=Pt, color="tomato", linetype=2) %>%
-  gf_segment(25 + y ~ t+t, data=Pts, color="blue", linetype=2) %>%
+  gf_segment(25 + y ~ t+t, data=Pts, color="dodgerblue", linetype=2) %>%
   gf_lims(y=c(25, NA)) %>%
   I()
 ```
@@ -577,22 +577,22 @@ Figure \@ref(fig:small-x-pattern-book} shows the naked functions along with the 
 ```{r small-x-pattern-book, echo=FALSE, fig.show="hold", out.width="50%", fig.cap="Comparing the pattern-book functions exp(x), sin(x), and cos(x) to their simple approximations for small x. The functions are drawn as a broad gray line; the approximations are a thin blue line."}
 options(digits=5)
 slice_plot(exp(x) ~ x, domain(x=c(-1, 1)), size=3, alpha=0.25) %>%
-  slice_plot(1 + x ~ x, color="blue") %>%
+  slice_plot(1 + x ~ x, color="dodgerblue") %>%
   gf_labs(title = "Exponential")
 slice_plot(exp(x) ~ x, domain(x=c(-0.01, 0.01)), size=3, alpha = 0.25) %>%
-  slice_plot(1+x ~ x, color = "blue")
+  slice_plot(1+x ~ x, color = "dodgerblue")
 
 slice_plot(sin(x) ~ x, domain(x=c(-1, 1)), size=3, alpha = 0.25) %>%
-  slice_plot(x ~ x, color="blue") %>%
+  slice_plot(x ~ x, color="dodgerblue") %>%
   gf_labs(title = "Sin")
 slice_plot(sin(x) ~ x, domain(x=c(-0.01, 0.01)), size=3, alpha = 0.25) %>%
-  slice_plot(x ~ x, color = "blue")
+  slice_plot(x ~ x, color = "dodgerblue")
   
 slice_plot(cos(x) ~ x, domain(x=c(-1, 1)), size=3, alpha=0.25) %>%
   slice_plot(1 - x^2 ~ x) %>%
   gf_labs(title = "Cos")
 slice_plot(cos(x) ~ x, domain(x=c(-0.01, 0.01)), size=2, alpha = 0.25) %>%
-  slice_plot(1 - x^2 ~ x, color = "blue")
+  slice_plot(1 - x^2 ~ x, color = "dodgerblue")
 ```
 
 Near $x=0$, the graph of the approximation is dead on center of the corresponding pattern-book function.

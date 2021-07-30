@@ -155,8 +155,8 @@ Lq <- fitModel(income ~ 1 - (1-pop)^q, data = Income, start=list(q=0.5))
 Figure \@ref(fig:lorenz-1-fun) compares the polished functions to the data.
 ```{r lorenz-1-fun, echo=FALSE, fig.cap="Lorenz curves $L_b(p)$ (blue) and $L_q(p)$ (red) fitted to the household income data."}
 P %>%
-  slice_plot(Lb(pop) ~ pop, color="blue", npts=500) %>%
-  slice_plot(Lq(pop) ~ pop, color="red", npts=500) %>%
+  slice_plot(Lb(pop) ~ pop, color="dodgerblue", npts=500) %>%
+  slice_plot(Lq(pop) ~ pop, color="orange3", npts=500) %>%
   slice_plot(.55*Lb(pop) + .45*Lq(pop) ~ pop, color="white")
 ```
 Neither form $L_b(p)$ or $L_q(p)$ gives a compelling description of the data. What to do.
@@ -237,22 +237,22 @@ After plucking, the note fades away. An important model of this is a sinusoid (o
 
 Function multiplication is used so often in modeling that you'll see it in many modeling situations. Here's one example that is important in physics and communication: the ***wave packet***. Overall, the wave packet is a localized oscillation as in Figure \@ref{fig:wave-packet}. 
 
-```{r wave-packet, echo=FALSE, fig.cap="A *wave packet* constructed by multiplying a sinusoid by a hump function."}
+```{r wave-packet, echo=FALSE, fig.cap="A *wave packet* constructed by multiplying a sinusoid by a gaussian function."}
 wave_packet <- function(x, A=1, center = 0, width = 5, P=1, phase = 0) {
   A*sin(2*pi*x/P)*dnorm((x - center)/width)
 }
 slice_plot(wave_packet(x, A=2, center=3, width  = 4, P  = 10/5 ) ~ x, 
            domain(x = c(-15, 15)), npts = 500)
 ```
-This is the product of two simple functions: a hump times a sinusoid.
+This is the product of two simple functions: a gaussian times a sinusoid.
 
 ```{r making-wave-packet, echo=FALSE, out.width="50%", fig.show="hold", fig.cap="The two components of the wave packet in Figure \\@ref(fig:wave-packet)"}
 sinusoid <- makeFun(sin(2*pi*x/P) ~ x, P=10/5)
 envelope <- makeFun(2*dnorm((x - center)/width) ~ x, center=3, width=4)
-slice_plot(envelope(x) ~ x, domain(x = c(-15, 15)), color="blue") %>%
+slice_plot(envelope(x) ~ x, domain(x = c(-15, 15)), color="dodgerblue") %>%
   gf_labs(title="The \"envelope\" of the wave packet")
 slice_plot(sinusoid(x) ~ x, domain(x = c(-15, 15)),
-           color="red", npts=500) %>%
+           color="orange3", npts=500) %>%
   gf_labs(title="The oscillation in the wave packet. ")
 ```
 EXERCISES: Say which two kinds of functions are being multiplied here.
@@ -264,7 +264,7 @@ slice_plot(sin(2*pi*t/2.1)*sin(2*pi*t/20) ~ t, domain(t=c(-30, 40)), npts=500)
 etude2::etudeQ(
   "What are the two basic modeling functions being multiplied?",
   "+A sinusoid and another sinusoid with a faster period.+",
-  "A hump and a sinusoid.",
+  "A gaussian and a sinusoid.",
   "A sigmoidal function and a sinusoid.",
   ""
 )
@@ -283,7 +283,7 @@ random_answer_order = FALSE
 
 Other examples along the same lines.
 
-EXERCISE: Provide a sigmoid and a series of humps. Ask the student to sketch out the product.
+EXERCISE: Provide a sigmoid and a series of gaussians. Ask the student to sketch out the product.
 
 ## All together now!
 

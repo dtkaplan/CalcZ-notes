@@ -29,11 +29,11 @@ draw_pipe <- function(time=1, sigma = 1.7,
   f <- makeFun(dnorm(x, 0, sigma) ~ x, sigma=sigma)
   slice_plot(f(x) ~ x, dom, npts=500) %>%
     gf_point(y ~ x, data = Pts, alpha=0.1) %>%
-    gf_point(y ~ x, data = Pts[1,], color="red") %>%
+    gf_point(y ~ x, data = Pts[1,], color="orange3") %>%
     gf_refine(scale_color_identity()) %>%
     gf_hline(yintercept=c(1.03*ypos, 1.17*ypos, ypos*exp(-.5)),
-             color = c("blue", "blue", "red")) %>%
-    gf_text(1.1*ypos ~ -20, label="pipe", color="blue") %>%
+             color = c("dodgerblue", "dodgerblue", "orange3")) %>%
+    gf_text(1.1*ypos ~ -20, label="pipe", color="dodgerblue") %>%
     gf_labs(x = "Position x along pipe (cm)", y = "Concentration", title = glue::glue("Concentration at time t={time}"))
 }
 set.seed(101)

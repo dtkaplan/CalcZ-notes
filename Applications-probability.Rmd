@@ -2,7 +2,7 @@
 
 ## Objectives
 
-a. Understand the relationship between the hump function and the sigmoidal function. 
+a. Understand the relationship between the gaussian function and the sigmoidal function. 
 b. Discuss the scientific application of probability density and cumulative probability.
 
 ## Integrals and basic modeling functions (review)
@@ -13,7 +13,7 @@ i. exponentials $e^{kt}$
 ii. power-law functions $x^{n}$
 iii. sinusoids: sines and cosines, e.g., $\sin(\omega x)$
 iv. logarithm
-v. hump functions, a go-to function for something that happens locally
+v. gaussian functions, a go-to function for something that happens locally
 vi. sigmoidal functions, a related function for modeling something that "builds up" or "matures" to a final value.
 
 In terms of derivatives, exponentials, power-law functions, and sinusoids have a remarkable property:
@@ -26,12 +26,12 @@ The same property can also be stated in terms of anti-derivatives :
 
 Logarithm functions don't have this property: the derivative of a logarithm is **not** a logarithm function. But they are not that far afield. They border on exponentials (the log function is the inverse of an exponential function) and also power-law functions; the anti-derivative of $x^{-1}$ is $\ln(x) + C$ and, of course, the derivative of $\ln(x)$ is $x^{-1}$. `r mark(4510)`
 
-Sigmoids and hump functions similarly do **not** have this property. The derivative of a sigmoid is not a sigmoid and the derivative of a hump is not a hump. But ...
+Sigmoids and gaussian functions similarly do **not** have this property. The derivative of a sigmoid is not a sigmoid and the derivative of a gaussian is not a gaussian. But ...
 
 > The $\left\{\begin{array}{c}\mbox{derivative}\\\mbox{anti-derivative}\end{array}\right\}$
-derivative of a $\left\{\begin{array}{c}\mbox{sigmoid}\\\mbox{hump}\end{array}\right\}$ is a $\left\{\begin{array}{c}\mbox{hump}\\\mbox{sigmoid}\end{array}\right\}$
+derivative of a $\left\{\begin{array}{c}\mbox{sigmoid}\\\mbox{gaussian}\end{array}\right\}$ is a $\left\{\begin{array}{c}\mbox{gaussian}\\\mbox{sigmoid}\end{array}\right\}$
 
-In this Daily Digital, you're going to explore humps and sigmoids in a specific setting: uncertainty and risk. It turns out that each hump and its corresponding sigmoid provide different perspectives on the same phenomenon. `r mark(4515)`
+In this Daily Digital, you're going to explore gaussians and sigmoids in a specific setting: uncertainty and risk. It turns out that each gaussian and its corresponding sigmoid provide different perspectives on the same phenomenon. `r mark(4515)`
 
 ## Quantifying uncertainty with probability
 
@@ -241,7 +241,7 @@ The **cumulative** distribution translates the probability density into an actua
 
 Evaluating $P(t)$ at given value of $t$ gives a probability. For instance, $P(10) \approx 0.095$, roughly 10%. In terms of storms, this means that according to the standard model of these things, the time between consequtive 100-year storms has a 10% chance of being 10 years or less! `r mark(4625)`
 
-A graph of the **cumulative** distribution shows what you might have anticipated: the hump function $p(t)$ has an integral that is a sigmoid function.
+A graph of the **cumulative** distribution shows what you might have anticipated: the gaussian function $p(t)$ has an integral that is a sigmoid function.
 
 ```{r echo=FALSE}
 slice_plot(P(t) ~ t, domain(t=c(-100,400)), npts=300) %>%
@@ -348,7 +348,7 @@ So don't overdo the "Fundamental" part.
 
 ::: {.objectives}
 ```{r echo=FALSE, results="asis"}
-state_objective("Int-6a", "Understand the relationship between the hump function and the sigmoidal function.")
+state_objective("Int-6a", "Understand the relationship between the gaussian function and the sigmoidal function.")
 state_objective("Int-6b", "Discuss the scientific application of probability density and cumulative probability.")
 state_objective("Int-6c", "Understand the concept of expected value.")
 ```
@@ -465,7 +465,7 @@ The **cumulative** distribution translates the probability density into an actua
 
 Evaluating $P(t)$ at given value of $t$ gives a probability. For instance, $P(10) \approx 0.095$, roughly 10%. In terms of storms, this means that according to the standard model of these things, the time between consequtive 100-year storms has a 10% chance of being 10 years or less! `r mark(4685)`
 
-A graph of the **cumulative** distribution shows what you might have anticipated: the hump function $p(t)$ has an integral that is a sigmoid function.
+A graph of the **cumulative** distribution shows what you might have anticipated: the gaussian function $p(t)$ has an integral that is a sigmoid function.
 
 ```{r echo=FALSE}
 slice_plot(P(t) ~ t, domain(t=c(-100,400)), npts=300) %>%
@@ -541,7 +541,7 @@ grade_result(
 ```
 
 <!--
-## Parameters of humps
+## Parameters of gaussians
 
 IN DRAFT ... Present the gaussian. Show the analytic form for the gaussian. Expectation value is the "center" parameter. The density function and the cumulative distribution function are so important that they have been given names in R, `dnorm()` and `pnorm()` respectively. `r mark(4710)`
 
@@ -554,7 +554,7 @@ $$g(x) \equiv \frac{1}{\sqrt{2\pi\sigma^2}} \exp\left(- \frac{1}{2}\frac{(x - m)
 
 <!-- outline. XX means "not included in the above"
 
-1. Hump / sigmoid pair
+1. gaussian / sigmoid pair
     i. Probability of generating a specific random number from a continuous prob. density is zero. 
     ii. You need to integrate it up over a finite domain.
 2. Expectation value  and XX standard width (variance) 

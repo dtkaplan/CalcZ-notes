@@ -8,8 +8,8 @@ n2 = 9
 n = n1 + n2
 v1 <- 3
 v2 <- 5
-var1 = c(c(rep("red", v1), rep("white", n1-v1)), c(rep("red", v2), rep("white", n2-v2)))
-success = "red"
+var1 = c(c(rep("orange3", v1), rep("white", n1-v1)), c(rep("orange3", v2), rep("white", n2-v2)))
+success = "orange3"
 sim  = matrix(NA, nrow = n, ncol = nsim)
 group = c(rep("first", n1), rep("second", n2))
 

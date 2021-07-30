@@ -9,7 +9,7 @@ library(mosaic)
 library(mosaicCalc)
 ```
 
-Each simple function such as a hump, a sigmoid, a straight-line function, or a sinusoid can be likened to a character in a story. For instance, a sinusoid with a period of 10 seconds and an amplitude of 5 feet might be all we need to say about the shaking encountered in an earthquake. A sigmoid might be a good description of the uptake of a social media platform such as Facebook. 
+Each simple function such as a gaussian, a sigmoid, a straight-line function, or a sinusoid can be likened to a character in a story. For instance, a sinusoid with a period of 10 seconds and an amplitude of 5 feet might be all we need to say about the shaking encountered in an earthquake. A sigmoid might be a good description of the uptake of a social media platform such as Facebook. 
 
 Many stories require more than one character. For instance, the initial rise in popularity  of social media platform might be exponential, then turning into a sigmoid, then an eventual exponential decay as popularity wanes as with Yik Yak.
 
@@ -27,16 +27,16 @@ You can see in the graph the slow seasonal change in  temperature represented by
 
 We are going to use this strategy of modeling complex phenomena as a  sum of two or more simple functions.
 
-**Problem 1** Epidemics are often modeled as a series of "waves." Each wave involves different  people. Let's imagine two epidemic waves, one passing through the "blue" population  and a smaller one through  the "red" population, like this:
+**Problem 1** Epidemics are often modeled as a series of "waves." Each wave involves different  people. Let's imagine two epidemic waves, one passing through the "dodgerblue" population  and a smaller one through  the "orange3" population, like this:
 
 ```{r echo=FALSE}
 f1 <- makeFun(1000 * pnorm(t, 50, 20) ~ t)
 f2 <- makeFun(500 * pnorm(t, 125, 10) ~ t)
 slice_plot(f1(t) ~ t, domain(t=c(0,200)), 
-           color = "blue",  
+           color = "dodgerblue",  
            label_text = "wave1(t)") %>%
   gf_labs(y = "Cumulative cases",  x = "Day of year") %>%
-  slice_plot(f2(t) ~ t, color="red", label_text  = "wave2(t)")
+  slice_plot(f2(t) ~ t, color="orange3", label_text  = "wave2(t)")
 ```
 
 

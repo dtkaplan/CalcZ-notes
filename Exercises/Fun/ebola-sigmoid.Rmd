@@ -31,10 +31,10 @@ Points <- tibble::tibble(
 gf_jitter(y ~ t, data  = Points,  height = 0.5, alpha = 0.25) %>%
 slice_plot(sigmoid(t, A=15, center = 5, width = 2) ~ t,
            domain(t = c(-1, 15))) %>%
-  gf_hline(yintercept  = 15, color  = "red",  alpha = 0.5) %>%
-  gf_vline(xintercept = 5, color = "blue", alpha = 0.5) %>%
+  gf_hline(yintercept  = 15, color  = "orange3",  alpha = 0.5) %>%
+  gf_vline(xintercept = 5, color = "dodgerblue", alpha = 0.5) %>%
   gf_vline(xintercept =  c(3, 7),  color = "green", alpha = 0.5) %>%
-  gf_segment(7.5 + 7.5 ~ -1 + 5, color = "blue",  alpha = 0.5) %>%
+  gf_segment(7.5 + 7.5 ~ -1 + 5, color = "dodgerblue",  alpha = 0.5) %>%
   gf_labs(title  = "A genuine sigmoid and its parameters")
 ```
 
@@ -104,8 +104,8 @@ refined_fun <- fitModel(Cases ~ A * pnorm(Day, center, width),
                               width=width_estimate))
 
 gf_point(Cases  ~ Day, data = MMAC::EbolaSierraLeone)  %>%
-  slice_plot(guessed_fun(Day) ~ Day, color="red") %>%
-  slice_plot(refined_fun(Day) ~ Day, color="blue")
+  slice_plot(guessed_fun(Day) ~ Day, color="orange3") %>%
+  slice_plot(refined_fun(Day) ~ Day, color="dodgerblue")
 ```
 :::
 

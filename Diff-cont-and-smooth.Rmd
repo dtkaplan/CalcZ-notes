@@ -79,11 +79,11 @@ DH01   <- makeFun((H(x + 0.01) - H(x))/0.01 ~ x)
 DH001  <- makeFun((H(x + 0.001) - H(x))/0.001 ~ x)
 DH0001 <- makeFun((H(x + 0.0001) - H(x))/0.0001 ~ x)
 slice_plot(DH01(x) ~ x, domain(x=c(-0.02, 0.02)), npts=500,
-           color="red") %>%
+           color="orange3") %>%
   slice_plot(DH001(x) ~ x,
            color="green", npts=500, alpha=0.5) %>%
   slice_plot(DH0001(x) ~ x,
-           color="blue", npts=500, alpha=0.5) 
+           color="dodgerblue", npts=500, alpha=0.5) 
 ```
 Differencing the Heaviside function produces very different functions depending on the value of $h$. Since there is no convergence as $h$ gets smaller, it's fair to say that the Heaviside function does not have a derivative. Perhaps a more useful way to think of it is that the "derivative" of the Heaviside function at $x=0$ is unaccountably large as $h\rightarrow 0$.  `r mark(2355)`
 
