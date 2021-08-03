@@ -125,7 +125,7 @@ In Figure \@ref(fig:penguin-flipper), the data point plot of the penguin flipper
 
 When we construct a function to model the pattern observed in that cloud, we need to respect the mathematical definition of function, part of which is that a function has ***only one output*** for any given input. 
 
-```{r penguin-flipper2,echo=FALSE, warning=FALSE,message=FALSE, out.width="50%", fig.show="keep", fig.cap="The penguin data doesn't directly describe any sensible mathematical function. (left) We use modeling to create a function that stays close, but not too close, to the data points. (right)"}
+```{r penguin-flipper2,echo=FALSE, warning=FALSE,message=FALSE, out.width="50%", fig.show="keep", fig.cap="Connecting the penguin data points with lines (left) doesn't directly describe any sensible mathematical function.  We use modeling to create a smooth function (right) that stays close, but not too close, to the data points."}
 gf_line(flipper_length_mm/10 ~ body_mass_g/1000, 
          data=penguins) %>%
   gf_labs(y = "Flipper length (cm)", x = "Body mass (kg)") 
@@ -163,7 +163,7 @@ A function graph makes it easy to evaluate the ***function inverse***. For all t
 
 Often, working with a function goes another way: you know the output and you want to find a corresponding input. It's easy to do this with a graph. Pick the position on the vertical axis that represents the given input. Then trace horizontally to where the ink is. From there, trace vertically to read off the value of an input that would produce the given output.
 
-Mathematicians are careful to distinguish between functions where there is a ***unique*** input that generates each given output, and functions where there can be more than one input that generates the same output. Functions with a one-to-one relationship between output and input are called "invertible."
+Mathematicians are careful to distinguish between functions where there is one and only one possible input that generates each given output, and functions where there can be more than one input that generates the same output. (Mathematicians use the word ***unique*** to mean "one and only one.") Functions with a one-to-one relationship between output and input are called "invertible."
 
 Invertible or not, it is a common procedure for working with functions to find *an* input corresponding to a specific, given output. In high-school algebra, this was called "solving for $x$." A special case of solving is finding the ***roots of a polynomial***. The name we give to the procedure is ***zero finding***, which correctly points out that we are trying to **find** an input.
 
@@ -184,7 +184,7 @@ It is very hard to read a graph of a function with two inputs. Think of the grap
 
 A mathematical graph is just one way to draw a picture of a function with two inputs. There are other ways. One helpful mode of picture is called a ***contour plot***, familiar to many non-mathematicians in the form of topgraphical maps showing landscape elevation as a function of latitude and longitude. Here's a contour plot of the same function shown in the previous graph: `r mark(770)`
 
-```{r Fig-1b-2.1, echo=FALSE, fig.cap="A contour plot displays the surface in the same manner as a topographical map shows the terrain. This contour plot is a topographical map of the mathematical graph in Figure \\@ref(fig:fun-1b-1-2)."}
+```{r Fig-1b-2-1, echo=FALSE, fig.cap="A contour plot displays the surface in the same manner as a topographical map shows the terrain. This contour plot is a topographical map of the mathematical graph in Figure \\@ref(fig:fun-1b-1-2)."}
 f2 <- rfun( ~ input_1 + input_2, seed=932)
 contour_plot(f2(input_1, input_2) ~ input_1 + input_2,
                  domain(input_1=c(-5, 5), input_2 = c(0, 4)),

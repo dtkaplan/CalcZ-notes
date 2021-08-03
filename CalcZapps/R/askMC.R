@@ -4,9 +4,9 @@ askMC <- function (prompt = "The question prompt", ..., id = NULL, right_one = N
                    inline = FALSE, random_answer_order = FALSE, allow_retry = TRUE,
                    correct = "Right!", incorrect = "Sorry.", message = NULL,
                    post_message = NULL, submit_button = "Check answer", try_again_button = "Try again",
-                   allow_multiple_correct = FALSE, show_feedback=TRUE)
-{
+                   allow_multiple_correct = FALSE, show_feedback=TRUE, out_format=c("Markdown", "GradeScope")) {
   out <- paste(prompt, "\n\n")
+  out_format <- match.arg(out_format)
   raw_labels <- c("i", "ii", "iii", "iv", "v", "vi", "vii", "viii", "ix", "x")
   answer_labels <- c(raw_labels,
                      paste0("x", raw_labels),
@@ -16,7 +16,32 @@ askMC <- function (prompt = "The question prompt", ..., id = NULL, right_one = N
                      letters, LETTERS, paste0(letters, "2"))
   answer_table <- etude2:::dots_to_answers(..., right_one = right_one,
                                            allow_multiple_correct = allow_multiple_correct)
+
+
+  ## GradeScope output module
+  if (out_format == "GradeScope") {
+    out <- fix_dollar_signs(prompt)
+
+    answers <- paste0("(", ifelse(answer_table$correct, "x", " "), ")  ",
+                      fix_dollar_signs(answer_table$item), collapse="\n")
+
+    feedback <- paste0("[[",
+                       paste(fix_dollar_signs(answer_table$feedback[answer_table$correct]),
+                             collapse = "\n"),
+                       "]]\n")
+    if (feedback == "[[]]") feedback <- NULL
+
+    total <- paste(out, answers, feedback, sep="\n\n")
+
+    Res <- knitr::asis_output(paste0("<pre>", "[Question ", id, "]  ", total, "\n</pre>\n"))
+
+    return(Res)
+  }
+  ## End of GradeScope module
+
+
   place_inline <- inline || (sum(nchar(answer_table$item)) < 40)
+
   if (place_inline) {
     answer_labels <- paste0(rep("    ", nrow(answer_table)))
     newline <- "   "
@@ -28,7 +53,7 @@ askMC <- function (prompt = "The question prompt", ..., id = NULL, right_one = N
 
   if (show_feedback) {
     feedback <- paste("<span class='mcanswer'>",
-                      ifelse(answer_table$correct, "✔︎", "︎✘"),
+                      ifelse(answer_table$correct, random_success(), "︎✘"),
                       answer_table$feedback, "</span>")
   } else {
     feedback <- ""
@@ -41,4 +66,17 @@ askMC <- function (prompt = "The question prompt", ..., id = NULL, right_one = N
   knitr::asis_output(paste0(
     "**Question ", MC_counter$get(), "**  ",
     out, answers))
+}
+
+
+# For Gradescope output
+#' @export
+askGS <- function(...) {
+  CalcZapps::askMC(..., out_format = "GradeScope")
+}
+# fix the dollar signs for GradeScope
+fix_dollar_signs <- function(str) {
+  str <- gsub("\\${1}", "\\$\\$", str)
+  str <- gsub("\\${4}", "\\$\\$\\$", str)
+  str
 }

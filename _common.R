@@ -115,3 +115,7 @@ ex.mark <- function(num, perm_id, fname="no file specified") {
   perm_id <- as.character(substitute(perm_id))
   glue::glue('**Exercise {num}**: <span><a name="File: {fname}" href="#{perm_id}"><img src="www/icons8-signpost.png" title="Location: {fname}" width="12px"/></a><span style="color: red; font-size: 9pt;">{perm_id}</red></span>')
 }
+
+# For gradescope output
+#askMC <- CalcZapps::askGS
+

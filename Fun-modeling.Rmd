@@ -112,25 +112,32 @@ What remains is to find the parameters $A$, $k$, and $C$.  Here is a general pro
 
 **General process for curve-fitting an exponential**
 
-**Step 0**: Check that the data show an exponential pattern in one of its variations, namely a smooth increase or decrease and leveling out beyond some value of $t$. If this isn't true, reconsider whether you should be using an exponential function in the first place.
+The goal is to find the parameters $A$, $k$, and $C$ in the formula $A e^{kx} + C$.
 
-**Step 1** Do the data show exponential growth or exponential decay? If it's exponential growth, then the flat region in Step 0 will be to the left and $k$ will be positive. If exponential decay, the flat region will be to the right and $k$ will be negative.
+**Step 0**: Check that the data show an exponential pattern in one of its varieties, namely a smooth increase or decrease and leveling out beyond some value of $x$. If this isn't true, reconsider whether you should be using an exponential function in the first place. Using your mind's eye (or paper, if you like) sketch out an exponential-shaped curve that follows the overall trend of the data. We'll call this imagined curve $f(x)$.
 
-Notice that the question of "growth or decay" depends only on the sign of the parameter $k$. You can have an exponentially decaying process that's increasing. Consider, for instance, the speed of a car as it merges onto a highway from a slow speed on the entrance ramp.  The car's velocity is increasing, but as you approach highway speed the rate of increase gets smaller. That's exponential decay.
+**Step 1**: Find the ***baseline***. This is the output level at which the function has a horizontal asymptote, that is, at which the function levels off. $C$ is this baseline level. 
 
-**Step 2** Where is the baseline? We're going to put aside $k$ for the moment and find the value of the output that is being approached asymptotically, that is, the height of the level zone of the data. This height is the coefficient $A$ in the linear combination.
+**Step 2**: Find the numerical value of the imagined function $f()$ at input $x = 0$. We'll call this value $f(0)$. Then $A \equiv f(0) - C$.
 
-**Step 3** Once you know the baseline, you're set to find a numerical value for the parameter $k$. 
+**Step 3** Estimate parameter $k$ using these steps:
 
-i. Pick a point in the data far from the baseline. Call the input $t_1$. 
-ii. Scan forward or backward in time to find a point in the data that's vertically half way from the original point toward the baseline. Call the input at that point $t_{1/2}$. The difference between these, $t_1 - t_{1/2}$ is called the ***half-life*** or ***halving-time*** if it's negative and the ***doubling time*** if it's positive. 
-iii. The parameter $k$ is $0.693 / (t_1 - t_{1/2})$. Double check the sign of $k$ to make sure it's consistent with what you saw in Step 1. (Incidently, $0.693 = \ln(2)$. The 2 is the same as the 2 in doubling or halving.)
+a. Pick any input value, which we'll call $x_2$, such that $f(x_2)$ is far from the baseline.
+b. Find an input value, which we'll call $x_1$ such that $f(x_1)$ is halfway between the baseline $C$ and $f(x_2)$, that is, $$f(x_1) = \frac{f(x_2) - C}{2}$$
+c. Then $$k = \frac{\ln(2)}{x_2 - x_1} \approx \frac{0.693}{x_2 - x_1}$$
+d. Using this simple test to double-check your work. If the horizontal asymptote of $f()$ (that is, approach to the baseline) is for $x \rightarrow \infty$, then $k$ should be **negative**. If the horizontal asymptote is for $x \rightarrow - \infty$, then $k$ will be positive. 
+    
 
-**Step 4** Now that you have numerical values for the baseline $A$ and the parameter $k$, calculating the value of $B$ is straightforward.  
-    i. Pick a $t_0$ that's reasonably well represented in your data. Find the vertical coordinate represented by the data near that $t_0$. Call that ${\cal D}$. 
-    ii. Solve with respect to $B$ the equation $A + B e^{k t_0} = {\cal D}$. Things are particularly easy if you can use $t_0 = 0$. Then you just straight off calculate $B = {\cal D} - A$.
+Notice that the question of "growth or decay" depends only on the sign of the parameter $k$. You can have an exponentially decaying process that's increasing. Consider, for instance, the speed of a car as it merges onto a highway from a slow speed on the entrance ramp.  The car's velocity is increasing, but as you approach highway speed the rate of increase gets smaller. That's exponential **decay**.
 
-**Step 5** Plot the function $A + B e^{k t}$ using the values for $A$, $B$, and $t$ that you just found. If you are not satisfied, tweak the parameters a bit until you are.
+The procedure in Step 3 works for estimating $k$ stemps from a very important property of exponential functions: Exponential functions always double/half at a constant pace. By design, the parameter $k$
+directly determines that pace. Picking an $x_2$ and finding the corresponding $x_1$ gives the length of the input interval, $x_1 - x_2$ over which the distance from the baseline doubles/halves. 
+ 
+What’s remarkable about the doubling/halving time is that, for a genuinely exponential function, it doesn’t matter which point we choose for $x_1$. In practice working with graphed data, it's best to choose so that  $f(x_1)$ is discernibly far from the baseline. started with, this property is true across the entire input domain. 
+The $2$ in $\ln(2)$ corresponds to idea of doubling/halving. The logarithm converts $2$ to an scale that will generate 2 when exponentiated.
+
+
+**Step 4** If you can plot the data, do so. Add to that a graphics layer showing the function $A e^{k x} + C$ using the values for $A$, $C$, and $k$ that you just found. If you are not satisfied with the way the plotted function approximates the data, tweak the parameters a bit until you are.
 
 **Exponential curve fitting applied to the water-cooling data**
 

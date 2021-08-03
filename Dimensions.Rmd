@@ -82,13 +82,6 @@ You will hear it said that a kilogram is 2.2 pounds. That's not strictly true. A
 
 It's also potentially confusing that sometimes different dimensions are used to get at the same idea. For instance, the same car that gets 35 miles / gallon in the US (dimension $\text{L}/\text{L}^3 = 1/\text{L}^2$) will use 6.7 liters per 100 kilometers ($\text{L}^3 / L = \text{L}^2$) in Europe. Same car. Same fuel. Different conventions using different dimensions.  `r mark(1730)` 
 
-::: {.objectives}
-```{r echo=FALSE, results="asis"}
-state_objective("Fun-10d", "Understand the bracket notation and how it works with dimensional arithmetic.")
-```
-:::
-
-
 Keeping track of the various compound dimensions can be tricky. For many people, it's easier to keep track of the physical relationships involved and use that knowledge to put together the dimensions appropriately. Often, the relationship can be described using specific calculus operations, so knowing dimensions and units helps you use calculus successfully. 
 
 We'll use a specific bracket notation to translate between words for the concept and the dimension. For instance, [length] = L, [mass] = M, [time] = T, [inches] = L, ...
@@ -103,10 +96,10 @@ i. [***Area***] $= \text{L}^2$. Some corresponding units to remind you: "square 
 
 Anticipating that you will return to this section for reference, we've also added some dimensions that can be understood through the relevant calculus operations.
 
-- acceleration: [Calculus: derivative of velocity with respect to time, 2nd derivative of position with respect to time]
-- force: [Calculus: Derivative of momentum with respect to time]
-- energy: [Calculus: Integral of force with respect to length]
-- power: [Calculus: Derivative of energy with respect to time]
+- [***Acceleration***] $= \text{L}/\text{T}^2$. Units: "meters per second squared," In calculus, acceleration is the derivative of velocity with respect to time, or, equivalently, the 2nd derivative of position with respect to time.
+- [***Force***] $=  \text{M}\, \text{L}/\text{T}^2$ In calculus: force is the derivative of momentum with respect to time.
+- [***Energy***] or [***Work***] $=   \text{M}\, \text{L}^2/\text{T}^2$ In calculus, energy is the  integral of force with respect to length.
+- [***Power***] $=  \text{M}\, \text{L}^2/\text{T}^3 $ In calculus, power is the derivative of energy with respect to time.
 
 
 ::: {.intheworld}
@@ -162,25 +155,27 @@ Sigmoidal | $[\mbox{sigmoid}(a)] =  [1]$ | $[a] = [1]$ |celibate
 
 
 
-## Example: Dimensional analysis 
+## Example: Dimensional analysis {#pendulum-dimensions}
 
-We want to relate the **period** (in T) of a pendulum to it's **length** and **mass**. **Gravity** also plays a role. For simplicity, we'll assume that the pendulum cable or rod is massless.  `r mark(1750)` 
+We want to relate the **period** (in T) of a pendulum to it's **length** and **mass**. Acceleration due to **gravity** also plays a role; that has dimension $\text{L}\cdot \text{T}^{-2}$. For simplicity, we'll assume that only the bob at the end of the pendulum cable or rod has mass.  `r mark(1750)` 
 
 The analysis strategy is to combine the four quantities we think play a role into one total quantity that is **dimensionless**. Since it is dimensionless, it can be constant regardless of the mass, length, period, gravity of each individual situation.
 
-$$\mbox{[Period]}^a \cdot \mbox{[Mass]}^b \cdot \mbox{[Length]}^c \cdot \mbox{[Gravity]}^d = T^a \cdot M^b \cdot L^c \cdot L^d \cdot T^{-2d}$$
-To be dimensionless ...
+$$\mbox{[Period]}^a \cdot \mbox{[Mass]}^b \cdot \mbox{[Length]}^c \cdot \mbox{[Gravity]}^d = T^a \cdot M^b \cdot L^c \cdot L^d \cdot T^{-2d} = [1]$$
+To be dimensionless:
 
 - $c = -d$, cancel out the L
-- $a = -2d$, cancel out the T
+- $a = 2d$, cancel out the T
 - $b=0$, there's no other mass term, and we need to cancel out the M
 
-Let $d=1$ and see what happens. 
+All of the exponents can be put in terms of $d$. That doesn't tell us what $d$ should be, but whatever value for $d$ we decide to choose, we get a ratio that's equivalent to:  
 
-$$ \frac{\mbox{Gravity}}{\mbox{Length}\cdot \mbox{Period}^2} \equiv c$$
-Consequently
+$$ \frac{\mbox{Gravity}\cdot \mbox{Period}^2}{\mbox{Length}} \equiv B$$
+where $B$ is the size of the dimensionless quantity [1]. Consequently
 
-$$\text{Period} = \sqrt{\frac{\mbox{Gravity}}{\mbox{Length}} }$$
+$$\text{Period} = B \sqrt{\frac{\mbox{Length}}{\mbox{Gravity}} }$$
+We can experimentally determine the numerical value of the dimensionless constant $c$ by measuring the period and length of a pendulum and (on Earth) recognizing that gravitational acceleration on Earth's surface is 9.8 meters-per-second-squared. Such experiment and mathematical models using differential equations give $B = (2\pi)^2$.
+
 ::: {.forinstructors} 
 Test via experiment
 
@@ -194,16 +189,18 @@ String knotted into 4 equal segments (about 1 foot each) with a bolt at the end
     - Time 10 oscillations and record result
 ... and so on
 
-Calculate the dimensionless quantity $c$ in each case. They should all be approximately the same.
+Calculate the dimensionless quantity $B$ in each case. They should all be approximately the same and roughly $B = (2 \pi)^2$.
 :::
 
 
-`r insert_calcZ_exercise(15.3, "RDTTKW", "Exercises/Dimension/satellite-dimensions.Rmd")`
+`r insert_calcZ_exercise("15.4", "mHACgC", "Exercises/Dimension/frog-win-fridge.Rmd")`
+
+`r insert_calcZ_exercise(15.4, "RDTTKW", "Exercises/Dimension/satellite-dimensions.Rmd")`
 
 
 ## Conversion: Flavors of 1
 
-Numbers are dimensionless but not necessarily unitless. Failure to accept this distinction is one of the prime reasons people have trouble figuring out to to convert from one unit to another.  `r mark(1760)` 
+Numbers are dimensionless but not necessarily unitless. Failure to accept this distinction is one of the prime reasons people have trouble figuring out how to convert from one unit to another.  `r mark(1760)` 
 
 
 1 is a favorite of elementary school students because its multiplication  and division tables are  completely  simple. Anything times one, or anything divided by one, is simply that thing.  Addition and subtraction are pretty simple, too, but that's not my concern here.
@@ -222,30 +219,34 @@ When it comes to ***quantities***, there's not just one one but many. And often 
 
 I like to call these and others different ***flavors of one***. 
 
-In every example, the dimension of  the numerator matches the dimension of the denominator. [feet / meter] is L/L = 1.  [cups / pint] is L^3/L^3 = 1. [miles/hour / ft per sec] = L/T / L/T = 1. Each of these quantities has *units* but it has no *dimension*. 
+In every one of the above examples, the dimension of  the numerator matches the dimension of the denominator. The same is true when comparing feet and meters ([feet / meter] is L/L = [1]), or comparing cups and pints  ([cups / pint] is $\text{L}^3/\text{L}^3 = [1]$) or comparing miles per hour and feet per second ([miles/hour / ft per sec] = L/T / L/T = [1]). Each of these quantities has *units* but it has no *dimension*. 
  
 It's helpful to think about conversion between units as a matter of multiplying by the appropriate flavor of 1. Such conversion will not change the dimension of the quantity but will render it in new units.
 
 ::: {.workedexample}
-Example: Convert 100 feet-per-second into miles-per-hour. First, write the quantity to be converted as a fraction and along side it, write the desired units after the conversion. In this case that will be $$100 \frac{\text{feet}}{\text{second}} \ \ \ \text{into} \ \ \ \frac{\text{miles}}{\text{hour}}$$
+Example: Convert 100 feet-per-second into miles-per-hour. First, write the quantity to be converted as a fraction and alongside it, write the desired units after the conversion. In this case that will be $$100 \frac{\text{feet}}{\text{second}} \ \ \ \text{into} \ \ \ \frac{\text{miles}}{\text{hour}}$$
 
-First, we'll change feet into miles. This can be accomplished by multiplying by the flavor of one that has units miles-per-foot. What number will give a flavor of one? One mile is 5280 feet, so $$\frac{1}{5280} \frac{\text{miles}}{\text{foot}}$$ is a flavor of one.
+First, we'll change feet into miles. This can be accomplished by multiplying by the flavor of one that has units miles-per-foot. Second, we'll change seconds into hours. Again, a flavor of 1 is involved. 
 
-Next, we need a flavor of one that will turn $\frac{1}{\text{second}}$ into $\frac{\text{1}}{\text{hour}}$. This will have the form $\frac{\text{second}}{\text{hour}}$. What number will give a flavor of one with these units. One hour is 3600 seconds, so $$3600 \frac{\text{second}}{\text{hour}}$$ is a flavor of one.
+
+What number will give a flavor of one? One mile is 5280 feet, so $$\frac{1}{5280} \frac{\text{miles}}{\text{foot}}$$ is a flavor of one.
+
+Next, we need a flavor of one that will turn $\frac{1}{\text{second}}$ into $\frac{\text{1}}{\text{hour}}$. We can make use of a minute being 60 seconds, and an hour being 60 minutes. 
+$$\underbrace{\frac{60\  \text{s}}{\text{minute}}}_\text{flavor of 1}\  \underbrace{\frac{60\ \text{minutes}}{\text{hour}}}_\text{flavor of 1} = \underbrace{3600\frac{\text{s}}{ \text{hour}}}_\text{flavor of 1}$$
 
 Multiplying our carefully selected flavors of one by the initial quantity, we get $$
-\frac{1}{5280} \frac{\text{miles}}{\text{foot}} \times 3600 \frac{\text{second}}{\text{hour}}\times 100 \frac{\text{feet}}{\text{second}} = 100 \frac{3600}{5280} \frac{\text{miles}}{\text{hour}} = 68.18 \frac{\text{miles}}{\text{hour}}$$
+\underbrace{\frac{1}{5280} \frac{\text{mile}}{\text{foot}}}_\text{flavor of 1} \times \underbrace{3600 \frac{\text{s}}{\text{hour}}}_\text{flavor of 1} \times \underbrace{100 \frac{\text{feet}}{\text{s}}}_\text{original quantity} = 100 \frac{3600}{5280} \frac{\text{miles}}{\text{hour}} = 68.18 \frac{\text{miles}}{\text{hour}}$$
 :::
 
 
 ## Dimensions and linear combinations
 
-Low-order polynomials are a useful way of constructing model functions. And a polynomial is a linear combination of monomials. For instance, suppose we want a model of the yield of corn in a field per inch of rain over the growing season, will call it corn(rain). The output will have units of bushels (of corn). The input will have units of inches (of rain). A second-order polynomial will be appropriate for reasons to be discussed in Chapter \@ref(optimization1).  `r mark(1770)` 
+Low-order polynomials are a useful way of constructing model functions. A For instance, suppose we want a model of the yield of corn in a field per inch of rain over the growing season, will call it corn(rain). The output will have units of bushels (of corn). The input will have units of inches (of rain). A second-order polynomial will be appropriate for reasons to be discussed in Chapter \@ref(optimization1).  `r mark(1770)` 
 
 $$\text{corn(rain)} \equiv a_0 + a_1\, \text{rain} + \frac{1}{2} a_2\, \text{rain}^2$$
-Of course, the addition in the linear combination will only make sense if all three terms $a_0$, $a_1\,\text{rain}$, and $a_2\, \text{rain}^2/2$ have the same dimension. But clearly $[\text{rain}] \neq [\text{rain}^2]$. In order for things to work out, the **scalars must themselves have dimension**. We know the output of the function will have dimension $[\text{volume}] = \text{L}^3$.  Thus, $[a_0] = \text{L}^3$. 
+Of course, the addition in the linear combination will only make sense if all three terms $a_0$, $a_1\,\text{rain}$, and $\frac{1}{2}\, a_2\, \text{rain}^2/2$ have the same dimension. But clearly $[\text{rain}] \neq [\text{rain}^2]$. In order for things to work out, the **scalars must themselves have dimension**. We know the output of the function will have dimension $[\text{volume}] = \text{L}^3$.  Thus, $[a_0] = \text{L}^3$. 
 
-$[a_1]$ must be different, because it has to cancel out the $[\text{rain}] = \text{L}$ and produce $\text{L}^3$. Thus, $[a_1] = \text{L}^2$. 
+$[a_1]$ must be different, because it has to combine with the $[\text{rain}] = \text{L}$ and produce $\text{L}^3$. Thus, $[a_1] = \text{L}^2$. 
 
 Finally, $[a_2] = \text{L}$. Multiplying that by $[\text{rain}]^2$ will give the required $\text{L}^3$
 

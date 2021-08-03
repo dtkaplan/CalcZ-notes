@@ -19,7 +19,8 @@ askMC(
   submit_button = "Check answer",
   try_again_button = "Try again",
   allow_multiple_correct = FALSE,
-  show_feedback = TRUE
+  show_feedback = TRUE,
+  out_format = c("Markdown", "GradeScope")
 )
 }
 \description{
