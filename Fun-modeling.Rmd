@@ -1,6 +1,6 @@
 # Process of modeling {#process-of-modeling}
 
-Seen very abstractly, a mathematical model, as we are using the term, is a set of ***functions*** that represent the relationships between inputs and outputs.  `r mark(900)`
+Seen very abstractly, a mathematical model is a set of ***functions*** that represent the relationships between inputs and outputs.  `r mark(900)`
 
 At the most simple level, building a model can be a short process:
 
@@ -69,8 +69,7 @@ slice_plot(-exp(-x) ~ x, domain(x=c(-2,2))) %>%
 
 ```
 
-
-`r insert_calcZ_exercise(8.3, "ds4e7",  "Exercises/DD-141Z-04/exponential-bases.Rmd")`
+`r insert_calcZ_exercise("XX.XX", "0rvpbu", "Exercises/Fun/kid-type-boat.Rmd")`
 
 
 ## Curve fitting an exponential function {#fit-exponential}
@@ -151,22 +150,21 @@ gf_point(temp ~ time, data=CoolingWater %>% sample_n(20)) %>%
 
 Step 0: The data indicate a smooth curve. As $t$ gets large, the curve approaches a constant. So an exponential model is reasonable.
 
-Step 1: The flat zone of the data is to the right. So we've got exponential decay and $k < 0$. 
 
-Step 2: The curve looks like it's leveling out at a temperature of about 25 degrees C for large $t$. So $A \approx 25^{\circ} \text{C}$.
+Step 1: The curve looks like it's leveling out at a temperature of about 25 degrees C for large $t$. So $A \approx 25^{\circ} \text{C}$.
 
-Step 3: 
+Step 2: 
 
-i. The point furthest from the baseline is located at $t_1 = 15 \text{sec}$ with a value ${\cal D} \approx 80^\circ\text{C}$. 
+i. The point far from the baseline is located at $t_1 = 15 \text{sec}$ with a value ${\cal D} \approx 80^\circ\text{C}$. 
 ii. This if $55^\circ\text{C}$ from the baseline. We want to find the value of $t_1$ where the temperature will be half way from 80 to the baseline. That's a temperature of about $80 - 55/2 = 53.5$. Scanning over to the right, the function that I can imagine going through the data crossed $53^\circ$ at about $t_{1/2} = 40$. Thus, the half-life is estimated at 25s. 
-iii. The parameter $k$ is therefore $k\approx $0.693 / \mbox{half-life}) = - 0.63 / 25 = -0.0277$. Since we identified in Step 1 that exponential decay is involved, we expect $k$ to be negative. It is.
+iii. The parameter $k$ is therefore $k\approx 0.693 / \mbox{half-life}) = - 0.63 / 25 = -0.0277$. Since we identified in Step 1 that exponential decay is involved, we expect $k$ to be negative. It is.
 
-Step 4. 
+Step 3. 
 
 i. We know $A \approx 25$ and $k \approx -0.0277$. We also now that for $t=15$ the function output is about ${\cal D} = 80^\circ$. 
-ii. This means $25^\circ + B e^{- 0.0277 \times 15} \approx 80^\circ = 25 + 0.66 B$. Solving for $B$ gives $B = (80 - 25)/0.66 = 83.3$
+ii. This means $25^\circ + B e^{- 0.0277 \times 15} \approx 80^\circ = 25 + 0.66\ B$. Solving for $B$ gives $B = (80 - 25)/0.66 = 83.3$
 
-Step 5. Graph the function over the data.
+Step 4. Graph the function over the data.
 
 ```{r Fun-4-a-2-2, echo=FALSE, fig.cap="An exponential function that roughly aligns with the data."}
 set.seed(101)
@@ -175,6 +173,7 @@ gf_point(temp ~ time, data=CoolingWater %>% sample_n(20)) %>%
   slice_plot(25 + 83.3*exp(-.0277*time) ~ time, color="dodgerblue")
 ```
 
+Step 5: The flat zone of the data is to the right. So we've got exponential decay and $k < 0$. 
 
 
 `r insert_calcZ_exercise(8.7, "vkwl4", "Exercises/Fun/chicken-choose-vase.Rmd")`

@@ -18,7 +18,8 @@ gf_point(confirmed ~ day,
          data = March) %>%
   gf_labs(y = "Cumulative confirmed cases", x = "Day in March, 2020") %>%
   gf_lims(y=c(0,200000)) %>%
-  slice_plot(exp(x) ~ x, domain(x=c(0,15)), color="orange3", label_text = "exp(x)")
+  slice_plot(exp(x) ~ x, domain(x=c(0,15)), color="orange3", label_text = "exp(x)", size=4) %>%
+  slice_plot(exp(x) ~ x, domain(x=c(0,15)), color="red", size=2)
 ```
 
 There's an obvious mismatch between the data and the function $e^x$. Does this mean the COVID pattern is not exponential?
