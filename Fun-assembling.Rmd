@@ -186,30 +186,11 @@ Many modelers are tempted to extend the technique to third-, fourth-, fifth-orde
 An ofttimes better approach is to compose the polynomial with a curved but monotonic function, such as a logarithm.
 
 ::: {.why}
-Explain why we are now using subscripts for the names of scalars.
+Notice that in writing low-order polynomials like $$g_1(x) \equiv a_0 + a_1 x$$ or  $$g_2(x) \equiv b_0 + b_1 x + b_2 x^2$$ we are using a specific naming convention for the scalars in the linear combinations. For each different function, we use a different start-of-the-alphabet name, like $a$ and $b$. That same name is used for all the scalars in the function, and a subscript is used to make the distinction between the different functions being combined. Thus, we have $a_1$ for the $x$ function in $g_1()$ and $b_2$ for the $x^2$ function in $g_2()$.
+
+In high-school mathematics, polynomials are often written without subscript, for instance $a x^2 + b x + c$. This can be fine when working with only one polynomial at a time, but in modeling we often need to compare multiple, related polynomials.
 :::
 
-## Tukey's ladder (optional)
-
-::: {.todo}
-[[Tukey's ladder]] Using a simple straight line with input composition and/or output composition. You can get a variety of curve shapes using only a linear function.
-:::
-
-
-`r insert_calcZ_exercise(11.15, "UVGMA", "Exercises/Fun/rule-of-72.Rmd")`
-
-
-::: {.todo}
-As exercises?
-
-
-
-Log transformation of used car prices
-
-[[Perceived brightness or loudness]] is a log scale.
-
-
-:::
 
 ## Function multiplication
 
@@ -255,35 +236,28 @@ slice_plot(sinusoid(x) ~ x, domain(x = c(-15, 15)),
            color="orange3", npts=500) %>%
   gf_labs(title="The oscillation in the wave packet. ")
 ```
-EXERCISES: Say which two kinds of functions are being multiplied here.
 
-```{r echo=FALSE}
-slice_plot(sin(2*pi*t/2.1)*sin(2*pi*t/20) ~ t, domain(t=c(-30, 40)), npts=500)
-```
-```{r sine-in-sine1, echo=FALSE, results="markup"}
-etude2::etudeQ(
-  "What are the two basic modeling functions being multiplied?",
-  "+A sinusoid and another sinusoid with a faster period.+",
-  "A gaussian and a sinusoid.",
-  "A sigmoidal function and a sinusoid.",
-  ""
-)
-```
+::: {.intheworld}
+Each simple function such as a gaussian, a sigmoid, a straight-line function, or a sinusoid can be likened to a character in a story. For instance, a sinusoid with a period of 10 seconds and an amplitude of 5 feet might be all we need to say about the shaking encountered in an earthquake. A sigmoid might be a good description of the uptake of a successful social media platform such as Facebook. 
 
+But not every social media firm succeeds and you may need two or more characters to express the drama: the rising young firm and the rapid fall in popularity when competition provides a better alternative.
 
-```{r sine-in-sine2, echo=FALSE, results="markup"}
-etude2::etudeQ(
-"What is the period of the envelope?", 
-"10" = "It's true that the broad peaks in the overall function occur every 10 time units. But a sine wave has two excursions from zero every cycle, one positive and one negative. So if the period of the envelope were 10, we would see an amplitude of the faster sinusoid near zero every 5 time units.",  
-"+20+",
-"30" = "If this were so, the dips in amplitude of the faster sign would occur every 15 time units.",
-random_answer_order = FALSE
-)
+For instance, the initial rise in popularity of the social media platform [Yik Yak](https://en.wikipedia.org/wiki/Yik_Yak) was exponential. Then popularity leveled off briefly like a sigmoid. Finally popularity collapsed to near zero and the company closed.
+You could model this pattern by multiplying a sigmoid by an exponential, as in Figure \@ref(fig:yikyak).
+
+```{r yikyak, fig.cap="Subscriptions to the web messaging service Yik Yak grew exponentially in 2013 and 2014, then collapsed. The company closed in 2017."}
+yikyak <- makeFun(pnorm(year, mean=2014.5, sd=0.7) * exp(- (year-2014)) ~ year)
+slice_plot(yikyak(year) ~ year, domain(year=c(2010,2018)))
 ```
 
-Other examples along the same lines.
 
-EXERCISE: Provide a sigmoid and a series of gaussians. Ask the student to sketch out the product.
+:::
+
+
+
+`r insert_calcZ_exercise("XX.XX", "LPhyTb", "Exercises/Fun/maple-pitch-jacket.Rmd")`
+
+
 
 ## All together now!
 
