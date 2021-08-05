@@ -18,18 +18,21 @@ In this chapter, we'll illustrate these five different modes using the pattern-b
 
 
 
-## Computer commands
+## Computer commands {slice-plot-intro}
 
 Since we've already introduced the pattern-book functions, this is a good time to show you how to draw a graph of them. After this short introduction, we'll discuss graphics more generally and look at graphics of functions that have *two* inputs.
 
 All the pattern-book functions have just a single input. You can draw graphs of single-input functions using the `slice_plot()` R/mosaic operator. You need to specify two pieces of information to `slice_plot()`:
 
 1. Which function to graph. In R/mosaic, You state this with what's called a ***tilde expression***. A couple of examples will suffice for the moment.
-    a. When the function has a name, like `exp()` or `log()` or `sin()`, the tilde expression looks like `exp(x) ~ x`. There's a squiggle called "tilde" in the middle: <span style="font-size: 24pt;">~</span>. On the left side of the tilde you put the name of the function you want to graph followed by an input name. You can choose any input name you like: here we are using `x`. On the right side of the tilde, place the input name again. We'll explain why the name appears in two places later.
+    a. When the function has a name, like `exp()` or `log()` or `sin()`, the tilde expression looks like `exp(x) ~ x`. On the left side of the tilde you put the name of the function you want to graph with the input name in parentheses. You can choose any input name you like: here we are using `x`, but we are not limited to using `x` or any other letter. Sometimes we even use named inputs (e.g. `exp(time)`). On the right side of the tilde, place the input name again. We'll explain why the name appears in two places later.
     b. When the function is being written as a formula, for instance `1/z` or `t^2`, put the formula on the left side of the tilde and the input name on the right side, like `1/z ~ z` or `1/t ~ t`.
 2. The ***graphics domain***. As you know, the ***domain*** of a function is the collection of all possible legitimate inputs. For most of the pattern-book functions, the domain is $-\infty < x < \infty$. As you might expect, it's impractical to have a graphical axis that is infinitely long. So you have to choose some finite interval of the function domain to use. This finite interval is called the "graphics domain." You specify the domain with a statement like `domain(x = c(-5,5))`, which is setting the graphics domain to $-5 \leq x \leq 5$. Note that the input name used in `domain()` must match the input name you selected in the tilde expression. 
 
-::: {.why}  R uses the `c()` function to collect together the two numbers that define the left and right borders of the domain. In traditional notation, we write an interval in formats like $(-5, 5)$ or $[-5, 5]$ or $-5 \leq x \leq 5$. None of these will work with the R language. For instance, the fragment `(-5, 5)` is not a complete expression in R; the opening parenthesis needs to be preceded by a function name. The `c()` function was invented for this purpose. It can combine any number of arguments, but two is enough for our purpose here: to specify an interval on the number line.^[Some other computer languages, like MATLAB and Python, do allow use of the concise notation `[-5, 5]`. R doesn't, so you will see an awful lot of the `c()` function.]
+::: {.why}  
+
+R uses the `c()` function to *collect* together the two numbers that define the left and right borders of the domain. In traditional notation, we write an interval in formats like $(-5, 5)$ or $[-5, 5]$ or $-5 \leq x \leq 5$. None of these will work with the R language. For instance, the fragment `(-5, 5)` is not a complete expression in R; the opening parenthesis needs to be preceded by a function name. The `c()` function was invented for this purpose. It can combine any number of arguments, but two is enough for our purpose here: to specify an interval on the number line.^[Some other computer languages, like MATLAB and Python, do allow use of the concise notation `[-5, 5]`. R doesn't, so you will see an awful lot of the `c()` function.]
+
 :::
 
 The tilde expression and the graphics domain specifier are the two arguments to `slice_plot()`. All of these are correct commands for drawing a graph:
@@ -85,11 +88,9 @@ slice_plot(1/x ~ x, domain(x=c(.01, 1.25))) %>%
   gf_labs(title="(c) power-law with negative exponent")
 ```
 
-## Concavity
+### Concavity
 
-The slope of a function at a given input tells how fast the function **output** is increasing or decreasing as the input changes slightly. 
-
-***Concavity*** is not directly about how the function output changes, but about how the function's slope changes. For instance, a function might be growing slowly in some region of the domain and then gradually shift to larger growth in an adjacent region. Or, a function might be decaying steeply and then gradually shift to a slower decay. Both of these are instances of ***positive concavity***. The opposite pattern of change in slope is called ***negative concavity***. If the slope doesn't change at all---only straight-line functions are this way--- the concavity is zero.
+The slope of a function at a given input tells how fast the function **output** is increasing or decreasing as the input changes slightly. ***Concavity*** is not directly about how the function output changes, but about how the function's *slope* changes. For instance, a function might be growing slowly in some region of the domain and then gradually shift to larger growth in an adjacent region. Or, a function might be decaying steeply and then gradually shift to a slower decay. Both of these are instances of ***positive concavity***. The opposite pattern of change in slope is called ***negative concavity***. If the slope doesn't change at all---only straight-line functions are this way--- the concavity is zero. 
 
 Concavity has a very clear appearance in a function graph. If a function is positive concave in a region, the graph looks like a smile. Negative concavity looks like a frown. Zero concavity is a straight line. `r mark(432)`
 
@@ -99,7 +100,11 @@ a. The exponential is ***concave up*** everywhere in its domain.
 b. The sinusoid alternates back and forth between ***concave up*** and ***concave down***.
 c. This particular power law $x^{-1}$ is ***concave up*** for $x > 0$ and ***concave down*** for $x < 0$.
 
-When a function switches continuously between positive concavity and negative concavity, as does the sinusoid as well as the gaussian and sigmoid functions, there is an input value where the switch occurs and the function has zero concavity. (Continuous functions that pass from negative to positive or *vice versa* must always cross zero.) Such in-between points of zero concavity are called ***inflection points***. For instance, the sinusoid has inflection points at $x = \ldots, -\pi, 0, \pi, 2\pi, \ldots$.
+When a function switches between positive concavity and negative concavity, as does the sinusoid as well as the gaussian and sigmoid functions, there is an input value where the switch occurs and the function has zero concavity. (Continuous functions that pass from negative to positive or *vice versa* must always cross zero.) Such in-between points of zero concavity are called ***inflection points***. A function can have zero, one, or many inflection points. For instance, the sinusoid has inflection points at $x = \ldots, -\pi, 0, \pi, 2\pi, \ldots$, the cubic power function $f(x)\equiv x^3$ has one, and the exponential has none.
+
+```{r echo=FALSE, out.width="70%", fig.align="center", fig.cap="A diagram showing a cubic function which is concave up until a point of inflection and concave down thereafter."}
+knitr::include_graphics(normalizePath("www/Concavity-diagram.png"))
+```
 
 "Inflection point" appears in news stories, so it is important to know what it means in context. The mathematical definition is about the change in the direction of curvature of a graph. In business, however, it generally means something less esoteric, "a time of significant change in a situation" or "a turning point."^[Google dictionary, provided by Oxford Languages] The business sense effectively means that the function---say profits as a function of time, or unemployment as a function of time---has a non-zero concavity, up or down. It's about the *existence* of concavity rather than about the change in the sign of concavity. 
 
@@ -112,42 +117,44 @@ One of the benefits of learning calculus is to gain a way to think about the pre
 `r insert_calcZ_exercise(4.4, "PYKG5", "Exercises/Fun/pattern-book-concave.Rmd")`
 
     
-## Continuity
+### Continuity
 
-A function is ***continuous*** if you can trace out the graph of the function without lifting your finger from the page. All of the pattern-law functions are continuous except for the reciprocal function and the power law functions with negative exponents (of which the reciprocal is one example: $1/x = x^{-1}$).
+A function is ***continuous*** if you can trace out the graph of the function without lifting pencil from the page. A function is ***continuous on an interval (a,b)*** if you can trace the function over that whole interval. All of the pattern-book functions are continuous over any interval in their domain except for the logarithm and power-law functions with negative exponents. (This includes the reciprocal since it is a power-law with a negative exponent:  $1/x = x^{-1}$.) Those exceptions are not defined at $x=0$. 
 
-Consider the power-law function graphed in Figure \@ref(fig:for-words). This is continuous almost everywhere. There's just one input where the continuity fails, $x=0$. For inputs $x < 0$, the function is negative. For inputs $0 < x$, the function is positive. A continuous function whose value switches from positive to negative must, at some input value, be zero. But the function $1/x$ is not zero at $x=0$; it is undefined. In other words, $1/x$ is discontinuous at $x=0$. `r mark(433)`
+To illustrate, consider the power-law function graphed in Figure \@ref(fig:for-words). On any interval (a,b) that does **not include 0**, the function is continuous.  For inputs $x < 0$, the function is negative. For inputs $0 < x$, the function is positive. So, on an interval that includes $x=0$ the function jumps discontinuously from negative to positive.  `r mark(433)`
 
-## Monotonicity
+### Monotonicity
 
-A function is ***monotonic*** on a domain when the sign of the slope never changes on that domain. Monotonic functions either steadily **increase** in value or, alternatively, steadily **decrease** in value. 
+A function is ***monotonic*** on a domain when the *sign* of the slope never changes on that domain. Monotonic functions either steadily **increase** in value or, alternatively, steadily **decrease** in value. 
+
+Another way of thinking about monotonicity is to consider the order of inputs and outputs compared to a number line. If a function is monotonically increasing then it will preserve the order of inputs along the number line when it maps inputs to outputs, whereas a monotonically decreasing function will reverse the order. For instance, if the input $x$ comes before and input $y$ (i.e., $x<y$), then $f(x)<f(y)$ for monotonically *increasing* functions (the order is preserved), but $f(y)<f(x)$ for monotonically *decreasing* functions (the order of outputs is reversed).
 
 Of the pattern-book functions in Figure \@ref(fig:for-words): both the exponential and the power-law function are monotonic: the exponential grows monotonically and the power-law $x^{-1}$ decreases monotonically. The sinusoid is not monotonic over any domain longer than half a cycle: the function switchs between positive slope and negative slope in different parts of the cycle. `r mark(434)`
     
-## Periodicity
+### Periodicity
 
-A phenomenon is ***periodic*** if it repeats the same pattern over and over again. The pattern that is repeated is called a **cycle**; the periodic function as a whole is one cycle placed next to the previous one and so forth. The day-night cycle is an example of a periodic process, as is the march of the seasons. The ***period*** is the duration of one complete cycle; the period of the day-night cycle is 24 hours, the period of the seasonal progression is 1 year. 
+A phenomenon is ***periodic*** if it repeats a pattern over and over again. The pattern that is repeated is called a **cycle**; the periodic function as a whole is one cycle placed next to the previous one and so forth. The day-night cycle is an example of a periodic phenomenon, as is the march of the seasons. The ***period*** is the duration of one complete cycle; the period of the day-night cycle is 24 hours, the period of the seasonal progression is 1 year. 
 
 Real-world periodic phenomena often show some slight variation from one cycle to the next. 
 Of the pattern-book functions, only the sinusoid is periodic. And it is exactly periodic, repeating exactly the same cycle over and over again. The period---that is, the length of an input interval that contains exactly one cycle---has a value of $2\pi$ for the pattern-book sinusoid. When used to model a periodic phenomenon, the model function needs to be tailored to match the period of the phenomena.
 
-The idea of representing with sinusoids phenomena that are almost but not exactly periodic, for instance a communications signal or a vibration, is fundamental to to many areas of physics and engineering. `r mark(435)`
+The idea of representing with sinusoids phenomena that are almost but not exactly periodic, for instance a communications signal or a vibration, is fundamental to many areas of physics and engineering. `r mark(435)`
 
-## Asymptotic behavior
+### Asymptotic behavior
 
-***Asymptotic*** refers to two possible situations:
+***Asymptotic*** refers to two possible situations depending on whether the input *or* output is being considered:
 
 1. When the **input** to a function gets bigger and bigger in size, going to $\infty$ or $-\infty$. If, as the input changes in this way the output gets closer and closer to a specific value, the function is said to have a ***horizontal asymptote*** of that value.
 
 An example in Figure \@ref(fig:for-words) is the exponential function. As $x \rightarrow -\infty$, that is, as $x$ goes more and more to the left of the domain, the output tends asymptotically to zero.
 
-2. When the **output** of a function gets bigger and bigger in size, going to $\infty$ or $-\infty$ without the input doing likewise. The visual appearance on a graph is like a sky-rocket: the output changes tremendously fast even though the input changes only a little. The vertical line that the skyrocket approaches called a ***vertical asymptote***. The power-law function $x^{-1}$ has a ***vertical asymptote*** at $x=0$.
+2. When the **output** of a function gets bigger and bigger in size, going to $\infty$ or $-\infty$ without the input doing likewise. The visual appearance on a graph is like a sky-rocket: the output changes tremendously fast even though the input changes only a little. The vertical line that the skyrocket approaches called a ***vertical asymptote***. The power-law function $x^{-1}$ has a ***vertical asymptote*** at $x=0$. If you were to consider inputs closer and closer to $x=0$, the outputs would grow larger and larger is magnitude, tending toward $\infty$ or $-\infty$.
 
 Several of the pattern-book functions have horizontal or vertical asymptotes or both. For instance, the function $x^{-1}$ has a horizontal asymptote of zero for both $x \rightarrow \infty$ and $x \rightarrow -\infty$. `r mark(436)`
 
 The sinusoid has neither a vertical nor a horizontal asymptote. As input $x$ increases either to $-\infty$ or $\infty$, the output of the sinusoid continues to oscillate, never settling down to a single value. And, of course, the output of the sinusoid is everywhere $-1 \leq \sin(x) \leq 1$, so there is no possibility for a vertical asymptote.
 
-## Locally extreme points
+### Locally extreme points
 
 Many continous functions have a region of the input domain where the output is gradually growing, then reaches a peak, then gradually diminishes. This is called a ***local maximum***. "Maximum" because the output reaches a peak at a particular input, "local" because in the neighborhood of the peak the function output is smaller than at the peak.
 
@@ -192,8 +199,7 @@ If you are interested in these things, three concepts from computing may help yo
 
 Traditional mathematical notation includes features such as superscripts and special symbols that are easily written out with pencil in hand. Often this notation is beautiful and aesthetically cherished by mathematicians. But computer commands in most computer languages are straight sequences of characters using function or infix notation.^[Some computer languages use notation where the name of the function is contained inside the parentheses as in `(+ 2 3)`.]
 
-`r insert_calcZ_exercise("4.5", "3KEgLM", "Exercises/Fun/chicken-chew-screen.Rmd")`
 
-`r insert_calcZ_exercise("4.6", "zSgXP2", "Exercises/Fun/dolphin-toss-candy.Rmd")`
+
 
 

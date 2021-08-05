@@ -29,7 +29,9 @@ gf_blank(mpg ~ wt, data=mtcars) %>%
 
 ## Data graphics: the point plot
 
-One of the most common uses of a graphics frame is to display visually two columns from a table containing data. For instance, here is a small part of a table about the size of penguins in the Palmer Archipelago in Antarctica. `r mark(710)`
+One of the most common uses of a graphics frame is to display visually two columns from a table containing data. Data are stored in a spreadsheet-like format called a ***data frame***. There are many ways to access data frames and many different ways to store them. In CalcZ we supply data frames in the simplest possible way: giving them a name that you can use to refer to the data frame.
+
+For instance, here is a small part of a data frame about the size of penguins in the Palmer Archipelago in Antarctica. `r mark(710)`
 
 ```{r echo=FALSE}
 library(palmerpenguins)
@@ -48,55 +50,73 @@ knitr::kable(
     kableExtra::kable_styling()
 ```
 
-A point plot displays two columns from the table. Each row in the table is represented by one point in the graphic. For instance:
+::: {.scaffolding}
+The output above shows what a data frame looks like. Now we need to look at how to use a data frame in an R command. The particular data frame shown just above has the name `penguins` in R. To refer to the data frame, just use the name.
 
-```{r penguin-flipper,echo=FALSE, warning=FALSE, fig.cap="Data from 344 penguins on flipper length (cm) and body mass (kg)."}
-gf_point(flipper_length_mm/10 ~ body_mass_g/1000, 
-         data=penguins) %>%
-  gf_labs(y = "Flipper length (cm)", x = "Body mass (kg)") 
+Open a `r sandbox_link()` and give the name itself as a command. This simple command causes the data frame to be displayed on the screen.
+
+```{r eval=FALSE}
+penguins
 ```
 
-Each penguin has a specific mass and flipper length. To look at the penguins with a mass of around 4 kg, you can see that the different penguins have a variety of flipper lengths. That's typical natural variability.
+You should see as a result a table that can be scrolled through interactively with all 344 rows of the `penguins` data frame.
 
+*Looking* at a data frame, or part of one, is sometimes what's required. But in general you will use the name of the data frame of interest as an ***argument*** to an R function. Typically the argument will be named `data = ` as you'll see below.
 
-A function graph can be constructed in the same way. Start with a table reporting the output of the function for a variety of inputs, like this:
-
-```{r echo=FALSE}
-Sigmoid1 <- tibble::tibble(input = seq(-3, 3, length=11), output = pnorm(input)) 
-Sigmoid1 %>%
-  knitr::kable() %>% 
-  kableExtra::kable_styling()
-```
-Then make a point plot of the two columns in the table:
-
-```{r echo=FALSE, fig.cap="A point plot of the table."}
-gf_point(output ~ input, data = Sigmoid1)
-```
-
-Typically, when drawing the graph of a function we do not plot individual dots, but lines connecting the dots. It's very much the same as making a point plot, but use `gf_line()`.
-
-
-
-
-::: {.tip}
-Data are stored in tables called ***data frames***. There are many ways to access data frames and many different ways to store them. This is an important topic in data science. In CalcZ we supply data frames in the simplest possible way: giving them a name that you can use to refer to the data frame.
-
-Before you can use `gf_point()` to plot a pair of columns from a data frame, you have to know the names of the columns. A useful function for this is `names()`. Similarly, to look at the first few rows, use the `head()` function.
+The name `penguins` is very general and it wouldn't be at all surprising if some other penguin fan or researcher created a different set of data with the same name. R, like many other modern languages, makes room for such multiple uses of a name by a facility called a ***namespace***. R programmers can create their own namespace. This is not something we will do in this course. But it's helpful to know when the namespace mechanism is at work. For instance, the particular `penguins` we've provided with this course comes from a namespace called `palmerpenguins`. Thus, the "full" name of the data fr is `palmerpenguins::penguins`. You may see such name constructions occasionally in exercises in this course. You don't have to understand how namespaces work other than to know that when you are given the full name, you should use it, double colons and all.
 :::
+
+Before you can use `gf_point()` to plot a pair of columns from a data frame, you have to know the names of the columns. A useful function for this is `names()`. Similarly, to look at the first few rows, use the `head()` function. Try these commands in a sandbox:
+
+```{r results="hide"}
+names(penguins)
+head(penguins)
+```
+
+
+A ***point plot*** displays two columns from a data frame. Each row in the data frame is represented by one point in the graphic. For instance:
+
+```{r penguin-flipper, warning=FALSE, fig.cap="Data from 344 penguins on flipper length (mm) and body mass (g)."}
+gf_point(flipper_length_mm ~ body_mass_g, 
+         data=penguins) 
+```
+
+Each penguin has a specific mass and flipper length. If you focus your attention on the penguins with a mass of around 4 kg (that is, 4000 gm), you can see that the different penguins have a variety of flipper lengths. That's typical natural variability.
+
+## Function graphs
+
+Back in Section \@ref(slice-plot-intro) you saw how to use R to create a graph of a function with a single input. (Review that section now if you've forgotten.) The `slice_plot()` function takes two arguments:
+
+i. A ***tilde expression*** giving the function you want to plot and naming the horizontal axis.
+ii. The ***domain*** to use when making the plot.
+
+For example:
+
+```{r results="hide"}
+slice_plot(sin(z) ~ z, domain(z=c(-10, 10)))
+```
+
+The tilde expression can be more elaborate of course, for instance `sin(z)*z + z^2 ~ z`, but it will always have the name to be used for the horizontal axis on the right-hand side of the tilde character.
+
+::: {.takenote}
+The ***domain*** to be shown in the graph is specified using a special-purpose function, called `domain()`. The argument to `domain` is named: Use the same name as on the right-hand side of the tilde expression then an equal sign, then a collected pair of numbers specifying the lower and upper ends of the domain. The collected pair must always be given as the arguments to a very basic function named `c()`, which simply collects it's arguments. Later, when we graph functions with two inputs, you'll see why `domain()` is set up this way.
+:::
+
+
 
 ## Graphics layers
 
-You will often want to compare to functions, or compare a function to data, or something more elaborage. You can do this using the ordinary graphics functions, e.g. `slice_plot()` or `gf_point()`. Each such command would generates a ***graphics layer***. You can stack layers on top of one another by connecting the commands with a ***pipe***, which is written `%>%` in R. The pipe token should always come at the end of a line, never at the beginning. The last command in the ***pipeline*** should not be followed by `%>%`. `r mark(720)`
+You will often want to compare to functions, or compare a function to data. You can do this using the ordinary graphics functions, e.g. `slice_plot()` or `gf_point()`, arranging things so that both types of graphics are drawn together in the same graphics frame. To create this kind of compound graphic, arrange the individual graphics commands into a ***pipeline***, which is a list of commands connected together by `%>%`.  Your pipeline might include two commands or twenty, depending on how complicated is the graphic you want to draw. As long as you use `%>%` after each command, the next command is taken to build upon the previous command.  The very last command in that pipeline should not be followed by `%>%`.”  `r mark(720)`
 
 ::: {.workedexample}
-Here is an ugly plot made of three layers, each layer displaying one of the pattern-book functions. When a `slice_plot()` is the first layer, the `domain()` must be given explicitly. You're welcome to do so in the later layers, but if you don't the original `domain()` will be passed down the pipeline.
+Here is an just-for-demonstration plot composed from three graphs, each displaying one of the pattern-book functions. At the start of the pipeline, the `domain()` must be given explicitly as an argument to `slice_plot()`. You're welcome to specify other domains in the commands further along the pipeline, but if you don't the original `domain()` will be passed down the pipeline.
 
 ```{r echo=TRUE}
 slice_plot(dnorm(x) ~ x, domain(x=c(-4,4))) %>%
   slice_plot(pnorm(x) ~ x, color="red", size=2) %>%
   slice_plot(sin(x) ~ x, color="green", size=4, alpha = 0.2)
 ```
-Just to show how these things are done, the functions have been drawn in different colors, different widths (e.g., `size=2`) and different levels of transparency (e.g. `alpha=0.2`).
+Just to show how these things are done, the functions have been drawn in different colors, different widths (e.g., `size=2`) and different levels of transparency (e.g. `alpha=0.2`). You can use such styling arguments in any slice-plot.
 :::
 
 ## Data and functions
@@ -105,7 +125,7 @@ In Figure \@ref(fig:penguin-flipper), the data point plot of the penguin flipper
 
 When we construct a function to model the pattern observed in that cloud, we need to respect the mathematical definition of function, part of which is that a function has ***only one output*** for any given input. 
 
-```{r penguin-flipper2,echo=FALSE, warning=FALSE,message=FALSE, out.width="50%", fig.show="keep", fig.cap="The penguin data doesn't directly describe any sensible mathematical function. (left) We use modeling to create a function that stays close, but not too close, to the data points. (right)"}
+```{r penguin-flipper2,echo=FALSE, warning=FALSE,message=FALSE, out.width="50%", fig.show="keep", fig.cap="Connecting the penguin data points with lines (left) doesn't directly describe any sensible mathematical function.  We use modeling to create a smooth function (right) that stays close, but not too close, to the data points."}
 gf_line(flipper_length_mm/10 ~ body_mass_g/1000, 
          data=penguins) %>%
   gf_labs(y = "Flipper length (cm)", x = "Body mass (kg)") 
@@ -143,7 +163,7 @@ A function graph makes it easy to evaluate the ***function inverse***. For all t
 
 Often, working with a function goes another way: you know the output and you want to find a corresponding input. It's easy to do this with a graph. Pick the position on the vertical axis that represents the given input. Then trace horizontally to where the ink is. From there, trace vertically to read off the value of an input that would produce the given output.
 
-Mathematicians are careful to distinguish between functions where there is a ***unique*** input that generates each given output, and functions where there can be more than one input that generates the same output. Functions with a one-to-one relationship between output and input are called "invertible."
+Mathematicians are careful to distinguish between functions where there is one and only one possible input that generates each given output, and functions where there can be more than one input that generates the same output. (Mathematicians use the word ***unique*** to mean "one and only one.") Functions with a one-to-one relationship between output and input are called "invertible."
 
 Invertible or not, it is a common procedure for working with functions to find *an* input corresponding to a specific, given output. In high-school algebra, this was called "solving for $x$." A special case of solving is finding the ***roots of a polynomial***. The name we give to the procedure is ***zero finding***, which correctly points out that we are trying to **find** an input.
 
@@ -164,7 +184,7 @@ It is very hard to read a graph of a function with two inputs. Think of the grap
 
 A mathematical graph is just one way to draw a picture of a function with two inputs. There are other ways. One helpful mode of picture is called a ***contour plot***, familiar to many non-mathematicians in the form of topgraphical maps showing landscape elevation as a function of latitude and longitude. Here's a contour plot of the same function shown in the previous graph: `r mark(770)`
 
-```{r Fig-1b-2.1, echo=FALSE, fig.cap="A contour plot displays the surface in the same manner as a topographical map shows the terrain. This contour plot is a topographical map of the mathematical graph in Figure \\@ref(fig:fun-1b-1-2)."}
+```{r Fig-1b-2-1, echo=FALSE, fig.cap="A contour plot displays the surface in the same manner as a topographical map shows the terrain. This contour plot is a topographical map of the mathematical graph in Figure \\@ref(fig:fun-1b-1-2)."}
 f2 <- rfun( ~ input_1 + input_2, seed=932)
 contour_plot(f2(input_1, input_2) ~ input_1 + input_2,
                  domain(input_1=c(-5, 5), input_2 = c(0, 4)),
@@ -220,12 +240,13 @@ The most common forms of ***slice*** involve constructing a simpler function tha
 
 For instance, suppose we set input #2 to the constant value 1.5. This means that we can consider any value of input #1, but input #2 has been replaced by 1.5. In Figure \@ref(fig:Fig-1c2), we've marked in red the points in the contour plot that give the output of the simplified function. `r mark(795)`
 
-```{r Fig-1c2, echo=FALSE, out.width="50%", fig.show="hold", warning=FALSE}
+```{r Fig-1c2, echo=FALSE, out.width="50%", fig.show="hold", warning=FALSE, fig.cap="Left: A slice through the domain of a contour plot. Right: The value of the function along that slice, presented as a mathematical graph, as generated by `slice_plot()`."}
 f2 <- rfun( ~ input_1 + input_2, seed=96)
 contour_plot(f2(input_1, input_2) ~ input_1 + input_2,
                  domain(input_1=c(-5, 5), input_2 = c(0, 4)),
              skip=0) %>%
   gf_hline(yintercept=1.5, color="orange3", size=2) %>%
+  gf_hline(yintercept=1.5, color="red", size=1) %>%
   gf_labs(title="Contour plot of function of two inputs")
 slice_plot(f2(input_1, input_2=1.5) ~ input_1, domain(input_1=c(-5, 5))) %>%
   gf_labs(title="Graph of function output versus input #1")

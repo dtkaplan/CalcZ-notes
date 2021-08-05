@@ -4,7 +4,7 @@
 \alias{bigRadioButtons}
 \title{Radio buttons that display HTML}
 \usage{
-bigRadioButtons(id, label, choices)
+bigRadioButtons(id, label, choices, origNum)
 }
 \arguments{
 \item{choices}{a character vector, one for each choice}

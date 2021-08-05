@@ -1,8 +1,7 @@
 ---
-id: "exponential-bases"
-title: "Exponential bases"
-author: "Daniel Kaplan"
-runtime: shiny_prerendered
+id: "kid-type-boat"
+created: "Tue Aug  3 21:58:25 2021"
+global_id: "0rvpbu"
 ---
 
 These three expressions 
@@ -19,6 +18,9 @@ fa <- makeFun(2^(t/h) ~ t, h = 4)
 fb <- makeFun(10^(t/d) ~ t, d = 10)
 fc <- makeFun(exp(k*t)  ~ t, k = 0.1)
 
+fb <- makeFun(10^(t/d) ~ t, d = 13.1)
+fc <- makeFun(exp(k*t)  ~ t, k = 0.175)
+
 slice_plot(fa(t) ~ t, domain(t = c(-4, 12))) %>%
   slice_plot(fb(t) ~ t, color="dodgerblue") %>%
   slice_plot(fc(t) ~ t, color  = "orange3") %>%
@@ -32,12 +34,23 @@ After you have found values of `k` and `d` that are suited to the task ...
 
 ```{r EB1-1, echo=FALSE}
 askMC(
-  prompt = "Enter the numerical value of your best estimate of `k`."
+  prompt = "What is the numerical value of your best estimate of `k`?",
+  "0.145",
+  "+0.175+", 
+  "0.285",
+  "0.320",
+  random_answer_order = FALSE
+  
 )
 ```
 
 ```{r EB1-2, echo=FALSE}
 askMC(
-  prompt = "Enter the numerical value of your beat estimate of `d`."
+  prompt = "What is the numerical value of your best estimate of `d`?",
+  "11.2",
+  "11.9",
+  "+13.1+", 
+  "15.8",
+  random_answer_order = FALSE
 )
 ```
