@@ -242,8 +242,9 @@ Each simple function such as a gaussian, a sigmoid, a straight-line function, or
 
 But not every social media firm succeeds and you may need two or more characters to express the drama: the rising young firm and the rapid fall in popularity when competition provides a better alternative.
 
-For instance, the initial rise in popularity of the social media platform [Yik Yak](https://en.wikipedia.org/wiki/Yik_Yak) was exponential. Then popularity leveled off briefly like a sigmoid. Finally popularity collapsed to near zero and the company closed.
-You could model this pattern by multiplying a sigmoid by an exponential, as in Figure \@ref(fig:yikyak).
+For instance, the initial rise in popularity of the social media platform [Yik Yak](https://en.wikipedia.org/wiki/Yik_Yak) was exponential. Then popularity leveled off, promising a steady, if static, business into the future. But, the internet being what it is, popularity collapsed to near zero and the company closed.
+
+On way to model this pattern is by multiplying a sigmoid by an exponential.(See Figure \@ref(fig:yikyak).)
 
 ```{r yikyak, fig.cap="Subscriptions to the web messaging service Yik Yak grew exponentially in 2013 and 2014, then collapsed. The company closed in 2017."}
 yikyak <- makeFun(pnorm(year, mean=2014.5, sd=0.7) * exp(- (year-2014)) ~ year)
@@ -278,9 +279,12 @@ The 2/15 is scaling the output of $\arccos()$. The $\arcos()$ is being composed 
 `r insert_calcZ_exercise(11.21, "AMBXI", "Exercises/Fun/compose-1.Rmd")`
 
 
-
+<!--
 
 ::: {.todo}
 Use the `mosaicData::Births_CDC` data and find a segment with a linear secular trend, the yearly trend, and (as always) a weekly trend. Or maybe first just a short segment of a couple of months showing the weekly trend and a secular trend (as part of the yearly trend). Ask for the decomposition. Then back out on the data to show the yearly trend repeating.
 :::
+
+-->
+
 
