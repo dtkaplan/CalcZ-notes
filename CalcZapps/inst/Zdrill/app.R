@@ -48,10 +48,8 @@ ui <- fluidPage(
         width: 50em;
       }"))),
 
-  # Application title
   titlePanel("CalcZ Quick Response"),
 
-    # Sidebar with a slider input for number of bins
     sidebarLayout(
         sidebarPanel(
             useShinyjs(),
