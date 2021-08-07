@@ -1,5 +1,5 @@
 ---
-title: "CalcZ Sandbox"
+title: "MOSAIC Calculus"
 output: learnr::tutorial
 runtime: shiny_prerendered
 ---
@@ -14,34 +14,61 @@ knitr::opts_chunk$set(echo = FALSE)
 tutorial_options(exercise.timelimit = 30)
 ```
 
-## Sandbox A
+## SANDBOX
 
-The contents of the several R/mosaic sandboxes are cached in your browser, so you can save your work from day to day. All the sandboxes are the same, but they **do not communicate with each other**. All use the `mosaic` and `mosaicCalc` packages, which are already installed. 
+The sandbox below can be used for any of the computations needed to follow the *MOSAIC Calculus* textbook. 
 
+The contents of the sandboxes are cached in your browser, so you can save your work when you want to take a break.
+
+
+```{r sandbox-base, exercise=TRUE, exercise.cap="MOSAIC Calculus Primary Sandbox", exercise.lines=15}
+
+
+
+
+
+
+
+
+```
+
+
+
+Sandboxes A, B, ... provide a place to cache your work so while you continue to work in the primary sandbox.  All the sandboxes look the same, but they **do not communicate with each other**. Each is a blank slate aside from the commands you have entered or cached in them.
+
+<details>
+<summary>Sandbox A</summary>
 ```{r sandboxA, exercise=TRUE, exercise.cap="Sandbox A", exercise.lines=15}
 # You can add comments by starting a line with the `#` mark.
 ```
+</details>
 
-
-## Sandbox B
-
+<details>
+<summary>Sandbox B</summary>
 ```{r sandboxB, exercise=TRUE, exercise.cap="Sandbox B", exercise.lines=15}
+# You can add comments by starting a line with the `#` mark.
 
 ```
+</details>
 
-## Sandbox C
-
+<details>
+<summary>Sandbox C</summary>
 ```{r sandboxC, exercise=TRUE, exercise.cap="Sandbox C", exercise.lines=15}
 
 ```
+</details>
 
-## Sandbox D
-
+<details>
+<summary>Sandbox D</summary>
 ```{r sandboxD, exercise=TRUE, exercise.cap="Sandbox D", exercise.lines=15}
 
 ```
+</details>
 
-## Prof. Schaubroeck's *Essential R Commands*
+## Prof. Schaubroeck's *Essential R*
+
+<details>
+<summary>Assignment: Giving names to values</summary>
 
 * `x <- 2`
     - *What it does* Stores the value 2 under the name `x`
@@ -52,21 +79,257 @@ The contents of the several R/mosaic sandboxes are cached in your browser, so yo
     - *Notes*
         - You make the left-pointing arrow by using the "less than" sign followed by a hyphen.
         - Your commands will be more readable if you put a space on either side of `<-`. But never put a space between the two characters in the arrow.
-        - `2 <- x` might make sense to a human, but in R it will lead to an error message, "invalid(do_set) left-hand side to assignment."
-        
-* `sin(3)*sqrt(5)`
-    - *What it does* Multiplies the sine of 3 times the square-root of 5
+        - `2 <- x` might make sense to a human, but in R it will lead to an error message, "invalid(do_set) left-hand side to assignment." 
+        - An assignment statement does not have any printed output, so there will be no indication of having done anything, other than the absence of error messages.
+
+* `x` (or any other name)
+    - *What it does* Provides the value previous stored under that name
+    - *Vocabulary* ***Names*** are assigned to ***objects***.
+    - *Notes* 
+        - A name can be used as a complete command, with the result of printing to the screen the object stored under that name.
+        - Valid names cannot contain spaces, or any punctuation character except `.` and `_`
+        - Valid names cannot start with a numeral.
+</details>
+
+<!------------------------------------------>
+
+
+<details>
+<summary>Function application: Evaluating a function on an input</summary>
+
+* `sqrt(3)` 
+    - *What it does* The first example calculates $\sqrt{3}$. 
     - *Vocabulary*
-        - `sin` and `sqrt` are ***functions***
+        - `sqrt` is the name of a  ***function***
         - 3 is the input to the function `sin`. Another word for input is ***argument***. 
         - The parentheses surrounding the argument come after the function name. `sin(3)` causes the sine calculation to be carried out. 
     - *Notes*
-        - Spaces are allowed just about anywhere, but not in the middle of `sin` or `sqrt` (or other function names).
+        - Spaces are allowed just about anywhere, but not in the middle of a name.
         - If you capitalize one of the functions, you get an error message such as "could not find function \"Sin\"."
-        - Later, you will write statements like `sin(x)`. For this to work, `x` must have been previously assigned to a value. If there is no such assignment, you'll get an error code such as "object \"x\" not found." 
+        - Later, you will write statements like `sqrt(x)`. For this to work, `x` must have been previously assigned to a value. If there is no such assignment, you'll get an error code such as "object \"x\" not found." 
+</details>
+
+<!---------------------------------->
+
+<details>
+<summary>Writing mathematical formulas</summary>
+
+* `(3 + 7 * sin(2*pi*x)) / (x^2 - 4)` 
+   - *What it does* Expresses a formula which would traditionally be written  $$\frac{3 + 7\,\sin(2 \pi x)}{x^2 - 4}$$
+   - *Vocabulary*
+       - The outer parentheses in `(3 + 7 * sin(2*pi*x))` are ***grouping parentheses***. Grouping parentheses do what you would expect: govern the order of the operations.
+       - The parentheses following `sin` in `sin(2*pi*x)` are ***function evaluation parentheses***. These signal to R that you want to evaluate the function on the input contained inside the parentheses.
+   - *Notes*
+       - You can always identify function evaluation parentheses, since they will be immediately preceeded by the name of a function. Grouping parentheses are not preceeded by a function name.
+       - You will use grouping parentheses more often in R than in traditional notation, because there is no use of superscripts or $\div$ in R. All commands are a line of typewriter characters.
+       - Multiplication must be made explicit, using the `*` character.
+       - Exponentiation is signified with the `^` character, as in `x^2`
+       - Giving the above as a stand-alone calculator-style command will fail, unless you have previously assigned values to each of the names (e.g. `x`) used in the formula. Typically you will write formulas in ***tilde expressions***. (See below.)
+</details>
+<!---------------------------------->
+
+<details>
+<summary>Tilde expressions</summary>
+A ***tilde expression*** is a special feature of R that let's you write down a mathematical expression without having the expression evaluated. We use tilde expressions to construct our own mathematical functions and for a handful of other, related purposes such as plotting.
+
+* `y^2 + 3*y ~ y`
+    - *What it does* A tilde expression does ***not*** cause any computation to be done. It is simply a way of writing down a mathematical relationship for use later on.
+    - *Vocabulary*
+        - The ***tilde*** is a character that's little used in English. It looks like <span style="font-size: 30pt;">~</span>. Most US keyboards place it in the upper-left key. 
+        - There are two R expressions involved, one on the ***left-hand side*** of the tilde, the other on the ... need we say it? ... ***right-hand side***. In the example, `y^2 + 3*y` is the left-hand side and plain, ordinary `y` is on the right-hand side.
+        - In R/mosaic, The translation of tilde into English is any of the following: "[left] is a function of [right]", or "[left] versus [right]" or "[left] depends on [right]". 
+    - *Notes*
+        - You will always use a tilde expression as an ***argument to a function***. It is merely a description of how the two sides are related and doesn't by itself cause any computation to be done. As such, you will never use it as a stand-alone command.
+        - Many of the tilde expressions we use in *MOSAIC Calculus* will have more than one name in the right-hand side expression. The multiple names are separated by `+` or `&` (either will do). The `+` does not mean "add them," it's merely a way of saying "and." For instance, the right-hand side in `3*x*exp(y) ~ x + y"
 
 
-## Basic modeling functions
+</details>
+<!---------------------------------->
+
+<details>
+<summary>Constructing your own mathematical functions</summary>
+* `g <- makeFun(2 + 3*x - 7*x^2 ~ x)`
+    - *What it does* Creates an R function named `g` corresponding to $g(x)\equiv 2 + 3x - 7\,x^2$
+    - *Vocabulary* 
+        - `makeFun()` is a ***function constructor***
+        - The argument to `makeFun()` is a ***tilde expression***
+    - *Notes*
+        - The name of the ***input*** goes on the right side of the tilde <span style="font-size: 30pt;">~</span>
+        - Like all names, `makeFun()` is ***case sensitive***. So using `makefun` (note: lower-case `f` in `fun`) won't work.
+        - If you use just the name of your function as a command, that is, `g`, you will get the output
+    ```    function (x) 
+
+    2 + 3 * x - 7 * x^2
+    <environment: 0x55d2ee828678>    ```* x^2
+
+    The first line tells you that you defined g as a function of x.  The second line tells the formula for it.  The third line is relevant only to advanced R programmers; you can ignore it. 
+        
+        
+</details>
+
+<!---------------------------------->
+
+<details>
+<summary>Graphing functions with a single input</summary>
+
+* `slice_plot(exp(x) ~ x, domain(x=c(-3,3)))`
+    - *What it does* Draws a graph of the function $e^x$ with the horizontal axis running from $-3 \leq x \leq 3$.
+    - *Vocabulary* 
+        - The first argument is a ***tilde expression***. 
+        - The second argument specifies the ***domain*** to use in the graph, that is, the extent of the horizontal axis. This will **always** be in the form shown above: applying the `domain()` function to a ***named argument***.
+        - The plotting function is called `slice_plot()` because we think of a function of one input as a slice of a multivariable surface, but we won’t get into that immediately.
+    - *Notes*
+        - Used as shown above, there will be **three consecutive closing parentheses** at the end of the command.
+        - The argument to `domain()` will always be named. That name should match the one on the right-hand side of the tilde expression. 
+        - You will always use `c()` to collect together the lower and upper bounds of the graphics domain. To graph the function from 0 to 10, you would replace the `c(-3,3)` with `c(0, 10)`.
+        - The extent of the vertical axis, that is, the ***range***, is determined automatically.
+    - *Useful additional arguments* 
+        - You can draw the function in a color by adding an additional argument, e.g. `color="blue"`. To see the full list of named colors in R, give the command `colors()` in a sandbox. (You need the empty parentheses, otherwise you'll be shown the software underlying the list of colors.) Notice that the color should always be in quotes, e.g. `"green"` or `"darkorchid"`.
+        - You can draw a thicker curve with the `size` argument, for instance `size=2`.
+        - If you want the curve to be semi-transparent, for instance so that you can see another curve underneath, use the argument `alpha = 0.2`. The alpha value can range from 0.0 (completely invisible) to 1.0 (completely opaque).
+    - *Common mistakes*
+        - If you type `slice_plot(exp(x)~x, domain(c(-3,3)))` (leaving out the name `x` inside `domain()`), you get an error of, "Domain involves 0 variables, but function has 1"
+        - If you type `slice_plot(exp(x)~x, domain(t=c(-3,3)))` (mismatching names in tilde expression and domain), you get an error of, "Domain has variable(s) t but function has argument(s) named x"
+        - If you type `slice_plot(exp(x), domain(x=c(-3,3)))` (forgetting the `~x` in the tilde expression), you get an error of, "object 'x' not found"
+        - If you type `slice_plot(exp(x)~x)`, you get an error of, "Domain must be specified when there is no preceeding layer."  Aside from the misspelling of preceding, this is telling the user that there wasn’t a previous graph to pull the domain from, so you need to specify the domain as an argument to `slice_plot()`.
+        - If you leave out a closing parenthesis, you will get the error of, "Error in parse(text = x, keep.source = TRUE) : <text>:4:0: unexpected end of input 2:…" 
+
+</details>
+<!---------------------------------->
+<details>
+<summary>Drawing contour plots</summary>
+In *MOSAIC Calculus*, we generally use a contour-plot format to display graphically a function with two inputs. This is done in much the same way as `slice_plot()`.
+
+* `contour_plot(3 + 2*x - 4*y + 0.5*x*y ~ x & y, domain(x=c(-5, 5), y=c(0, 10)))`
+    - *What it does* Draws a contour plot on a domain with two dimensions.
+    - *Vocabulary* Nothing here that you haven't seen in `slice_plot()`: tilde expression, domain, ...
+    - *Notes*
+        - The tilde expression names two inputs on the right-hand side. Those names should match the ones in the left-hand side and in the arguments to `domain()`.
+        - The right-hand side of the tilde can be written either with `+` or `&`. Both have the same effect.
+        - There are **two arguments** to `domain()`, one for each of the two inputs to the function being plotted.
+        - The input represented on the horizontal axis is determined by the first name in the arguments to `domain()`. The vertical axis is set by the second name.
+        - The extent of the domain for one input doesn't need to match the extent for the other input. 
+    - *Useful additional arguments* After the tilde expression and the `domain()` statement, you can add additional named arguments, separated as always by commas, to customize your graph.
+        - `skip = 0` Label every one of the contours, rather than the default of skipping one between labels.
+        - `filled = FALSE` Don't color in the background. This is particularly useful when showing two or more graphical layers.
+        - `contour_color = "blue"` (or any other color) Instead of using the function output level to determine the color of each contour, use just one color for all. This is useful when, for example, you want to show just the zero contour of each of two functions.
+</details>
+<!---------------------------------->
+<details>
+<summary>Evaluating mathematical functions with two inputs</summary>
+When you use `makeFun()` to define a function of two inputs, the created function will take two arguments, one for each of the inputs. Those arguments are named and it is a good idea when evaluating the function you created using the names explicitly.
+
+```r
+h <- makeFun(x + 15*y - x*y ~ x + y)
+```
+
+* `h(y=3, x=2)`
+    - *What it does* Evaluates the function $h()$ with the $x$ input set to 2 and the $y$ input set to 3.
+    - *Vocabulary* 
+        - ***Named inputs*** let you direct a value to a specific input.
+    - *Notes*
+        - The way we defined the example function `h()`, the first argument will be `x` and the second `y`. So you could perform the same evaluation as in the above command with `h(2, 3)`. But it's easy to forget or mistake the order of the arguments. Using the named-argument style makes it clearer which value is intended for which argument.
+        - You may notice commands like `slice_plot(h(x=x, y=3) ~ x, domain(x=c(-1,1)))`. At first glance, this may look silly. What it means is that the $x$ argument to $h()$ will take on the set of values inside the domain, which is itself written in terms of $x$.
+
+
+</details>
+
+
+<!---------------------------------->
+<details>
+<summary>Layering graphics</summary>
+Sometimes you may want to compare two or more functions in the same graphics frame. You do this by drawing the individual functions in the usual way, but connecting the commands with a ***pipe***, signified by the token `%>%`
+
+* `slice_plot(x^2 ~ x, domain(x=c(-2, 2))) %>% slice_plot(sin(x) ~ x, color="blue")`
+    - *What it does* Overlays one graphics layer on another.
+    - *Vocabulary* 
+        - The `%>%` symbol is pronounced "***pipe***"
+        - A command involving a pipe is called a ***pipeline***. Think of the calculation as flowing from one command to the next, left to right.
+    - *Notes*
+        - If you have specified the `domain()` at an early stage in the pipeline, you don't need to specify it again in the later plotting commands. But, if you want, feel free to set the domain explicitly. This is helpful if you want the graphics domains to be different for the different layers.
+        - You can add as many stages as you like to the pipeline. Each stage will add a new graphics layer. But remember that the last stage **should not** be followed by the pipe symbol.
+        - It's a good idea to write a pipeline with one line for each stage, with the pipe symbol at the **end** of each stage. Like this:
+    ```r
+    slice_plot(x^2 ~ x, domain(x=c(-2,2))) %>%
+      slice_plot(sin(x) ~ x, color="blue")
+    ```
+
+</details>
+
+<hr>
+
+
+*The following are under construction*. You don't need them yet.
+<!---------------------------------->
+<details>
+<summary>Data frames</summary>
+
+</details>
+
+<!---------------------------------->
+<details>
+<summary>Fitting functions to data</summary>
+
+</details>
+
+
+
+<!---------------------------------->
+<details>
+<summary>Default values for parameters in functions</summary>
+
+</details>
+
+<!---------------------------------->
+<details>
+<summary>Calculating derivatives</summary>
+
+</details>
+
+<!---------------------------------->
+<details>
+<summary>Calculating anti-derivatives</summary>
+
+</details>
+
+<!---------------------------------->
+<details>
+<summary>Solving (zero-finding)</summary>
+
+</details>
+<!---------------------------------->
+<details>
+<summary>Optimization</summary>
+
+</details>
+<!---------------------------------->
+<details>
+<summary>Matrices</summary>
+
+</details>
+<!---------------------------------->
+<details>
+<summary>Finding solutions to the target problem</summary>
+
+</details>
+
+<!---------------------------------->
+<details>
+<summary>Solving differential equations</summary>
+
+</details>
+
+
+
+<!---------------------------------->
+
+
+<!---------------------------------->
+
+## Examples of commands
+
+<details>
+<summary>Basic modeling functions</summary>
 
 ```{r create-functions, exercise=TRUE, exercise.cap="Basic modeling functions", exercise.lines=15}
 identity_fun  <- makeFun(x ~ x)
@@ -76,15 +339,18 @@ exponential   <- makeFun(exp(k * x) ~ x, k=1)
 power_law     <- makeFun(x^p ~ x, p = 1/2)
 sinusoid      <- makeFun(2*pi*(t-t0)/P ~ t, P=2, t0=0)
 logarithm     <- makeFun(log(x, base=exp(1)) ~ x)
-hump          <- makeFun(dnorm(x, mean, sd) ~ x, mean=0, sd=1)
+gaussian      <- makeFun(dnorm(x, mean, sd) ~ x, mean=0, sd=1)
 sigmoid       <- makeFun(pnorm(x, mean, sd) ~ x, mean=0, sd=1)
 
 identity_fun(3)
 constant_fun(3)
 power_law(3)
 ```
+</details>
 
-## Assembling functions
+<!------------------->
+<details>
+<summary>Assembling functions</summary>
 
 ```{r assembling-functions, exercise=TRUE, exercise.cap="Assembling functions", exercise.lines=10}
 # Linear combination (example)
@@ -95,7 +361,10 @@ g <- makeFun(dnorm(x, mean=0, sd=3) * sin(2*pi*t/P) ~ x + t, P=3)
 h <- makeFun(exp(sin(2*pi*t/P) ~ x) ~ x, P = 3)
 ```
 
-## Graphing functions
+</details>
+<!------------------->
+<details>
+<summary>Graphing functions</summary>
 
 ```{r graphing-functions, exercise=TRUE,  exercise.cap="Graphing functions", exercise.lines=10}
 slice_plot(dnorm(x, mean=1, sd=2) ~ x, 
@@ -104,8 +373,11 @@ contour_plot(dnorm(x, mean=1, sd=2) * pnorm(y, mean=-3, sd=1) ~ x + y,
              domain(x=c(-5, 5), y=c(-5,5)))
 
 ```
+</details>
 
-## Calculus operations
+<!------------------->
+<details>
+<summary>Calculus operations</summary>
 
 
 ```{r calculus-ops-der, exercise=TRUE, exercise.cap="Differentiation", exercise.lines=10}
@@ -136,8 +408,11 @@ slice_plot(f(x) ~ x, domain(x=c(-5,5))) %>%
   gf_hline(yintercept=0, color="orange3") %>%
   gf_vline(xintercept= ~ x, color="dodgerblue", data=Zeros)
 ```
+</details>
 
-## Fitting functions to data
+<!------------->
+<details>
+<summary>Fitting functions to data</summary>
 
 Use `fitModel()` to fit a function of one variable to data. 
 
@@ -155,8 +430,12 @@ mod <- fitModel(temp ~ A + B*exp(-k*time), data=CoolingWater,
 Plot <- gf_point(temp ~ time, data = CoolingWater) %>%
   slice_plot(mod(time) ~ time, color="dodgerblue", alpha=0.25, size=2) 
 ```
+</details>
 
-## Linear and quadratic approximations
+<!-------------->
+
+<details>
+<summary>Linear and quadratic approximations</summary>
 
 Approximate a function $f(x)$ around a selected point $x=x_0$.
 
@@ -172,4 +451,6 @@ slice_plot(f(x) ~ x, domain(x=c(0, 1.5)), size=2) %>%
   slice_plot(quad_approx(x) ~ x, color="orange") %>%
   gf_vline(xintercept = x0, alpha=0.2, color="yellow", size=3)
 ```
+
+</details>
 

@@ -241,7 +241,7 @@ server <- function(input, output, session) {
     })
 
     instructor_chooses <- reactive({
-      input$passcode %in% c("mouse-eats-corn", "mm")
+      input$passcode %in% c("mouse-eats-corn")
     })
 
     observe({
