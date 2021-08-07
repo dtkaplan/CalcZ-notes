@@ -1,6 +1,7 @@
 ---
 id: "two-gaussians"
 author: "Daniel Kaplan"
+global-id: "FISHU"
 ---
 
 According to data from the US National Health and Nutrition Evaluation Survey, the average height of adult females is 157 cm vs 167 for adult males. The standard deviations are 17 cm and 22 cm respectively. A good model for the person-to-person variation for females is `dnorm(height, mean = 157, sd = 17)` and similarly for males.
@@ -12,8 +13,8 @@ Open a `r sandbox_link()` and construct the linear combination function for the 
 ```{r eval=FALSE}
 female <- makeFun(dnorm(height, mean = 157, sd=17) ~ height)
 male   <- makeFun(dnorm(height, mean = 167, sd=22) ~ height)
-overall <- makeFun(female(height)/2 + male(height)/2 ~ height)
-#overall <- makeFun( __your_linear_combination_here__)
+
+overall <- makeFun( __your_linear_combination_here__)
 
 slice_plot(female(height) ~ height, domain(height=c(100,220)), color="orange3",
            label_x=.5, label_text="F") %>%
@@ -21,6 +22,11 @@ slice_plot(female(height) ~ height, domain(height=c(100,220)), color="orange3",
   slice_plot(overall(height) ~ height, color="black", size=2)
 
 ```
+
+<!--
+overall <- makeFun(female(height)/2 + male(height)/2 ~ height)
+-->
+
 
 Some people erroneously think that since the mean height of men is larger than women by 10cm, you can readily distinguish between the sexes based on height. However, notice that the overall distribution (plotted in black) does not show a dip between the sexes: there is no clear separation based on height. 
 

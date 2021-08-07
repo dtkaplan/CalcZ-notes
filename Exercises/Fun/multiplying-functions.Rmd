@@ -11,7 +11,7 @@ library(mosaicCalc)
 
 It's very common in communications systems to have a signal  that is  a sine-wave *carrier* that is *modulated* by  another function. That is,  the carrier is *multiplied*  by the other function: `waveform(t) = modulator(t)` $\times$ `carrier(t)`.
 
-Here are four examples in each of which a sine with a period of about 2 units is modulated by another  function,  one of  the modeling functions we have studied.
+Here are four examples in each of which a sine with a period of about 2 units is modulated by another  function. In each case, that other function is one of the modeling functions we have studied.
 
 ```{r echo=FALSE}
 slice_plot(exp(-t/10) * sin(2*pi*t/2.3) ~ t, 
@@ -24,7 +24,7 @@ slice_plot(exp(-t/10) * sin(2*pi*t/2.3) ~ t,
 askMC(
   prompt = "(A) Of what sort is the function  that is  modulating  the carrier?",
     "+exponential+",
-    "hump",
+    "gaussian",
     "sigmoid",
     "sine"
 )
@@ -40,7 +40,7 @@ slice_plot(dnorm(t, 10, 7) * sin(2*pi*t/2) ~ t,
 askMC(
   prompt = "(B) Of what sort is the function  that is  modulating  the carrier?",
     "exponential",
-    "+hump+",
+    "+gaussian+",
     "sigmoid",
     "sine"
 )
@@ -58,7 +58,7 @@ slice_plot(pnorm(t, 10, 7) * sin(2*pi*t/2) ~ t,
 askMC(
   prompt = "(C) Of what sort is the function  that is  modulating  the carrier?",
     "exponential",
-    "hump",
+    "gaussian",
     "+sigmoid+",
     "sine"
 )
@@ -75,7 +75,7 @@ slice_plot(sin(2*pi*t/20) * sin(2*pi*t/1.5) ~ t,
 askMC(
   prompt = "(D) Of what sort is the function that is modulating  the carrier?",
     "exponential",
-    "hump",
+    "gaussian",
     "sigmoid",
     "+sine+"
 )
