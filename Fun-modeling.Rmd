@@ -129,7 +129,7 @@ d. Using this simple test to double-check your work. If the horizontal asymptote
 
 Notice that the question of "growth or decay" depends only on the sign of the parameter $k$. You can have an exponentially decaying process that's increasing. Consider, for instance, the speed of a car as it merges onto a highway from a slow speed on the entrance ramp.  The car's velocity is increasing, but as you approach highway speed the rate of increase gets smaller. That's exponential **decay**.
 
-The procedure in Step 3 works for estimating $k$ stemps from a very important property of exponential functions: Exponential functions always double/half at a constant pace. By design, the parameter $k$
+The procedure in Step 3 for estimating $k$ stems from a very important property of exponential functions: Exponential functions always double/half at a constant pace. By design, the parameter $k$
 directly determines that pace. Picking an $x_2$ and finding the corresponding $x_1$ gives the length of the input interval, $x_1 - x_2$ over which the distance from the baseline doubles/halves. 
  
 What’s remarkable about the doubling/halving time is that, for a genuinely exponential function, it doesn’t matter which point we choose for $x_1$. In practice working with graphed data, it's best to choose so that  $f(x_1)$ is discernibly far from the baseline. started with, this property is true across the entire input domain. 
@@ -157,7 +157,7 @@ Step 2:
 
 i. The point far from the baseline is located at $t_1 = 15 \text{sec}$ with a value ${\cal D} \approx 80^\circ\text{C}$. 
 ii. This if $55^\circ\text{C}$ from the baseline. We want to find the value of $t_1$ where the temperature will be half way from 80 to the baseline. That's a temperature of about $80 - 55/2 = 53.5$. Scanning over to the right, the function that I can imagine going through the data crossed $53^\circ$ at about $t_{1/2} = 40$. Thus, the half-life is estimated at 25s. 
-iii. The parameter $k$ is therefore $k\approx 0.693 / \mbox{half-life}) = - 0.63 / 25 = -0.0277$. Since we identified in Step 1 that exponential decay is involved, we expect $k$ to be negative. It is.
+iii. The parameter $k$ is therefore $k\approx 0.693 / \mbox{half-life} = - 0.63 / 25 = -0.0277$. Since we identified in Step 1 that exponential decay is involved, we expect $k$ to be negative. It is.
 
 Step 3. 
 
@@ -197,9 +197,9 @@ It's not too hard to see what's going on. The tide rises and falls about every 1
 
 This simple description tells almost everything needed to construct an A/B model of the tide level using a sinusoid, that is, a function of the form $$A \sin(2\pi t/P) + B$$ The procedure is straightforward:
 
-**Step 0**: Determine whether a sinusoid model is appropriate. As you know, sinusoids oscillate up and down repeatedly with a steady ***period***. That certainly seems the case here. But sinusoids are also steady in the ***peak*** and ***trough*** values for each cycle. That's only approximately true in the Providence data. Models inevitably involve approximation. We'll have to keep an eye on whether the ***fixed amplitude*** feature of sinusoids 
+**Step 0**: Determine whether a sinusoid model is appropriate. As you know, sinusoids oscillate up and down repeatedly with a steady ***period***. That certainly seems the case here. But sinusoids are also steady in the ***peak*** and ***trough*** values for each cycle. That's only approximately true in the Providence data. Models inevitably involve approximation. We'll have to keep an eye on whether modeling with sinusoids and their ***fixed amplitude*** still lets us extract useful information. 
 
-**Step 1**: Choose a sensible value to represent the low point repeatedly reached. 0.5 m seems appropriate here, but obviously the exact position of the trough of each cycle varies over the 4.5 day duration of the data.  Similarly, the peak is near 1.6 m. Parameter $B$ is the mean of the peak and trough values: $\frac{1.6 + 0.5}{2} = 1.05$ m here. Parameter $A$ is half the difference between the peak and trough values: $\frac{1.6 - 0.5}{2} = 0.55$. Parameter $B$ is called the ***baseline*** of the sinusoid. Paramter $A$ is the ***amplitude***. (Note that by convention, the amplitude is always *half* the high-to-low range of the sinusoid.)
+**Step 1**: Choose a sensible value to represent the low point repeatedly reached. 0.5 m seems appropriate here, but obviously the exact position of the trough of each cycle varies over the 4.5 day duration of the data.  Similarly, the peak is near 1.6 m. Parameter $B$ is the mean of the peak and trough values: $\frac{1.6 + 0.5}{2} = 1.05$ m here. Parameter $A$ is half the difference between the peak and trough values: $\frac{1.6 - 0.5}{2} = 0.55$. Parameter $B$ is called the ***baseline*** of the sinusoid. Parameter $A$ is the ***amplitude***. (Note that by convention, the amplitude is always *half* the high-to-low range of the sinusoid.)
 
 **Step 2**: Estimate the period $P$ of the sinusoid. This can be done with a ruler: the horizontal duration of a complete cycle. I like to use the time between peaks, but the time between troughs would work just as well. Another good choice is the time between positive sloping crossings of the baseline. (But be careful. The time between *successive* baseline crossings, one positive sloping and the other negative, give just *half* the period.) 
 
@@ -265,7 +265,7 @@ Gas pressure versus volume | $P(V) = \frac{n R T}{V}$ | $-1$
 ... perhaps less familiar ... | | 
 Distance traveled by a diffusing gas | $X(t) = D \sqrt{
 \strut t}$ | $1/2$
-Animal lifespan (in the wild) versus body mass | $L(M) = a M^{0.25} | 0.25
+Animal lifespan (in the wild) versus body mass | $L(M) = a M^{0.25}$ | 0.25
 Blood flow versus body mass | $F(M) = b M^{0.75}$ | 0.75
 
 The reason why power-law functions have their important role in science have to do with the logic of physical quantities such as length, mass, time, area, volume, force, power, and so on. We'll discuss this at length later in the course and the principles will appear throughout calculus.
@@ -282,16 +282,16 @@ Now let's add a bump to the road. A bump is a local feature, often only a few fe
 
 The basic modeling function suited to represent bumps in the road, or potholes, or mountain ranges is generically called a "hump function." In this book, we use a specific hump function called the ***gaussian*** function (`dnorm()`). 
 
-A gaussian function has two parameters: the location^[That is, the input value at which the function value is largest.] of the peak, which we'll call the ***center*** parameter, and the sideways extent of the gaussian, which we'll call the ***spread***. Figure \@ref(fig:Fun-3C-1) shows a few gaussian functions with different parameters.
+A gaussian function has two parameters: the location^[That is, the input value at which the function value is largest.] of the peak, which we'll call the ***center*** parameter, and the sideways extent of the gaussian, which is called the ***standard deviation***. Figure \@ref(fig:Fun-3C-1) shows a few gaussian functions with different parameters.
 
-```{r Fun-3C-1, echo=FALSE, warning=FALSE, fig.show="hold", fig.height=3, fig.width=6}
+```{r Fun-3C-1, echo=FALSE, warning=FALSE, fig.cap="Gaussians with various centers and standard deviations (sd).", fig.show="hold", fig.height=3, fig.width=6}
 slice_plot(dnorm(x, 1, 0.5) ~ x, domain(x=c(-3, 3))) %>%
-    gf_labs(title="(a) Gaussian with center=1, spread = 0.5")
+    gf_labs(title="(a) Gaussian with center=1, sd = 0.5")
 slice_plot(dnorm(x, -1, 0.05) ~ x, domain(x=c(-3, 3)), npts=500) %>%
-    gf_labs(title="(b) Gaussian with center=-1, spread = 0.05")
+    gf_labs(title="(b) Gaussian with center=-1, sd = 0.05")
 slice_plot(dnorm(x, 0.25, 1.2) ~ x, domain(x=c(-3, 3)), npts=500) %>%
-    gf_labs(title="(c) Gaussian with center=0.25, spread = 1.2") %>%
-  gf_hline(yintercept = dnorm(1.2+0.25, 0.25, 1.2), color="orange3") %>%
+    gf_labs(title="(c) Gaussian with center=0.25, sd = 1.2") %>%
+  gf_hline(yintercept = ~dnorm(1.2+0.25, 0.25, 1.2), color="orange3") %>%
     gf_segment(0.2016 + 0.2016 ~ -0.95 + 1.45, color="orange3", size=3, alpha=.03)
 ```
 
@@ -309,13 +309,13 @@ This business with the area will make more sense when you've learned some calcul
 
 Consider another road feature, a local ***change*** from one elevation to another as you might accomplish with a ramp. The basic modeling function corresponding to a ***local change*** from one level to another is the ***sigmoid*** function. Figure \@ref(fig:Fun-3C-2) shows three sigmoid functions.
 
-```{r Fun-3C-2, echo=FALSE, fig.show="hold", warning=FALSE, fig.height=3, fig.width=6}
+```{r Fun-3C-2, echo=FALSE, fig.cap="Sigmoids with various centers and standard deviations", fig.show="hold", warning=FALSE, fig.height=3, fig.width=6}
 slice_plot(pnorm(x, 1, 0.5) ~ x, domain(x=c(-3, 3))) %>%
-    gf_labs(title="(a) Sigmoid with center=1, spread = 0.5")
+    gf_labs(title="(a) Sigmoid with center=1, sd = 0.5")
 slice_plot(pnorm(x, -1, 0.05) ~ x, domain(x=c(-3, 3)), npts=500) %>%
-    gf_labs(title="(b) Sigmoid with center=-1, spread = 0.05")
+    gf_labs(title="(b) Sigmoid with center=-1, sd = 0.05")
 slice_plot(pnorm(x, 0.25, 1.2) ~ x, domain(x=c(-3, 3)), npts=500) %>%
-    gf_labs(title="(c) Sigmoid with center=0.25, spread = 1.2") 
+    gf_labs(title="(c) Sigmoid with center=0.25, sd = 1.2") 
 ```
 The name "sigmoid" comes from vague resemblance of the graph to the letter S (which is "sigma" in Greek: ς). 
 
