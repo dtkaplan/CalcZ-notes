@@ -59,7 +59,8 @@ ui <- fluidPage(
             textOutput("question_name"),
             tags$hr(),
             textInput("passcode", "access code"),
-            selectInput("instructor_choice", "Choose question:", choices=1:3)
+            selectInput("instructor_choice", "Choose question:", choices=1:3),
+            textOutput("show_success_code")
         ),
 
         # Show a plot of the generated distribution
@@ -69,6 +70,7 @@ ui <- fluidPage(
             tags$hr(),
             uiOutput("Feedback"),
             actionButton("check_answer", "Check answer"),
+            tags$hr(),
             actionButton("nextQ", "Next question"),
             tags$hr(),
             textOutput("score"),
@@ -106,34 +108,36 @@ server <- function(input, output, session) {
 
 
     observeEvent(input$the_choices, {
-        cat("Choice made: ", input$the_choices, "\n")
+      cat("Choice made: ", input$the_choices, "\n")
     })
     observeEvent(input$check_answer, {
-        req(input$answers)
-        State$n_answered <- State$n_answered + 1
+      if (instructor_chooses()) return()
+      req(input$answers)
 
-        was_correct <- this_question$correct == as.numeric(input$answers)
-        if (was_correct) {
-            State$n_correct <- State$n_correct + 1
+      State$n_answered <- State$n_answered + 1
+
+      was_correct <- this_question$correct == as.numeric(input$answers)
+      if (was_correct) {
+        State$n_correct <- State$n_correct + 1
+      } else {
+        # Insert the question back into the queue
+        this_id <- State$q_ids[State$next_q]
+        n_qs <- length(State$q_ids)
+        if (n_qs - State$next_q <= 3 ) {
+          return(NULL) # do nothing
         } else {
-            # Insert the question back into the queue
-            this_id <- State$q_ids[State$next_q]
-            n_qs <- length(State$q_ids)
-            if (n_qs - State$next_q <= 3 ) {
-                return(NULL) # do nothing
-            } else {
-                index <- sample((State$next_q+3):n_qs, size=1)
-            }
-
-            if (index <= length(State$q_ids)) {
-                tmp <- State$q_ids[index]
-                State$q_ids[index] <- this_id
-                State$q_ids[State$next_q] <- tmp
-            }
+          index <- sample((State$next_q+3):n_qs, size=1)
         }
+
+        if (index <= length(State$q_ids)) {
+          tmp <- State$q_ids[index]
+          State$q_ids[index] <- this_id
+          State$q_ids[State$next_q] <- tmp
+        }
+      }
     })
 
-    observeEvent(input$nextQ, {
+    observeEvent(c(input$instructor_choice, input$nextQ), {
         shinyjs::show("check_answer")
         shinyjs::hide("nextQ")
         isolate(feedback$message <- "")
@@ -154,6 +158,10 @@ server <- function(input, output, session) {
             "Sorry. Resetting to zero. Try again!"
         }
     })
+    output$show_success_code <- renderText({
+      paste("Success token is", {State$success_code})
+    })
+
     output$score <- renderText({
         paste(input$topic_choice, ": ", State$n_correct, "correct out of", State$n_answered, "attempts.")
     })
@@ -166,6 +174,7 @@ server <- function(input, output, session) {
         if (instructor_chooses()) {
           selected_question <- Qbank$Q %>%
             filter(topic == input$topic_choice, qname == input$instructor_choice) %>% .$unique
+          req(selected_question)
         } else {
           # shuffle as we go around the loop
           isolate({
@@ -218,23 +227,31 @@ server <- function(input, output, session) {
 
     output$Feedback <- renderUI({
         if (nchar(feedback$message)==0) return(" ") # for the dependency
+        if (instructor_chooses()) input$answers # for the dependency when instructor is browsing
         isolate({
             if (!is.null(input$answers)) message <- feedback$message
             else return(NULL)
             correct_sign <- ifelse(this_question$correct == input$answers, random_success(), random_regret())
-            shinyjs::hide("check_answer")
-            shinyjs::show("nextQ")
+            if (!instructor_chooses()) {
+              shinyjs::hide("check_answer")
+              shinyjs::show("nextQ")
+            }
         })
         withMathJax(HTML(paste(correct_sign, message, sep=" ")))
     })
 
     instructor_chooses <- reactive({
-      input$passcode == "mouse-eats-corn"
+      input$passcode %in% c("mouse-eats-corn", "mm")
     })
 
     observe({
-        if (instructor_chooses()) shinyjs::show("instructor_choice")
-        else shinyjs::hide("instructor_choice")
+        if (instructor_chooses()) {
+          shinyjs::show("instructor_choice")
+          shinyjs::show("show_success_code")
+        } else {
+          shinyjs::hide("instructor_choice")
+          shinyjs::hide("show_success_code")
+        }
     })
 
     observeEvent(input$topic_choice, {
