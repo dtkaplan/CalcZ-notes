@@ -1,17 +1,5 @@
 # Piecewise functions {#fun-piecewise}
 
-
-
-::: {.objectives}
-```{r echo=FALSE, results="asis"}
-state_objective("Fun-4-b-4a", "Identify graphs of a piecewise linear function.")
-state_objective("Fun-1C-d", "Construct a hock-stick function by piecewise combination of a constant function and a straight-line function with non-zero slope.")
-state_objective("Fun-4-b-4b", "Recognize traditional curly-brace notation for piecewise functions.")
-state_objective("Fun-4-b-4c", "Be able to create a piecewise function in R.")
-state_objective("Fun-4-b-4d", "Distinguish between continuous and discontinuous functions")
-```
-:::
-
 Each of our basic modeling functions, with two exceptions, has a domain that is the entire number line $-\infty < x < \infty$. No matter how big or small is the value of the input, the function has an output. Such functions are particularly nice to work with, since we never have to worry about the input going out of bounds. `r mark(1500)` 
 
 The two exceptions are:
@@ -124,7 +112,7 @@ slice_plot(sig(x) ~ x, domain(x=c(-3, 3)))
 ::: {.intheworld}
 Figure \@ref(fig:gas-use-2) is a graph of monthly natural gas use in the author's household versus average temperature during the month. (Natural gas is measured in cubic feet, appreviated *ccf*.)  `r mark(1530)` 
 
-```{r gas-use-2, echo=FALSE}
+```{r gas-use-2, echo=FALSE, fig.cap="The amount of natural gas used for heating the author's home varies with the outside temperature."}
 gf_point(ccf ~ temp, data = Home_utilities, alpha=0.5) %>%
   gf_labs(title="Household natural gas use", x = "Average temperature for the month (deg. F)", y = "Volume of gas used (cubic feet)") %>%
   gf_lims(x = c(0, 85)) %>%
@@ -137,12 +125,6 @@ Even simpler is the model for the other uses of natural gas:
 $$\text{other_ccf}(x) \equiv 15$$. 
 :::
 
-
-::: {.todo}
-Do heating degree days in integration.
-
-Similarly with power from wind turbines
-:::
 
 Our last example concerns a bit of familiar technology: music synthesis. Generating a pure tone electronically is easy done using a sinusoid. Generating a note with rich instrumental timbre can be accomplished by a linear combination of sinusoids. Of course, the note will be localized in time. This could be accomplished by multiplying the sinusoids by a gaussian function envelope.  `r mark(1540)` 
 
