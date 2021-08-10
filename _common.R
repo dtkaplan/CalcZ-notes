@@ -117,5 +117,5 @@ ex.mark <- function(num, perm_id, fname="no file specified") {
 }
 
 # For gradescope output
-# askMC <- CalcZapps::askGS
+askMC <- CalcZapps::askGS
 

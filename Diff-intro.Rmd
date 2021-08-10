@@ -25,8 +25,8 @@ From his data, he observed that ${\cal D}_t\, x(t)$ increases linearly in $t$: $
 
 Calculating the second increments of $x$ is done by the "slope function of the slope function," which we can call ${\cal D}_{tt}$:
 $${\cal D}_{tt} x \equiv {\cal D}_t \left[{\cal D}_t x(t)\right] = 2(t+1) + 1 - (2 t + 1) = 2$$
-## Continuous time
 
+## Continuous time
 
 Newton considered the problem for continuous time rather than Galileo's discrete time. He reframed the slope function from the big increments of the slope operator ${\cal D}_t$ to imagined vanishingly small increments of a operator that we shall denote $\partial_t$ and call ***differentiation***. `r mark(2015)`
 
@@ -48,9 +48,9 @@ Over the next three centuries, calculus evolved from a set of techniques for des
 Chapter \@ref(instantaneous-rate-of-change) introduced the idea of a ***slope function***: a function $g(t)$ whose value at each instant gives the instantaneous rate of change of a partner function $f(t)$. To keep easier track of the relationship between the function and it's slope function, we use the ${\cal D}$ notation:
 $${\cal}D_t f(t)$$ is the slope function of $f(t)$ with respect to $t$. 
 
-To illustrate, imagine a graph of the position of a car along a road as in Figure \@ref(fig:stop-and-go2).  Over the course of an hour, the car traveled about 25 miles. In other words, the ***average*** speed is 25 miles/hour: the *slope* of the red line segment. Given the traffic, sometimes the car was stopped (time C), sometimes crawling (time D) and sometimes much faster than average (time B).   `r mark(2030)`
+To illustrate, imagine a graph of the position of a car along a road as in Figure \@ref(fig:stop-and-go2).  Over the course of an hour, the car traveled about 25 miles. In other words, the ***average*** speed is 25 miles/hour: the *slope* of the tan line segment. Given the traffic, sometimes the car was stopped (time C), sometimes crawling (time D) and sometimes much faster than average (time B).   `r mark(2030)`
 
-```{r stop-and-go2, echo=FALSE, fig.cap="The position of an imagined car over an hour of time. (black) The red line shows what the position would have been if the car had travelled steadily at the average speed for the hour."}
+```{r stop-and-go2, echo=FALSE, fig.cap="The position of an imagined car over an hour of time. (black) The tan line shows what the position would have been if the car had travelled steadily at the average speed for the hour."}
 f <- rfun(~ t, seed=105, n=5)
 raw <- function(t) 
         f(t) - t - 30*dnorm(t, 0, 3) + 60*dnorm(t,7,1)
@@ -80,9 +80,9 @@ slice_plot(position(t) ~ t, domain(t = c(0, 1)), size=2) %>%
     gf_refine(scale_color_identity())
 ```
 
-Of course, when you're driving you are aware of the car's speed at any instant. You need only look at the speedometer to read off the value (in miles per hour). Speedometers don't show the average speed for the entire trip. The average speed is the slope of the red line in Figure \@ref(fig:stop-and-go2}, 25 miles in one hour, usually stated 25 miles-per-hour. `r mark(2035)`
+Of course, when you're driving you are aware of the car's speed at any instant. You need only look at the speedometer to read off the value (in miles per hour). Speedometers don't show the average speed for the entire trip. The average speed is the slope of the tan line in Figure \@ref(fig:stop-and-go2), 25 miles in one hour, usually stated 25 miles-per-hour. `r mark(2035)`
 
-In terms of Figure \@ref(fig:stop-and-go2}, the speedometer reading is the **slope** of $f(t)$ at the given instant. You can see from the Figure that at instant A the speed is very close to the average speed for the entire trip. At instant B the car is going faster; the slope is much steeper. On the other hand, at instant C the car is at a standstill; its position doesn't change at all. `r mark(2040)`
+In terms of Figure \@ref(fig:stop-and-go2), the speedometer reading is the **slope** of $f(t)$ at the given instant. You can see from the Figure that at instant A the speed is very close to the average speed for the entire trip. At instant B the car is going faster; the slope is much steeper. On the other hand, at instant C the car is at a standstill; its position doesn't change at all. `r mark(2040)`
 
 The car's speedometer shows the speed at each moment---or ***instant***---of the trip. As you can see in Figure \@ref{fig:stop-and-go}, the speed varies and is sometimes less than the average speed, sometimes greater, and occasionally equal to the average speed over the trip.  `r mark(2045)`
 
@@ -126,6 +126,7 @@ With acceleration as a concept, we can define net force as mass times accelerati
 ::: {.why}
 We used **net force** as the quantity we related to mass and the slope function of velocity. There are different sources of forces which add up and can cancel out. Famously, Newton formulated the ***law of universal gravitation*** which ascribed the force between masses as proportional to the product of the two masses and inversely proportional to the square of the distance between them. But a mass on a table has no net force on it, since the table pushes back (push = force) on the mass to cancel out the force due to gravity. "Net force" takes such cancellation into account. `r mark(2060)`
 :::
+
 
 ## Differentiation
 

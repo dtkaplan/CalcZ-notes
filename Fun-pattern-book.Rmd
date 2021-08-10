@@ -1,6 +1,6 @@
 # Functions for modeling {#pattern-book}
 
-***Mathematical modeling** is a process where mathematics is used to understand, analyze, or predict a real-world situation. This process often occurs in cycles that revisit each of the following three stages: `r mark(200)`
+***Mathematical modeling*** is a process where mathematics is used to understand, analyze, or predict a real-world situation. This process often occurs in cycles that revisit each of the following three stages: `r mark(200)`
 
 1. Translate the real-world situation into a mathematical form (called a model)
 2. Shape the model to answer the question at hand
@@ -30,7 +30,7 @@ The third and final stage of mathematical modeling often involves **evaluating t
 In this section, we introduce the ***Pattern-book functions***--a short list of simple mathematical functions that provide a large majority of the tools for representing the real world as a mathematical object. 
 Think of the items in this list as different actors, each of whom is skilled in portraying an archetypical character: hero, outlaw, lover, fool, comic. A play brings together different characters, costumes them, and relates them to one another through dialog or other means. All this is for the purpose of telling a story and providing insight into human relationships and emotions. `r mark(230)`
 
-A mathematical model is a kind of a story and a mathematical modeler a kind of playwright. She combines mathematical character types to tell a story about relationships. But there is only a handful of archetypal mathematical functions, the analog of the character actors in drama and comedy. In creating a mathematical model, you clothe the actors to suit the era and location and assemble them together in harmony or discord.
+A mathematical model is a kind of story and a mathematical modeler a kind of playwright. She combines mathematical character types to tell a story about relationships. But there is only a handful of archetypal mathematical functions, the analog of the character actors in drama and comedy. In creating a mathematical model, you clothe the actors to suit the era and location and assemble them together in harmony or discord.
 
 Costume designers and others do not start from nothing. There are reference guides that collect patterns which a designer can customize to the needs at hand. These reference guides are sometimes called "pattern books." (See Figure \@ref(fig:pattern-book) for an example.) 
 
@@ -218,41 +218,5 @@ You may also notice the proportional function shown above does nothing to change
 ---------
 
 `r insert_calcZ_exercise("2.4", "Qj0JAr", "Exercises/Fun/bear-lay-plant.Rmd")`
-
-## Instructor notes
-
-It would be a huge coincidence if one of the pattern-book functions was a match for a particular relationship, such as one shown in data. We'll need to tailor the pattern-book functions and combine them in various ways to capture a real-world relationship. `r mark(295)`
-
-A helpful demonstration for students can be to display some real-world data, ask which pattern-book function seems the best of the lot, and then ask students how they would shift or shrink that function to correspond better to the data.
-
-To start, here are the data relating pressure and volume of a gas at constant temperature s collected by Robert Boyle (1627-1691) that led him to formulate "Boyle's Law." The correct pattern-book function for these data is $\recip(x) \equiv 1/x$. This is plotted but it doesn't match the data. (Try scaling the function from $1/x$ to $1000/x$. Then home in on the correct value.)
-
-```{r}
-gf_point(pressure ~ volume, data = Boyle) %>%
-  slice_plot(1/volume ~ volume)
-```
-
-
-To illustrate, here's a graph of month-to-month utility data from a house in Minnesota plotted along with the pattern-book function $x$.
-
-```{r}
-gf_point(kwh ~ elecbill, data = Utilities) %>%
-  slice_plot(x ~ x, domain(x=c(0,140)))
-```
-
-Ask students why a straight-line pattern is appropriate for modeling these data and why $x$ isn't, on its own, a good model.
-
-Here is monthly use of natural gas (mainly for heating) versus average outdoor temperature for the month. We'll plot it next to an exponential function. 
-
-```{r out.width="50%", fig.show="hold"}
-gf_point(ccf ~ temp, data = Home_utilities) 
-slice_plot(exp(temp) ~ temp, domain(temp=c(0,80)))
-```
-Flipping the exponential left for right and scaling it would help:
-```{r}
-gf_point(ccf ~ temp, data = Home_utilities) %>%
-slice_plot(300*exp(-temp/20) ~ temp, domain(temp=c(0,80)))
-```
-Do the data suggest a function that has a horizontal asymptote for large temperature? If so, where is it and why? The "why" should include both a descriptions of the mathematical signs that there is or is not a horizontal asymptote, but also a description of what this corresponds to in terms of real-world relationships, e.g. how much heating is needed when the outdoor temperature is high.
 
 
