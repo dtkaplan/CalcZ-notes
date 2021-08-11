@@ -11,7 +11,7 @@ In the days when functions were always presented using formulas, symbolic differ
 
 ## A function from a function
 
-Recall that the goal of differentiation is to make a function out of an already known function. We'll call the already known function $g(x)$. In Chapter \ref(change-relationships) we've outlined the properties that the new function should have and gave a nice naming convention, $\partial_x g(x)$ that shows where the new function comes from. In this section we'll put that aside and focus on the question of what it means to "make a function." `r mark(2165)`
+Recall that the goal of differentiation is to make a function out of an already known function. We'll call the already known function $g(x)$. In Chapter \@ref(change-relationships) we've outlined the properties that the new function should have and gave a nice naming convention, $\partial_x g(x)$ that shows where the new function comes from. In this section we'll put that aside and focus on the question of what it means to "make a function." `r mark(2165)`
 
 When mathematics is done with paper and pencil, "making a function" is a matter of writing a formula, such as $x^2 \sin(x) + 3$ and sometimes giving a name to the formula, e.g. $h(x) \equiv x^2 \sin(x) + 3$. We are essentially writing something down that will make sense when viewed by another person trained in the conventions of mathematical notation. `r mark(2170)`
 
@@ -19,12 +19,13 @@ For a computer, on the other hand, a function is a definite kind of thing. We  "
 
 The computer language itself provides specific means to define a new function. In R/mosaic, you first construct a tilde expression naming the function inputs (right side of the tilde) and specifying the algorithm of that function (left side of the tilde), as with this formula:
 ```{r}
-f_description <- x^2 * sin(x) + 3 ~ x
+f_description <- x^2 * sin(x) + 3 ~ x   # a tilde expression
 ```
 
 On its own, `f_description` cannot be used like a function because it was constructed as something else: a tilde expression. Trying to use `f_description` in the way one uses a function produces an error.
-```{r error=TRUE}
+```
 f_description(2)
+ Error in f_description(2): could not find function "f_description"
 ```
 
 In between the tilde expression and the final result---a function---is software that translates from tilde-expressions into functions:
@@ -68,12 +69,12 @@ Whenever you calculate a derivative function, you should check against mistakes 
 ```{r check-dg, fig.cap="A check that zero-crossings (blue) of the derivative function (red) correspond to inputs where the original function is flat (black)." }
 zeros_of_dg <- findZeros(dg(x) ~ x, xlim=c(-5,5))
 slice_plot(g(x) ~ x, domain(x=c(-5,5)), npts=500) %>%
-  slice_plot(dg(x) ~ x, color="orange3", npts=500) %>%
+  slice_plot(dg(x) ~ x, color="red", npts=500) %>%
   gf_hline(yintercept = ~ 0, color = "orange", size=2, alpha=0.2) %>%
-  gf_vline(xintercept = ~ x, data=zeros_of_dg, color="dodgerblue")
+  gf_vline(xintercept = ~ x, data=zeros_of_dg, color="blue")
 ```
 
-Look very closely at Figure \@ref(fig:check-dg), particularly at the places where the blue vertical markers cross the function $g(x)$ (black). They should cross exactly at the flat zone, but they are a little shifted to the left. That's the sense in which the finite-difference approach gives an approximation. This left-shift stems from the use of 0.1 in the definition of the zero function. Use a smaller value, say 0.01 or 0.001, and you won't be able to see the shift at all. `r mark(2185)`
+Look very closely at Figure \@ref(fig:check-dg), particularly at the places where the blue vertical markers cross the function $g(x)$ (black). They should cross exactly at the flat zone, but they are a little shifted to the left. (You might have to zoom in on the plot to see the offset between the vertical blue marker and the local maximum of the function.) That's the sense in which the finite-difference approach gives an approximation. The small left-shift stems from the use of 0.1 in the definition of the zero function. Use a smaller value, say 0.01 or 0.001, and you won't be able to see the shift at all. `r mark(2185)`
 
 ::: {.takenote}
 In modeling work, there's nothing wrong with an approximation so long as it is good enough for your purposes. We picked the value 0.1 for our definition of the slope function because it works very well with the pattern-book functions. Here, "very well" means you can't easily see in the graph any deviation compared the the exact derivative. `r mark(2190)`
@@ -83,6 +84,12 @@ When a calculation can be done exactly (without outrageous effort) it certainly 
 1. It's useful to have an easy, approximate method always at hand. This lets you check the results of other methods against the possibility of some blunder or mis-conception. The slope function approach to differentiation is certainly easy, and if you think the approximation isn't good enough, then instead of 0.1 use something smaller. (Chapter \@ref(evanescent-h) discusses how small is **too** small.)
 2. The computer makes it practical to employ the slope function as a useful approximation to the derivative. There are many other mathematical methods that the computer has made feasible, for instance the methods of ***machine learning***. These methods create functions that sometimes cannot be handled by the traditional ("exact") methods of differentiation.  `r mark(2195)`
 :::
+
+
+`r insert_calcZ_exercise("XX.XX", "K05LrF", "Exercises/Diff/fly-speak-canoe.Rmd")`
+
+`r insert_calcZ_exercise("XX.XX", "n78LrF", "Exercises/Diff/wolf-talk-kayak.Rmd")`
+
 
 ## The slope-function operator
 
