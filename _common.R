@@ -5,6 +5,7 @@ library(math141Z) # REPLACE THIS WHEN PACKAGES ARE RE-ALIGNED
 library(CalcZapps)
 library(here) # for file locations
 library(thematic)
+library(gridExtra) # for arranging plots.
 
 # theme the plots to match the document
 thematic_rmd()
@@ -117,5 +118,5 @@ ex.mark <- function(num, perm_id, fname="no file specified") {
 }
 
 # For gradescope output
-askMC <- CalcZapps::askGS
+# askMC <- CalcZapps::askGS
 
