@@ -192,8 +192,7 @@ We're calling `D()` an ***operator*** rather than a ***function***. The reason i
 ::: {.intheworld}
 It is a fact of mathematical and scientific life that a variety of notations are used for differentiation. To some extent, this reflects historical precedence and, to be honest, nationalistic European politics of the 18th century. To make sense of mathematical writing in the many areas in which calculus is used, you have to recognize all of them for what they are. Your skill will be enhanced if you also memorize the names of the different styles. It's not all that different from the pattern in English of having multiple words for the same sort of object, for instance: car, automobile, junker, ride, wheels, crate, jalopy, limo, motor car, horseless carriage.  `r mark(2100)`
 
-In the days when carriages where pulled by horses, the phrase "horseless carriage" made a useful distinction. Today, when horses are rarely seen on the road, it make sense to trim down the notation to its essentials: ~~horseless~~ **car**~~iage~~. Think of $\partial_x$ as this sort of minificat
-ion of older notations.^[Yes, "minification" is a word!]   
+In the days when carriages where pulled by horses, the phrase "horseless carriage" made a useful distinction. Today, when horses are rarely seen on the road, it make sense to trim down the notation to its essentials: ~~horseless~~ **car**~~iage~~. Think of $\partial_x$ as this sort of minification of older notations.^[Yes, ["minification" is a word!](https://en.wikipedia.org/wiki/Minification_(programming))]   
 :::
 
 `r insert_calcZ_exercise("XX.XX", "eodlt", "Exercises/Diff/pine-lead-car.Rmd")`
@@ -203,33 +202,6 @@ ion of older notations.^[Yes, "minification" is a word!]
 
 `r insert_calcZ_exercise("XX.XX", "helxs", "Exercises/Diff/deer-pitch-saw.Rmd")`
 
-
-## Dimension of derivatives
-
-Recall that the differencing operator takes as input a function and returns as output another function that takes the same kind of input, but produces a different kind of output. 
-
-For instance, suppose the function `pressure()` takes an altitude as input (in km) and returns as output a pressure (in kPa, "kiloPascal"^[Air pressure at sea level is about 100 kiloPascal.]).
-
-The derivative function, let's call it `d_pressure()`, also takes an input in km, but produces an output in kPA per km: a rate.
-
-You can see this by examining the differencing operator itself:
-
-$${\cal D}_x f(x) \equiv \frac{f(x+h) - f(x)}{h}$$
-
-Remember the notation for dimensions. A quantity $x$ has dimensions denoted as $[x]$. (This is nothing more than saying, "Pronounce '$[x]$' as 'the dimensions of $x$'.")
-The input to $f()$ has dimension $[x]$. The output from $f()$ has dimension $[f(x)]$.
-
-What is the dimension of $h$? (We could write this question more simply, "What is $[h]$?) Since the operator adds $x + h$, it must be that $[h] = [x]$. Otherwise, addition wouldn't be a viable operation to combine the two quantities. `r mark(2105)`
-
-What is the dimension of $f(x + h) - f(x)$? (Again, we could ask this more simply, "What is $[f(x+h) - f(x)]$?") Since we're subtracting two quantities, the two quantities must have the same dimension and the result is also that dimension. So $[f(x+h) - f(x)] = [f(x)]$. `r mark(2110)`
-
-The output of the function $df(x)$ produced by $\mbox{Diff}(f)$ therefore has dimension $[f(x)] / [x]$.
-
-`r insert_calcZ_exercise("XX.XX", "eyded", "Exercises/Diff/kitten-put-kayak.Rmd")`
-
-`r insert_calcZ_exercise("XX.XX", "elclvd", "Exercises/Diff/rat-take-fork.Rmd")`
-
-`r insert_calcZ_exercise("XX.XX", "nsmx8w3", "Exercises/Diff/SIR-dimensions.Rmd")`
 
 
 ## Visualizing the slope function {#slope-fun-visualization}
@@ -328,6 +300,33 @@ knitr::include_graphics("www/cournot-demand-curve.png")
 ```
 
 :::
+
+## Dimension of derivatives
+
+Recall that the differencing operator takes as input a function and returns as output another function that takes the same kind of input, but produces a different kind of output. 
+
+For instance, suppose the function `pressure()` takes an altitude as input (in km) and returns as output a pressure (in kPa, "kiloPascal"^[Air pressure at sea level is about 100 kiloPascal.]).
+
+The derivative function, let's call it `d_pressure()`, also takes an input in km, but produces an output in kPA per km: a rate.
+
+You can see this by examining the differencing operator itself:
+
+$${\cal D}_x f(x) \equiv \frac{f(x+h) - f(x)}{h}$$
+
+Remember the notation for dimensions. A quantity $x$ has dimensions denoted as $[x]$. (This is nothing more than saying, "Pronounce $[x]$ as 'the dimensions of $x$'.")
+The input to $f()$ has dimension $[x]$. The output from $f()$ has dimension $[f(x)]$.
+
+What is the dimension of $h$? (We could write this question more simply, "What is $[h]$?) Since the operator adds $x + h$, it must be that $[h] = [x]$. Otherwise, addition wouldn't be a viable operation to combine the two quantities. `r mark(2105)`
+
+What is the dimension of $f(x + h) - f(x)$? (Again, we could ask this more simply, "What is $[f(x+h) - f(x)]$?") Since we're subtracting two quantities, the two quantities must have the same dimension and the result is also that dimension. So $[f(x+h) - f(x)] = [f(x)]$. `r mark(2110)`
+
+The output of the function $df(x)$ produced by $\mbox{Diff}(f)$ therefore has dimension $[f(x)] / [x]$.
+
+`r insert_calcZ_exercise("XX.XX", "eyded", "Exercises/Diff/kitten-put-kayak.Rmd")`
+
+`r insert_calcZ_exercise("XX.XX", "elclvd", "Exercises/Diff/rat-take-fork.Rmd")`
+
+`r insert_calcZ_exercise("XX.XX", "nsmx8w3", "Exercises/Diff/SIR-dimensions.Rmd")`
 
 
 

@@ -1,11 +1,9 @@
 ---
-chapter: "none yet"
-title: "Title for finch-trim-kayak"
 author: "Daniel Kaplan"
-difficulty: "XX"
 date: 2020-10-12 
 tags: [first, second, third]
-id: finch-trim-kayak
+id: robin-row-boat
+global-id: iclcws
 ---
 
 ```{r finch-trim-kayak-setup, include = FALSE}
@@ -70,25 +68,29 @@ F10 <- antiD(f10(x) ~ x)
 ```
 
 
-```{r echo=FALSE, out.width = "50%", fig.show="hold"}
+```{r echo=FALSE}
 dom <- domain(x = c(-5, 5))
-slice_plot(f7(x) ~ x, dom) %>% gf_labs(title = "Function A()")
-slice_plot(df4(x) ~ x, dom) %>% gf_labs(title = "Function f1()") 
-slice_plot(f4(x) ~ x, dom) %>% gf_labs(title = "Function B()")
-slice_plot(df7(x) ~ x, dom) %>% gf_labs(title = "Function f2()")
-slice_plot(f10(x) ~ x, dom) %>% gf_labs(title = "Function C()")
-slice_plot(df3(x) ~ x, dom) %>% gf_labs(title = "Function f3()")
-slice_plot(f9(x) ~ x, dom) %>% gf_labs(title = "Function D()")
-slice_plot(df10(x) ~ x, dom) %>% gf_labs(title = "Function f4()")
+P1A <- slice_plot(f7(x) ~ x, dom) %>% gf_labs(title = "Function A()")
+P1B <- slice_plot(df4(x) ~ x, dom) %>% gf_labs(title = "Function f1()")
+P2A <- slice_plot(f4(x) ~ x, dom) %>% gf_labs(title = "Function B()")
+P2B<- slice_plot(df7(x) ~ x, dom) %>% gf_labs(title = "Function f2()")
+gridExtra::grid.arrange(P1A, P1B, P2A, P2B, ncol=2)
+```
+```{r echo=FALSE}
+P3A <- slice_plot(f10(x) ~ x, dom) %>% gf_labs(title = "Function C()")
+P3B <- slice_plot(df3(x) ~ x, dom) %>% gf_labs(title = "Function f3()")
+P4A <- slice_plot(f9(x) ~ x, dom) %>% gf_labs(title = "Function D()")
+P4B <- slice_plot(df10(x) ~ x, dom) %>% gf_labs(title = "Function f4()")
+gridExtra::grid.arrange(P3A, P3B, P4A, P4B, ncol=2)
 ```
 
 ```{r finch-trim-kayak-QA1, echo=FALSE}
 askMC(
   prompt = "The derivative of Function A() is which of the following:",
-    "f1()" = "",
+    "f1()" = "           ",
     "+f2()+" = "",
-    "f3()" = "",
-    "f4()" = "",
+    "f3()" = "         ",
+    "f4()" = "         ",
     "not shown" = "",
   random_answer_order = FALSE
 )
@@ -99,9 +101,9 @@ askMC(
 askMC(
   prompt = "The derivative of Function B() is which of the following:",
     "+f1()+" = "",
-    "f2()" = "",
-    "f3()" = "",
-    "f4()" = "",
+    "f2()" = "        ",
+    "f3()" = "        ",
+    "f4()" = "        ",
     "not shown" = "",
   random_answer_order = FALSE
 )
@@ -110,9 +112,9 @@ askMC(
 ```{r finch-trim-kayak-QA3, echo=FALSE}
 askMC(
   prompt = "The derivative of Function C() is which of the following:",
-    "f1()" = "",
-    "f2()" = "",
-    "f3()" = "",
+    "f1()" = "        ",
+    "f2()" = "        ",
+    "f3()" = "        ",
     "+f4()+" = "",
     "not shown" = "",
   random_answer_order = FALSE
@@ -122,10 +124,10 @@ askMC(
 ```{r finch-trim-kayak-QA4, echo=FALSE}
 askMC(
   prompt = "The derivative of Function D() is which of the following:",
-    "f1()" = "",
-    "f2()" = "",
-    "f3()" = "",
-    "f4()" = "",
+    "f1()" = "         ",
+    "f2()" = "          ",
+    "f3()" = "         ",
+    "f4()" = "         ",
     "+not shown+" = "",
   random_answer_order = FALSE
 )

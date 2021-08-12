@@ -19,7 +19,7 @@ $$F = \frac{G m_1 m_2}{d^2}\ \ \ \text{(Law of Universal Gravitation)}$$
 
 The second stage of modeling involves doing mathematical work to **shape the model into a form that can directly answer the modeler's question of interest**. For instance, Newton knew from previous astronomical observations and Kepler's theorizing that planets' orbits are elliptical in shape that he needed to do some work on his two models in order to deduce the orbital shapes consistent with his Second Law and Universal Gravitation. 
 
-**In this book** you'll learn to use several key tools for doing mathematical work on functions. We might as well name them now: ***differentiation***, ***anti-differentiation***, ***optimization***, and ***zero-finding***. These tools derive directly from Newton's work on planetary motion, but thankfully, we are not constrained to using the the technology of his day in their application. Instead, we will leverage modern computers make each tool easier to use. Your job is to learn enough about them that you will know when, how, and why to use each tool.
+**In this book** you'll learn to use several key tools for doing mathematical work on functions. We might as well name them now: ***differentiation***, ***anti-differentiation***, ***optimization***, and ***zero-finding***. These tools derive directly from Newton's work on planetary motion, but thankfully, we are not constrained to using the technology of his day in their application. Instead, we will leverage modern computers make each tool easier to use. Your job is to learn enough about them that you will know when, how, and why to use each tool.
 
 The third and final stage of mathematical modeling often involves **evaluating the model**. The goal is to determine how reliable is the model's answer and to see if the consequences of the model are consistent with what happens in the real world. The evaluation often leads to a re-assessment of the model and a return to stage 1 to improve things. The resulting loop is called the ***modeling cycle***. For example, it seems likely that Newton did not start out knowing that gravitation follows an inverse square law. Perhaps he went through several ***modeling cycles*** until he found the form that was consistent with Kepler's elliptical orbits.
 
@@ -126,7 +126,7 @@ slice_plot(x^-1.5 ~ x, domain=pos_domain(-1.5), npts=500) %>%
   gf_lims(y=c(-200, 200), x=c(-1.25,1.25))
 ```
 
-3. The **non-integer powers**, e.g. $f(x) = \sqrt{x}$, $g(x) = x^\pi$, and so on. When $p$ is either a fraction or an irrational number (like $\pi$), the real-valued power-function $x^p$ can only take non-negative numbers as input. In other words, the domain of $x^p$ is $0$ to $\infty)$ when $p$ is not an integer. You have likely already encountered this domain restriction when using the power law with $p=\frac{1}{2}$, since $f(x)\equiv x^{1/2}=\sqrt{x}$, and the square root of a negative number is not a *real* number. Some of you may have heard about the *imaginary* numbers that allow you to take the square root of a negative number, but for the moment, you only need to understand that when working with real-valued power-law functions with non-integer exponents, the input must be non-negative.
+3. The **non-integer powers**, e.g. $f(x) = \sqrt{x}$, $g(x) = x^\pi$, and so on. When $p$ is either a fraction or an irrational number (like $\pi$), the real-valued power-function $x^p$ can only take non-negative numbers as input. In other words, the domain of $x^p$ is $0$ to $\infty$ when $p$ is not an integer. You have likely already encountered this domain restriction when using the power law with $p=\frac{1}{2}$, since $f(x)\equiv x^{1/2}=\sqrt{x}$, and the square root of a negative number is not a *real* number. Some of you may have heard about the *imaginary* numbers that allow you to take the square root of a negative number, but for the moment, you only need to understand that when working with real-valued power-law functions with non-integer exponents, the input must be non-negative. (The story is actually a bit more complicated since, algebraically, rational exponents like $1/3$ or $1/5$ with an odd-valued denominator can be applied to negative numbers. Computer arithmetic, however, does not recognize these exceptions.)
 
 ```{r non-integer-graphs, echo=FALSE, out.width="50%", fig.show="keep", warning=FALSE, fig.cap="The domain of power-law functions with non-integer power is $0 \\leq x < \\infty$."}
 dom <- domain(x=c(-1.25, 1.25))
@@ -220,3 +220,31 @@ You may also notice the proportional function shown above does nothing to change
 `r insert_calcZ_exercise("2.4", "Qj0JAr", "Exercises/Fun/bear-lay-plant.Rmd")`
 
 
+<!-- An .observation about giving names to functions that don't have them in standard notation: square, recip, power. Exercise: write square(x) in terms of power. I'm not asking you to square a number, but to create a function which, at any time you want, will square any number you give it as input. -->
+
+::: {.observation}
+Functions like `sin()`, `log()`, `pnorm()` are always referred to by name with parentheses enclosing the arguments. Other functions, like $e^x$ or $1/x$ are written in the traditional arithmetic notation, with no name applying.
+
+It's perfectly feasible to arrange so every pattern-book function uses the name/parentheses style. For instance, here are definitions for four of the pattern-book functions that we haven't written in name/parentheses style:
+
+```{r}
+reciprocal <- makeFun(1/t ~ t)
+constant <- makeFun(1 ~ z)
+square <- makeFun(x^2 ~ x)
+```
+
+These would be used in the ordinary way, for instance:
+```{r}
+reciprocal(7)
+constant(123.67)
+square(19)
+```
+
+We're using different names for the inputs in these three functions just to emphasize that for functions with one input, the name has no significance. You just have to make sure to use the same name on the left- and right-hand sides of the tilde expression. 
+
+The function called `constant()` necessarily has the property that the output does **not depend** on the input. That's why it's constant!
+
+In R, a statement like `x^2` is really just shorthand for using a name/parenthesis style function whose name is `` `^` ``. Or, consider $-3$. In R you would write this `-3` but internally R is applying a function named `` `-` ``, like this: `` `-`(3)``. 
+
+
+:::
