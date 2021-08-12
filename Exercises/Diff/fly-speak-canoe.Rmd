@@ -15,6 +15,8 @@ slope_of_g <- makeFun( _your_tilde_expression_here )
 
 
 ```{r fsc1-1, echo=FALSE, results="markup"}
+g <- makeFun(sin(x) ~ x)
+slope_of_g <- makeFun( (g(x+0.1) - g(x))/0.1 ~ x )
 askMC(
   "What's the value of `slope_of_g(1)`?",
   "0.3749",
@@ -34,8 +36,8 @@ slice_plot(g(x) ~ x, domain(x=c(-5,5))) %>%
 ```{r fsc1-2, echo=FALSE, results="markup"}
 askMC(
   "Which of these statements best describes the graph of $g()$ compared to `slope_of_g()`?",
-  "+`slope_of_g()` is shifted left by about $\pi/2$ compared to `g(x)`.+",
-  "`slope_of_g()` is shifted left by about $\pi$ compared to `g(x)`.",
+  "+`slope_of_g()` is shifted left by about $\\pi/2$ compared to `g(x)`.+",
+  "`slope_of_g()` is shifted left by about $\\pi$ compared to `g(x)`.",
   "`slope_of_g()` has a larger amplitude than `g()`", 
   "The output of `slope_of_g()` is always positive",
   "`slope_of_g()` is practically the same function as `g()`. That is, for any input the output of the two functions is practically the same."

@@ -13,7 +13,9 @@ h <- makeFun(exp(x) ~ x)
 slope_of_h <- makeFun( _your_tilde_expression_here_ )
 ```
 
-```{r fsc1-1, echo=FALSE, results="markup"}
+```{r wtf1-1, echo=FALSE, results="markup"}
+h <- makeFun(exp(x) ~ x)
+slope_of_h <- makeFun( (h(x + 0.1) - h(x))/0.1 ~ x )
 askMC(
   "What's the value of `slope_of_h(1)`?",
   "0.3749",
@@ -31,7 +33,7 @@ Using your sandbox, plot both `h()` and `slope_of_h()` (in blue) on a domain $-1
 slice_plot(h(x) ~ x, domain(x=c(-1,1))) %>%
   slice_plot(slope_of_h(x) ~ x, color="blue")
 ```
-```{r fsc1-2, echo=FALSE, results="markup"}
+```{r wtf1-2, echo=FALSE, results="markup"}
 askMC(
   "Which of these statements best describes the graph of $h()$ compared to `slope_of_h()`?",
   "+`slope_of_h()` is negative compared to `h(x)`.+",

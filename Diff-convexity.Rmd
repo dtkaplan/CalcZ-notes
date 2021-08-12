@@ -1,12 +1,13 @@
-# Convexity and curvature
+# Concavity, curvature, and smoothness
 
 Looking at the graph of a function, our eyes immediately register the slope at any point we focus on. A glance shows whether the slope at that point is positive or negative. Comparing the slopes at two locales is also an automatic visual task: most people have little difficulty saying which slope is steeper. 
 
 One consequence of this visual ability is that it's easy to  recognize whether a line that touches the graph at a point is tangent to the graph. `r mark(2230)`
 
-
-
 -----
+
+Here are some exercises to check out your own visual skills. Don't be upset if you don't get the right answer the first time. Usually it takes a bit of eye training to get proficient at the task.
+
 `r insert_calcZ_exercise("XX.XX", "ykIBCb", "Exercises/Diff/frog-bid-bed.Rmd")`
 
 
@@ -15,58 +16,182 @@ One consequence of this visual ability is that it's easy to  recognize whether a
 
 `r insert_calcZ_exercise("XX.XX", "kq3t86", "Exercises/Diff/reptile-put-kitchen.Rmd")`
 
-
-
-
-
-
-
-
 `r insert_calcZ_exercise("XX.XX", "BVRjhF", "Exercises/Diff/goat-pay-pot.Rmd")`
 
 
 -----
 
 
-On the other hand, finding a numerical value for the slope is not an automatic process. We need to do some arithmetic, computing rise over run. Or, in the language of calculus, we can calculate the slope by evaluating the derivative function. `r mark(2235)`
 
-Other aspects of functions are also readily discerned from a glance at the function graph.
+There are other aspects of functions, introduced in Section \@ref(), that
+ are also readily discerned from a glance at the function graph. `r mark(2235)`
 
 - ***Concavity***: We can tell within each locale whether the function is concave down, concave up, or not concave.
 - ***Curvature***: Generalizing the tangent line capability a bit, we can do a pretty good job of eyeballing the tangent circle recognizing whether a circle has much too large or much too small a radius.. 
 - ***Smoothness***: We can distinguish smooth functions from non-smooth ones. Or, as you will see, there are some kinds of smoothness that we can discern and others that are not apparent to the eye. 
 
-This chapter is about how to ***quantify*** these properties. It turns out that this is naturally done by calculating derivatives.  `r mark(2240)`
-
 The following exercises are simply meant to test your **visual** acuity in spotting concavity, tangency, and smoothness. Then we'll move on to the calculations involved.
-
 
 -----
 
 `r insert_calcZ_exercise("XX.XX", "5ddB5r", "Exercises/Diff/seahorse-speak-saucer.Rmd")`
 
+`r insert_calcZ_exercise("XX.XX", "4nsU0z", "Exercises/Diff/panda-drive-shirt.Rmd")`
 
 -----
 
+## Quantifing concavity, curvature, and smoothness
+
+It often happens in building models that the modeler (you!) knows something about the concavity, curvature, or smoothness of a function. For example, ***concavity*** is important in classical economics; the curve for supply is concave down while the curve for demand is concave up. For a train, car, or plane, there are forces that depend on the curvature of the track, road, or trajectory. If you are designing a road, you'll need to calculate the curvature in order to know if the road is safe at the indicated speed. And if you are programming a robot arm, you need to measure the smoothness of of motion in order to avoid putting excessive force on the arm itself or the object it is holding.
+
+It turns out that quantifying the properties of functions or shapes is naturally done by calculating derivatives.  `r mark(2240)`
+
+::: {.intheworld}
+Imagine designing a highway. Due to the terrain, part of the road is oriented east-west and another part north-south. For vehicles to use the road, those two parts need to be connected together! (In math-speak, we might say that the road has to be ***continuous***, but this is just common sense.)
+
+From your experience with highways, you know the connection will be a ***smooth*** curve. If the curve is part of a circle, then the design needs to specify the ***radius of curvature*** of the circle. Too tight a radius and the traffic won't be able to handle the centrifugal force and will drift of skid off the road. A big radius is needed for safety, but making the radius bigger than required for safety adds additional cost to road construction.
+
+But it's not as simple as finding the radius of the curve. The radius needs to **change** at the entry and exit of the curve. Why? Here's an explanation from the American Association of State Highway and Transportation Officials *Policy on Geometric Design of Highways and Streets (1994):
+
+*Any motor vehicle follows a transition path as it enters or leaves a circular horizontal curve. The steering change and the consequent gain or loss of centrifugal force cannot be effected instantly. For most curves the average driver can effect a suitable transition path within the limits of normal lane width. However, with combinations of high speed and sharp curvature the resultant longer transition can result in crowding and sometimes actual occupation of adjoining lanes. In such instances transition curves would be appropriate because they make it easier for a driver to confine the vehicle to his or her own lane. The employment of transition curves between tangents and sharp circular curves and between circular curves of substantially different radii warrants consideration.*
+
+Later in this chapter, you'll see the calculus concepts that relate to designing a road with a gently changing curvature. (Hint, but don't get scared: It's the *third* derivative, not the first or the second.)
+
+:::
+
+I'll frame the calculations in terms of a function $f(x)$. Depending on the setting, $x$ might be the price of a product and $f(x)$ the demand for that product. Or the graph of $f(x)$ might be the path of a road or the trajectory of a robot arm. Remember that $f()$ is just a *pronoun* that I'm using instead of a proper descriptive name. I use such pronouns (also, $g()$, $h()$, the "she" and "he" of mathematical language) when writing about the general properties of functions.
+
+## Concavity {#concavity-deriv}
+
+Of course, you recall that to find the slope of a function $f(x)$ at any input $x$, you compute the ***derivative*** of that function, which we've been writing $\partial_x\,f(x)$. Plug in some value for the input $x$ and the output of $\partial_x\, f(x)$ will the the slope of $f(x)$ at that input. (Chapter \@ref(computing-derivs) introduced some techniques for computer the derivative of any given function.)
+
+Now we want to show how differentiation can be used to quantify the concavity of a function. It will help if we augment our nomenclature a bit. When we speak of the "derivative" of a function, we mean something that might be more completely expressed as the ***first derivative*** of the function. Just that name naturally suggests that there will be a ***second derivative***, a ***third derivative***, and so on.
+
+Figure \@ref(fig:changing-slope) shows a simple function that is concave down.
+
+```{r changing-slope, echo=FALSE, fig.cap="A function that is concave down."}
+fraw <- rfun(~ x, seed=93872)
+f <- makeFun(fraw((x-5.5)/3) ~ x )
+slice_plot(f(x) ~ x, domain(x=c(0, 4)))
+```
+Notice that the concavity is not about the slope. The curve in Figure \@ref(fig:changing-slope) is concave down everywhere in the domain $0 \leq x \leq 4$, but the slope is positive for $0 \leq x \leq 1$ and negative for larger $x$. Slope and concavity are two different aspects of a function.
+
+The concavity of a function depends not on the slope, but on the ***change in the slope***. Figure \@ref(fig:changing-slope2) adds some annotations on top of the graph in Fig. \@ref(fig:changing-slope). In the subdomain marked A, the function slope is positive while in the subdomain B, the function slope is negative. It is this ***transition*** from the slope in A to the slope in B that corresponds to the concavity of the function between A and B. 
 
 
-`r insert_calcZ_exercise("XX.XX", "4nsU0z", "Exercises/Diff/panda-drive-shirt.Rmd")`
 
 
+```{r changing-slope2, echo=FALSE, fig.cap="Convexity is about how the slope *changes* from one place in the domain to another."}
+graph_with_boxes(f,
+                 interval = tibble(x=c(.0, 1.5, 3),
+                                   xend=c(.75, 2, 3.5)),
+                 domain = c(0, 4))
+```
+Similarly, the concavity of the function between B and C, reflects the ***transition*** in the slope from B to C. Even though the slope is negative in both B and C, the change in slope tells us about the concavity. 
 
-## Concavity
+Let's look at this using symbolic notation. Keep in mind that the function graphed is $f(x)$ while the slope is the function $\partial_x\,f(x)$. We've seen that the concavity is indicated by the change in slope of $f()$, that is, the change in $\partial_x\, f(x)$. We'll go back to our standard way of describing the rate of change near an input $x$:
 
-Change in the slope
+$$\text{concavity_of_f}(x) \equiv\ \text{rate of change in}\ \partial_x\, f(x) = \partial_x [\partial_x f(x)] \\
+\\
+= \frac{\partial_x f(x+h) - \partial_x f(x)}{h}$$
+We're defining the concavity of a function $f()$ at any input $x$ to be $\partial_x [\partial_x f(x)]$. We create the concavity_of_f(x) function by applying differentiation **twice** to the function $f()$. 
+
+Such a double derivative of a function $f(x)$ is called the ***second derivative*** of $f(x)$. The second derivative is so important in applications that it has it's own compact notation:
+$$\text{second derivative of}\ f()\ \text{is written}\ \partial_{xx} f(x)$$
+Look carefully to see the difference between the first derivative $\partial_x f(x)$ and the second derivative $\partial_{xx} f(x)$: it's all in the double subscript $_{xx}$.
+
+Computing the second derivative is merely a matter of computing the first derivative $\partial_x f(x)$ and then computing the (first) derivative of $\partial_x f(x)$.  In R this process looks like:
+
+```{r}
+dx_f  <- D(   f(x) ~ x)   # First deriv. of f()
+dxx_f <- D(dx_f(x) ~ x)   # Second deriv. of f()
+```
+
+R/mosaic offers a shortcut for computing second derivatives using just one application of `D()`:
+
+```{r}
+dxx_f <- D(f(x) ~ x & x)
+```
+Notice that we're doubling up on the `x` in the right-hand side of the tilde expression.
+
+`r insert_calcZ_exercise("XX.XX", "iIXOYZ", "Exercises/Diff/crow-write-chair.Rmd")`
 
 
 ## Curvature
 
-Orthogonal to tangent
+As you see from Section \@ref(concavity-deriv), it's easy to quantify the concavity of a function $f(x)$: just evaluate the second derivative $\partial_{xx} f(x)$. But it turns out that people are very poor at estimating the quantitative value of concavity by eye.
 
-Tangent circle to function.
+To illustrate, consider the square function, $f(x) \equiv x^2$. (See Figure \@ref(fig:square34).)
 
-Graphics frame.
+```{r square34, echo=FALSE, fig.cap="Does the concavity of the square function vary with $x$?"}
+slice_plot(x^2 ~ x, domain(x=c(-2,2))) %>%
+  gf_labs(title="Square function")
+```
 
-We're also pretty good at eyeballing the ***radius of curvature***.  This can be calculated from the first and second derivatives. The radius of curvature operator is $${\cal K} f(x) \equiv \frac{\left|\partial_{xx} f(x)\right|}{\left|1 + \left(\strut\partial_x f(x)\right)^2\right|^{3/2}}$$ `r mark(2245)`
+Clearly, the square function is concave up. Now at test: Looking at the graph of the square function, where is the concavity the largest? **Don't read on until you've pointed where you think the concavity is largest.**
+
+With your answer to the test question in mind, let's calculate the concavity of the square function using derivatives.
+
+$$f(x) \equiv x^2\ \text{      so     }\ 
+\partial_x f(x) = 2 x\ \text{     and therefore     }\ \partial_{xx} f(x) = 2$$
+
+The second derivative of $f(x)$ is positive, as you would expect for a function that is concave up. What you might not expect, however, is that the second derivative is ***constant***.
+
+The concavity-related property that the human eye reads from the graph of a function is not the concavity itself, but the ***curvature*** of the function. The curvature of $f(x)$ at a point $x_0$ is defined to be the radius of the circle that is tangent to the function at $x_0$.
+
+```{r echo=FALSE}
+curve_circle <- function(ftilde, x0=0) {
+  ff <- makeFun(ftilde)
+  df <- D(ff(x) ~ x)
+  ddf <- D(ff(x) ~ x & x)
+  K <- abs(ddf(x0)) / abs(1+ df(x0)^2)^(3/2)
+  
+  angle <- sign(ddf(x0))*pi + atan2(-1, df(x0)) 
+  centerx <- x0 + cos(angle)/K
+  centery <- ff(x0) + sin(angle)/K
+  print(c(K, angle, centerx, centery, f(x0)))
+  angles <- seq(0, 2*pi, length=100)
+  data.frame(x = centerx + cos(angles)/K,
+             y = centery + sin(angles)/K)
+  
+}
+```
+
+To illustrate, here's another graph of $f(x) \equiv x^2$ with tangent circles drawn in at various values of the input: $x=-1.5$, $x=0$, and $x=1$.
+```{r}
+slice_plot(x^2 ~ x, domain(x=c(-2,2))) %>%
+  gf_path(y ~ x, data = curve_circle(x^2 ~ x, 1), color="tan", size=2, alpha=0.4) %>%
+  gf_path(y ~ x, data = curve_circle(x^2 ~ x, 0.0), color="blue", size=2, alpha=0.5) %>%
+  gf_path(y ~ x, data = curve_circle(x^2 ~ x, -1.5), color="green", size=2, alpha=0.5) %>%
+  gf_point(1 ~ 1) %>%
+  gf_point(0 ~ 0) %>%
+  gf_point(2.25 ~ -1.5) %>%
+  gf_refine(coord_fixed(xlim=c(-3,3), ylim=c(-1, 4)))
+```
+
+Black dots have been put along the graph at those inputs and the tangent circle drawn. You can tell that each circle is tangent to the function at it's marked point; the graph of the function goes right down the center of the circle at the point of tangency.
+
+You can also see that the circle is tightest at $x=0$, somewhat bigger at $x=1$, and bigger still at $x=1.5$. This accords with the visual impression of how the radius of curvature changes at different points on the graph.
+
+The ***curvature*** of a function $f(x)$ depends on both the first and second derivative. The formula for curvature $K$ is somewhat off-putting; you are not expected to memorize it. But you can see where $\partial x f()$ and $\partial_{xx}f()$ come into play.
+
+$${\cal K}_f  \equiv \frac{\left|\partial_{xx} f(x)\right|}{\ \ \ \ \left|1 + \left[\strut\partial_x f(x)\right]^2\right|^{3/2}}$$
+
+Mathematically, the curvature $\cal K$ corresponds to the reciprocal of the radius of the tangent circle. When the tangent circle is tight, $\cal K$ is large. When the tangent circle has a very large radius, that is, the function is very close to approximating a straight line, $\cal K$ is very small.
+`r mark(2245)`
+
+AN EXERCISE ON CALCULATING THE CURVATURE OF THE sin at the zero-crossings and at the argmax and argmin.
+```{r}
+f <- makeFun(sin(x) ~ x)
+slice_plot(f(x) ~ x, domain(x=c(-3,3))) %>%
+  gf_path(y ~ x, data = curve_circle(f(x) ~ x, -pi/2), color="tan", size=2, alpha=0.4) %>%
+  gf_path(y ~ x, data = curve_circle(f(x) ~ x, 1), color="blue", size=2, alpha=0.5) %>%
+  gf_path(y ~ x, data = curve_circle(f(x) ~ x, +pi/2), color="green", size=2, alpha=0.5) %>%
+  gf_point(1 ~ pi/2) %>%
+  gf_point( sin(1)~ 1) %>%
+  gf_point(-1 ~ -pi/2) %>%
+  gf_refine(coord_fixed(xlim=c(-3,3), ylim=c(-2, 2)))
+```
+
 
 `r insert_calcZ_exercise("XX.XX", "v2doBq", "Exercises/Diff/boy-send-book.Rmd")`

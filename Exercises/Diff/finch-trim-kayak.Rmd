@@ -6,16 +6,12 @@ date: 2021-06-09
 version: 0.1
 tags: [first, second, third]
 id: finch-trim-kayak
+global-id: ykels
 ---
 
-```{r finch-trim-kayak-default, include = FALSE}
-library(etude2)
-library(mosaic)
-library(mosaicCalc)
-```
 
 ::: {.scaffolding}
-The R command defines a new operator named `Diff()` which implements the differencing operator $\cal D_x$ for functions with one input.
+The R command given below defines a new operator named `Diff()` which implements the differencing operator $\cal D_x$ for functions with one input.
 ```{r}
 Diff <- function(f, h=0.001) {
   function(x) {
@@ -25,7 +21,7 @@ Diff <- function(f, h=0.001) {
 ```
 Open an R sandbox and copy the definition of `Diff()` into it. 
 
-As an example of the use of `Diff()`, here is R code that defines a function `f()` and finds ${\cal D}_x f()$, calling it `D_f()`. Then a slice plot is of both `f()` and `D_f()`.
+As an example of the use of `Diff()`, here is some more R code that defines a function `f()` and finds ${\cal D}_x f()$, calling it `D_f()`. Then a slice plot is made of both `f()` and `D_f()`. (Remember to paste this code under the definition of `Diff()` in your sandbox.)
 
 ```{r}
 f   <- makeFun(sqrt(exp(x)) - x^2 ~ x)
