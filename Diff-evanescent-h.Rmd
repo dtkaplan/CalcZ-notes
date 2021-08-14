@@ -31,7 +31,7 @@ Dsin   <- makeFun((  sin(t+h) -   sin(t))/h ~ t, h=0.1)
 Dsigma <- makeFun((pnorm(t+h) - pnorm(t))/h ~ t, h=0.1)
 ```
 
-In the tilde expression handed to `makeFun()`, we've identified `t` as the name of the input and given a "small" default value to the `h` parameter. But R recognizes that both `Dsin()` and `Dsigma()` are functions of two variables, `t` and `h`, as you can see in the parenthesized argument list for the functions.
+In the tilde expression handed to `makeFun()`, we've identified `t` as the name of the input and given a "small" default value to the `h` parameter. But R recognizes that both `Dsin()` and `Dsigma()` are functions with two inputs, `t` and `h`, as you can see in the parenthesized argument list for the functions.
 ```{r}
 Dsin
 Dsigma
@@ -66,7 +66,7 @@ slice_plot(Dsigma(t, h=1) ~ t, domain(t=c(-5, 2*pi)), label_text="h=1", label_x=
 
 Some observations from this numerical experiment:
 
-1. As $h$ gets very small, the slope function doesn't depend on the exact value of $h$.
+1. As $h$ gets very small, the slope function doesn't depend on the exact value of $h$. As you can see in Figure \@ref(fig:sin-sig-many-h), the graphs of the functions with the smallest $h$ (green, with labels near the top of the graph) lie on top of one another.
 
     This will provide a way for us, eventually, to discard $h$ so that the slope function will not need an $h$ argument.
     
@@ -125,8 +125,6 @@ These numerical experiments with the logarithm and exponential functions are mor
 
 You can confirm these by evaluating the slope function of the exponential at $t=0$ and $t=1$, and the slope function of the logarithm at $t= 2, 1, 1/2, 1/4, 1/8.$
 
-Such numerical experiments on the other pattern-book functions reveal the patterns presented in Chapter \@ref(computing-derivs)
-
 
 ## Role of h
 
@@ -141,17 +139,17 @@ Dsigma(t=0, h=0)
 
 In `NaN`, you can hear the echo of your fourth-grade teacher reminding you that it is illegal to divide by zero.
 
-Think of evanescent $h$ as the vapor in the definition of "evanescent": "tending to vanish like vapor." This vapor is the solvent in paint. You don't want the solvent once the paint is on the wall; wet paint is a nuisance. But getting the paint from the can to the wall absolutely needs the solvent.  `r mark(2386)`
+Think of evanescent $h$ as the vapor in the definition of "evanescent": "tending to vanish like vapor." This vapor is the solvent in paint. You don't want the solvent once the paint is on the wall; wet paint is a nuisance. But getting the paint from the container to the wall absolutely needs the solvent.  `r mark(2386)`
 
 We used the solvent $h$ earlier in the chapter in the numerical experiments that led us to the derivatives of the pattern-book functions, for instance $\partial_x e^x = e^x$ or $\partial_x \sin(x) = \cos(x)$.  Eventually, we'll construct an $h$-free theory of differentiation, reducing the process to a set of algebraic rules in which $h$ never appears. With this as our goal, let's continue using $h$ for a while to find some additional useful facts about derivatives. `r mark(2388)`
 
 ## Derivatives of linear combinations
 
-***Linear combination*** is one of the ways in which we make new functions from existing functions. As you recall, linear combination involves ***scaling*** a function and ***adding*** the scaled functions. We can easily use $h$ to show what is the result of differentiating a linear combination of functions. We'll use $f(x)$ and $g(x)$ as the names that could stand for any function whatsoever. And we'll let $b$ be the name of a scalar. First, let's figure out what is $\partial_x\, b f(x)$, Going back to writing $\partial_x$ in terms of a slope function:
+***Linear combination*** is one of the ways in which we make new functions from existing functions. As you recall, linear combination involves ***scaling*** functions and then ***adding*** the scaled functions. We can easily use $h$ to show what is the result of differentiating a linear combination of functions. We'll use $f(x)$ and $g(x)$ as the names that could stand for any function whatsoever. And we'll let $b$ be the name of a scalar. First, let's figure out what is $\partial_x\, b f(x)$, Going back to writing $\partial_x$ in terms of a slope function:
 $$\partial_x\, b\,f(x) = \frac{b\, f(x + h) - b\,f(x)}{h}\\
 \ \\
 = b \frac{f(x+h) - f(x)}{h} = b\, \partial_x f(x)$$
-In other words, if we know the derivative $\partial_x\, f(x)$, we can easily find the derivative of any scaled version of $f()$.
+In other words, if we know the derivative $\partial_x\, f(x)$, we can easily find the derivative of any scaled version of $f()$. Notice that even though $h$ was used in the derivation, it appears nowhere in the result $\partial_x\, b\,f(x) = b\, \partial_x\, f(x)$. The $h$ is solvent to get the paint on the wall and evaporates once its job is done.
 
 Now consider the derivative of the sum of two functions, $f(x)$ and $g(x)$:
 $$\partial_x\, \left[f(x) + g(x)\right] =\\
@@ -189,11 +187,11 @@ Berkeley was saying that calculus had not yet been put on a solid logical founda
 :::
 
 
-`r insert_calcZ_exercise("XX.XX", "qyOuQF", "Exercises/Diff/giraffe-sit-piano.Rmd")`
+`r insert_calcZ_exercise("21.1", "qyOuQF", "Exercises/Diff/giraffe-sit-piano.Rmd")`
 
-`r insert_calcZ_exercise("XX.XX", "yT2BkB", "Exercises/Diff/ant-bite-bed.Rmd")`
+`r insert_calcZ_exercise("21.2", "yT2BkB", "Exercises/Diff/ant-bite-bed.Rmd")`
 
-`r insert_calcZ_exercise("XX.XX", "Z7MY4I", "Exercises/Diff/goat-pay-pantry.Rmd")`
+`r insert_calcZ_exercise("21.3", "Z7MY4I", "Exercises/Diff/goat-pay-pantry.Rmd")`
 
 
 ## Derivatives of the basic modeling functions
@@ -208,7 +206,7 @@ x^2 \ \ \ \longrightarrow\ \ \ \left[mx + b\right]^2\\
 1/x \ \ \ \longrightarrow\ \ \ 1/\left[mx + b\right]\\
 \ln(x) \ \ \ \longrightarrow\ \ \ \ln(a x + b)\\$$
 
-The rule for the derivative of any basic modeling function $f(\line(x))$ is $$\partial f(\line(x)) = \partial_x \line(x) \times [\partial_x f]\left(\strut\line(x)\right)$$
+The rule for the derivative of any basic modeling function $f(\line(x))$ is $$\partial_x f(\line(x)) = \partial_x \line(x) \times \partial_x f\left(\strut\line(x)\right)$$
 
 To illustrate:
 
@@ -236,17 +234,14 @@ Failing to remember the $sd$ is a common pitfall, even among experienced modeler
 Even for seemingly simple tasks like computing $\partial_x \pnorm\left(\left[x-mn\right] / sd\right)$, responsible practice calls for having a way to verify your result. For instance, you can compute the derivative of $\pnorm(x, mn, sd)$ using the slope function with a small but finite $h$ and compare that to your symbolic result.
 :::
 
-------
-
-`r insert_calcZ_exercise("XX.XX", "bEC6C4", "Exercises/Diff/spider-sail-bottle.Rmd")`
 
 ------
 
-`r insert_calcZ_exercise(12.3, "QIELS", "Exercises/Diff/dnorm.Rmd")`
+`r insert_calcZ_exercise(21.4, "QIELS", "Exercises/Diff/dnorm.Rmd")`
 
 
 -----
 
-`r insert_calcZ_exercise(12.3, "HCILW", "Exercises/Diff/descent-path.Rmd")`
+`r insert_calcZ_exercise(21.5, "HCILW", "Exercises/Diff/descent-path.Rmd")`
 
 

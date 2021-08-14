@@ -1,10 +1,16 @@
-# Differentiation of assembled functions {#prod-comp-rules}
+# Derivs of assembled functions {#prod-comp-rules}
+
+<!-- Standard colors in equations
+magenta, brown, darkorange
+-->
+
+
 
 In Chapter \@ref(fun-assembling) we introduced three major methods for putting two or more basic modeling functions together in order to make a new function.
 
-i. Linear combinations: e.g. $a f(x) + b g(x)$
-i. Products: e.g. $f(x) g(x)$
-i. Composition:, e.g. $f(g(x))$ (which is usually a different function than $g(f(x))$.)
+i. Linear combinations: e.g. $\Large a \color{magenta}{f(x)} + b\, \color{brown}{g(x)}$
+i. Products: e.g. $\Large\color{magenta}{f(x)} \color{brown}{g(x)}$
+i. Composition:, e.g. $\Large\color{magenta}{f(}{\color{brown}{g(x)}}\color{magenta})$ (which is usually a different function than $g(f(x))$.)
 
 We have already looked at differentiation of linear combinations. In this chapter, we'll examine products of functions and compositions of functions.
 
@@ -16,6 +22,8 @@ In general, $f()$ and $g()$ might be complicated functions, themselves involving
 
 `r insert_calcZ_exercise("XX.XX", "3ICCCz", "Exercises/Diff/lamb-rise-sofa.Rmd")`
 
+`r insert_calcZ_exercise("XX.XX", "QFzIOl", "Exercises/Diff/buck-draw-bed.Rmd")`
+
 ## Step 2: Find f'() and g'()
 
 For differentiating either products or compositions, you will need to identify both $f()$ and $g()$ (the first step) and then compute the derivatives $\partial_x f()$ and $\partial_x g()$. That is, you'll write down four functions. `r mark(2410)`
@@ -23,37 +31,37 @@ For differentiating either products or compositions, you will need to identify b
 `r insert_calcZ_exercise("XX.XX", "jYXYTF", "Exercises/Diff/ant-give-room.Rmd")`
 
 
+
+
 ## Product rule
 
 Written in terms of the pronoun functions $f()$ and $g()$, the product rule is
 
-::: {.todo}
-Decide if colorizing the formulas, as in the following, is helpful and worthwhile.
-:::
 
-$$\partial_x \left[\strut \color{blue}{f(x)}\times \color{green}{g(x)}\right] = \color{blue}{[\partial_x f(x)]} \times \color{green}{g(x)}\ \  {\mathbf +}
-\ \ \color{green}{[\partial_x g(x)]} \times \color{blue}{f(x)}$$
+$$\Large\partial_x \left[\strut \color{magenta}{f(x)}\times \color{brown}{g(x)}\right] = \color{magenta}{[\partial_x f(x)]} \times \color{brown}{g(x)}\ \  {\mathbf +}
+\ \ \color{magenta}{[\partial_x g(x)]} \times \color{brown}{f(x)}$$
 Some people find it easier to read the rule in Lagrange shorthand, where f and g stand for $f(x)$ and $g(x)$ respectivly, and f' ("f-prime") and g' ("g-prime") stand for $\partial f()$ and $\partial g()$. `r mark(2415)`
 
-$$\text{Lagrange shorthand:}\ \   \partial[f \times g] = [f \times g]' = f'g + g'f$$
+$$\Large\text{Lagrange shorthand:}\ \   \partial[\color{magenta}f \times \color{brown}g] = [\color{magenta}f \times \color{brown}g]' = \color{magenta}{f'}\color{brown}g + \color{brown}{g'}\color{magenta}f$$
 Let's start with some very simple examples where we already know the answer:
 
-- $\partial [x \times x^2] = [\partial x] \times x^2 \ +\  [\partial x^2] \times x =1\times x^2 + 2x \times x = 3 x^2$
+- We know $\partial_x x^3 = 3 x^2$ so lets check when we write $x^3$ as $x^2 x$:
+$$\large\partial [\color{magenta}x \times \color{brown}{x^2}] = \color{magenta}{[\partial x]} \times \color{brown}{x^2} \ +\  \color{brown}{[\partial x^2]} \times \color{magenta}x =\color{magenta}1\times \color{brown}{x^2} + \color{brown}{2x} \times \color{magenta}x = 3 x^2$$
 
-    Since $[x \times x^2] = x^3$, we could have figured out directly that the derivative is $3 x^2$
+- We know that $e^x \times e^x = e^{2x}$ so $\partial_x [e^x \times e^x] = 2 e^{2x}$. Let's check this against the product rule's result:
     
-- $partial_x [e^x \times e^x] = [\partial_x e^x] \times e^x \ + \ [\partial_x e^x] \times e^x = 2 e^x e^x = 2 e^{2x}$
+$partial_x [\color{magenta}{e^x} \times \color{brown}{e^x}] = \color{magenta}{[\partial_x e^x]} \times \color{brown}{e^x} \ + \ \color{brown}{[\partial_x e^x]} \times \color{magenta}{e^x} = 2 e^x e^x = 2 e^{2x}$
 
-    Since $[e^x \times e^x] = e^{2x}$, one of our basic modeling functions, we could have figured out directly that the derivative is $2 e^{2x}$.
+
 
 
 ## Composition ("chain") rule
 
 Written in terms of functions $f()$ and $g()$, the rule for the composition $f(g(x))$ is
 
-$$\partial_x \left[\strut \color{blue}{f\left(\right.}\strut \color{green}{g(x)}\color{blue}{\left.\right)}\right] = [\color{blue}{\partial_x f}](\color{green}{g(x)}) \times [\color{green}{\partial_xg(x)}]$$
+$$\Large\partial_x \left[\strut \color{magenta}{f\left(\strut\right.}\strut \color{brown}{g(x)}\color{magenta}{\left.\right)}\right] = [\color{magenta}{\partial_x f}](\color{brown}{g(x)}) \times [\color{brown}{\partial_xg(x)}]$$
 Or, using the Lagrange prime notation 
-$$\text{Lagrange shorthand:}\ \   \partial[f(g)] = f' (g) \times g'$$
+$$\large\text{Lagrange shorthand:}\ \   \partial[\color{magenta}f(\color{brown}g)] = \color{magenta}{f'} (\color{brown}g) \times \color{brown}{g'}$$
 
 This is almost universally called the ***chain rule***, presumably because the result involves a chain of derivatives.
 
@@ -68,9 +76,9 @@ Again, we'll practice with some simple examples where we already know the result
    Since $\partial_x \recip(x) = \partial_x [1/x] = \partial_x x^{-1} = -x^{-2} = - \frac{1}{x^2}$, we can simplify the above to 
 $\partial[ \recip(x^2)] = [\partial_x \recip](x^2) \times \partial_x x^2 =  - \frac{1}{(x^2)^2} \times 2 x = -2 \frac{x}{x^4} = -2 x^{-3}$  
 
-The derivatives of the basic modeling functions can be shown using the chain rule. Remember, that each of the basic modeling functions is the composition of a pattern-book function with $\line(x) \equiv ax + b$.  `r mark(2425)`
+The chain rule lets us use what we know about the derivatives of the pattern-book functions to figure out the derivatives of the basic modeling functions. Remember, that each of the basic modeling functions is the composition of a pattern-book function with $\line(x) \equiv ax + b$.  `r mark(2425)`
 
-- $\partial_x [\sin(a x + b)] = [\partial \sin](a x + b) \times \partial_x [ax + b = \cos(ax + b) \times a$.
+- $\large\partial_x [\color{brown}\sin(\color{magenta}{a x + b})] = [\partial_x \color{brown}{\sin}](\color{magenta}{a x + b}) \times \partial_x [\color{magenta}{ax + b}] = \color{brown}{\cos}(\color{magenta}{ax + b}) \times \color{magenta}a$.
 
 ## Step 3: Apply the relevant rule
 
