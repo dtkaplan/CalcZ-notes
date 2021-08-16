@@ -5,8 +5,8 @@ readQfiles <- function(file_names) {
   Q <- NULL
   C <- NULL
   for (k in 1:length(file_names)) {
-    this <- CalcZapps::readQfile(file_names[k])
-    if (!is.null(this)) {
+    this <- try(CalcZapps::readQfile(file_names[k]))
+    if (!inherits(this, "try-error") && !is.null(this)) {
       Q <- dplyr::bind_rows(Q, this$Q)
       C <- dplyr::bind_rows(C, this$C)
     }

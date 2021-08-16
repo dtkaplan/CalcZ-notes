@@ -8,9 +8,14 @@ library(digest)
 nright <- 8
 ntotal <- 10
 
+kill_empty_lines <- function(str) {
+  str[nchar(str) > 0]
+}
+
 source_files <-
   readLines("https://raw.githubusercontent.com/dtkaplan/Zdrill/main/Roster.Rmd") %>%
   gsub("#.*$", "", .) %>% # get rid of comments
+  kill_empty_lines() %>%
   paste0("https://raw.githubusercontent.com/dtkaplan/Zdrill/main/inst/", .)
 
 # Add in the testing questions straight from the Zdrill sources
@@ -154,6 +159,7 @@ server <- function(input, output, session) {
         glue::glue("Question ID: {this_question$name}")
     })
     output$success_key <- renderText({
+      return(NULL) # Taking out the GradeScope hash connection
         if (State$n_correct < nright ) {
             glue::glue("Target: {nright} out of {ntotal}")
         } else if (State$n_answered <= ntotal ) {
