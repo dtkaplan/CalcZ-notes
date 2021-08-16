@@ -8,13 +8,19 @@ library(digest)
 nright <- 8
 ntotal <- 10
 
+source_files <-
+  readLines("https://raw.githubusercontent.com/dtkaplan/Zdrill/main/Roster.Rmd") %>%
+  gsub("#.*$", "", .) %>% # get rid of comments
+  paste0("https://raw.githubusercontent.com/dtkaplan/Zdrill/main/inst/", .)
+
+# Add in the testing questions straight from the Zdrill sources
 draft_questions <- "/Users/kaplan/KaplanFiles/USAFA/Zdrill/testing.Rmd"
 dq_size <- file.info(draft_questions)$size
 if (is.na(dq_size) || dq_size < 10) draft_questions <- NULL
 
-test_file <- system.file("Zdrill/www/text.Rmd", package="CalcZapps")
+# test_file <- system.file("Zdrill/www/text.Rmd", package="CalcZapps")
 source_files <- c(
-    "https://raw.githubusercontent.com/dtkaplan/Zdrill/main/Block_1.Rmd",
+    source_files,
     draft_questions
 )
 
