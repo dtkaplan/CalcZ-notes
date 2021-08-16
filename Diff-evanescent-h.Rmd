@@ -170,9 +170,65 @@ $$\partial_x\ \left[\strut a_1 g_1(x) + a_2 g_2(x) + a_3 g_3(x) + \cdots\right] 
 
 
 
-Because of the way that $\partial_x$ can be "passed through" a linear combination, mathematicians say that differentiation is a ***linear operator***. Consider this new fact about differentiation as a down payment on what will eventually become a complete theory telling us how to differentiate a ***product of two functions*** or the ***composition of two functions***.  `r mark(2390)`
+Because of the way that $\partial_x$ can be "passed through" a linear combination, mathematicians say that differentiation is a ***linear operator***. Consider this new fact about differentiation as a down payment on what will eventually become a complete theory telling us how to differentiate a ***product of two functions*** or the ***composition of two functions***. We'll lay out the $h$-based algebra of this in the next two sections.  `r mark(2390)`
 
 
+
+## Derivatives of products
+
+The question at hand is how to compute the derivative $\partial_x f(x) g(x)$.  Needless to say, $f(x) g(x)$ is just a function so it's perfectly appropriate to use numerical methods in exactly the same way you would for any other function. So let's make the question more specific by asking how to compute the derivative $\partial_x f(x) g(x)$ **if you already know** $\partial_x f(x)$ and $\partial_x g(x)$.
+
+This situation arises particularly when $f(x)$ and $g(x)$ are pattern-book functions for which you already have memorized $\partial_x f(x)$ and $\partial_x g(x)$ or are basic modeling functions whose derivatives you will memorize in Chapter \@ref(prod-comp-rules).
+
+The purpose of this section is to **derive** the formula for $\partial_x f(x) g(x)$ in terms of $f(x)$, $g(x)$, $\partial_x f(x)$ and $\partial_x g(x)$. This formula is called the ***product rule***. The point of showing a derivation of the product rule is to let you see how the logic of evanescent $h$ plays a role. In practice, everyone simply memorizes the rule, which has a beautiful, symmetric form:
+
+$$\text{Product rule:}\ \ \ \ \partial_x \left[\strut f(x)g(x)\right] = \left[\strut \partial_x f(x)\right]\, g(x) + f(x)\, \left[\strut\partial_x g(x)\right]$$ and is even prettier in Lagrange notation (where $\partial_x f(x)$ is written $f'$): $$ \left[\strut f g\right]' = f' g + f g'$$
+
+As with all derivatives, the product rule is based on the instantaneous rate of change $$\partial_x h(x) \equiv \lim_{h\rightarrow 0} \frac{h(x+h) - h(x)}{h}$$
+
+We also need two other statements about $h$ and functions:
+
+1. The derivative is the slope of the function, so $f(x+h) = f(x) + h f'(x)$.
+2. Any result of the form $h f(x)$, where $f(x)$ is finite, gives 0. More precisely, $\lim_{h\rightarrow 0} h f(x) = 0$
+
+For simplicity, we'll leave out the $\lim_{h\rightarrow 0}$ until the last step; you can imagine that it's being written in every step. We do some algebraic manipulation of the instantaneous rate of change:
+
+$$\partial_x \left[\strut f(x) g(x) \right] \equiv \frac{f(x+h) g(x+h) - f(x) g(x)}{h} = \\
+\,\\
+= \frac{f(x+h) \left[\strut g(x) + h g'(x) \right] - f(x) g(x)}{h} =\\
+=\frac{\left[\strut f(x+ h) - f(x)\right]  g(x) + f(x+h) h\, g'(x)}{h} =\\
+\,\\
+=\left[\strut \frac{f(x+h) - f(x)}{h}\right] g(x) + \frac{\left[\strut f(x) + h f'(x)\right]h\,g'(x)}{h} =\\
+\,\\
+= f'(x) g(x) + \frac{f(x) h g'(x)}{h} + \frac{h f'(x) h g'(x)}{h} = \\
+\,\\
+= f'(x) g(x) + f(x) g'(x) + \cancelto{0}{h f'(x) g'(x)} = \\
+\\\,\\
+=f'(x) g(x) + f(x) g'(x)
+$$
+
+The last step relies on statement (2) above.
+
+
+
+## Derivatives of compositions
+
+The formula for the derivative of the composition $\partial_x \left[\strut f(g(x))\right]$ in terms of $f(y)$, $g(x)$, $f'(y)$ and $g'(x)$ is usually called the ***chain rule*** rather than the "composition rule." It is:
+$$\partial_x \left[\strut f(g(x))\right] = \left[\strut f(g(x))\right]' = f'(g(x)) g'(x)$$
+The derivation relies on two closely related statements:
+
+1. $g(x + h) = g(x) + h g'(x)$
+2. $f\left[\strut(g(x + h)\right) = f\left[\strut g(x) + hg'(x)\right] = f(g(x)) + f'(g(x)) h g'(x)$
+
+Apply these statements to the instantaneous rate of change of $f(x)g(x)$:
+
+$$\partial_x f(x) g(x) \equiv \frac{f(g(x+h)) - f(g(x))}{x} =\\
+\,\\
+= \frac{\cancel{f(g(x))} + f'(g(x))h g'(x) - \cancel{f(g(x))}}{h} =\\
+\,\\
+= f'(g(x) g'(x)$$
+
+Again, in practice, models have memorized the chain rule; they don't derive it each time they use it!
 
 ::: {.intheworld}
 In 1734, famous philosopher [George Berkeley](https://en.wikipedia.org/wiki/George_Berkeley) (1685-1753) published a long-titled book: *The Analyst: A Discourse Addressed to an Infidel Mathematician: Wherein It Is Examined Whether the Object, Principles, and Inferences of the Modern Analysis Are More Distinctly Conceived, or More Evidently Deduced, Than Religious Mysteries and Points of Faith*. In *The Analyst*, Berkeley took issue with the arguments of that time that it is legitimate to divide by $h$ when, ultimately, $h$ will be replaced by zero. Calling $h$ an "evanescent increment," he asked,  `r mark(2392)`
@@ -192,56 +248,5 @@ Berkeley was saying that calculus had not yet been put on a solid logical founda
 `r insert_calcZ_exercise("21.2", "yT2BkB", "Exercises/Diff/ant-bite-bed.Rmd")`
 
 `r insert_calcZ_exercise("21.3", "Z7MY4I", "Exercises/Diff/goat-pay-pantry.Rmd")`
-
-
-## Derivatives of the basic modeling functions
-
-The basic modeling functions are the same as the pattern-book functions, but with bare $x$ replaced by $\line(x)$. By convention, there are different ways of writing $\line(x)$ for the different naked functions, for instance: `r mark(2396)`
-
-$$\text{Pattern-book}  \ \ \ \longrightarrow\ \ \ \text{Basic}\\
-\ \\
-\sin(x)\ \ \ \longrightarrow\ \ \ \sin\left(\strut2 \pi \left[x-x_0\right]/P\right)\\
-\exp(x)\ \ \ \longrightarrow\ \ \ \exp(k x)\\
-x^2 \ \ \ \longrightarrow\ \ \ \left[mx + b\right]^2\\
-1/x \ \ \ \longrightarrow\ \ \ 1/\left[mx + b\right]\\
-\ln(x) \ \ \ \longrightarrow\ \ \ \ln(a x + b)\\$$
-
-The rule for the derivative of any basic modeling function $f(\line(x))$ is $$\partial_x f(\line(x)) = \partial_x \line(x) \times \partial_x f\left(\strut\line(x)\right)$$
-
-To illustrate:
-
-- $\partial_x e^{kx} = k\, e^{kx}$
-- $\partial_x \sin(2\pi (x-x_0)/P) = \frac{2\pi}{P}  \sin(2\pi (x-x_0)/P)$
-- $\partial_x (mx + b)^2 = m\, 2 (m x + b) = 2 m^2 x + m^2 b$
-- $\partial_x \frac{1}{mx + b} = - \frac{m}{(mx + b)^2}$
-- $\partial_x \ln(a x + b) = a/(ax+b)$ 
-- $\partial_x \dnorm(x, mn, sd) =  - \frac{x}{sd} \dnorm(x, mn, sd)$
-
-::: {.takenote}
-The sigmoidal function can be written in the general $f(\line(x))$ fashion:
-
-- sigmoid: $\pnorm\left(\frac{x-mn}{sd}\right)$ 
-
-But it's also common to write it in the manner of statistics software where the parameters are given as separate arguments:
-
-- sigmoid: $\pnorm(x, mn, sd)$ which is completely equivalent to  $\pnorm\left(\frac{x-mn}{sd}\right)$
-
-It's natural, but wrong, to assume that the same holds true for $\dnorm(x, mn, sd)$, that is, that it could be written with a single input of the form $(x-mn)/sd$. That's not true. In fact,
-
-$$\dnorm\left(\frac{x-mn}{sd}\right) = sd\, \dnorm(x, mn, sd)$$
-Failing to remember the $sd$ is a common pitfall, even among experienced modelers.
-
-Even for seemingly simple tasks like computing $\partial_x \pnorm\left(\left[x-mn\right] / sd\right)$, responsible practice calls for having a way to verify your result. For instance, you can compute the derivative of $\pnorm(x, mn, sd)$ using the slope function with a small but finite $h$ and compare that to your symbolic result.
-:::
-
-
-------
-
-`r insert_calcZ_exercise(21.4, "QIELS", "Exercises/Diff/dnorm.Rmd")`
-
-
------
-
-`r insert_calcZ_exercise(21.5, "HCILW", "Exercises/Diff/descent-path.Rmd")`
 
 
