@@ -31,7 +31,8 @@ source_files <- c(
 
 
 
-Qbank <- readQfiles(source_files)
+Qbank <- try(readQfiles(source_files))
+if (inherits(Qbank, "try-error")) cat("Problem reading files")
 Qbank_topics <- unique(Qbank$Q$topic)
 
 # an experiment to see if I can get markdown to render as HTML.

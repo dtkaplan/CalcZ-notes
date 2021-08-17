@@ -140,16 +140,16 @@ slice_plot(x^pi ~ x, domain=dom, npts=500) %>%
 
 ## Constructing functions
 
-Often, modeling involves building a complicated function out of the simple shapes provided by the pattern-book functions. This is not yet the time to say much more, but we do want to show you what such a construction looks like in both a traditional style of notation and the style used for programming computers. As you'll see later, to make complicated functions we generally combine simpler functions in one or more of three different ways: ***linear combinations***, ***products***, and ***composition***. `r mark(270)`
+Often, modeling involves building a complicated function out of the simple shapes provided by the pattern-book functions. This is not yet the time to say much more, but we do want to show you what such a construction looks like in both a traditional style of notation and the style used for programming computers. As you'll see later, in Chapter \@ref(fun-assembling), to make complicated functions we generally combine simpler functions in one or more of three different ways: ***linear combinations***, ***products***, and ***composition***. `r mark(270)`
 
-For instance, a linear combination of simple functions called "monomials" can look like this in traditional notation:
+As a very brief introduction, consider these examples. A ***polynomial*** is a ***linear combination*** of simple functions called "monomials." These are likely familiar to you in traditional notation:
 $$g(x) \equiv 2 + 3 x - 7x^2$$
-and like this in the R/mosaic computer notation we will be using:
+In the R/mosaic computer notation we will be using the function $g()$ would be defined like this:
 ```{r}
 g <- makeFun(2 + 3*x - 7*x^2 ~ x)
 ```
 
-You will notice that the R/mosaic notation has most elements in common with the traditional notation, but the order is somewhat different. 
+Notice that the R/mosaic notation has most elements in common with the traditional notation, but the order is somewhat different. 
 
 ::: {.takenote}
 - `g <-` means to give the function the **name** $g.$ (In this book, I usually write function names with a pair of parentheses as a suffix, e.g. $g(x).$ This reminds you that the name refers to a function. But the R name is simply `g`, even though I often write it as `g()` in the text.) The `<-` is called the ***assignment operator***, the instruction in R to give a name to an object. Here, the object will be the R function created by `makeFun()`.
@@ -160,12 +160,18 @@ You will notice that the R/mosaic notation has most elements in common with the 
 :::
 
 
-Functions constructed as a product of simple functions can look like this in tradition notation:
+Functions constructed as a ***product*** of simple functions can look like this in tradition notation:
 $$h(t) \equiv \sin(t) e^{-t}$$
 and like this in computer notation:
 ```{r}
 h <- makeFun(sin(t)*exp(-t) ~ t)
 ```
+
+In function ***composition***, the output of one function is the input to a second function, as with $$H(t) \equiv \sin\left(e^{-t}\right)$$ or, in computer notation,
+```{r}
+H <- makeFun(sin(exp(-t)) ~ t)
+```
+
 
 ## Function shapes
 
