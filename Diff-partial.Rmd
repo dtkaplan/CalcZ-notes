@@ -4,20 +4,20 @@ This is a good time to point out something we have been doing all along, but whi
 
 We have two ways by which we represent functions:
 
-1. As a ***computational algorithm*** for generating the output from an input(s), typically involving arithmetic and the such. 
+1. As a ***computational algorithm*** for generating the output from an input(s), typically involving arithmetic and such. 
 2. As a geometrical entity, specifically the graph of a function which can be a ***curve*** or, for functions of two inputs, a ***surface***.
 
-These two modes are sometimes intertwained, as when we use the name "line" to refer to a computational object: $\line(x) \equiv a x + b$.
+These two modes are sometimes intertwined, as when we use the name "line" to refer to a computational object: $\line(x) \equiv a x + b$.
 
 Unfortunately for functions of two inputs, a ***surface*** is hard to present in the formats that are most easily at hand: a piece of paper, a printed page, a computer screen. That's because a curved surface is naturally a 3-dimensional object, while paper and screens provide two-dimensional images. Consequently, the graphics mode we prefer for presenting functions of two variables is the contour plot, which is not a single geometrical object but a set of many objects: contours, labels, colored tiles.  `r mark(2605)`
 
 We've been doing calculus on functions of one variable because it is so easy to exploit both the computational mode and the graphical mode. And it might fairly be taken as a basic organizing theme of calculus that  `r mark(2610)`
 
-> a line segment can be as good an approximation to a curve as you choose to make it. 
+> a line segment approximates a curve in a small region around a point.
 
 When figuring out the derivative function $\partial_x f(x)$ from a graph of $f(x)$, we find the tangent to the graph at each of many input values, record the slope of the line (and throw away the intercept) and then write down the series of slopes as a function of the input, typically by representing the slope by position along the vertical axis and the corresponding input by position along the horizontal axis. Figure \@ref(fig:segment-deriv) shows the process. `r mark(2615)`
 
-```{r segment-deriv, echo=FALSE, fig.cap="The **slope** of the function $f(x)$ at any given input becomes the **value** of the derivative at that input.", fig.show="hold", warning=FALSE}
+```{r segment-deriv, echo=FALSE, fig.cap="(A) The graph of a smooth function annotated with small line segments that approximate the function locally. The color of each labeled segment corresponds to the value of $x$ for that segment. The slope of each segment is written numerically below the segment.  (B) The labeled dots show the slope of each segment from (A). The slope is encoded using vertical position (as usual) and carries over the numerical label from (A). Connecting the dots sketches out the derivative of the function in (A).", fig.show="hold", warning=FALSE}
 f <- rfun(~ x, seed=977)
 df <- D(f(x) ~ x)
 dom = c(-3, 3)
@@ -45,24 +45,30 @@ gf_point(dy ~ x, data = Pts, color = ~ color) %>%
   gf_text(I(dy+1) ~ x, data = Segments, color=~ color, label=~label)
 ```
 
-Consider the top panel (A). At the input $x=0$---the point labeled "L"---the value of the function is $f(0) \approx 25$. This is practically the same as the value at "K." The slope of the short line segment labeled "L" is $\partial_x f(0) = -3.4$ Now look at the same input in the bottom panel (B). This shows $\partial_x f(x)$ on the vertical axis. The slope of $f()$ at $x=0$ was negative, even though $f(0)\approx 25$.On the graph of $\partial_x f()$, the position of "L" is in negative territory. And it's quite different from the position of its neighbor "K". `r mark(2620)`
+Panel (A) in Figure \@ref(fig:segment-deriv) shows a smooth function $f(x)$ (thin black curve). To find the function $\partial_x f(x)$, we take the slope of $f(x)$ at many closely spaced inputs. In Panel (A), I've drawn a short, tangent line segment at the closely points labeled A through V. The slope of each tangent line segment can be calculated by the usual rise-over-run method; the numerical value of the slope is written underneath the segment. To plot the derivative $\partial_x f(x)$, I have taken the slope information from (A) and plotted it as a function of $x$. `r mark(2620)`
+
+To restate what you already know, in the neighborhood of any input value $x_0$, the slope of any local straight-line approximation to $f(x)$ is given by the value of of $\partial_x f(x_0)$. 
 
 ## Calculus on two inputs
 
-To think about derivatives of functions of two inputs, we need to have some way to approximate the surface at each point with a small linear form that is tangent to the surface at that point. 
+Although we use contour plots for good practical reasons, the ***graph*** of a function $g(x,y)$ with two inputs is a surface, as described in Section \@ref(surface-plot). The derivative of $g(x,y)$ should encode the information needed to approximate the surface at any input $(x,y)$. In particular, we want the derivative of $g(x,y)$ to tell us the orientation of the ***tangent plane*** to the surface.
 
-An applet written by Alfredo Sánchez Alberca lets you visualize the ***tangent plane*** to a surface. (Instructions: Check "tangent plane" then rotate the view. Move the (x,y) coordinate of the point to see how the tangent plane differs from place to place.) `r mark(2625)`
-
-<a href="https://www.geogebra.org/m/wTh7KKd3" target="_blank"><img src="www/geogebra-tangent-app.png" width="50%"></a>
-
-The tangent plane is infinite in extent. Let's use the word ***facet*** to refer to a little patch of the tangent plane centered at the point of contact. The facet is flat. (It's part of a plane!) Figure \@ref(fig:melon-facets) shows some facets tangent to a curved surface. No two of them are oriented the same way. `r mark(2630)`
-
+A tangent plane is infinite in extent. Let's use the word ***facet*** to refer to a little patch of the tangent plane centered at the point of contact. Each facet is flat. (It's part of a plane!) Figure \@ref(fig:melon-facets) shows some facets tangent to a familiar curved surface. No two of the facets are oriented the same way.
 
 ```{r melon-facets, echo=FALSE, fig.cap="A melon as a model of a curved surface such as the graph of a function of two inputs. Each tangent facet has its own orientation. (Disregard the slight curvature of the small pieces of paper. Summer humidity has interfered with my attempt to model a flat facet with a piece of Post-It paper!"}
 knitr::include_graphics("www/tangent-planes-on-melon.png")
 ```
 
-Better than a picture of a summer melon, pick up a hardcover book and place it on a curved surface that's convex facing away from the cover. The cover will match the orientation of the surface at the point of tangency. Change the orientation of the cover and you will find that the point of tangency will change correspondingly.  `r mark(2635)`
+Better than a picture of a summer melon, pick up a hardcover book and place it on a curved surface such as a basketball. The book cover is a flat surface: a facet. The orientation of the cover will match the orientation of the surface at the point of tangency. Change the orientation of the cover and you will find that the point of tangency will change correspondingly.  `r mark(2625)`
+
+If melons and basketballs are not your style, you can play the same game on an interactive graph of a function of two variables. The snapshot below is a link to an applet that shows the graph of a function as a blue surface. You can specify a point on the surface by setting the value of the (x, y) input using the sliders. Display the tangent plane at that point by check-marking the "Tangent plane" input. (Acknowledgments to Alfredo Sánchez Alberca who wrote the applet using the GeoGebra math visualization system.) `r mark(2630)`
+
+
+<a href="https://www.geogebra.org/m/wTh7KKd3" target="_blank"><img src="www/geogebra-tangent-app.png" width="70%"></a>
+
+ `r mark(2635)`
+
+
 
 For the purposes of computation by eye, a contour graph of a surface can be easier to deal with. Figure \@ref(fig:whole-plot) shows the contour graph of a smoothly varying function. Three points have been labeled A, B, and C.  `r mark(2640)`
 
@@ -117,7 +123,7 @@ P
 ```
 
 
-Zooming in on each of the marked points presents a simpler picture for each of them, although one that is different for each point. Each zoomed-in plot contains almost parallel, almost evenly spaced contours. If the surface had been exactly planar over the zoomed-in domain, the contours would be *exactly* parallel and exactly evenly spaced. `r mark(2645)`
+Zooming in on each of the marked points presents a simpler picture for each of them, although one that is different for each point. Each zoomed-in plot contains almost parallel, almost evenly spaced contours. If the surface had been exactly planar over the entire zoomed-in domain, the contours would be *exactly* parallel and exactly evenly spaced. We can approach such exact parallelness by zooming in more closely around the labeled point. `r mark(2645)`
 
 ```{r zoomed-plot, echo=FALSE, out.width="33%", fig.show="hold", fig.cap="Zooming in on the neighborhoods of A, B, and C in Figure \\@ref(fig:whole-plot) shows a simple, almost planar, local landscape."}
 PzC
@@ -166,12 +172,12 @@ knitr::include_graphics("www/tipped-book.png")
 ```
 You can tip the object in one direction by raising or lowering one hand. (middle picture) And you can tip the object in the other coordinate direction by rotating the object around the line joining the points grasped by the left and right hands. (right picture) By combining these two motions, you can orient the surface of the object in a wide range of directions. `r mark(2680)`
 
-The purpose of this lesson is to show that two-numbers are sufficient to dictate the orientation of a plane: the amount that one hand is raised relative to the other and the angle of rotation around the hand-to-hand axis. `r mark(2685)`
+The purpose of this lesson is to show that two-numbers are sufficient to dictate the orientation of a plane. In terms of Figure \@ref(fig:hold-book) these are 1) the amount that one hand is raised relative to the other and 2) the angle of rotation around the hand-to-hand axis. `r mark(2685)`
 
 Similarly, in the formula for a plane, the orientation is set by two numbers, $b$ and $c$ in $\text{plane}(x, y) \equiv a + b x + c y$.
 
 How to find the right $b$ and $c$ for the tangent facet to a function $g(x,y)$ at a specific input $(x_0, y_0)$? Taking slices of $g(x,y)$ provides the answer. In particular, these two slices:
-$\text{slice}_1(x) \equiv g(x, y_0) = a + b\, x + c\, y_0 \ \ \text{and}\ \ \text{slice}_2(y) \equiv g(x_0, y) = a + b x_0 + c y$
+$\text{slice}_1(x) \equiv g(x, y_0) = a + b\, x + c\, y_0 \\ \text{slice}_2(y) \equiv g(x_0, y) = a + b x_0 + c\, y$
 
 Look carefully at the formulas for the slices. In $\text{slice}_1(x)$, the value of $y$ is being held constant at $y=y_0$. Similarly, in $\text{slice}_2(y)$ the value of $x$ is held constant at $x=x_0$.  `r mark(2690)`
 
@@ -201,9 +207,9 @@ $$
 
 Recall that the derivative of a function of one variable, say, $\partial_x f(x)$ tells you, at each possible value of the input $x$, how much the output will change proportional to a small change in the value of the input. This is exactly what the first-order polynomial approximation (that is, the ***linear approximation***), is saying: for small $dx$, $$f(x+dx) = f(x) + \partial_x f(x) \times dx$$
 The same logic applies for functions of two inputs:
-$$g(x + \color{blue}{dx}, y) = g(x,y) + \color{blue}{\partial_x} g(x,y) \times \color{blue}{dx}\\
+$$g(x + \color{magenta}{dx}, y) = g(x,y) + \color{magenta}{\partial_x} g(x,y) \times \color{magenta}{dx}\\
 \text{and} \\
-g(x, y+\color{red}{dy}) = g(x,y) + \color{red}{\partial_y} g(x,y) \times \color{red}{dy}$$
+g(x, y+\color{brown}{dy}) = g(x,y) + \color{brown}{\partial_y} g(x,y) \times \color{brown}{dy}$$
 
 Each of these statements is about *changing one input* while *holding the other input(s) constant*. Or, as the more familiar expression goes, "The effect of changing one input  **all other things being equal**. `r mark(2705)`
 
@@ -219,11 +225,11 @@ state_objective("Deriv-4d", "Know the three properties of gradient vectors")
 ```
 :::
 
-Everything we've said about differentiation rules applies not just to functions of one input, $f(x)$, but to functions with two or more inputs, $g(x,y)$, $h(x,y,z)$ and so on. In this chapter, we'll consider the interpretation and applications of derivatives of functions with multiple inputs. `r mark(2710)`
+Everything we've said about differentiation rules applies not just to functions of one input, $f(x)$, but to functions with two or more inputs, $g(x,y)$, $h(x,y,z)$ and so on.  `r mark(2710)`
 
 ## Gradient vector
 
-For functions of two inputs, there are two partial derivatives. For functions of three inputs, there are three partial derivatives. We can, of course, collect the partial derivatives into coordinate form. This collection is called the ***gradient vector***. `r mark(2715)`
+For functions of two inputs, there are two partial derivatives. For functions of three inputs, there are three partial derivatives. We can, of course, collect the partial derivatives into Cartesian coordinate form. This collection is called the ***gradient vector***. `r mark(2715)`
 
 Just as our notation for differences ($\cal D$) and derivatives ($\partial$) involves unusual typography on the letter "D," the notation for the gradient involves such unusual typography although this time on $\Delta$, the Greek version of "D." For the gradient symbol, turn $\Delta$ on its head: $\nabla$. That is,
 $$\nabla g(x,y) \equiv \left(\stackrel\strut\strut\delta_x g(x,y), \ \ \delta_y g(x,y)\right)$$
@@ -232,7 +238,7 @@ Note that $\nabla g(x,y)$ is a function of both $x$ and $y$, so in general the g
 
 The graphics convention for drawing a gradient vector for a particular input, that is, $\nabla g(x_0, y_0)$, puts an arrow with its root at $(x_0, y_0)$, pointing in direction $\nabla g(x_0, y_0)$, as in Figure \@ref(fig:one-grad-arrow). `r mark(2720)`
 
-```{r one-grad-arrow, echo=FALSE, fig.cap="The gradient vector $\\nabla g(x=1,y=2)$. The vector points in the steepest uphill direction. Consequently, it is perpendicular to the contour passing through it's root.", cache=TRUE}
+```{r one-grad-arrow, echo=FALSE, fig.cap="The gradient vector $\\nabla g(x=1,y=2)$. The vector points in the steepest uphill direction. Consequently, it is perpendicular to the contour passing through its root.", cache=TRUE}
 graw <- rfun( ~ x + y, seed=562)
 g <- makeFun(graw(x, y)  ~ x & y)
 contour_plot(g(x, y+.2) ~ x + y, domain(x=c(-2,2), y=c(0, 4))) %>%
@@ -248,16 +254,12 @@ contour_plot(g(x, y+.2) ~ x + y, domain(x=c(-2,2), y=c(0, 4))) %>%
   gradient_plot(g(x, y) ~ x + y, color="orange3", alpha=1) %>%
   gf_refine(coord_fixed())
 ```
-Since each gradient vector points uphill, start at a point and follow the vectors as you go, you will get to a local maximum!
 
 `r insert_calcZ_exercise("XX.XX", "9iowVB", "Exercises/Diff/partial-purple.Rmd")`
 
 `r insert_calcZ_exercise("XX.XX", "qdkw", "Exercises/Diff/partial-tan.Rmd")`
 
 `r insert_calcZ_exercise("XX.XX", "uekses", "Exercises/Diff/partial-doctor.Rmd")`
-
-
-## Gradient vector
 
 `r insert_calcZ_exercise("XX.XX", "wkd83", "Exercises/Diff/gradient-field-red.Rmd")`
 
@@ -285,5 +287,49 @@ Since each gradient vector points uphill, start at a point and follow the vector
 
 ## Algorithmic optimization
 
+In Chapter \@ref(optim-and-shape) we explored how to find an argmin of a function $f(x)$ with one input. Finding the argmin is easy and intuitive if you have a graph of $f(x)$: just look for the top of the hill. 
+
+Figure \@ref(fig:optim-hill) shows an example. With a bit of practice you can see that the "top of the hill" is at roughly $(x=1, y=1)$ whereat the function takes on a value somewhat larger than 16. 
+
+```{r optim-hill, echo=FALSE, fig.cap="For an objective function with two inputs, the argmax can be found by looking for the location of the top of the hill. In general, the contour near the top of a hill will be a closed round shape.", cache=TRUE}
+graw <- rfun( ~ x + y, seed=68)
+g <- makeFun(-graw(x, y)  ~ x & y)
+contour_plot(g(x, y+.2) ~ x + y, domain(x=c(-2,2), y=c(-2, 2))) %>%
+  gradient_plot(g(x, y) ~ x + y, color="orange3", alpha=0.25) %>%
+  gf_refine(coord_fixed())
+```
+Many optimization problems involve objective functions with several or many inputs. Regrettably, it becomes very difficult to graph functions with 3 or more inputs. So, we can't rely on our visual intuition to find the top of the hill.
+
+The key to optimization problems with many inputs is the derivative of the function. Figure \@ref(fig:optim-hill2) shows the gradient field of the same terrain graphed in Figure \@ref(fig:optim-hill). Even without seeing the surface or the contours, you can get to the top of the hill by picking a starting point and following the contours. Since there can be many hills in a complicated terrain, this approach will get you to the one "closest" to your starting point. In practice, modelers repeat the method for many different starting points until they reach a hilltop that's high enough for their purposes.
+
+```{r optim-hill2, echo=FALSE, fig.cap="You don't need the contours to find the top of the hill. Just follow the gradient vectors!"}
+gradient_plot(g(x, y) ~ x + y, 
+  domain(x=c(-2,2), y=c(-2, 2)), 
+  color="orange3", alpha=1) %>%
+  gf_refine(coord_fixed())
+```
+Let's lay out the algorithm for using the gradient to find an argmax. In every optimization problem we assume we know the objective function $g(x, y, z, ...)$ and can compute the output of the function for any valid inputs.
+
+**Step 1** We pick two starting points near to each other: ${\mathbf X}_0 = (x_0, y_0, z_0, \ldots)$ and ${\mathbf{X}_2 = (x_1, y_1, z_1, \ldots)$. (We're using the names ${\mathbf X}_0$ and ${\mathbf X}_1$ to denote the starting points, just as we might denote a place on Earth by a name like "Chicago." 
+
+**Step 2** By evaluating $g()$ at ${\mathbf X}_0$ and ${\mathbf X}_1$ we can find the gradient vector near ${\mathbf X}_1$. 
+
+$$\partial_\color{magenta}{x} g({\mathbf X}_1) \equiv \partial_\color{magenta}{x} g(x_1, y_1, z_1, \ldots) = \frac{g(\color{magenta}{x_1}, y_1, z_1, \ldots) - g(\color{magenta}{x_0}, y_1, z_1, \ldots)}{\color{magenta}{x_1 - x_0}}\\
+\,\\
+\partial_\color{brown}{y} g({\mathbf X}_1) \equiv\partial_\color{brown}{y} g(x_1, y_1, z_1, \ldots) = \frac{g(x_1, \color{brown}{y_1}, z_1, \ldots) - g(x_1, \color{brown}{y_0}, z_1, \ldots)}{\color{brown}{y_1 - y_0}}\\
+\,\\
+\partial_\color{darkorange}{z} g({\mathbf X}_1) \equiv\partial_\color{darkorange}{z} g(x_1, y_1, z_1, \ldots) = \frac{g(x_1, y_1, \color{darkorange}{z_1}, \ldots) - g(x_1, y_1, \color{darkorange}{z_0}, \ldots)}{\color{darkorange}{z_1 - z_0}}\\
+\,\\
+\ldots$$
+
+**Step 3** Pick a small number $h$ and compute the coordinates of a new point $${\mathbf X}_2 \equiv (
+\color{magenta}{x_1} + h \partial_{\color{magenta}{x}} g({\mathbf X}_1), 
+\color{brown}{y_1} + h \partial_{\color{brown}{y}} g({\mathbf X}_1), 
+\color{darkorange}{z_1} + h \partial_{\color{darkorange}{z}} g({\mathbf X}_1), \ldots) $$
+${\mathbf X}_2$ is located a small distance from ${\mathbf X}_1$ in the direction of the gradient vector. 
+
+**Step 4** If $g({\mathbf X}_2) \approx g({\mathbf X}_1)$ then the gradient vector must be very close to zero. We can stop the algorithm, giving the argmax result as ${\mathbf X}_2$. Otherwise, go back to Step 2, but using ${\mathbf X}_1$ in place of ${\mathbf X}_0$ and using ${\mathbf{X}_2}$ in place of ${\mathbf{X}_1}$. 
+
+There are many variations on this algorithm that seek to reduce the number of calculations, avoid overstepping the argmax, etc. Collectively, the algorithms are called ***gradient ascent*** or, in more familiar language, "walking uphill one step at a time."
 
 `r insert_calcZ_exercise("XX.XX", "kcblMf", "Exercises/Diff/pony-run-bed.Rmd")`
