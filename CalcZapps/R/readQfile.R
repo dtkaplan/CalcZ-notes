@@ -5,9 +5,11 @@ readQfiles <- function(file_names) {
   Q <- NULL
   C <- NULL
   for (k in 1:length(file_names)) {
-    this <- CalcZapps::readQfile(file_names[k])
-    Q <- dplyr::bind_rows(Q, this$Q)
-    C <- dplyr::bind_rows(C, this$C)
+    this <- try(CalcZapps::readQfile(file_names[k]))
+    if (!inherits(this, "try-error") && !is.null(this)) {
+      Q <- dplyr::bind_rows(Q, this$Q)
+      C <- dplyr::bind_rows(C, this$C)
+    }
   }
 
   return(list(Q=Q, C=C))
@@ -15,9 +17,17 @@ readQfiles <- function(file_names) {
 #'
 #' @export
 readQfile <- function(fname) {
-  content <- readLines(fname)
+  content <- try(readLines(fname))
+  if (inherits(content, "try-error")) {
+    warning("Can't read file ", fname)
+    return(NULL)
+  }
   start_lines <- grepl("^\\*\\*", content)
   Headers <- content[start_lines]
+  if (length(Headers) < 1) {
+    warning("No content in ", fname)
+    return(NULL)
+  }
   qname <- gsub("\\*+([-a-zA-Z0-9\\._]*)\\*+.*$", "\\1", Headers)
   prompt <- gsub("\\*+[-a-zA-Z0-9\\._\\?,!\\$\\|\\\\'\"]*\\*+\\s*(.*)\\s*\\[(.*)\\]\\w*$", "\\1", Headers)
   topic <- gsub("\\*+[-a-zA-Z0-9\\._]*\\*+\\s*(.*)\\s*\\[(.*)\\]\\w*$", "\\2", Headers)
@@ -35,7 +45,8 @@ readQfile <- function(fname) {
     this_question <- content[these_line_nums]
     valid_lines <- grepl("^\\s?\\[", this_question)
     invalid_lines <- which(!valid_lines)
-    wrong_start <- !grepl("^ {0,}\\#", this_question[!valid_lines]) & nchar(this_question[!valid_lines]) > 0
+    wrong_start <- !grepl("^ {0,}\\#", this_question[!valid_lines]) &
+      nchar(gsub(" ", "", this_question[!valid_lines])) > 0
 
     if (any(wrong_start)) {
       wrong_line_nums <- these_line_nums[!valid_lines][wrong_start]

@@ -4,35 +4,17 @@ created: "Mon Jul 19 18:26:28 2021"
 global_id: "2beqIv"
 ---
 
-Mathematicians quantify the "smoothness" of a function by looking at the continuity of the function and its derivatives. For engineering and design problems, smoothness means something substantially different. This section is about the differences and similarities of the two notions of smoothness.
 
-The mathematical definition of smoothness is straightforward and phrased in terms of derivatives. Suppose you are examining the smoothness of a function $f(x)$. The smoothness is assessed on a scale $C^0, C^1, C^2, \ldots, C^\infty$.
-
-- $C^0$: the function $f(x)$ is continuous. Intuitively, this means that a graph of the function can be drawn without lifting the pencil from the paper.
-- $C^1$: the function $f(x)$ has a derivative over its entire domain *and* that derivative $\partial_x f(x)$ is continuous.
-- $C^2$: the function $\partial_x f(x)$ has a derivative over its entire domain *and* that derivative is continuous. In other words, $\partial_{xx} f(x)$ exists and is continuous.
-- $C^n$: Like $C^2$, but we're talk about the nth-derivative of $f(x)$ existing and being continuous.
-- $C^\infty$: Usually when we denote a sequence with an infinite number of terms, we write down something like $C^0, C^1, C^2, \ldots$. It would be entirely valid to do this in talking about the $C^n$ sequence. But many of the mathematical functions we work with are *infinitely differentiable*, that is $C^\infty$.
-
-**Examples of $C^\infty$ functions**:
-
-- $\sin(x)$: the derivatives are $\partial_x \sin(x) = \cos(x)$, $\partial_{xx} \sin(x) = -\sin(x)$, $\partial_{xxx} \sin(x) =-\cos(x)$, $\partial_{xxxx} \sin(x) =\sin(x)$, ... You  can keep going infinitely.
-
-- $e^x$: the derivatives are $\partial_x e^x = e^x$, $\partial_{xx} e^x = e^x$, and so on.
-
-- $x^2$: the derivatives are $\partial_x x^2 = 2 x$, $\partial_{xx} x^2 = 2$, $\partial_{xxx} x^2 = 0$, ... Higher order derivatives are all simply 0. Boring, but still existing.
-
-**Example of non-$C^2$ functions:** We see these often when we take two or more different $C^\infty$ functions and split their domain, using one function for one subdomain and the other(s) for other subdomain(s).
-
-- $|x|$, the absolute value function. $|x|$ is a pasting together of two $C^\infty$ functions: $$|x| \equiv \left\{\begin{array}{rcl}+x & \mbox{for} & 0 \leq x\\-x&\mbox{for}& x \leq 0\end{array} \right.$$ The domain is split at $x=0$.
-
-- Cubic splines. The domain is split at each of the knot points. Between any two adjacent knot points, the function is an ordinary cubic polynomial. At the boundary between domains, the cubics on either side have been arranged to have their first and second derivatives match. Thus, the first two derivatives are continuous. The function is at least $C^2$. The second derivative of a cubic is a straight-line function, so the second derivative of a cubic spline is a series of straight-line functions connected at the knot points. The second derivative does not itself have a derivative at the knot points. So, a cubic spline cannot satisfy the requirements for being $C^3$; it is $C^2$. 
 
 Consider the functions shown in the table, all of which involve a domain split at $x=0$ and the pasting together of two individually $C^\infty$ functions:
 
+I"M HAVING TROUBLE GETTING THESE TO RENDER PROPERLY WITH MathJax
+
+$$f_A(x) \equiv \left\{\begin{array}{ccl}{x^2} &  & 0\leq x\\ & \text{for} &  \\x& & x \leq 0\end{array} \right.$$
+
 
 ```{r cn1-1, echo=FALSE, results="markup"}
-askMC("Consider $$f_A(x) \\equiv \\left\\{\\begin{array}{ccl}x^2 & \\mbox{for} & 0 \\leq x\\\\x&\\mbox{for}& x \\leq 0\\end{array} \\right.$$ How smooth is it?",
+askMC(r"(Consider $$f_A(x) \equiv \left\{\begin{array}{ccl}{x^2} &  & 0\\ & \text{for} & \\ \leq x\\x& \text{for}& x \leq 0\end{array} \right.$$ How smooth is it?)",
                "discontinuous",
                "+$C^0$+", 
                "$C^1$",
@@ -44,7 +26,7 @@ askMC("Consider $$f_A(x) \\equiv \\left\\{\\begin{array}{ccl}x^2 & \\mbox{for} &
 ```
 
 ```{r cn1-2, echo=FALSE, results="markup"}
-askMC("Consider $$f_B(x) \\equiv \\left\\{\\begin{array}{ccl}x^3 & \\mbox{for} & 0 \\leq x\\\\0&\\mbox{for}& x \\leq 0\\end{array} \\right.$$ How smooth is it?",
+askMC("Consider $$f_B(x) \\equiv \\left\\{\\begin{array}{ccl}x^3 & \\text{for} & 0 \\leq x\\\\0&\\text{for}& x \\leq 0\\end{array} \\right.$$ How smooth is it?",
                "discontinuous",
                "$C^0$", 
                "$C^1$",
@@ -56,7 +38,7 @@ askMC("Consider $$f_B(x) \\equiv \\left\\{\\begin{array}{ccl}x^3 & \\mbox{for} &
 ```
 
 ```{r cn1-3, echo=FALSE, results="markup"}
-askMC("Consider $$f_C(x) \\equiv \\left\\{\\begin{array}{ccl}x^3 & \\mbox{for} & 0 \\leq x\\\\x^3 & \\mbox{for}& x \\leq 0\\end{array} \\right.$$ How smooth is it?",
+askMC("Consider $$f_C(x) \\equiv \\left\\{\\begin{array}{ccl}x^3 & \\text{for} & 0 \\leq x\\\\x^3 & \\\text{for}& x \\leq 0\\end{array} \\right.$$ How smooth is it?",
                "discontinuous",
                "$C^0$", 
                "$C^1$",
@@ -68,7 +50,7 @@ askMC("Consider $$f_C(x) \\equiv \\left\\{\\begin{array}{ccl}x^3 & \\mbox{for} &
 ```
 
 ```{r cn1-4, echo=FALSE, results="markup"}
-askMC("Consider $$f_D(x) \\equiv \\left\\{\\begin{array}{ccl}x^3 & \\mbox{for} & 0 \\leq x\\\\x^2&\\mbox{for}& x \\leq 0\\end{array} \\right.$$ How smooth is it?",
+askMC("Consider $$f_D(x) \\equiv \\left\\{\\begin{array}{ccl}x^3 & \\text{for} & 0 \\leq x\\\\x^2&\\text{for}& x \\leq 0\\end{array} \\right.$$ How smooth is it?",
                "discontinuous",
                "$C^0$", 
                "+$C^1$+",
@@ -80,7 +62,7 @@ askMC("Consider $$f_D(x) \\equiv \\left\\{\\begin{array}{ccl}x^3 & \\mbox{for} &
 ```
 
 ```{r cn1-5, echo=FALSE, results="markup"}
-askMC("Consider $$f_E(x) \\equiv \\left\\{\\begin{array}{ccl}x^3 & \\mbox{for} & 0 \\leq x\\\\-x^2 &\\mbox{for}& x \\leq 0\\end{array} \\right.$$ How smooth is it?",
+askMC("Consider $$f_E(x) \\equiv \\left\\{\\begin{array}{ccl}x^3 & \\text{for} & 0 \\leq x\\\\-x^2 &\\text{for}& x \\leq 0\\end{array} \\right.$$ How smooth is it?",
                "discontinuous",
                "$C^0$", 
                "+$C^1$+",
@@ -92,7 +74,7 @@ askMC("Consider $$f_E(x) \\equiv \\left\\{\\begin{array}{ccl}x^3 & \\mbox{for} &
 ```
 
 ```{r cn1-6, echo=FALSE, results="markup"}
-askMC("Consider $$f_F(x) \\equiv \\left\\{\\begin{array}{ccl}\\cos(x) & \\mbox{for} & 0 \\leq x\\\\0 &\\mbox{for}& x \\leq 0\\end{array} \\right.$$ How smooth is it?",
+askMC("Consider $$f_F(x) \\equiv \\left\\{\\begin{array}{ccl}\\cos(x) & \\text{for} & 0 \\leq x\\\\0 &\\text{for}& x \\leq 0\\end{array} \\right.$$ How smooth is it?",
                "+discontinuous+",
                "$C^0$", 
                "$C^1$",
@@ -104,7 +86,7 @@ askMC("Consider $$f_F(x) \\equiv \\left\\{\\begin{array}{ccl}\\cos(x) & \\mbox{f
 ```
 
 ```{r cn1-7, echo=FALSE, results="markup"}
-askMC("Consider $$f_G(x) \\equiv \\left\\{\\begin{array}{ccl}\\sin(x) & \\mbox{for} & 0 \\leq x\\\\0 &\\mbox{for}& x \\leq 0\\end{array} \\right.$$ How smooth is it?",
+askMC("Consider $$f_G(x) \\equiv \\left\\{\\begin{array}{ccl}\\sin(x) & \\text{for} & 0 \\leq x\\\\0 &\\text{for}& x \\leq 0\\end{array} \\right.$$ How smooth is it?",
                "discontinuous",
                "+$C^0$+", 
                "$C^1$",
@@ -116,7 +98,7 @@ askMC("Consider $$f_G(x) \\equiv \\left\\{\\begin{array}{ccl}\\sin(x) & \\mbox{f
 ```
 
 ```{r cn1-8, echo=FALSE, results="markup"}
-askMC("Consider $$f_H(x) \\equiv \\left\\{\\begin{array}{ccl}\\sin(x) & \\mbox{for} & 0 \\leq x\\\\x &\\mbox{for}& x \\leq 0\\end{array} \\right.$$ How smooth is it?",
+askMC("Consider $$f_H(x) \\equiv \\left\\{\\begin{array}{ccl}\\sin(x) & \\text{for} & 0 \\leq x\\\\x &\\text{for}& x \\leq 0\\end{array} \\right.$$ How smooth is it?",
                "discontinuous",
                "$C^0$", 
                "$C^1$",

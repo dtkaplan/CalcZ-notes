@@ -23,7 +23,7 @@ iii. $y^2 = x$
 iv. $x^2 = x$
 v. $x = \sqrt{x}$
 
-All five sentences are *equations*. That's easy, because they each have an equal sign between the two sides. Which are *formulas*? Which are *functions*? You're used to calling $x$ and $y$ *variables*. When do they become *unknowns*? Sentence (iv) might be interpreted as describing *roots*. But sentence (v) says the same thing as (iv) but would not be related to roots.`r mark(510)`
+All five sentences are *equations*. That's easy, because they each have an equal sign between the two sides. Which are *formulas*? Which are *functions*? You're used to calling $x$ and $y$ *variables*. When do they become *unknowns*? Sentence (v) involves *roots* (as in "square root"). But sentence (v) says the same thing as (iv) which is about squares rather than roots.`r mark(510)`
 
 ## A notation for computing
 
@@ -31,25 +31,38 @@ The traditional notation is practically useless for computing. A programmer has 
 
 
 ::: {.scaffolding}
-To illustrate, here are some similar-looking sentences. In math notation, each of them can mean something. In R, one of them is valid and the others invalid. Read each one and try to guess which one is valid and why the others are not. `r mark(520)`
+To illustrate, consider these statements in traditional math notation, each of which has a sensible meaning. 
+$$y = x\\
+y = \sqrt{x}\\
+y^2 = 3\\
+y = \sqrt{3}\\
+y - x = 0\\
+0 = (x+3)(x-2)$$
+
+Imagine translating these statements into R, fixing things a little by inserting the required `*` in  `(x+3)*(x-2)`, and using `sqrt()` instead of $\sqrt{\strut\ }$. `r mark(520)`
+
 ```{r eval=FALSE}
 y = x
 y = sqrt(x)
 y^2 = 3
 y = sqrt(3)
 y - x = 0
-0 = (x+3)(x-2)
+0 = (x+3) * (x-2)
 ```
-Once you've made your choice, open a `r sandbox_link()` to see if you got it right.
+Running these statements in R (for instance, by copying them to a `r sandbox_link()`) will generate an error. Even if you copy and run the statements individually, one at a time, into the sandbox, you'll get an error for all but one of the statements. 
 
-Try one line at a time, and erase it before trying another line.  If the code is invalid, pressing "Run code" will lead to an error message below the sandbox. The valid line will not lead to any error message.
+Before reading on, see if you can figure out, just by reading the R statements, which one is valid.
+
+For some of the statements, the left-hand side of `<-` is not a valid name in R (`0` and `y^2` and `y-x`). For others, the name `x` is being used before any value has been assigned to it.
+
+One of the reasons we use `<-` for assignment in R, rather than `=` (which, technically, is allowed) is to remind us that ***assignment*** is different from equality.
 :::
 
 The student who knows how to make sense of math notation will find this not of much help in writing computer notation. It's like a well educated foreigner trying to make sense of how some of these sentences are meaningful and others not.
 
 "Chair a meeting," but not "seat a meeting." 
 "Seat a guest," but not "chair a guest."  
-"Bush yourself out," but not "tree yourself out."  
+"I'm bushed," but not "I'm treed."  
 "Tree a cat," but not "bush a cat."  
 "Table a motion," but not "desk a motion."  
 "Bench a player," but not "couch a player."   
@@ -87,15 +100,18 @@ It's another matter when you are ***defining*** a function. For instance, $$g(x,
 
 In R/mosaic, using a ***tilde-expression*** signals that you are asking for the same kind of promise to do something when the time for it comes. 
 
-Most of the time in this course, the functions you define will be described by either 
-
-i. A ***formula***, such as `3*x + 2` or $x^2 \sin(y)$ 
-ii. Another kind of computation of the sort not typically covered in high-school math: an iterative process, a branching process, a neural network, and so on. These processes are usually expressed using a computer programming language and so they are unfamiliar to many students.
+ii. A
 
 
 ## Formulas and algorithms {#algorithms}
+
+In high-school math, you got used to seeing ***formula***s like $3x + 2$ or $x^2 \sin(y)$. So it will likely be natural to you to think of defining mathematical functions in R with tilde expressions like `3*x + 2 ~ x` or `x^2 * sin(y) ~ x & y`. 
+
+But formulas are hardly the only way to define a function. Functions can also be defined using another kind of computation of the sort not typically covered in high-school math: an iterative process, a branching process, a neural network, and so on. These processes are usually expressed using a computer programming language and so they will be unfamiliar to many students.
+
+The idea of "algorithm" generalizes that of formulas. You will be using many mathematical computations that do not involve evaluating formulas but instead are written in terms of ***iteration***, ***branching***, and ***searching***.  A computer programming course is a good place to learn about these concepts but, for now, what's important is that you know that much of the work going on behind the scenes in a computation is "algorithmic" rather than based on formulas.
     
-The idea of "algorithm" generalizes that of formulas. A starter definition is:
+A starter definition is:
 
 > An ***algorithm*** is a set of instructions for performing a computation. 
 
@@ -186,7 +202,7 @@ Long and awkward. So we'll feel free to write instead,
 
 > "$\sqrt{\strut x}$ and $x^3$ are examples of power-law functions."
 
-Without the formality provided by "$g(x) \equiv$" it can be hard to know whether $\sqrt{\strut x}$ means "the square-root function" or "take the square root of a specific number $x$. The convention we will use is based on the name used in the expression. When standard argument names from the end of the alphabet are being used without any subscript (e.g. $x_0$) or with a special symbol as a subscript (e.g. $t^\star$), we intend the expression to be a function. However, when we want to ***apply a function*** to specific values for inputs we will write in any of the following styles:
+Without the formality provided by "$g(x) \equiv$" it can be hard to know whether $\sqrt{\strut x}$ means "the square-root function" or "take the square root of a specific number $x$. The convention we will use is based on the name used in the expression. When standard argument names from the end of the alphabet are being used with a subscript (e.g. $x_0$) or with a special symbol used in a  superscript (e.g. $t^\star$), we intend the expression to be a function. However, when we want to ***apply a function*** to specific values for inputs we will write in any of the following styles:
 
 $$f(x^\star) \ \ \mbox{or}\ \ \sqrt{\strut x^\star}\ \ \mbox{or}\ \ \sqrt{\strut x=3}\ \ \mbox{or}\ \ \left.\sqrt{\strut x}\right|_{x=3}\ \ \mbox{or}\ \ \left.g(x)\strut \right|_{x=3}$$
 
@@ -196,7 +212,7 @@ Here's an illustration that will only make sense to those who have already studi
 
 $$\int_0^3\!\! f(t) dt\ \ \text{is a number, but }\int_0^x\!\! f(t) dt \ \ \text{is a function.}\ \ $$
 
-In high-school math notation, it can be hard to tell if an expression is intended to be a function or a number. Careful attention to the CalcZ conventions will make it much easier to figure whether an expression resolves to a function or a number. When you first read a mathematical expression, a good first question to ask is, "What kind of thing is this? A function? A number?"
+In high-school math notation, it can be hard to tell if an expression is intended to be a function or a number. Careful attention to the CalcZ conventions will make it easier to figure whether an expression resolves to a function or a number. When you first read a mathematical expression, a good first question to ask is, "What kind of thing is this? A function? A number?"
 
 ::: {.takenote}
 It is essential that you can apply these conventions reflexively. Being able to say what kind of thing a symbol stands for is a key to understanding what a mathematical expression means.

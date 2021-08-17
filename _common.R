@@ -27,7 +27,9 @@ exercise_file <- function(day,  file_name, course="141Z") {
 # Resolve the exercise number assigned to a permanent name like "3KEgLM"
 # or "chicken-sit-table".
 # See script in <_make_exercise_index.R>
-exercise_cross_reference <- readr::read_csv("_exercise_cross_reference.csv")
+if (file.exists("_exercise_cross_reference.csv")) {
+  exercise_cross_reference <- readr::read_csv("_exercise_cross_reference.csv")
+}
 
 ref_ex <- function(perm_name) {
   # This is not yet implemented but will be based on a program that searches through all the

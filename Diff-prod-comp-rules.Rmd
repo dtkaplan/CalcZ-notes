@@ -1,14 +1,87 @@
-# Differentiation of assembled functions {#prod-comp-rules}
+# Derivs of assembled functions {#prod-comp-rules}
 
-In Chapter \@ref(fun-assembling) we introduced three major methods for putting two or more basic modeling functions together in order to make a new function.
+<!-- Standard colors in equations
+magenta, brown, darkorange
+-->
 
-i. Linear combinations: e.g. $a f(x) + b g(x)$
-i. Products: e.g. $f(x) g(x)$
-i. Composition:, e.g. $f(g(x))$ (which is usually a different function than $g(f(x))$.)
 
-We have already looked at differentiation of linear combinations. In this chapter, we'll examine products of functions and compositions of functions.
+In Section \@ref(derivatives-of-linear-combinations) we looked at differentiation of linear combinations. In this chapter, we'll examine products of functions and compositions of functions.
 
-## Step 1: Identify f() and g()
+
+## Derivatives of the basic modeling functions
+
+The basic modeling functions are the same as the pattern-book functions, but with bare $x$ replaced by $\line(x)$.  In other words, each of the basic modeling functions is a ***composition*** of the corresponding pattern-book function with $\line(x)$. As such, the derivatives of the basic modeling functions can be found using the chain rule. 
+
+Suppose $f()$ is one of our pattern-book functions. Then $$\large\partial_x f(\color{magenta}{ax + b}) = \color{brown}{a} f'(\color{magenta}{ax + b})$$ where $\color{brown}{a}$ is the derivative with respect to $x$ of $\color{magenta}{ax + b}$.
+
+Here are the steps for differentiating a basic modeling function $\color{brown}{f}(\color{magenta}{a x + b})$ where $f()$ is one of the pattern-book functions:
+
+- Step 1: Identify the particular pattern-book function $\color{brown}{f}()$ and write down it's derivative $\color{brown}{f'}$. For example, if $f()$ is $\sin()$, then $f'()$ is $\cos()$.
+- Step 2: Find the derivative of the linear interior function. If the function is $\color{magenta}{ax + b}$, then the derivative is $\color{magenta}{a}$. Of the interior function is $\frac{2\pi}{P}(t-t_0)$, the derivative is $\frac{2 \pi}{P}$.
+- Step 3: Write down the original function $\large\color{brown}{f}(\color{magenta}{a x + b})$ but replace $\large\color{brown}{f}$ with $\large \color{brown}{f'}$ and pre-multiply by the derivative of the interior function. For instance, $$\partial_x f(\color{magenta}{ax + b}) = {\large \color{magenta}{a}}{\large f'}(\color{magenta}{ax + b})$$ Another example: $$\partial_t \color{brown}{\sin}\left(\color{magenta}{\frac{2 \pi}{P}(t-t_0)} \right) = {\large \color{magenta}{\frac{2 \pi}{P}}}\color{brown}{\large\cos}\left(\color{magenta}{\frac{2 \pi}{P}(t-t_0) }\right) $$
+
+
+By convention, there are different ways of writing $\line(x)$ for the different naked functions, for instance: `r mark(2396)`
+
+$$\text{Pattern-book function}  \ \ \ \longrightarrow\ \ \ \text{Basic modeling function}\\
+\ \\
+\sin(x)\ \ \ \longrightarrow\ \ \ \sin\left(\strut2 \pi \left[x-x_0\right]/P\right)\\
+\exp(x)\ \ \ \longrightarrow\ \ \ \exp(k x)\\
+x^2 \ \ \ \longrightarrow\ \ \ \left[mx + b\right]^2\\
+1/x \ \ \ \longrightarrow\ \ \ 1/\left[mx + b\right]\\
+\ln(x) \ \ \ \longrightarrow\ \ \ \ln(a x + b)\\$$
+
+The rule for the derivative of any basic modeling function $f(\line(x))$ is $$\partial_x f(\line(x)) = \partial_x \line(x) \times \partial_x f\left(\strut\line(x)\right)$$
+
+To illustrate:
+
+- $\partial_x e^{\color{magenta}{kx}} = {\large\color{magenta}{k}}\, e^{\color{magenta}{kx}}$
+- $\partial_x \sin(2\pi (x-x_0)/P) = \frac{2\pi}{P}  \sin(2\pi (x-x_0)/P)$
+- $\partial_x (mx + b)^2 = m\, 2 (m x + b) = 2 m^2 x + m^2 b$
+- $\partial_x \frac{1}{mx + b} = - \frac{m}{(mx + b)^2}$
+- $\partial_x \ln(a x + b) = a/(ax+b)$ 
+- $\partial_x \pnorm(x, mn, sd) = dnorm(x, mn, sd)$
+- $\partial_x \dnorm(x, mn, sd) =  - \frac{x}{sd} \dnorm(x, mn, sd)$
+
+You will be using the derivatives of the basic modeling functions so often, that you should practice and practice until you can write the derivative at a glance.
+
+
+::: {.takenote}
+
+This note describes a "gotcha" that often catches even professional modelers. For the introductory student this serves more as a general reminder to be careful, and not as a primary fact to be remembered about the derivatives of the basic modeling functions. 
+
+The sigmoidal function can be written in the general $f(\line(x))$ fashion:
+
+- sigmoid: $\pnorm\left(\frac{x-mn}{sd}\right)$ 
+
+But it's also common to write it in the manner of statistics software where the parameters are given as separate arguments:
+
+- sigmoid: $\pnorm(x, mn, sd)$ which is completely equivalent to  $\pnorm\left(\frac{x-mn}{sd}\right)$
+
+It's natural, but wrong, to assume that the same holds true for $\dnorm(x, mn, sd)$, that is, that it could be written with a single input of the form $(x-mn)/sd$. That's not true. In fact,
+
+$$\dnorm\left(\frac{x-mn}{sd}\right) = sd\, \dnorm(x, mn, sd)$$
+Failing to remember the $sd$ is a common pitfall, even among experienced modelers.
+
+Even for seemingly simple tasks like computing $\partial_x \pnorm\left(\left[x-mn\right] / sd\right)$, responsible practice calls for having a way to verify your result. For instance, you can compute the derivative of $\pnorm(x, mn, sd)$ using the slope function with a small but finite $h$ and compare that to your symbolic result.
+:::
+
+
+`r insert_calcZ_exercise(21.4, "QIELS", "Exercises/Diff/dnorm.Rmd")`
+
+
+-----
+
+`r insert_calcZ_exercise(21.5, "HCILW", "Exercises/Diff/descent-path.Rmd")`
+
+
+
+
+## The steps
+
+We're going to focus on assembled functions involving two basic modeling functions. In the following, I'm going to use the names $f()$ and $g()$, but in practice the functions will be basic modeling functions, for instance $e^{kx}$ or $\sin\left(\frac{2\pi}{P}t\right)$ or $\ln(x/x_0)$, etc. 
+
+### Step 1: Identify f() and g()
 
 We will write the rules in terms of two function names, $f()$ and $g()$, which can stand for any functions whatsoever. It's rare to see the product or the composition written explicitly as $f(x)g(x)$ of $f(g(x))$. Instead, you are given something like $e^x \ln(x)$. The first step in differentiating the product or composition is to identify what are $f()$ and $g()$ individually.  `r mark(2400)`
 
@@ -16,44 +89,64 @@ In general, $f()$ and $g()$ might be complicated functions, themselves involving
 
 `r insert_calcZ_exercise("XX.XX", "3ICCCz", "Exercises/Diff/lamb-rise-sofa.Rmd")`
 
-## Step 2: Find f'() and g'()
+`r insert_calcZ_exercise("XX.XX", "QFzIOl", "Exercises/Diff/buck-draw-bed.Rmd")`
+
+### Step 2: Find f'() and g'()
 
 For differentiating either products or compositions, you will need to identify both $f()$ and $g()$ (the first step) and then compute the derivatives $\partial_x f()$ and $\partial_x g()$. That is, you'll write down four functions. `r mark(2410)`
 
 `r insert_calcZ_exercise("XX.XX", "jYXYTF", "Exercises/Diff/ant-give-room.Rmd")`
 
+### Step 3: Apply the relevant rule
+
+Recall from Chapter \@ref(fun-assembling) that will will be working with three important forms for creating new functions out of existing functions:
+
+1. Linear combinations, e.g. $a f(x) + bg(x)$
+2. Products of functions, e.g. $f(x) g(x)$
+3. Compositions of functions, e.g. $f\left(g(x)\right)$
+
+
+
+## Linear combinations
+
+The derivative of a linear combination is the linear combination of the derivatives. That is:
+
+$$\partial_x \left[\strut \color{magenta}{a} \color{brown}{f(x)} + \color{magenta}{b} \color{brown}{g(x)}\right] = \color{magenta}{a} {\large\color{brown}{f'(x)}} + \color{magenta}{b} {\large\color{brown}{g'(x)}}$$
+::: {.example}
+The derivative of a polynomial is a polynomial of a lower order. 
+
+Consider the polynomial $$h(x) = \color{magenta}{a}\color{brown}{x^0}  + \color{magenta}{b} \color{brown}{x^1} + \color{magenta}{c} \color{brown}{x^2}$$ The derivative is 
+$$\partial_x h(x) = \color{magenta}{a}\color{brown}{0}  + \color{magenta}{b}\, \color{brown}{1} + \color{magenta}{c}\, \color{brown}{2 x} = \color{magenta}{b} +  \color{magenta}{2 c}\  x$$
 
 ## Product rule
 
 Written in terms of the pronoun functions $f()$ and $g()$, the product rule is
 
-::: {.todo}
-Decide if colorizing the formulas, as in the following, is helpful and worthwhile.
-:::
 
-$$\partial_x \left[\strut \color{blue}{f(x)}\times \color{green}{g(x)}\right] = \color{blue}{[\partial_x f(x)]} \times \color{green}{g(x)}\ \  {\mathbf +}
-\ \ \color{green}{[\partial_x g(x)]} \times \color{blue}{f(x)}$$
+$$\Large\partial_x \left[\strut \color{magenta}{f(x)}\times \color{brown}{g(x)}\right] = \color{magenta}{[\partial_x f(x)]} \times \color{brown}{g(x)}\ \  {\mathbf +}
+\ \ \color{magenta}{[\partial_x g(x)]} \times \color{brown}{f(x)}$$
 Some people find it easier to read the rule in Lagrange shorthand, where f and g stand for $f(x)$ and $g(x)$ respectivly, and f' ("f-prime") and g' ("g-prime") stand for $\partial f()$ and $\partial g()$. `r mark(2415)`
 
-$$\text{Lagrange shorthand:}\ \   \partial[f \times g] = [f \times g]' = f'g + g'f$$
+$$\Large\text{Lagrange shorthand:}\ \   \partial[\color{magenta}f \times \color{brown}g] = [\color{magenta}f \times \color{brown}g]' = \color{magenta}{f'}\color{brown}g + \color{brown}{g'}\color{magenta}f$$
 Let's start with some very simple examples where we already know the answer:
 
-- $\partial [x \times x^2] = [\partial x] \times x^2 \ +\  [\partial x^2] \times x =1\times x^2 + 2x \times x = 3 x^2$
+- We know $\partial_x x^3 = 3 x^2$ so lets check when we write $x^3$ as $x^2 x$:
+$$\large\partial [\color{magenta}x \times \color{brown}{x^2}] = \color{magenta}{[\partial x]} \times \color{brown}{x^2} \ +\  \color{brown}{[\partial x^2]} \times \color{magenta}x =\color{magenta}1\times \color{brown}{x^2} + \color{brown}{2x} \times \color{magenta}x = 3 x^2$$
 
-    Since $[x \times x^2] = x^3$, we could have figured out directly that the derivative is $3 x^2$
+- We know that $e^x \times e^x = e^{2x}$ so $\partial_x [e^x \times e^x] = 2 e^{2x}$. Let's check this against the product rule's result:
     
-- $partial_x [e^x \times e^x] = [\partial_x e^x] \times e^x \ + \ [\partial_x e^x] \times e^x = 2 e^x e^x = 2 e^{2x}$
+$partial_x [\color{magenta}{e^x} \times \color{brown}{e^x}] = \color{magenta}{[\partial_x e^x]} \times \color{brown}{e^x} \ + \ \color{brown}{[\partial_x e^x]} \times \color{magenta}{e^x} = 2 e^x e^x = 2 e^{2x}$
 
-    Since $[e^x \times e^x] = e^{2x}$, one of our basic modeling functions, we could have figured out directly that the derivative is $2 e^{2x}$.
+
 
 
 ## Composition ("chain") rule
 
 Written in terms of functions $f()$ and $g()$, the rule for the composition $f(g(x))$ is
 
-$$\partial_x \left[\strut \color{blue}{f\left(\right.}\strut \color{green}{g(x)}\color{blue}{\left.\right)}\right] = [\color{blue}{\partial_x f}](\color{green}{g(x)}) \times [\color{green}{\partial_xg(x)}]$$
+$$\Large\partial_x \left[\strut \color{magenta}{f\left(\strut\right.}\strut \color{brown}{g(x)}\color{magenta}{\left.\right)}\right] = [\color{magenta}{\partial_x f}](\color{brown}{g(x)}) \times [\color{brown}{\partial_xg(x)}]$$
 Or, using the Lagrange prime notation 
-$$\text{Lagrange shorthand:}\ \   \partial[f(g)] = f' (g) \times g'$$
+$$\large\text{Lagrange shorthand:}\ \   \partial[\color{magenta}f(\color{brown}g)] = \color{magenta}{f'} (\color{brown}g) \times \color{brown}{g'}$$
 
 This is almost universally called the ***chain rule***, presumably because the result involves a chain of derivatives.
 
@@ -68,20 +161,13 @@ Again, we'll practice with some simple examples where we already know the result
    Since $\partial_x \recip(x) = \partial_x [1/x] = \partial_x x^{-1} = -x^{-2} = - \frac{1}{x^2}$, we can simplify the above to 
 $\partial[ \recip(x^2)] = [\partial_x \recip](x^2) \times \partial_x x^2 =  - \frac{1}{(x^2)^2} \times 2 x = -2 \frac{x}{x^4} = -2 x^{-3}$  
 
-The derivatives of the basic modeling functions can be shown using the chain rule. Remember, that each of the basic modeling functions is the composition of a pattern-book function with $\line(x) \equiv ax + b$.  `r mark(2425)`
+The chain rule lets us use what we know about the derivatives of the pattern-book functions to figure out the derivatives of the basic modeling functions. Remember, that each of the basic modeling functions is the composition of a pattern-book function with $\line(x) \equiv ax + b$.  `r mark(2425)`
 
-- $\partial_x [\sin(a x + b)] = [\partial \sin](a x + b) \times \partial_x [ax + b = \cos(ax + b) \times a$.
+- $\large\partial_x [\color{brown}\sin(\color{magenta}{a x + b})] = [\partial_x \color{brown}{\sin}](\color{magenta}{a x + b}) \times \partial_x [\color{magenta}{ax + b}] = \color{brown}{\cos}(\color{magenta}{ax + b}) \times \color{magenta}a$.
 
-## Step 3: Apply the relevant rule
+`r insert_calcZ_exercise("XX.XX", "ed6q4v", "goldfish-keep-bed.Rmd")`
 
-`r insert_calcZ_exercise("XX.XX", "YbPAf1", "Exercises/Diff/sheep-draw-clock.Rmd")`
-
-::: {.todo}
-See 141 DD 31 for drill problems
-:::
-
-
-
+<!-- `rrr insert_calcZ_exercise("XX.XX", "YbPAf1", "Exercises/Diff/sheep-draw-clock.Rmd")`-->
 
 ## Exponentials and logarithms (optional)
     
@@ -103,18 +189,8 @@ Calculating $\partial_x 10^x$ or $\partial_x 2^x$ is a matter of applying the ch
 $$\partial_x [10^x] = \partial_x [e^{\ln(10)x}] = e^{\ln(10)x} \times \ln(10) = 2.30258509299405... \times 10^x\\ 
 \ \text{and}\\
 \partial_x [2^x] = \partial_x [e^{\ln(2)x}] = e^{\ln(2)x} \times \ln(2) = 0.693147180559945...\times 2^x$$
-Like $e^x$, the derivatives of $10^x$ and $2^x$ are proportional to themselves. For $e^x$ the constant of proportality is 1, a very natural number indeed. 
+Like $e^x$, the derivatives of $10^x$ and $2^x$ are proportional to themselves. For $e^x$ the constant of proportionality is 1, a very natural number indeed. 
     
-
-
-
-## Checking your work
-
-::: {.todo}
-1. When you get the result for a derivative, plot it out along with the finite-difference approximation. If they are close, you're good. 
-
-2. Apply the `antiD()` operator to your derivative and graphically confirm that there is a constant difference between the output of `antiD()` and the original function.
-:::
 
 
 

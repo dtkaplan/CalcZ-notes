@@ -18,7 +18,7 @@ In this chapter, we'll illustrate these five different modes using the pattern-b
 
 
 
-## Computer commands {#slice-plot-intro}
+## Graphing a function {#slice-plot-intro}
 
 Since we've already introduced the pattern-book functions, this is a good time to show you how to draw a graph of them. After this short introduction, we'll discuss graphics more generally and look at graphics of functions that have *two* inputs.
 
@@ -26,7 +26,7 @@ All the pattern-book functions have just a single input. You can draw graphs of 
 
 1. Which function to graph. In R/mosaic, You state this with what's called a ***tilde expression***. A couple of examples will suffice for the moment.
     a. When the function has a name, like `exp()` or `log()` or `sin()`, the tilde expression looks like `exp(x) ~ x`. On the left side of the tilde you put the name of the function you want to graph with the input name in parentheses. You can choose any input name you like: here we are using `x`, but we are not limited to using `x` or any other letter. Sometimes we even use named inputs (e.g. `exp(time)`). On the right side of the tilde, place the input name again. We'll explain why the name appears in two places later.
-    b. When the function is being written as a formula, for instance `1/z` or `t^2`, put the formula on the left side of the tilde and the input name on the right side, like `1/z ~ z` or `1/t ~ t`.
+    b. When the function is being written as a formula, for instance `1/z` or `t^2`, put the formula on the left side of the tilde and the input name on the right side, like `1/z ~ z` or `t^2 ~ t`.
 2. The ***graphics domain***. As you know, the ***domain*** of a function is the collection of all possible legitimate inputs. For most of the pattern-book functions, the domain is $-\infty < x < \infty$. As you might expect, it's impractical to have a graphical axis that is infinitely long. So you have to choose some finite interval of the function domain to use. This finite interval is called the "graphics domain." You specify the domain with a statement like `domain(x = c(-5,5))`, which is setting the graphics domain to $-5 \leq x \leq 5$. Note that the input name used in `domain()` must match the input name you selected in the tilde expression. 
 
 ::: {.why}  
@@ -92,9 +92,9 @@ slice_plot(1/x ~ x, domain(x=c(.01, 1.25))) %>%
 
 The slope of a function at a given input tells how fast the function **output** is increasing or decreasing as the input changes slightly. ***Concavity*** is not directly about how the function output changes, but about how the function's *slope* changes. For instance, a function might be growing slowly in some region of the domain and then gradually shift to larger growth in an adjacent region. Or, a function might be decaying steeply and then gradually shift to a slower decay. Both of these are instances of ***positive concavity***. The opposite pattern of change in slope is called ***negative concavity***. If the slope doesn't change at all---only straight-line functions are this way--- the concavity is zero. 
 
-Concavity has a very clear appearance in a function graph. If a function is positive concave in a region, the graph looks like a smile. Negative concavity looks like a frown. Zero concavity is a straight line. `r mark(432)`
+Concavity has a very clear appearance in a function graph. If a function is positive concave in a region, the graph looks like a smile or cup.  Negative concavity looks like a frown. Zero concavity is a straight line.  `r mark(432)`
 
-Referring to the three function examples in Figure \@ref(fig:for-words) ...
+Referring to the three function examples in Figure \@ref(fig:for-words), we'll use the traditional terms ***concave up*** and ***concave down*** to refer to positive and negative concavity respectively.
 
 a. The exponential is ***concave up*** everywhere in its domain.
 b. The sinusoid alternates back and forth between ***concave up*** and ***concave down***.
@@ -102,7 +102,7 @@ c. This particular power law $x^{-1}$ is ***concave up*** for $x > 0$ and ***con
 
 When a function switches between positive concavity and negative concavity, as does the sinusoid as well as the gaussian and sigmoid functions, there is an input value where the switch occurs and the function has zero concavity. (Continuous functions that pass from negative to positive or *vice versa* must always cross zero.) Such in-between points of zero concavity are called ***inflection points***. A function can have zero, one, or many inflection points. For instance, the sinusoid has inflection points at $x = \ldots, -\pi, 0, \pi, 2\pi, \ldots$, the cubic power function $f(x)\equiv x^3$ has one, and the exponential has none.
 
-```{r echo=FALSE, out.width="70%", fig.align="center", fig.cap="A diagram showing a cubic function which is concave up until a point of inflection and concave down thereafter."}
+```{r echo=FALSE, out.width="70%", fig.align="center", fig.cap="A diagram showing a cubic function which is concave up until a point of inflection and concave down thereafter. [Source: Maj. Austin Davis]"}
 knitr::include_graphics(normalizePath("www/Concavity-diagram.png"))
 ```
 
@@ -119,7 +119,7 @@ One of the benefits of learning calculus is to gain a way to think about the pre
     
 ### Continuity {#continuity-intro}
 
-A function is ***continuous*** if you can trace out the graph of the function without lifting pencil from the page. A function is ***continuous on an interval (a,b)*** if you can trace the function over that whole interval. All of the pattern-book functions are continuous over any interval in their domain except for the logarithm and power-law functions with negative exponents. (This includes the reciprocal since it is a power-law with a negative exponent:  $1/x = x^{-1}$.) Those exceptions are not defined at $x=0$. 
+A function is ***continuous*** if you can trace out the graph of the function without lifting pencil from the page. A function is ***continuous on an interval (a,b)*** if you can trace the function over that whole interval. All of the pattern-book functions are continuous over any interval in their domain except for power-law functions with negative exponents. (This includes the reciprocal since it is a power-law with a negative exponent:  $1/x = x^{-1}$.) Those exceptions are not defined at $x=0$. 
 
 To illustrate, consider the power-law function graphed in Figure \@ref(fig:for-words). On any interval (a,b) that does **not include 0**, the function is continuous.  For inputs $x < 0$, the function is negative. For inputs $0 < x$, the function is positive. So, on an interval that includes $x=0$ the function jumps discontinuously from negative to positive.  `r mark(433)`
 
@@ -127,9 +127,9 @@ To illustrate, consider the power-law function graphed in Figure \@ref(fig:for-w
 
 A function is ***monotonic*** on a domain when the *sign* of the slope never changes on that domain. Monotonic functions either steadily **increase** in value or, alternatively, steadily **decrease** in value. 
 
-Another way of thinking about monotonicity is to consider the order of inputs and outputs compared to a number line. If a function is monotonically increasing then it will preserve the order of inputs along the number line when it maps inputs to outputs, whereas a monotonically decreasing function will reverse the order. For instance, if the input $x$ comes before and input $y$ (i.e., $x<y$), then $f(x)<f(y)$ for monotonically *increasing* functions (the order is preserved), but $f(y)<f(x)$ for monotonically *decreasing* functions (the order of outputs is reversed).
+Another way of thinking about monotonicity is to consider the order of inputs and outputs compared to a number line. If a function is monotonically increasing then it will preserve the order of inputs along the number line when it maps inputs to outputs, whereas a monotonically decreasing function will reverse the order. For instance, if the input $x$ comes before an input $y$ (i.e., $x<y$), then $f(x)<f(y)$ for monotonically *increasing* functions (the order is preserved), but $f(y)<f(x)$ for monotonically *decreasing* functions (the order of outputs is reversed).
 
-Of the pattern-book functions in Figure \@ref(fig:for-words): both the exponential and the power-law function are monotonic: the exponential grows monotonically and the power-law $x^{-1}$ decreases monotonically. The sinusoid is not monotonic over any domain longer than half a cycle: the function switchs between positive slope and negative slope in different parts of the cycle. `r mark(434)`
+Of the pattern-book functions in Figure \@ref(fig:for-words): both the exponential and the logarithm function are monotonic: the exponential grows monotonically as does the logarithm. The sinusoid is not monotonic over any domain longer than half a cycle: the function switchs between positive slope and negative slope in different parts of the cycle. `r mark(434)`
     
 ### Periodicity
 

@@ -8,19 +8,31 @@ library(digest)
 nright <- 8
 ntotal <- 10
 
+kill_empty_lines <- function(str) {
+  str[nchar(str) > 0]
+}
+
+source_files <-
+  readLines("https://raw.githubusercontent.com/dtkaplan/Zdrill/main/Roster.Rmd") %>%
+  gsub("#.*$", "", .) %>% # get rid of comments
+  kill_empty_lines() %>%
+  paste0("https://raw.githubusercontent.com/dtkaplan/Zdrill/main/inst/", .)
+
+# Add in the testing questions straight from the Zdrill sources
 draft_questions <- "/Users/kaplan/KaplanFiles/USAFA/Zdrill/testing.Rmd"
 dq_size <- file.info(draft_questions)$size
 if (is.na(dq_size) || dq_size < 10) draft_questions <- NULL
 
-test_file <- system.file("Zdrill/www/text.Rmd", package="CalcZapps")
+# test_file <- system.file("Zdrill/www/text.Rmd", package="CalcZapps")
 source_files <- c(
-    "https://raw.githubusercontent.com/dtkaplan/Zdrill/main/Block_1.Rmd",
+    source_files,
     draft_questions
 )
 
 
 
-Qbank <- readQfiles(source_files)
+Qbank <- try(readQfiles(source_files))
+if (inherits(Qbank, "try-error")) cat("Problem reading files")
 Qbank_topics <- unique(Qbank$Q$topic)
 
 # an experiment to see if I can get markdown to render as HTML.
@@ -148,6 +160,7 @@ server <- function(input, output, session) {
         glue::glue("Question ID: {this_question$name}")
     })
     output$success_key <- renderText({
+      return(NULL) # Taking out the GradeScope hash connection
         if (State$n_correct < nright ) {
             glue::glue("Target: {nright} out of {ntotal}")
         } else if (State$n_answered <= ntotal ) {
