@@ -20,20 +20,22 @@ askMC <- function (prompt = "The question prompt", ..., id = NULL, right_one = N
 
   ## GradeScope output module
   if (out_format == "GradeScope") {
-    out <- fix_dollar_signs(prompt)
 
     answers <- paste0("(", ifelse(answer_table$correct, "x", " "), ")  ",
                       fix_dollar_signs(answer_table$item), collapse="\n")
 
+    feedback_for_correct <- answer_table$feedback[answer_table$correct]
+    if (nchar(gsub(" *", "", feedback_for_correct)) == 0)
+      feedback_for_correct <- random_success()
+
     feedback <- paste0("[[",
-                       paste(fix_dollar_signs(answer_table$feedback[answer_table$correct]),
+                       paste(fix_dollar_signs(feedback_for_correct),
                              collapse = "\n"),
                        "]]\n")
-    if (feedback == "[[]]") feedback <- NULL
 
     total <- paste(out, answers, feedback, sep="\n\n")
 
-    Res <- knitr::asis_output(paste0("<pre>", "[Question ", id, "]  ", total, "\n</pre>\n"))
+    Res <- knitr::asis_output(paste0("<pre>",  total, "\n</pre>\n"))
 
     return(Res)
   }
