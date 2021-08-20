@@ -352,24 +352,28 @@ We can experimentally determine the numerical value of the dimensionless constan
 <details><summary><strong>Exercise 16.1</strong>: <span><a name="File:%20Exercises/Dimension/frog-win-fridge.Rmd" href="#mHACgC"><img src="www/icons8-signpost.png" title="Location: Exercises/Dimension/frog-win-fridge.Rmd" width="12px"></a><span style="color: red; font-size: 9pt;">mHACgC</span>
 </span></summary><p>You are designing a pendulum for a planned joint NASA/ESA mission to Mars. From the orbital period and radius of Mars, its mass is known. From the mass and the observed diameter of the planet, gravitational acceleration at the surface is calculated as 3.721 m/s<span class="math inline">\(^2\)</span>. According to Section <a href="dimensions.html#pendulum-dimensions">16.4</a>, the period is <span class="math inline">\(\text{Period} = 2 \pi \sqrt{\frac{\text{Gravity}}{\text{Length}}}\)</span>.</p>
 <p>The length of your pendulum is 3 feet.</p>
-<pre>[Question ]  What will be the period of your pendulum when it eventually gets to Mars? (Hint: Don't make the mistake of the engineers working on the [Mars Polar Lander](https://en.wikipedia.org/wiki/Mars_Polar_Lander) and forget to resolve the different units of length presented in the problem.)
+<pre>What will be the period of your pendulum when it eventually gets to Mars? (Hint: Don't make the mistake of the engineers working on the [Mars Polar Lander](https://en.wikipedia.org/wiki/Mars_Polar_Lander) and forget to resolve the different units of length presented in the problem.) 
+
+
 
 ( )  1.3 seconds
 ( )  1.9 seconds
 (x)  3.1 seconds
 ( )  9.1 seconds
 
-[[]]
+[[Right!]]
 
 </pre>
-<pre>[Question ]  What is the period of your pendulum on Earth?
+<pre>What is the period of your pendulum on Earth? 
+
+
 
 ( )  1.3 seconds
 (x)  1.9 seconds
 ( )  3.1 seconds
 ( )  9.1 seconds
 
-[[]]
+[[Good.]]
 
 </pre>
 </details>
@@ -427,49 +431,55 @@ For the civil engineers, introduce the words stress and strain and talk about th
 Where <span class="math inline">\(n\)</span> is zero at the midnight marking New Years and increases by 1 per day. (The <span class="math inline">\(n+10\)</span> has units of days and translates New Years back 10 days, to the day of the winter solstice.) <span class="math inline">\(\delta_\odot()\)</span> gives the declination of the sun: the latitude pieced by an imagined line connecting the centers of the earth and the sun.</p>
 <p>The Wikipedia formula is well written in that it uses some familiar numbers to help the reader see where the formula comes from. 365 is recognizably the length of the year in days. <span class="math inline">\(360^\circ\)</span> is the angle traversed when making a full cycle around a circle. <span class="math inline">\(23.44^\circ\)</span> is less familiar, but the student of geography might recognize it as the latitude of the Tropic of Cancer, the latitude farthest north where the sun is directly overhead at noon (on the day of the summer solstice).</p>
 <p>But there’s a world of trouble for programmer who implements the formula as</p>
-<div class="sourceCode" id="cb130"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb131"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">dec_sun</span> <span class="op">&lt;-</span> <span class="fu">makeFun</span><span class="op">(</span><span class="op">-</span><span class="fl">23.44</span> <span class="op">*</span> <span class="fu"><a href="https://rdrr.io/r/base/Trig.html">cos</a></span><span class="op">(</span><span class="op">(</span><span class="fl">360</span><span class="op">/</span><span class="fl">365</span><span class="op">)</span><span class="op">*</span><span class="op">(</span><span class="va">n</span><span class="op">+</span><span class="fl">10</span><span class="op">)</span><span class="op">)</span> <span class="op">~</span> <span class="va">n</span><span class="op">)</span></code></pre></div>
 <p>For instance, the equinoxes are around March 21 (n=81) and Sept 21 (n=264). On an equinox, the delination of the sun is zero degrees. But let’s plug <span class="math inline">\(n=81\)</span> and <span class="math inline">\(n=264\)</span> into the formula and see what we get.</p>
-<div class="sourceCode" id="cb131"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb132"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">dec_sun</span><span class="op">(</span><span class="fl">81</span><span class="op">)</span></code></pre></div>
 <pre><code>## [1] 5.070321</code></pre>
-<div class="sourceCode" id="cb133"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb134"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">dec_sun</span><span class="op">(</span><span class="fl">264</span><span class="op">)</span></code></pre></div>
 <pre><code>## [1] -23.38324</code></pre>
 <p>The equinoxes aren’t even equal! And they are not close to zero. Does this mean astronomy is wrong?</p>
 <p>The Wikipedia formula should have been programmed this way, using 2 <span class="math inline">\(\pi\)</span> radians instead of 360 degrees:</p>
-<div class="sourceCode" id="cb135"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb136"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">dec_sun_right</span> <span class="op">&lt;-</span> <span class="fu">makeFun</span><span class="op">(</span><span class="op">-</span><span class="fl">23.44</span> <span class="op">*</span> <span class="fu"><a href="https://rdrr.io/r/base/Trig.html">cos</a></span><span class="op">(</span><span class="op">(</span> <span class="fl">2</span><span class="op">*</span><span class="va">pi</span> <span class="op">/</span> <span class="fl">365</span><span class="op">)</span><span class="op">*</span><span class="op">(</span><span class="va">n</span><span class="op">+</span><span class="fl">10</span><span class="op">)</span><span class="op">)</span> <span class="op">~</span> <span class="va">n</span><span class="op">)</span>
 <span class="fu">dec_sun_right</span><span class="op">(</span><span class="fl">81</span><span class="op">)</span></code></pre></div>
 <pre><code>## [1] -0.1008749</code></pre>
-<div class="sourceCode" id="cb137"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb138"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">dec_sun_right</span><span class="op">(</span><span class="fl">264</span><span class="op">)</span></code></pre></div>
 <pre><code>## [1] -0.1008749</code></pre>
 <p>The deviation of one-tenth of a degree reflects rounding off the time of the equinox to the nearest day.</p>
 </div>
 <details><summary><strong>Exercise 16.2</strong>: <span><a name="File:%20Exercises/Dimension/dim-formulas.Rmd" href="#UGDKY"><img src="www/icons8-signpost.png" title="Location: Exercises/Dimension/dim-formulas.Rmd" width="12px"></a><span style="color: red; font-size: 9pt;">UGDKY</span>
 </span></summary><p>For each mathematical operation, identify the operation as valid or invalid according to the rules of dimensional arithmetic.</p>
-<pre>[Question ]  In this formula $$$\frac{8 \text{m} - 2.5 \text{km}}{2 \text{min} - 32 \text{s}}$$$ choose which rule (if any) is violated.
+<pre>In this formula $$\frac{8 \text{m} - 2.5 \text{km}}{2 \text{min} - 32 \text{s}}$$ choose which rule (if any) is violated. 
+
+
 
 ( )  Addition or Subtraction rule
 ( )  Multiplication  or Division rule
 ( )  Exponential
 (x)  It's valid. No rules are violated.
 
-[[]]
+[[Correct.]]
 
 </pre>
-<pre>[Question ]  In this formula $$$\frac{3 \text{g} \times 2 \text{m}}{3 \text{km}^2}$$$ choose which rule (if any) is violated.
+<pre>In this formula $$\frac{3 \text{g} \times 2 \text{m}}{3 \text{km}^2}$$ choose which rule (if any) is violated. 
+
+
 
 ( )  Addition or Subtraction rule
 ( )  Multiplication  or Division rule
 ( )  Exponential
 (x)  It's valid. No rules are violated.
 
-[[]]
+[[Excellent!]]
 
 </pre>
-<pre>[Question ]  For this formula $$$10^{\frac{4 \text{hr}}{3 \text{g}}}$$$ choose which rule (if any) is violated.
+<pre>For this formula $$10^{\frac{4 \text{hr}}{3 \text{g}}}$$ choose which rule (if any) is violated. 
+
+
 
 ( )  Addition or Subtraction rule
 ( )  Multiplication  or Division rule
@@ -479,17 +489,21 @@ Where <span class="math inline">\(n\)</span> is zero at the midnight marking New
 [[The  exponent is 4 ft /  3 g, which  has dimension L / M.  Exponents must *always* have dimension [1].]]
 
 </pre>
-<pre>[Question ]  In this formula $$$6^{\frac{2 \text{hr}}{3 \text{min}}}$$$choose which rule (if any) is violated.
+<pre>In this formula $$6^{\frac{2 \text{hr}}{3 \text{min}}}$$choose which rule (if any) is violated. 
+
+
 
 ( )  Addition or Subtraction rule
 ( )  Multiplication  or Division rule
 ( )  Exponential
 (x)  It's valid. No rules are violated.
 
-[[]]
+[[Excellent!]]
 
 </pre>
-<pre>[Question ]  In this formula $$$5 \text{g} \times 3 \text{kg} - 7 \text{lbs}$$$ choose which rule (if any) is violated.
+<pre>In this formula $$5 \text{g} \times 3 \text{kg} - 7 \text{lbs}$$ choose which rule (if any) is violated. 
+
+
 
 (x)  Addition or Subtraction rule
 ( )  Multiplication  or Division rule
@@ -499,7 +513,9 @@ Where <span class="math inline">\(n\)</span> is zero at the midnight marking New
 [[You can't subtract M from M$$^2$$. (Strictly speaking, lbs has dimension of force, $$M L^2 / T^2$$, but you can't subtract force from M$$^2$$ either.]]
 
 </pre>
-<pre>[Question ]  In this formula $$$\sqrt[3]{8 m^3 + 27 \text{ft}^2}$$$ choose which rule (if any) is violated.
+<pre>In this formula $$\sqrt[3]{8 m^3 + 27 \text{ft}^2}$$ choose which rule (if any) is violated. 
+
+
 
 (x)  Addition or Subtraction rule
 ( )  Multiplication  or Division rule
@@ -510,7 +526,9 @@ Where <span class="math inline">\(n\)</span> is zero at the midnight marking New
 
 </pre>
 </details><details><summary><strong>Exercise 16.3</strong>: <span><a name="File:%20Exercises/Dimension/dim-params.Rmd" href="#DVGKY"><img src="www/icons8-signpost.png" title="Location: Exercises/Dimension/dim-params.Rmd" width="12px"></a><span style="color: red; font-size: 9pt;">DVGKY</span>
-</span></summary><pre>[Question ]  A) The dimension of $$t$$ is T,  that is, $$[t] = T$$. What must the dimension of $$k$$ for the arithmetic operation  to make sense?
+</span></summary><pre>A) The dimension of $t$ is T,  that is, $[t] = T$. What must the dimension of $k$ for the arithmetic operation  to make sense? 
+
+
 
 ( )  [1]
 (x)  T$$^{ -1}$$
@@ -520,7 +538,9 @@ Where <span class="math inline">\(n\)</span> is zero at the midnight marking New
 [[Right, [k] needs to cancel out [t] so that the exponention is valid.]]
 
 </pre>
-<pre>[Question ]  B) What must the dimension of $$c$$ for the arithmetic operation $$1 + c \cdot 2^{kt}$$  to make sense?
+<pre>B) What must the dimension of $c$ for the arithmetic operation $1 + c \cdot 2^{kt}$  to make sense? 
+
+
 
 (x)  [1]
 ( )  T$$^{-1}$$
@@ -536,34 +556,40 @@ Where <span class="math inline">\(n\)</span> is zero at the midnight marking New
 <p>Note that <span class="math inline">\(M^{2/3}\)</span> is <strong>not an allowed arithmetic operation</strong>. <span class="math inline">\([M] = \mbox{mass}\)</span>, and mass, like any other dimension, cannot be raised to a non-integer power. More properly, the expression should be written <span class="math display">\[\left(\frac{M}{1\  kg}\right)^{2/3}\]</span> The division by “1 kg” renders dimensionless the quantity in the parentheses: <span class="math display">\[\left[\frac{M}{1\  kg}\right] = 1\]</span>
 In order to render the quantity both dimensionless and <em>unitless</em>, <span class="math inline">\(M\)</span> should be specified in kg. The usual practice is to skip the “1 kg” business and simply say, “Where <span class="math inline">\(M\)</span> is in kg.” You will see such notation frequently in your career and should take care to use the indicated units.</p>
 <p>You’ll need to open a computing sandbox to do the calculations.</p>
-<pre>[Question ]  Consider a baby and an adult. The adult's mass is $$8$$ times greater than the baby's. Then the adult's surface area is ...?
+<pre>Consider a baby and an adult. The adult's mass is $8$ times greater than the baby's. Then the adult's surface area is ...? 
+
+
 
 ( )  The same as the baby's
 ( )  1.5 times of the baby's
 (x)  4 times the baby's
 ( )  8 times the baby's
 
-[[]]
+[[Correct.]]
 
 </pre>
-<pre>[Question ]  Consider a human of body mass 70 kg with a skin surface area of 18,600 cm^2^. Which of the following units for the constant of proportionality $$k$$ is correct?
+<pre>Consider a human of body mass 70 kg with a skin surface area of 18,600 cm^2^. Which of the following units for the constant of proportionality $k$ is correct? 
+
+
 
 ( )  cm$$^2$$ kg$$^{-2/3}$$
 (x)  cm$$^2$$
 ( )  cm$$^2$$ kg$$^{2/3}$$
 ( )  kg$$^{-1}$$
 
-[[]]
+[[Correct.]]
 
 </pre>
-<pre>[Question ]  In the units of part (B), which value is $$k$$ closest to?
+<pre>In the units of part (B), which value is $k$ closest to? 
+
+
 
 ( )  1
 ( )  10
 ( )  100
 (x)  1000
 
-[[]]
+[[Good.]]
 
 </pre>
 <p>The numerical value of the constant <span class="math inline">\(k\)</span> changes depending on what units you want to express it in. The value you found in part (C) works for masses stated in kg and skin areas in cm<span class="math inline">\(^2\)</span>.</p>
@@ -576,7 +602,9 @@ You can’t take (pounds)<span class="math inline">\(^{2/3}\)</span> or (kg)<spa
 <p>Still, there’s a problem. Multiplying <span class="math inline">\(k\ 154^{2/3} (\text{lbs}/\text{kg})^{2/3}\)</span> has the right dimension, but strange-looking units that have nothing to do with skin area.</p>
 <p>The resolution to this paradox is to multiply <span class="math inline">\(\frac{154\ \text{lbs}}{1\  \text{kg}}\)</span> by an appropriate flavor of 1 to render the dimensionless quantity unitless as well as dimensionless. This flavor will be <span class="math inline">\(\frac{1 \text{kg}}{2.2 lbs}\)</span>, giving a formula for skin area in square inches</p>
 <p><span class="math display">\[S_{in}(M)= \frac{k}{2.6^2}\left(\frac{154\ \bcancel{\text{lbs}}}{1\ \cancel{\text{kg}}}\ \underbrace{\frac{1\ \cancel{\text{kg}}}{2.2\ \bcancel{\text{lbs}}}}_\text{flavor of 1}\right)^{2/3} = \underbrace{\frac{k}{2.6^2}\ \left(\frac{1}{2.2}\right)^{2/3}}_{k'\ \text{for inches and pounds}} 154^{2/3}\]</span></p>
-<pre>[Question ]  Optional challenge) Assuming that $$k = 1000 \text{cm}^2$$ when specifying mass in kilograms, what should be the numerical value of $$k'$$ in square-inches that should be used when body mass is given in pounds?
+<pre>Optional challenge) Assuming that $k = 1000 \text{cm}^2$ when specifying mass in kilograms, what should be the numerical value of $k'$ in square-inches that should be used when body mass is given in pounds? 
+
+
 
 ( )  8.7
 (x)  87
@@ -584,7 +612,7 @@ You can’t take (pounds)<span class="math inline">\(^{2/3}\)</span> or (kg)<spa
 ( )  8700
 ( )  87000
 
-[[]]
+[[Correct.]]
 
 </pre>
 </details><details><summary><strong>Exercise 16.5</strong>: <span><a name="File:%20Exercises/Dimension/Boyd-1.Rmd" href="#JELCI"><img src="www/icons8-signpost.png" title="Location: Exercises/Dimension/Boyd-1.Rmd" width="12px"></a><span style="color: red; font-size: 9pt;">JELCI</span>
@@ -598,17 +626,21 @@ You can’t take (pounds)<span class="math inline">\(^{2/3}\)</span> or (kg)<spa
 <li><p>Energy has dimension [Force] <span class="math inline">\(\times\  L\)</span></p></li>
 <li><p>Power has dimension [Energy] <span class="math inline">\(\times\  T^{-1}\)</span>.</p></li>
 </ul>
-<pre>[Question ]  Which of the following is a correct dimensional formulation of power?
+<pre>Which of the following is a correct dimensional formulation of power? 
+
+
 
 (x)  [Force][Velocity]
 ( )  [Energy][Velocity]
 ( )  [Force] / [Velocity]
 ( )  [Energy] / [Velocity]
 
-[[]]
+[[Excellent!]]
 
 </pre>
-<pre>[Question ]  What is the dimension of $$P_s$$ in E-M Theory?
+<pre>What is the dimension of $P_s$ in E-M Theory? 
+
+
 
 (x)  [Power] $$\times\ M^{-1}$$
 ( )  [Force] $$\times$$ [Acceleration]
@@ -622,24 +654,28 @@ You can’t take (pounds)<span class="math inline">\(^{2/3}\)</span> or (kg)<spa
 </span></summary><p>Newton’s law of universal gravitation—also known as the inverse square law—is generally written <span class="math display">\[F = G \frac{m_1\ m_2}{r^2} .\]</span>
 <span class="math inline">\(m_1\)</span> and <span class="math inline">\(m_2\)</span> are the masses of the two objects (say, Earth and Sun). <span class="math inline">\(r\)</span> is the distance between the two objects (about 150,000,000 km). <span class="math inline">\(F\)</span> is the gravitational force and <span class="math inline">\(G\)</span> is a fixed quantity called the “gravitational constant.”</p>
 <p>Of course, you already know the dimension of force, mass, and distance.</p>
-<pre>[Question ]  What is the dimension of the gravitational constant, $$G$$?
+<pre>What is the dimension of the gravitational constant, $G$? 
+
+
 
 (x)  $$L^3 M^{-1} T^{-2}$$
 ( )  $$L^2 M^{-2}$$
 ( )  $$L^2 M^{2} T^{-2}$$
 ( )  $$L^2 M^{-2} T^{-2}
 
-[[]]
+[[Right!]]
 
 </pre>
-<pre>[Question ]  The quantity $$G$$ is $$6.674 \times 10^{−11}$$ when $$L$$ is in meters, $$M$$ is in kilograms, and $$T$$ in seconds. What is the gravitational force between Earth (mass $$6 \times 10^{24}$$ kg) and Sun (mass $$2  imes 10^{30}$$ kg) ?
+<pre>The quantity $G$ is $6.674 \times 10^{−11}$ when $L$ is in meters, $M$ is in kilograms, and $T$ in seconds. What is the gravitational force between Earth (mass $6 \times 10^{24}$ kg) and Sun (mass $2    imes 10^{30}$ kg) ? 
+
+
 
 (x)  $$3.6 \times 10^{28}$$ Newtons
 ( )  $$3.6 \times 10^{31}$$ meters
 ( )  $$3.6 \times 10^{28}$$ meters per second-squared
 ( )  $$3.6 \times 10^{31}$$ meter seconds per kg
 
-[[]]
+[[Right!]]
 
 </pre>
 </details><!-- `rrr insert_calcZ_exercise("XX.XX", "3dkse", "Exercises/Dimension/rooster-blue.Rmd")` --><!-- Block 1 project
@@ -689,7 +725,7 @@ You could equally well say that the $\sin()$ function has a characteristic scale
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>CalcZ Student Notes</strong>" was written by Daniel Kaplan. It was last built on 2021-08-18.</p>
+    <p>"<strong>CalcZ Student Notes</strong>" was written by Daniel Kaplan. It was last built on 2021-08-20.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

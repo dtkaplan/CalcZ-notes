@@ -167,7 +167,7 @@ EXERCISE: <span class="math inline">\(\log_{10}(x)\)</span> and <span class="mat
 <p>What is the order-of-magnitude difference in velocity between a snail and a walking human. A snail slides at about 1 mm/sec, a human walks at about 5 km per hour. Putting human speed in the same units as snail speed:
 <span class="math display">\[5 \frac{km}{hr} = \left[\frac{1}{3600} \frac{hr}{sec}\right] 5 \frac{km}{hr} = \left[10^6 \frac{mm}{km}\right] \left[\frac{1}{3600} \frac{hr}{sec}\right] 5 \frac{km}{hr} = 1390 \frac{mm}{sec} \]</span>
 Calculating the difference in <code>digits()</code> between 1 and 1390:</p>
-<div class="sourceCode" id="cb106"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb105"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/Log.html">log10</a></span><span class="op">(</span><span class="fl">1390</span><span class="op">)</span> <span class="op">-</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html">log10</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span></code></pre></div>
 <pre><code>## [1] 3.143015</code></pre>
 <p>So, about 3 orders of magnitude difference in speed. To a snail, we walking humans must seem like rockets on their way to orbit!</p>
@@ -216,12 +216,15 @@ Calculating the difference in <code>digits()</code> between 1 and 1390:</p>
 <p>Open a sandbox and make the plot.</p>
 <div class="scaffolding">
 <p>We’re going to plot confirmed cases in blue and deaths in red.</p>
-<div class="sourceCode" id="cb108"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb107"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">gf_point</span><span class="op">(</span><span class="va">confirmed</span> <span class="op">~</span> <span class="va">date</span>, data <span class="op">=</span> <span class="va">Covid_US</span>, color <span class="op">=</span> <span class="st">"blue"</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu">gf_point</span><span class="op">(</span><span class="va">deaths</span> <span class="op">~</span> <span class="va">date</span>, color <span class="op">=</span> <span class="st">"red"</span><span class="op">)</span></code></pre></div>
+<pre><code>## Warning: Removed 38 rows containing missing values (geom_point).</code></pre>
 <div class="inline-figure"><img src="CalcZ-notes_files/figure-html/unnamed-chunk-209-1.png" width="90%" style="display: block; margin: auto;"></div>
 </div>
-<pre>[Question ]  As of mid July, about how many confirmed cases were there? (Note that the labeled tick marks refer to the beginning of the month, so the point labeled `Feb` is February 1.)
+<pre>As of mid July, about how many confirmed cases were there? (Note that the labeled tick marks refer to the beginning of the month, so the point labeled `Feb` is February 1.) 
+
+
 
 ( )  about 300,000
 ( )  about 350,000
@@ -230,7 +233,7 @@ Calculating the difference in <code>digits()</code> between 1 and 1390:</p>
 (x)  about 3,500,000
 ( )  about 4,000,000
 
-[[]]
+[[Right!]]
 
 </pre>
 <p>We’re going to do something to make the graph more informative. (At least, more informative if you understand about logarithms and exponentials!)</p>
@@ -239,25 +242,30 @@ Calculating the difference in <code>digits()</code> between 1 and 1390:</p>
 <div class="sourceCode" id="cb109"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">gf_point</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html">log</a></span><span class="op">(</span><span class="va">confirmed</span><span class="op">)</span> <span class="op">~</span> <span class="va">date</span>, data <span class="op">=</span> <span class="va">Covid_US</span>, color <span class="op">=</span> <span class="st">"dodgerblue"</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu">gf_point</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html">log</a></span><span class="op">(</span><span class="va">deaths</span><span class="op">)</span> <span class="op">~</span> <span class="va">date</span>, color <span class="op">=</span> <span class="st">"orange3"</span><span class="op">)</span> </code></pre></div>
+<pre><code>## Warning: Removed 38 rows containing missing values (geom_point).</code></pre>
 <div class="inline-figure"><img src="CalcZ-notes_files/figure-html/unnamed-chunk-210-1.png" width="90%" style="display: block; margin: auto;"></div>
 </div>
 <p>Up through the beginning of March in the US, it is thought that most US cases were in people travelling into the US from hot spots such as China and Italy and the US, as opposed to contagion between people within the US. (Such contagion is called “community spread.”) So let’s focus on the data from the start of March onward.</p>
 <p>Exponential growth appears as a straight-line pattern on a semi-log plot. Obviously, the overall pattern of the curves is not a straight line. The explanation for this is that the exponential growth rate changes over time, perhaps due to public health measures (like business closing, masks, etc.)</p>
 <p>The first (official) US death from Covid-19 was recorded was recorded on Feb. 29, 2020. Five more deaths occurred two days later, bringing the cumulative number to 6.</p>
-<pre>[Question ]  The red data points for Feb 29/March 1 show up at zero on the vertical scale. The red data point for March 2 is at around 2 on the vertical scale. Is this consistent with the facts stated above?
+<pre>The red data points for Feb 29/March 1 show up at zero on the vertical scale. The red data point for March 2 is at around 2 on the vertical scale. Is this consistent with the facts stated above? 
+
+
 
 ( )  No. The data contradict the facts.
 (x)  Yes. The vertical scale is in log units, so 0 corresponds to 1 death, since $$\ln 1 = 0$$.
 ( )  No. The vertical scale doesn't mean anything.
 
-[[]]
+[[Excellent!]]
 
 </pre>
 <p>One of the purposes of making a semi-log plot is to enable you to compare very large numbers with very small numbers on the same graph. For instance, in the semi-log plot, you can easily see when the first death occurred, a fact that is invisible in the plot of the raw counts (the first plot in this exercise).</p>
 <p>Another feature of semi-log plots is that they preserve proportionality. Look at the plot of raw counts and note that the curve for the number of deaths is much shallower than the curve for the number of (confirmed) cases. Yet on the semi-log plot, the two curves are practically parallel.</p>
 <p>On a semi-log plot, the arithmetic difference between the two curves tells you what the proportion is between those curves. The parallel curves mean that the proportion is practically constant.
 Calculate what the proportion between deaths and cases was in the month of May. Here’s a mathematical hint: <span class="math inline">\(\ln \frac{a}{b} == \ln a - \ln b\)</span>. We are interested in <span class="math inline">\(\frac{a}{b}\)</span>.</p>
-<pre>[Question ]  What is the proportion of deaths to cases during the month of May?
+<pre>What is the proportion of deaths to cases during the month of May? 
+
+
 
 ( )  about 0.2%
 ( )  about 1%
@@ -271,18 +279,18 @@ Calculate what the proportion between deaths and cases was in the month of May. 
 </pre>
 <p>In many applications, people use semi-log plots to see whether a pattern is exponential or to compare very small and very large numbers. Often, people find it easier if the vertical scale is written in the original units rather than the log units. To accomplish both, the vertical scale can be ruled with raw units spaced logarithmically, like this:</p>
 <div class="scaffolding">
-<div class="sourceCode" id="cb110"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb111"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">gf_point</span><span class="op">(</span><span class="va">confirmed</span> <span class="op">~</span> <span class="va">date</span>, data <span class="op">=</span> <span class="va">Covid_US</span>, color <span class="op">=</span> <span class="st">"dodgerblue"</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu">gf_point</span><span class="op">(</span><span class="va">deaths</span> <span class="op">~</span> <span class="va">date</span>, color <span class="op">=</span> <span class="st">"orange3"</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu">gf_refine</span><span class="op">(</span><span class="fu">scale_y_log10</span><span class="op">(</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<pre><code>## Warning: Transformation introduced infinite values in continuous y-axis
-
-## Warning: Transformation introduced infinite values in continuous y-axis</code></pre>
+<pre><code>## Warning: Removed 38 rows containing missing values (geom_point).</code></pre>
 <div class="inline-figure"><img src="CalcZ-notes_files/figure-html/unnamed-chunk-211-1.png" width="90%" style="display: block; margin: auto;"></div>
 </div>
 <p>The <strong>labels</strong> on the vertical axis show the raw numbers, while the <strong>position</strong> shows the logarithm of those numbers.</p>
 <p>The next question has to do with the meaning of the interval between grid lines on the vertical axis. Note that on the <em>horizontal</em> axis, the spacing between adjacent grid lines is half a month.</p>
-<pre>[Question ]  What is the numerical spacing (in terms of raw counts) between adjacent grid lines on the vertical axis? (Note: Two numbers are different by a "factor of 10" when one number is 10 times the other." Similarly, "a factor of 100" means that one number is 100 times the other.
+<pre>What is the numerical spacing (in terms of raw counts) between adjacent grid lines on the vertical axis? (Note: Two numbers are different by a "factor of 10" when one number is 10 times the other." Similarly, "a factor of 100" means that one number is 100 times the other. 
+
+
 
 ( )  $$10^1$$
 ( )  $$10^2$$
@@ -305,38 +313,46 @@ Calculate what the proportion between deaths and cases was in the month of May. 
 <li>Exponential: The input is a magnitude, the output is the quantity with that magnitude.</li>
 </ul>
 <details><summary><strong>Exercise 15.3</strong>: <span><a name="File:%20Exercises/Fun/cat-lend-futon.Rmd" href="#ILESX"><img src="www/icons8-signpost.png" title="Location: Exercises/Fun/cat-lend-futon.Rmd" width="12px"></a><span style="color: red; font-size: 9pt;">ILESX</span>
-</span></summary><pre>[Question ]  True or false: $$2^x$$ is a power-law function.
+</span></summary><pre>True or false: $2^x$ is a power-law function. 
+
+
 
 ( )  TRUE
 (x)  FALSE
 
-[[]]
+[[Right!]]
 
 </pre>
-<pre>[Question ]  True or false: $$3/x^2$$ is a power-law function. 
+<pre>True or false: $3/x^2$ is a power-law function.  
+
+
 
 (x)  TRUE
 ( )  FALSE
 
-[[]]
+[[Right-oh! ]]
 
 </pre>
-<pre>[Question ]  True or false: $$5\sqrt{x}$$ is a power-law function. 
+<pre>True or false: $5\sqrt{x}$ is a power-law function.  
+
+
 
 (x)  TRUE
 ( )  FALSE
 
-[[]]
+[[Right!]]
 
 </pre>
-<pre>[Question ]  The gravitational force, F, between two bodies is inversely proportional to the square of the distance $$d$$ between them. Then ...
+<pre>The gravitational force, F, between two bodies is inversely proportional to the square of the distance $d$ between them. Then ... 
+
+
 
 ( )  $$F = k d^{2}$$
 (x)  $$F = kd^{-2}$$
 ( )  $$F = k d^{1/2}$$
 ( )  $$F = k d^{-1/2}$$
 
-[[]]
+[[Correct.]]
 
 </pre>
 </details>
@@ -346,7 +362,7 @@ Calculate what the proportion between deaths and cases was in the month of May. 
 <span class="header-section-number">15.5</span> Magnitude graphics<a class="anchor" aria-label="anchor" href="#magnitude-graphics"><i class="fas fa-link"></i></a>
 </h2>
 <p>In order to display a variable from data that varies over multiple orders of magnitude, it helps to plot the <strong><em>logarithm</em></strong> rather than the variable itself. Let’s illustrate using the <code>Engine</code> data frame, which contains measurements of many different internal combustion engines of widely varying size. For instance, we can graph engine RPM (revolutions per second) versus enging mass, as in Figure <a href="magnitudes.html#fig:rpm-mass">15.1</a>.</p>
-<div class="sourceCode" id="cb112"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb113"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">gf_point</span><span class="op">(</span><span class="va">RPM</span> <span class="op">~</span> <span class="va">mass</span>, data <span class="op">=</span> <span class="va">Engines</span><span class="op">)</span></code></pre></div>
 <div class="figure" style="text-align: center">
 <span id="fig:rpm-mass"></span>
@@ -356,7 +372,7 @@ Figure 15.1: Engine RPM versus mass for 39 different enginges plotted on the sta
 </div>
 <p>In the graph, most of the engines have a mass that is … zero. At least that’s what it appears to be. The horizontal scale is dominated by the two huge 100,000 pound monster engines plotted at the right end of the graph.</p>
 <p>Plotting the logarithm of the engine mass spreads things out, as in Figure @ref(fig:rpm-mass-log}.</p>
-<div class="sourceCode" id="cb113"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb114"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">gf_point</span><span class="op">(</span><span class="va">RPM</span> <span class="op">~</span> <span class="va">mass</span>, data <span class="op">=</span> <span class="va">Engines</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu">gf_refine</span><span class="op">(</span><span class="fu">scale_x_log10</span><span class="op">(</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <div class="figure" style="text-align: center">
@@ -367,7 +383,7 @@ Figure 15.2: Engine RPM versus mass on semi-log axes.
 </div>
 <p>Note that the horizontal axis has been labelled with the actual mass (in pounds), with the labels evenly spaced in terms of their logarithm. This presentation, with the horizontal axis constructed this way, is called a <strong><em>semi-log</em></strong> plot.</p>
 <p>When both axes are labeled this way, we have a <strong><em>log-log</em></strong> plot, as shown in Figure @ref(fig:rpm-mass-log-log}</p>
-<div class="sourceCode" id="cb114"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb115"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">gf_point</span><span class="op">(</span><span class="va">RPM</span> <span class="op">~</span> <span class="va">mass</span>, data <span class="op">=</span> <span class="va">Engines</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu">gf_refine</span><span class="op">(</span>
     <span class="fu">scale_x_log10</span><span class="op">(</span><span class="op">)</span>,
@@ -391,7 +407,7 @@ Figure 15.4: A cartoon illustrating Boyle’s Law. Source: <a href="https://www.
 </p>
 </div>
 <p>Figure <a href="magnitudes.html#fig:boyle-data">15.5</a> plots out Boyle’s actual experimental data. I</p>
-<div class="sourceCode" id="cb115"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb116"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">gf_point</span><span class="op">(</span><span class="va">pressure</span> <span class="op">~</span> <span class="va">volume</span>, data <span class="op">=</span> <span class="va">Boyle</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu">gf_lm</span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <div class="figure" style="text-align: center">
@@ -402,7 +418,7 @@ Figure 15.5: A plot of Boyle’s pressure vs volume data on linear axes. The str
 </div>
 <p>You can see a clear relationship between pressure and volume, but it’s hardly a linear relationship.</p>
 <p>Plotting Boyle’s data on log-log axes reveals that, in terms of the logarithm of pressure and the logarithm of volume, the relationship is linear.</p>
-<div class="sourceCode" id="cb116"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb117"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">gf_point</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html">log</a></span><span class="op">(</span><span class="va">pressure</span><span class="op">)</span> <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html">log</a></span><span class="op">(</span><span class="va">volume</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">Boyle</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu">gf_lm</span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <div class="figure" style="text-align: center">
@@ -422,14 +438,16 @@ A power-law relationship!</p>
 <details><summary><strong>Exercise 15.4</strong>: <span><a name="File:%20Exercises/Fun/mag-blue.Rmd" href="#ILXEG"><img src="www/icons8-signpost.png" title="Location: Exercises/Fun/mag-blue.Rmd" width="12px"></a><span style="color: red; font-size: 9pt;">ILXEG</span>
 </span></summary><p>Open a <a href="https://maa-statprep.shinyapps.io/CalcZ-Sandbox/">SANDBOX</a> and make the following log-log plot of horsepower (<code>BHP</code>) versus displacement of the internal combustion engines listed in the <code>Engines</code> data frame.</p>
 <div class="scaffolding">
-<div class="sourceCode" id="cb117"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb118"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">gf_point</span><span class="op">(</span><span class="va">BHP</span> <span class="op">~</span> <span class="va">displacement</span>, data <span class="op">=</span> <span class="va">Engines</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu">gf_refine</span><span class="op">(</span><span class="fu">scale_x_log10</span><span class="op">(</span><span class="op">)</span>, <span class="fu">scale_y_log10</span><span class="op">(</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <div class="inline-figure"><img src="CalcZ-notes_files/figure-html/unnamed-chunk-214-1.png" width="90%" style="display: block; margin: auto;"></div>
 </div>
 <p>In the plot, you’ll see that the vertical axis has labels at 1, 10, 100, 1000, 10000. These numbers are hardly spaced evenly when plotted on a linear scale, but on the log scale they are evenly spaced. Since there is a factor of ten between consecutive labels, the interval between the labels is called a <strong><em>decade</em></strong>. On the horizontal axis, the labels are at 10, 1000, 100,000, and 10,000,000. Each of those intervals spans a factor of one hundred. For instance, from 1000 is one-hundred times 10, 100,000 is one-hundred times 1000, and so on. An interval of size 100 is said to span <strong><em>two decades</em></strong>, not 20 years but a factor of 100.</p>
 <p>Based on the log-log plot, answer these questions.</p>
-<pre>[Question ]  How many engines have a displacement of 1 liter or less?
+<pre>How many engines have a displacement of 1 liter or less? 
+
+
 
 ( )  none
 ( )  7
@@ -440,20 +458,22 @@ A power-law relationship!</p>
 [[Right. It's the $$10^3$$ tick that marks 1 liter, since 1 liter is 1000 cc.]]
 
 </pre>
-<pre>[Question ]  Using the log-log plot, how many decades of BHP are spanned by the data?
+<pre>Using the log-log plot, how many decades of BHP are spanned by the data? 
+
+
 
 ( )  4
 (x)  5
 ( )  100
 
-[[]]
+[[Good.]]
 
 </pre>
 </details><details><summary><strong>Exercise 15.5</strong>: <span><a name="File:%20Exercises/Dimension/Boyles-data.Rmd" href="#RWESX"><img src="www/icons8-signpost.png" title="Location: Exercises/Dimension/Boyles-data.Rmd" width="12px"></a><span style="color: red; font-size: 9pt;">RWESX</span>
 </span></summary><p>Open a sandbox to carry out some calculations with Boyle’s data. To see how the data frame is organized, use the <code><a href="https://rdrr.io/r/utils/head.html">head(Boyle)</a></code> and <code><a href="https://rdrr.io/r/base/names.html">names(Boyle)</a></code> commands.</p>
 <div class="scaffolding">
 <p>The scaffolding here contains a command for plotting out Boyle’s data. It also includes a command, <code>gf_lm()</code> that will add a graph of the best straight-line model to the plotted points. Recall that the <code>#</code> symbol turns what follows on the line into a <em>comment</em>, which is ignored by R. By removing the <code>#</code> selectively you can turn on the display of log axes.</p>
-<div class="sourceCode" id="cb118"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb119"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">gf_point</span><span class="op">(</span><span class="va">pressure</span> <span class="op">~</span> <span class="va">volume</span>, data <span class="op">=</span> <span class="va">Boyle</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu">gf_refine</span><span class="op">(</span>
      <span class="co"># scale_x_log10(),</span>
@@ -462,55 +482,65 @@ A power-law relationship!</p>
   <span class="fu">gf_lm</span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <div class="inline-figure"><img src="CalcZ-notes_files/figure-html/unnamed-chunk-216-1.png" width="90%" style="display: block; margin: auto;"></div>
 </div>
-<pre>[Question ]  In a sandbox, plot pressure versus volume using linear, semi-log, and log-log axes. Based on the plot, and the straight-line function drawn, which of these is a good model of the relationship between pressure and volume?
+<pre>In a sandbox, plot pressure versus volume using linear, semi-log, and log-log axes. Based on the plot, and the straight-line function drawn, which of these is a good model of the relationship between pressure and volume? 
+
+
 
 ( )  linear
 ( )  exponential
 (x)  power-law
 
-[[]]
+[[Excellent!]]
 
 </pre>
 </details><details><summary><strong>Exercise 15.6</strong>: <span><a name="File:%20Exercises/Fun/lion-jump-kitchen.Rmd" href="#gmZiWh"><img src="www/icons8-signpost.png" title="Location: Exercises/Fun/lion-jump-kitchen.Rmd" width="12px"></a><span style="color: red; font-size: 9pt;">gmZiWh</span>
 </span></summary><p>Recall Robert Boyle’s data on pressure and volume of a fixed mass of gas held at constant pressure. In Section <a href="magnitudes.html#magnitude-graphics">15.5</a> of the text you saw a graphical analysis that enabled you to identify Boyle’s Law with a power-law relationship between pressure and volume: <span class="math display">\[P(V) = a V^n\]</span> On log-log axes, a power-law relationship shows up as a straight-line graphically.</p>
 <p>Taking logarithms translates the relationship to a straight-line function:<span class="math display">\[\text{lnP(lnV)} = \ln(a) + n\,  \ln(V)\]</span>
 To find the parameter <span class="math inline">\(n\)</span>, you can fit the model to the data. This R command will do the job:</p>
-<div class="sourceCode" id="cb119"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb120"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">fitModel</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html">log</a></span><span class="op">(</span><span class="va">pressure</span><span class="op">)</span> <span class="op">~</span> <span class="va">a</span> <span class="op">+</span> <span class="va">n</span><span class="op">*</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html">log</a></span><span class="op">(</span><span class="va">volume</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">Boyle</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="https://rdrr.io/r/stats/coef.html">coefficients</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <p>Open a <a href="https://maa-statprep.shinyapps.io/CalcZ-Sandbox/">SANDBOX</a> and run the model-fitting command. Then, interpret the parameters.</p>
-<pre>[Question ]  What is the slope produced by `fitModel()` when fitting a power law model?
+<pre>What is the slope produced by `fitModel()` when fitting a power law model? 
+
+
 
 ( )  Roughly -1
 (x)  Almost exactly -1
 ( )  About -1.5
 ( )  Slope $$&gt; 0$$
 
-[[]]
+[[Right!]]
 
 </pre>
 <p>According to the appropriate model that you found in (A) and (B), interpret the function you found relating pressure and volume.</p>
-<pre>[Question ]  As the volume becomes very large, what happens to the pressure?
+<pre>As the volume becomes very large, what happens to the pressure? 
+
+
 
 (x)  Pressure becomes very small.
 ( )  Pressure stays constant
 ( )  Pressure also becomes large.
 ( )  None of the above
 
-[[]]
+[[Right-oh! ]]
 
 </pre>
 <p>Return to your use of <code>fitModel()</code> to find the slope of the straight-line fit to the appropriately log-transformed model. When you carried out the log transformation, you could have used the so-called “natural logarithm” with expressions like <code><a href="https://rdrr.io/r/base/Log.html">log(pressure)</a></code>. Alternatively, you could have used the log base-10 or the log base-2, with expressions like <code><a href="https://rdrr.io/r/base/Log.html">log(pressure, base = 10)</a></code> or <code><a href="https://rdrr.io/r/base/Log.html">log(volume, base = 2)</a></code>. Whichever you use, you should use the same base for all the logarithmic transformations when finding the straight-line parameters.</p>
-<pre>[Question ]  **(D)** Does the **slope** of the  straight line found by `fitModel()` depend on which base is used?
+<pre>**(D)** Does the **slope** of the  straight line found by `fitModel()` depend on which base is used? 
+
+
 
 (x)  No
 ( )  Yes
 ( )  There's no way to tell.
 
-[[]]
+[[Good.]]
 
 </pre>
-<pre>[Question ]  **(E)** Does the **intercept** of the  straight line found by `fitModel()` depend on which base is used?
+<pre>**(E)** Does the **intercept** of the  straight line found by `fitModel()` depend on which base is used? 
+
+
 
 (x)  Yes
 ( )  No
@@ -521,45 +551,51 @@ To find the parameter <span class="math inline">\(n\)</span>, you can fit the mo
 </details><details><summary><strong>Exercise 15.7</strong>: <span><a name="File:%20Exercises/Fun/engine-magnitude-new.Rmd" href="#EWLCI"><img src="www/icons8-signpost.png" title="Location: Exercises/Fun/engine-magnitude-new.Rmd" width="12px"></a><span style="color: red; font-size: 9pt;">EWLCI</span>
 </span></summary><p>Here is a plot of the power output (BHP) versus displacement (in cc) of 39 internal combustion engines.</p>
 <div class="scaffolding">
-<div class="sourceCode" id="cb120"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb121"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">gf_point</span><span class="op">(</span><span class="va">BHP</span> <span class="op">~</span> <span class="va">displacement</span>, data <span class="op">=</span> <span class="va">Engines</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu">gf_lims</span><span class="op">(</span>y  <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">30000</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <div class="inline-figure"><img src="CalcZ-notes_files/figure-html/unnamed-chunk-219-1.png" width="90%" style="display: block; margin: auto;"></div>
 </div>
-<pre>[Question ]  Your study partner claims that the smallest engine in the data has a displacement of 2000 cc (that is, 2.0 liters) and 100 horsepower. Based only on the graph, is this claim plausible?
+<pre>Your study partner claims that the smallest engine in the data has a displacement of 2000 cc (that is, 2.0 liters) and 100 horsepower. Based only on the graph, is this claim plausible? 
+
+
 
 (x)  Yes, because 2000  cc and 100 hp would look like (0, 0) on  the scale of this graph.
 ( )  Yes, because that size engine is typical for a small car.
 ( )  No, the smallest engine is close to 0 cc.
 ( )  No, my study partner is always wrong.
 
-[[]]
+[[Excellent!]]
 
 </pre>
 <p><strong>Semi-log scales</strong></p>
 <p>The next command will make a graph of the same engine data as before, but with a log scale on the horizontal axis. The vertical axis is still linear.</p>
-<div class="sourceCode" id="cb121"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb122"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">gf_point</span><span class="op">(</span><span class="va">BHP</span> <span class="op">~</span> <span class="va">displacement</span>, data <span class="op">=</span> <span class="va">Engines</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu">gf_refine</span><span class="op">(</span><span class="fu">scale_x_log10</span><span class="op">(</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <div class="inline-figure"><img src="CalcZ-notes_files/figure-html/unnamed-chunk-220-1.png" width="90%" style="display: block; margin: auto;"></div>
-<pre>[Question ]  Using just the graph, answer this question: The engines range over how many decades of displacement? (Remember, a decade is a factor of 10.)
+<pre>Using just the graph, answer this question: The engines range over how many decades of displacement? (Remember, a decade is a factor of 10.) 
+
+
 
 (x)  7 decades
 ( )  Can't tell
 ( )  $$10^7$$ decades
 ( )  About 3.5 decades
 
-[[]]
+[[Correct.]]
 
 </pre>
 <p><strong>Log-log scales</strong></p>
 <p>In order to make a graph with log-log scales, we refine the graph with both <code>scale_y_log10()</code> and <code>scale_x_log10()</code>, as in the following …</p>
-<div class="sourceCode" id="cb122"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb123"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">gf_point</span><span class="op">(</span><span class="va">BHP</span> <span class="op">~</span> <span class="va">displacement</span>, data <span class="op">=</span> <span class="va">Engines</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu">gf_refine</span><span class="op">(</span><span class="fu">scale_x_log10</span><span class="op">(</span><span class="op">)</span>, <span class="fu">scale_y_log10</span><span class="op">(</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <div class="inline-figure"><img src="CalcZ-notes_files/figure-html/unnamed-chunk-221-1.png" width="90%" style="display: block; margin: auto;"></div>
 <p>Based on the log-log plot, answer these questions.</p>
-<pre>[Question ]  How many engines have a displacement of 1 liter or less?
+<pre>How many engines have a displacement of 1 liter or less? 
+
+
 
 ( )  none
 ( )  7
@@ -570,13 +606,15 @@ To find the parameter <span class="math inline">\(n\)</span>, you can fit the mo
 [[Right. It's the $$10^3$$ tick that marks 1 liter, since 1 liter is 1000 cc.]]
 
 </pre>
-<pre>[Question ]  Using the log-log plot, how many decades of BHP are spanned by the data?
+<pre>Using the log-log plot, how many decades of BHP are spanned by the data? 
+
+
 
 ( )  4
 (x)  5
 ( )  100
 
-[[]]
+[[Excellent!]]
 
 </pre>
 </details>
@@ -587,7 +625,7 @@ To find the parameter <span class="math inline">\(n\)</span>, you can fit the mo
 </h2>
 <p>Plotting the logarithm of a quantity gives a visual display of the magnitude of the quantity and labels the axis as that magnitude. A useful graphical technique is to label the axis with the original quantity, letting the position on the axis show the magnitude. <span style="float: right; padding-left: 50px;"><a name="1640" href="#1640"><img src="www/icons8-signpost.png" title="Location: 1640" width="12px"></a><span style="color: red; font-size: 6pt;">1640</span></span></p>
 <p>To illustrate, Figure <a href="magnitudes.html#fig:mag-scales-1">15.7</a>(left) is a log-log graph of horsepower versus displacement for the internal combustion engines reported in the <code>Engines</code> data frame. The points are admirably evenly spaced, but it is hard to translate the scales to the physical quantity. The right panel in Figure <a href="magnitudes.html#fig:mag-scales-1">15.7</a> shows <em>exactly the same data points</em>, but now the scales are labeled using the original quantity.</p>
-<div class="sourceCode" id="cb123"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb124"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">gf_point</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html">log</a></span><span class="op">(</span><span class="va">BHP</span><span class="op">)</span> <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html">log</a></span><span class="op">(</span><span class="va">displacement</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">Engines</span><span class="op">)</span>
 <span class="fu">gf_point</span><span class="op">(</span><span class="va">BHP</span> <span class="op">~</span> <span class="va">displacement</span>, data <span class="op">=</span> <span class="va">Engines</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu">gf_refine</span><span class="op">(</span><span class="fu">scale_y_log10</span><span class="op">(</span><span class="op">)</span>, <span class="fu">scale_x_log10</span><span class="op">(</span><span class="op">)</span><span class="op">)</span> </code></pre></div>
@@ -606,7 +644,9 @@ Figure 15.7: Horsepower versus displacement from the <code>Engines</code> data.f
 <p>It’s nice to have the labels show round numbers. It’s also nice for them to be evenly spaced along the axis. The 1-2-3-5-10 convention is a good compromise; almost evenly separated in space yet showing simple round numbers.</p>
 <details><summary><strong>Exercise 15.8</strong>: <span><a name="File:%20Exercises/Fun/fish-walk-green.Rmd" href="#TLEXE"><img src="www/icons8-signpost.png" title="Location: Exercises/Fun/fish-walk-green.Rmd" width="12px"></a><span style="color: red; font-size: 9pt;">TLEXE</span>
 </span></summary><div class="inline-figure"><img src="CalcZ-notes_files/figure-html/unnamed-chunk-223-1.png" width="90%" style="display: block; margin: auto;"></div>
-<pre>[Question ]  Consider the axis scales shown above.  Which kind of scale is the horizontal axis?
+<pre>Consider the axis scales shown above.  Which kind of scale is the horizontal axis? 
+
+
 
 (x)  linear
 ( )  logarithmic
@@ -616,95 +656,109 @@ Figure 15.7: Horsepower versus displacement from the <code>Engines</code> data.f
 [[You can see this because a given length along the axis corresponds to the same arithmetic difference regardless of where you are on the axis.  the distance between 0 and 50 is exactly the same as the difference between 50 and 100, or the distance between 150 and 200.]]
 
 </pre>
-<pre>[Question ]  Which kind of scale is the vertical axis?
+<pre>Which kind of scale is the vertical axis? 
+
+
 
 ( )  linear
 (x)  logarithmic
 ( )  semi-logarithmic
 ( )  log-log
 
-[[]]
+[[Right!]]
 
 </pre>
-<pre>[Question ]  Given your answers to the  previous two questions, what kind of plot would be made in the frame being displayed at the top of this question?
+<pre>Given your answers to the  previous two questions, what kind of plot would be made in the frame being displayed at the top of this question? 
+
+
 
 (x)  semi-log
 ( )  log-log
 ( )  linear-linear
 
-[[]]
+[[Right-oh! ]]
 
 </pre>
 </details><details><summary><strong>Exercise 15.9</strong>: <span><a name="File:%20Exercises/Dimension/tiger-have-fork.Rmd" href="#SELIX"><img src="www/icons8-signpost.png" title="Location: Exercises/Dimension/tiger-have-fork.Rmd" width="12px"></a><span style="color: red; font-size: 9pt;">SELIX</span>
 </span></summary><p>The data frame <code>SSA_2007</code> comes from the [US Social Security Administration(<a href="https://www.ssa.gov/oact/STATS/table4c6.html" class="uri">https://www.ssa.gov/oact/STATS/table4c6.html</a>) and contains mortality in the US as a function of age and sex. (“Mortality” refers to the probability of dying in the next year.)</p>
 <div class="scaffolding">
 <p>Open a sandbox and copy in the following scaffolding to see the organization of the data.</p>
-<div class="sourceCode" id="cb125"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb126"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="va">SSA_2007</span><span class="op">)</span>
 <span class="va">SSA_2007</span></code></pre></div>
 </div>
 <p>Once you understand the data organization, delete the old scaffolding and insert this:
 ::: {.scaffolding}</p>
-<div class="sourceCode" id="cb126"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb127"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="va">SSA_2007</span><span class="op">)</span>
 <span class="fu">gf_point</span><span class="op">(</span><span class="va">mortality</span> <span class="op">~</span> <span class="va">age</span>, color <span class="op">=</span> <span class="op">~</span> <span class="va">sex</span>, data <span class="op">=</span> <span class="va">SSA_2007</span><span class="op">)</span></code></pre></div>
 <p>There is a <em>slight</em> mistake in the way the command is written,
 so and error message will be generated. To figure out what’s wrong, read the error message, check the variable names, and so on until you successfully make the plot.
 :::</p>
-<pre>[Question ]  A) What was the mistake in the plotting command in the above code box?
+<pre>A) What was the mistake in the plotting command in the above code box? 
+
+
 
 (x)  Variable names didn't match the ones in the data.
 ( )  The *tilde* in the argument `color = ~ sex`
 ( )  The data frame name is spelled wrong.
 ( )  There is no function `gf_point()`.
 
-[[]]
+[[Correct.]]
 
 </pre>
 <p><strong>Essay question tmp-5</strong>: B) What’s the obvious (simple) message of the above plot?</p>
 <p>Now you are going to use semi-log and log-log scales to look at the mortality data again. To do this, you will use the <code>gf_refine()</code> function.</p>
 <div class="scaffolding">
-<div class="sourceCode" id="cb127"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb127-1"><a href="magnitudes.html#cb127-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_point</span>( __and_so_on__) <span class="sc">%&gt;%</span></span>
-<span id="cb127-2"><a href="magnitudes.html#cb127-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gf_refine</span>(</span>
-<span id="cb127-3"><a href="magnitudes.html#cb127-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_y_log10</span>(),</span>
-<span id="cb127-4"><a href="magnitudes.html#cb127-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_x_log10</span>()</span>
-<span id="cb127-5"><a href="magnitudes.html#cb127-5" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
+<div class="sourceCode" id="cb128"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb128-1"><a href="magnitudes.html#cb128-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_point</span>( __and_so_on__) <span class="sc">%&gt;%</span></span>
+<span id="cb128-2"><a href="magnitudes.html#cb128-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gf_refine</span>(</span>
+<span id="cb128-3"><a href="magnitudes.html#cb128-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_y_log10</span>(),</span>
+<span id="cb128-4"><a href="magnitudes.html#cb128-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_x_log10</span>()</span>
+<span id="cb128-5"><a href="magnitudes.html#cb128-5" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
 <p>Fill in the <code>__and_so_on__</code> details correctly and run the command in your sandbox.</p>
 <p>As written, both vertical and horizontal axes will be on log scales. This may not be what you want in the end.</p>
 </div>
 <p>Arrange the plotting command to make a semi-log plot of mortality versus age. Interpret the plot to answer the following questions. Note that labels such as those along the vertical axis are often called “decade labels.”</p>
-<pre>[Question ]  The level of mortality in year 0 of life is how much greater than in year 1 and after?
+<pre>The level of mortality in year 0 of life is how much greater than in year 1 and after? 
+
+
 
 ( )  About twice as large.
 ( )  About five times as large
 (x)  About 10 times as large
 ( )  About 100 times as large
 
-[[]]
+[[Right-oh! ]]
 
 </pre>
-<pre>[Question ]  D) Near age 20, the mortality of males is how much compared to females?
+<pre>D) Near age 20, the mortality of males is how much compared to females? 
+
+
 
 ( )  Less than twice as large.
 (x)  A bit more than three times as large
 ( )  About 8 times as large
 ( )  About 12 times as large
 
-[[]]
+[[Correct.]]
 
 </pre>
-<pre>[Question ]  E) Between the ages of about 40 and 80, how does mortality change with age?
+<pre>E) Between the ages of about 40 and 80, how does mortality change with age? 
+
+
 
 ( )  It stays about the same.
 ( )  It increases as a straight line.
 (x)  It increases exponentially.
 ( )  It increases, then decreases, then increases again.
 
-[[]]
+[[Right!]]
 
 </pre>
 <p>Remake the plot of mortality vs age once again, but this time put it on log-log axes. The sign of a power-law relationship is that it shows up as a straight line on log-log axes.</p>
-<pre>[Question ]  F) Between the ages of about 40 and 80 is the increase in mortality better modeled by an exponential or a power-law process?
+<pre>F) Between the ages of about 40 and 80 is the increase in mortality better modeled by an exponential or a power-law process? 
+
+
 
 ( )  Power-law
 (x)  Exponential
@@ -839,7 +893,7 @@ Figure 15.9: Part of the first page of Henry Briggs table of logarithms
 </div>
 <p>The table was called the <em>Chilias prima</em>, Latin for “First group of one thousand.” True to its name, the table gives the output of digits() for the inputs 1, 2, 3, …, 998, 999, 1000. For instance, as you can see from the top row of the right-most column, digits(67) = 1.82607480270082.</p>
 <p>In everyday speech, 67 has two digits. The authors of <em>Chilias prima</em> sensibly didn’t use the name “digit()” for the function. They chose something more abstract: “logarithm().” Nowadays, this function is named <span class="math inline">\(\log_{10}()\)</span>. In R, the function is called <code><a href="https://rdrr.io/r/base/Log.html">log10()</a></code>. <span style="float: right; padding-left: 50px;"><a name="1660" href="#1660"><img src="www/icons8-signpost.png" title="Location: 1660" width="12px"></a><span style="color: red; font-size: 6pt;">1660</span></span></p>
-<div class="sourceCode" id="cb128"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb129"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/Log.html">log10</a></span><span class="op">(</span><span class="fl">67</span><span class="op">)</span></code></pre></div>
 <pre><code>## [1] 1.826075</code></pre>
 <p>Our main use for <span class="math inline">\(\log_{10}()\)</span>/<code><a href="https://rdrr.io/r/base/Log.html">log10()</a></code> will be to count digits in order to quickly compare the magnitude of numbers. The difference digits(<span class="math inline">\(x\)</span>) - digits(<span class="math inline">\(y\)</span>) tells how many factors of 10 separate the magnitude of the <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span>.</p>
@@ -884,7 +938,7 @@ Figure 15.9: Part of the first page of Henry Briggs table of logarithms
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>CalcZ Student Notes</strong>" was written by Daniel Kaplan. It was last built on 2021-08-18.</p>
+    <p>"<strong>CalcZ Student Notes</strong>" was written by Daniel Kaplan. It was last built on 2021-08-20.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

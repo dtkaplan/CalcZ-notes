@@ -163,28 +163,32 @@ Failing to remember the <span class="math inline">\(sd\)</span> is a common pitf
 <details><summary><strong>Exercise 21.4</strong>: <span><a name="File:%20Exercises/Diff/dnorm.Rmd" href="#QIELS"><img src="www/icons8-signpost.png" title="Location: Exercises/Diff/dnorm.Rmd" width="12px"></a><span style="color: red; font-size: 9pt;">QIELS</span>
 </span></summary><p>Compare the functions <span class="math inline">\(f_1 \equiv \dnorm(x, mn, sd)\)</span> and <span class="math inline">\(f_2 \equiv \dnorm\left(\left[x-mn\right]/sd\right)\)</span> by plotting them out in a <a href="https://maa-statprep.shinyapps.io/CalcZ-Sandbox/">SANDBOX</a>.</p>
 <p>In order to construct the plot, you’ll have to pick specific values for <span class="math inline">\(mn\)</span> and <span class="math inline">\(sd\)</span>. Make sure that you use the same <span class="math inline">\(sd\)</span> and <span class="math inline">\(mn\)</span> when constructing <span class="math inline">\(f_1()\)</span> and <span class="math inline">\(f_2()\)</span>. For instance:</p>
-<div class="sourceCode" id="cb204"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb205"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">f1</span> <span class="op">&lt;-</span> <span class="fu">makeFun</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">dnorm</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">mn</span>, <span class="va">sd</span><span class="op">)</span> <span class="op">~</span> <span class="va">x</span>, mn<span class="op">=</span><span class="fl">2</span>, sd<span class="op">=</span><span class="fl">3</span><span class="op">)</span>
 <span class="va">f1</span> <span class="op">&lt;-</span> <span class="fu">makeFun</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">dnorm</a></span><span class="op">(</span> <span class="op">(</span><span class="va">x</span><span class="op">-</span><span class="va">mn</span><span class="op">)</span> <span class="op">/</span> <span class="va">sd</span><span class="op">)</span> <span class="op">~</span> <span class="va">x</span>, mn<span class="op">=</span><span class="fl">2</span>, sd<span class="op">=</span><span class="fl">3</span><span class="op">)</span></code></pre></div>
-<pre>[Question ]  When $$sd = 1$$, are the two functions the same?
+<pre>When $sd = 1$, are the two functions the same? 
+
+
 
 (x)  Yes
 ( )  Yes, but only if $$mn=1$$
 ( )  Yes, but only if $$mn=0$$
 ( )  No
 
-[[]]
+[[Good.]]
 
 </pre>
-<pre>[Question ]  When $$sd 
-eq 1$$, for any given $$mn$$, the two functions are not the same. What's the relationship between $$f_1(x)$$ and $$f_2(x)?
+<pre>When $sd 
+eq 1$, for any given $mn$, the two functions are not the same. What's the relationship between $f_1(x)$ and $f_2(x)? 
+
+
 
 (x)  $$f_2(x) = sd\, f_1(x)$$
 ( )  $$f_1(x) = sd\, f_2(x)$$
 ( )  $$f_1(x) = sd^2 f_2(x)$$
 ( )  $$f_2(x) = sd^2 f_1(x)$$
 
-[[]]
+[[Good.]]
 
 </pre>
 </details><hr>
@@ -193,26 +197,30 @@ eq 1$$, for any given $$mn$$, the two functions are not the same. What's the rel
 <p>A simple model of the descent path is a sigmoid function. Suppose that the descent starts from an altitude of <span class="math inline">\(A = 20,000\)</span> feet at a distance of 30,000 feet from the end of the runway. A reasonable model for the path is <span class="math display">\[\text{alt}(x) \equiv A\,\pnorm(x,\ \  mn=30000/2,\ \  sd=30000/6)\]</span>
 The vertical acceleration is the second derivative of alt() with respect to time: <span class="math inline">\(\partial_{tt} \text{alt}(t)\)</span>. But notice that the definition of alt() is in terms of distance from the runway, <span class="math inline">\(x\)</span>, not <span class="math inline">\(t\)</span>. It’s the plane’s velocity that relates <span class="math inline">\(x\)</span> and <span class="math inline">\(t\)</span>. For instance, <span class="math display">\[x = v (t - t_0)\]</span></p>
 <p>Suppose that the aircraft is flying at 200 miles-per-hour (the “speed limit” for aircraft at or below 10,000 feet).</p>
-<pre>[Question ]  What is the equivalent of 200 miles-per-hour in feet-per-second?
+<pre>What is the equivalent of 200 miles-per-hour in feet-per-second? 
+
+
 
 ( )  $$200 \times 3600/5280$$ ft/s
 (x)  $$200 \times 5280/3600$$ ft/s
 ( )  $$5280 \times 3600/200$$ ft/s
 ( )  $$5280/(3600 \times 200)$$ ft/s
 
-[[]]
+[[Right!]]
 
 </pre>
 <p>In a sandbox, re-write <span class="math inline">\(\text{alt}(x)\)</span> as <span class="math inline">\(f(t) \equiv \text{alt}\left(-v \left[t - t_0\right]\right)\)</span>. Set <span class="math inline">\(v\)</span> to the plane’s velocity in feet per second. For our purposes, it doesn’t matter what <span class="math inline">\(t_0\)</span> is; you can set it to zero. (<span class="math inline">\(t_0\)</span> is the plane’s arrival time at the foot of the runway.) Plot out the function choosing a domain for <span class="math inline">\(t\)</span> that lets you see the whole descent path.</p>
-<div class="sourceCode" id="cb205"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb205-1"><a href="prod-comp-rules.html#cb205-1" aria-hidden="true" tabindex="-1"></a>f <span class="ot">&lt;-</span> <span class="fu">makeFun</span>(<span class="fu">pnorm</span>(<span class="sc">-</span> <span class="dv">20000</span><span class="sc">*</span> v<span class="sc">*</span> t, <span class="dv">30000</span><span class="sc">/</span><span class="dv">2</span>, <span class="dv">30000</span><span class="sc">/</span><span class="dv">6</span>) <span class="sc">~</span> t, <span class="at">v =</span> __your_velocity_here__)</span>
-<span id="cb205-2"><a href="prod-comp-rules.html#cb205-2" aria-hidden="true" tabindex="-1"></a><span class="fu">slice_plot</span>(<span class="fu">f</span>(t) <span class="sc">~</span> t, <span class="fu">domain</span>(<span class="at">t=</span>__your_domain_here__))</span></code></pre></div>
+<div class="sourceCode" id="cb206"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb206-1"><a href="prod-comp-rules.html#cb206-1" aria-hidden="true" tabindex="-1"></a>f <span class="ot">&lt;-</span> <span class="fu">makeFun</span>(<span class="fu">pnorm</span>(<span class="sc">-</span> <span class="dv">20000</span><span class="sc">*</span> v<span class="sc">*</span> t, <span class="dv">30000</span><span class="sc">/</span><span class="dv">2</span>, <span class="dv">30000</span><span class="sc">/</span><span class="dv">6</span>) <span class="sc">~</span> t, <span class="at">v =</span> __your_velocity_here__)</span>
+<span id="cb206-2"><a href="prod-comp-rules.html#cb206-2" aria-hidden="true" tabindex="-1"></a><span class="fu">slice_plot</span>(<span class="fu">f</span>(t) <span class="sc">~</span> t, <span class="fu">domain</span>(<span class="at">t=</span>__your_domain_here__))</span></code></pre></div>
 <p>Compute the second derivative <span class="math inline">\(\partial_{tt} f(t)\)</span> to find the vertical component of acceleration of the aircraft. (Important note: Due to a bug in R, use <code>numD()</code> rather than <code><a href="https://rdrr.io/r/stats/deriv.html">D()</a></code> to compute the second derivative.)
 Graph the second derivative over the appropriate domain and look for the most extreme values of acceleration.</p>
-<div class="sourceCode" id="cb206"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb206-1"><a href="prod-comp-rules.html#cb206-1" aria-hidden="true" tabindex="-1"></a>ddf <span class="ot">&lt;-</span> <span class="fu">numD</span>(<span class="fu">f</span>(t) <span class="sc">~</span> t <span class="sc">+</span> t)</span>
-<span id="cb206-2"><a href="prod-comp-rules.html#cb206-2" aria-hidden="true" tabindex="-1"></a><span class="fu">slice_plot</span>(<span class="fu">ddf</span>(t) <span class="sc">~</span> t, <span class="fu">domain</span>(<span class="at">t=</span>__your_domain_here__))</span></code></pre></div>
+<div class="sourceCode" id="cb207"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb207-1"><a href="prod-comp-rules.html#cb207-1" aria-hidden="true" tabindex="-1"></a>ddf <span class="ot">&lt;-</span> <span class="fu">numD</span>(<span class="fu">f</span>(t) <span class="sc">~</span> t <span class="sc">+</span> t)</span>
+<span id="cb207-2"><a href="prod-comp-rules.html#cb207-2" aria-hidden="true" tabindex="-1"></a><span class="fu">slice_plot</span>(<span class="fu">ddf</span>(t) <span class="sc">~</span> t, <span class="fu">domain</span>(<span class="at">t=</span>__your_domain_here__))</span></code></pre></div>
 <p><img src="CalcZ-notes_files/figure-html/unnamed-chunk-266-1.png" width="90%" style="display: block; margin: auto;"><img src="CalcZ-notes_files/figure-html/unnamed-chunk-266-2.png" width="90%" style="display: block; margin: auto;"></p>
 <p>A rule of thumb is that a vertical acceleration up to <span class="math inline">\(5\, \text{ft}\, \text{s}^{-2}\)</span> is not discomfiting. Regrettably, the descent path we described doesn’t meet the standard! So we have to re-design the descent path. Since both the altitude and velocity are set, the only parameter you can change is the distance from the foot of the runway where descent commences.</p>
-<pre>[Question ]  How far from the foot of the runway should descent begin in order to stay within the $$5\, \text{ft}\, \text{s}^{-2}$$ acceleration constraint? Pick the shortest distance that satisfies the constraint.
+<pre>How far from the foot of the runway should descent begin in order to stay within the $5\, \text{ft}\, \text{s}^{-2}$ acceleration constraint? Pick the shortest distance that satisfies the constraint. 
+
+
 
 ( )  40,000 ft
 ( )  50,000 ft
@@ -220,7 +228,7 @@ Graph the second derivative over the appropriate domain and look for the most ex
 ( )  70,000 ft
 ( )  80,000 ft
 
-[[]]
+[[Correct.]]
 
 </pre>
 <p><strong>For reflection</strong>: A new hire at the airline’s operations center proposes to model the descent as a straight-line function rather than a sigmoid. He points out that the second derivative of a straight-line function is always 0, so the passengers would feel no acceleration at all! Explain to this newbie what’s wrong with his idea.</p>
@@ -239,79 +247,97 @@ Graph the second derivative over the appropriate domain and look for the most ex
 <p>In general, <span class="math inline">\(f()\)</span> and <span class="math inline">\(g()\)</span> might be complicated functions, themselves involving linear combinations, products, and composition. But to get started, we’ll practice with cases where they are simple, pattern-book functions. <span style="float: right; padding-left: 50px;"><a name="2405" href="#2405"><img src="www/icons8-signpost.png" title="Location: 2405" width="12px"></a><span style="color: red; font-size: 6pt;">2405</span></span></p>
 <details><summary><strong>Exercise XX.XX</strong>: <span><a name="File:%20Exercises/Diff/lamb-rise-sofa.Rmd" href="#3ICCCz"><img src="www/icons8-signpost.png" title="Location: Exercises/Diff/lamb-rise-sofa.Rmd" width="12px"></a><span style="color: red; font-size: 9pt;">3ICCCz</span>
 </span></summary><p>For each of the following, say whether the function is a composition <span class="math inline">\(f(g(x))\)</span> or a product <span class="math inline">\(f(x) g(x)\)</span>, or neither.</p>
-<pre>[Question ]  What sort of combination is $$h_1(x)\equiv \ln(x) e^x$$?
+<pre>What sort of combination is $h_1(x)\equiv \ln(x) e^x$? 
+
+
 
 (x)  product
 ( )  composition
 ( )  neither
 
-[[]]
+[[Correct.]]
 
 </pre>
-<pre>[Question ]  What sort of combination is $$h_2(x)\equiv \sin(x) \cos(x)$$?
+<pre>What sort of combination is $h_2(x)\equiv \sin(x) \cos(x)$? 
+
+
 
 (x)  product
 ( )  composition
 ( )  neither
 
-[[]]
+[[Correct.]]
 
 </pre>
-<pre>[Question ]  What sort of combination is $$h_3(x) \equiv \sin(\cos(x))$$?
+<pre>What sort of combination is $h_3(x) \equiv \sin(\cos(x))$? 
+
+
 
 ( )  product
 (x)  composition
 ( )  neither
 
-[[]]
+[[Right-oh! ]]
 
 </pre>
-<pre>[Question ]  What sort of combination is $$h_4(x) \equiv e^{\ln(x)}$$?
+<pre>What sort of combination is $h_4(x) \equiv e^{\ln(x)}$? 
+
+
 
 ( )  product
 (x)  composition
 ( )  neither
 
-[[]]
+[[Correct.]]
 
 </pre>
-<pre>[Question ]  What sort of combination is $$h_5(x) \equiv \sin(x) - \cos(x)$$?
+<pre>What sort of combination is $h_5(x) \equiv \sin(x) - \cos(x)$? 
+
+
 
 ( )  product
 ( )  composition
 (x)  neither
 
-[[]]
+[[Excellent!]]
 
 </pre>
-<pre>[Question ]  What sort of combination is is $$h_6(x) \equiv e^{x^2}$$?
+<pre>What sort of combination is is $h_6(x) \equiv e^{x^2}$? 
+
+
 
 ( )  product
 (x)  composition
 ( )  neither
 
-[[]]
+[[Good.]]
 
 </pre>
-<pre>[Question ]  What sort of combination is $$h_7(x) \equiv \pnorm(x^2)$$?
+<pre>What sort of combination is $h_7(x) \equiv \pnorm(x^2)$? 
+
+
 
 ( )  product
 (x)  composition
 ( )  neither
 
-[[]]
+[[Right-oh! ]]
 
 </pre>
-<pre>[Question ]  What sort of combination is $$h_8(x)  \equiv \pnorm(x) \dnorm(x)$$?
+<pre>What sort of combination is $h_8(x)  \equiv \pnorm(x) \dnorm(x)$? 
+
+
 
 (x)  product
 ( )  composition
 ( )  neither
 
-[[]]
+[[Correct.]]
 
 </pre>
-<pre>[Question ]  What sort of combination is $$h_9(x)  \equiv 1/\sin(x)$$?
+<pre>What sort of combination is $h_9(x)  \equiv 1/\sin(x)$? 
+
+
 
 ( )  product
 (x)  composition
@@ -322,7 +348,9 @@ Graph the second derivative over the appropriate domain and look for the most ex
 </pre>
 </details><details><summary><strong>Exercise XX.XX</strong>: <span><a name="File:%20Exercises/Diff/buck-draw-bed.Rmd" href="#QFzIOl"><img src="www/icons8-signpost.png" title="Location: Exercises/Diff/buck-draw-bed.Rmd" width="12px"></a><span style="color: red; font-size: 9pt;">QFzIOl</span>
 </span></summary><p>In function compositions of the form <span class="math inline">\(f\left(\strut g(x)\right)\)</span>, the function <span class="math inline">\(f()\)</span> is called the <strong><em>exterior function</em></strong> and <span class="math inline">\(g()\)</span> is called the <strong><em>interior function.</em></strong></p>
-<pre>[Question ]  In $$\cos(\ln(x))$$ which is the **interior** function?
+<pre>In $\cos(\ln(x))$ which is the **interior** function? 
+
+
 
 (x)  $$\ln()$$
 ( )  $$\cos()$$
@@ -330,10 +358,12 @@ Graph the second derivative over the appropriate domain and look for the most ex
 ( )  None of the above
 ( )  It's not a function composition
 
-[[]]
+[[Good.]]
 
 </pre>
-<pre>[Question ]  In $$1/\sin(x)$$ which is the **exterior** function?
+<pre>In $1/\sin(x)$ which is the **exterior** function? 
+
+
 
 (x)  $$\recip()$$
 ( )  $$\cos()$$
@@ -341,10 +371,12 @@ Graph the second derivative over the appropriate domain and look for the most ex
 ( )  None of the above
 ( )  It's not a function composition
 
-[[]]
+[[Correct.]]
 
 </pre>
-<pre>[Question ]  In $$\sin\left(\frac{2 \pi}{P} (t-t_0)\right)$$ which is the **exterior** function?
+<pre>In $\sin\left(\frac{2 \pi}{P} (t-t_0)\right)$ which is the **exterior** function? 
+
+
 
 ( )  $$t-t_0$$
 ( )  $$\frac{2\pi}{P}$$
@@ -354,10 +386,12 @@ Graph the second derivative over the appropriate domain and look for the most ex
 ( )  None of the above
 ( )  It's not a function composition
 
-[[]]
+[[Excellent!]]
 
 </pre>
-<pre>[Question ]  In $$\sin\left(2 \pi (t-t_0)/P\right)$$ which is the **interior** function?
+<pre>In $\sin\left(2 \pi (t-t_0)/P\right)$ which is the **interior** function? 
+
+
 
 ( )  $$t-t_0$$
 ( )  $$2\pi /P$$
@@ -367,10 +401,12 @@ Graph the second derivative over the appropriate domain and look for the most ex
 ( )  None of the above
 ( )  It's not a function composition.
 
-[[]]
+[[Correct.]]
 
 </pre>
-<pre>[Question ]  In $$\sin(x)\cos(x^2)$$, which is the interior function?
+<pre>In $\sin(x)\cos(x^2)$, which is the interior function? 
+
+
 
 ( )  $$x^2$$
 ( )  $$x$$
@@ -378,7 +414,7 @@ Graph the second derivative over the appropriate domain and look for the most ex
 ( )  None of the above
 (x)  It's not a function composition.
 
-[[]]
+[[Right-oh! ]]
 
 </pre>
 </details>
@@ -618,7 +654,7 @@ Like <span class="math inline">\(e^x\)</span>, the derivatives of <span class="m
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>CalcZ Student Notes</strong>" was written by Daniel Kaplan. It was last built on 2021-08-18.</p>
+    <p>"<strong>CalcZ Student Notes</strong>" was written by Daniel Kaplan. It was last built on 2021-08-20.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">
