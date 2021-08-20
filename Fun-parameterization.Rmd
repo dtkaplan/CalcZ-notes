@@ -12,8 +12,9 @@ The pattern-book functions provide the modeler with a collection of shapes. They
 The outbreak was widely described as "exponential," so alongside the data Figure \@ref(fig:covid-exp) shows the function $e^x$.
 
 ```{r covid-exp, echo=FALSE, fig.cap="Cumulative officially confirmed COVID-19 cases during the month of March, 2020. The red curve is $e^x$", warning=FALSE}
-March <- Covid_US %>% filter(month(date)==3) %>%
-  mutate(day = mday(date))
+March <- Covid_US %>% filter(lubridate::month(date)==3, 
+                             lubridate::year(date)==2020) %>%
+  mutate(day = lubridate::mday(date))
 gf_point(confirmed ~ day, 
          data = March) %>%
   gf_labs(y = "Cumulative confirmed cases", x = "Day in March, 2020") %>%

@@ -2,6 +2,7 @@ library(shiny)
 library(dplyr)
 library(shinyjs)
 library(CalcZapps)
+library(splines)
 library(digest)
 
 # Success policy: 17 out of 20
