@@ -230,7 +230,7 @@ Figure \@ref(fig:segment-approx) shows the segment by segment approximation arou
 
 ```{r segment-approx, echo=FALSE, fig.cap="A function $f(x)$ shown along with the tangent line segment touching $f()$ at each of the green points. For the slope function visualization, the tangent line segments are moved down to the horizontal axis."}
 
-Segs <- segments(sin(x) ~ x, domain(x=c(-.1,pi)), nsegs=10)
+Segs <- create_segments(sin(x) ~ x, domain(x=c(-.1,pi)), nsegs=10)
 gf_segment(yf + yfend ~ x + xend, data = Segs, 
            color=~slope,size=2, alpha=.9) %>%
     gf_refine(scale_color_continuous(type="gradient")) %>%
@@ -246,28 +246,28 @@ gf_segment(yf + yfend ~ x + xend, data = Segs,
 Figure \@ref(fig:slope-visualization-examples) shows several examples of the slope function visualization.
 
 ```{r slope-visualization-examples, echo=FALSE, fig.cap="Slope-function visualizations of several pattern-book functions.", fig.height=3, fig.width=7, fig.show="hold", out.width="50%"}
-Segs <- segments(exp(x) ~ x, domain(x=c(-pi,pi)), nsegs=30)
+Segs <- create_segments(exp(x) ~ x, domain(x=c(-pi,pi)), nsegs=30)
 slice_plot(exp(x) ~ x, domain(x=c(-pi, pi))) %>%
     gf_labs(title="exp(x)")
 gf_segment(y + yend ~ x + xend, data = Segs, 
            color=~slope,size=1.3, lineend="round") %>%
   gf_point(0 ~ start, size=1, color="green") %>%
     gf_labs(title="exp(x) slope-function visualization")
-Segs <- segments(log(x) ~ x, domain(x=c(.2,pi)), nsegs=30)
+Segs <- create_segments(log(x) ~ x, domain(x=c(.2,pi)), nsegs=30)
 slice_plot(log(x) ~ x, domain(x=c(.2, pi))) %>%
     gf_labs(title="og(x)")
 gf_segment(y + yend ~ x + xend, data = Segs, 
            color=~slope,size=1.3, lineend="round") %>%
   gf_point(0 ~ start, size=1, color="green") %>%
     gf_labs(title="log(x) slope-function visualization")
-Segs <- segments(x^2 ~ x, domain(x=c(-pi,pi)), nsegs=30)
+Segs <- create_segments(x^2 ~ x, domain(x=c(-pi,pi)), nsegs=30)
 slice_plot(x^2 ~ x, domain(x=c(-pi, pi))) %>%
     gf_labs(title=expression(x^2))
 gf_segment(y + yend ~ x + xend, data = Segs, 
            color=~slope,size=1.3, lineend="round") %>%
   gf_point(0 ~ start, size=1, color="green") %>%
     gf_labs(title=expression(paste("x^2 slope-function visualization")))
-Segs <- segments(2*x -4 ~ x, domain(x=c(-pi,pi)), nsegs=30)
+Segs <- create_segments(2*x -4 ~ x, domain(x=c(-pi,pi)), nsegs=30)
 slice_plot(2*x - 4 ~ x, domain(x=c(-pi, pi))) %>%
     gf_labs(title="2x - 4")
 gf_segment(y + yend ~ x + xend, data = Segs, 
