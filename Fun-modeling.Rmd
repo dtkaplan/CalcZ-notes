@@ -122,8 +122,12 @@ The goal is to find the parameters $A$, $k$, and $C$ in the formula $A e^{kx} + 
 **Step 3** Estimate parameter $k$ using these steps:
 
 a. Pick any input value, which we'll call $x_2$, such that $f(x_2)$ is far from the baseline.
-b. Find an input value, which we'll call $x_1$ such that $f(x_1)$ is halfway between the baseline $C$ and $f(x_2)$, that is, $$f(x_1) = \frac{f(x_2) - C}{2}$$
-c. Then $$k = \frac{\ln(2)}{x_2 - x_1} \approx \frac{0.693}{x_2 - x_1}$$
+
+b. Find an input value, which we'll call $x_1$ such that $f(x_1)$ is halfway^[The motivation for the equation is that the distance between $f(x_1)$ and $C$ should be half that of the distance between $f(x_2)$ and $C$. In other words, $$f(x_1) - C = \frac{f(x_2) - C}{2}$$ Simplifying the algebra a little tells you to look for $x_1$ such that $$f(x_1) = \frac{f(x_2) + C}{2}$$] between the baseline $C$ and $f(x_2)$, that is  $$f(x_1) = \frac{f(x_2) + C}{2}$$
+
+ 
+c. Once you have $x_1$ and $x_2$, you can immediately find $k$: $$k = \frac{\ln(2)}{x_2 - x_1} \approx \frac{0.693}{x_2 - x_1}$$
+
 d. Using this simple test to double-check your work. If the horizontal asymptote of $f()$ (that is, approach to the baseline) is for $x \rightarrow \infty$, then $k$ should be **negative**. If the horizontal asymptote is for $x \rightarrow - \infty$, then $k$ will be positive. 
     
 
@@ -142,35 +146,37 @@ The $2$ in $\ln(2)$ corresponds to idea of doubling/halving. The logarithm conve
 
 Let's illustrate the general process on the water-cooling data, redrawn in Figure \@ref(fig:Fun-4-a-2-1).   `r mark(950)`
 
-```{r Fun-4-a-2-1, echo=FALSE, fig.cap="The cooling-water data, repeated here for convenience."}
+```{r Fun-4-a-2-1, echo=FALSE, fig.cap="The cooling-water data, repeated here for convenience. We've sketched in an exponential-like curve that matches the data pretty well."}
 set.seed(101)
 gf_point(temp ~ time, data=CoolingWater %>% sample_n(20)) %>%
-  gf_lims(y = c(20, NA))
+  gf_lims(y = c(20, NA)) %>%
+  gf_smooth()
 ```
 
 Step 0: The data indicate a smooth curve. As $t$ gets large, the curve approaches a constant. So an exponential model is reasonable.
 
 
-Step 1: The curve looks like it's leveling out at a temperature of about 25 degrees C for large $t$. So $A \approx 25^{\circ} \text{C}$.
+**Step 1**: The curve looks like it's leveling out at a temperature of about 25 degrees C for large $t$. So $C \approx 25^{\circ} \text{C}$.
 
-Step 2: 
+**Step 2**: Looking at our imagined curve (sketched in blue in Figure \@ref(fig:Fun-4-a-2-1)), it appears to intersect the $t=0$ vertical axis at about $f(0) = 85^\circ\text{C}$. Thus, $$A = 85^\circ\text{C} - 25^\circ\text{C} = 60^\circ\text{C}$$
 
-i. The point far from the baseline is located at $t_1 = 15 \text{sec}$ with a value ${\cal D} \approx 80^\circ\text{C}$. 
-ii. This if $55^\circ\text{C}$ from the baseline. We want to find the value of $t_1$ where the temperature will be half way from 80 to the baseline. That's a temperature of about $80 - 55/2 = 53.5$. Scanning over to the right, the function that I can imagine going through the data crossed $53^\circ$ at about $t_{1/2} = 40$. Thus, the half-life is estimated at 25s. 
-iii. The parameter $k$ is therefore $k\approx 0.693 / \mbox{half-life} = - 0.63 / 25 = -0.0277$. Since we identified in Step 1 that exponential decay is involved, we expect $k$ to be negative. It is.
+**Step 3**:
 
-Step 3. 
+a. Now choose a time $t_2$ where $f(t_2)$ is far from the baseline. ... It looks like $t_2 = 25$ will do the job, at which point we can read off the graph that the function value is $f(25) \approx 65$.
+b. Find an input value $t_1$ such that $f(t_1) -C = (f(t_2)-C)/2.$ This tells us that $f(t_1) = 25 + (65-25)/2 = (65+25)/2 = 45$. Referring to the graph, the time at which the function is about 45 is $t_1 \approx 65$, that is, $f(t_1) \approx 65$.
+c. We have $t_1 \approx 65$ and $t_2 = 25$. From this, we calculate $k$:
+$$ k = \frac{\ln(2)}{25 - 65} = 0.693/(-40) = -0.0173$$
+d. The data show exponential decay, so we expect $k$ to be negative. Happily, it is. If it hadn't been, we would go back to look for a sign error someplace.
 
-i. We know $A \approx 25$ and $k \approx -0.0277$. We also now that for $t=15$ the function output is about ${\cal D} = 80^\circ$. 
-ii. This means $25^\circ + B e^{- 0.0277 \times 15} \approx 80^\circ = 25 + 0.66\ B$. Solving for $B$ gives $B = (80 - 25)/0.66 = 83.3$
 
-Step 4. Graph the function over the data.
+**Step 4**. Graph the function on top of the data to confirm the fitted function is a good match to the data.
 
 ```{r Fun-4-a-2-2, echo=FALSE, fig.cap="An exponential function that roughly aligns with the data."}
 set.seed(101)
 gf_point(temp ~ time, data=CoolingWater %>% sample_n(20)) %>%
   gf_lims(y = c(20, NA)) %>%
-  slice_plot(25 + 83.3*exp(-.0277*time) ~ time, color="dodgerblue")
+  slice_plot(25 + 60*exp(-.0173*time) ~ time, 
+             domain(time=c(0,250)), color="blue")
 ```
 
 Step 5: The flat zone of the data is to the right. So we've got exponential decay and $k < 0$. 

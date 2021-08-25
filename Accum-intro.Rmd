@@ -112,7 +112,7 @@ Section \@ref(slope-fun-visualization) introduced a non-standard visualization o
 Figure \@ref(fig:euler-viz-1) shows a slope function visualization of some function $f(x)$
 
 ```{r euler-viz-1, echo=FALSE, fig.cap="A slope function $\\partial_x f(x)$ from which we are going to reconstruct the mother function $f(x)$. Each of the sloped segments has been given a label for later reference."}
-Segs <- segments(sin(x) ~ x, domain(x=c(-pi,pi)), nsegs=30)
+Segs <- create_segments(sin(x) ~ x, domain(x=c(-pi,pi)), nsegs=30)
 Segs$num <- c(letters, LETTERS)[1:nrow(Segs)]
 Segs_orig <- Segs
 gf_segment(y + yend ~ x + xend, data = Segs, 
@@ -169,7 +169,7 @@ In the population example that started this chapter, we constructed a model for 
 
 ```{r pop-slope-fun, echo=FALSE, fig.cap="The slope-function visualization corresponding to the plot of $\\partial_t f(t)$ in Figure \\@ref(fig:pop-growth)."}
 G <- antiD(growth_fun(t) ~ t, lower.bound = 2020)
-Segs <- segments(G(t) ~ t, domain(t=c(2020-1.5, 2100)), nsegs=30)
+Segs <- create_segments(G(t) ~ t, domain(t=c(2020-1.5, 2100)), nsegs=30)
 gf_segment(y + yend ~ x + xend, data = Segs, 
            color=~slope,size=1.3, lineend="round") %>%
   gf_point(0 ~ start, size=1, color="green") %>%
