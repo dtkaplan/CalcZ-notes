@@ -15,12 +15,6 @@ ggplot2::theme_set(theme_bw(base_size = 16))
 
 knitr::opts_chunk$set(out.width="90%", fig.align="center")
 
-# Link to the CalcZ sandbox
-sandbox <- function() {
-  "[sandbox](https://maa-statprep.shinyapps.io/CalcZ-Sandbox/){target=\"_blank\"}"
-}
-
-
 # Resolve the exercise number assigned to a permanent name like "3KEgLM"
 # or "chicken-sit-table".
 # See script in <_make_exercise_index.R>
