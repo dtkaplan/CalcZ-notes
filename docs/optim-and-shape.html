@@ -6,13 +6,16 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>Chapter 23 Optimization | CalcZ Student Notes</title>
 <meta name="author" content="Daniel Kaplan">
-<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.2"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/header-attrs-2.8/header-attrs.js"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.2"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/header-attrs-2.10/header-attrs.js"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
 <script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.2.5.1/tabs.js"></script><script src="libs/bs3compat-0.2.5.1/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
 <script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="libs/kePrint-0.0.1/kePrint.js"></script><link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet">
 <script src="libs/htmlwidgets-1.5.3/htmlwidgets.js"></script><script src="libs/plotly-binding-4.9.4/plotly.js"></script><script src="libs/typedarray-0.1/typedarray.min.js"></script><link href="libs/crosstalk-1.1.1/css/crosstalk.css" rel="stylesheet">
 <script src="libs/crosstalk-1.1.1/js/crosstalk.min.js"></script><link href="libs/plotly-htmlwidgets-css-1.57.1/plotly-htmlwidgets.css" rel="stylesheet">
-<script src="libs/plotly-main-1.57.1/plotly-latest.min.js"></script><script type="text/x-mathjax-config">
+<script src="libs/plotly-main-1.57.1/plotly-latest.min.js"></script><link href="libs/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet">
+<script src="libs/datatables-binding-0.18/datatables.js"></script><link href="libs/dt-core-1.10.20/css/jquery.dataTables.min.css" rel="stylesheet">
+<link href="libs/dt-core-1.10.20/css/jquery.dataTables.extra.css" rel="stylesheet">
+<script src="libs/dt-core-1.10.20/js/jquery.dataTables.min.js"></script><script type="text/x-mathjax-config">
     const popovers = document.querySelectorAll('a.footnote-ref[data-toggle="popover"]');
     for (let popover of popovers){
       const div = document.createElement('div');
@@ -156,9 +159,9 @@ Figure 23.2: Zooming in on the argmax of the objective function. It’s importan
 </div>
 <p>From the graph, especially the zoomed-in version, you can read off the argmax as <span class="math inline">\(\theta = 45^\circ\)</span>.</p>
 <p>Finding the argmax solves the problem. You may also want to present your solution by saying what the value of the output of hdist() is when the argmax is given as input. You can read off the graph that the maximum of <span class="math inline">\(\cos(\theta)\sin(\theta)\)</span> is 0.5 at <span class="math inline">\(\theta = 45^\circ\)</span>, so overall the distance will be <span class="math inline">\(v_0^2 / g\)</span> <span style="float: right; padding-left: 50px;"><a name="2495" href="#2495"><img src="www/icons8-signpost.png" title="Location: 2495" width="12px"></a><span style="color: red; font-size: 6pt;">2495</span></span></p>
-<details><summary><strong>Exercise XX.XX</strong>: <span><a name="File:%20Exercises/Diff/child-iron-laundry.Rmd" href="#0zyL02"><img src="www/icons8-signpost.png" title="Location: Exercises/Diff/child-iron-laundry.Rmd" width="12px"></a><span style="color: red; font-size: 9pt;">0zyL02</span>
+<details><summary><strong>Exercise 23.02</strong>: <span><a name="File:%20Exercises/Diff/child-iron-laundry.Rmd" href="#0zyL02"><img src="www/icons8-signpost.png" title="Location: Exercises/Diff/child-iron-laundry.Rmd" width="12px"></a><span style="color: red; font-size: 9pt;">0zyL02</span>
 </span></summary><p>The simple model of the distance travelled by a tennis ball after launch from a slingshot is <span class="math display">\[\text{hdist}(v_0, \theta) = 2 v_0^2 \cos(\theta)\sin(\theta) / g\]</span> where <span class="math inline">\(\theta\)</span> is the launch angle, measure from horizontal, <span class="math inline">\(v_0\)</span> is the initial velocity, and <span class="math inline">\(g\)</span> is the acceleration due to gravity.</p>
-<pre>What is the dimension of $v_0$? 
+<pre>What is the dimension of $$v_0$$? 
 
 
 
@@ -170,7 +173,7 @@ Figure 23.2: Zooming in on the argmax of the objective function. It’s importan
 [[As in miles/hour or meters/second.]]
 
 </pre>
-<pre>What is the dimension of $v_0$? 
+<pre>What is the dimension of $$v_0$$? 
 
 
 
@@ -182,7 +185,7 @@ Figure 23.2: Zooming in on the argmax of the objective function. It’s importan
 [[Good.]]
 
 </pre>
-<pre>What is the dimension of $\theta$? 
+<pre>What is the dimension of $$\theta$$? 
 
 
 
@@ -194,7 +197,7 @@ Figure 23.2: Zooming in on the argmax of the objective function. It’s importan
 [[An angle is measured by *distance* along the circumference of a circle divided by the radius of the circle, so L/L. The L dimensions cancel out.]]
 
 </pre>
-<pre>What is the dimension of $\sin(\theta$)? 
+<pre>What is the dimension of $$\sin(\theta$$)? 
 
 
 
@@ -206,7 +209,7 @@ Figure 23.2: Zooming in on the argmax of the objective function. It’s importan
 [[The output of a sinusoid is always dimensionless. You would have to multiply by a dimensionful amplitude ($$A \sin(\theta)$$) to attach a dimension to the output.]]
 
 </pre>
-<pre>What is the dimension of $2 v_0^2 \cos(\theta)\sin(\theta) / g$? 
+<pre>What is the dimension of $$2 v_0^2 \cos(\theta)\sin(\theta) / g$$? 
 
 
 
@@ -218,7 +221,7 @@ Figure 23.2: Zooming in on the argmax of the objective function. It’s importan
 [[Correct.]]
 
 </pre>
-<pre>Suppose the initial velocity of the ball is $v_0 = 10$ meters/second. Since we're on the surface of Earth, $g=9.8$ meters/second-squared. How far will the ball travel according to the model? 
+<pre>Suppose the initial velocity of the ball is $$v_0 = 10$$ meters/second. Since we're on the surface of Earth, $$g=9.8$$ meters/second-squared. How far will the ball travel according to the model? 
 
 
 
@@ -227,7 +230,7 @@ Figure 23.2: Zooming in on the argmax of the objective function. It’s importan
 ( )  50 meters
 ( )  75 meters
 
-[[Right-oh! ]]
+[[Nice!]]
 
 </pre>
 </details>
@@ -300,14 +303,14 @@ Figure 23.3: Top row: An objective function near an argmax (left) and an argmin 
 </li>
 </ol>
 </div>
-<details><summary><strong>Exercise XX.XX</strong>: <span><a name="File:%20Exercises/Diff/calf-bring-pants.Rmd" href="#FbJynV"><img src="www/icons8-signpost.png" title="Location: Exercises/Diff/calf-bring-pants.Rmd" width="12px"></a><span style="color: red; font-size: 9pt;">FbJynV</span>
+<details><summary><strong>Exercise 23.04</strong>: <span><a name="File:%20Exercises/Diff/calf-bring-pants.Rmd" href="#FbJynV"><img src="www/icons8-signpost.png" title="Location: Exercises/Diff/calf-bring-pants.Rmd" width="12px"></a><span style="color: red; font-size: 9pt;">FbJynV</span>
 </span></summary><p><strong>Question tmp-13</strong>: Consider the function <span class="math inline">\(f(x) \equiv x^3\)</span>. Confirm that the value of the derivative <span class="math inline">\(\partial_x f(x = 0)\)</span> and so <span class="math inline">\(x^\star = 0\)</span> is a critical point. Which sort of critical point is <span class="math inline">\(x^\star=0\)</span>? (Hint: Draw the graph of <span class="math inline">\(f(x)\)</span> near <span class="math inline">\(x=0\)</span> to see what’s going on.)</p>
 <ol>
 <li><p>An argmax [But <span class="math inline">\(f(0) &lt; f(x &gt; 0)\)</span>, so <span class="math inline">\(x^\star=0\)</span> can’t be an argmax.]</p></li>
 <li><p>An argmin [But <span class="math inline">\(f(x &lt; 0) &lt; f(0)\)</span>, so <span class="math inline">\(x^\star=0\)</span> can’t be an argmin.]</p></li>
 <li><p>Neither (+) []</p></li>
 </ol>
-<pre>Still working with the function  $f(x) \equiv x^3$,  find the value of the second-derivative $\partial_{xx} f(x^\star)$ evaluated at the critical point $x = x^\star = 0$. Which of these is $\partial_{xx} f( x=0$?  
+<pre>Still working with the function  $$f(x) \equiv x^3$$,  find the value of the second-derivative $$\partial_{xx} f(x^\star)$$ evaluated at the critical point $$x = x^\star = 0$$. Which of these is $$\partial_{xx} f( x=0$$?  
 
 
 
@@ -318,7 +321,7 @@ Figure 23.3: Top row: An objective function near an argmax (left) and an argmin 
 [[Excellent!]]
 
 </pre>
-</details><details><summary><strong>Exercise XX.XX</strong>: <span><a name="File:%20Exercises/Diff/concavity.Rmd" href="#ykelx"><img src="www/icons8-signpost.png" title="Location: Exercises/Diff/concavity.Rmd" width="12px"></a><span style="color: red; font-size: 9pt;">ykelx</span>
+</details><details><summary><strong>Exercise 23.06</strong>: <span><a name="File:%20Exercises/Diff/concavity.Rmd" href="#ykelx"><img src="www/icons8-signpost.png" title="Location: Exercises/Diff/concavity.Rmd" width="12px"></a><span style="color: red; font-size: 9pt;">ykelx</span>
 </span></summary><p>The graph shows three different functions labeled (A), (B), and (C).</p>
 <p><img src="CalcZ-notes_files/figure-html/daily-digital-02-C1-1.png" width="32%" style="display: block; margin: auto;"><img src="CalcZ-notes_files/figure-html/daily-digital-02-C1-2.png" width="32%" style="display: block; margin: auto;"><img src="CalcZ-notes_files/figure-html/daily-digital-02-C1-3.png" width="32%" style="display: block; margin: auto;"></p>
 <pre>Function (A) is  
@@ -367,7 +370,7 @@ Figure 23.3: Top row: An objective function near an argmax (left) and an argmin 
 </pre>
 <p>The graph shows a function <span class="math inline">\(\mbox{wave}(t) \equiv \sin(2 \pi t/4)\)</span> and labels four input values <span class="math inline">\(t\)</span>.</p>
 <div class="inline-figure"><img src="CalcZ-notes_files/figure-html/daily-digital-02-C2-1.png" width="90%" style="display: block; margin: auto;"></div>
-<pre>For what values of the input $t$ is the function concave up? 
+<pre>For what values of the input $$t$$ is the function concave up? 
 
 
 
@@ -379,7 +382,7 @@ Figure 23.3: Top row: An objective function near an argmax (left) and an argmin 
 [[Excellent!]]
 
 </pre>
-<pre>For what values of the input $t$ is the function non-concave? 
+<pre>For what values of the input $$t$$ is the function non-concave? 
 
 
 
@@ -388,7 +391,7 @@ Figure 23.3: Top row: An objective function near an argmax (left) and an argmin 
 ( )  $$t=C$$
 ( )  none of the above
 
-[[Right-oh! ]]
+[[Nice!]]
 
 </pre>
 <pre>Where is the function steepest? 
@@ -403,10 +406,10 @@ Figure 23.3: Top row: An objective function near an argmax (left) and an argmin 
 [[Correct.]]
 
 </pre>
-</details><details><summary><strong>Exercise XX.XX</strong>: <span><a name="File:%20Exercises/Diff/tree-loves-fish.Rmd" href="#lexkd"><img src="www/icons8-signpost.png" title="Location: Exercises/Diff/tree-loves-fish.Rmd" width="12px"></a><span style="color: red; font-size: 9pt;">lexkd</span>
+</details><details><summary><strong>Exercise 23.08</strong>: <span><a name="File:%20Exercises/Diff/tree-loves-fish.Rmd" href="#lexkd"><img src="www/icons8-signpost.png" title="Location: Exercises/Diff/tree-loves-fish.Rmd" width="12px"></a><span style="color: red; font-size: 9pt;">lexkd</span>
 </span></summary><p>Here is a smooth function marked at a few points. Your task is, at each point, to estimate the value of the derivative, the sign of the second derivative, and the radius of the circle that would nicely match the function in a small region around each point. (Remember, we’re asking for the <em>radius</em> of the circle, which is half the <em>diameter</em>.)</p>
 <p>To simplify things, here is a table giving seven different combinations of the quantities you are to estimate. Some of them correctly match one of the labeled points, some do not. All you need to do is choose which is the correct set of quantities for each labeled point.</p>
-<div class="inline-figure"><img src="CalcZ-notes_files/figure-html/unnamed-chunk-269-1.png" width="90%" style="display: block; margin: auto;"></div>
+<div class="inline-figure"><img src="CalcZ-notes_files/figure-html/unnamed-chunk-270-1.png" width="90%" style="display: block; margin: auto;"></div>
 <table class="table table-sm">
 <colgroup>
 <col width="13%">
@@ -482,7 +485,7 @@ Figure 23.3: Top row: An objective function near an argmax (left) and an argmin 
 ( )  vi
 (x)  vii
 
-[[Right-oh! ]]
+[[Nice!]]
 
 </pre>
 <pre>Which row from the table best matches the function at point B? 
@@ -554,11 +557,11 @@ The graph of a quadratic polynomial is a <strong><em>parabola</em></strong>, whi
 <span class="math display">\[a_1 + 2 a_2 x^\star = 0\]</span>
 The above is an equation, not a definition. It says that whatever <span class="math inline">\(x^\star\)</span> happens to be, the quantity <span class="math inline">\(a_1 + 2 a_2 x^\star\)</span> must be zero. Using plain old algebra, we can find the location of the critical point <span class="math display">\[x^\star = -\frac{a_1}{2 a_2}\]</span> <span style="float: right; padding-left: 50px;"><a name="2585" href="#2585"><img src="www/icons8-signpost.png" title="Location: 2585" width="12px"></a><span style="color: red; font-size: 6pt;">2585</span></span></p>
 </div>
-<details><summary><strong>Exercise XX.XX</strong>: <span><a name="File:%20Exercises/Diff/optim-violet.Rmd" href="#dwes"><img src="www/icons8-signpost.png" title="Location: Exercises/Diff/optim-violet.Rmd" width="12px"></a><span style="color: red; font-size: 9pt;">dwes</span>
+<details><summary><strong>Exercise 23.10</strong>: <span><a name="File:%20Exercises/Diff/optim-violet.Rmd" href="#dwes"><img src="www/icons8-signpost.png" title="Location: Exercises/Diff/optim-violet.Rmd" width="12px"></a><span style="color: red; font-size: 9pt;">dwes</span>
 </span></summary><p>You’re very proud of your pet dog, Swimmer. You often go to the beach and walk along the water’s edge. You throw a ball down the beach, but at an angle so it lands in the water. Swimmer goes to work. She runs down the beach (fast) and then plunges into the water, heading toward the ball. She can run fast on the beach: 400 m/minute. But she swims rather slower: 50 m/min.</p>
 <p>Suppose you threw the ball to a point 50 meters down the beach and 10 meters out in the water. The overall distance to the ball is therefore <span class="math inline">\(\sqrt{50^2 + 10^2} = 51\)</span> meters. If Swimmer entered the water immediately, she would take about minute to reach the ball (51 m / 50 m/min). Swimmer can get to the ball faster by running down the beach a big and then turning into the water. If Swimmer ran all 50 meters down the beach and then turned to swim the 10 meters, it would take her (50/400 + 10/50) minutes, about one-third of a minute.</p>
 <p>Can Swimmer do better? You can set up the calculation like this. Imagine <span class="math inline">\(x\)</span> to be the distance down the beach that Swimmer runs. The time to run this distance will be <span class="math inline">\(x/400\)</span>. The distance remaining to the ball can be found by the pythagorean theorem. One leg of the triangle has length <span class="math inline">\((50-x)\)</span>, the other has length 10 m. So if <span class="math inline">\(x\)</span> were 45, the distance to swim in the water would be <span class="math inline">\(\sqrt{(50-45)^2 + 10^2}\)</span>. Divide this distance by 50 m/min to get the time spent in the water.</p>
-<div class="sourceCode" id="cb208"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb210"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">distance_in_water</span> <span class="op">&lt;-</span> <span class="fu">makeFun</span><span class="op">(</span> <span class="va">your_pythagorus_calculation</span> <span class="op">~</span> <span class="va">x</span><span class="op">)</span>
 <span class="va">time_to_ball</span> <span class="op">&lt;-</span> <span class="fu">makeFun</span><span class="op">(</span><span class="va">x</span><span class="op">/</span><span class="fl">400</span> <span class="op">+</span> <span class="va">distance_in_water</span><span class="op">/</span><span class="fl">50</span> <span class="op">~</span> <span class="va">x</span><span class="op">)</span></code></pre></div>
 <p><code>Time_to_ball()</code> takes one argument, the distance <span class="math inline">\(x\)</span> Swimmer runs down the beach before turning into the water. Use a <a href="https://maa-statprep.shinyapps.io/CalcZ-Sandbox/">SANDBOX</a> to find the distance that calculus-savvy Swimmer runs down the beach before turning into the water, if Swimmer’s goal is to get to the ball as fast as possible.</p>
@@ -573,11 +576,11 @@ The above is an equation, not a definition. It says that whatever <span class="m
 ( )  49.25
 ( )  49.75
 
-[[Right-oh! ]]
+[[Nice!]]
 
 </pre>
 <a href="https://abcnews.go.com/Technology/story?id=97628&amp;page=1">Here’s a news story</a> about a mathematician’s dog on the shore of Lake Michigan. It’s not plausible that Swimmer has been trained in calculus. Perhaps the way Swimmer solves the running distance problem is simply to graph <code>time_to_ball(x) ~ x</code> over a suitable domain and find the argmax by eye!
-</details><details><summary><strong>Exercise XX.XX</strong>: <span><a name="File:%20Exercises/Diff/optim-pink.Rmd" href="#whfrt"><img src="www/icons8-signpost.png" title="Location: Exercises/Diff/optim-pink.Rmd" width="12px"></a><span style="color: red; font-size: 9pt;">whfrt</span>
+</details><details><summary><strong>Exercise 23.12</strong>: <span><a name="File:%20Exercises/Diff/optim-pink.Rmd" href="#whfrt"><img src="www/icons8-signpost.png" title="Location: Exercises/Diff/optim-pink.Rmd" width="12px"></a><span style="color: red; font-size: 9pt;">whfrt</span>
 </span></summary><p>If you’re skeptical that a dog might do a calculus problem before running to fetch a ball, consider the path taken by a photon. “Fermat’s Principle” is that light takes the path of least time. To illustrate, consider the problem of a photon travelling from a point A to a point B, as in the diagram. The shortest path between the two points is a straight line. Along this straight-line path, the time taken by the photon will be the distance divided by the speed of light.</p>
 <p>The diagram shows another path consisting of two segments, one of length <span class="math inline">\(l_1\)</span> and the other <span class="math inline">\(l_2\)</span>. Obviously, the two-segment path is longer than the straight-line path. But Fermat’s principle would lead light to “prefer” the longer path if the time taken to traverse it is shorter.</p>
 <pre><code>## Warning in normalizePath("www/1200px-Fermat_Snellius.svg.png"): path[1]="www/
@@ -586,7 +589,7 @@ The above is an equation, not a definition. It says that whatever <span class="m
 <p>The reason the indirect path might be shorter is that the speed of light differs in different physical media. Light traveling in a vacuum famously has a speed of about 300,000 km per second. In air, the speed is smaller by a factor of 1/1.003. In water, the speed is smaller still: the factor is 1/1.3.</p>
 <p>Imagine that the blue zone of the diagram is water and the clear zone air. The time for the photon to travel from point A to B is proportional to <span class="math inline">\(1.003\ l_1 + 1.3\ l_2\)</span>.</p>
 <p>To see the path actually taken by light, let’s imagine that point A is <span class="math inline">\((x=0, y=10)\)</span> and point B is <span class="math inline">\((x=20, y=-10)\)</span>, and that the boundary between water and air is at <span class="math inline">\(y=0\)</span>. We’ll place the point P at <span class="math inline">\((x, 0)\)</span>. The total time taken for light to traverse this path is 1.003 dist(A to P) + 1.3 dist(P to B).</p>
-<pre>Which of these formulas gives the total time it takes for light to traverse the path from A to P at relative speed 1/1.003 and then the path from P to B at relative speed 1/1.3? A is located at $(0, 10)$, B is located at $(20,-10)$, and P is located at $(x, 0)$ 
+<pre>Which of these formulas gives the total time it takes for light to traverse the path from A to P at relative speed 1/1.003 and then the path from P to B at relative speed 1/1.3? A is located at $$(0, 10)$$, B is located at $$(20,-10)$$, and P is located at $$(x, 0)$$ 
 
 
 
@@ -594,12 +597,12 @@ The above is an equation, not a definition. It says that whatever <span class="m
 ( )  $$\sqrt{(x-0)^2 +(0-10)^2}/1.003+ \sqrt{(20-x)^2 + (-10 - 0)^2}/1.3$$
 ( )  $$1.003 \sqrt{(x-10)^2 +(0-0)^2}+ 1.3\sqrt{(-10 -x)^2 + (50 - 0)^2}$$
 
-[[Right-oh! ]]
+[[Nice!]]
 
 </pre>
 <p>Implement the calculation of <code>total_time()</code> in R, then use a graph to find the argmin.</p>
 <div class="scaffolding">
-<div class="sourceCode" id="cb210"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb212"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">total_time</span> <span class="op">&lt;-</span> <span class="fu">makeFun</span><span class="op">(</span> <span class="va">your_formula</span> <span class="op">~</span> <span class="va">x</span><span class="op">)</span>
 <span class="fu">slice_plot</span><span class="op">(</span><span class="fu">total_time</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">~</span> <span class="va">x</span>, <span class="fu">domain</span><span class="op">(</span>x<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">20</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
 
@@ -607,7 +610,7 @@ The above is an equation, not a definition. It says that whatever <span class="m
 <span class="va">dx_time</span>  <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/deriv.html">D</a></span><span class="op">(</span><span class="fu">total_time</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">~</span> <span class="va">x</span><span class="op">)</span>
 <span class="va">dxx_time</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/deriv.html">D</a></span><span class="op">(</span><span class="fu">total_time</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">~</span> <span class="va">x</span> <span class="op">+</span> <span class="va">x</span><span class="op">)</span></code></pre></div>
 </div>
-<pre>i) What value of $x$ (that is, the argmin) minimizes the travel time of light between points A and B? (Choose the best answer) 
+<pre>i) What value of $$x$$ (that is, the argmin) minimizes the travel time of light between points A and B? (Choose the best answer) 
 
 
 
@@ -634,7 +637,7 @@ The above is an equation, not a definition. It says that whatever <span class="m
 [[Correct.]]
 
 </pre>
-<pre>ii) Suppose that instead of being water, the blue area was glass. The speed of light in glass is roughly 1/1.5 times as big as in vacuum. What value of $x$ minimizes the travel time of light between points A and B? (Choose the best answer) 
+<pre>ii) Suppose that instead of being water, the blue area was glass. The speed of light in glass is roughly 1/1.5 times as big as in vacuum. What value of $$x$$ minimizes the travel time of light between points A and B? (Choose the best answer) 
 
 
 
@@ -662,7 +665,7 @@ The above is an equation, not a definition. It says that whatever <span class="m
 [[Correct.]]
 
 </pre>
-</details><details><summary><strong>Exercise XX.XX</strong>: <span><a name="File:%20Exercises/Diff/optim-red.Rmd" href="#jgtrds"><img src="www/icons8-signpost.png" title="Location: Exercises/Diff/optim-red.Rmd" width="12px"></a><span style="color: red; font-size: 9pt;">jgtrds</span>
+</details><details><summary><strong>Exercise 23.14</strong>: <span><a name="File:%20Exercises/Diff/optim-red.Rmd" href="#jgtrds"><img src="www/icons8-signpost.png" title="Location: Exercises/Diff/optim-red.Rmd" width="12px"></a><span style="color: red; font-size: 9pt;">jgtrds</span>
 </span></summary><div class="todo">
 <p>Turn this into a problem about algebra.</p>
 <p>Later in accumulation, figure out the mile-markers on the road.</p>
@@ -671,13 +674,13 @@ The above is an equation, not a definition. It says that whatever <span class="m
 <p>Suppose you have a function <span class="math inline">\(f(x)\)</span> whose graph represents the path of a road through the jungle. There is a lion at coordinates <span class="math inline">\((3, 2)\)</span> in the jungle. At what point as you travel along the road will you be closest to the lion.</p>
 <p>The trick here is to see that your position on the road at any value of <span class="math inline">\(x\)</span> is <span class="math inline">\((x, f(x))\)</span>. The distance to the lion as a function of <span class="math inline">\(x\)</span> is <span class="math display">\[ \text{lion_dist}(x) \equiv \sqrt{(x - 3)^2 + (f(x)-2)^2} .\]</span></p>
 <p>The road and the lion are graphed in the sandbox for the road <span class="math inline">\(f(x) \equiv x^2 e^{-x}\)</span>. You can see that the road comes closest to the lion at roughly <span class="math inline">\(x=3\)</span>. When you implement the <span class="math inline">\(\text{lion_dist}(x)\)</span> function, you’ll be able to find the <em>argmin</em>, that is, the value of the input <span class="math inline">\(x\)</span> for which the output <span class="math inline">\(\text{lion_dist}(x)\)</span> is minimal. The value of the function <span class="math inline">\(\text{lion_dist}(x)\)</span> at the argmin is the <em>min</em> of the function.</p>
-<div class="sourceCode" id="cb211"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb213"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">slice_plot</span><span class="op">(</span><span class="va">x</span><span class="op">^</span><span class="fl">2</span> <span class="op">*</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html">exp</a></span><span class="op">(</span><span class="op">-</span><span class="va">x</span><span class="op">)</span> <span class="op">~</span> <span class="va">x</span>, <span class="fu">domain</span><span class="op">(</span>x<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">5</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu">gf_label</span><span class="op">(</span><span class="fl">2</span> <span class="op">~</span> <span class="fl">3</span>, label<span class="op">=</span><span class="st">"lion"</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu">gf_refine</span><span class="op">(</span><span class="fu">coord_fixed</span><span class="op">(</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<div class="inline-figure"><img src="CalcZ-notes_files/figure-html/unnamed-chunk-277-1.png" width="90%" style="display: block; margin: auto;"></div>
+<div class="inline-figure"><img src="CalcZ-notes_files/figure-html/unnamed-chunk-278-1.png" width="90%" style="display: block; margin: auto;"></div>
 <p>To find the argmin of the distance to the lion more precisely, implement the <span class="math inline">\(\text{lion_dist}(x)\)</span> function in the sandbox. Plot this out and look for the minimum. Alternatively, find <span class="math inline">\(\partial_x \text{lion_dist}(x)\)</span> and find the <span class="math inline">\(x\)</span> of the zero crossing.</p>
-<pre>Using the sandbox above, find the argmin for which the graph of the function $g(x) \equiv x^2 \exp(-x)$ comes closest to the point $(3, 2)$? (Choose the best answer.)  
+<pre>Using the sandbox above, find the argmin for which the graph of the function $$g(x) \equiv x^2 \exp(-x)$$ comes closest to the point $$(3, 2)$$? (Choose the best answer.)  
 
 
 
@@ -699,12 +702,12 @@ The above is an equation, not a definition. It says that whatever <span class="m
 [[Excellent!]]
 
 </pre>
-</details><details><summary><strong>Exercise XX.XX</strong>: <span><a name="File:%20Exercises/Diff/optim-blue.Rmd" href="#eberg"><img src="www/icons8-signpost.png" title="Location: Exercises/Diff/optim-blue.Rmd" width="12px"></a><span style="color: red; font-size: 9pt;">eberg</span>
+</details><details><summary><strong>Exercise 23.16</strong>: <span><a name="File:%20Exercises/Diff/optim-blue.Rmd" href="#eberg"><img src="www/icons8-signpost.png" title="Location: Exercises/Diff/optim-blue.Rmd" width="12px"></a><span style="color: red; font-size: 9pt;">eberg</span>
 </span></summary><p>In the previous problem, you used graphics to find the argmin of a function. You can, of course, successively reset the domain of the graphing window to zoom in on the location of the argmin.</p>
 <p>To find the argmin numerically, you start with a (pretty good) guess for the argmin. Recall that a function (such as <code>total_time()</code>) can be modeled with a low-order polynomial. When the function has an extreme point the polynomial should include a quadratic term. Suppose you have guessed that <span class="math inline">\(x=10\)</span> is a good starting guess for the argmin of the air-to-water problem. You can compute the first and second derivatives of <code>total_time(x)</code> with respect to <code>x</code> and evaluate those derivative functions at <span class="math inline">\(x=10\)</span>. (Use the <code><a href="https://rdrr.io/r/stats/deriv.html">D()</a></code> function to construct the derivatives.) In the sandbox, use the value of those two derivatives at the <span class="math inline">\(x=10\)</span> guess to find the approximation to the minimum of the function.</p>
 <p>To help remind you, the quadratic approximation to a function <span class="math inline">\(t(x)\)</span> around a reference point <span class="math inline">\(x_0\)</span> is: <span class="math display">\[q(x) \equiv t(x_0) + \partial_x t(x_0) [x - x_0] + \frac{1}{2} \partial_{xx} t(x_0) [x - x_0]^2\]</span>
 Find the derivative <span class="math inline">\(\partial_x q(x)\)</span> and set this equal to zero. Inserting appropriate values for <span class="math inline">\(x_0\)</span>, <span class="math inline">\(\partial_x t(x_0)\)</span>, and <span class="math inline">\(\partial_{xx} t(x_0)\)</span> will enable you to calculate the value of <span class="math inline">\(x\)</span> at the minimum of the approximating quadratic.</p>
-<pre>iii) Letting the blue area be water (1/1.3 speed factor) and starting with a guess $x_0=10$, find the $x$ that minimizes the approximating quadratic. 
+<pre>iii) Letting the blue area be water (1/1.3 speed factor) and starting with a guess $$x_0=10$$, find the $$x$$ that minimizes the approximating quadratic. 
 
 
 
@@ -734,7 +737,7 @@ Find the derivative <span class="math inline">\(\partial_x q(x)\)</span> and set
 [[Right!]]
 
 </pre>
-<pre>iv) Using the correct answer from (iii) for a new $x_0$, find the value of $x$ that minimizes the new approximating quadratic. 
+<pre>iv) Using the correct answer from (iii) for a new $$x_0$$, find the value of $$x$$ that minimizes the new approximating quadratic. 
 
 
 
@@ -761,7 +764,7 @@ Find the derivative <span class="math inline">\(\partial_x q(x)\)</span> and set
 ( )  13.527
 ( )  13.888
 
-[[Right-oh! ]]
+[[Nice!]]
 
 </pre>
 </details>
@@ -772,15 +775,15 @@ Find the derivative <span class="math inline">\(\partial_x q(x)\)</span> and set
 </h2>
 <p>Your uncle Bob is writing a business plan for a tree farm for lumber. Having heard that you are taking Math 141Z, he emails you giving some information asking for some numbers. In particular, Bob sends you a report saying that, for the species of tree he plans to plant, the amount of usable lumber is a function of growth time <span class="math inline">\(t\)</span> looking like the function defined in the sandbox:</p>
 <div class="scaffolding">
-<div class="sourceCode" id="cb212"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb214"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">lumber</span> <span class="op">&lt;-</span> <span class="fu">makeFun</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="va">t</span><span class="op">&lt;</span><span class="fl">10</span>, <span class="fl">0</span>, <span class="fl">100</span><span class="op">*</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html">exp</a></span><span class="op">(</span><span class="op">(</span><span class="va">t</span><span class="op">-</span><span class="fl">25</span><span class="op">)</span><span class="op">/</span><span class="fl">8</span><span class="op">)</span><span class="op">/</span><span class="op">(</span><span class="fl">1</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html">exp</a></span><span class="op">(</span><span class="op">(</span><span class="va">t</span><span class="op">-</span><span class="fl">25</span><span class="op">)</span><span class="op">/</span><span class="fl">8</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">~</span> <span class="va">t</span><span class="op">)</span>
 <span class="va">dt_lumber</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/deriv.html">D</a></span><span class="op">(</span><span class="fu">lumber</span><span class="op">(</span><span class="va">t</span><span class="op">)</span> <span class="op">~</span> <span class="va">t</span><span class="op">)</span>
 <span class="va">ave_growth_rate</span> <span class="op">&lt;-</span> <span class="fu">makeFun</span><span class="op">(</span> <span class="va">your_expression_here</span> <span class="op">~</span> <span class="va">t</span><span class="op">)</span>
 <span class="fu">slice_plot</span><span class="op">(</span><span class="fu">lumber</span><span class="op">(</span><span class="va">t</span><span class="op">)</span> <span class="op">~</span> <span class="va">t</span>, <span class="fu">domain</span><span class="op">(</span>t<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">100</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<div class="inline-figure"><img src="CalcZ-notes_files/figure-html/unnamed-chunk-279-1.png" width="90%" style="display: block; margin: auto;"></div>
+<div class="inline-figure"><img src="CalcZ-notes_files/figure-html/unnamed-chunk-280-1.png" width="90%" style="display: block; margin: auto;"></div>
 </div>
 <p>Bob has heard that the time to harvest is when the tree is growing fastest.</p>
-<pre>A) What is the value of `t` (in years) at which $\partial_t$ `lumber(t)` is largest? 
+<pre>A) What is the value of `t` (in years) at which $$\partial_t$$ `lumber(t)` is largest? 
 
 
 
@@ -824,7 +827,7 @@ Find the derivative <span class="math inline">\(\partial_x q(x)\)</span> and set
 ( )  39
 ( )  41
 
-[[Right-oh! ]]
+[[Nice!]]
 
 </pre>
 
@@ -882,11 +885,11 @@ Recall the setting for calculus-type maximization. You have a function with one 
 <p>Minimizing the weight of the cylinder is our objective (according to the problem statement) and the weight is proportional to the surface area. Since the volume <span class="math inline">\(V\)</span> is given (according to the problem statement), we want to re-write the area function to use volume:</p>
 <p><span class="math display">\[h(r, V) \equiv V / \pi r^2 \ \ \ \implies\ \ \ A(r, V) = 2 \pi r^2 + 2 \pi r V/\pi r^2 = 2 \pi r^2 + 2 V / r\]</span>
 Suppose <span class="math inline">\(V\)</span> were specified as 1000 liters. A good first step is to choose appropriate units for <span class="math inline">\(r\)</span> to make sure the formula for <span class="math inline">\(A(r, V)\)</span> is dimensionally consistent. Suppose we choose <span class="math inline">\(r\)</span> in cm. Then we want <span class="math inline">\(V\)</span> in cubic centimeters (cc). 1000 liters is 1,000,000 cc. Now we can plot a slice of the area function:</p>
-<div class="sourceCode" id="cb213"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb215"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">A</span> <span class="op">&lt;-</span> <span class="fu">makeFun</span><span class="op">(</span><span class="fl">2</span><span class="op">*</span><span class="va">pi</span><span class="op">*</span><span class="va">r</span><span class="op">^</span><span class="fl">2</span> <span class="op">+</span> <span class="fl">2</span><span class="op">*</span><span class="va">V</span><span class="op">/</span><span class="va">r</span> <span class="op">~</span> <span class="va">r</span>, V<span class="op">=</span><span class="fl">1000000</span><span class="op">)</span>
 <span class="fu">slice_plot</span><span class="op">(</span><span class="fu">A</span><span class="op">(</span><span class="va">r</span><span class="op">)</span> <span class="op">~</span> <span class="va">r</span>, <span class="fu">domain</span><span class="op">(</span>r<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">10</span>, <span class="fl">100</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu">gf_labs</span><span class="op">(</span>x <span class="op">=</span> <span class="st">"radius (cm)"</span><span class="op">)</span></code></pre></div>
-<div class="inline-figure"><img src="CalcZ-notes_files/figure-html/unnamed-chunk-109-1.png" width="90%" style="display: block; margin: auto;"></div>
+<div class="inline-figure"><img src="CalcZ-notes_files/figure-html/unnamed-chunk-110-1.png" width="90%" style="display: block; margin: auto;"></div>
 <p>You can easily see that the minimum is near <span class="math inline">\(r=50\)</span>cm. Since <span class="math inline">\(h(r,V) = V/\pi r^2\)</span>, the required height of cylinder will be near <span class="math inline">\(10^6 / \pi 50^2 = 127\)</span>cm. And, as is clear from the graph, the function’s derivative is zero at the optimal <span class="math inline">\(r\)</span>.</p>
 <p>In calculus courses, the goal is often to find a <strong>formula</strong> for the optimal radius as a function of <span class="math inline">\(V\)</span>. So we differentiate the objective function—that is, the area function for any <span class="math inline">\(V\)</span> and <span class="math inline">\(r\)</span> with respect to <span class="math inline">\(r\)</span>,
 <span class="math display">\[\partial_r A(r, V) = 4 \pi r - 2 V / r^2\]</span>
@@ -906,7 +909,7 @@ Setting this to zero (which will be true at the optimal <span class="math inline
 <li>Look at how big a change in the output of the objective function is produced by a change from the argmax.</li>
 </ol>
 <p>Approach (2) is always at hand, since you already know the objective function. Let’s graph the objective function near <span class="math inline">\(r = 54.1926\)</span> …</p>
-<div class="inline-figure"><img src="CalcZ-notes_files/figure-html/unnamed-chunk-110-1.png" width="90%" style="display: block; margin: auto;"></div>
+<div class="inline-figure"><img src="CalcZ-notes_files/figure-html/unnamed-chunk-111-1.png" width="90%" style="display: block; margin: auto;"></div>
 <p>Look carefully at the axes scales. Deviating from the mathematical optimum by about 5cm (that is, 50,000 microns) produces a change in the output of the objective function by about 400 units <strong>out of 55,000</strong>. In other words, about 0.7%.</p>
 <p>It’s true that <span class="math inline">\(r^\star = 54.1926\)</span> cm gives the “best” outcome. And sometimes such precision is warranted. For example, improving the speed of an elite marathon racer by even 0.1% would give her a 7 second advantage: easily the difference between silver and gold!</p>
 <p>What’s different is that you know exactly what is the ultimate objective of a marathon: finish faster. But you may not know the ultimate objective of the system your “optimal” tank will be a part of. For instance, your tank may be part of an external fuel pod on an aircraft. Certainly the designers of the aircraft want the tank to be as light as possible. But they also want to reduce drag as much as possible. A 54 cm diameter tube has about 17% more drag than a 50 cm tube. To save that much drag, it’s probably well worth increasing weight by 0.7%.</p>
@@ -916,7 +919,7 @@ Setting this to zero (which will be true at the optimal <span class="math inline
 <p>Using <span class="math inline">\(h\)</span> for the length of the cylindrical portion of the tank, and <span class="math inline">\(r\)</span> for the radius, the volume and surface area are:
 <span class="math display">\[V(r, h) = \pi r^2 h + \frac{4}{3} \pi r^3 \ \ \ \mbox{and}\ \ \ A(r,h) = 2 \pi r h + 4 \pi r^2\]</span>
 Again, <span class="math inline">\(V\)</span> was specified as 1000 liters. So we can solve the <span class="math inline">\(V\)</span> formula for <span class="math inline">\(h(r, V)\)</span>, then plug that in for <span class="math inline">\(h\)</span> in the area function to give <span class="math inline">\(A(r, V)\)</span>.</p>
-<details><summary><strong>Exercise XX.XX</strong>: <span><a name="File:%20Exercises/Diff/walnut-write-futon.Rmd" href="#ph92lT"><img src="www/icons8-signpost.png" title="Location: Exercises/Diff/walnut-write-futon.Rmd" width="12px"></a><span style="color: red; font-size: 9pt;">ph92lT</span>
+<details><summary><strong>Exercise 23.18</strong>: <span><a name="File:%20Exercises/Diff/walnut-write-futon.Rmd" href="#ph92lT"><img src="www/icons8-signpost.png" title="Location: Exercises/Diff/walnut-write-futon.Rmd" width="12px"></a><span style="color: red; font-size: 9pt;">ph92lT</span>
 </span></summary><p>Return to the problem of finding the optimal radius of a cylindrical tank with spherical ends. The point is to choose the sphere radius <span class="math inline">\(r\)</span> and the cylinder length <span class="math inline">\(h\)</span> that minimize the surface area of the tank while enclosing a specified volume. In terms of <span class="math inline">\(h\)</span> and <span class="math inline">\(r\)</span>, the volume and surface area are:
 <span class="math display">\[V(r, h) = \pi r^2 h + \frac{4}{3} \pi r^3 \ \ \ \mbox{and}\ \ \ A(r,h) = 2 \pi r h + 4 \pi r^2\]</span></p>
 <pre>Which of these is correct? (Hint: Only one of the answers is dimensionally consistent.) 
@@ -931,7 +934,7 @@ Again, <span class="math inline">\(V\)</span> was specified as 1000 liters. So w
 [[Good.]]
 
 </pre>
-<pre>Which of these is the correct expression for $A(r, V)$ 
+<pre>Which of these is the correct expression for $$A(r, V)$$ 
 
 
 
@@ -943,7 +946,7 @@ Again, <span class="math inline">\(V\)</span> was specified as 1000 liters. So w
 [[Good.]]
 
 </pre>
-<pre>Find $\partial_r A(r, V)$ and set to zero. Solve for $r^\star$ in terms of $V$. Which of these is correct? 
+<pre>Find $$\partial_r A(r, V)$$ and set to zero. Solve for $$r^\star$$ in terms of $$V$$. Which of these is correct? 
 
 
 
@@ -952,11 +955,11 @@ Again, <span class="math inline">\(V\)</span> was specified as 1000 liters. So w
 ( )  $$r^\star = \sqrt[3]{\frac{3\pi}{4} V}$$
 ( )  $$r^\star = \sqrt[3]{\frac{3}{2\pi} V}$$
 
-[[Right-oh! ]]
+[[Nice!]]
 
 </pre>
 <p>Find the optimum value of <span class="math inline">\(r\)</span> to minimize <span class="math inline">\(A(r,V)\)</span> when <span class="math inline">\(V = 1000\)</span> liters.</p>
-<pre>What is the optimal value of $r$ in cm to a precision of one micron? 
+<pre>What is the optimal value of $$r$$ in cm to a precision of one micron? 
 
 
 
@@ -969,10 +972,10 @@ Again, <span class="math inline">\(V\)</span> was specified as 1000 liters. So w
 
 </pre>
 <p>Use the sandbox to plot a graph of <span class="math inline">\(A(r, V)\)</span> for <span class="math inline">\(V = 1000\)</span>liters.</p>
-<div class="sourceCode" id="cb214"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb216"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">#A &lt;- makeFun(function here ~ r, V = 1000000)</span>
 <span class="co">#slice_plot(A(r) ~ r, domain(r=c(55,70)))</span></code></pre></div>
-<pre>From the graph of $A(r, V)$ at $V=1000$ liters, read off a range of $r$ that produces $A$ no worse than 1% greater than the minimum. How wide is that range, approximately? 
+<pre>From the graph of $$A(r, V)$$ at $$V=1000$$ liters, read off a range of $$r$$ that produces $$A$$ no worse than 1% greater than the minimum. How wide is that range, approximately? 
 
 
 
@@ -1017,7 +1020,7 @@ Again, <span class="math inline">\(V\)</span> was specified as 1000 liters. So w
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>CalcZ Student Notes</strong>" was written by Daniel Kaplan. It was last built on 2021-08-20.</p>
+    <p>"<strong>CalcZ Student Notes</strong>" was written by Daniel Kaplan. It was last built on 2021-08-24.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

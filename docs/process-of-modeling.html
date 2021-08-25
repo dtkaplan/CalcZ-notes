@@ -6,13 +6,16 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>Chapter 8 Process of modeling | CalcZ Student Notes</title>
 <meta name="author" content="Daniel Kaplan">
-<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.2"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/header-attrs-2.8/header-attrs.js"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.2"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/header-attrs-2.10/header-attrs.js"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
 <script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.2.5.1/tabs.js"></script><script src="libs/bs3compat-0.2.5.1/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
 <script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="libs/kePrint-0.0.1/kePrint.js"></script><link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet">
 <script src="libs/htmlwidgets-1.5.3/htmlwidgets.js"></script><script src="libs/plotly-binding-4.9.4/plotly.js"></script><script src="libs/typedarray-0.1/typedarray.min.js"></script><link href="libs/crosstalk-1.1.1/css/crosstalk.css" rel="stylesheet">
 <script src="libs/crosstalk-1.1.1/js/crosstalk.min.js"></script><link href="libs/plotly-htmlwidgets-css-1.57.1/plotly-htmlwidgets.css" rel="stylesheet">
-<script src="libs/plotly-main-1.57.1/plotly-latest.min.js"></script><script type="text/x-mathjax-config">
+<script src="libs/plotly-main-1.57.1/plotly-latest.min.js"></script><link href="libs/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet">
+<script src="libs/datatables-binding-0.18/datatables.js"></script><link href="libs/dt-core-1.10.20/css/jquery.dataTables.min.css" rel="stylesheet">
+<link href="libs/dt-core-1.10.20/css/jquery.dataTables.extra.css" rel="stylesheet">
+<script src="libs/dt-core-1.10.20/js/jquery.dataTables.min.js"></script><script type="text/x-mathjax-config">
     const popovers = document.querySelectorAll('a.footnote-ref[data-toggle="popover"]');
     for (let popover of popovers){
       const div = document.createElement('div');
@@ -266,7 +269,7 @@ Figure 8.1: Four variations of the exponential functions.
 <p>produce the same value if <span class="math inline">\(k\)</span>, <span class="math inline">\(d\)</span> and <span class="math inline">\(h\)</span> have corresponding numerical values.</p>
 <div class="scaffolding">
 <p>The scaffolding has an expression for plotting out <span class="math inline">\(2^{t/h}\)</span> for <span class="math inline">\(-4 \leq t \leq 12\)</span> where <span class="math inline">\(h = 4\)</span>. It also plots out <span class="math inline">\(e^{kt}\)</span> and <span class="math inline">\(10^{t/d}\)</span></p>
-<div class="sourceCode" id="cb42"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb43"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">fa</span> <span class="op">&lt;-</span> <span class="fu">makeFun</span><span class="op">(</span><span class="fl">2</span><span class="op">^</span><span class="op">(</span><span class="va">t</span><span class="op">/</span><span class="va">h</span><span class="op">)</span> <span class="op">~</span> <span class="va">t</span>, h <span class="op">=</span> <span class="fl">4</span><span class="op">)</span>
 <span class="va">fb</span> <span class="op">&lt;-</span> <span class="fu">makeFun</span><span class="op">(</span><span class="fl">10</span><span class="op">^</span><span class="op">(</span><span class="va">t</span><span class="op">/</span><span class="va">d</span><span class="op">)</span> <span class="op">~</span> <span class="va">t</span>, d <span class="op">=</span> <span class="fl">10</span><span class="op">)</span>
 <span class="va">fc</span> <span class="op">&lt;-</span> <span class="fu">makeFun</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html">exp</a></span><span class="op">(</span><span class="va">k</span><span class="op">*</span><span class="va">t</span><span class="op">)</span>  <span class="op">~</span> <span class="va">t</span>, k <span class="op">=</span> <span class="fl">0.1</span><span class="op">)</span>
@@ -339,12 +342,10 @@ Figure 8.2: Stan’s data
 <p><strong>Step 2</strong>: Find the numerical value of the imagined function <span class="math inline">\(f()\)</span> at input <span class="math inline">\(x = 0\)</span>. We’ll call this value <span class="math inline">\(f(0)\)</span>. Then <span class="math inline">\(A \equiv f(0) - C\)</span>.</p>
 <p><strong>Step 3</strong> Estimate parameter <span class="math inline">\(k\)</span> using these steps:</p>
 <ol style="list-style-type: lower-alpha">
-<li>Pick any input value, which we’ll call <span class="math inline">\(x_2\)</span>, such that <span class="math inline">\(f(x_2)\)</span> is far from the baseline.</li>
-<li>Find an input value, which we’ll call <span class="math inline">\(x_1\)</span> such that <span class="math inline">\(f(x_1)\)</span> is halfway between the baseline <span class="math inline">\(C\)</span> and <span class="math inline">\(f(x_2)\)</span>, that is, <span class="math display">\[f(x_1) = \frac{f(x_2) - C}{2}\]</span>
-</li>
-<li>Then <span class="math display">\[k = \frac{\ln(2)}{x_2 - x_1} \approx \frac{0.693}{x_2 - x_1}\]</span>
-</li>
-<li>Using this simple test to double-check your work. If the horizontal asymptote of <span class="math inline">\(f()\)</span> (that is, approach to the baseline) is for <span class="math inline">\(x \rightarrow \infty\)</span>, then <span class="math inline">\(k\)</span> should be <strong>negative</strong>. If the horizontal asymptote is for <span class="math inline">\(x \rightarrow - \infty\)</span>, then <span class="math inline">\(k\)</span> will be positive.</li>
+<li><p>Pick any input value, which we’ll call <span class="math inline">\(x_2\)</span>, such that <span class="math inline">\(f(x_2)\)</span> is far from the baseline.</p></li>
+<li><p>Find an input value, which we’ll call <span class="math inline">\(x_1\)</span> such that <span class="math inline">\(f(x_1)\)</span> is halfway<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content='&lt;p&gt;The motivation for the equation is that the distance between &lt;span class="math inline"&gt;\(f(x_1)\)&lt;/span&gt; and &lt;span class="math inline"&gt;\(C\)&lt;/span&gt; should be half that of the distance between &lt;span class="math inline"&gt;\(f(x_2)\)&lt;/span&gt; and &lt;span class="math inline"&gt;\(C\)&lt;/span&gt;. In other words, &lt;span class="math display"&gt;\[f(x_1) - C = \frac{f(x_2) - C}{2}\]&lt;/span&gt; Simplifying the algebra a little tells you to look for &lt;span class="math inline"&gt;\(x_1\)&lt;/span&gt; such that &lt;span class="math display"&gt;\[f(x_1) = \frac{f(x_2) + C}{2}\]&lt;/span&gt;&lt;/p&gt;'><sup>12</sup></a> between the baseline <span class="math inline">\(C\)</span> and <span class="math inline">\(f(x_2)\)</span>, that is <span class="math display">\[f(x_1) = \frac{f(x_2) + C}{2}\]</span></p></li>
+<li><p>Once you have <span class="math inline">\(x_1\)</span> and <span class="math inline">\(x_2\)</span>, you can immediately find <span class="math inline">\(k\)</span>: <span class="math display">\[k = \frac{\ln(2)}{x_2 - x_1} \approx \frac{0.693}{x_2 - x_1}\]</span></p></li>
+<li><p>Using this simple test to double-check your work. If the horizontal asymptote of <span class="math inline">\(f()\)</span> (that is, approach to the baseline) is for <span class="math inline">\(x \rightarrow \infty\)</span>, then <span class="math inline">\(k\)</span> should be <strong>negative</strong>. If the horizontal asymptote is for <span class="math inline">\(x \rightarrow - \infty\)</span>, then <span class="math inline">\(k\)</span> will be positive.</p></li>
 </ol>
 <p>Notice that the question of “growth or decay” depends only on the sign of the parameter <span class="math inline">\(k\)</span>. You can have an exponentially decaying process that’s increasing. Consider, for instance, the speed of a car as it merges onto a highway from a slow speed on the entrance ramp. The car’s velocity is increasing, but as you approach highway speed the rate of increase gets smaller. That’s exponential <strong>decay</strong>.</p>
 <p>The procedure in Step 3 for estimating <span class="math inline">\(k\)</span> stems from a very important property of exponential functions: Exponential functions always double/half at a constant pace. By design, the parameter <span class="math inline">\(k\)</span>
@@ -354,27 +355,26 @@ The <span class="math inline">\(2\)</span> in <span class="math inline">\(\ln(2)
 <p><strong>Step 4</strong> If you can plot the data, do so. Add to that a graphics layer showing the function <span class="math inline">\(A e^{k x} + C\)</span> using the values for <span class="math inline">\(A\)</span>, <span class="math inline">\(C\)</span>, and <span class="math inline">\(k\)</span> that you just found. If you are not satisfied with the way the plotted function approximates the data, tweak the parameters a bit until you are.</p>
 <p><strong>Exponential curve fitting applied to the water-cooling data</strong></p>
 <p>Let’s illustrate the general process on the water-cooling data, redrawn in Figure <a href="process-of-modeling.html#fig:Fun-4-a-2-1">8.3</a>. <span style="float: right; padding-left: 50px;"><a name="950" href="#950"><img src="www/icons8-signpost.png" title="Location: 950" width="12px"></a><span style="color: red; font-size: 6pt;">950</span></span></p>
+<pre><code>## `geom_smooth()` using method = 'loess'</code></pre>
 <div class="figure" style="text-align: center">
 <span id="fig:Fun-4-a-2-1"></span>
-<img src="CalcZ-notes_files/figure-html/Fun-4-a-2-1-1.png" alt="The cooling-water data, repeated here for convenience." width="90%"><p class="caption">
-Figure 8.3: The cooling-water data, repeated here for convenience.
+<img src="CalcZ-notes_files/figure-html/Fun-4-a-2-1-1.png" alt="The cooling-water data, repeated here for convenience. We've sketched in an exponential-like curve that matches the data pretty well." width="90%"><p class="caption">
+Figure 8.3: The cooling-water data, repeated here for convenience. We’ve sketched in an exponential-like curve that matches the data pretty well.
 </p>
 </div>
 <p>Step 0: The data indicate a smooth curve. As <span class="math inline">\(t\)</span> gets large, the curve approaches a constant. So an exponential model is reasonable.</p>
-<p>Step 1: The curve looks like it’s leveling out at a temperature of about 25 degrees C for large <span class="math inline">\(t\)</span>. So <span class="math inline">\(A \approx 25^{\circ} \text{C}\)</span>.</p>
-<p>Step 2:</p>
-<ol style="list-style-type: lower-roman">
-<li>The point far from the baseline is located at <span class="math inline">\(t_1 = 15 \text{sec}\)</span> with a value <span class="math inline">\({\cal D} \approx 80^\circ\text{C}\)</span>.</li>
-<li>This if <span class="math inline">\(55^\circ\text{C}\)</span> from the baseline. We want to find the value of <span class="math inline">\(t_1\)</span> where the temperature will be half way from 80 to the baseline. That’s a temperature of about <span class="math inline">\(80 - 55/2 = 53.5\)</span>. Scanning over to the right, the function that I can imagine going through the data crossed <span class="math inline">\(53^\circ\)</span> at about <span class="math inline">\(t_{1/2} = 40\)</span>. Thus, the half-life is estimated at 25s.</li>
-<li>The parameter <span class="math inline">\(k\)</span> is therefore <span class="math inline">\(k\approx 0.693 / \mbox{half-life} = - 0.63 / 25 = -0.0277\)</span>. Since we identified in Step 1 that exponential decay is involved, we expect <span class="math inline">\(k\)</span> to be negative. It is.</li>
-</ol>
-<p>Step 3.</p>
-<ol style="list-style-type: lower-roman">
-<li>We know <span class="math inline">\(A \approx 25\)</span> and <span class="math inline">\(k \approx -0.0277\)</span>. We also now that for <span class="math inline">\(t=15\)</span> the function output is about <span class="math inline">\({\cal D} = 80^\circ\)</span>.</li>
-<li>This means <span class="math inline">\(25^\circ + B e^{- 0.0277 \times 15} \approx 80^\circ = 25 + 0.66\ B\)</span>. Solving for <span class="math inline">\(B\)</span> gives <span class="math inline">\(B = (80 - 25)/0.66 = 83.3\)</span>
+<p><strong>Step 1</strong>: The curve looks like it’s leveling out at a temperature of about 25 degrees C for large <span class="math inline">\(t\)</span>. So <span class="math inline">\(C \approx 25^{\circ} \text{C}\)</span>.</p>
+<p><strong>Step 2</strong>: Looking at our imagined curve (sketched in blue in Figure <a href="process-of-modeling.html#fig:Fun-4-a-2-1">8.3</a>), it appears to intersect the <span class="math inline">\(t=0\)</span> vertical axis at about <span class="math inline">\(f(0) = 85^\circ\text{C}\)</span>. Thus, <span class="math display">\[A = 85^\circ\text{C} - 25^\circ\text{C} = 60^\circ\text{C}\]</span></p>
+<p><strong>Step 3</strong>:</p>
+<ol style="list-style-type: lower-alpha">
+<li>Now choose a time <span class="math inline">\(t_2\)</span> where <span class="math inline">\(f(t_2)\)</span> is far from the baseline. … It looks like <span class="math inline">\(t_2 = 25\)</span> will do the job, at which point we can read off the graph that the function value is <span class="math inline">\(f(25) \approx 65\)</span>.</li>
+<li>Find an input value <span class="math inline">\(t_1\)</span> such that <span class="math inline">\(f(t_1) -C = (f(t_2)-C)/2.\)</span> This tells us that <span class="math inline">\(f(t_1) = 25 + (65-25)/2 = (65+25)/2 = 45\)</span>. Referring to the graph, the time at which the function is about 45 is <span class="math inline">\(t_1 \approx 65\)</span>, that is, <span class="math inline">\(f(t_1) \approx 65\)</span>.</li>
+<li>We have <span class="math inline">\(t_1 \approx 65\)</span> and <span class="math inline">\(t_2 = 25\)</span>. From this, we calculate <span class="math inline">\(k\)</span>:
+<span class="math display">\[ k = \frac{\ln(2)}{25 - 65} = 0.693/(-40) = -0.0173\]</span>
 </li>
+<li>The data show exponential decay, so we expect <span class="math inline">\(k\)</span> to be negative. Happily, it is. If it hadn’t been, we would go back to look for a sign error someplace.</li>
 </ol>
-<p>Step 4. Graph the function over the data.</p>
+<p><strong>Step 4</strong>. Graph the function on top of the data to confirm the fitted function is a good match to the data.</p>
 <div class="figure" style="text-align: center">
 <span id="fig:Fun-4-a-2-2"></span>
 <img src="CalcZ-notes_files/figure-html/Fun-4-a-2-2-1.png" alt="An exponential function that roughly aligns with the data." width="90%"><p class="caption">
@@ -384,7 +384,7 @@ Figure 8.4: An exponential function that roughly aligns with the data.
 <p>Step 5: The flat zone of the data is to the right. So we’ve got exponential decay and <span class="math inline">\(k &lt; 0\)</span>.</p>
 <details><summary><strong>Exercise 8.2</strong>: <span><a name="File:%20Exercises/Fun/chicken-choose-vase.Rmd" href="#vkwl4"><img src="www/icons8-signpost.png" title="Location: Exercises/Fun/chicken-choose-vase.Rmd" width="12px"></a><span style="color: red; font-size: 9pt;">vkwl4</span>
 </span></summary><p>The Bargain Basement store wants to sell its goods quickly. Consequently, they reduce each product’s price <span class="math inline">\(P\)</span> by 5% per day.</p>
-<pre>If a jacket costs $80 today, how much will it cost in $t$ days? 
+<pre>If a jacket costs $$80 today, how much will it cost in $$t$$ days? 
 
 
 
@@ -394,14 +394,14 @@ Figure 8.4: An exponential function that roughly aligns with the data.
 ( )  $$P = 80 (0.05)^t$$
 (x)  $$P = 80 (0.95)^t$$
 
-[[Right-oh! ]]
+[[Nice!]]
 
 </pre>
 <p>You’ll need to open a sandbox for the next question.</p>
 <div class="scaffolding">
 <p>You’re on your own here! Remember, to raise a number to a power, you can use an expression like <code>0.95^7</code>.</p>
 </div>
-<pre>You decided that you like the $80 jacket, but you have a budget of only $60. How long should you wait before coming back to the Bargain Basement store.? 
+<pre>You decided that you like the $$80 jacket, but you have a budget of only $$60. How long should you wait before coming back to the Bargain Basement store.? 
 
 
 
@@ -450,7 +450,7 @@ This is an exponential function with base 1/2.</p>
 <p>You’re going to carry out a <strong><em>guess-and-check</em></strong> procedure to find a zero of the function <span class="math inline">\(\text{amount_left}(n) - 0.10\)</span> that is, you’ll find what <span class="math inline">\(n\)</span> will generate the stated output value (e.g. 10%).
 Open a sandbox and copy over the scaffolding, which include the definition of the <code>amount_left()</code> function. and a “guess” for the input. Change the guess until you get the output 10%.</p>
 <div class="scaffolding">
-<div class="sourceCode" id="cb43"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb45"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">amount_left</span> <span class="op">&lt;-</span> <span class="fu">makeFun</span><span class="op">(</span><span class="op">(</span><span class="fl">1</span><span class="op">/</span><span class="fl">2</span><span class="op">)</span><span class="op">^</span><span class="va">n</span> <span class="op">~</span> <span class="va">n</span><span class="op">)</span>
 <span class="fu">amount_left</span><span class="op">(</span><span class="fl">0</span><span class="op">)</span></code></pre></div>
 <pre><code>## [1] 1</code></pre>
@@ -471,7 +471,7 @@ Open a sandbox and copy over the scaffolding, which include the definition of th
 <p>Another way to find the input <span class="math inline">\(n\)</span> that generates an output of 10% is to construct the <strong><em>inverse function</em></strong> to <span class="math inline">\(\text{amount_left}()\)</span>.</p>
 <p>The computer already provides you with inverse functions for <span class="math inline">\(2^n\)</span> and <span class="math inline">\(e^n\)</span> and <span class="math inline">\(10^n\)</span>. Their names are <code><a href="https://rdrr.io/r/base/Log.html">log2()</a></code>, <code><a href="https://rdrr.io/r/base/Log.html">log()</a></code>, and <code><a href="https://rdrr.io/r/base/Log.html">log10()</a></code> repectively. Using <code><a href="https://rdrr.io/r/base/Log.html">log2()</a></code>, write a function named <code>log_half()</code> that gives the inverse function to <span class="math inline">\((1/2)^n\)</span>. Remember, the input to the inverse function corresponds to 10%; the output to the <span class="math inline">\(n\)</span>.</p>
 <div class="scaffolding">
-<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb45-1"><a href="process-of-modeling.html#cb45-1" aria-hidden="true" tabindex="-1"></a>log_half <span class="ot">&lt;-</span> <span class="fu">makeFun</span>( <span class="fu">log2</span>(...your stuff here ...) <span class="sc">~</span> x)</span></code></pre></div>
+<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb47-1"><a href="process-of-modeling.html#cb47-1" aria-hidden="true" tabindex="-1"></a>log_half <span class="ot">&lt;-</span> <span class="fu">makeFun</span>( <span class="fu">log2</span>(...your stuff here ...) <span class="sc">~</span> x)</span></code></pre></div>
 </div>
 <pre>D) The answer you got in part C) is the **number** of halvings needed to reach 10%. If this number occurs in 2 hours (that is, 120 minutes),  what is the half life stated in minutes. 
 
@@ -539,7 +539,7 @@ Figure 8.7: The sinusoid fails to align with the timing of peaks and troughs.
 <details><summary><strong>Exercise 8.4</strong>: <span><a name="File:%20Exercises/Fun/lamb-talk-gloves.Rmd" href="#YELXG"><img src="www/icons8-signpost.png" title="Location: Exercises/Fun/lamb-talk-gloves.Rmd" width="12px"></a><span style="color: red; font-size: 9pt;">YELXG</span>
 </span></summary><p>A person breathes in and out roughly every three seconds. The volume <span class="math inline">\(V\)</span> of air in the person’s lungs varies between a minimum of <span class="math inline">\(2\)</span> liters and a maximum of <span class="math inline">\(4\)</span> liters. Assume time <span class="math inline">\(t\)</span> is measured in seconds.</p>
 <p>Remember that a full cycle of the sine wave <span class="math inline">\(\sin(x)\)</span> involves <span class="math inline">\(x\)</span> going from its starting value to that value <strong>plus</strong> <span class="math inline">\(2 \pi\)</span>.</p>
-<pre>Which of the following is the most appropriate of these models for $V(t)$? 
+<pre>Which of the following is the most appropriate of these models for $$V(t)$$? 
 
 
 
@@ -572,7 +572,7 @@ Figure 8.7: The sinusoid fails to align with the timing of peaks and troughs.
 ( )  Expiration lasts longer than inspiration
 ( )  Inspiration and expiration each consume about  the same fraction of the complete  cycle.
 
-[[Right-oh! ]]
+[[Nice!]]
 
 </pre>
 </details><details><summary><strong>Exercise 8.5</strong>: <span><a name="File:%20Exercises/Fun/spirometer.Rmd" href="#VBWD"><img src="www/icons8-signpost.png" title="Location: Exercises/Fun/spirometer.Rmd" width="12px"></a><span style="color: red; font-size: 9pt;">VBWD</span>
@@ -660,7 +660,7 @@ Figure 8.7: The sinusoid fails to align with the timing of peaks and troughs.
 <p>Our last two basic modeling functions express an important idea in modeling: <strong><em>localness</em></strong>. To put this in concrete terms, imagine creating a function to depict the elevation above sea level of a long road as a function of distance in miles, <span class="math inline">\(x\)</span>, from the start of the road. If the road were level at 1200 feet elevation, a sensible model would be <span class="math inline">\(\mbox{elevation}(x) = 1200 \text{ft}\)</span>. If the road were gently sloping, a better model would be <span class="math inline">\(\mbox{elevation}(x) = 1200 + 3 x\)</span>. <span style="float: right; padding-left: 50px;"><a name="980" href="#980"><img src="www/icons8-signpost.png" title="Location: 980" width="12px"></a><span style="color: red; font-size: 6pt;">980</span></span></p>
 <p>Now let’s add a bump to the road. A bump is a local feature, often only a few feet wide. Or, perhaps the road is crossing a mountain range. That’s also a local feature, but unlike a bump in the road a mountain range extends for many miles.</p>
 <p>The basic modeling function suited to represent bumps in the road, or potholes, or mountain ranges is generically called a “hump function.” In this book, we use a specific hump function called the <strong><em>gaussian</em></strong> function (<code><a href="https://rdrr.io/r/stats/Normal.html">dnorm()</a></code>).</p>
-<p>A gaussian function has two parameters: the location<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content="&lt;p&gt;That is, the input value at which the function value is largest.&lt;/p&gt;"><sup>12</sup></a> of the peak, which we’ll call the <strong><em>center</em></strong> parameter, and the sideways extent of the gaussian, which is called the <strong><em>standard deviation</em></strong>. Figure <a href="process-of-modeling.html#fig:Fun-3C-1">8.8</a> shows a few gaussian functions with different parameters.</p>
+<p>A gaussian function has two parameters: the location<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content="&lt;p&gt;That is, the input value at which the function value is largest.&lt;/p&gt;"><sup>13</sup></a> of the peak, which we’ll call the <strong><em>center</em></strong> parameter, and the sideways extent of the gaussian, which is called the <strong><em>standard deviation</em></strong>. Figure <a href="process-of-modeling.html#fig:Fun-3C-1">8.8</a> shows a few gaussian functions with different parameters.</p>
 <div class="figure" style="text-align: center">
 <span id="fig:Fun-3C-1"></span>
 <img src="CalcZ-notes_files/figure-html/Fun-3C-1-1.png" alt="Gaussians with various centers and standard deviations (sd)." width="90%"><img src="CalcZ-notes_files/figure-html/Fun-3C-1-2.png" alt="Gaussians with various centers and standard deviations (sd)." width="90%"><img src="CalcZ-notes_files/figure-html/Fun-3C-1-3.png" alt="Gaussians with various centers and standard deviations (sd)." width="90%"><p class="caption">
@@ -691,12 +691,12 @@ Figure 8.9: Sigmoids with various centers and standard deviations
 </span></summary><p>The gaussian function is implemented in R with <code><a href="https://rdrr.io/r/stats/Normal.html">dnorm(x, mean, sd)</a></code>. The input called <code>mean</code> corresponds to the <em>center</em> of the hump. The input called <code>sd</code> gives the <em>width</em> of the hump.</p>
 <div class="scaffolding">
 <p>In a sandbox, make a slice plot of <code><a href="https://rdrr.io/r/stats/Normal.html">dnorm(x, mean=0, sd=1)</a></code>. By varying the value of <code>width</code>, figure out how you could read that value directly from the graph.</p>
-<div class="sourceCode" id="cb46"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb48"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">slice_plot</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">dnorm</a></span><span class="op">(</span><span class="va">x</span>, mean<span class="op">=</span><span class="fl">0</span>, sd<span class="op">=</span><span class="fl">1</span><span class="op">)</span> <span class="op">~</span> <span class="va">x</span>,
            <span class="fu">domain</span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">4</span>, <span class="fl">4</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 </div>
 <p>In the plot below, one of the double-headed arrows represents the <code>width</code> parameter. The others are misleading.</p>
-<div class="inline-figure"><img src="CalcZ-notes_files/figure-html/unnamed-chunk-151-1.png" width="90%" style="display: block; margin: auto;"></div>
+<div class="inline-figure"><img src="CalcZ-notes_files/figure-html/unnamed-chunk-152-1.png" width="90%" style="display: block; margin: auto;"></div>
 <pre>Which arrow shows correctly the `width` parameter of the gaussian function in the graph with arrows? 
 
 
@@ -706,7 +706,7 @@ Figure 8.9: Sigmoids with various centers and standard deviations
 ( )  bottom
 ( )  none of them
 
-[[Right-oh! ]]
+[[Nice!]]
 
 </pre>
 <pre>What is the value of `center` in the graph with arrows? 
@@ -728,7 +728,7 @@ Figure 8.9: Sigmoids with various centers and standard deviations
 </span></summary><p>Gaussian functions and sigmoidal functions come in pairs. For every possible sigmoid, there is a corresponding gaussian that gives, for each value of the input, the slope of the sigmoid.</p>
 <p>Each of the following graphs shows a sigmoid and a gaussian function. The two might or might not correspond to one another. That is, the output of the gaussian might be the slope of the sigmoid, or the gaussian might correspond to some other sigmoid. Remember, you’re comparing the <em>output</em> of the gaussian to the <em>slope</em> of the sigmoid.</p>
 <p>For each graph, say whether the gaussian and the sigmoid correspond to one another. If not, choose one of the reasons why not.</p>
-<div class="inline-figure"><img src="CalcZ-notes_files/figure-html/unnamed-chunk-153-1.png" width="90%" style="display: block; margin: auto;"></div>
+<div class="inline-figure"><img src="CalcZ-notes_files/figure-html/unnamed-chunk-154-1.png" width="90%" style="display: block; margin: auto;"></div>
 <pre>Graph (A) 
 
 
@@ -740,7 +740,7 @@ Figure 8.9: Sigmoids with various centers and standard deviations
 [[Excellent!]]
 
 </pre>
-<div class="inline-figure"><img src="CalcZ-notes_files/figure-html/unnamed-chunk-154-1.png" width="90%" style="display: block; margin: auto;"></div>
+<div class="inline-figure"><img src="CalcZ-notes_files/figure-html/unnamed-chunk-155-1.png" width="90%" style="display: block; margin: auto;"></div>
 <pre>Graph (B) 
 
 
@@ -752,7 +752,7 @@ Figure 8.9: Sigmoids with various centers and standard deviations
 [[The gaussian peaks at about $$x=2$$ while the steepest part of the sigmoid is at about $$x=4$$]]
 
 </pre>
-<div class="inline-figure"><img src="CalcZ-notes_files/figure-html/unnamed-chunk-155-1.png" width="90%" style="display: block; margin: auto;"></div>
+<div class="inline-figure"><img src="CalcZ-notes_files/figure-html/unnamed-chunk-156-1.png" width="90%" style="display: block; margin: auto;"></div>
 <pre>Graph (C) 
 
 
@@ -765,7 +765,7 @@ Figure 8.9: Sigmoids with various centers and standard deviations
 
 </pre>
 <p>In the graph <em>D</em>, there are several gaussian functions shown, only one of which corresponds to the sigmoid.</p>
-<div class="inline-figure"><img src="CalcZ-notes_files/figure-html/unnamed-chunk-156-1.png" width="90%" style="display: block; margin: auto;"></div>
+<div class="inline-figure"><img src="CalcZ-notes_files/figure-html/unnamed-chunk-157-1.png" width="90%" style="display: block; margin: auto;"></div>
 <pre>Which gaussian corresponds to  the sigmoid? 
 
 
@@ -780,7 +780,7 @@ Figure 8.9: Sigmoids with various centers and standard deviations
 </pre>
 </details><details><summary><strong>Exercise 8.8</strong>: <span><a name="File:%20Exercises/Fun/sigmoid-bath.Rmd" href="#bllKR"><img src="www/icons8-signpost.png" title="Location: Exercises/Fun/sigmoid-bath.Rmd" width="12px"></a><span style="color: red; font-size: 9pt;">bllKR</span>
 </span></summary><p>Have in mind a gaussian function and a sigmoid function that form a corresponding pair.</p>
-<div class="inline-figure"><img src="CalcZ-notes_files/figure-html/unnamed-chunk-158-1.png" width="50%" style="display: block; margin: auto;"></div>
+<div class="inline-figure"><img src="CalcZ-notes_files/figure-html/unnamed-chunk-159-1.png" width="50%" style="display: block; margin: auto;"></div>
 <pre>Which of these stories is consistent with the relationship between a gaussian and its corresponding sigmoid? 
 
 
@@ -790,12 +790,12 @@ Figure 8.9: Sigmoids with various centers and standard deviations
 (x)  The gaussian is the rate at which water flows from the tap and the sigmoid is the amount of water in the bathtub.
 ( )  The gaussian indicates the amount the drain is open and the sigmoid is the amount of water in the bathtub.
 
-[[Right-oh! ]]
+[[Nice!]]
 
 </pre>
 </details><details><summary><strong>Exercise 8.9</strong>: <span><a name="File:%20Exercises/Fun/ebola-sigmoid.Rmd" href="#EKCIE"><img src="www/icons8-signpost.png" title="Location: Exercises/Fun/ebola-sigmoid.Rmd" width="12px"></a><span style="color: red; font-size: 9pt;">EKCIE</span>
-</span></summary><p>A data frame named <code>EbolaSierraLeone</code><a class="footnote-ref" tabindex="0" data-toggle="popover" data-content="&lt;p&gt;From the &lt;code&gt;{MMAC}&lt;/code&gt; R package&lt;/p&gt;"><sup>13</sup></a> records the cumulative number of Ebola cases in Sierra Leone from May 1, 2014 to December 16, 2015. Figure <a href="process-of-modeling.html#fig:ebola-data">8.10</a> plots the data.</p>
-<div class="sourceCode" id="cb47"><pre class="downlit sourceCode r">
+</span></summary><p>A data frame named <code>EbolaSierraLeone</code><a class="footnote-ref" tabindex="0" data-toggle="popover" data-content="&lt;p&gt;From the &lt;code&gt;{MMAC}&lt;/code&gt; R package&lt;/p&gt;"><sup>14</sup></a> records the cumulative number of Ebola cases in Sierra Leone from May 1, 2014 to December 16, 2015. Figure <a href="process-of-modeling.html#fig:ebola-data">8.10</a> plots the data.</p>
+<div class="sourceCode" id="cb49"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">gf_point</span><span class="op">(</span><span class="va">Cases</span> <span class="op">~</span> <span class="va">Day</span>, data <span class="op">=</span> <span class="fu">MMAC</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/MMAC/man/EbolaSierraLeone.html">EbolaSierraLeone</a></span><span class="op">)</span></code></pre></div>
 <div class="figure" style="text-align: center">
 <span id="fig:ebola-data"></span>
@@ -829,7 +829,7 @@ Figure 8.11: A simulated sigmoidal growth process.
 ( )  About 20,000 cases
 ( )  None of the above
 
-[[Right-oh! ]]
+[[Nice!]]
 
 </pre>
 <pre>Where is the centerline? 
@@ -857,25 +857,25 @@ Figure 8.11: A simulated sigmoidal growth process.
 </pre>
 <p>Open a sandbox and use the following commands to plot the Ebola data along with the sigmoid that you matched to the data by eye. The commands also generate and plot a more “refined” estimate found with <code>fitModel()</code> starting with your by-eye parameters. (Note: You’ll need to fill in the blanks at the start of the scaffolding with your by-eye parameters before running the code.)</p>
 <div class="scaffolding">
-<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb48-1"><a href="process-of-modeling.html#cb48-1" aria-hidden="true" tabindex="-1"></a>A_estimate <span class="ot">&lt;-</span>  _____ </span>
-<span id="cb48-2"><a href="process-of-modeling.html#cb48-2" aria-hidden="true" tabindex="-1"></a>center_estimate <span class="ot">&lt;-</span> _____</span>
-<span id="cb48-3"><a href="process-of-modeling.html#cb48-3" aria-hidden="true" tabindex="-1"></a>width_estimate <span class="ot">&lt;-</span> ______</span>
-<span id="cb48-4"><a href="process-of-modeling.html#cb48-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-5"><a href="process-of-modeling.html#cb48-5" aria-hidden="true" tabindex="-1"></a>guessed_fun <span class="ot">&lt;-</span> <span class="fu">makeFun</span>(A<span class="sc">*</span> <span class="fu">pnorm</span>(Day, center, width) <span class="sc">~</span> Day,</span>
-<span id="cb48-6"><a href="process-of-modeling.html#cb48-6" aria-hidden="true" tabindex="-1"></a>                       <span class="at">A =</span> A_estimate,</span>
-<span id="cb48-7"><a href="process-of-modeling.html#cb48-7" aria-hidden="true" tabindex="-1"></a>                       <span class="at">center =</span> center_estimate,</span>
-<span id="cb48-8"><a href="process-of-modeling.html#cb48-8" aria-hidden="true" tabindex="-1"></a>                       <span class="at">width =</span> width_estimate)</span>
-<span id="cb48-9"><a href="process-of-modeling.html#cb48-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-10"><a href="process-of-modeling.html#cb48-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-11"><a href="process-of-modeling.html#cb48-11" aria-hidden="true" tabindex="-1"></a>refined_fun <span class="ot">&lt;-</span> <span class="fu">fitModel</span>(Cases <span class="sc">~</span> A <span class="sc">*</span> <span class="fu">pnorm</span>(Day, center, width),</span>
-<span id="cb48-12"><a href="process-of-modeling.html#cb48-12" aria-hidden="true" tabindex="-1"></a>                 <span class="at">data =</span> EbolaSierraLeone,</span>
-<span id="cb48-13"><a href="process-of-modeling.html#cb48-13" aria-hidden="true" tabindex="-1"></a>                 <span class="at">start =</span> <span class="fu">list</span>(<span class="at">A=</span>A_estimate, </span>
-<span id="cb48-14"><a href="process-of-modeling.html#cb48-14" aria-hidden="true" tabindex="-1"></a>                              <span class="at">center=</span>center_estimate,</span>
-<span id="cb48-15"><a href="process-of-modeling.html#cb48-15" aria-hidden="true" tabindex="-1"></a>                              <span class="at">width=</span>width_estimate))</span>
-<span id="cb48-16"><a href="process-of-modeling.html#cb48-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-17"><a href="process-of-modeling.html#cb48-17" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_point</span>(Cases  <span class="sc">~</span> Day, <span class="at">data =</span> MMAC<span class="sc">::</span>EbolaSierraLeone)  <span class="sc">%&gt;%</span></span>
-<span id="cb48-18"><a href="process-of-modeling.html#cb48-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice_plot</span>(<span class="fu">guessed_fun</span>(Day) <span class="sc">~</span> Day, <span class="at">color=</span><span class="st">"red"</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb48-19"><a href="process-of-modeling.html#cb48-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice_plot</span>(<span class="fu">refined_fun</span>(Day) <span class="sc">~</span> Day, <span class="at">color=</span><span class="st">"blue"</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb50-1"><a href="process-of-modeling.html#cb50-1" aria-hidden="true" tabindex="-1"></a>A_estimate <span class="ot">&lt;-</span>  _____ </span>
+<span id="cb50-2"><a href="process-of-modeling.html#cb50-2" aria-hidden="true" tabindex="-1"></a>center_estimate <span class="ot">&lt;-</span> _____</span>
+<span id="cb50-3"><a href="process-of-modeling.html#cb50-3" aria-hidden="true" tabindex="-1"></a>width_estimate <span class="ot">&lt;-</span> ______</span>
+<span id="cb50-4"><a href="process-of-modeling.html#cb50-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-5"><a href="process-of-modeling.html#cb50-5" aria-hidden="true" tabindex="-1"></a>guessed_fun <span class="ot">&lt;-</span> <span class="fu">makeFun</span>(A<span class="sc">*</span> <span class="fu">pnorm</span>(Day, center, width) <span class="sc">~</span> Day,</span>
+<span id="cb50-6"><a href="process-of-modeling.html#cb50-6" aria-hidden="true" tabindex="-1"></a>                       <span class="at">A =</span> A_estimate,</span>
+<span id="cb50-7"><a href="process-of-modeling.html#cb50-7" aria-hidden="true" tabindex="-1"></a>                       <span class="at">center =</span> center_estimate,</span>
+<span id="cb50-8"><a href="process-of-modeling.html#cb50-8" aria-hidden="true" tabindex="-1"></a>                       <span class="at">width =</span> width_estimate)</span>
+<span id="cb50-9"><a href="process-of-modeling.html#cb50-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-10"><a href="process-of-modeling.html#cb50-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-11"><a href="process-of-modeling.html#cb50-11" aria-hidden="true" tabindex="-1"></a>refined_fun <span class="ot">&lt;-</span> <span class="fu">fitModel</span>(Cases <span class="sc">~</span> A <span class="sc">*</span> <span class="fu">pnorm</span>(Day, center, width),</span>
+<span id="cb50-12"><a href="process-of-modeling.html#cb50-12" aria-hidden="true" tabindex="-1"></a>                 <span class="at">data =</span> EbolaSierraLeone,</span>
+<span id="cb50-13"><a href="process-of-modeling.html#cb50-13" aria-hidden="true" tabindex="-1"></a>                 <span class="at">start =</span> <span class="fu">list</span>(<span class="at">A=</span>A_estimate, </span>
+<span id="cb50-14"><a href="process-of-modeling.html#cb50-14" aria-hidden="true" tabindex="-1"></a>                              <span class="at">center=</span>center_estimate,</span>
+<span id="cb50-15"><a href="process-of-modeling.html#cb50-15" aria-hidden="true" tabindex="-1"></a>                              <span class="at">width=</span>width_estimate))</span>
+<span id="cb50-16"><a href="process-of-modeling.html#cb50-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-17"><a href="process-of-modeling.html#cb50-17" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_point</span>(Cases  <span class="sc">~</span> Day, <span class="at">data =</span> MMAC<span class="sc">::</span>EbolaSierraLeone)  <span class="sc">%&gt;%</span></span>
+<span id="cb50-18"><a href="process-of-modeling.html#cb50-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice_plot</span>(<span class="fu">guessed_fun</span>(Day) <span class="sc">~</span> Day, <span class="at">color=</span><span class="st">"red"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb50-19"><a href="process-of-modeling.html#cb50-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice_plot</span>(<span class="fu">refined_fun</span>(Day) <span class="sc">~</span> Day, <span class="at">color=</span><span class="st">"blue"</span>)</span></code></pre></div>
 </div>
 <p>I can’t predict what you see in your graph, since it depends on what starting estimates you used for <code>A</code>, <code>center</code> and <code>width</code>.</p>
 <p><strong>Your task</strong>: <em>Write down the estimates you made by eye for <code>A</code>, <code>center</code> and <code>width</code>. Then explain in words any major systematic deviations of the ‘refined’ model from the data."</em></p>
@@ -900,7 +900,7 @@ Figure 8.11: A simulated sigmoidal growth process.
 [[Good.]]
 
 </pre>
-<pre>Taking $f()$ to be the pattern-book function in plot (A), which one of the curves is $f(-x)$? 
+<pre>Taking $$f()$$ to be the pattern-book function in plot (A), which one of the curves is $$f(-x)$$? 
 
 
 
@@ -927,7 +927,7 @@ Figure 8.11: A simulated sigmoidal growth process.
 [[Good.]]
 
 </pre>
-<pre>Taking $f()$ to be the pattern-book function in plot (B), which one of the curves is $-f(x)$? 
+<pre>Taking $$f()$$ to be the pattern-book function in plot (B), which one of the curves is $$-f(x)$$? 
 
 
 
@@ -969,7 +969,7 @@ Figure 8.11: A simulated sigmoidal growth process.
 [[Correct.]]
 
 </pre>
-<pre>Taking $f()$ to be the pattern-book function in plot (D), which one of the curves is $-f(-x)$? 
+<pre>Taking $$f()$$ to be the pattern-book function in plot (D), which one of the curves is $$-f(-x)$$? 
 
 
 
@@ -986,7 +986,7 @@ Figure 8.11: A simulated sigmoidal growth process.
 <details><summary><strong>Exercise 8.11</strong>: <span><a name="File:%20Exercises/Fun/flipping-2.Rmd" href="#YLWP2"><img src="www/icons8-signpost.png" title="Location: Exercises/Fun/flipping-2.Rmd" width="12px"></a><span style="color: red; font-size: 9pt;">YLWP2</span>
 </span></summary><p>Each of the curves in the graph is an exponential function <span class="math inline">\(e^{kt}\)</span>, for various values of <span class="math inline">\(k\)</span>.</p>
 <div class="inline-figure"><img src="CalcZ-notes_files/figure-html/flipping-2-1-1.png" width="90%" style="display: block; margin: auto;"></div>
-<pre>What is the order from $k$ smallest (most negative) to k largest? 
+<pre>What is the order from $$k$$ smallest (most negative) to k largest? 
 
 
 
@@ -1030,7 +1030,7 @@ Figure 8.11: A simulated sigmoidal growth process.
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>CalcZ Student Notes</strong>" was written by Daniel Kaplan. It was last built on 2021-08-20.</p>
+    <p>"<strong>CalcZ Student Notes</strong>" was written by Daniel Kaplan. It was last built on 2021-08-24.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

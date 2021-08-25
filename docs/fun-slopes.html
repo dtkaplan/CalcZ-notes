@@ -6,13 +6,16 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>Chapter 9 Slope function | CalcZ Student Notes</title>
 <meta name="author" content="Daniel Kaplan">
-<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.2"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/header-attrs-2.8/header-attrs.js"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.2"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/header-attrs-2.10/header-attrs.js"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
 <script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.2.5.1/tabs.js"></script><script src="libs/bs3compat-0.2.5.1/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
 <script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="libs/kePrint-0.0.1/kePrint.js"></script><link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet">
 <script src="libs/htmlwidgets-1.5.3/htmlwidgets.js"></script><script src="libs/plotly-binding-4.9.4/plotly.js"></script><script src="libs/typedarray-0.1/typedarray.min.js"></script><link href="libs/crosstalk-1.1.1/css/crosstalk.css" rel="stylesheet">
 <script src="libs/crosstalk-1.1.1/js/crosstalk.min.js"></script><link href="libs/plotly-htmlwidgets-css-1.57.1/plotly-htmlwidgets.css" rel="stylesheet">
-<script src="libs/plotly-main-1.57.1/plotly-latest.min.js"></script><script type="text/x-mathjax-config">
+<script src="libs/plotly-main-1.57.1/plotly-latest.min.js"></script><link href="libs/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet">
+<script src="libs/datatables-binding-0.18/datatables.js"></script><link href="libs/dt-core-1.10.20/css/jquery.dataTables.min.css" rel="stylesheet">
+<link href="libs/dt-core-1.10.20/css/jquery.dataTables.extra.css" rel="stylesheet">
+<script src="libs/dt-core-1.10.20/js/jquery.dataTables.min.js"></script><script type="text/x-mathjax-config">
     const popovers = document.querySelectorAll('a.footnote-ref[data-toggle="popover"]');
     for (let popover of popovers){
       const div = document.createElement('div');
@@ -218,7 +221,7 @@ Figure 9.1: Some candidate straight-line function models plotted on top of the c
 <span class="header-section-number">9.5</span> Average rate of change<a class="anchor" aria-label="anchor" href="#average-rate-of-change"><i class="fas fa-link"></i></a>
 </h2>
 <p>Since the slope is our standard way of representing a relationship of change, we will often use it as a way of summarizing a function. To illustrate, consider the exponential model we constructed to match the cooling-water data: <span style="float: right; padding-left: 50px;"><a name="1130" href="#1130"><img src="www/icons8-signpost.png" title="Location: 1130" width="12px"></a><span style="color: red; font-size: 6pt;">1130</span></span></p>
-<div class="sourceCode" id="cb49"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb51"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">water</span> <span class="op">&lt;-</span> <span class="fu">makeFun</span><span class="op">(</span><span class="fl">60.7</span><span class="op">*</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html">exp</a></span><span class="op">(</span><span class="op">-</span><span class="fl">0.019</span><span class="op">*</span><span class="va">t</span><span class="op">)</span> <span class="op">+</span> <span class="fl">25.93</span> <span class="op">~</span> <span class="va">t</span><span class="op">)</span></code></pre></div>
 <div class="figure" style="text-align: center">
 <span id="fig:water-average"></span>
@@ -236,7 +239,7 @@ Figure 9.2: The exponential function that was previously matched to the cooling-
 <li><p>Corresponding with the idea of the change in output being <span class="math inline">\(f(x=b) - f(x=a)\)</span> the change in the input value to a function is <span class="math inline">\(b - a\)</span>. This is often called the <em>run</em> in the value of the input.</p></li>
 </ul>
 <p>Each point on the graph of a function has Cartesian coordinates <span class="math inline">\((a, f(x=a))\)</span>. For example, the graph of the function <span class="math inline">\(f()\)</span> shown in Graph I includes points such as <span class="math inline">\((1.0, 4.0)\)</span>, and <span class="math inline">\((3.5, 3.0)\)</span>. The second coordinate is the output value when we provide the first coordinate as an input value. The nature of the <span class="math inline">\(f()\)</span> function (as defined by the graph) is such that <span class="math inline">\(f(x=1) \equiv 4\)</span> and <span class="math inline">\(f(x=3.5) \equiv 3\)</span>.</p>
-<div class="inline-figure"><img src="CalcZ-notes_files/figure-html/unnamed-chunk-162-1.png" width="90%" style="display: block; margin: auto;"></div>
+<div class="inline-figure"><img src="CalcZ-notes_files/figure-html/unnamed-chunk-163-1.png" width="90%" style="display: block; margin: auto;"></div>
 <pre>True or false: In Graph I, the *rise* from a to b is positive. 
 
 
@@ -244,10 +247,10 @@ Figure 9.2: The exponential function that was previously matched to the cooling-
 ( )  TRUE
 (x)  FALSE
 
-[[Right-oh! ]]
+[[Nice!]]
 
 </pre>
-<pre>True or false: In Graph I, the *run* from $x=a$ to $x=b$ is positive. 
+<pre>True or false: In Graph I, the *run* from $$x=a$$ to $$x=b$$ is positive. 
 
 
 
@@ -257,7 +260,7 @@ Figure 9.2: The exponential function that was previously matched to the cooling-
 [[Right!]]
 
 </pre>
-<div class="inline-figure"><img src="CalcZ-notes_files/figure-html/unnamed-chunk-163-1.png" width="90%" style="display: block; margin: auto;"></div>
+<div class="inline-figure"><img src="CalcZ-notes_files/figure-html/unnamed-chunk-164-1.png" width="90%" style="display: block; margin: auto;"></div>
 <pre>True or false: In Graph II, the *run* from a to b is positive. 
 
 
@@ -265,7 +268,7 @@ Figure 9.2: The exponential function that was previously matched to the cooling-
 (x)  TRUE
 ( )  FALSE
 
-[[Right-oh! ]]
+[[Nice!]]
 
 </pre>
 <pre>True or false: In Graph II, the *rise* from a to b is positive. 
@@ -295,7 +298,7 @@ Figure 9.2: The exponential function that was previously matched to the cooling-
 (x)  TRUE
 ( )  FALSE
 
-[[Right-oh! ]]
+[[Nice!]]
 
 </pre>
 <pre>For an interval [2, 6] what is the value of the run? (The answer is independent of any particular graph/function.) 
@@ -325,13 +328,13 @@ Figure 9.2: The exponential function that was previously matched to the cooling-
 <details><summary><strong>Exercise 9.6</strong>: <span><a name="File:%20Exercises/Fun/chicken-show-map.Rmd" href="#YQCLE"><img src="www/icons8-signpost.png" title="Location: Exercises/Fun/chicken-show-map.Rmd" width="12px"></a><span style="color: red; font-size: 9pt;">YQCLE</span>
 </span></summary><div class="scaffolding">
 <p>Open an R sandbox. You can use these function definitions to help you in your calculations.</p>
-<div class="sourceCode" id="cb50"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb52"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">f</span> <span class="op">&lt;-</span> <span class="fu">makeFun</span><span class="op">(</span><span class="fl">2</span><span class="op">*</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html">exp</a></span><span class="op">(</span><span class="va">x</span><span class="op">+</span><span class="fl">1</span><span class="op">)</span> <span class="op">~</span> <span class="va">x</span><span class="op">)</span>
 <span class="va">g</span> <span class="op">&lt;-</span> <span class="fu">makeFun</span><span class="op">(</span><span class="fl">3</span><span class="op">*</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html">exp</a></span><span class="op">(</span><span class="op">-</span><span class="va">x</span><span class="op">)</span> <span class="op">~</span> <span class="va">x</span><span class="op">)</span>
 <span class="va">h</span> <span class="op">&lt;-</span> <span class="fu">makeFun</span><span class="op">(</span><span class="va">x</span><span class="op">*</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html">exp</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">~</span> <span class="va">x</span><span class="op">)</span></code></pre></div>
 </div>
 <p>Using R, compute the <em>average</em> rate of change of the function over the given interval. Choose the closest answer for each problem.</p>
-<pre>$f(x) \equiv 2 e^{x+1}$ over [-2, 2] 
+<pre>$$f(x) \equiv 2 e^{x+1}$$ over [-2, 2] 
 
 
 
@@ -345,7 +348,7 @@ Figure 9.2: The exponential function that was previously matched to the cooling-
 [[Correct.]]
 
 </pre>
-<pre>$g(x) \equiv 3 e^{-x}$ over [-1, 1.5]  
+<pre>$$g(x) \equiv 3 e^{-x}$$ over [-1, 1.5]  
 
 
 
@@ -359,7 +362,7 @@ Figure 9.2: The exponential function that was previously matched to the cooling-
 [[Correct.]]
 
 </pre>
-<pre>$h(x) \equiv x e^x$ over [0, 1] 
+<pre>$$h(x) \equiv x e^x$$ over [0, 1] 
 
 
 
@@ -375,14 +378,14 @@ Figure 9.2: The exponential function that was previously matched to the cooling-
 </pre>
 <p>It’s much less work if we use the R function <code><a href="https://rdrr.io/r/base/c.html">c()</a></code> to define the interval, and the R function <code><a href="https://rdrr.io/r/base/diff.html">diff()</a></code> to calculate differences. The next sandbox contains an example asking you to compute the average rate of change of <span class="math inline">\(f(x) \equiv e^x\)</span> over the interval [0, 4]. You only need lines 1, 3, and 5. The other lines show intermediate results to help you understand what <code><a href="https://rdrr.io/r/base/diff.html">diff()</a></code> is doing.</p>
 <div class="scaffolding">
-<div class="sourceCode" id="cb51"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb53"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">interval</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">4</span><span class="op">)</span>  <span class="co"># creates the interval</span>
 <span class="fu"><a href="https://rdrr.io/r/base/diff.html">diff</a></span><span class="op">(</span><span class="va">interval</span><span class="op">)</span>       <span class="co"># calculate the run</span>
 <span class="va">f</span> <span class="op">&lt;-</span> <span class="fu">makeFun</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html">exp</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">~</span> <span class="va">x</span><span class="op">)</span>   <span class="co">#  create the function</span>
 <span class="fu">f</span><span class="op">(</span><span class="va">interval</span><span class="op">)</span>     <span class="co"># evaluate  function at the endpoints of  the interval</span>
 <span class="fu"><a href="https://rdrr.io/r/base/diff.html">diff</a></span><span class="op">(</span><span class="fu">f</span><span class="op">(</span><span class="va">interval</span><span class="op">)</span><span class="op">)</span> <span class="op">/</span> <span class="fu"><a href="https://rdrr.io/r/base/diff.html">diff</a></span><span class="op">(</span><span class="va">interval</span><span class="op">)</span>  <span class="co"># complete answer</span></code></pre></div>
 </div>
-<pre>True or false: The average rate of change of $f(x) \equiv e^{x^2}$ over [0.0, 0.1] is 0.1005017 
+<pre>True or false: The average rate of change of $$f(x) \equiv e^{x^2}$$ over [0.0, 0.1] is 0.1005017 
 
 
 
@@ -392,8 +395,8 @@ Figure 9.2: The exponential function that was previously matched to the cooling-
 [[Correct.]]
 
 </pre>
-<pre>True or false: The average rate of change of $f(x) \equiv \log(x)$ over [2, 3] is 0.5062353.  
-  (Hint: Change the code above so the interval variable goes from 2 to 3 and f becomes the function $f(x) \equiv \log(x)$) 
+<pre>True or false: The average rate of change of $$f(x) \equiv \log(x)$$ over [2, 3] is 0.5062353.  
+  (Hint: Change the code above so the interval variable goes from 2 to 3 and f becomes the function $$f(x) \equiv \log(x)$$) 
 
 
 
@@ -403,7 +406,7 @@ Figure 9.2: The exponential function that was previously matched to the cooling-
 [[Right!]]
 
 </pre>
-<pre>True or false: The average rate of change of $f(x) \equiv \sin(x)$ over [0.0, 0.5] is 0.9588511 
+<pre>True or false: The average rate of change of $$f(x) \equiv \sin(x)$$ over [0.0, 0.5] is 0.9588511 
 
 
 
@@ -416,7 +419,7 @@ Figure 9.2: The exponential function that was previously matched to the cooling-
 </details><hr>
 <details><summary><strong>Exercise 9.7</strong>: <span><a name="File:%20Exercises/Fun/eagle-bring-car.Rmd" href="#rTSX3"><img src="www/icons8-signpost.png" title="Location: Exercises/Fun/eagle-bring-car.Rmd" width="12px"></a><span style="color: red; font-size: 9pt;">rTSX3</span>
 </span></summary><p>Consider the sinusoid function, graphed below.</p>
-<img src="CalcZ-notes_files/figure-html/unnamed-chunk-166-1.png" width="90%" style="display: block; margin: auto;"><pre>What is the average rate of change over the interval $0 &lt; x &lt; \frac{1}{2}$? (Choose the closest value.) 
+<img src="CalcZ-notes_files/figure-html/unnamed-chunk-167-1.png" width="90%" style="display: block; margin: auto;"><pre>What is the average rate of change over the interval $$0 &lt; x &lt; \frac{1}{2}$$? (Choose the closest value.) 
 
 
 
@@ -427,7 +430,7 @@ Figure 9.2: The exponential function that was previously matched to the cooling-
 [[Right. From the interval you have that the run is 1/2. The rise over that interval is from 0 to 1/2, so a rise of 1/2. ]]
 
 </pre>
-<pre>What is the average rate of change over the interval $0 &lt; x &lt; 6.25$? (Choose the closest value.) 
+<pre>What is the average rate of change over the interval $$0 &lt; x &lt; 6.25$$? (Choose the closest value.) 
 
 
 
@@ -438,7 +441,7 @@ Figure 9.2: The exponential function that was previously matched to the cooling-
 [[Right. The function output is zero at both endpoints of the interval, so the rise is zero. Hence, the run is zero.]]
 
 </pre>
-<pre>What is the average rate of change over the interval $0 &lt; x &lt; 10$? (Choose the closest value.) 
+<pre>What is the average rate of change over the interval $$0 &lt; x &lt; 10$$? (Choose the closest value.) 
 
 
 
@@ -453,7 +456,7 @@ Figure 9.2: The exponential function that was previously matched to the cooling-
 </details><hr>
 <details><summary><strong>Exercise 9.8</strong>: <span><a name="File:%20Exercises/Fun/pig-look-rug.Rmd" href="#URIMX"><img src="www/icons8-signpost.png" title="Location: Exercises/Fun/pig-look-rug.Rmd" width="12px"></a><span style="color: red; font-size: 9pt;">URIMX</span>
 </span></summary><p>For each of the following, compute the <em>average</em> rate of change of the function over the given interval.</p>
-<pre>The average rate of change of $f(x) \equiv x + 5$ over [3, 5] is 
+<pre>The average rate of change of $$f(x) \equiv x + 5$$ over [3, 5] is 
 
 
 
@@ -465,7 +468,7 @@ Figure 9.2: The exponential function that was previously matched to the cooling-
 [[$$f(x=5) = 10$$ and $$f(x=3) = 8$$, so the *difference* in values is 2. Since this difference occurs over an interval of length 2 (that is, from #x=3$$ to 5), the average *rate* of change is 2/2.]]
 
 </pre>
-<pre>The average rate of change of $f(x) \equiv 3 - 2 x$ over [-4, -2] is 
+<pre>The average rate of change of $$f(x) \equiv 3 - 2 x$$ over [-4, -2] is 
 
 
 
@@ -479,7 +482,7 @@ Figure 9.2: The exponential function that was previously matched to the cooling-
 [[The difference from $$x=-4$$ to $$-2$$ is $$f(-2) - f(-4) = (7) - (11) = -4$$. The length of the interval is $$(-2) - (-4) = 2$$. So the rate is -4/2, just as you got.]]
 
 </pre>
-<pre>The average rate of change of $f(x) \equiv -3 x^2$ over [0, 4] is 
+<pre>The average rate of change of $$f(x) \equiv -3 x^2$$ over [0, 4] is 
 
 
 
@@ -494,7 +497,7 @@ Figure 9.2: The exponential function that was previously matched to the cooling-
 [[The difference in $$f()$$ over the interval is $$f(4) - f(2) = (-48) - 0 = -48$$. The length of the interval is $$4-0$$, so the average rate of change over the interval is $$(-48)/4 = -12$$.]]
 
 </pre>
-<pre>The average rate of change of $f(x) \equiv x^3 - 2 x + 1$ over [0, 2] is 
+<pre>The average rate of change of $$f(x) \equiv x^3 - 2 x + 1$$ over [0, 2] is 
 
 
 
@@ -522,10 +525,10 @@ Figure 9.2: The exponential function that was previously matched to the cooling-
 <li><span class="math inline">\(g(x_4) = 0.1\)</span></li>
 </ol>
 <p>The code sandbox below already contains an R command to plot out the mathematical exponential function over the domain <span class="math inline">\(-3 \leq x \leq 3\)</span>. For each of (a)-(d), modify the command to zoom in on the domain around around the appropriate value of <span class="math inline">\(x_i\)</span>. Then calculate the slope of the curve at that <span class="math inline">\(x_i\)</span>.</p>
-<div class="sourceCode" id="cb52"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb54"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">slice_plot</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html">exp</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">~</span> <span class="va">x</span>, <span class="fu">domain</span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">3</span>, <span class="fl">3</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <div class="inline-figure"><img src="CalcZ-notes_files/figure-html/daily-digital-02-sandbox1-1.png" width="90%" style="display: block; margin: auto;"></div>
-<pre>Using your answers for the slope at the points given in (a)-(d), choose the best answer to this question: What is the pattern in the slope as $x$ varies? 
+<pre>Using your answers for the slope at the points given in (a)-(d), choose the best answer to this question: What is the pattern in the slope as $$x$$ varies? 
 
 
 
@@ -595,9 +598,9 @@ Figure 9.6: Graph of the average-growth function ave_growth(year), constructed b
 <details><summary><strong>Exercise 9.1</strong>: <span><a name="File:%20Exercises/Fun/lion-find-bowl.Rmd" href="#HRTIX"><img src="www/icons8-signpost.png" title="Location: Exercises/Fun/lion-find-bowl.Rmd" width="12px"></a><span style="color: red; font-size: 9pt;">HRTIX</span>
 </span></summary><p>For each exercise, you are given a series of intervals that get smaller and smaller. Your job is to calculate the <em>average rate of change</em> of the function <span class="math inline">\(f(x) \equiv x^2\)</span> for each of the intervals. As the width of the intervals approach zero, our <em>average</em> rates of change become better approximations of the <em>instantaneous</em> rates of change. You should use the results you calculate to make an informed <em>estimate</em> of the <strong>instantaneous rate of change</strong>.</p>
 <div class="scaffolding">
-<div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb54-1"><a href="fun-slopes.html#cb54-1" aria-hidden="true" tabindex="-1"></a>interval <span class="ot">&lt;-</span> <span class="fu">c</span>(__start__ , __end__ )</span>
-<span id="cb54-2"><a href="fun-slopes.html#cb54-2" aria-hidden="true" tabindex="-1"></a>f <span class="ot">&lt;-</span> <span class="fu">makeFun</span>(x<span class="sc">^</span><span class="dv">2</span> <span class="sc">~</span> x)</span>
-<span id="cb54-3"><a href="fun-slopes.html#cb54-3" aria-hidden="true" tabindex="-1"></a><span class="fu">diff</span>(<span class="fu">f</span>(interval)) <span class="sc">/</span> <span class="fu">diff</span>(interval)</span></code></pre></div>
+<div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb56-1"><a href="fun-slopes.html#cb56-1" aria-hidden="true" tabindex="-1"></a>interval <span class="ot">&lt;-</span> <span class="fu">c</span>(__start__ , __end__ )</span>
+<span id="cb56-2"><a href="fun-slopes.html#cb56-2" aria-hidden="true" tabindex="-1"></a>f <span class="ot">&lt;-</span> <span class="fu">makeFun</span>(x<span class="sc">^</span><span class="dv">2</span> <span class="sc">~</span> x)</span>
+<span id="cb56-3"><a href="fun-slopes.html#cb56-3" aria-hidden="true" tabindex="-1"></a><span class="fu">diff</span>(<span class="fu">f</span>(interval)) <span class="sc">/</span> <span class="fu">diff</span>(interval)</span></code></pre></div>
 </div>
 <p>A. Use these three intervals to estimate the instantaneous rate of change <span class="math inline">\(\partial_x f(x=3)\)</span>
 - [3, 3.1]
@@ -634,7 +637,7 @@ meaning, evaluate the”slope function of f()" at <span class="math inline">\(t_
 <p>To formalize this, we’ll define the <strong><em>slope function of f()</em></strong> as
 <span class="math display">\[{\cal D}f(t) \equiv \frac{f(t + 0.1) - f(t)}{0.1}\]</span>
 Let’s look at the slope functions that correspond to some of pattern-book functions: <span class="math inline">\(e^x\)</span>, <span class="math inline">\(\sin(x)\)</span>, <span class="math inline">\(x^{-1}\)</span> and <span class="math inline">\(\ln(x)\)</span>. We can define them easily enough in R:</p>
-<div class="sourceCode" id="cb55"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb57"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">Dexp</span> <span class="op">&lt;-</span> <span class="fu">makeFun</span><span class="op">(</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html">exp</a></span><span class="op">(</span><span class="va">t</span><span class="op">+</span><span class="fl">0.1</span><span class="op">)</span> <span class="op">-</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html">exp</a></span><span class="op">(</span><span class="va">t</span><span class="op">)</span><span class="op">)</span><span class="op">/</span><span class="fl">0.1</span> <span class="op">~</span> <span class="va">t</span><span class="op">)</span>
 <span class="va">Dsin</span> <span class="op">&lt;-</span> <span class="fu">makeFun</span><span class="op">(</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Trig.html">sin</a></span><span class="op">(</span><span class="va">t</span><span class="op">+</span><span class="fl">0.1</span><span class="op">)</span> <span class="op">-</span> <span class="fu"><a href="https://rdrr.io/r/base/Trig.html">sin</a></span><span class="op">(</span><span class="va">t</span><span class="op">)</span><span class="op">)</span><span class="op">/</span><span class="fl">0.1</span> <span class="op">~</span> <span class="va">t</span><span class="op">)</span>
 <span class="va">Dxm1</span> <span class="op">&lt;-</span> <span class="fu">makeFun</span><span class="op">(</span><span class="op">(</span><span class="op">(</span><span class="fl">1</span><span class="op">/</span><span class="op">(</span><span class="va">t</span><span class="op">+</span><span class="fl">0.1</span><span class="op">)</span><span class="op">)</span> <span class="op">-</span> <span class="op">(</span><span class="fl">1</span><span class="op">/</span><span class="va">t</span><span class="op">)</span><span class="op">)</span><span class="op">/</span><span class="fl">0.1</span> <span class="op">~</span> <span class="va">t</span><span class="op">)</span>
@@ -648,7 +651,7 @@ Figure 9.8: Comparing the pattern-book function (blue) to it’s slope function 
 <hr>
 <details><summary><strong>Exercise 9.12</strong>: <span><a name="File:%20Exercises/Fun/slope-web-1.Rmd" href="#CUXLR"><img src="www/icons8-signpost.png" title="Location: Exercises/Fun/slope-web-1.Rmd" width="12px"></a><span style="color: red; font-size: 9pt;">CUXLR</span>
 </span></summary><p>There is a web of connections between the pattern-book functions and their slopes.</p>
-<pre>1. Which pattern-book function has a slope function that is simply a input-shifted version of itself? (For small enough $h$.) 
+<pre>1. Which pattern-book function has a slope function that is simply a input-shifted version of itself? (For small enough $$h$$.) 
 
 
 
@@ -657,10 +660,10 @@ Figure 9.8: Comparing the pattern-book function (blue) to it’s slope function 
 ( )  logarithm
 ( )  power-law $$x^{-1}$$
 
-[[Right-oh! ]]
+[[Nice!]]
 
 </pre>
-<pre>2. Which pattern-book function has a slope function that is identical to itself? (For small enough $h$.) 
+<pre>2. Which pattern-book function has a slope function that is identical to itself? (For small enough $$h$$.) 
 
 
 
@@ -690,7 +693,7 @@ Figure 9.8: Comparing the pattern-book function (blue) to it’s slope function 
 <p>Rather than writing the slope function definition with a 0.1, let’s substitute in the symbol <span class="math inline">\(h\)</span>. This gives <span class="math display">\[{\cal D}\exp(x) = \frac{e^{x+h} - e^x}{h}\]</span>
 Extracting out the common term <span class="math inline">\(e^x\)</span> in the numerator, we arrive at <span class="math display">\[{\cal D}\exp(x) = e^x \left[\frac{e^h - 1}{h}\right]\]</span>
 Since <span class="math inline">\(h\)</span> is a number, <span class="math inline">\([e^h - 1]/h\)</span> is a number, not a function of <span class="math inline">\(x\)</span>. So, for any given value of <span class="math inline">\(h\)</span>, the slope function of the exponential is proportional to the exponential itself.</p>
-<pre>Using a sandbox, find the value of $[e^h - 1]/h$ when $h=0.1$. Which of these is it? 
+<pre>Using a sandbox, find the value of $$[e^h - 1]/h$$ when $$h=0.1$$. Which of these is it? 
 
 
 
@@ -703,7 +706,7 @@ Since <span class="math inline">\(h\)</span> is a number, <span class="math inli
 
 </pre>
 <p>The instantaneous rate of change involves making <span class="math inline">\(h\)</span> very small, but not quite zero. If you make <span class="math inline">\(h\)</span> exactly zero, the result will be ambiguous.</p>
-<pre>Using a sandbox, compute $[e^0 - 1]/0$. What's the result? 
+<pre>Using a sandbox, compute $$[e^0 - 1]/0$$. What's the result? 
 
 
 
@@ -715,7 +718,7 @@ Since <span class="math inline">\(h\)</span> is a number, <span class="math inli
 [[Meaning, 'not a number'.]]
 
 </pre>
-<pre>Using a sandbox, compute $[e^h - 1]/h$. Make $h$ as small as you can, for instance $0.00001$ or $0.00000001$. What's the result? 
+<pre>Using a sandbox, compute $$[e^h - 1]/h$$. Make $$h$$ as small as you can, for instance $$0.00001$$ or $$0.00000001$$. What's the result? 
 
 
 
@@ -789,7 +792,7 @@ Figure 9.9: The instantaneous investment return from the tree is the instantaneo
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>CalcZ Student Notes</strong>" was written by Daniel Kaplan. It was last built on 2021-08-20.</p>
+    <p>"<strong>CalcZ Student Notes</strong>" was written by Daniel Kaplan. It was last built on 2021-08-24.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

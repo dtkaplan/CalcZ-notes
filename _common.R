@@ -3,7 +3,8 @@
 # library(glue)
 # library(math141Z) # REPLACE THIS WHEN PACKAGES ARE RE-ALIGNED
 # library(CalcZapps)
-library(Zcalc) # New, catch-all package
+library(Zcalc) #
+library(Znotes)
 library(here) # for file locations
 library(thematic)
 library(gridExtra) # for arranging plots.
@@ -82,5 +83,5 @@ drill_link <- function() {
 
 
 # For gradescope output
-# askMC <- Znotes::askGS
+askMC <- Znotes::askGS
 
