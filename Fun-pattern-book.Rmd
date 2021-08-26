@@ -225,13 +225,12 @@ You may also notice the proportional function shown above does nothing to change
 
 `r insert_calcZ_exercise("2.4", "Qj0JAr", "Exercises/Fun/bear-lay-plant.Rmd")`
 
-
-<!-- An .observation about giving names to functions that don't have them in standard notation: square, recip, power. Exercise: write square(x) in terms of power. I'm not asking you to square a number, but to create a function which, at any time you want, will square any number you give it as input. -->
+--------
 
 ::: {.observation}
-Functions like `sin()`, `log()`, `pnorm()` are always referred to by name with parentheses enclosing the arguments. Other functions, like $e^x$ or $1/x$ are written in the traditional arithmetic notation, with no name applying.
+Functions like `sin()`, `log()`, `pnorm()` are always referred to by name with parentheses enclosing the arguments. Other functions are traditionally written without a name, for instance, like $e^x$ or $1/x$. These two different conventions can lead to confusion. There is little that can be done to avoid that confusion, since the dual conventions appear throughout technical work. 
 
-It's perfectly feasible to arrange so every pattern-book function uses the name/parentheses style. For instance, here are definitions for four of the pattern-book functions that we haven't written in name/parentheses style:
+If absolute consistency of notation were the prime goal, we could have written this book in a style that gives a name to every pattern-book function writes it in the name/parentheses style. Something like this:
 
 ```{r}
 reciprocal <- makeFun(1/t ~ t)
@@ -246,11 +245,7 @@ constant(123.67)
 square(19)
 ```
 
-We're using different names for the inputs in these three functions just to emphasize that for functions with one input, the name has no significance. You just have to make sure to use the same name on the left- and right-hand sides of the tilde expression. 
+Writing reciprocal($x$) instead of $1/x$ is long-winded, which is perhaps why you never see it. But when you see $1/x$ you should think of it as a function being applied to $x$ and not as a bit of arithmetic.
 
-The function called `constant()` necessarily has the property that the output does **not depend** on the input. That's why it's constant!
-
-In R, a statement like `x^2` is really just shorthand for using a name/parenthesis style function whose name is `` `^` ``. Or, consider $-3$. In R you would write this `-3` but internally R is applying a function named `` `-` ``, like this: `` `-`(3)``. 
-
-
+By the way ... I used different names for the inputs in these three functions just to remind the reader that, for functions with one input, the name has no significance. You just have to make sure to use the same name on the left- and right-hand sides of the tilde expression. 
 :::

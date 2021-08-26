@@ -46,11 +46,11 @@ Let's change pace and think about the "10% after 2 hours" observation. First, re
 $\mbox{amount_left}(n) \equiv \frac{1}{2}^n$ 
 This is an exponential function with base 1/2.
 
-You're going to carry out a ***guess-and-check*** procedure to find a zero of the function $\text{amount_left}(n) - 0.10$ that is, you'll find what $n$ will generate the stated output value (e.g. 10%).
-Open a sandbox and copy over the scaffolding, which include the definition of the `amount_left()` function. and a "guess" for the input. Change the guess until you get the output 10%.
+You're going to carry out a ***guess-and-check*** procedure to find $n$ that gives $\text{amount_left}(n) = 0.10$.  
+Open a sandbox and copy over the scaffolding, which includes the definition of the `amount_left()` function. We started with a guess of $n=0$, which is wrong.  Change the guess until you get the output 10%.
 
 ::: {.scaffolding}
-```{r}
+```{r results="hide"}
 amount_left <- makeFun((1/2)^n ~ n)
 amount_left(0)
 ```
@@ -58,7 +58,7 @@ amount_left(0)
 
 ```{r CTK1-3, echo=FALSE}
 askMC(
-  prompt = "C) Use `amount_left()` to figure out how many halvings it takes to bring something down to 10% of the original amount.",
+  prompt = "C) Use `amount_left()` as defined in the scaffolding to guess-and-check how many halvings it takes to bring something down to 10% of the original amount.",
   "2.58", "+3.32+" , "3.62", "3.94", "4.12",
   random_answer_order = FALSE
 )
@@ -82,7 +82,7 @@ askMC(
 )
 ```
 
-Suppose you compromise between the half-life needed to reach 25% after one hour and the half-life needed to reach 10% after two hours. Use, say, 33 minutes as the compromise half life. Using the sandbox below, calculate how much would be left after 1 hour for this compromise half life, and how much left after 2 hours.
+Suppose you compromise between the half-life needed to reach 25% after one hour and the half-life needed to reach 10% after two hours. Use, say, 33 minutes as the compromise half life. Using the sandbox, calculate how much would be left after 1 hour for this compromise half life, and how much left after 2 hours.
 
 ```{r CTK1-5, echo=FALSE}
 askMC(

@@ -136,5 +136,57 @@ slice_plot(sin(2*pi*x/.7) ~ x, domain(x=c(-2,2)), npts=300) %>%
 
 `r insert_calcZ_exercise(10.1, "IWLDN1", "Exercises/Fun/inverse-flip-1.Rmd")`
 
+## Find x
 
+Most readers are familiar with the sort of high-school math problem where you are presented with an equation written in terms of $x$ and asked to "find $x$" or "find the solution." For instance, the problem might be 
+
+$$\text{Let}\ \ 3x - 2 = 7 x^2 .\ \ \  \text{Find} \ x .$$
+
+The above problem falls into one class of such changes, the class of "finding roots of polynomials." Here's another problem in that class:
+
+
+> *An investment club decided to buy
+$9000 worth of stock with each
+member paying an equal share. But
+two members left the club, and the
+remaining members had to pay $50
+more apiece. How many members
+are in the club?*^[This translates to an equation, where $x$ is the number of members: $$(x-2)(9000/x + 50) = 9000$$ [Source](https://www.ams.org/notices/201005/rtx100500608p.pdf)] 
+
+Let's pose the problem in terms of a function, money_raised$(x)$ where $x$ is the original number of members in the investment club. Originally, the members were each going to pay $9000/x$. But after the drop outs, each of the remaining members has to pay $9000/x + 50$. Since there are $x-2$ remaining members, the total amount raised is $$\text{money_raised}(x) \equiv (x-2) \left(\frac{9000}{x} + 50\right)$$
+Figure \@ref(fig:money-raised) graphs $\text{money_raised}(x)$
+```{r money-raised}
+money_raised <- makeFun((x-2)*(9000/x + 50) ~ x)
+slice_plot(money_raised(x) ~ x, domain(x=c(10,25)))
+```
+The function tells us, for any number of members $x$, how much money will be raised. So what's $x$ for the club? The function doesn't tell us ... until we add in a new fact. The club raised $9000. So look up $9000 on the vertical axis, trace horizontally over to the graph, and read off the resulting input that generates an output of $9000.
+
+This inverse way of using functions---we know the output and we need to calculate the input---is very common. One reason is that sometimes it's relatively easy to construct a model that takes input $x$ to an output, but the problem at hand is to figure out from a value of the output what is the corresponding value of the input.
+
+::: {.intheworld}
+
+Seismograms and electrocardiograms
+
+::: 
+
+
+Suppose that you have a function $f(x)$ and you also know the inverse of that function. We'll call the inverse $g(x)$ for this example, but a more typical notation is $f^{-1}(x)$ where the function name is $f^{-1}$.
+
+Composing a function and its inverse gives back the input: $f(g(x)) = x$ and $g(f(x)) = x$.
+
+As part of your high-school mathematics education, you learned the inverses to several functions. For instance, $e^x$ and $\ln(x)$ are inverses, meaning that $\ln(e^x) = x$ and $e^{\ln(x)} = x$. The identity function is its own inverse. The inverse of the square function is the square root: $\sqrt{x^2} = x$ and $(\sqrt{x})^2 = x$.
+
+It's helpful to keep in mind that if you have a function $f(x)$ there is some other function---although you may not know its form yet---that is the inverse to $f()$. 
+
+There are two caveats:
+
+i. Mathematicians will say that for functions like $\sin(x)$ or $\dnorm(x)$ which fail the horizontal line test the inverse does not exist. That's because mathematicians want the inverse to have a single, unique value, while functions like $\dnorm()$ have two inputs that generate any output in the function's range. $\sin()$ has an infinite number of inputs that generate any output in the function's range. 
+
+    But in practice, the problem is to find **some** input that will generate the known output. If there is more than one such input, we just have to choose one.
+    
+    We can even satisfy the mathematician's insistence that there be a unique inverse if we restrict the domain of the forward function to a region where it is monotonically increasing or monotonically decreasing. 
+    
+ii. There is always an algorithm to that can be applied to find a solution to any inverse problem. But this algorithm is rarely a simple formula. Not having a formula, we play a name game. For instance, the inverse of the square function is called the "square root," but there is no simple formula for finding the square root of a number. Similarly, the inverse to $\sin(x)$ is called $\arcsin(x)$, but there is no simple formula for $\arcsin()$.  Almost invariably we use such inverse functions not by doing arithmetic to calculate their output, but by using a calculator button or a software function that carries out the algorithm. 
+
+For now, it suffices that you can compute the inverse to any function (over some sub-domain where the function is monotonically increasing or decreasing) by graphing the function and then reading from the vertical axis to the horizontal.  As we encounter more concepts from calculus and computing, we'll develop additional methods for evaluating an inverse function.
 
