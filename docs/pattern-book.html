@@ -90,10 +90,10 @@
 <li><a class="" href="dimensions.html"><span class="header-section-number">16</span> Dimensions</a></li>
 <li class="book-part">Block 2: Differentiation</li>
 <li><a class="" href="change-relationships.html"><span class="header-section-number">17</span> Change relationships</a></li>
-<li><a class="" href="computing-derivs.html"><span class="header-section-number">18</span> Computing derivatives</a></li>
-<li><a class="" href="concavity-curvature.html"><span class="header-section-number">19</span> Concavity and curvature</a></li>
-<li><a class="" href="cont-and-smooth.html"><span class="header-section-number">20</span> Continuity and smoothness</a></li>
-<li><a class="" href="evanescent-h.html"><span class="header-section-number">21</span> Evanescent h</a></li>
+<li><a class="" href="evanescent-h.html"><span class="header-section-number">18</span> Evanescent h</a></li>
+<li><a class="" href="computing-derivs.html"><span class="header-section-number">19</span> Computing derivatives</a></li>
+<li><a class="" href="concavity-curvature.html"><span class="header-section-number">20</span> Concavity and curvature</a></li>
+<li><a class="" href="cont-and-smooth.html"><span class="header-section-number">21</span> Continuity and smoothness</a></li>
 <li><a class="" href="prod-comp-rules.html"><span class="header-section-number">22</span> Derivs of assembled functions</a></li>
 <li><a class="" href="optim-and-shape.html"><span class="header-section-number">23</span> Optimization</a></li>
 <li><a class="" href="partial-change.html"><span class="header-section-number">24</span> Partial change</a></li>
@@ -479,7 +479,7 @@ Figure 2.7: The <span class="math inline">\(\sin()\)</span> function is not scal
 ( )  16
 ( )  256
 
-[[Almost all of the gaussian fits within the domain $$-3 &lt; x &lt; 3$$ having length 6.]]
+[[The domain $$-3 &lt; x &lt; 3$$ supports practically everything.]]
 
 </pre>
 <pre>The sigmoid function `pnorm()` also has a characteristic scale. Which of these is a domain length that can encompass the characteristic shape of the sigmoid? 
@@ -496,9 +496,10 @@ Figure 2.7: The <span class="math inline">\(\sin()\)</span> function is not scal
 
 </pre>
 Throughout science, it’s common to set a standard approach to defining a characteristic scale. For instance, the characteristic scale of an aircraft could be taken as the length of body. Gaussian and sigmoids are so common throughout science that there is a convention for defining the characteristic scale called the <strong><em>standard deviation</em></strong>. For the pattern book gaussian and sigmoid, the standard deviation is 1. That’s much shorter than the domain that captures the bulk of action of the gaussian or sigmoid. For this reason, statisticians in practice use a characteristic scale of <span class="math inline">\(\pm 2\)</span> or <span class="math inline">\(\pm 3\)</span> standard deviations.
-</details><!-- An .observation about giving names to functions that don't have them in standard notation: square, recip, power. Exercise: write square(x) in terms of power. I'm not asking you to square a number, but to create a function which, at any time you want, will square any number you give it as input. --><div class="observation">
-<p>Functions like <code><a href="https://rdrr.io/r/base/Trig.html">sin()</a></code>, <code><a href="https://rdrr.io/r/base/Log.html">log()</a></code>, <code><a href="https://rdrr.io/r/stats/Normal.html">pnorm()</a></code> are always referred to by name with parentheses enclosing the arguments. Other functions, like <span class="math inline">\(e^x\)</span> or <span class="math inline">\(1/x\)</span> are written in the traditional arithmetic notation, with no name applying.</p>
-<p>It’s perfectly feasible to arrange so every pattern-book function uses the name/parentheses style. For instance, here are definitions for four of the pattern-book functions that we haven’t written in name/parentheses style:</p>
+</details><hr>
+<div class="observation">
+<p>Functions like <code><a href="https://rdrr.io/r/base/Trig.html">sin()</a></code>, <code><a href="https://rdrr.io/r/base/Log.html">log()</a></code>, <code><a href="https://rdrr.io/r/stats/Normal.html">pnorm()</a></code> are always referred to by name with parentheses enclosing the arguments. Other functions are traditionally written without a name, for instance, like <span class="math inline">\(e^x\)</span> or <span class="math inline">\(1/x\)</span>. These two different conventions can lead to confusion. There is little that can be done to avoid that confusion, since the dual conventions appear throughout technical work.</p>
+<p>If absolute consistency of notation were the prime goal, we could have written this book in a style that gives a name to every pattern-book function writes it in the name/parentheses style. Something like this:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">reciprocal</span> <span class="op">&lt;-</span> <span class="fu">makeFun</span><span class="op">(</span><span class="fl">1</span><span class="op">/</span><span class="va">t</span> <span class="op">~</span> <span class="va">t</span><span class="op">)</span>
 <span class="va">constant</span> <span class="op">&lt;-</span> <span class="fu">makeFun</span><span class="op">(</span><span class="fl">1</span> <span class="op">~</span> <span class="va">z</span><span class="op">)</span>
@@ -513,9 +514,8 @@ Throughout science, it’s common to set a standard approach to defining a chara
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">square</span><span class="op">(</span><span class="fl">19</span><span class="op">)</span></code></pre></div>
 <pre><code>## [1] 361</code></pre>
-<p>We’re using different names for the inputs in these three functions just to emphasize that for functions with one input, the name has no significance. You just have to make sure to use the same name on the left- and right-hand sides of the tilde expression.</p>
-<p>The function called <code>constant()</code> necessarily has the property that the output does <strong>not depend</strong> on the input. That’s why it’s constant!</p>
-<p>In R, a statement like <code>x^2</code> is really just shorthand for using a name/parenthesis style function whose name is <code><a href="https://rdrr.io/r/base/Arithmetic.html">`^`</a></code>. Or, consider <span class="math inline">\(-3\)</span>. In R you would write this <code>-3</code> but internally R is applying a function named <code><a href="https://rdrr.io/r/base/Arithmetic.html">`-`</a></code>, like this: <code>`-`(3)</code>.</p>
+<p>Writing reciprocal(<span class="math inline">\(x\)</span>) instead of <span class="math inline">\(1/x\)</span> is long-winded, which is perhaps why you never see it. But when you see <span class="math inline">\(1/x\)</span> you should think of it as a function being applied to <span class="math inline">\(x\)</span> and not as a bit of arithmetic.</p>
+<p>By the way … I used different names for the inputs in these three functions just to remind the reader that, for functions with one input, the name has no significance. You just have to make sure to use the same name on the left- and right-hand sides of the tilde expression.</p>
 </div>
 
 </div>
@@ -548,7 +548,7 @@ Throughout science, it’s common to set a standard approach to defining a chara
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>CalcZ Student Notes</strong>" was written by Daniel Kaplan. It was last built on 2021-08-24.</p>
+    <p>"<strong>CalcZ Student Notes</strong>" was written by Daniel Kaplan. It was last built on 2021-08-26.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

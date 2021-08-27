@@ -1,9 +1,4 @@
-# library(mosaic)
-# library(mosaicCalc)
-# library(glue)
-# library(math141Z) # REPLACE THIS WHEN PACKAGES ARE RE-ALIGNED
-# library(CalcZapps)
-library(Zcalc) #
+library(Zcalc) # New, catch-all package
 library(Znotes)
 library(here) # for file locations
 library(thematic)

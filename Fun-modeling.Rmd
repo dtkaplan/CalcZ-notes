@@ -42,7 +42,7 @@ Sigmoid | $\dnorm(x, mean, sd)$ | $sd$ is "standard deviation" or "spread."
 
 It helps in making the selection to have ready to mind the basic shape of each of these function families. To review, revisit Section \@ref(function-shapes).
 
-Remember also that, in general, we scale the inputs and scale the output. This means that in choose a model family, we don't have to worry at first about the numbers on the axes. (Of course, those numbers will be critically important later on in the process!) The scaling does, however, allow us to consider some variations on the shapes of the modeling functions. In particular, the ***input scaling*** lets us flip the shape right-for-left. And the ***output scaling*** lets us flip the shape top-for-bottom.
+Remember also that, in general, we scale the inputs and scale the output. This means that in choosing a model family, we don't have to worry at first about the numbers on the axes. (Of course, those numbers will be critically important later on in the process!) The scaling does, however, allow us to consider some variations on the shapes of the modeling functions. In particular, the ***input scaling*** lets us flip the shape right-for-left. And the ***output scaling*** lets us flip the shape top-for-bottom.
 
 - $f(t)$, basic shape
 - $f(-t)$, flipped right-for-left
@@ -56,20 +56,24 @@ For the exponential function, the two possible types of flipping---right-for-lef
 ```{r four-variations, out.width="50%", echo=FALSE, fig.cap="Four variations of the exponential functions.", fig.show="keep"}
 slice_plot(exp(x) ~ x, domain(x=c(-2,2))) %>%
   gf_refine(theme_void()) %>%
-  gf_labs(title="A. The exponential function, no flipping")
+  gf_theme(plot.title = element_text(size=16)) %>%
+  gf_labs(title="A. The exponential function, no flipping") 
+  
 slice_plot(exp(-x) ~ x, domain(x=c(-2,2))) %>%
   gf_refine(theme_void()) %>%
+    gf_theme(plot.title = element_text(size=16)) %>%
   gf_labs(title="B. Flipped right-for-left")
 slice_plot(-exp(x) ~ x, domain(x=c(-2,2))) %>%
   gf_refine(theme_void()) %>%
+    gf_theme(plot.title = element_text(size=16)) %>%
   gf_labs(title="C. Flipped top-for-bottom")
 slice_plot(-exp(-x) ~ x, domain(x=c(-2,2))) %>%
   gf_refine(theme_void()) %>%
+    gf_theme(plot.title = element_text(size=16)) %>%
   gf_labs(title="D. Flipped both right-for-left and top-for-bottom")
 
 ```
 
-`r insert_calcZ_exercise("8.1", "0rvpbu", "Exercises/Fun/kid-type-boat.Rmd")`
 
 
 ## Curve fitting an exponential function {#fit-exponential}
@@ -80,7 +84,7 @@ When you know the "percent increase per time" of a quantity whose initial value 
 The number $r$ is often called the ***interest rate*** or ***discount rate*** and is given in **percent**. 
 
 ::: {.takenote}
-Regrettably, it's extremely easy amd common to forget the rules for addition with percent. If $r = 5\%$, then $(1+r) = 1.05$, not 6. Always keep in mind that $5\%$ means $\frac{5}{100}$.
+Regrettably, it's extremely easy and common to forget the rules for addition with percent. If $r = 5\%$, then $(1+r) = 1.05$, not 6. Always keep in mind that $5\%$ means $\frac{5}{100}$.
 
 Another source of error stems from the tradition in mathematics of using the number $e=2.718282$ as the "natural" base of the exponential function, whereas in $f(t) = A (1+r)^t$ the base is $1+r$. 
 
@@ -136,8 +140,9 @@ Notice that the question of "growth or decay" depends only on the sign of the pa
 The procedure in Step 3 for estimating $k$ stems from a very important property of exponential functions: Exponential functions always double/half at a constant pace. By design, the parameter $k$
 directly determines that pace. Picking an $x_2$ and finding the corresponding $x_1$ gives the length of the input interval, $x_1 - x_2$ over which the distance from the baseline doubles/halves. 
  
-What’s remarkable about the doubling/halving time is that, for a genuinely exponential function, it doesn’t matter which point we choose for $x_1$. In practice working with graphed data, it's best to choose so that  $f(x_1)$ is discernibly far from the baseline. started with, this property is true across the entire input domain. 
-The $2$ in $\ln(2)$ corresponds to idea of doubling/halving. The logarithm converts $2$ to an scale that will generate 2 when exponentiated.
+What’s remarkable about the doubling/halving time is that, for a genuinely exponential function, it doesn’t matter which point we choose for $x_1$. In practice working with graphed data, it's best to choose so that  $f(x_1)$ is discernibly far from the baseline. 
+
+The $2$ in $\ln(2)$ corresponds to idea of doubling/halving. The logarithm converts $2$ to a scale that will generate 2 when exponentiated.
 
 
 **Step 4** If you can plot the data, do so. Add to that a graphics layer showing the function $A e^{k x} + C$ using the values for $A$, $C$, and $k$ that you just found. If you are not satisfied with the way the plotted function approximates the data, tweak the parameters a bit until you are.
@@ -181,6 +186,8 @@ gf_point(temp ~ time, data=CoolingWater %>% sample_n(20)) %>%
 
 Step 5: The flat zone of the data is to the right. So we've got exponential decay and $k < 0$. 
 
+
+`r insert_calcZ_exercise("8.1", "0rvpbu", "Exercises/Fun/kid-type-boat.Rmd")`
 
 `r insert_calcZ_exercise(8.2, "vkwl4", "Exercises/Fun/chicken-choose-vase.Rmd")`
 

@@ -13,17 +13,14 @@ produce the same value if $k$, $d$ and $h$ have corresponding numerical values.
 ::: {.scaffolding}
 The scaffolding has an expression for plotting out  $2^{t/h}$ for $-4 \leq t \leq 12$ where $h = 4$. It also plots out $e^{kt}$ and $10^{t/d}$
 
-```{r EB2-1, eval=FALSE}
-fa <- makeFun(2^(t/h) ~ t, h = 4)
-fb <- makeFun(10^(t/d) ~ t, d = 10)
-fc <- makeFun(exp(k*t)  ~ t, k = 0.1)
-
-fb <- makeFun(10^(t/d) ~ t, d = 13.1)
-fc <- makeFun(exp(k*t)  ~ t, k = 0.175)
+```{r EB2-1, eval=FALSE, warning=FALSE}
+fa <- makeFun(exp(k*t)  ~ t, k = 4)
+fc <- makeFun(2^(t/h) ~ t, h = 4)
+fb <- makeFun(10^(t/d) ~ t, d = 4)
 
 slice_plot(fa(t) ~ t, domain(t = c(-4, 12))) %>%
-  slice_plot(fb(t) ~ t, color="dodgerblue") %>%
-  slice_plot(fc(t) ~ t, color  = "orange3") %>%
+  slice_plot(fb(t) ~ t, color="blue") %>%
+  slice_plot(fc(t) ~ t, color  = "red") %>%
   gf_lims(y = c(0, 8))
 ```
 :::
@@ -35,9 +32,9 @@ After you have found values of `k` and `d` that are suited to the task ...
 ```{r EB1-1, echo=FALSE}
 askMC(
   prompt = "What is the numerical value of your best estimate of `k`?",
-  "0.145",
-  "+0.175+", 
-  "0.285",
+  "0.143",
+  "+0.173+", 
+  "0.283",
   "0.320",
   random_answer_order = FALSE
   
@@ -49,7 +46,7 @@ askMC(
   prompt = "What is the numerical value of your best estimate of `d`?",
   "11.2",
   "11.9",
-  "+13.1+", 
+  "+13.3+", 
   "15.8",
   random_answer_order = FALSE
 )

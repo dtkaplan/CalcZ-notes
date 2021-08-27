@@ -90,10 +90,10 @@
 <li><a class="" href="dimensions.html"><span class="header-section-number">16</span> Dimensions</a></li>
 <li class="book-part">Block 2: Differentiation</li>
 <li><a class="" href="change-relationships.html"><span class="header-section-number">17</span> Change relationships</a></li>
-<li><a class="" href="computing-derivs.html"><span class="header-section-number">18</span> Computing derivatives</a></li>
-<li><a class="" href="concavity-curvature.html"><span class="header-section-number">19</span> Concavity and curvature</a></li>
-<li><a class="" href="cont-and-smooth.html"><span class="header-section-number">20</span> Continuity and smoothness</a></li>
-<li><a class="" href="evanescent-h.html"><span class="header-section-number">21</span> Evanescent h</a></li>
+<li><a class="" href="evanescent-h.html"><span class="header-section-number">18</span> Evanescent h</a></li>
+<li><a class="" href="computing-derivs.html"><span class="header-section-number">19</span> Computing derivatives</a></li>
+<li><a class="" href="concavity-curvature.html"><span class="header-section-number">20</span> Concavity and curvature</a></li>
+<li><a class="" href="cont-and-smooth.html"><span class="header-section-number">21</span> Continuity and smoothness</a></li>
 <li><a class="" href="prod-comp-rules.html"><span class="header-section-number">22</span> Derivs of assembled functions</a></li>
 <li><a class="" href="optim-and-shape.html"><span class="header-section-number">23</span> Optimization</a></li>
 <li><a class="" href="partial-change.html"><span class="header-section-number">24</span> Partial change</a></li>
@@ -502,6 +502,123 @@ Which pattern-book function has just a single value missing from its domain?
 
 </pre>
 </details><hr>
+</div>
+<div id="formulas-in-r" class="section level2" number="3.5">
+<h2>
+<span class="header-section-number">3.5</span> Formulas in R<a class="anchor" aria-label="anchor" href="#formulas-in-r"><i class="fas fa-link"></i></a>
+</h2>
+<!-- moved two exercise files inline: 
+chicken-chew-screen.Rmd (was exercise 3.6)
+dolphin-toss-candy.Rmd (was 3.7) -->
+<p>You’re familiar to some extent with traditional mathematical notation for formulas. Yet in applied work, you will often need to translate such formulas into computer notation. This book is written using R, but particularly when mathematical formulas are involved, commands are similar across many computer languages, so what you learn will be applicable to any other languages such as Python or MATLAB.</p>
+<p>The first high-level computer language was FORTRAN, released in 1957. The name stands for “formula translation.” FORTRAN enabled arithmetic operations to be written in a way very nearly that of traditional notation. Until then, computer programs were written using alpha-numeric codes that were meaningless to a casual reader. We unfortunately still use the term “computer code” to refer to programs, despite 70-years progress in improving legibility.</p>
+<p>The best way to learn to implement mathematical formulas in a computer language is to read examples and practice writing them.</p>
+<p>Here are some examples:</p>
+<div class="inline-table"><table class="table table-sm">
+<thead><tr class="header">
+<th>Traditional notation</th>
+<th>R notation</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td><span class="math inline">\(3 + 2\)</span></td>
+<td><code>3 + 2</code></td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(3 \div 2\)</span></td>
+<td><code>3 / 2</code></td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(6 \times 4\)</span></td>
+<td><code>6 * 4</code></td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(\sqrt{\strut4}\)</span></td>
+<td><code><a href="https://rdrr.io/r/base/MathFun.html">sqrt(4)</a></code></td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(\ln 5\)</span></td>
+<td><code><a href="https://rdrr.io/r/base/Log.html">log(5)</a></code></td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(2 \pi\)</span></td>
+<td><code>2 * pi</code></td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(\frac{1}{2} 17\)</span></td>
+<td><code>(1 / 2) * 17</code></td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(17 - 5 \div 2\)</span></td>
+<td><code>17 - 5 / 2</code></td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(\frac{17 - 5}{\strut 2}\)</span></td>
+<td><code>(17 - 5) / 2</code></td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(3^2\)</span></td>
+<td><code>3^2</code></td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(e^{-2}\)</span></td>
+<td><code><a href="https://rdrr.io/r/base/Log.html">exp(-2)</a></code></td>
+</tr>
+</tbody>
+</table></div>
+<p>Each of these examples has been written using numbers as inputs to the mathematical operations. The syntax will be exactly the same when using an input name such as <code>x</code> or <code>y</code> or <code>altitude</code>, for instance <code>(x - y) / 2</code>. In order for that command using <code>x</code> and <code>y</code> to work, some meaning must have been previously attached to the symbols. We’ll come back to this important topic on another day.</p>
+<p>Read through the above table of examples several times. Note down any that you find at all confusing. Then cover up the right side of the table and write down the R expression for each item on the left side. Similarly, cover up the left side of the table and translate the R expression into traditional notation.</p>
+<div class="scaffolding">
+<p>Open a <a href="https://maa-statprep.shinyapps.io/CalcZ-Sandbox/">SANDBOX</a> and, one at a time, write and run the R expression for each of these traditional-notation expressions. We give the numerical result for each of the traditional expressions to let you confirm that your R version is correct.</p>
+<ol style="list-style-type: lower-roman">
+<li>
+<span class="math inline">\((16 - 3)/2\)</span> gives result 6.5</li>
+<li>
+<span class="math inline">\(\sqrt{\frac{19}{3}}\)</span> gives 2.5166115</li>
+<li>
+<span class="math inline">\(\cos(\frac{2 \pi}{3})\)</span> gives -0.5</li>
+<li>
+<span class="math inline">\(\pi^3 + 2\)</span> gives 33.0062767</li>
+<li>
+<span class="math inline">\(\pi^{3+2}\)</span> gives 306.0196848</li>
+</ol>
+</div>
+<p>Once you have a grasp of how to render traditional-notation formulas into R, read these few principles to help consolidate your understanding.</p>
+<ol style="list-style-type: lower-roman">
+<li>Computer languages generally, and R in particular, involve expressions that are written in a typewriter format: one conventional character after another in a straight line. There are no superscripts or subscripts used. So, <span class="math inline">\(\frac{1}{3}\)</span> will be written <code>1/3</code>. The equivalent of <span class="math inline">\(\sqrt{7}\)</span> is <code><a href="https://rdrr.io/r/base/MathFun.html">sqrt(7)</a></code>.</li>
+<li>Parentheses:
+<ol style="list-style-type: lower-alpha">
+<li>When an opening parenthesis directly follows a name, as in <code>sqrt(</code>, it means that the named operation is to be <strong><em>applied</em></strong> to the quantity inside the parentheses. So <code><a href="https://rdrr.io/r/base/MathFun.html">sqrt(7)</a></code> means “take the square root of 7” and <code><a href="https://rdrr.io/r/base/Log.html">log(10)</a></code> means “take the (natural) logarithm of 10.” The common mathematical functions typically take only one input. We’ll stick with those for now.</li>
+<li>When an opening parenthesis does not directly follow a name, as in <code>6 - (2+3)</code>, the parentheses stand for <strong><em>grouping</em></strong> in exactly the same way as in traditional notation. For instance, <span class="math inline">\((6 + 15) / 3\)</span> is translated as <code>(6 + 15) / 3</code>.</li>
+</ol>
+</li>
+<li>Multiplication and exponentiation are often written traditionally in terms of the relative position of quantities. So <span class="math inline">\((3 + 2)\pi\)</span> means to multiply 5 times <span class="math inline">\(\pi\)</span>, even though there is no multiplication sign being written. Similar, <span class="math inline">\(\pi^{3 + 2}\)</span> means to raise <span class="math inline">\(\pi\)</span> to the fifth power. There is no “exponentiation sign” used, just the positioning of <span class="math inline">\(3+2\)</span> as a superscript: <span class="math inline">\(^{3+2}\)</span>. In R (and almost every computer language) multiplication and exponentiation <strong>must be written explicitly</strong>. The quantities <span class="math inline">\((3 + 2)\pi\)</span> and <span class="math inline">\(\pi^{3 + 2}\)</span> would be translated as <code>(3 + 2) * pi</code> and <code>pi^(3+2)</code>.</li>
+</ol>
+<p>One additional note: All these examples can be written with a single line of code, as is true for many short formulas. Later on, we’ll encounter longer formulas that <em>could</em> be written on a single line but are more readable when spread over two or more consecutive lines.</p>
+<p>When your R command is not a complete sentence, the <a href="https://maa-statprep.shinyapps.io/CalcZ-Sandbox/">SANDBOX</a> will display an error like this:</p>
+<p><span style="font-color: red;"><code>Error in parse(text = x, keep.source = TRUE) : <text>:5:0: unexpected end of input </text></code></span></p>
+<p>The “unexpected end of input” is the computer’s way of saying, “You haven’t finished your sentence so I don’t know what to do.”</p>
+<p>Each of these R expressions is incomplete. Your job, which you should do in a sandbox, is to turn each into a complete expression. Sometimes you’ll have to be creative, since when a sentence is incomplete you, like the computer, don’t really know what it means to say! But each of these erroneous expressions can be fixed by <strong>adding</strong> or <strong>changing</strong> text.</p>
+<p>Open a sandbox and copy each of the items below, one at a time, into a sandbox. Press “Run code” for that item and verify that you get an error message.</p>
+<p>For the first item, the sandbox will look like this:</p>
+<div class="figure" style="text-align: center">
+<span id="fig:unnamed-chunk-20"></span>
+<img src="www/sandbox-error.png" alt="Running an invalid command will produce an error message." width="90%"><p class="caption">
+Figure 3.2: Running an invalid command will produce an error message.
+</p>
+</div>
+<p>Then, fix the command so you get a numerical result rather than the error message.</p>
+<p>Working through all of these will help you develop an eye and finger-memory for R commands.</p>
+<ol style="list-style-type: lower-roman">
+<li><code>sin 3</code></li>
+<li><code>((16 - 4) + (14 + 2) / sqrt(7)</code></li>
+<li><code>pnorm(3; mean=2, sd=4)</code></li>
+<li><code>log[7]</code></li>
+<li><code>14(3 + 7)</code></li>
+<li><code>e^2</code></li>
+<li><code>3 + 4 x + 2 x^2</code></li>
+</ol>
+<hr>
 <details><summary><strong>Exercise 3.5</strong>: <span><a name="File:%20Exercises/Fun/fish-sees-tree.Rmd" href="#BXCA4"><img src="www/icons8-signpost.png" title="Location: Exercises/Fun/fish-sees-tree.Rmd" width="12px"></a><span style="color: red; font-size: 9pt;">BXCA4</span>
 </span></summary><p>Open a <a href="https://maa-statprep.shinyapps.io/CalcZ-Sandbox/">SANDBOX</a>. (Just click on that link, although you may eventually be given other ways to open a sandbox.)</p>
 <div class="scaffolding">
@@ -574,118 +691,7 @@ Which pattern-book function has just a single value missing from its domain?
 [[Good.]]
 
 </pre>
-</details><hr>
-<details><summary><strong>Exercise 3.6</strong>: <span><a name="File:%20Exercises/Fun/chicken-chew-screen.Rmd" href="#3KEgLM"><img src="www/icons8-signpost.png" title="Location: Exercises/Fun/chicken-chew-screen.Rmd" width="12px"></a><span style="color: red; font-size: 9pt;">3KEgLM</span>
-</span></summary><p>In this activity, you will start getting familiar with the structure of R computer commands. Particularly when mathematical formulas are involved, commands are similar across many computer languages, so what you learn will be applicable to any other languages such as Python or MATLAB.</p>
-<p>The first high-level computer language was FORTRAN, released in 1957. The name stands for “formula translation.” FORTRAN enabled arithmetic operations to be written in a way very nearly that of traditional notation. Until then, computer programs were written using alpha-numeric codes that were meaningless to a casual reader. We unfortunately still use the term “computer code” to refer to programs, despite 70-years progress in improving legibility.</p>
-<p>The best way to learn to implement mathematical formulas in a computer language is to read examples and practice writing them.</p>
-<p>Here are some examples:</p>
-<table class="table table-sm">
-<thead><tr class="header">
-<th>Traditional notation</th>
-<th>R notation</th>
-</tr></thead>
-<tbody>
-<tr class="odd">
-<td><span class="math inline">\(3 + 2\)</span></td>
-<td><code>3 + 2</code></td>
-</tr>
-<tr class="even">
-<td><span class="math inline">\(3 \div 2\)</span></td>
-<td><code>3 / 2</code></td>
-</tr>
-<tr class="odd">
-<td><span class="math inline">\(6 \times 4\)</span></td>
-<td><code>6 * 4</code></td>
-</tr>
-<tr class="even">
-<td><span class="math inline">\(\sqrt{\strut4}\)</span></td>
-<td><code><a href="https://rdrr.io/r/base/MathFun.html">sqrt(4)</a></code></td>
-</tr>
-<tr class="odd">
-<td><span class="math inline">\(\ln 5\)</span></td>
-<td><code><a href="https://rdrr.io/r/base/Log.html">log(5)</a></code></td>
-</tr>
-<tr class="even">
-<td><span class="math inline">\(2 \pi\)</span></td>
-<td><code>2 * pi</code></td>
-</tr>
-<tr class="odd">
-<td><span class="math inline">\(\frac{1}{2} 17\)</span></td>
-<td><code>(1 / 2) * 17</code></td>
-</tr>
-<tr class="even">
-<td><span class="math inline">\(17 - 5 \div 2\)</span></td>
-<td><code>17 - 5 / 2</code></td>
-</tr>
-<tr class="odd">
-<td><span class="math inline">\(\frac{17 - 5}{\strut 2}\)</span></td>
-<td><code>(17 - 5) / 2</code></td>
-</tr>
-<tr class="even">
-<td><span class="math inline">\(3^2\)</span></td>
-<td><code>3^2</code></td>
-</tr>
-<tr class="odd">
-<td><span class="math inline">\(e^{-2}\)</span></td>
-<td><code><a href="https://rdrr.io/r/base/Log.html">exp(-2)</a></code></td>
-</tr>
-</tbody>
-</table>
-<p>Each of these examples has been written using numbers as inputs to the mathematical operations. The syntax will be exactly the same when using an input name such as <code>x</code> or <code>y</code> or <code>altitude</code>, for instance <code>(x - y) / 2</code>. In order for that command using <code>x</code> and <code>y</code> to work, some meaning must have been previously attached to the symbols. We’ll come back to this important topic on another day.</p>
-<p>Read through the above table of examples several times. Note down any that you find at all confusing. Then cover up the right side of the table and write down the R expression for each item on the left side. Similarly, cover up the left side of the table and translate the R expression into traditional notation.</p>
-<div class="scaffolding">
-<p>Open a <a href="https://maa-statprep.shinyapps.io/CalcZ-Sandbox/">SANDBOX</a> and, one at a time, write and run the R expression for each of these traditional-notation expressions. We give the numerical result for each of the traditional expressions to let you confirm that your R version is correct.</p>
-<ol style="list-style-type: lower-roman">
-<li>
-<span class="math inline">\((16 - 3)/2\)</span> gives result 6.5</li>
-<li>
-<span class="math inline">\(\sqrt{\frac{19}{3}}\)</span> gives 2.5166115</li>
-<li>
-<span class="math inline">\(\cos(\frac{2 \pi}{3})\)</span> gives -0.5</li>
-<li>
-<span class="math inline">\(\pi^3 + 2\)</span> gives 33.0062767</li>
-<li>
-<span class="math inline">\(\pi^{3+2}\)</span> gives 306.0196848</li>
-</ol>
-</div>
-<p>Once you have a grasp of how to render traditional-notation formulas into R, read these few principles to help consolidate your understanding.</p>
-<ol style="list-style-type: lower-roman">
-<li>Computer languages generally, and R in particular, involve expressions that are written in a typewriter format: one conventional character after another in a straight line. There are no superscripts or subscripts used. So, <span class="math inline">\(\frac{1}{3}\)</span> will be written <code>1/3</code>. The equivalent of <span class="math inline">\(\sqrt{7}\)</span> is <code><a href="https://rdrr.io/r/base/MathFun.html">sqrt(7)</a></code>.</li>
-<li>Parentheses:
-<ol style="list-style-type: lower-alpha">
-<li>When an opening parenthesis directly follows a name, as in <code>sqrt(</code>, it means that the named operation is to be <strong><em>applied</em></strong> to the quantity inside the parentheses. So <code><a href="https://rdrr.io/r/base/MathFun.html">sqrt(7)</a></code> means “take the square root of 7” and <code><a href="https://rdrr.io/r/base/Log.html">log(10)</a></code> means “take the (natural) logarithm of 10.” The common mathematical functions typically take only one input. We’ll stick with those for now.</li>
-<li>When an opening parenthesis does not directly follow a name, as in <code>6 - (2+3)</code>, the parentheses stand for <strong><em>grouping</em></strong> in exactly the same way as in traditional notation. For instance, <span class="math inline">\((6 + 15) / 3\)</span> is translated as <code>(6 + 15) / 3</code>.</li>
-</ol>
-</li>
-<li>Multiplication and exponentiation are often written traditionally in terms of the relative position of quantities. So <span class="math inline">\((3 + 2)\pi\)</span> means to multiply 5 times <span class="math inline">\(\pi\)</span>, even though there is no multiplication sign being written. Similar, <span class="math inline">\(\pi^{3 + 2}\)</span> means to raise <span class="math inline">\(\pi\)</span> to the fifth power. There is no “exponentiation sign” used, just the positioning of <span class="math inline">\(3+2\)</span> as a superscript: <span class="math inline">\(^{3+2}\)</span>. In R (and almost every computer language) multiplication and exponentiation <strong>must be written explicitly</strong>. The quantities <span class="math inline">\((3 + 2)\pi\)</span> and <span class="math inline">\(\pi^{3 + 2}\)</span> would be translated as <code>(3 + 2) * pi</code> and <code>pi^(3+2)</code>.</li>
-</ol>
-<p>One additional note: All these examples can be written with a single line of code, as is true for many short formulas. Later on, we’ll encounter longer formulas that <em>could</em> be written on a single line but are more readable when spread over two or more consecutive lines.</p>
-</details><hr>
-<details><summary><strong>Exercise 3.7</strong>: <span><a name="File:%20Exercises/Fun/dolphin-toss-candy.Rmd" href="#zSgXP2"><img src="www/icons8-signpost.png" title="Location: Exercises/Fun/dolphin-toss-candy.Rmd" width="12px"></a><span style="color: red; font-size: 9pt;">zSgXP2</span>
-</span></summary><p>When your R command is not a complete sentence, the <a href="https://maa-statprep.shinyapps.io/CalcZ-Sandbox/">SANDBOX</a> will display an error like this:</p>
-<p><span style="font-color: red;"><code>Error in parse(text = x, keep.source = TRUE) : <text>:5:0: unexpected end of input </text></code></span></p>
-<p>The “unexpected end of input” is the computer’s way of saying, “You haven’t finished your sentence so I don’t know what to do.”</p>
-<p>Each of these R expressions is incomplete. Your job, which you should do in a sandbox, is to turn each into a complete expression. Sometimes you’ll have to be creative, since when a sentence is incomplete you, like the computer, don’t really know what it means to say! But each of these erroneous expressions can be fixed by <strong>adding</strong> or <strong>changing</strong> text.</p>
-<p>Open a sandbox and copy each of the items below, one at a time, into a sandbox. Press “Run code” for that item and verify that you get an error message.</p>
-<p>For the first item, the sandbox will look like this:</p>
-<div class="figure" style="text-align: center">
-<span id="fig:unnamed-chunk-127"></span>
-<img src="Exercises/Fun/www/sandbox-error.png" alt="Running an invalid command will produce an error message." width="90%"><p class="caption">
-Figure 3.2: Running an invalid command will produce an error message.
-</p>
-</div>
-<p>Then, fix the command so you get a numerical result rather than the error message.</p>
-<p>Working through all of these will help you develop an eye and finger-memory for R commands.</p>
-<ol style="list-style-type: lower-roman">
-<li><code>sin 3</code></li>
-<li><code>((16 - 4) + (14 + 2) / sqrt(7)</code></li>
-<li><code>pnorm(3; mean=2, sd=4)</code></li>
-<li><code>log[7]</code></li>
-<li><code>14(3 + 7)</code></li>
-<li><code>e^2</code></li>
-<li><code>3 + 4 x + 2 x^2</code></li>
-</ol></details>
+</details>
 </div>
 </div>
   <div class="chapter-nav">
@@ -699,6 +705,7 @@ Figure 3.2: Running an invalid command will produce an error message.
 <li><a class="nav-link" href="#bureaucratic"><span class="header-section-number">3.2</span> A bureaucratic analogy</a></li>
 <li><a class="nav-link" href="#domain-input-space"><span class="header-section-number">3.3</span> Domain: input space</a></li>
 <li><a class="nav-link" href="#range-output-space"><span class="header-section-number">3.4</span> Range: output space</a></li>
+<li><a class="nav-link" href="#formulas-in-r"><span class="header-section-number">3.5</span> Formulas in R</a></li>
 </ul>
 
       <div class="book-extra">
@@ -716,7 +723,7 @@ Figure 3.2: Running an invalid command will produce an error message.
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>CalcZ Student Notes</strong>" was written by Daniel Kaplan. It was last built on 2021-08-24.</p>
+    <p>"<strong>CalcZ Student Notes</strong>" was written by Daniel Kaplan. It was last built on 2021-08-26.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">
