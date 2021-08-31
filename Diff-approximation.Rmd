@@ -1,4 +1,4 @@
-# Local approximations
+# Local approximations {#local-approximations}
 
 We have focused in this book on a small set of basic modeling functions and three operations for assembling new functions out of old ones: ***linear combination***, ***multiplication***, and ***composition***. All of these have a domain that is the whole number line, or the positive half of the number line, or perhaps the whole number line leaving out zero or some other isolated point. Consider such domains to be ***global***. `r mark(2750)`
 
@@ -9,14 +9,13 @@ In this chapter, we'll explore a simple and surprisingly powerful method to appr
 ::: {.why}
 Why would you want to approximate a function? Why not just use the function itself? 
 
-It's often the case that we don't know a definite functional form for a relationship. Instead we know about the relationship only through data. It's helpful to be able to create a function that depicts the relationship implicit in the data. Local approximations provide a ready method for creating functions that can represent a wide range of relationship patterns.
+It's often the case that we know about or hypothesize about relationships only from data. We believe there is a definite functional form for the relationship, but it's unknown and unknowable to us. Still, we can approximate even an unknown function, matching the approximation to the data that is the visible manifestation of the unknown function. Local approximations provide a general-purpose method for creating functions that can represent a wide range of relationship patterns, even ones that are not otherwise known to us.
 
 In fields such as physics or engineering, there are often theories that dictate a particular form of function. For example, Newton's universal law of gravitation posits an inverse square law for the force of gravity as a function of distance. Mechanical engineers use power laws to describe the shape of a beam under load, and communications engineers (and others) make extensive use of sinusoids. Textbooks in those fields rightfully emphasize those particular function forms. 
 
 The utility of the local approximation methods is that you can move forward even in the absence of a detailed theory. Instead, you need only apply your insight to posit which quantities are related to each other and then apply the approximation methods to produce a functional form. This approach is ubiquitous in all fields. 
 
 Sometimes, the local approximation *becomes* the theory. This is seen, for instance, in [Newton's law of cooling](https://en.wikipedia.org/wiki/Newton%27s_law_of_cooling), in [Hooke's law](https://en.wikipedia.org/wiki/Hooke%27s_law) relating force and extension, or the chemist's [law of mass action](https://en.wikipedia.org/wiki/Law_of_mass_action). `r mark(2760)`
-
 
 :::
 
@@ -36,43 +35,29 @@ Note that the three questions all have to do with derivatives. An "optimal gear"
 
 ## Eight simple shapes
 
-In many modeling situations with a single input, you can get very close to a good modeling function $f(x)$ by selecting one of ***eight simple shapes***. I've sketched these out and annotated them with their properties and examples of function forms that have that shape. `r mark(2790)`
+In many modeling situations with a single input, you can get very close to a good modeling function $f(x)$ by selecting one of ***eight simple shapes***, shown in Figure \@ref(fig:eight-simple-shapes). `r mark(2790)`
 
-Straight-line functions
-
-sloping upward  | sloping downward
--------------------------|---------------------------
-![](www/flat-up.png)     | ![](www/flat-down.png)
-not concave, slopes up, monotonic  | not concave, slopes down, monotonic
-$a x + b$   | $b - ax$
-
-
-shallow then steep 
-
-concave down | concave up
--------------|-------------
-![](www/shallow-then-steep.png) | ![](www/shallow-then-steep-up.png)
-monotonic      | monotonic
-$a - b e^{kx}$ | $a + b e^{kx}$
-
-steep then shallow
-
-concave down | concave up
--------------|-------------
-![](www/steep-then-shallow.png) | ![](www/steep-then-shallow-up.png)
-monotonic     | monotonic
-$\ln(x)$ | $e^{-kx}$
-$-1/x$   | $1/x$
+```{r eight-simple-shapes, echo=FALSE, out.width="40%", fig.show="keep", fig.cap="The ***eight simple shapes***, locally, of functions with one input. (See Chapter \\@ref(local-approximations).)"}
+g <- makeFun(a + b*x + c*x^2 ~ x, a=-1, b=2, c=1)
+slice_plot(-g(x, c=0) ~ x, domain(x=c(-3,1)), size=2  ) %>%
+  gf_labs(y="Output", x="Input", title="(A) downward sloping line")
+slice_plot(g(x, c=0) ~ x, domain(x=c(-3,1)), size=2  ) %>%
+  gf_labs(y="Output", x="Input", title="(B) upward sloping line")
+slice_plot(g(x) ~ x, domain(x=c(-3,-1)), size=2) %>%
+  gf_labs(y="Output", x="Input", title="(C) downward sloping, concave up; steep then shallow")
+slice_plot(g(x) ~ x, domain(x=c(-1,1)), size=2) %>% 
+  gf_labs(y="Output", x="Input", title="(D) upward sloping, concave up; shallow then steep")
+slice_plot(-g(x) ~ x, domain(x=c(-3,-1)), size=2) %>% 
+  gf_labs(y="Output", x="Input", title="(E) upward sloping, concave down; steep then shallow")
+slice_plot(-g(x) ~ x, domain(x=c(-1,1)), size=2) %>%
+  gf_labs(y="Output", x="Input", title="(F) downward sloping, concave down; shallow then steep")
+slice_plot(g(x) ~ x, domain(x=c(-3,1)), size=2) %>%
+  gf_labs(y="Output", x="Input", title="(G) local minimum")
+slice_plot(-g(x) ~ x, domain(x=c(-3,1)), size=2) %>% 
+  gf_labs(y="Output", x="Input", title="(H) local maximum")
+```
 
 
-local extremum
-
-maximum  | minimum   
----------|----------
-![](www/maximum.png) | ![](www/minimum.png)
-not monotonic  | not monotonic
-$a x^2$ | $-a x^2$
-$\text{gaussian}(x)$ |  $-\text{gaussian(x)}$
 
 To choose among these shapes, consider your modeling context: `r mark(2795)`
 
@@ -115,12 +100,12 @@ Consider what happens if $c = 0$. The function becomes simply $a + bx$, the stra
 
 With the appropriate choice of parameters, the form $a + bx + cx^2$ is  capable of representing four of the ***eight simple shapes***. What about the remaining four? This is where the idea of ***local*** becomes important. Those remaining four shapes are the sides of parabolas, as in Figure \@ref(fig:four-shapes). `r mark(2830)`
 
-```{r four-shapes, echo=FALSE, fig.cap="Four of the ***eight simple shapes*** correspond to the sides of the parabola."}
+```{r four-shapes, echo=FALSE, fig.cap="Four of the ***eight simple shapes*** correspond to the sides of the parabola. The labels refer to the graphs in Figure \\@ref(fig:eight-simple-shapes)."}
 f1 <- makeFun(a + b*x + c*x^2 ~ x, a=-2, b=1, c=1)
 f2 <- makeFun(a + b*x + c*x^2 ~ x, a=-2, b=1, c=-1)
-graph_with_boxes(f1, domain = c(-1.1,0.1), my_letters = c("A", "B", "C"), 
+graph_with_boxes(f1, domain = c(-1.1,0.1), my_letters = c("C", "D"), 
                  intervals = tibble(x = c(-1, -.45), xend=c(-.55, 0)))
-graph_with_boxes(f2, domain = c(-.3,1.4), my_letters = c("D", "E", "F"),
+graph_with_boxes(f2, domain = c(-.3,1.4), my_letters = c("E", "F"),
                  intervals = tibble(x = c(-.2, .55), xend=c(.45, 1.25)))
 ```
 

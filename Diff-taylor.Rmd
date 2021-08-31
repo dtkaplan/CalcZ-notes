@@ -1,267 +1,189 @@
-# Approximation near a reference input {#taylor-polynomial}
+---
+editor_options: 
+  markdown: 
+    wrap: 72
+---
 
-Back in Chapter \@ref(local-approximations) we considered ***eight simple shapes*** for functions of one input:
+# Polynomials
 
-```{r eight-simple-redux, echo=FALSE, out.width="40%", fig.show="keep", fig.cap="The ***eight simple shapes***, locally, of functions with one input. (See Chapter \\@ref(local-approximations).)"}
-g <- makeFun(a + b*x + c*x^2 ~ x, a=-1, b=2, c=1)
-slice_plot(-g(x, c=0) ~ x, domain(x=c(-3,1)), size=2  ) %>%
-  gf_labs(y="Output", x="Input", title="(A) downward sloping line")
-slice_plot(g(x, c=0) ~ x, domain(x=c(-3,1)), size=2  ) %>%
-  gf_labs(y="Output", x="Input", title="(B) upward sloping line")
-slice_plot(g(x) ~ x, domain(x=c(-3,-1)), size=2) %>%
-  gf_labs(y="Output", x="Input", title="(C) downward sloping, concave up")
-slice_plot(g(x) ~ x, domain(x=c(-1,1)), size=2) %>% 
-  gf_labs(y="Output", x="Input", title="(D) upward sloping, concave up")
-slice_plot(-g(x) ~ x, domain(x=c(-3,-1)), size=2) %>% 
-  gf_labs(y="Output", x="Input", title="(E) upward sloping, concave down")
-slice_plot(-g(x) ~ x, domain(x=c(-1,1)), size=2) %>%
-  gf_labs(y="Output", x="Input", title="(F) downward sloping, concave down")
-slice_plot(g(x) ~ x, domain(x=c(-3,1)), size=2) %>%
-  gf_labs(y="Output", x="Input", title="(G) local minimum")
-slice_plot(-g(x) ~ x, domain(x=c(-3,1)), size=2) %>% 
-  gf_labs(y="Output", x="Input", title="(H) local maximum")
+A big part of the high-school algebra curriculum is about polynomials.
+In some ways, this is appropriate since polynomials played an outsized
+part in the historical development of mathematical theory. Indeed, the
+so-called "Fundamental theorem of algebra" is about
+polynomials.[^diff-taylor-1]
+
+[^diff-taylor-1]: The fundamental theorem says that an order-n
+    polynomial has n roots (including multiplicities).
+
+For modelers, polynomials are a mixed bag. They are very widely used in modeling. Sometimes this is entirely appropriate, for instance the low-order polynomials that are the subject of Chapter \@ref(local-approximations). The problems come when high-order
+polynomials are selected for modeling purposes. Building a reliable model with high-order polynomials requires a deep knowledge of mathematics, and introduces serious potential pitfalls. Modern professional modelers learn the alternatives to high-order polynomials, but newcomers often draw on their experience in high-school and give unwarranted credence to polynomials. This chapter attempts to guide you to the ways you are likely to see polynomials in your future work and to help you avoid them when better alternatives are available.
+
+## Basics of polynomials {#polynomial-basics}
+
+As you know, a polynomial is a ***linear combination*** of a particular class of functions: power-law functions with non-negative, integer exponents: 1, 2, 3, .... The individual functions are called ***monomials***, a word use that echoes the construction of chemical polymers out of monomers; for instance, the material *polyester* is constructed by chaining together a basic chemical unit called an [*ester*](https://en.wikipedia.org/wiki/Ester)*.*
+
+In one variable, say $x$, the monomials are
+$x^1, x^2, x^3$, and so on. (There's also $x^0$, but that's better thought of as the constant function.) An ***n-th order*** polynomial has monomials up to exponent $n$. For example, the form of a third-order polynomial is
+$$a_0 + a_1 x^1 + a_2 x^2 + a_3 x^3$$
+High-order polynomials are rarely used for multiple inputs because they are verbose and unreliable. Consider the third-order polynomial form in $x$ and $y$:
+$$\underbrace{b_0 + b_x x + b_y y}_\text{first-order terms} + \underbrace{b_{xy} x y + b_{xx} x^2 + b_{yy} y^2}_\text{second-order terms} + \underbrace{b_{xxy} x^2 y + b_{xyy} x y^2 + b_{xxx} x^3 + b_{yyy} y^3}_\text{third-order terms}$$ Too many terms! Consequently, we'll limit this chapter to polynomials in one variable.
+
+The ***domain*** of polynomials, like the power-law functions they are made from, is the entire number line: $-\infty < x < \infty$. But for the purposes of understanding the shape of high-order polynomials, it's helpful to divide the domain into three parts: a ***wriggly domain*** at the center and two ***tail domains*** to the right and left of the center.
+
+```{r wriggly-polynomial, echo=FALSE, fig.cap="A $n$th-order polynomial can have up to $n-1$ critical points that it wriggles among. A 7-th order polynomial is shown here in which there are six local maxima or minima alternatingly."}
+set.seed(101)
+n <- 8
+Pts <- tibble(x = runif(n, -3, 3), y = rnorm(n))
+mod <- lm(y ~ poly(x, n-1), data = Pts)
+fmod <- makeFun(mod)
+slice_plot(fmod(x) ~ x, domain(x=c(-2.8, 1.65))) %>%
+  gf_vline(xintercept = ~ -2.65, color="tan") %>%
+  gf_vline(xintercept = ~ 1.6, color="tan") %>%
+  gf_text(25 ~ -.5, label="Wriggly domain", color="tan", size=10) %>%
+  gf_lims(x=c(-3.5,2.5)) %>%
+  gf_text(-20 ~ -3.1, label="Negative tail domain", color="tan", angle=90, size=8) %>%
+  gf_text(-20 ~ 2.2, label="Positive tail domain", color="tan", angle=-90, size=8)
+```
+Figure \@ref(fig:wriggly-polynomial) shows a 7-th order polynomial---that is, the highest-order term is $x^7$. In one of the tail domains the function value heads off to $\infty$, in the other to $-\infty$.
+
+This is always the case with odd-order polynomials: 1, 3, 5, 7, .... For even-order polynomials, the function value in the two tail domains go in the same direction, either both to $\infty$ (Hands up!) or both to $-\infty$.  
+
+In the wriggly domain in Figure \@ref(fig:wriggly-polynomial), there are six argmins or argmaxes. An $n$th-order polynomial can have up to $n-1$ extrema.
+
+Note that the local polynomial approximations in Chapter \@ref(local-approximations) are at most 2-nd order and so there is at most 1 wriggle: a unique argmax. If the approximation does not include the quadratic terms ($x^2$ or $y^2$) then there is no argmax for the function. 
+
+## High-order approximations
+
+We've discussed first- and second-order polynomial approximations and their valuable contribution to modeling technique in Chapter \@ref(local-approximations). From now on, we'll focus only on polynomials of order three or higher. 
+
+The potential attraction of high-order polynomials is that, with their wriggly interior, they can take on a large number of appearances. This chameleon-like behavior has historically made them the tool of choice for understanding the behavior of approximations. That theory has motivated the use of polynomials for modeling patterns in data, but, paradoxically, has shown that high-order polynomials should not be the tool of choice for modeling data. The mathematical background needed for those better tools won't be available to us until Block 5, when we explore linear algebra. 
+
+Let's start the story before the invention of the linear-algebra tools, when polynomials were well understood. 
+
+Polynomial functions lend themselves well to calculations, since the output from a polynomial function can be calculated using just the basic arithmetic functions: addition, subtraction, multiplication, and division. To illustrate, consider this polynomial: $$g(x) \equiv x - \frac{1}{6} x^3$$
+This is a third-order polynomial, since the highest-order term is $x^3$. The coefficients have been selected for the purpose of the illustration to be easy to handle by mental arithmetic. For instance, for $g(x=1)$ is $5/6$. Similarly, $g(x=1/2) = 23/48$ and $g(x=2) = 2/3$. A person of today's generation would use an electronic calculator for more complicated inputs, but the mathematicians of Newton's time were accomplished human calculators.  It would have been well within their capabilities to calculate, using paper and pencil^[Unfortunately for these human calculators, pencils weren't invented until 1795. Prior to the introduction of this advanced, graphite-based computing technology, mathematicians had to use quill and ink.], $g(\pi/4) = 0.7046527$. 
+
+Our example polynomial, $g(x) \equiv x - \frac{1}{6}x^3$, graphed in color in Figure \@ref(fig:small-sine),  doesn't look like any of our pattern book functions. But, for a small interval around $x=0$, it has a great similarity to the sinusoid.
+
+```{r small-sine, echo=FALSE, fig.cap="The polynomial $g(x) \\equiv x -x^3 / 6$ is remarkably similar to $\\sin(x)$ near $x=0$."}
+slice_plot(sin(x) ~ x, domain(x=c(-2.85, 2.85)), size=3, alpha=0.25) %>%
+  slice_plot(x - x^3/6 ~ x, color="magenta")
 ```
 
-All these simple shapes can be generated with the same function formula and appropriate values for parameters $a$, $b$, and $c$.
+It's clear from the graph that the approximation is excellent near $x=0$ and gets worse as $x$ gets larger. The approximation is poor for $x \approx \pm 2$. We know enough about polynomials to say that the approximation will not get better for larger $x$; the sine function has a range of $-1$ to $1$, while the left and right tails of the polynomial are heading off to $\infty$ and $-\infty$ respectively.
 
-$$g(x) \equiv a_0 + a_1 x + a_2 x^2$$ 
-This chapter examines the possibilities for extending the formula a bit, to include higher-order terms, e.g. $$h(x) \equiv a_0 + a_1 x + a_2 x^2 + a_3 x^3 + a_4 x^4 + \cdots$$
+One way to quantify the quality of the approximation is to look at the ***error***, that is the difference between the actual sinusoid and $g(x)$, that is ${\cal E}(x) \equiv |\strut\sin(x) - g(x)|$. The point of the absolute value used in defining the error is that we're interested in how ***far*** the approximation is from the actual function and not so much in whether the approximation is below or above the actual function. Figure \@ref(fig:sin-error) shows ${\cal E}(x)$ as a function of $x$.
 
-We'll consider two possible applications:
+```{r sin-error, echo=FALSE, fig.cap = "The error ${\\cal E}(x)$ of $x - x^3/6$ as an approximation to $\\sin(x)$. Left panel: linear scale. Right panel: log-log scale."}
+P <- slice_plot(abs(sin(x) - (x - x^3/6)) ~ x, domain(x=c(0.001, 3)), npts=500) %>% 
+  gf_labs(y = "Error(x)")
+P
+breaksx <- c(.001, .003, .005, 0.01,0.03,0.05, 0.1, 0.3, 0.5, 1, 3)
+P %>%
+  gf_refine(scale_y_log10(breaks=10^(-17:0)), scale_x_log10(breaks=breaksx, labels=as.character(breaksx)))
 
-1. Creating an arithmetically simple approximation to a function whose formula is already known. Such approximations are known as ***Taylor polynomials***.
-2. Creating a function to capture the patterns in data, as in Chapter \@ref(local-approximations). It turns out that this is a dubious practice. We discuss the reasons why so that you can know to avoid using high-order polynomials to fit data. `r mark(2915)`
- 
-## The reference point
+```
 
-Since this is all about ***approximations***, we need to have a way to specify the neighborhood of the function domain in which the approximation is intended to be good enough for use. We can use the same approach that turned the pattern-book functions (e.g., $x$, $x^2$, ...) into the basic modeling functions: replacing $x$ in the polynomial with $\line(x)$.  But unlike the basic modeling functions, where the useful form of $\line()$ was usually $ax + b$, here, we'll use just a ***shift form*** of line, where the slope is 1:  `r mark(2920)`
+Figure \@ref(fig:sin-error) shows that for $x < 0.3$, the error in the polynomial approximation to $\sin(x)$ is in the 5th decimal place. For instance, $\sin(0.3) = 0.2955202$ while $g(0.3) = 0.2955000$. 
 
-$$\text{shift}(x) \equiv \left[\strut x - x_0\right]$$
-The parameter $x_0$ is called the ***reference point***. For a power-law function, $$\left[\strut\text{shift}(x)\right]^n =  \left[\strut x - x_0\right]^n$$
-the output is always zero when $x=x_0$, which will be a matter of considerable importance as we go on. Also, note that we're using square braces $\left[\ \ \right]$ simply to make it completely unambiguous what is being exponentiated. `r mark(2925)`
+That the graph of ${\cal E}(x)$ is a straight-line on log-log scales diagnoses ${\cal E}(x)$ as a power law. That is: ${\cal E}(x) = A x^p$. As always for power-law functions, we can estimate the exponent $p$ from the slope of the graph. It's easy to see that the slope is positive, so $p$ must also be positive.
 
+The inevitable consequence of ${\cal E}(x)$ being a power-law function with positive $p$ is that $\lim_{x\rightarrow 0} {\cal E}(x) = 0$. That is, the polynomial approximation $x - \frac{1}{6}x^3$ is *exact* as $x \rightarrow 0$.
+
+Throughout this book, we've been using straight-line approximations to functions around an input $x_0$. The slope of the tangent-line approximation is the derivative of the function at $x_0$. We can always choose the coefficients of a polynomial approximation to be at least as good as the tangent-line approximation. For a function $f(x)$ that we want to approximate at $x=x_0$ with a polynomial, just start with the polynomial 
+$$g(x) = f(x_0) + \partial_x f(x_0) [x-x_0]$$
+Notice that $g(x=x_0) = f(x=x_0)$, and $\partial_x g(x=x_0) = \partial_x f(x=x_0)$: the approximation matches the function's value and its derivative at $x_0$. One way to construct a high-order polynomial approximation is to follow the same logic: structure $g(x)$ such that $g(x_0) = f(x_0)$ and $\partial_x g(x=x_0) = \partial_x f(x=x_0)$, $\partial_{xx} g(x=x_0) = \partial_{xx} f(x=x_0)$, and so on for the higher order derivatives.
+
+$$\newcommand{\bigstrut}{{\rule[-.3\baselineskip]{0pt}{1.5\baselineskip}}$$
+
+The table below compares the function value and the derivatives at input $x = x_0 = 0$ for $\sin(x)$ to the polynomial approximation $g(x)\equiv x - \frac{1}{6} x^3$.
+
+Order | $\sin(x)$ derivative | $x - \frac{1}{6}x^3$ derivative ------|----------------------|--------------------------------   0   | $\sin(x) \left.{\Large\strut}\right|_{x=0} = 0$ | $\left( 1 - \frac{1}{6}x^3\right)\left.{\Large\strut}\right|_{x=0} = 0$ 
+  1   | $\cos(x) \left.{\Large\strut}\right|_{x=0} = 1$ | 
+$\left(1 - \frac{3}{6} x^2\right) \left.{\Large\strut}\right|_{x=0}= 1$
+  2   | $-\sin(x) \left.{\Large\strut}\right|_{x=0} = 0$ | 
+$\left(- \frac{6}{6} x\right) \left.{\Large\strut}\right|_{x=0} = -1$
+  3   |  $-\cos(x) \left.{\Large\strut}\right|_{x=0} = -1$ |
+$- 1\left.{\Large\strut}\right|_{x=0} = -1$ 
+  4   |  $\sin(x) \left.{\Large\strut}\right|_{x=0} = 0$ |
+$0\left.{\Large\strut}\right|_{x=0} = 0$ 
+
+The first four derivatives of $x - \frac{1}{6} x^3$ exactly match, at $x=0$, the first four derivatives of $\sin(x)$.
+
+The polynomial $h(x) \equiv a_0 + a_1 [x-x_0]^1 + a_2 [x-x_0]^2 + \cdots + a_n [x-x_0]^n$, with coefficients $a_0, a_1, a_2, ...$ selected to match the function value $f(x=x_0)$ as well as the first $n$ derivatives $\partial_x f(x=x_0)$, $\partial_{xx} f(x=x_0)$, $\partial_{xxx} f(x=x_0)$, ... is called the ***Taylor polynomial*** approximation to $f(x)$ around the input $x_0$.
+
+::: {.example}
+Find the 4th-order Taylor polynomial approximation to $f(x) = e^x$ around $x=0$.
+
+We know it will be a 4th order polynomial:
+$$\text{Taylor}(x) \equiv a_0 + a_1 x + a_2 x^2 + a_3 x^3 + a_4 x^4$$
+The exponential function is particularly nice for examples because the function value and all it's derivatives are identical: $e^x$. So $$f(x= 0) \color{magenta}{=} \partial_x f(x=0) \color{magenta}= \partial_{xx} f(x=0) \color{magenta}= \partial_{xxx} f(x=0) \color{magenta}= \partial_{xxxx} f(x=0) \color{magenta}= 1$$
+The function value and derivatives of $\text{Taylor}(x)$ at $x=0$ are:
+$$
+\text{Taylor}(x=0) = a_0\\
+\,\\
+\partial_{x}\text{Taylor}(x=0) = a_1\\
+\,\\
+\partial_{xx}\text{Taylor}(x=0) = 2 a_2\\
+\,\\
+\partial_{xxx}\text{Taylor}(x=0) = 2\cdot3\cdot a_3\\
+\,\\
+\partial_{xxxx}\text{Taylor}(x=0) = 2\cdot3\cdot4 \cdot a_4
+$$
+Matching these to the exponential evaluated at $x=0$, we get
+$$a_0 = 1\\
+\,\\
+a_1 = 1\\
+\,\\
+a_2 = \frac{1}{2}\\
+\,\\
+a_3 = \frac{1}{2 \cdot 3}\\
+\,\\
+a_4 = \frac{1}{2 \cdot 3 \cdot 4}
+$$
+So the 4th-order Taylor polynomial approximation to the exponential at $x=0$ is $$g(x) = 1 + x + \frac{1}{2} x + \frac{1}{2\cdot 3} x^2 + \frac{1}{2\cdot 3} x^3 +\frac{1}{2\cdot 3\cdot 4} x^4$$
+
+Figure \@ref{fig:taylor-exp-4} shows the exponential function $e^x$ and its 4th-order Taylor polynomial approximation near $x=0$:
+
+```{r taylor-exp-4, echo=FALSE, class.source="code-hide", fig.cap="The 4th-order Taylor polynomial approximation to $e^x$ arount $x=0$"}
+slice_plot(exp(x) ~ x, domain(x=c(-2,2)), size=3, alpha = 0.25) %>%
+  slice_plot(1 + x + x^2/2 + x^3/6 + x^4 / 24 ~ x, color="magenta")
+```
+
+The polynomial is exact at $x=0$ but the ***error*** ${\cal E}(x)$ grows with increasing distance from $x=0$:
+
+```{r taylor-exp-4, echo=FALSE, class.source="code-hide", fig.cap="The error from a 4th-order Taylor polynomial approximation to $e^x$ around $x=0$.", out.width="50%", fig.show="hold"}
+Pts <- tibble(x = seq(-2, 2, length=100),
+              y = exp(x),
+              y_approx = 1 + x + x^2/2 + x^3/6 + x^4/24,
+              y_error = abs(y - y_approx),
+              x_abs = abs(x))
+gf_path(y_error ~ x, data = Pts, color=~sign(x)) %>%
+  gf_labs(y="Error(x)") %>%
+  gf_refine(scale_color_continuous(guide = 'none'))
+gf_path(log10(y_error) ~ log10(x_abs), data = Pts, color=~sign(x)) %>%
+  gf_labs(y="Log10(Error(x))") %>%
+  gf_refine(scale_color_continuous(guide = 'none'))
+```
+
+From the plot of $\log_{10} {\cal E}(x)$ versus $\log_{10} | x |$ you can see that the error grows from zero at $x=0$ as a power-law function. Measuring the exponent of the power-law from the slope of the graph on log-log axes give ${\cal E}(|x|) = a |x|^5$. This is typical of Taylor polynomials: for a polynomial of degree $n$, the error will grow as a power-law with exponent $n+1$. This means that the higher is $n$, the faster $\lim_{x\rightarrow x_0}{\cal E}(x) \rightarrow 0$. On the other hand, since ${\cal E}_x$ is a power law function, as $x$ gets further from $x_0$ the error grows as as $\left(x-x_0\right)^{n+1}$
+:::
+
+
+`r insert_calcZ_exercise("26.05", "k8H2vs", "Exercises/Diff/bee-throw-mug.Rmd")`
+
+
+
+`r insert_calcZ_exercise("XX.XX", "uebqnO", "Exercises/Diff/fir-shut-coat.Rmd")`
 
 
 `r insert_calcZ_exercise("XX.XX", "682lsB", "Exercises/Diff/local-shift.Rmd")`
-
------
-
-With the reference point $x_0$ we will re-write the approximating polynomial as 
-$$h(x) \equiv a_0 + a_1 [x-x_0] + a_2 [x - x_0]^2 + a_3 [x - x_0]^3 + \cdots$$
-This format is convenient because in finding the $a_0$, $a_1$, $\ldots$ for approximating a function $f(x)$ in the neighborhood of $x_0$, we have a way to calculate quickly the value of $a_0$.  Note that at $x=x_0$, all the terms in the polynomial go to zero except the first, so we know $a_0 = f(x_0)$. `r mark(2930)`
-
-Now consider the derivative of the approximating polynomial. This is
-$$\partial_x h(x) = a_1 + 2 \times a_2 [x-x_0] + 3 \times a_3 [x-x_0] + \cdots$$
-Again, at $x=x_0$ all the terms except the first go to zero. So if $h(x)$ is an approximation to $f(x)$ we'll have $a_1 = \partial_x f(x_0)$.
-
-We can do this as many times as we want. Here's the second derivative $\partial_{xx} h(x)$:
-$$\partial_{xx} h(x) = 2 a_2  + 2 \times 3 \times a_3 [x-x_0] + \cdots$$
-and the third
-$$\partial_{xxx} h(x) =  2 \times 3 \times a_3 + \cdots$$
-
-As before, all the terms in $\partial_{xx} h()$ and $\partial_{xxx} h()$ *except the first* go to zero when $x=x_0$. This implies
-$$a_2 = \frac{1}{2} \partial_{xx} f(x_0) \ \ \ \text{and}\ \ \ a_3 = \frac{1}{2\times 3} \partial_{xxx}f(x_0)$$
-Just following the pattern, we can guess that $a_4 = \frac{1}{2 \times 3 \times 4} \partial_{xxxx} f(x_0)$ and, in general for the n^th^ term
-$$a_n = \frac{1}{1\times 2 \times 3 \times \cdots \times n} \partial^n f(x_0)$$
-We're writing $${\huge \partial^n} \ \text{to stand for}\ \ \stackrel{\Huge \partial}{\ } \underbrace{xx...x}_\text{n times}$$
-
-The quantity $1\times 2 \times 3 \times \cdots \times n$ is called a factorial and written $$\huge n! =  1\times 2 \times 3 \times \cdots \times n$$
-
-In case you're not already familiar with factorials, note the following:
-$$1! = 1\\
-2! = 2\\
-3! = 6\\
-4! = 24\\
-5! = 120\\
-\text{... and so on}
-$$
-
-In R, use the `factorial()` function to calculate $n!$ for instance:
-```{r}
-factorial(5)
-factorial(6)
-factorial(7)
-factorial(10)
-factorial(15)
-```
-
-## Approximations around $x^\star$
-
-Starting with just the pattern-book functions (e.g. $e^t$), you have a small but rich set of mathematical operations that enables you to make a huge variety of functions to suit a big range of modeling needs: `r mark(2855)`
-
-- ***input scaling***, which turns the pattern-book functions into the more directly useful basic modeling functions.
-- ***linear combinations*** of functions, e.g. $A + B e^{-kt}$
-- ***compositions*** of functions, e.g. $e^{-kt^2}$ which you can recognize as the composition of an exponential with a power-law function.
-- ***products*** of functions, e.g., $\sin\left(\frac{2\pi}{P}x\right) e^{-kt}$
-
-Now we want to tame this profusion of possibilities and consider a way to construct stand-ins for any function, using a universal format that needs a minimum of information and can be used for many purposes ***in place of*** the original function. It's helpful to have a name for the stand-ins that reminds us of whom they are stand-ins for. If the original function is $f(x)$, we'll write the names of the stand-ins with a tilde, as in $\widetilde{\,f\ }(x)$.  `r mark(2860)`
-
-The stand-in functions are intended to be much simpler than the original but useable as a substitute for the original. The catch is that the stand-in is warranteed to be a good substitute only ***within a small neighborhood*** of the domain of the origin. `r mark(2865)`
-
-The information we need to construct the stand-ins is very limited. First, we need to specify where the warranteed neighborhood is. We'll tend to use $x_0$ as identifying the center of that neighborhood. We'll also need $f(x_0)$, the output of the original function when the input is $x_0$, and $\partial_x f(x_0)$ and $\partial_{xx} f(x_0)$.  `r mark(2870)`
-
-
-Here are two universal formats that can be used to construct a stand-in for *any* function near a particular input $x_0$. Since it's useful to have a name for the stand-in, we'll use a tilde on top of the original function name: `r mark(2885)`
-
-- First-order approximation: $\widetilde{f_1}(x) \equiv f(x_0) + \partial_x f(x_0) (x-x_0)$
-- Second-order approximation: $\widetilde{f_2}(x) \equiv f(x_0) + \partial_x f(x_0) [x-x_0] + \frac{1}{2} \partial_{xx} f(x_0) [x - x_0]^2$
-
-Notice that the first two terms of $\widetilde{f_2}(x)$ are identical to $\widetilde{f_1}(x)$, so we could write the second-order approximation as
-$$\widetilde{f_2}(x) \equiv \widetilde{f_1}(x) +\frac{1}{2} \partial_{xx} f(x_0) [x-x_0]^2$$ 
-
-
-The first-order approximation $\widetilde{f_1}(x)$ is nothing more than the straight-line function whose graph is tangent to the graph of $f(x)$ at the input $x=x_0$.
-
-The second-order approximation is a quadratic polynomial. Being quadratic, its graph is the familiar parabola. The graph of $\widetilde{f_2}(x)$ is the parabola that is tangent to the graph of $f(x)$.
-
-::: {.workedexample}
-Consider the function $g(x)$ whose graph is shown in Figure \@ref(fig:ds-g).
-
-```{r ds-g, echo=FALSE, warning=FALSE}
-g <- rfun( ~ x, seed=973)
-slice_plot(g(x) ~ x, domain(x=c(-3, 3))) %>%
-  gf_labs(title="g(x) vs x") %>%
-  gf_vline(xintercept= ~ -1, color="dodgerblue", alpha=0.1, size=20) %>%
-  gf_vline(xintercept= ~ -1, color="dodgerblue") %>%
-  gf_text(-5 ~ -1.1, label="x0 = -1", color="dodgerblue", angle=90) %>%
-  gf_theme(theme_minimal)
-```
-We haven't given you a formula for $g(x)$, but you can see that it isn't any of the basic modeling functions but something more complicated. We're going to construct a first-order and second-order approximation to $g(x)$ in a neighborhood $x_0 = -1$ as marked by the blue shaded area.  `r mark(2890)`
-
-Note that $x_0$ is not an argmin of $g(x)$. You can see that the argmin is a little to the right of $x_0$. 
-
-The "facts" about $g(x)$ that are needed to construct the approximations, beyond the specification of the location of the neighborhood $x_0$, are the values $g(x_0)$, $\partial_x g(x_0)$, and $\partial_{xx} g(x_0)$. These are: `r mark(2895)`
-
-```{r}
-x0 <- -1
-g(x0)
-dx_g <- D(g(x) ~ x)
-dxx_g <- D(g(x) ~ x + x)
-dx_g(x0)
-dxx_g(x0)
-```
-With these facts, we can construct the first- and second-order approximations:
-```{r}
-tilde1_g <- makeFun(-23.992 - 2.3493*(x-x0) ~ x)
-tilde2_g <- makeFun(tilde1_g(x) + (7.8077/2) * (x-x0)^2 ~ x)
-```
-
-Figure \@ref(fig:ds-g2) shows $\widetilde{g_1}(x)$ and $\widetilde{g_2}(x)$, zooming in around $x_0 = -1$.
-
-```{r ds-g2, echo=FALSE, warning=FALSE, fig.cap="The first-order (green) and second-order (red) approximations to $g(x)$ near $x_0=-1$."}
-g <- rfun( ~ x, seed=973)
-slice_plot(tilde1_g(x) ~ x, domain(x=c(-2, 0)),
-             color="green", size=2, alpha=0.25) %>%
-  slice_plot(tilde2_g(x) ~ x, domain(x=c(-2, 0)),
-             color="orange3", size=2, alpha=0.25) %>%
-
-slice_plot(g(x) ~ x, domain(x=c(-2, 0))) %>%
-  gf_labs(title="g(x) vs x") %>%
-  gf_vline(xintercept= ~ -1, color="dodgerblue", alpha=0.1, size=50) %>%
-  gf_vline(xintercept= ~ -1, color="dodgerblue") %>%
-  gf_text(-20 ~ -1.05, label="x0 = -1", color="dodgerblue", angle=90) %>%
-  gf_theme(theme_minimal())
-```
-
-You can see that $\widetilde{g_2}(x)$ is a good approximation to $g(x)$. In particular, the argmin of $\widetilde{g_2}(x)$ is close to the that of $g(x)$. 
-
-In a previous example, we showed that the argmin of the parabolic function $a_0 + a_1 x + a_2 x^2$ is $x^\star = -\frac{a_1}{2 a_2}$. Using that formula, the argmin of $\widetilde{g_2}(x)$ is  -2.3493/(7.8077/2) = -0.602. `r mark(2900)`
-:::
-
-
-
-
-
-
-## Taylor polynomials
-
-Putting together everything in the previous sections, we arrive at a remarkable formula for a polynomial to approximate any smooth, continuous function $f(x)$ in the neighborhood of a selected input $x_0$. The overall formula is daunting at first glance, but each of the terms has the same pattern:
-$$f(x) \approx f(x_0) + \frac{\partial_x f(x_0)}{1!} [x - x_0]^1
-+ \frac{\partial_{xx} f(x_0)}{2!} [x - x_0]^2
-+ \frac{\partial_{xxx} f(x_0)}{3!} [x - x_0]^3
-+ \ldots
-$$
-This is the ***Taylor polynomial***. A Taylor polynomial that terminates with the $[x-x_0]^2$ term is a ***second-order Taylor polynomial***, one that terminates with the $[x-x_0]^3$ term is a ***third-order Taylor polynomial***. Mathematicians are particularly interested in the $n$th-order Taylor polynomial where $n \rightarrow \infty$. `r mark(2935)`
-
-Construction of a Taylor polynomial involves finding the various orders of derivatives. There are some cases where this is simple, especially if a felicitous choice of $x_0$ can be made.
-
-Example: The successive derivatives of $\sin(x)$ are $cos(x)$, then $-\sin(x)$, then $-\cos(x)$, then back to $\sin(x)$ and onward to any order derivative you like. If we select $x_0=0$, then each of the derivatives evaluated at $x_0$ will be zero, $-1$, or $1$. The Taylor polynomial (to 5th order) of $\sin(x)$ is:
-$$\sin(x) \approx 0 + \frac{1}{1!}[x] + \frac{0}{2!} [x]^2 - \frac{1}{3!} [x]^3 + \frac{0}{4!} [x]^4 + \frac{1}{5!} [x]^5 = x - \frac{x^3}{3!} + \frac{x^5}{5!}$$
-
-
-::: {.why}
-Why say "smooth, continuous function" instead of just function when talking about the kinds of functions Taylor polynomials can approximate?
-
-Keep in mind that each of the terms in the polynomial has the form $a_n [x-x_0]^n$ for $n=1,2,3, \ldots$. Each of these is a power-law function and therefore smooth and continuous. So the polynomial---the sum of the individual terms---will always be smooth and continous. If $f()$ is not, no promises can be given about the quality of the approximation. `r mark(2940)`
-:::
 
 
 `r insert_calcZ_exercise("XX.XX", "ecdVKx", "Exercises/Diff/frog-throw-screen.Rmd")`
 
 
 
-
-## Polynomial computer
-
-```{r echo=FALSE}
-source("Exercises/Diff/www/polycomp.R")
-```
-
-The day's topic is the translation of a continuous function of one variable, $f(x)$, whatever form it might be, into a polynomial, that is, a linear combination of power-law functions (with integer exponents):
-
-$$f(x) \overset{?}{=}  s(x) \equiv a_0 + a_1 (x-x_0) + a_2 (x-x_0)^2 + \cdots + a_n (x-x_0)^n + \cdots $$
-We've already seen that any continuous function can be approximated by a straight-line function near any given point. We have already looked extensively at using low-order polynomials (up to quadratic terms of potentially multiple variables) as a modeling tool. Now we're going to look at whether and when an approximation can be improved by adding higher-order terms such as $x^3$ and so on. And in order to say whether an approximation can be improved, we have to have some way to measure the quality of the approximation. 
-
-In 1715, Brooke Taylor (1685-1731) introduced a method to find for any $n$ the "best" approximating polynomial. This amounts to specifying the polynomial coefficients $a_0$, $a_1$, $a_2$, and so on. Taylor produced a formula in terms of the derivatives of the function $f()$:
-
-$$a_n = \frac{f^{(n)}(x_0)}{n!}$$
-where $f^{(n)}$ means the "n^th" derivative. That is, 
-$$f^{(0)}(x_0) = f(x)\left.\right|_{x_0}\\
-f^{(1)}(x_0) = \partial_x f(x) \left.\right|_{x_0}\\
-f^{(2)}(x_0) = \partial_{xx} f(x) \left.\right|_{x_0}\\
-f^{(3)}(x_0) = \partial_{xxx} f(x) \left.\right|_{x_0}\\
-\mbox{... and so on}
-$$
-
-```{r pc1-1, echo=FALSE, results="markup"}
-askMC(
-  "Consider $f(x) \\equiv e^x$ and take $x_0 = 0$. Use Taylor's formula to find the coefficients from $a_0$ to $a_5$. Which choice below is right?",
-  "1, 1, 1, 1, 1, 1" = 
-    "Remember the factorials in Taylor's formula.",
-  "1, 2, 3, 4, 5, 6",
-  "1, 1/2, 1/3, 1/4, 1/5, 1/6" = 
-    "Remember that, say, 4! = 4 x 3 x 2",
-  "+1, 1, 1/2, 1/6, 1/24, 1/120+",
-  random_answer_order = FALSE
-  
-)
-```
-
-
-
-For Taylor, "best approximation" means that the all the orders of derivative of $f(x)$ and those of $s(x)$ match exactly at $x=x_0$. This can be proved simply by differentiating the polynomial with coefficients $a_n$ given by Taylor's formula. Or, seen another way, Taylor's formula was invented with this property in mind. Today, in contrast, people are much more likely to think of "best" as a least-squares or other statistical approximation.
-
-Taylor's invention was important largely for reasons that are no longer relevant. There is a handful of facts based on Taylor's formula that are still useful when working algebraically with sinusoids, exponentials, and logs. Also still important is the framework for measuring the quality of the approximation, which is still important when comparing, say, Euler and other algorithms for the numerical integration of differential equations.
-
-To understand why Taylor's invention was genuinely important in the 18th and 19th centuries, it helps to compare the technology for computing of Taylor's day to today's computing technology. Today, of course, an ordinary computer can almost instantaneously perform arithmetic to 15 digits precision. From these basic operations, software has been constructed to compute the values of many functions to a similar level of precision: `exp(0)`, `sin()` and `cos()`, `log()`, and so on. The algorithms of these functions today are different from Taylor's, but for the people developing those algorithms it was important to be able to compare their new methods to Taylor's method.
-
-In order to facilitate the comparison of Taylor's method with that of modern computing, it helps to think about Taylor's invention as a computer, which I'll call the "polynomial computer," but which is also called "Taylor polynomials." (There is also something called "Taylor series," which are closely related but mainly of interest in pure mathematics rather than applied math, modeling, and computing.)
-
-There were no electronic chips implementing the polynomial computer, but even in Taylor's day you could hire a computer: a skilled person who could perform the arithmetic calculations of addition, subtraction, multiplication and division. Think of this as the "hardware" of a polynomial computer. 
-
-There's also software for the polynomial computer. Each program for the polynomial computer consisted simply of an ordered set of numbers: $a_0$, $a_1$, $a_2$, $\cdots$, and $a_n$ as well as the value $x_0$.
-
-We can write a simulator of the polynomial computer in R. To program the simulated computer, pick the value of $x_0$ and the coefficients $a_0$ to $a_n$. Once programmed, the computer is simply a function: You give it $x$ and it gives you $f(x)$. Let's try it for a very simple polynomial: $f(x) \equiv 1 + x + x^2$. The first step is to use `poly_comp()` to define $f()$. Then we can apply $f()$ to any $x$ we wish.
-
-Note that in $f(x) \equiv 1 - 2*x + x^2$ nowhere does $x_0$ appear. In other words, $x_0 = 0$. The coefficients are $a_0=1$, $a_1=-2$, and $a_3 = 1$.
-
-
-```{r pc1-2, exercise=TRUE, exercise.cap="Demo of poly_comp()",exercise.nlines=6, eval=FALSE}
-f <- poly_comp(0, 1, -2, 1) #these are the coefficients for the previous function, you should change them to answer the MC questions
-slice_plot(f(x) ~ x, domain(x=c(-1,1)))
-```
-
-Using the sandbox above, re-program the polynomial computer with $x_0 = 0$ and $a_0$ through $a_4$ set to the coefficients you found earlier that match $e^x$ up to the $a_4 x^4$ term.
 
 ```{r pc1-3, echo=FALSE, results="markup"}
 askMC(
@@ -290,115 +212,74 @@ askMC(
 ```
 
 
-
-Another mathematical question is when and whether the question mark in $\overset{?}{=}$ can be removed and equality established between $f(x)$ and a corresponding polynomial.
-
-
-
-We tend to think of computing as a modern activity. The first electronic computers were built in the 1940s for decoding and solving ballistics problems; by 1960s computers were available to mid-sized businesses for handling accounting, inventory, and payroll; around 1980 micro-computers with mouse-based interfaces became reasonably affordable to consumers and the foundations of the internet were in place; about 1990 the World Wide Web and browsers were starting to emerge; the smart phone appeared in 2007.
-
-But this modern history is about a certain form of computing: electronic, stored instruction, Von Neumann architecture computers. Before that there were mechanical calculators and card tabulators. And before that ...
-
-This session is about a type of computer that started to emerge around 1700. Since it lacks an official name, we'll call it the "infinity computer," since it's based on ideas of infinitely long series and infinitesimally small differences. It's fair to say that the infinity computer was *discovered* rather than *invented*; it was put together out of technological components available by 1700 and took form as mathematicians realized the sorts of problems that could be solved by it.
-
-A key component of the infinity computer is polynomials. These had been available for 500 years (with roots going much further back) and much of the high-school mathematics curriculum is still oriented around them. As you know, a polynomial is a function built up as a linear combination of power-law functions:
-
-$$p(x) \equiv a_0 x^0 + a_1 x^1 + a_2 x^2 + a_3 x^3 + \cdots$$
-Polynomials are "flexible" and, importantly, a polynomial function can be evaluated at any $x$ by a series of multiplications and additions, arithmetic operations that had already been mastered. 
-
-Before Newton, polynomials were mostly used to describe shapes and generally consisted of only the first few terms: linear, quadratics, and cubics were standard forms. It was only with the advent of the infinity computer that much thought was given to the possibilities of the $\cdots$ terms.
-
-The other key component of the infinity computer is the idea of a derivative function, introduced in the late 1600s. Already by 1700 the basic apparatus of calculating derivatives was available, e.g. the chain and product rules, symbolic forms derivatives of some basic modeling functions such as power laws and sinusoids.
-
-The initiating idea of the infinity computer was sequences of derivatives evaluated at a single value of $x$. (We'll use $x=0$ but any point could be used.)
-
-To illustrate, the table shows the first few derivatives of a few of our basic modeling functions, evaluated at $x=0$
-
-$f()$ | $\partial_x f()$ | $\partial_{xx} f()$ | $\partial_{xxx} f()$ | $\partial_{xxxx} f()$ | $\cdots$
-------|-------|--------|-------|--------|-----------
-$\sin(x)\left.\right|_0 = 0$ | $\cos(x)\left.\right|_0 = 1$ | $-\sin(x)\left.\right|_0 = 0$ | $-\cos(x)\left.\right|_0 = -1$ | $\sin(x)\left.\right|_0 = 0$ | $\cdots$
-$e^x\left.\right|_0 = 1$ | $e^x\left.\right|_0 = 1$ | $e^x\left.\right|_0 = 1$ |$e^x\left.\right|_0 = 1$ | $e^x\left.\right|_0 = 1$ | $\cdots$
-$x^3\left.\right|_0 = 0$ | $3 x^2 \left.\right|_0 = 0$ | $3\cdot 2\cdot x^1\left.\right|_0 = 0$ | $3\cdot 2 \cdot 1 \cdot x^0\left.\right|_0 = 6$ | $\ \ \ \ 0$ | $\cdots$
-
-Compare this to the first few derivatives of the polynomial $p(x)$ evaluated at $x=0$:
-
-- $p(x = 0)\ \ \ \ \ \ \ \ =\ \ \ \  a_0$
-- $\partial_{x} p(x=0)\ \ \ \ \ \ =\ \ \ \  a_1$
-- $\partial_{xx} p(x=0)\ \ \ \ = \ \ \ 2\cdot a_2$
-- $\partial_{xxx} p(x=0) \ \ = \ \ 3\cdot 2 \cdot a_3\ \  = \ \ 3!\, a_3$
-- $\partial_{xxxx} p(x=0) = \ 4\cdot 3 \cdot 2 \cdot 1 \cdot a_4 \ \ = \ \ 4!\, a_4$
-- $\cdots$
-
-Here's a tantalizing possibility! Suppose we custom design a polynomial by picking the coefficients $a_0, a_1, a_2, \ldots$ in order to match the derivatives of the function $f(x)$. For instance, the polynomial designed to have the same derivatives as $\sin(x)$ (at $x=0$) is:
-
-$$p_{\sin}(x) = 0 + \frac{1}{1!} x + \frac{0}{2!} x + \frac{-1}{3!}x^3! + \frac{0}{4!} x^4 + \ldots = x - x^3/3! + \ldots $$
-
-The polynomial that matches the derivatives of $e^x$ at $x=0$ is even simpler:
-
-$$p_{\exp}(x) = 1 + \frac{1}{1!}x + \frac{1}{2!} x^2 + \frac{1}{3!} 3^2 + \frac{1}{4!} x^4 + \cdots$$
-
-Natural questions to ask are
-
-$$p_{\sin}(x) \overset{?}{=} \sin(x)  \ \ \ \mbox{or} \ \ \ \ p_{\exp}(x) \overset{?}{=} e^x$$
-Imagine that the answer were yes. (That turns out to be the case.) Evaluating polynomials is easy: just addition and multiplication. 
-So if we can write a polynomial $p_f(x)$ that matches any (differentiable) function $f(x)$, several tasks come within our range. For instance:
-
-1. Evaluate $f(x)$ for some $x$. Just plug in that $x$ to the polynomial, turn the arithmetic crank, and the answer appears. 
-2. Integrate $f(x)$. As you remember, integration can be algebraically hard or even impossible. But integrating the terms of a polynomial, $a_n x^n$ is so easy: the answer is $\frac{a_n}{n+1} x^{n+1}$.
-3. Examine carefully questions like $\lim_{x\rightarrow 0} \frac{\sin(x)}{x}$ which involve division by zero.
-
-Generations of calculus students have been taught to program the infinity computer. That is, they have been exercises to construct the polynomial that matches $f(x)$ and to use that to solve problems (1), (2), and (3). 
-
-
-EXERCISE: Write expansion for $h(x) \equiv \sqrt{x}$ at $x=1$.
-
 `r insert_calcZ_exercise("XX.XX", "KmDiXI", "Exercises/Diff/girl-wake-bottle.Rmd")`
-
 
 `r insert_calcZ_exercise("XX.XX", "IlNSF0", "Exercises/Diff/fawn-hear-kayak.Rmd")`
 
 ## l'Hopital's rule
 
-One task for which the polynomial computer is extremely well suited is the resolution of singularities. A singularity is an input for which the function involves division by zero, for instance:
+One task for which the polynomial computer is extremely well suited is
+the resolution of singularities. A singularity is an input for which the
+function involves division by zero, for instance:
 
 $$g(x) \equiv \frac{\sin(x)}{x}\ \ \ \mbox{at}\ \ \ x=0$$
 
-Since division by zero is undefined, there's no way to do a numerical computation at $x=0$. Even computer arithmetic is set up to recognize this:
+Since division by zero is undefined, there's no way to do a numerical
+computation at $x=0$. Even computer arithmetic is set up to recognize
+this:
 
 ```{r echo=TRUE}
 g <- makeFun(sin(x)/x ~ x)
 g(0)
 ```
-The output `NaN` stands for "not a number." It is as if the computer is throwing up its hands and saying, "I don't know what to do with this."
 
-Actually, the computer doesn't get so frustrated at all such division-by-zero problems, for instance
+The output `NaN` stands for "not a number." It is as if the computer is
+throwing up its hands and saying, "I don't know what to do with this."
+
+Actually, the computer doesn't get so frustrated at all such
+division-by-zero problems, for instance
 
 ```{r echo=TRUE}
 h <- makeFun(1/x ~ x)
 h(0)
 ```
 
-The output `Inf` is also not a number, but here the computer is willing to say that whatever 1/0 might be, it's very large: infinity.
+The output `Inf` is also not a number, but here the computer is willing
+to say that whatever 1/0 might be, it's very large: infinity.
 
-Why does the computer make a distinction between the kind of divide-by-zero in $\sin(x)/x$ and the kind in $1/x$. The answer is that the first function involves a numerator, $\sin(x)$ that will also be zero when $x=0$. It's the zero-over-zero that prompts the `NaN` response:
+Why does the computer make a distinction between the kind of
+divide-by-zero in $\sin(x)/x$ and the kind in $1/x$. The answer is that
+the first function involves a numerator, $\sin(x)$ that will also be
+zero when $x=0$. It's the zero-over-zero that prompts the `NaN`
+response:
 
 ```{r echo=TRUE}
 0 / 0
 ```
 
-The numerator must literally be zero. Being very close to zero doesn't cut it.
+The numerator must literally be zero. Being very close to zero doesn't
+cut it.
 
 ```{r echo=TRUE}
 0.000000000000000000000000000000000000000000000001 / 0
 ```
 
-The polynomial computer provides another approach to sorting out what $\sin(x)/x$ and similar functions might be at $x=0$. And the key thing is the word "approach". The sandbox carries out the $\sin(x)/x$ calculation for $x$ very small but not zero. See what you get.
+The polynomial computer provides another approach to sorting out what
+$\sin(x)/x$ and similar functions might be at $x=0$. And the key thing
+is the word "approach". The sandbox carries out the $\sin(x)/x$
+calculation for $x$ very small but not zero. See what you get.
 
 ```{r zoz1-1, exercise=TRUE, exercise.cap="Divide by tiny", exercise.nlines=5, eval=FALSE}
 x <- 0.00000001
 sin(x) / x
 ```
-Although $\sin(x) / x$ is not defined at $x=0$, it is defined *everywhere* else. Recall that the idea of a **limit** is to find a value to stand in for the undefined $\sin(0)/0$ by making $x$ very small and seeing what you get. If you get something sensible for very small $x$, and get the same thing for *even smaller* $x$, then we have a reasonable claim for what value to insert for $\sin(x)/x$.
+
+Although $\sin(x) / x$ is not defined at $x=0$, it is defined
+*everywhere* else. Recall that the idea of a **limit** is to find a
+value to stand in for the undefined $\sin(0)/0$ by making $x$ very small
+and seeing what you get. If you get something sensible for very small
+$x$, and get the same thing for *even smaller* $x$, then we have a
+reasonable claim for what value to insert for $\sin(x)/x$.
 
 ```{r zoz1-2, echo=FALSE, results="markup"}
 askMC(
@@ -411,9 +292,17 @@ askMC(
 )
 ```
 
-Saying, "so small that I got tired typing the zeros" is not a convincing definition of "small" to a mathematician. For example, 0.0000000000000001 parsec (a unit of length) seems small but it is equivalent to about 10 feet---no so small. Mathematicians want you to take "small" to the limit, an arbitrarily large number of zeros, and when you're done with that, even more zeros.
+Saying, "so small that I got tired typing the zeros" is not a convincing
+definition of "small" to a mathematician. For example,
+0.0000000000000001 parsec (a unit of length) seems small but it is
+equivalent to about 10 feet---no so small. Mathematicians want you to
+take "small" to the limit, an arbitrarily large number of zeros, and
+when you're done with that, even more zeros.
 
-Fortunately, R and other computer languages have a scientific notation that allows you just to name the number of zeros you want after the decimal point. For instance `1e-2` is $0.01$---one zero. Similarly `1e-20` is $0.00000000000000000001$, nineteen zeros.
+Fortunately, R and other computer languages have a scientific notation
+that allows you just to name the number of zeros you want after the
+decimal point. For instance `1e-2` is $0.01$---one zero. Similarly
+`1e-20` is $0.00000000000000000001$, nineteen zeros.
 
 ```{r zoz1-3, echo=FALSE, results="markup"}
 askMC(
@@ -427,7 +316,19 @@ askMC(
 )
 ```
 
-What's happening here has more to do with the nature of computers than the nature of numbers. Computers (in the manner they are ordinarily programmed) use packets of bits to represent numbers, and the chips have been engineered to make those bit packets respond to arithmetic operations as if they were the numbers they represent. A typical computer number, like 0.001, uses 64 bits in a special, standard format. Since there is a finite number of bits, there is a largest possible non-`Inf` number and a smallest possible non-zero number. According to the IEEE standard for "floating-point" arithmetic the largest non-`Inf` number is around `1e300` and the smallest non-zero number is around `1e-320`. This failure to behave like genuine mathematical numbers is called "overflow" (for large numbers which turn into `Inf`) and "underflow" (for small numbers which turn into `0`).
+What's happening here has more to do with the nature of computers than
+the nature of numbers. Computers (in the manner they are ordinarily
+programmed) use packets of bits to represent numbers, and the chips have
+been engineered to make those bit packets respond to arithmetic
+operations as if they were the numbers they represent. A typical
+computer number, like 0.001, uses 64 bits in a special, standard format.
+Since there is a finite number of bits, there is a largest possible
+non-`Inf` number and a smallest possible non-zero number. According to
+the IEEE standard for "floating-point" arithmetic the largest non-`Inf`
+number is around `1e300` and the smallest non-zero number is around
+`1e-320`. This failure to behave like genuine mathematical numbers is
+called "overflow" (for large numbers which turn into `Inf`) and
+"underflow" (for small numbers which turn into `0`).
 
 ```{r zoz1-4, echo=FALSE, results="markup"}
 askMC(
@@ -440,11 +341,15 @@ askMC(
 )
 ```
 
-The polynomial computer doesn't have any problem with overflow or underflow. The key to success is to write the Taylor polynomial for functions such as $\sin(x)$ or $x$ or $x^2$ near $x_0 = 0$. Such polynomials will always look like:
+The polynomial computer doesn't have any problem with overflow or
+underflow. The key to success is to write the Taylor polynomial for
+functions such as $\sin(x)$ or $x$ or $x^2$ near $x_0 = 0$. Such
+polynomials will always look like:
 
 $$f(x) = a_1 x^1 + a_2 x^2 + a_3 x^3 + \cdots$$
 
-What's special here is that the `a_0` term does not need to be included in the polynomial, since $f(0) = 0$.
+What's special here is that the `a_0` term does not need to be included
+in the polynomial, since $f(0) = 0$.
 
 ```{r zoz1-5, echo=FALSE, results="markup"}
 askMC(
@@ -456,30 +361,51 @@ askMC(
 )
 ```
 
-These zero divided by zero problems (like $\sin(x) / x$) always involve a ratio of two functions ($\sin(x)$ and $x$ here) that don't need the $a_0$ term in their Taylor series around $x_0 = 0$. That makes them just a little bit simpler.
+These zero divided by zero problems (like $\sin(x) / x$) always involve
+a ratio of two functions ($\sin(x)$ and $x$ here) that don't need the
+$a_0$ term in their Taylor series around $x_0 = 0$. That makes them just
+a little bit simpler.
 
-What's more important than simpler is that, for the expansion of such functions to study the limit at $x \rightarrow 0$, we only need the **first terms with a non-zero coefficient* $a_k$ to represent the function with complete accuracy.
+What's more important than simpler is that, for the expansion of such
+functions to study the limit at $x \rightarrow 0$, we only need the
+\*\*first terms with a non-zero coefficient\* $a_k$ to represent the
+function with complete accuracy.
 
-Why? Consider the 2nd-order Taylor polynomial $a_1 x + a_2 x^2$. If we are to be able to safely disregard the $a_2$ term it is because that term, for small $x$ is much, much smaller than the $a_1 x$ term. And we can always choose non-zero $x$ to make this so.  
+Why? Consider the 2nd-order Taylor polynomial $a_1 x + a_2 x^2$. If we
+are to be able to safely disregard the $a_2$ term it is because that
+term, for small $x$ is much, much smaller than the $a_1 x$ term. And we
+can always choose non-zero $x$ to make this so.
 
-For instance, suppose our polynomial were $x + 100 x^2$. For $x=0.1$, the first and second terms are the same size; we need them both for accuracy. For $x=0.01$, the second term is 1/100 the size of the first term, maybe we don't need the second term so much. You can always make $x$ so small that anyone will be satisfied that the second term is utterly negligible compared to the first.
+For instance, suppose our polynomial were $x + 100 x^2$. For $x=0.1$,
+the first and second terms are the same size; we need them both for
+accuracy. For $x=0.01$, the second term is 1/100 the size of the first
+term, maybe we don't need the second term so much. You can always make
+$x$ so small that anyone will be satisfied that the second term is
+utterly negligible compared to the first.
 
 Here's the method:
 
-Suppose you have a function $f(x) \equiv u(x)/v(x)$ where $$\lim_{x\rightarrow 0} u(x) = 0\ \ \ \mbox{and}\ \ \ \lim_{x\rightarrow 0} v(x) = 0$$
-Given this, $f(0)$ is not defined. But we can ask whether there is a sensible value that can be plugged in in place of $f(0)$ that will cause the modified $f()$ to be continuous at $x=0$.  
+Suppose you have a function $f(x) \equiv u(x)/v(x)$ where
+$$\lim_{x\rightarrow 0} u(x) = 0\ \ \ \mbox{and}\ \ \ \lim_{x\rightarrow 0} v(x) = 0$$
+Given this, $f(0)$ is not defined. But we can ask whether there is a
+sensible value that can be plugged in in place of $f(0)$ that will cause
+the modified $f()$ to be continuous at $x=0$.
 
-Step 1: Write the Taylor polynomial expansion around $x-0 = 0$ for both $u(x)$ and $v(x)$. If both expansions have a non-zero first coefficient, you can stop there. Now we have:
+Step 1: Write the Taylor polynomial expansion around $x-0 = 0$ for both
+$u(x)$ and $v(x)$. If both expansions have a non-zero first coefficient,
+you can stop there. Now we have:
 
 $$u(x) \approx a_1 x\\
-v(x) \approx b_1 x$$ where
-$a_1 = \partial_x u(0)$ and $b_1 = \partial_x v(0)$.
+v(x) \approx b_1 x$$ where $a_1 = \partial_x u(0)$ and
+$b_1 = \partial_x v(0)$.
 
-Step 2: Divide the polynomial (really just linear!) expansion of $u()$ by the expansion of $v()$ to get
+Step 2: Divide the polynomial (really just linear!) expansion of $u()$
+by the expansion of $v()$ to get
 
 $$\lim_{x\rightarrow 0}\frac{u(x)}{v(x)} = \lim_{x\rightarrow 0} \frac{a_1 x}{b_1 x} = \frac{a_1}{b_1}$$
 
-That's the answer, $a_1/b_1$, at least when $b_1 \neq 0$. We'll come back to that case later.
+That's the answer, $a_1/b_1$, at least when $b_1 \neq 0$. We'll come
+back to that case later.
 
 ```{r zoz1-6, echo=FALSE, results="markup"}
 askMC(
@@ -491,40 +417,69 @@ askMC(
 )
 ```
 
-Sometimes the singularity is at some non-zero $x$. For instance, $$h(x) \equiv \frac{x^2 - 16}{x - 4}$$
-The divide-by-zero comes into play when $x=4$. So is there a sensible value to plug in for $h(4)$ to replace the singularity.
+Sometimes the singularity is at some non-zero $x$. For instance,
+$$h(x) \equiv \frac{x^2 - 16}{x - 4}$$ The divide-by-zero comes into
+play when $x=4$. So is there a sensible value to plug in for $h(4)$ to
+replace the singularity.
 
-Here, write your Taylor polynomials around $x_0 = 4$, the location of the singularity.  We'll get:
+Here, write your Taylor polynomials around $x_0 = 4$, the location of
+the singularity. We'll get:
 
 $$x^2 - 16 = a_1 (x-4) + a_2 (x-4)^2 + \cdots\\ 
-x - 4 = b_1 (x-4)$$
-Using Taylor's formula for coefficients we'll get
+x - 4 = b_1 (x-4)$$ Using Taylor's formula for coefficients we'll get
 $$a_1 = \partial_x (x^2 - 16)\left.\right|_{x=4} = 2x\left.\right|_{x=4} = 8\\
 b_1 = \partial_x (x - 4) = 1
 $$
 
 Consequently, $\lim_{x\rightarrow 4} \frac{x^2 - 16}{x - 4} = 8$
 
-We've been discussing ratios of functions where the ratio cannot be calculated at the singularity using simply the limits of the functions approaching that singularity. (For instance $\lim_{x\rightarrow 0} \sin(x) = 0$ and $\lim_{x\rightarrow 0} x = 0$, but knowing this does not tell us what $\lim_{x\rightarrow 0} \frac{\sin(x)}{x}$ will be. These are called "indeterminate forms." As you've seen, if we know more about the functions than merely their individual limits, we can sometimes resolve the indeterminacy. Here we're doing that by writing each function as a low-order polynomial. 
+We've been discussing ratios of functions where the ratio cannot be
+calculated at the singularity using simply the limits of the functions
+approaching that singularity. (For instance
+$\lim_{x\rightarrow 0} \sin(x) = 0$ and $\lim_{x\rightarrow 0} x = 0$,
+but knowing this does not tell us what
+$\lim_{x\rightarrow 0} \frac{\sin(x)}{x}$ will be. These are called
+"indeterminate forms." As you've seen, if we know more about the
+functions than merely their individual limits, we can sometimes resolve
+the indeterminacy. Here we're doing that by writing each function as a
+low-order polynomial.
 
-The indeterminate form $\lim_{x\rightarrow 0} \frac{\sin(x)}{x}$ might be said to have the "shape" 0/0. But 0/0 is just a notation about the limits of the two individual functions. There are indeterminate forms with other shapes:
+The indeterminate form $\lim_{x\rightarrow 0} \frac{\sin(x)}{x}$ might
+be said to have the "shape" 0/0. But 0/0 is just a notation about the
+limits of the two individual functions. There are indeterminate forms
+with other shapes:
 $$\frac{0}{0}\ \ \ \ \ \ \frac{\infty}{\infty}\ \ \ \ \ \ 0\, {\infty\ \ \ \  \ 0^0\ \ \ \ \ \ \infty^0\ \ \ \ \ \ 1^\infty\ \ \ \ \ \ \infty - \infty}$$
-Keep in mind that something like $0 \infty$ is not a multiplication problem but rather shorthand for $u(x) v(x)$ where $\lim_{x\rightarrow x_0} u(x) = 0$ and $\lim_{x\rightarrow x_0} v(x) \rightarrow \infty$.
+Keep in mind that something like $0 \infty$ is not a multiplication
+problem but rather shorthand for $u(x) v(x)$ where
+$\lim_{x\rightarrow x_0} u(x) = 0$ and
+$\lim_{x\rightarrow x_0} v(x) \rightarrow \infty$.
 
-There is a variety of algebraic tricks to try to transform these different shapes of indeterminate forms into a ratio of functions, each of which goes to zero at the relevant $x_0$. Once that's done, you can apply the method described above.
+There is a variety of algebraic tricks to try to transform these
+different shapes of indeterminate forms into a ratio of functions, each
+of which goes to zero at the relevant $x_0$. Once that's done, you can
+apply the method described above.
 
-Indeterminate forms have been a bonanza for the author of calculus book exercises, who can write an large number of examples, many of which have never been seen in the wild.
+Indeterminate forms have been a bonanza for the author of calculus book
+exercises, who can write an large number of examples, many of which have
+never been seen in the wild.
 
-One shortcut that that works in practice is to make a graph of the indeterminate form near the singularity. If the limit as $x$ approaches the singularity is a finite number, you can read off the result from the graph.
+One shortcut that that works in practice is to make a graph of the
+indeterminate form near the singularity. If the limit as $x$ approaches
+the singularity is a finite number, you can read off the result from the
+graph.
 
-In the sandbox below, the function $g(x)\equiv x \ln(x)$ is set up. This function has a singularity at $x=0$. Examine the plot and determine where the function value is going as you walk along the graph to the singularity.
+In the sandbox below, the function $g(x)\equiv x \ln(x)$ is set up. This
+function has a singularity at $x=0$. Examine the plot and determine
+where the function value is going as you walk along the graph to the
+singularity.
 
 ```{r zoz1-7, exercise=TRUE, exercise.cap="Just plot the function", exercise.nlines=5, eval=FALSE}
 g <- makeFun(x * log(x) ~ x)
 slice_plot(g(x) ~ x, domain(x=c(0, 0.5)))
 ```
 
-You may have to zoom in on the domain to get a clear read of the function value at $x=0$ singularity.
+You may have to zoom in on the domain to get a clear read of the
+function value at $x=0$ singularity.
 
 ```{r zoz1-8, echo=FALSE, results="markup"}
 askMC(
@@ -535,235 +490,12 @@ askMC(
 ```
 
 Conventionally, the relationship
-$$\lim_{x\rightarrow x_0} \frac{u(x)}{v(x)} = \lim_{x\rightarrow x_0} \frac{\partial_x u(x)}{\partial_x v(x)}$$ is called "L'Hopital's Rule" after the author of the very first Calculus textbook where the rule was first published. Here's the title page from the second edition of 1716.
+$$\lim_{x\rightarrow x_0} \frac{u(x)}{v(x)} = \lim_{x\rightarrow x_0} \frac{\partial_x u(x)}{\partial_x v(x)}$$
+is called "L'Hopital's Rule" after the author of the very first Calculus
+textbook where the rule was first published. Here's the title page from
+the second edition of 1716.
 
 ```{r echo=FALSE, out.width="50%", fig.align="center"}
 knitr::include_graphics("www/lhopital-cover.png")
 ```
-
-
-
-## Polynomials and data
-
-A global polynomial has a nice feature: all orders of derivatives are continuous. But there is a huge disadvantage. Polynomials, like dogs chasing squirrels, always run off to infinity in the end. This off-to-infinity behavior always occurs outside the domain of the knots. Even so, it is highly relevant to what goes on inside the knots' domain, because the polynomial function "wiggles" as if to gain momentum for its infinite run. To use a metaphor, a polynomial is like a player rounding the bases in baseball. To go fast and yet to touch each base requires that the runner curve considerably outside the direct path from base to base.
-
-For this exercise, let's define a wiggle this (highly informal) way:
-
-> *A wiggle is a change in sign of the slope of the function in the interval between two adjacent knot points.* 
-
-
-We'll use the "exploring interpolation" app, [here](https://maa-statprep.shinyapps.io/142Z-Interpolation/?_ga=2.39812192.233017403.1617632170-1036744100.1568230437).
-
-Turn on both the cubic-spline and the global cubic displays; you're going to be contrasting their behavior. (You don't need the linear interpolant to be displayed.)
-
-We're going to ask a series of questions about the behavior of the interpolants. Since knot points are generated at random, it might be that one particular set of knot points does not demonstrate clearly the feature that we'll as about. Therefore, in answering each question press "Start again" several times to find out whether the presence or absence of the feature is generic or due simply to the play of chance.
-
-```{r cs1-1, echo=FALSE, results="markup"}
-askMC(
-  "True or False: the interpolating function has at most one wiggle between adjacent knots.",
-  "polynomial: true; cubic-spline: false",
-  "+polynomial: true; cubic-spline: true+",
-  "polynomial: false; cubic-spline: true",
-  "polynomial: false; cubic-spline: false",
-  random_answer_order = FALSE
-)
-```
-
-```{r cs1-2, echo=FALSE, results="markup"}
-askMC(
-  "True or false: the wiggles tend to get bigger toward the edges of the set of knots. ",
-  "+polynomial: true; cubic-spline: false+",
-  "polynomial: true; cubic-spline: true",
-  "polynomial: false; cubic-spline: true",
-  "polynomial: false; cubic-spline: false",
-  random_answer_order = FALSE
-)
-```
-
-```{r cs1-3, echo=FALSE, results="markup"}
-askMC(
-  "Turn down the number of knots to $n=3$. True or false: the cubic spline and global polynomial functions are practically the same. ",
-  "+True+",
-  "False",
-  random_answer_order = FALSE
-)
-```
-
-```{r cs1-4, echo=FALSE, results="markup"}
-askMC(
-  "Turn up the number of knots to $n=10$ or higher. True or false: the cubic spline and global polynomial functions are practically the same. ",
-  "True",
-  "+False+",
-  random_answer_order = FALSE
-)
-```
-
-```{r cs1-5, echo=FALSE, results="markup"}
-askMC(
-  "Keeping the number of knots at $n=10$ or higher ... True or false: the wiggles of the global polynomial are smaller than the wiggles of the cubic spline. ",
-  "True",
-  "+False+",
-  random_answer_order = FALSE
-)
-```
-
-The app has a control to change the $x$-scale of the display, excluding the first or last few knots. (The interpolating function, however, uses all the knots.)
-
-```{r cs1-6, echo=FALSE, results="markup"}
-askMC(
-  "Keeping the number of knots at $n=10$ or higher, but excluding the first and last knot points ... True or false: the wiggles of the global polynomial are similar to or smaller than the wiggles of the cubic spline when looking at the function over the restricted domain.",
-  "True",
-  "+False+",
-  random_answer_order = FALSE
-)
-```
-
-::: {.why}
-The interpolation-explorer app has a "jitter" button which adds a small random vertical displacement to the knot points. This simulates the situation when the knot points are drawn from noisy data. A method (such as interpolation with polynomials) is called **ill-conditioned** when it tends to magnify the effect of noise. You can get an idea for this by pressing "jitter" many times and looking at the spread of the resulting interpolating functions. The higher the order of polynomial, that is, the greater the number of knot points, the worse the magnification. You can judge for yourself whether the cubic spline suffers from a similar problem.
-:::
-
-`r insert_calcZ_exercise(22.3, "2W6VB", "Exercises/Diff/approx-orange.Rmd")`
-
-
-`r insert_calcZ_exercise(22.5, "3IUVB", "Exercises/Diff/approx-blue.Rmd")`
-
-`r insert_calcZ_exercise("XX.XX", "zdrsLb", "Exercises/Diff/fox-dig-room.Rmd")`
-
-::: {.todo}
-[Under taylor series, show that $\frac{e^h - 1}{h} \rightarrow 0$.]
-:::
-
-
-::: {.takenote}
-
-The derivative of a ***polynomial*** follows the linear combination rule  because polynomials are a linear combination of functions. Those functions are the monomials, $x^0$, $x^1$, $x^2$, and so on. Of course, the derivative of each monomial is another monomial with an exponent reduced by 1 and scaled by the original exponent. That is, $\partial_x x^k = k x^{k-1}$.
-
-The consequence is that the derivative of a polynomial is another polynomial, with each term being reduced by one order.
-
-- $\partial_x x^0 = 0$
-- $\partial_x x^1 = x^0 = 1$
-- $\partial_x x^2 = 2 x^1 = 2x$
-- and so on.
-
-Example:  $f(x) \equiv a + b x +  c  x^2\  \  \implies\ \ \partial_x f(x) \equiv b  + 2 c x$
-:::
-
-
-
-
-
-
-## Solving computationally
-
-::: {.todo}
-How to find the zeros of the derivative of a function and how to evaluate the second derivative at those zeros to find out what kind of critical point it is.
-:::
-
-::: {.todo}
-The cubic bifurcation. Start with a cubic with an argmax followed by an argmin. Then move the parameter to see the two critical points coalesce into a single point then disappear.
-
-Or, maybe, "the problem with polynomials." Linear function always has 1 root and no critical points. Quadratic function always has one critical point (and subject to a constant may have two roots generically). But a cubic might have 1 or 3 solutions and the behavior depends on the constant. It might have one or three critical points. `r mark(2905)`
-:::
-
-
-## Calculating square roots
-
-It's easy to square a number by hand; just multiply the number by itself. But it's hard to find the square root of a number---unless you have a computer or calculator.  How does the calculator do it?
-
-Algebraically, the problem is this: You have a number $B$, say $B=17$ and you seek an as yet unknown number, which we will call $x$. The relationship between them is $$x^2 = B .$$ If you're good at algebra, it's almost algebraic to solve the equation for $x$. You take the square root of both sides to get $x = \sqrt{B}$ and reach for a calculator. But the calculator can't reach for another calculator, so how does it do it? Using calculus, of course!
-
-Since calculus is about *functions*, we'll translate $x^2 = B$ into a function that we'll call $g()$: $$g(x) = x^2 - B$$. Given any value of $x$, it's easy to find the output of $g()$. If you can guess a value of $x$ such that $g(x) = 0$, then you have a solution to the problem.
-
-The calculator starts with a guess, $x=1$. Plugging this into $g()$ and using $B=17$, we find that $g(1) = -16$. So $x=1$ is *not* $\sqrt{B}$. (And you already knew that!) But $g(1) = -176$ actually has something helpful to say: our guess was too big. Likewise, if we had guessed too large, say $x=10$, we would get $g(10) = 100 - 17 = 83$. This positive output from $g()$ says that $x=10$ is too big to be $\sqrt{B}$. So we can guess something in between and start anew. 
-
-Calculus provides a way to take a guess and improve it. To see, let's make a plot of $g(x)$, and mark the simple guess $x=1$ with the output of $g(1) = -16$.
-
-```{r}
-slice_plot(x^2 - 17 ~ x, domain(x = c(0, 10))) %>%
-  gf_point(-16 ~ 1) %>%
-  slice_plot(-16 + 2*(x-1) ~ x, color="blue")
-```
-
-With calculus, we can find the straight-line function that is  tangent to $g(x)$ at $x=1$. It will be $$f_0(x) = g(1) + \partial_x g(1) [x - 1] = -16 + 2 [x-1]$$
-
-The function $f_0()$ is a horrible approximation to $g()$ except around the point $x=1$. Still, it is useful. We can easily use $f_0()$ to find a new guess, by finding the $x$ such that $f_0(x) = 0$. (This sounds pointless right now, but wait!) Solving $-16 + 2[x-1] = 0$, we get $x=9$, which becomes our new guess. 
-
-In general, for a function $g()$ and an initial guess $x_i$, the new guess $x_{i+1}$ will be the zero of the tangent-line function at the initial guess.
-
-$$x_{i+1} = x_i - \frac{g(x_0)}{\partial_x g(x_0)}$$
-
-For our particular $g(x) \equiv x^2 - 17$, this becomes $$x_{i+1} = x_i - \frac{x_i^2 - 17}{2x_i}$$ This function, which we might call `improve()` is implemented in the sandbox. Notice that the calculation in `improve()` uses only arithmetic, no square roots.
-
-```{r daily-digital-35-sandbox4-setup, echo=FALSE}
-options(digits = 15)
-```
-
-
-```{r daily-digital-35-sandbox4, eval=FALSE}
-improve <- makeFun(x_i - (x_i^2 - 17) / (2*x_i) ~ x_i)
-improve(x_i = 1) # one improvement steps
-improve(improve(1)) # two improvement steps
-improve(improve(improve(1))) # three improvement steps
-```
- 
-```{r daily-digital-35-QA9, echo=FALSE}
-askMC(
-  prompt = "As very accurate approximation, $\\sqrt{17} = 4.12310562561766$? How many improvement steps do you need to take to reach this level of accuracy?",
-  3,4,5,6,"+7+",8,9,10, 
-  random_answer_order = FALSE
-)
-```
-
-```{r daily-digital-35-QA10, echo=FALSE}
-askMC(
-  prompt = "Modify the `improve()` function so that it calculates toward $\\sqrt{75829.31}$. Starting from an initial guess of $x = 100$, what is the guess after 3 improvements?",
-  180.832, "+276.624+", "437.293", "562.745", "601.174",
-  random_answer_order = FALSE
-)
-```
-
-Consider the improvement function for finding **cube roots**.
-
-
-```{r daily-digital-35-QA11, echo=FALSE}
-askMC(
-  prompt = "What will the $g(x)$ function look like for finding cube roots?",
-    "+`g <- makeFun(x^3 - B ~ x)`+",
-    "`g <- makeFun(x - B^3 ~ B)`",
-    "`g <- makeFun(x^3 - B ~ B)`",
-    "`g <- makeFun((x - B)^3 ~ x)`",
-    "`g <- makeFun(x^6 - B^3 ~ x)`"
-)
-```
-
-
-```{r daily-digital-35-QA12, echo=FALSE}
-askMC(
-  prompt = "What will be $\\partial_x g()$?",
-    "+`dx_g <- makeFun(3*x^2 ~ x)`+",
-    "`dx_g <- makeFun(2*x^3  ~ x)`",
-    "`dx_g <- makeFun(x^2  ~ x)`",
-    "`dx_g <- makeFun(3*x^2 - B  ~ x)`",
-    "`dx_g <- makeFun(2*x^3 - B  ~ x)`",
-    "`dx_g <- makeFun(x^2 - B  ~ x)`"
-)
-```
-
-
-Remember that the improvement function will be $$\mbox{improve}(x) = x - \frac{g(x)}{\partial_x g(x)}$$
-In the code box, implement the improvement function for $\sqrt[3]{19.4}$. Then, starting with the initial guess $x_i = 10$, calculate six improvement steps. 
-
-
-```{r daily-digital-35-E1, eval=FALSE}
-improve <- __your_function_here__
-improve(improve(for_six_improvement_steps_altogether(10)))
-```
-
-
-```{r daily-digital-35-E1-check, eval=FALSE}
-grade_result(
-  pass_if(~ abs(.result - 2.686997) < 0.001)
-)
-```
-
 
