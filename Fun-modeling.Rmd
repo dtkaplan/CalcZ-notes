@@ -208,13 +208,13 @@ gf_line(level ~ hour, data = math141Z::RI_tide) %>%
 
 It's not too hard to see what's going on. The tide rises and falls about every 12 hours. The difference between high tide and low tide is a little more than one meter. The tide gauge is calibrated so that a typical reading is 1 meter, although we don't know what that is respect to. (Certainly not sea level, since then the typical reading would be around zero.)
 
-This simple description tells almost everything needed to construct an A/B model of the tide level using a sinusoid, that is, a function of the form $$A \sin(2\pi t/P) + B$$ The procedure is straightforward:
+This simple description tells almost everything needed to construct an A/B model of the tide level using a sinusoid, that is, a function of the form $$\text{tide}(t) \equiv A \sin(2\pi t/P) + B$$ The procedure is straightforward:
 
 **Step 0**: Determine whether a sinusoid model is appropriate. As you know, sinusoids oscillate up and down repeatedly with a steady ***period***. That certainly seems the case here. But sinusoids are also steady in the ***peak*** and ***trough*** values for each cycle. That's only approximately true in the Providence data. Models inevitably involve approximation. We'll have to keep an eye on whether modeling with sinusoids and their ***fixed amplitude*** still lets us extract useful information. 
 
 **Step 1**: Choose a sensible value to represent the low point repeatedly reached. 0.5 m seems appropriate here, but obviously the exact position of the trough of each cycle varies over the 4.5 day duration of the data.  Similarly, the peak is near 1.6 m. Parameter $B$ is the mean of the peak and trough values: $\frac{1.6 + 0.5}{2} = 1.05$ m here. Parameter $A$ is half the difference between the peak and trough values: $\frac{1.6 - 0.5}{2} = 0.55$. Parameter $B$ is called the ***baseline*** of the sinusoid. Parameter $A$ is the ***amplitude***. (Note that by convention, the amplitude is always *half* the high-to-low range of the sinusoid.)
 
-**Step 2**: Estimate the period $P$ of the sinusoid. This can be done with a ruler: the horizontal duration of a complete cycle. I like to use the time between peaks, but the time between troughs would work just as well. Another good choice is the time between positive sloping crossings of the baseline. (But be careful. The time between *successive* baseline crossings, one positive sloping and the other negative, give just *half* the period.) 
+**Step 2**: Estimate the period $P$ of the sinusoid. This can be done with the horizontal axis scale: measure the horizontal duration of a complete cycle. I like to use the time between peaks, but the time between troughs would work just as well. Another good choice is the time between positive sloping crossings of the baseline. (But be careful. The time between *successive* baseline crossings, one positive sloping and the other negative, give just *half* the period.) 
 
 
 On the scale of the above plot, it's hard to read off the time of the first peak. So, zoom in until it becomes more obvious.
@@ -232,31 +232,39 @@ gf_line(level ~ hour,
   gf_lims(y =c(0, 2))
 ```
 
-The left panel in Figure \@ref(fig:Fun-4-a-3-2) shows about 24 hours at the start of the record. The first peak is at about 7 hours, the second at about 18 hours. That indicates that the period is 18 - 7 = 11 hours. 
+The left panel in Figure \@ref(fig:Fun-4-a-3-2) shows about 24 hours at the start of the record. The first peak is at about 6 hours, the second at about 19 hours. That indicates that the period is roughly 19 - 6 = 13 hours. 
 
 **Step 3** Plot out the model over the data. Replacing the symbols $A$, $B$, and $P$ with our estimates, the model is 
 
 $$\require{color}
-{\color{green}\mbox{tide}(t) \equiv 1.05 + 0.55 \sin(2\pi t/11)}$$
+{\color{magenta}\mbox{tide}(t) \equiv 1.05 + 0.55 \sin(2\pi t/13)}$$
 
-Figure \@ref(fig:Fun-4-a-3-3) shows this model in $\color{green}\mbox{green}$.
+Figure \@ref(fig:Fun-4-a-3-3) shows this model in $\color{magenta}\mbox{magenta}$.
 
-```{r Fun-4-a-3-3, echo=FALSE, out.width="50%", fig.show="hold", fig.cap="The sinusoid fails to align with the timing of peaks and troughs."}
-mod1 <- makeFun(1.05 + 0.55*sin(2*pi*hour/11) ~ hour)
-mod2 <- makeFun(1.05 + 0.55*sin(2*pi*(hour-17)/11) ~ hour)
+```{r Fun-4-a-3-3, echo=FALSE,  fig.cap="The sinusoid fails to align with the timing of peaks and troughs."}
+mod1 <- makeFun(1.05 + 0.55*sin(2*pi*hour/13) ~ hour)
+mod2 <- makeFun(1.05 + 0.55*sin(2*pi*(hour-17)/13) ~ hour)
 gf_line(level ~ hour, 
-         data = math141Z::RI_tide %>% filter(hour < 25)) %>%
-  slice_plot(mod1(hour) ~ hour, color="green") %>%
-  gf_labs(y="Water level (meters)", x="Time (hours)") %>%
-  gf_lims(y =c(0, 2))
-gf_line(level ~ hour, 
-         data = math141Z::RI_tide %>% filter(hour > 90)) %>%
-  slice_plot(mod1(hour) ~ hour, color="green") %>%
+         data = math141Z::RI_tide) %>% 
+  slice_plot(mod1(hour) ~ hour, color="magenta") %>%
   gf_labs(y="Water level (meters)", x="Time (hours)") %>%
   gf_lims(y =c(0, 2))
 ```
+Figure \@ref(fig:Fun-4-a-3-3) shows the model aligning beautifully with the data at around time 80 hours, but not so well near the very beginning of the record. Looking carefully, you can see the magenta peak gradually move to the left compared to the data as you look at the peaks of the cycles one at a time moving backward from $t=80$ hours. This is diagnostic of our 13-hour estimate for the period being a little too long.
 
+A good way to refine the estimate is to change the model slightly and re-graph the data and model. Keep doing this until you have found the right alignment. In other words, parameter estimation is often an ***iterative*** process of estimate-and-refine. This is one of the aspects of the ***modeling cycle***, where a modeler builds a tentative model, looks for systematic deviations from the data, and refines the model. 
 
+::: {.intheworld}
+Another sort of deviation of the model from the data seen in Figure \@ref(fig:Fun-4-a-3-3) concerns the varying heights of the peaks and troughs in the data, which is not captured by the simple sinusoid pattern. Perhaps you can see that at the beginning of the record, the troughs are also *wider* than the peaks. Later on, as this extra width disappears, the amplitude of the peaks and troughs increases. 
+
+You don't yet have the calculus tools or experience to know how or whether this phenomenon can be modeled. For now, a hint: Earth has two large orbiting bodies, the Sun and the Moon. These have slightly different periods: 24 hours for the Sun and slightly longer for the Moon.
+:::
+
+**Step 4** Our model omitted one of the parameters of the sinusoid basic modeling function: the time shift $t_0$. A more complete model would be: 
+$$\text{tide}_\text{shifted}(t) \equiv A \sin(2\pi (t - t_0)/P) + B$$
+Whether including this parameter is important depends on our purpose for the model. If the goal is to find the period of the tides, the time shift hardly matters. But if the goal is to predict a future tide level, the time shift is critical.
+
+Estimating $t_0$ can only be done once the period $P$ is known precisely. In practice, as you'll see in Chapter \@ref(modeling-cycle), we use a numerical method called ***polishing*** to estimate both $P$ and $t_0$ at the same time.
 
 
 `r insert_calcZ_exercise(8.4, "YELXG", "Exercises/Fun/lamb-talk-gloves.Rmd")`
