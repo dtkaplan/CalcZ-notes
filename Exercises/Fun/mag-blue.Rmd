@@ -10,12 +10,13 @@ library(mosaic)
 library(mosaicCalc)
 ```
 
-Open a `r sandbox_link()` and make the following log-log plot of horsepower (`BHP`) versus displacement of the internal combustion engines listed in the `Engines` data frame. 
+Open a `r sandbox_link()` and make the following log-log plot of horsepower (`BHP`) versus displacement (in cc, cubic-centimeters) of the internal combustion engines listed in the `Engines` data frame. 
 
 ::: {.scaffolding}
 ```{r results="hide"}
 gf_point(BHP ~ displacement, data = Engines) %>%
-  gf_refine(scale_x_log10(), scale_y_log10())
+  gf_refine(scale_x_log10(), scale_y_log10()) %>%
+  gf_labs(x = "displacement (cc)")
 ```
 :::
 
@@ -30,7 +31,7 @@ askMC(
     "7" = "This is the number of engines with displacement of 10 cc or smaller. But one liter corresponds to 1000 cc.",
     "+14+" = "Right. It's the $10^3$ tick that marks 1 liter, since 1 liter is 1000 cc.",
     "25" = "That would be true if the cut-off were 10 liters. But it's not.",
-  randomAnswerOrder = FALSE
+  random_answer_order = FALSE
 )
 ```
 
