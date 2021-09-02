@@ -95,9 +95,6 @@ For a creature active both night and day, they eye needs to be sensitive over 7 
 
 
 
-`r insert_calcZ_exercise(15.2, "j3xe", "Exercises/Fun/maple-hit-saucer.Rmd")`
-
-
 ## Composing $\ln()$ 
 
 The logarithm is the inverse of the exponential function. In other words, $$\ln(e^x) = x\ \ \text{and}\ \ e^{\ln(x)} = x$$
@@ -106,9 +103,6 @@ Think about this in terms of the kinds of quantities that are the input and outp
 
 * Logarithm: The input is a quantity, the output is the magnitude of that quantity.
 * Exponential: The input is a magnitude, the output is the quantity with that magnitude.
-
-
-`r insert_calcZ_exercise(15.3, "ILESX", "Exercises/Fun/cat-lend-futon.Rmd")`
 
 
 ## Magnitude graphics {#magnitude-graphics}
@@ -120,7 +114,7 @@ gf_point(RPM ~ mass, data = Engines)
 ```
 In the graph, most of the engines have a mass that is ... zero. At least that's what it appears to be. The horizontal scale is dominated by the two huge 100,000 pound monster engines plotted at the right end of the graph.
 
-Plotting the logarithm of the engine mass spreads things out, as in Figure \@ref(fig:rpm-mass-log}.
+Plotting the logarithm of the engine mass spreads things out, as in Figure \@ref(fig:rpm-mass-log).
 
 ```{r rpm-mass-log, fig.cap="Engine RPM versus mass on semi-log axes."}
 gf_point(RPM ~ mass, data = Engines) %>%
@@ -129,7 +123,7 @@ gf_point(RPM ~ mass, data = Engines) %>%
 
 Note that the horizontal axis has been labelled with the actual mass (in pounds), with the labels  evenly spaced in terms of their logarithm. This presentation, with the horizontal axis constructed this way, is called a ***semi-log*** plot.
 
-When both axes are labeled this way, we have a ***log-log*** plot, as shown in Figure \@ref(fig:rpm-mass-log-log} 
+When both axes are labeled this way, we have a ***log-log*** plot, as shown in Figure \@ref(fig:rpm-mass-log-log). 
 
 ```{r rpm-mass-log-log, fig.cap="Engine RPM versus mass on log-log axes."}
 gf_point(RPM ~ mass, data = Engines) %>%
@@ -185,9 +179,11 @@ $$e^{\ln(\text{Pressure})} = \text{Pressure} = e^{a + b \ln(\text{Volume})} = e^
 $$\text{Pressure} = A\,  \text{Volume}^b$$
 A power-law relationship!
 
+`r insert_calcZ_exercise(15.2, "ILXEG", "Exercises/Fun/mag-blue.Rmd")`
 
 
-`r insert_calcZ_exercise(15.4, "ILXEG", "Exercises/Fun/mag-blue.Rmd")`
+`r insert_calcZ_exercise(15.4, "j3xe", "Exercises/Fun/maple-hit-saucer.Rmd")`
+
 
 `r insert_calcZ_exercise(15.5, "RWESX", "Exercises/Dimension/Boyles-data.Rmd")`
 
@@ -230,7 +226,7 @@ It's nice to have the labels show round numbers. It's also nice for them to be e
 
 `r insert_calcZ_exercise(15.9, "SELIX", "Exercises/Dimension/tiger-have-fork.Rmd")`
 
-`r insert_calcZ_exercise("XX.XX", "PeQJCA", "Exercises/Dimension/octopus-look-radio.Rmd")`
+`r insert_calcZ_exercise("15.10", "PeQJCA", "Exercises/Dimension/octopus-look-radio.Rmd")`
 
 
 
@@ -287,7 +283,7 @@ Consider the question what is digit(316.2278)? That seems a odd question unless 
 
 Another question: what is digit(17.7828)? This seems crazy, until you notice that $17.7828^2 = 316.2278$. So digit(17.78279) = 5/4.
 
-It happens that for a couple of thousand years mathematicians have known how to compute the square root of any number to a high precision. By taking square roots and dividing by two, it's easy to fill in more rows in the digit()-function table. You get even more rows by noticing other simple patterns like $$\text{digit}(a/10) = \text{digit}(a) -1  \ \ \and \ \ \ \text{digit}(10 a) = \text{digit}(a) + 1$$
+For a couple of thousand years mathematicians have known how to compute the square root of any number to a high precision. By taking square roots and dividing by two, it's easy to fill in more rows in the digit()-function table. You get even more rows by noticing other simple patterns like $$\text{digit}(a/10) = \text{digit}(a) -1  \ \ \text{and} \ \ \ \text{digit}(10 a) = \text{digit}(a) + 1$$
 
 Here are some additional rows in the table
 
@@ -330,12 +326,11 @@ You can play this game for weeks. We asked the computer to play the game for abo
 
 Figure \@ref(fig:expanded-log) plots the expanded digits() function table.
 
-```{r expanded-log, echo=FALSE}
+```{r expanded-log, echo=FALSE, fig.cap="The digit function with more entries"}
 ticks <- 1:10
 
 gf_point(output ~ input, 
          data = start %>% filter(output <= 1, output >= 0)) %>%
-  gf_labs(title = "The digit function with more entries") %>%
   gf_refine(scale_x_continuous(breaks=ticks)) %>%
   gf_line()
 ```
@@ -355,7 +350,7 @@ In everyday speech, 67 has two digits. The authors of *Chilias prima* sensibly d
 log10(67)
 ```
 
-Our main use for $\log_{10}()$/`log10()` will be to count digits in order to quickly compare the magnitude of numbers. The difference digits($x$) - digits($y$) tells how many factors of 10 separate the magnitude of the $x$ and $y$.
+Our main use for $\log_{10}()$ (in R: `log10()`) will be to count digits in order to quickly compare the magnitude of numbers. The difference digits($x$) - digits($y$) tells how many factors of 10 separate the magnitude of the $x$ and $y$.
 
 Another important logarithmic/digit-counting function is $\log_2()$, written `log2()` in R. This counts how many ***binary digits** are in a number. For us, $\log_2(x)$ tells how many times we need to double, starting at 1, in order to reach $x$. For instance, $\log_2(67) = 6.06609$, which indicates that $67 = 2\times 2 \times 2 \times 2 \times 2 \times 2 \times 2^{0.06609}$
 

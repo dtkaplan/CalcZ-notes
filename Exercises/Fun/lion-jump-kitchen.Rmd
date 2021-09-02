@@ -11,7 +11,7 @@ To find the parameter $n$, you can fit the model to the data. This R command wil
 
 
 ```{r results="hide"}
-fitModel(log(pressure) ~ a + n*log(volume), data = Boyle) %>%
+fitModel(log(pressure) ~ log(a) + n*log(volume), data = Boyle) %>%
   coefficients()
 ```
 
@@ -43,7 +43,7 @@ askMC(
 )
 ```
 
-Return to your use of `fitModel()` to find the slope of the straight-line fit to the appropriately log-transformed model. When you carried out the log transformation, you could have used the so-called "natural logarithm" with expressions like `log(pressure)`.  Alternatively, you could have used the log base-10 or the log base-2, with expressions like `log(pressure, base = 10)` or `log(volume, base = 2)`.  Whichever you use, you should use the same base for all the logarithmic transformations when finding the straight-line parameters.
+Return to your use of `fitModel()` to find the slope of the straight-line fit to the appropriately log-transformed model. When you carried out the log transformation, you used the so-called "natural logarithm" with expressions like `log(pressure)`.  Alternatively, you could have used the log base-10 or the log base-2, with expressions like `log(pressure, base = 10)` or `log(volume, base = 2)`.  Whichever you use, you should use the same base for all the logarithmic transformations when finding the straight-line parameters.
 
 
 ```{r daily-digital-06-QA8, echo=FALSE}
