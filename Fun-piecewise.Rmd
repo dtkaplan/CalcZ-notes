@@ -66,7 +66,7 @@ R notation              | English
 
 Having an ability to split up the domain of a function and provide different formula for each of the pieces allows us to
 construct ***piecewise functions***. To illustrate, the function $h(x) \equiv |x|$. You'll recognize this as the "absolute value" function. The intuitive algorithm is to "strip the negative sign, if any" from the input. But with the ability to divide the domain into pieces, we gain access to a less mysterious sort of arithmetic operation and can re-write $$h(x) \equiv \left\{ 
-\begin{array}{ll}  x & \text{for}\ 0 \leq x \\ \text{- x} & \mbox{otherwise}\\\end{array}
+\begin{array}{ll}  x & \text{for}\ 0 \leq x \\ \text{- x} & \text{otherwise}\\\end{array}
 \right.$$ 
 Or, in computer notation
 ```{r}
@@ -76,8 +76,8 @@ Note that the absolute value function is built-in to R in the form of the `abs()
 
 Less familiar is the ***Heaviside function*** which has important uses in physics and engineering:
 
-$$\mbox{Heaviside}(x) \equiv \left\{ 
-\begin{array}{cl} 0 & \text{for}\ x < 0\\1 & \mbox{otherwise}\end{array}
+$$\text{Heaviside}(x) \equiv \left\{ 
+\begin{array}{cl} 0 & \text{for}\ x < 0\\1 & \text{otherwise}\end{array}
 \right.$$
 In computer notation, this is 
 ```{r}
@@ -93,8 +93,8 @@ slice_plot(0 ~ x, domain(x = c(-10, 0)), size=2) %>%
 The vertical gap between the two pieces is called a ***discontinuity***. Intuitively, you cannot draw a discontinuous function ***without lifting the pencil from the paper***. The Heaviside function has a discontinuity at $x=0$.
 
 Similarly, the ***ramp function*** (aka "ReLU") is a kind of one-sided absolute value:
-$$\mbox{ramp}(x) \equiv \left\{ 
-\begin{array}{cl} x & \text{for}\ 0 \leq x\\0 & \mbox{otherwise}\end{array}
+$$\text{ramp}(x) \equiv \left\{ 
+\begin{array}{cl} x & \text{for}\ 0 \leq x\\0 & \text{otherwise}\end{array}
 \right.$$
 Or, in computer notation:
 ```{r}
@@ -120,7 +120,7 @@ gf_point(ccf ~ temp, data = Home_utilities, alpha=0.5) %>%
 ```
 The graph looks somewhat like a hockey stick. A sloping straight-line dependence of ccf on temperature for temperatures below $60^\circ$F and constant for higher temperatures.  The shape originates from the dual uses of natural gas. Gas is used for cooking and domestic hot water, the demand for which is more of less independent of outdoor temperature at about 15 ccf per month. Gas is also used for heating the house, but that's needed only when the temperature is less than about $60^\circ$F.  
 
-We can accomplish the hockey-stick shape with a linear combination of the ramp() function and a constant. The ramp function represents gas used for heating, the constant is the other uses of gas (which are modeled as not depending on temperature. Overall, the model is  $$\text{gas_ccf}(x) \equiv 4.3\,  \mbox{ramp}(62-x)  + 15$$
+We can accomplish the hockey-stick shape with a linear combination of the ramp() function and a constant. The ramp function represents gas used for heating, the constant is the other uses of gas (which are modeled as not depending on temperature. Overall, the model is  $$\text{gas_ccf}(x) \equiv 4.3\,  \text{ramp}(62-x)  + 15$$
 Even simpler is the model for the other uses of natural gas:
 $$\text{other_ccf}(x) \equiv 15$$. 
 :::

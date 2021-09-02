@@ -9,14 +9,14 @@ library(etude2)
 
 Early in Math 141Z we undertook to figure out how fast a satellite travels. As you recall, we measured the orbit height r *from the center of the Earth*. Assuming a circular orbit (which is not necessarily a good assumption) the total path length of an orbit is $2 \pi r$. We also assumed that the acceleration of the satellite due to gravity is 9.8 m/s^2 , the value on the Earth's surface. (And a reasonably good approximation to the value at a height of, say, 100 mi above the surface.)
 
-Then we asked, how large is the centripetal acceleration needed to keep a satellite in orbit of radius $r$ at velocity $v$. We used dimensional analysis to say that $a = v^2/r$, a formula that is dimensionally consistent. Knowing that $a \approx 9.8$ m/s^2 , and specifying $r = 4050mi$ (that is, 100 mi above the surface of the Earth), we solved for $v$: $$v = \sqrt{a \times r} = \sqrt{9.8 \mbox{m}\, \mbox{s}^{-2} \times 4050 \mbox{mi}} = 191.5 \sqrt{\mbox{m}\cdot\mbox{mi}\strut}\ \mbox{s}^{-1}$$
+Then we asked, how large is the centripetal acceleration needed to keep a satellite in orbit of radius $r$ at velocity $v$. We used dimensional analysis to say that $a = v^2/r$, a formula that is dimensionally consistent. Knowing that $a \approx 9.8$ m/s^2 , and specifying $r = 4050mi$ (that is, 100 mi above the surface of the Earth), we solved for $v$: $$v = \sqrt{a \times r} = \sqrt{9.8 \text{m}\, \text{s}^{-2} \times 4050 \text{mi}} = 191.5 \sqrt{\text{m}\cdot\text{mi}\strut}\ \text{s}^{-1}$$
 
 ```{r orb1, echo=FALSE}
 askMC(
-  "What is the numerical value of $\\sqrt{\\mbox{m}\\cdot\\mbox{mi}\\strut}$ expressed in miles?",
-  "$\\sqrt{1609.34 \\mbox{m}^2} = 40.12 m$" = "You were asked for the value of $\\sqrt{\\mbox{m}\\cdot\\mbox{mi}\\strut}$ in miles, not meters.",
-  "$\\sqrt{40.12 \\mbox{mi}^2} \\approx 6.33 \\mbox{mi}$" = "But if you think about the area of 1 meter times 1 mile, it's much, much less than a square mile. The square root of a square mile is 1 mile. So the true answer must be much less than that.",
-  "+$\\sqrt{0.000621371 \\mbox{mi}^2} \\approx 0.025 \\mbox{mi}$+"="roughly 1/1600, which makes sense considering there are roughly 1600 m in a mile.",
+  "What is the numerical value of $\\sqrt{\\text{m}\\cdot\\text{mi}\\strut}$ expressed in miles?",
+  "$\\sqrt{1609.34 \\text{m}^2} = 40.12 m$" = "You were asked for the value of $\\sqrt{\\text{m}\\cdot\\text{mi}\\strut}$ in miles, not meters.",
+  "$\\sqrt{40.12 \\text{mi}^2} \\approx 6.33 \\text{mi}$" = "But if you think about the area of 1 meter times 1 mile, it's much, much less than a square mile. The square root of a square mile is 1 mile. So the true answer must be much less than that.",
+  "+$\\sqrt{0.000621371 \\text{mi}^2} \\approx 0.025 \\text{mi}$+"="roughly 1/1600, which makes sense considering there are roughly 1600 m in a mile.",
   "It's crazy to take the square root of a length. There's no such thing as $\\sqrt{1 m\\strut}$." = "Indeed, there is no such thing as $\\sqrt{1 m\\strut}$. But that's irrelevant here because the contents of the square-root are a product of 1 m $\\times$ 1 mile, which has dimension L^2 Taking the squareroot of a quantity with dimension L^2 gives a quantity with dimension L, a perfectly everyday affair.",
   random_answer_order = FALSE
 )
@@ -32,12 +32,12 @@ The figure shows a diagram of the situation. There is a satellite in circular or
 
 The change in the velocity vector over half the orbital time is simple: ${\mathbf v}_3 - {\mathbf v}_1 = {\mathbf v}_3 + {\mathbf v}_3 = 2 {\mathbf v}_3$. 
 
-Now calculus comes in: the change in velocity is the integral with respect to time of acceleration over the time to complete half an orbit. $$\int_{t=\mbox{start}}^{t=\mbox{end}} {\mathbf a}\, dt = 2 {\mathbf v}_3$$  
+Now calculus comes in: the change in velocity is the integral with respect to time of acceleration over the time to complete half an orbit. $$\int_{t=\text{start}}^{t=\text{end}} {\mathbf a}\, dt = 2 {\mathbf v}_3$$  
 We can simplify by setting the "start" time to zero. The end time is how long it takes to complete half an orbit. This will be the distance covered divided by the speed. The half circumference of the orbit is $\pi r$. The speed of the satellite is $|v|$. So the end time is $\pi r/ v$.
 
 Now we will take a false step. (You may not see it as such yet, but heads up!) The acceleration is constant: the satellite is always a constant distance from the center of the Earth. That's the nature of circular orbits. So the integral is simple: 
 
-$$\int_{t=\mbox{start}}^{t=\mbox{end}} {\mathbf a}\, dt = \int_{t=0}^{t=\pi r /v} a\, dt = a \int_{t=0}^{t=\pi r /v} dt = a \pi r/v = 2v .$$
+$$\int_{t=\text{start}}^{t=\text{end}} {\mathbf a}\, dt = \int_{t=0}^{t=\pi r /v} a\, dt = a \int_{t=0}^{t=\pi r /v} dt = a \pi r/v = 2v .$$
 The rightmost equals relationship comes from our previous analysis of the change in velocity in half an orbit. Solving $a \pi r/v = 2 v$ we get $$a = \frac{2}{\pi} \frac{v^2}{r} \neq \frac{v^2}{r}$$
 This half-an-orbit analysis gives a different answer for the relationship between acceleration and velocity than we used in the earlier calculation. At least one of them is wrong.
 
@@ -54,7 +54,7 @@ The integral involves one of the basic modeling functions, so we've memorized th
 ```{r orb2, echo=FALSE}
 explain <- "$-\\cos(\\theta)$ is the anti-derivative of $\\sin(\\theta)$, but we are asking for the value of a definite integral, so the answer you give should be a number."
 askMC(
-  "What is $$\\int_{\\theta=0}^{\\theta = \\pi} \\sin(\\theta)\\, d \\theta \\ \\mbox{?}$$",
+  "What is $$\\int_{\\theta=0}^{\\theta = \\pi} \\sin(\\theta)\\, d \\theta \\ \\text{?}$$",
   0, "+2+", "$-\\cos(\\theta)$" = explain,
   "$- \\pi \\cos(\\theta)$" = "What's the $\\pi$ doing there?",
   random_answer_order = FALSE

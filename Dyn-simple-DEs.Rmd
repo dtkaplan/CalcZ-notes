@@ -160,7 +160,7 @@ Calling $x_n$ a "function" drops (for good reason) some conventions we have used
 2. We have used names like $f()$ and $g()$ and $\exp()$ and $\sin()$ for functions, and used names like $x$ and $y$ and $t$ for *numerical inputs to functions*.
 3. We have been concerned with functions where the input can be varied continuously, say $\infty < x < \infty$ rather than functions where the input is discrete, e.g. $n=0, 1, 2, \ldots$.
 
-Differential equations---as opposed to *difference equations*---also involve an equation. As we start out, that equation will involve **three** different functions, typically a function of time $g(t)$, the derivative $\partial_t g(t)$ of that function with respect to time and still another function $\mbox{dynamic}()$. So a differential equation might look like $$\underbrace{\partial_t g(t)}_\mbox{function 3} = \underbrace{\mbox{dynamic}}_\mbox{function 2}(\ \underbrace{g(t)}_\mbox{function 1}\ )$$ `r mark(6250)`
+Differential equations---as opposed to *difference equations*---also involve an equation. As we start out, that equation will involve **three** different functions, typically a function of time $g(t)$, the derivative $\partial_t g(t)$ of that function with respect to time and still another function $\text{dynamic}()$. So a differential equation might look like $$\underbrace{\partial_t g(t)}_\text{function 3} = \underbrace{\text{dynamic}}_\text{function 2}(\ \underbrace{g(t)}_\text{function 1}\ )$$ `r mark(6250)`
 
 The equation mandates a particular relationship between the functions $g(t)$ and $\partial_t g(t)$. To *solve* this equation means to find a particular function $g(t)$ that is faithful to the mandate set by the equation. And, of course, whatever $g(t)$ is, $\partial_t g(t)$ is its derivative with respect to time. `r mark(6255)`
 
@@ -170,9 +170,9 @@ $$g(t) + C \equiv \int \partial_t g(t) dt = \int \sin(\omega t) dt \equiv - \fra
 
 Notice that I've used $\equiv$ in two places in the above line. To say $\partial_t g(t) = \sin(\omega t)$ is to impose a mandate. This won't be true for any $g(t)$ that comes along, the equation is giving specific information about what kind of function $g(t)$ has to be. One the other hand, $g(t) - C \equiv \int \partial_t g(t) dt$ is something that has to be true for *any* $g(t)$ that someone happens to provide. Similarly, $\int \sin(\omega t)dt \equiv - \frac{1}{\omega} \cos(\omega\, t) + D$ is a mathematical *fact*, not a modeling statement about the world. `r mark(6260)`
 
-In a differential equation, the unknown function $g(t)$ appears on *both* sides of the equation, once in the form of $\partial_t g(t)$ ("function 3") and once as $g(t)$ ("function 1"). Although it's tempting to apply anti-differentiation, that will not do the job of finding $g(t)$, since $g(t)$ itself appears as part of the broader function $\mbox{dynamics}(\ g(t)\ )$ to which we're tempted to apply anti-differentiation. `r mark(6265)`
+In a differential equation, the unknown function $g(t)$ appears on *both* sides of the equation, once in the form of $\partial_t g(t)$ ("function 3") and once as $g(t)$ ("function 1"). Although it's tempting to apply anti-differentiation, that will not do the job of finding $g(t)$, since $g(t)$ itself appears as part of the broader function $\text{dynamics}(\ g(t)\ )$ to which we're tempted to apply anti-differentiation. `r mark(6265)`
 
-We will need other approaches to *solve* the differential equation for $g(t)$. We will use two good approaches, one that always works (for any function $\mbox{dynamics}()$ and the second that only works sometimes. `r mark(6270)`
+We will need other approaches to *solve* the differential equation for $g(t)$. We will use two good approaches, one that always works (for any function $\text{dynamics}()$ and the second that only works sometimes. `r mark(6270)`
 
 1. A numerical method that approximates the differential equation with a finite-difference equation, enabling it to be solved simply by *iteration*. This is Euler's method.
 2. A algebraic method that works only if we already know the functional form of the solution. As you'll see, for many differential equations important in modeling, there is such an *ansatz*: a function we already know where all we have to do is fill in the details. `r mark(6275)`
@@ -183,11 +183,11 @@ Interestingly, traditionally calculus courses have featured a third method for s
 
 ```{r sff1, echo=FALSE, results="markup"}
 askMC(
-  "Consider the differential equation $$\\partial_t g(t) = 0.2 g(t) \\left(1 - g(t)/200\\right)$$ Which of these is the function $\\mbox{dynamics}()$ in the differential equation?",
-  "+$\\mbox{dynamics}(x) \\equiv 0.2 x (1 - x/200)$+" = "When you give as input the function $g(t)$ you get the right-hand side of the differential equation.",
-  "$\\mbox{dynamics}(t) \\equiv 0.2 g(t) (1-g(t)/200)$" = "The input to dynamics() should be the function $g(t)$, not the whole right side of the differential equation.",
-  "$\\mbox{dynamics}(x) \\equiv 0.2 x$",
-  "$\\mbox{dynamics}(x) \\equiv 1 - x/200$"
+  "Consider the differential equation $$\\partial_t g(t) = 0.2 g(t) \\left(1 - g(t)/200\\right)$$ Which of these is the function $\\text{dynamics}()$ in the differential equation?",
+  "+$\\text{dynamics}(x) \\equiv 0.2 x (1 - x/200)$+" = "When you give as input the function $g(t)$ you get the right-hand side of the differential equation.",
+  "$\\text{dynamics}(t) \\equiv 0.2 g(t) (1-g(t)/200)$" = "The input to dynamics() should be the function $g(t)$, not the whole right side of the differential equation.",
+  "$\\text{dynamics}(x) \\equiv 0.2 x$",
+  "$\\text{dynamics}(x) \\equiv 1 - x/200$"
 )
 ```
 
@@ -210,7 +210,7 @@ In the shorthand the equation is rendered
 
 ```{r sff2, echo=FALSE, results="markup"}
 askMC(
-  "Which of the following is the x-shorthand for the differential equation $$\\partial_t g(t) = a g(t) + b \\ \\mbox{?}$$",
+  "Which of the following is the x-shorthand for the differential equation $$\\partial_t g(t) = a g(t) + b \\ \\text{?}$$",
   "+$\\dot{x} = a x + b$+",
   "$x = a \\dot{x} + b$" = "Dot on the wrong side.",
   "$\\dot{x} = a \\dot{x} + b$" = "Too many dots.",
@@ -238,9 +238,9 @@ There are a few differential-equation forms that show up again and again in mode
 * Simple population growth. The population is a function of time: $x(t)$. Growth at any instant is proportional to the instantaneous population. For instance a population growing at 3% per year will have $a \approx 0.03$ with units 1/year.
 * Radioactive decay. The amount of the radioactive substance is a function of time: $x(t)$. For example, phosphorus-32 (that is, $^{32}$P) has a half life of 14 days. The differential equation is $\dot{x} = -a x$ with $a \approx 0.049$ with units 1/day. `r mark(6295)`
 
-**Change proportional to  difference**: $\dot{x} = - a (x - x_\mbox{fixed})$
+**Change proportional to  difference**: $\dot{x} = - a (x - x_\text{fixed})$
 
-* Newton's Law of Cooling is about how a hot (or cold) object comes into equilibrium with the ambient temperature. For instance, you might have a cup of coffee at $200^\circ$F in a room at $70^\circ$F. Unless you drink it, the coffee will cool with time until it reaches the room's temperature. In this setting, $x_\mbox{fixed} = 70^\circ$F. The value of $a$ depends on how insulated the cup is (and details of evaporation, etc.). But if the coffee reaches very near to room temperature in 60 minutes, $a \approx 0.5$ with units 1/minute. `r mark(6300)`
+* Newton's Law of Cooling is about how a hot (or cold) object comes into equilibrium with the ambient temperature. For instance, you might have a cup of coffee at $200^\circ$F in a room at $70^\circ$F. Unless you drink it, the coffee will cool with time until it reaches the room's temperature. In this setting, $x_\text{fixed} = 70^\circ$F. The value of $a$ depends on how insulated the cup is (and details of evaporation, etc.). But if the coffee reaches very near to room temperature in 60 minutes, $a \approx 0.5$ with units 1/minute. `r mark(6300)`
 
 
 ```{r basic2a, echo=FALSE, results="markup"}
@@ -357,7 +357,7 @@ askMC(
 )
 ```
 
-The cow's consumption is one part of the dynamics. If there were no grass growing, the dynamics would be $$\partial_t G(v) = - H \times \mbox{consumption}(v)$$ where $H$ is the number of cows in the herd. `r mark(6330)`
+The cow's consumption is one part of the dynamics. If there were no grass growing, the dynamics would be $$\partial_t G(v) = - H \times \text{consumption}(v)$$ where $H$ is the number of cows in the herd. `r mark(6330)`
 
 ```{r cow2, echo=FALSE}
 etude2::etudeEssay("Explain why there is a minus sign in the previous dynamics.")
@@ -684,9 +684,9 @@ This is most famously "Newton's Law of Cooling," where $x(t)$ is the changing te
 
 **Logistic growth to the carrying capacity $\kappa$**
 
-The model is $$\dot{x} = r x (1 - x/\kappa)\ \ \implies\ \ \ x(t) = \left\{\begin{array}{lcc}\mbox{sigmoidal growth to }\kappa & \mbox{ if } & x(0) < \kappa\\
-\mbox{stable at }\kappa & \mbox{ if } & x(0) = \kappa\\
-\mbox{exponential decay to }\kappa & \mbox{ if } & x(0) > \kappa
+The model is $$\dot{x} = r x (1 - x/\kappa)\ \ \implies\ \ \ x(t) = \left\{\begin{array}{lcc}\text{sigmoidal growth to }\kappa & \text{ if } & x(0) < \kappa\\
+\text{stable at }\kappa & \text{ if } & x(0) = \kappa\\
+\text{exponential decay to }\kappa & \text{ if } & x(0) > \kappa
 \end{array}\right.$$
 
 In some ways, this is like Newton's Law. Eventually the solution will be approximately exponential decay to the fixed point $\kappa$.

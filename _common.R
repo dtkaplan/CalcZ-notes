@@ -9,7 +9,8 @@ thematic_rmd()
 ggplot2::theme_set(theme_bw(base_size = 16))
 
 
-knitr::opts_chunk$set(out.width="90%", fig.align="center")
+knitr::opts_chunk$set(out.width="90%", fig.align="center",
+                      fig.pos = "!h", out.extra = "")
 
 # Resolve the exercise number assigned to a permanent name like "3KEgLM"
 # or "chicken-sit-table".
@@ -78,5 +79,6 @@ drill_link <- function() {
 
 
 # For gradescope output
-# askMC <- Znotes::askGS
+askMC <- Znotes::askGS
+mark <- function(x) NULL
 

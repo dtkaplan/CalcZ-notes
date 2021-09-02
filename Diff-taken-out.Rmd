@@ -682,12 +682,12 @@ state_objective("Deriv-7a-2", "Apply the basic derivative shortcuts to find the 
 
 
 
-We're going to leave $\partial_x \mbox{hump}(x)$ alone for now until we have a more complete understanding of derivatives. But other than that, notice that the derivative of every one of these mathematical functions---exponential, power-law, sinusoid---is also in the set of the basic functions.
+We're going to leave $\partial_x \text{hump}(x)$ alone for now until we have a more complete understanding of derivatives. But other than that, notice that the derivative of every one of these mathematical functions---exponential, power-law, sinusoid---is also in the set of the basic functions.
 
 ::: {.workedexample latex-data=""}
 How can we know that these formulas are right? Let's start by comparing them to the functions computed from the ${\cal D}_x$ formula when $h$ is very small.
 
-Consider $\partial_x e^x$, which is claimed to be $e^x$. Figure \@ref(fig:exp-h_ plots $e^x$ (in green) as well as a function ARC$(x, h)$ (**A**verage **R**ate of **C**hange) that takes both $x$ and $h$ as inputs: $$\mbox{ARC}(x, h) \equiv {\cal D}_x e^x = \frac{e^{x+h} - e^x}{h} = e^x \frac{e^h - 1}{h}$$
+Consider $\partial_x e^x$, which is claimed to be $e^x$. Figure \@ref(fig:exp-h_ plots $e^x$ (in green) as well as a function ARC$(x, h)$ (**A**verage **R**ate of **C**hange) that takes both $x$ and $h$ as inputs: $$\text{ARC}(x, h) \equiv {\cal D}_x e^x = \frac{e^{x+h} - e^x}{h} = e^x \frac{e^h - 1}{h}$$
 
 ```{r exp-h, echo=FALSE}
 colors <- heat.colors(5)
@@ -708,10 +708,10 @@ P1 <- slice_plot(exp(x) ~ x, domain(x=c(-2,2)),
 P1
 ```
 
-You can see at a glance that $\mbox{ARC}(x, h)$ gets closer and closer to the claimed derivative, $e^x$, as $h$ gets smaller. 
+You can see at a glance that $\text{ARC}(x, h)$ gets closer and closer to the claimed derivative, $e^x$, as $h$ gets smaller. 
 
-A better view of things comes from recognizing that $$\mbox{ARC}(x, h) = e^x \left[\frac{e^h - 1}{h}\right]$$
-Let's look at the quantity in brackets as $h$ gets small. If that goes to 1 for small $h$, then $\mbox{ARC}(x, h)$ goes to $e^x$.
+A better view of things comes from recognizing that $$\text{ARC}(x, h) = e^x \left[\frac{e^h - 1}{h}\right]$$
+Let's look at the quantity in brackets as $h$ gets small. If that goes to 1 for small $h$, then $\text{ARC}(x, h)$ goes to $e^x$.
 
 $h$ | $\frac{e^h - 1}{h}$ 
 :----|-------------------
@@ -760,7 +760,7 @@ Just an application of the principles behind composed functions.
 * $\partial_x x^p = p\, x^{p-1}$. unless $p=0$. 
 * $\partial_x \sin(\frac{2\pi}{P} x) = \frac{2\pi}{P}\cos(\frac{2\pi}{P}x)$
 * $\partial_x \cos(\frac{2\pi}{P} x) = \frac{2\pi}{P}\sin(\frac{2\pi}{P}x)$
-* $\partial_x \mbox{sigmoid}(x, \text{center}, \text{width}) = \frac{1}{\text{center}}\mbox{hump}(x, \text{center}, \text{width})$
+* $\partial_x \text{sigmoid}(x, \text{center}, \text{width}) = \frac{1}{\text{center}}\text{hump}(x, \text{center}, \text{width})$
 
 
 NEXT STEP. The linear expansion ...
@@ -802,7 +802,7 @@ $\equiv$ means "is defined as" or "is the name of." When we wrote $$\Delta(f) \e
 
 What is the output of $\Delta()$? It takes a *function* as an input and returns ... a function as an output.
 
-We might choose to give a name to the output, for example fred() or betty() or, more helpfully, $\mbox{rate}_{\sin}$ or $\Delta \sin$, but our naming conventions, particularly the use of $x$ indicate that $\frac{\sin(x+h) - \sin(x)}{h}$ is a function.
+We might choose to give a name to the output, for example fred() or betty() or, more helpfully, $\text{rate}_{\sin}$ or $\Delta \sin$, but our naming conventions, particularly the use of $x$ indicate that $\frac{\sin(x+h) - \sin(x)}{h}$ is a function.
 
 In calculus, there are a handful of celebrity functions that take a function as input and return a function as output. Notice that the word "function" appeared three times in the previous sentence. To avoid this sort of sleep-inducing repetition, we'll call such functions ***operators***. 
 
@@ -1214,7 +1214,7 @@ derivative. That is, $$f^{(0)}(x_0) = f(x)\left.\right|_{x_0}\\
 f^{(1)}(x_0) = \partial_x f(x) \left.\right|_{x_0}\\
 f^{(2)}(x_0) = \partial_{xx} f(x) \left.\right|_{x_0}\\
 f^{(3)}(x_0) = \partial_{xxx} f(x) \left.\right|_{x_0}\\
-\mbox{... and so on}
+\text{... and so on}
 $$
 
 ```{r pc1-1, echo=FALSE, results="markup"}
@@ -1405,7 +1405,7 @@ $$p_{\exp}(x) = 1 + \frac{1}{1!}x + \frac{1}{2!} x^2 + \frac{1}{3!} 3^2 + \frac{
 
 Natural questions to ask are
 
-$$p_{\sin}(x) \overset{?}{=} \sin(x)  \ \ \ \mbox{or} \ \ \ \ p_{\exp}(x) \overset{?}{=} e^x$$
+$$p_{\sin}(x) \overset{?}{=} \sin(x)  \ \ \ \text{or} \ \ \ \ p_{\exp}(x) \overset{?}{=} e^x$$
 Imagine that the answer were yes. (That turns out to be the case.)
 Evaluating polynomials is easy: just addition and multiplication. So if
 we can write a polynomial $p_f(x)$ that matches any (differentiable)

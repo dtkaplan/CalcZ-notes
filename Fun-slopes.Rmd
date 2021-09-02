@@ -43,7 +43,7 @@ You already know pretty much everything there is to know about the straight-line
 - **Formula**: $f(x) \equiv a x + b$. The parameters $a$ and $b$ are the "slope" and "intercept" respectively. (More precisely, $b$ is the "y-intercept." But in statistics and modeling, it's just the "intercept.")
 - **Reading parameters from a graph**: You learned several ways to do this which are all equivalent. Maybe the easiest is to read the y-intercept off the graph. That's $b$. Then choose some non-zero $x_0$ and read off from the graph the value of $f(x_1)$. The slope is simply $$\frac{f(x_0) - b}{x_0}$$
 
-    The ***y-intercept method*** is a special case of a more general method, the ***two-point method***, that you can use even if the y-intercept isn't shown on the graph. Pick two specific values of $x$, which we'll call $x_0$ and $x_1$. Evalate the function at these input values and compute the rise over run: $$\mbox{rise over run} \equiv \frac{f(x_1) - f(x_0)}{x_1 - x_0}$$
+    The ***y-intercept method*** is a special case of a more general method, the ***two-point method***, that you can use even if the y-intercept isn't shown on the graph. Pick two specific values of $x$, which we'll call $x_0$ and $x_1$. Evalate the function at these input values and compute the rise over run: $$\text{rise over run} \equiv \frac{f(x_1) - f(x_0)}{x_1 - x_0}$$
 The rise over run is the slope of the straight line.
 
     The y-intercept method is exactly the same as the two-point method with $x_1 = 0$.
@@ -222,7 +222,7 @@ The tree continues to grow until year 50, when it seems to have reached an equil
 
 At year 25, the tree is growing as fast as it ever will. You'll get about 600 board-feet of lumber. Should you harvest at year 25? No! That the tree is growing so fast means that you will have a lot more wood at year 26, 27, and so on. The time to harvest is when the growth is getting smaller, so that it's not worth waiting an extra year.
 
-The quantity of interest is the average rate of growth from seedling to harvest. Harvesting at year 25 will give a total change of 600 board feet over 25 years, giving an average rate of change of $600 \div 25 = 24\ \mbox{board-feet-per-year}$. But if you wait until year 35, you'll have about 900 board feet, giving an average rate of change of $900 \div 35 = 25.7\  \mbox{board-feet-per-year}$.
+The quantity of interest is the average rate of growth from seedling to harvest. Harvesting at year 25 will give a total change of 600 board feet over 25 years, giving an average rate of change of $600 \div 25 = 24\ \text{board-feet-per-year}$. But if you wait until year 35, you'll have about 900 board feet, giving an average rate of change of $900 \div 35 = 25.7\  \text{board-feet-per-year}$.
 
 It's easy to construct a diagram that shows whether year 35 is best for the harvest. Recall that our fundamental model of change is the straight-line function. So we're going to ***model the model*** of tree growth as a straight line function. Like the more realistic model, our straight-line model will start out with zero wood at the time of planting. And to be faithful to the realistic model, we'll insist that the straight-line intersect or touch the realistic model at some point in the future. 
 
@@ -244,7 +244,7 @@ P %>%
 
 To maximize average lumber volume per year, choose a harvest time that produces the steepest possible green segment. From Figure \@ref(fig:aver-tree2) this is the model that glances the growth curve near year 31 (shown as $t_3$ in the diagram). 
 
-It's best to find the argmax by creating a function that shows explicitly what one is trying to optimize. (In Chapter \@ref(optim-and-shape) we'll use the name ***objective function*** to identify such function.)  Here, the objective function is ave_growth(year) $\equiv$ volume(year)/year. See Figure \@ref(fig:aver-tree3).
+It's best to find the argmax by creating a function that shows explicitly what one is trying to optimize. (In Chapter \@ref(optim-and-shape) we'll use the name ***objective function*** to identify such function.)  Here, the objective function is $\text{ave.growth(year)} \equiv \text{volume(year)} / \text{year}$. See Figure \@ref(fig:aver-tree3).
 
 
 ```{r aver-tree3, echo=FALSE, fig.cap="Graph of the average-growth function ave_growth(year), constructed by dividing volume(year) by year."}
@@ -338,10 +338,11 @@ This exception is not a good excuse for indulging a bad practice. Perhaps you'll
 :::
 
 ::: {.takenote}
-Here, I'm writing the slope function of $f(t)$ as ${\cal D}f(t)$. That works for this chapter, which deals with functions of only one variable. But in general modeling functions have more than one variable, for instance $g(x, t)$. To work with slope functions with more than one variable, we need to extend the notation a little. We will place a small subscript after ${\cal D}$ to indicate which variable we are changing. Thus, there will be two slope functions for $g(x,t)$:
-$$\require{color}{\cal D}_{\color{blue}x} g(x, t) \equiv \frac{g({\color{blue}x + 0.1}, t) - g(x, t)}{0.1}\\
-\text{and}\\
-{\cal D}_{\color{red}t} g(x, t) \equiv \frac{g(x, {\color{red}t + 0.1}) - g(x, t)}{0.1}$$
+Here, we write the slope function of $f(t)$ as ${\cal D}f(t)$. That works for this chapter, which deals with functions of only one variable. But in general modeling functions have more than one variable, for instance $g(x, t)$. To work with slope functions with more than one variable, we need to extend the notation a little. We will place a small subscript after ${\cal D}$ to indicate which variable we are changing. Thus, there will be two slope functions for $g(x,t)$:
+$${\cal D}_{\color{blue}x} g(x, t) \equiv \frac{g({\color{blue}x + 0.1}, t) - g(x, t)}{0.1}$$
+and
+
+$${\cal D}_{\color{red}t} g(x, t) \equiv \frac{g(x, {\color{red}t + 0.1}) - g(x, t)}{0.1}$$
 The input referred to in the subscript following ${\cal D}$ is called the ***with-respect-to input***.
 :::
 
@@ -379,13 +380,9 @@ The best time to harvest is when the annual "interest rate" paid by the growing 
 `r insert_calcZ_exercise("9.10", "HRTIX", "Exercises/Fun/lion-find-bowl.Rmd")`
 
 
-
------
-
 `r insert_calcZ_exercise(9.12, "CUXLR", "Exercises/Fun/slope-web-1.Rmd")`
 
------
 
 `r insert_calcZ_exercise("9.13", "MW03ay", "Exercises/Fun/lamb-put-bulb.Rmd")`
 
------
+...

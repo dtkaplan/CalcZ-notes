@@ -53,24 +53,27 @@ For functions such as the sinusoid, flipping is not much use, since the flipped 
 
 For the exponential function, the two possible types of flipping---right-for-left and top-for-bottom---produce four different curves, all of which are exponential, shown in Figure \@ref(fig:four-variations).
 
-```{r four-variations, out.width="50%", echo=FALSE, fig.cap="Four variations of the exponential functions.", fig.show="keep"}
-slice_plot(exp(x) ~ x, domain(x=c(-2,2))) %>%
+```{r four-variations, out.width="50%", echo=FALSE, fig.cap="Four variations of the exponential function.", fig.show="hold"}
+ggpubr::ggarrange(
+  slice_plot(exp(x) ~ x, domain(x=c(-2,2))) %>%
   gf_refine(theme_void()) %>%
   gf_theme(plot.title = element_text(size=16)) %>%
-  gf_labs(title="A. The exponential function, no flipping") 
+  gf_labs(title="A. The exponential function, no flipping"), 
   
 slice_plot(exp(-x) ~ x, domain(x=c(-2,2))) %>%
   gf_refine(theme_void()) %>%
     gf_theme(plot.title = element_text(size=16)) %>%
-  gf_labs(title="B. Flipped right-for-left")
-slice_plot(-exp(x) ~ x, domain(x=c(-2,2))) %>%
+  gf_labs(title="B. Flipped right-for-left"), ncol=2)
+
+ggpubr::ggarrange(
+  slice_plot(-exp(x) ~ x, domain(x=c(-2,2))) %>%
   gf_refine(theme_void()) %>%
     gf_theme(plot.title = element_text(size=16)) %>%
-  gf_labs(title="C. Flipped top-for-bottom")
+  gf_labs(title="C. Flipped top-for-bottom"),
 slice_plot(-exp(-x) ~ x, domain(x=c(-2,2))) %>%
   gf_refine(theme_void()) %>%
     gf_theme(plot.title = element_text(size=16)) %>%
-  gf_labs(title="D. Flipped both right-for-left and top-for-bottom")
+  gf_labs(title="D. Flipped both right-for-left and top-for-bottom"), ncol=2)
 
 ```
 
@@ -117,10 +120,9 @@ The left panel in Figure \@ref(fig:Fun-4-a-3-2) shows about 24 hours at the star
 
 **Step 3** Plot out the model over the data. Replacing the symbols $A$, $B$, and $P$ with our estimates, the model is 
 
-$$\require{color}
-{\color{magenta}\mbox{tide}(t) \equiv 1.05 + 0.55 \sin(2\pi t/13)}$$
+$${\color{magenta}\text{tide}(t) \equiv 1.05 + 0.55 \sin(2\pi t/13)}$$
 
-Figure \@ref(fig:Fun-4-a-3-3) shows this model in $\color{magenta}\mbox{magenta}$.
+Figure \@ref(fig:Fun-4-a-3-3) shows this model in $\color{magenta}\text{magenta}$.
 
 ```{r Fun-4-a-3-3, echo=FALSE,  fig.cap="The sinusoid fails to align with the timing of peaks and troughs."}
 mod1 <- makeFun(1.05 + 0.55*sin(2*pi*hour/13) ~ hour)
@@ -297,7 +299,7 @@ As for finding the power law $f(x) \equiv A x^p$ that provides a good match to d
 
 ## Gaussian and sigmoid functions
 
-Our last two basic modeling functions express an important idea in modeling: ***localness***. To put this in concrete terms, imagine creating a function to depict the elevation above sea level of a long road as a function of distance in miles, $x$, from the start of the road. If the road were level at 1200 feet elevation, a sensible model would be $\mbox{elevation}(x) = 1200 \text{ft}$. If the road were gently sloping, a better model would be $\mbox{elevation}(x) = 1200 + 0.01 x$.   `r mark(980)`
+Our last two basic modeling functions express an important idea in modeling: ***localness***. To put this in concrete terms, imagine creating a function to depict the elevation above sea level of a long road as a function of distance in miles, $x$, from the start of the road. If the road were level at 1200 feet elevation, a sensible model would be $\text{elevation}(x) = 1200 \text{ft}$. If the road were gently sloping, a better model would be $\text{elevation}(x) = 1200 + 0.01 x$.   `r mark(980)`
 
 Now let's add a bump to the road. A bump is a local feature, often only a few feet wide. Or, perhaps the road is crossing a mountain range. That's also a local feature, but unlike a bump in the road a mountain range extends for many miles.
 
@@ -338,7 +340,7 @@ slice_plot(pnorm(x, -1, 0.05) ~ x, domain(x=c(-3, 3)), npts=500) %>%
 slice_plot(pnorm(x, 0.25, 1.2) ~ x, domain(x=c(-3, 3)), npts=500) %>%
     gf_labs(title="(c) Sigmoid with center=0.25, sd = 1.2") 
 ```
-The name "sigmoid" comes from vague resemblance of the graph to the letter S (which is "sigma" in Greek: ς). 
+The name "sigmoid" comes from vague resemblance of the graph to the letter S (which is "sigma" in Greek: ![](www/variant-sigma.png)). 
 
 The parameters of the sigmoid function are the same as for the gaussian function: ***center*** and ***width***. The center is easy to estimate from a graph. It's the value of the input that produces an output of 0.5, half-way between the max and min of the sigmoid. As with the gaussian function, the ***width*** is measured according to a convention. The width is the ***change in input*** needed to go from an output of 0.5 to an output of 0.8413. This use of 0.8413 must seem loony at first exposure, but there is a reason. We'll need more calculus tools before it can make sense.
 

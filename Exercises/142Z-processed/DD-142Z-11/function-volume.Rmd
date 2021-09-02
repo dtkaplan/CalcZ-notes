@@ -81,7 +81,7 @@ slab_antid <- antiD(slab_area(x) ~ x)
 slab_antid(x = 5) - slab_antid(x = -5)
 ```
 
-At the heart of the computer notation is the use of `antiD()` on a function that is itself defined in terms of `antiD()`. In other words, a kind of `antiD(antiD(...))`. The math notation is prettier: $$\int_{-5}^5 \int_{-5}^5 g(x, y) dy dx$$ which can be seen as shorthand for $$\int_{-5}^5 \left\{\int_{-5}^5 g(x, y) dy\right\} dx = \int_{-5}^{5} \mbox{slab_area}(x) dx$$
+At the heart of the computer notation is the use of `antiD()` on a function that is itself defined in terms of `antiD()`. In other words, a kind of `antiD(antiD(...))`. The math notation is prettier: $$\int_{-5}^5 \int_{-5}^5 g(x, y) dy dx$$ which can be seen as shorthand for $$\int_{-5}^5 \left\{\int_{-5}^5 g(x, y) dy\right\} dx = \int_{-5}^{5} \text{slab_area}(x) dx$$
 The *integral within an integral* is called an "iterated integral" or, in the case here, a "double integral."
 
 Working with double integrals (which you will see in more advanced math, science, and engineering courses) requires that you pay close attention to the "what" of the interior integrals. For instance: $$\int_{-5}^{5} g(x, y) dy$$ might appear at first glance to evaluate to a number, since it is a definite integral. But the integration $\int dy$ sums over the $y$ variable and leaves the $x$ variable alone. So $\int_{-5}^{5} g(x, y) dy$ is a function of $x$, not a number. 

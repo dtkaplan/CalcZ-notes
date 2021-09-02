@@ -22,7 +22,7 @@ An important strategy in creating and understanding models of dynamics involves 
 At a fixed point, "tomorrow's" value is the same as "today": ${\mathbf X}_{n+1} = {\mathbf X}_n$; the state doesn't change with $n$.
 
 A fixed point ${\mathbf X}^\star$ satisfies
-$${\mathbf X}^\star = g({\mathbf X}^\star)\ \ \ \mbox{or, said another way,}\ \ \ g({\mathbf X}^\star) - {\mathbf x^\star} = 0$$
+$${\mathbf X}^\star = g({\mathbf X}^\star)\ \ \ \text{or, said another way,}\ \ \ g({\mathbf X}^\star) - {\mathbf x^\star} = 0$$
 "Fixed point" is a mathematical term. In the sciences, you will hear the term "equilibrium state," "steady state," "resting point," or "balance point." For example, chemistry has a concept of [chemical equilibrium](https://en.wikipedia.org/wiki/Chemical_equilibrium), a state where the concentration of reactants and products doesn't change. Finding such equilibria is an important task in many areas of science and engineering. `r mark(7705)`
 
 Some dynamical systems don't display any fixed points, e.g. the orbit of the Earth around the Sun. Others have one or more. We're going to treat them mathematically by analysis of the function $g()$ that governs the dynamics. `r mark(7710)`
@@ -153,7 +153,7 @@ draw_flow()
 ```
 The functions $f(x,y)$ and $g(x,y)$ are represented by short line segments with a tiny dot at one end. Each line segment connects $(x_n, y_n)$ to $(x_{n+1}, y_{n+1})$, with the dot at the $n+1$ end.
 
-Consider the line segment that starts at $(0,0)$. The end of the line segment is at about $(-0.101, -0.163)$. (You can't see such precision from the graph, but the author can!) This is just to say that for the particular $f()$ and $g()$ being displayed, $$f(0, 0) = -0.101\ \ \ \mbox{and}\ \ \ g(0,0) = -0.163$$ The result of the dynamics is to take a state of $(0,0)$ a bit to the "southwest," to $(-0.101, -0.163)$. From there you can take the next step, then the one after that, and so on to approximate the trajectory. It's very much like the state was being blown around in the wind, with the line segments indicating the direction and speed of the wind at any point. `r mark(7765)`
+Consider the line segment that starts at $(0,0)$. The end of the line segment is at about $(-0.101, -0.163)$. (You can't see such precision from the graph, but the author can!) This is just to say that for the particular $f()$ and $g()$ being displayed, $$f(0, 0) = -0.101\ \ \ \text{and}\ \ \ g(0,0) = -0.163$$ The result of the dynamics is to take a state of $(0,0)$ a bit to the "southwest," to $(-0.101, -0.163)$. From there you can take the next step, then the one after that, and so on to approximate the trajectory. It's very much like the state was being blown around in the wind, with the line segments indicating the direction and speed of the wind at any point. `r mark(7765)`
 
 ```{r 2d1-1, echo=FALSE, results="markup"}
 askMC(
@@ -240,10 +240,10 @@ The price we pay for limiting ourselves to linear dynamics is that we can't nece
 
 Recall some of the concepts we used in exploring *linear combinations*.
 
-- a **vector** is a mathematical object with two properties: magnitude (length) and direction. We wrote vectors as a column of numbers, for instance $${\mathbf v} = \left[\begin{array}{r}3\\-1\\8\end{array}\right]\ \ \ \mbox{or}\ \ \ {\mathbf u} =\left[\begin{array}{r}2\\-3\end{array}\right]$$ The dimension of a vector is the count of numbers used in its representation: 3 for $\mathbf v$ and 2 for $\mathbf u$.
+- a **vector** is a mathematical object with two properties: magnitude (length) and direction. We wrote vectors as a column of numbers, for instance $${\mathbf v} = \left[\begin{array}{r}3\\-1\\8\end{array}\right]\ \ \ \text{or}\ \ \ {\mathbf u} =\left[\begin{array}{r}2\\-3\end{array}\right]$$ The dimension of a vector is the count of numbers used in its representation: 3 for $\mathbf v$ and 2 for $\mathbf u$.
 - a **matrix** is a collection of vectors, all of which have the same dimension. For instance:
 
-$${\mathbf M} =\left[\begin{array}{rrr}3 & 1 & 0\\-1 & 4 & -2\\8 & 0 & 12\end{array}\right]\ \ \ \mbox{or}\ \ \ {\mathbf P} =\left[\begin{array}{rr}-1 & 2\\7 & 0\end{array}\right]$$
+$${\mathbf M} =\left[\begin{array}{rrr}3 & 1 & 0\\-1 & 4 & -2\\8 & 0 & 12\end{array}\right]\ \ \ \text{or}\ \ \ {\mathbf P} =\left[\begin{array}{rr}-1 & 2\\7 & 0\end{array}\right]$$
 
 - **multiplying** a matrix times a vector produces a new vector which is a *linear combination* of the vectors in the matrix. For instance:
 
@@ -255,13 +255,13 @@ We'll call this an [ab10]-format matrix.
 
 It's worth emphasizing the special form of the equations corresponding to an [ab10] matrix:
 
-$$\underbrace{\left[\begin{array}{c}x_{n+1}\\y_{n+1}\end{array}\right]}_\mbox{next state} =
-\underbrace{\left[\begin{array}{rr}a & b\\1 & 0\end{array}\right]}_\mbox{[ab10] format matrix} \cdot\underbrace{\left[\begin{array}{c}x_n\\y_n\end{array}\right]}_\mbox{current state} =
+$$\underbrace{\left[\begin{array}{c}x_{n+1}\\y_{n+1}\end{array}\right]}_\text{next state} =
+\underbrace{\left[\begin{array}{rr}a & b\\1 & 0\end{array}\right]}_\text{[ab10] format matrix} \cdot\underbrace{\left[\begin{array}{c}x_n\\y_n\end{array}\right]}_\text{current state} =
 \left[\begin{array}{rcr}a\, x_n & + & b\, y_n \\x_n & & \end{array}\right]$$
 Since both $x_n$ and $y_n$ are numerical quantities, you'll often work with the system like this:
 
-$$\underbrace{\left[\begin{array}{c}x_{n+1}\\y_{n+1}\end{array}\right]}_\mbox{next state} =
-\underbrace{\left[\begin{array}{rr}a & b\\1 & 0\end{array}\right]}_\mbox{[ab10] format matrix} \cdot\underbrace{\left[\begin{array}{r}3\\-1\end{array}\right]}_\mbox{current state} =
+$$\underbrace{\left[\begin{array}{c}x_{n+1}\\y_{n+1}\end{array}\right]}_\text{next state} =
+\underbrace{\left[\begin{array}{rr}a & b\\1 & 0\end{array}\right]}_\text{[ab10] format matrix} \cdot\underbrace{\left[\begin{array}{r}3\\-1\end{array}\right]}_\text{current state} =
 \left[\begin{array}{rcr}3 a & + & (-1)b \\3 & & \end{array}\right]$$
 
 [Exercise: j2ettP ]
@@ -301,7 +301,7 @@ state_objective("Dyn-4b", "Understand sequences as steps through discrete time")
 ```
 :::
 
-We're focusing now on the behavior of discrete-time dynamical systems near fixed points. Recall that we've defined $x$ and $y$ scales that have the fixed point at (0, 0) and that the dynamics can be approximated by linear functions which we write with a matrix. We'll call the matrix ${\mathbf A}$ and use ${\mathbf X}_n$ to denote the two-dimensional state at time $n$.  So the dynamics are: $${\mathbf X}_{n+1} = {\mathbf A}\, {\mathbf X}_n\ \ \ \mbox{where}\ \ {\mathbf A} = \left[\begin{array}{cc}a & b\\c & d\end{array}\right]\  \mbox{for instance}\ \ \left[\begin{array}{rr}1.1 & -0.4\\0.3 & 0.9\end{array}\right]$$
+We're focusing now on the behavior of discrete-time dynamical systems near fixed points. Recall that we've defined $x$ and $y$ scales that have the fixed point at (0, 0) and that the dynamics can be approximated by linear functions which we write with a matrix. We'll call the matrix ${\mathbf A}$ and use ${\mathbf X}_n$ to denote the two-dimensional state at time $n$.  So the dynamics are: $${\mathbf X}_{n+1} = {\mathbf A}\, {\mathbf X}_n\ \ \ \text{where}\ \ {\mathbf A} = \left[\begin{array}{cc}a & b\\c & d\end{array}\right]\  \text{for instance}\ \ \left[\begin{array}{rr}1.1 & -0.4\\0.3 & 0.9\end{array}\right]$$
 This is all just a matter of arithmetic. Suppose we start at the initial condition ${\mathbf X}_0 = \left[\begin{array}{r}1.3\\0.5\end{array}\right]$. Using the example matrix from above, the value of ${\mathbf X}_{1}$ will be ${\mathbf A}\, {\mathbf X}_0$, or `r mark(7810)`
 $$
 {\mathbf X}_1 = \underbrace{\left[\begin{array}{rr}1.1 & -0.4\\0.3 & 0.9\end{array}\right]}_{\mathbf A} \cdot \underbrace{\left[\begin{array}{r}1.3\\0.5\end{array}\right]}_{{\mathbf X}_0} = 1.3 \left[\begin{array}{r}1.1\\0.3\end{array}\right] + 0.5 \left[\begin{array}{r}-0.4\\0.9\end{array}\right] = \left[\begin{array}{r}1.23\\0.84\end{array}\right] `r mark(7815)`
