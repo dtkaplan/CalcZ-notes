@@ -12,13 +12,13 @@ You have an solid, intuitive sense of what "change" means. In mathematics, and e
 
 The word that encapsulates "change" in high-school math is ***slope***. For instance, you've undoubtedly had to calculate the slope of a straight line in a graph. You learned about "rise" and "run" and how to read them from a graph or from a formula. The slope is the ratio: rise over run. 
 
-Slope is a lovely ***metaphor*** for change, since everyone has a intuitive sense of the slope of a road or of a hillside. You learned to apply this intuition to reading graphs and the slope of a line. We'll exploit the intuitive ability to read a landscape in order to introduce abstract mathematical ideas in a down-to-earth setting. It's a very effective pedagogical strategy.
+Everyone has a intuitive sense of the slope of a road or of a hillside. You learned to apply this intuition to reading graphs and the slope of a line. We'll exploit the intuitive ability to read a landscape in order to introduce abstract mathematical ideas in a down-to-earth setting.
 
-But not everything that changes has a "slope." For instance, the population of a country can change, as can the number of new cases of an epidemic disease, the temperature of a cup of coffee, or the distance from Earth of a spacecraft. A major part of learning calculus is generalizing and abstracting the mathematical concept of which "slope" is an example and becoming proficient with mathematical procedures for working with change. 
+But you should learn to think of "slope" abstractly, not just as referring to the incline of a road. For instance, the population of a country can change, as can the number of new cases of an epidemic disease, the temperature of a cup of coffee, or the distance from Earth of a spacecraft. A major part of learning calculus is generalizing and abstracting the mathematical concept of which "slope" is an example and becoming proficient with mathematical procedures for working with change. 
 
 ## Continuous change
 
-Most people are comfortable with the ideas of daily changes in temperature or monthly changes in credit-card debt or quarterly changes in the unemployment rate or annual changes in the height of a child. Such things are easy to record in, say, a spreadsheet. For example, as I write, the weather forecast for the next several days (in southeastern Colorado in mid-May) is  `r mark(1110)`
+Most people are comfortable with the ideas of daily changes in temperature or monthly changes in credit-card debt or quarterly changes in the unemployment rate or annual changes in the height of a child. Such things are easy to record in, say, a spreadsheet. For example, as this paragraph is being written, the weather forecast for the next several days (in southeastern Colorado in mid-May) is  `r mark(1110)`
 
 Day | High | Low | Description
 ----|------|-----|------------
@@ -41,12 +41,12 @@ Finding a language to describe continuous change---famously, the position of the
 You already know pretty much everything there is to know about the straight-line function,
 
 - **Formula**: $f(x) \equiv a x + b$. The parameters $a$ and $b$ are the "slope" and "intercept" respectively. (More precisely, $b$ is the "y-intercept." But in statistics and modeling, it's just the "intercept.")
-- **Reading parameters from a graph**: You learned several ways to do this which are all equivalent. Maybe the easiest is to read the y-intercept off the graph. That's $b$. Then choose some non-zero $x_1$ and read off from the graph the value of $f(x_1)$. The slope is simply $$\frac{f(x_1) - b}{x_1}$$
+- **Reading parameters from a graph**: You learned several ways to do this which are all equivalent. Maybe the easiest is to read the y-intercept off the graph. That's $b$. Then choose some non-zero $x_0$ and read off from the graph the value of $f(x_1)$. The slope is simply $$\frac{f(x_0) - b}{x_0}$$
 
     The ***y-intercept method*** is a special case of a more general method, the ***two-point method***, that you can use even if the y-intercept isn't shown on the graph. Pick two specific values of $x$, which we'll call $x_0$ and $x_1$. Evalate the function at these input values and compute the rise over run: $$\mbox{rise over run} \equiv \frac{f(x_1) - f(x_0)}{x_1 - x_0}$$
 The rise over run is the slope of the straight line.
 
-    The y-intercept method is exactly the same as the two-point method with $x_0 = 0$.
+    The y-intercept method is exactly the same as the two-point method with $x_1 = 0$.
     
 - **Matching a straight-line function to data**: You might not have been taught this formally, but the basic process is easy to imitate. The process is called ***line fitting*** or, in statistics and other fields, ***linear regression***.  `r mark(1120)`
 
@@ -83,10 +83,10 @@ Step 2: Find the parameters that correspond to the line you drew.
 
 ## Average rate of change
 
-Since the slope is our standard way of representing a relationship of change, we will often use it as a way of summarizing a function. To illustrate, consider the exponential model we constructed to match the cooling-water data:  `r mark(1130)`
+Since the slope is our standard way of representing a relationship of change, we will often use it as a way of summarizing a function. To illustrate, consider the exponential model we constructed to match the cooling-water data in Section \@ref(fit-exponential):  `r mark(1130)`
 
 ```{r}
-water <- makeFun(60.7*exp(-0.019*t) + 25.93 ~ t)
+water <- makeFun(60*exp(-0.0173*t) + 25 ~ t)
 ```
 
 
@@ -115,14 +115,11 @@ For all except straight-line models, the average rate of change depends on the i
 
 -----
 
+`r insert_calcZ_exercise(9.5, "WRWIX", "Exercises/Fun/goat-dive-saucer.Rmd")`
+
+
 
 `r insert_calcZ_exercise(9.4, "KEWIX", "Exercises/Fun/snail-tear-blanket.Rmd")`
-
-
------
-
-
-`r insert_calcZ_exercise(9.5, "WRWIX", "Exercises/Fun/goat-dive-saucer.Rmd")`
 
 
 -----
@@ -153,7 +150,7 @@ For all except straight-line models, the average rate of change depends on the i
 
 For a straight-line function---think of a car driving at constant speed on a highway---it doesn't matter what you choose for $x_1$ and $x_0$ (so long as they are not identical). But for other functions, the choice does matter.
 
-Imagine a graph of the position of a car along a road as in Figure \@ref{fig:stop-and-go}. Over the course of an hour, the car travelled about 25 miles. In other words, the ***average*** speed is 25 miles/hour: the *slope* of the red line segment. Given the traffic, sometimes the car was stopped (time C), sometimes crawling (time D) and sometimes much faster than average (time B).  
+Imagine a graph of the position of a car along a road as in Figure \@ref(fig:stop-and-go). Over the course of an hour, the car travelled about 25 miles. In other words, the ***average*** speed is 25 miles/hour: the *slope* of the tan line segment. Given the traffic, sometimes the car was stopped (time C), sometimes crawling (time D) and sometimes much faster than average (time B).  
 
 ```{r stop-and-go, echo=FALSE, fig.cap="The position of an imaginary car over time (black curve). The average rate of change over various intervals is the slope of the straight-line segment connecting the start and end of the black curve in that interval."}
 f <- rfun(~ t, seed=105, n=5)
@@ -171,9 +168,9 @@ Pts <- tibble::tibble(
 Intervals <- tibble::tribble(
     ~t0, ~ t1, ~color,
     0, 1, "orange3",
-    .54, .65, "orange",
+    .54, .65, "darkorange",
     .19, .4, "green",
-    .4, .54, "brown",
+    .4, .54, "magenta",
 ) %>%
     mutate(y0=position(t0), y1=position(t1))
 slice_plot(position(t) ~ t, domain(t = c(0, 1)), size=2) %>%
@@ -185,7 +182,7 @@ slice_plot(position(t) ~ t, domain(t = c(0, 1)), size=2) %>%
     gf_refine(scale_color_identity())
 ```
 
-During the interval from B to C, the car was travelling relatively fast. The slope of the brown segment connecting the position at times B and C is the ***average*** rate of change between times B and C. It's easy to see that the average rate of change from B to C is larger than the overall average from $t=0$ to $t=1$. Calculating that slope is a matter of evaluating the position at the endpoints and dividing by the length of the interval.  `r mark(1140)`
+During the interval from B to C, the car was travelling relatively fast. The slope of the $\color{magenta}{\text{magenta}}$ segment connecting the position at times B and C is the ***average*** rate of change between times B and C. It's easy to see that the average rate of change from B to C is larger than the overall average from $t=0$ to $t=1$. Calculating that slope is a matter of evaluating the position at the endpoints and dividing by the length of the interval.  `r mark(1140)`
 :::
 
 ::: {.workedexample latex-data=""}
@@ -199,7 +196,7 @@ Rise is $x(t_C) - x(t_B) = 18 - 12.6 = 5.4$.
 
 Run is $t_C - t_B = 0.54-0.40=0.14$.
 
-The average rate of change during the interval is $5.4/0.14 = 38.6 $ miles/hour.
+The average rate of change during the interval is $5.4/0.14 = 38.6$ miles/hour.
 :::
 
 
@@ -217,7 +214,7 @@ P <- slice_plot(tree_volume(year) ~ year, domain(year = c(0, 50))) %>%
 P
 ```
 
-You are writing a business plan for a proposed pine forest. Among other things, you have to forecast the revenue that will be generated and when you will have salable product.
+You are writing a business plan for a proposed pine forest. Among other things, you have to forecast the revenue that will be generated and when you will have saleable product.
 
 They say that "time is money." Every year you wait before harvest is another year that you don't have the money. On the other hand, every year that you wait means more wood at the end. How to decide when to harvest?
 
@@ -225,15 +222,15 @@ The tree continues to grow until year 50, when it seems to have reached an equil
 
 At year 25, the tree is growing as fast as it ever will. You'll get about 600 board-feet of lumber. Should you harvest at year 25? No! That the tree is growing so fast means that you will have a lot more wood at year 26, 27, and so on. The time to harvest is when the growth is getting smaller, so that it's not worth waiting an extra year.
 
-The quantity of interest is the average rate of growth from seedling to harvest. Harvesting at year 25 will give a total change of 600 board feet over 25 years, giving an average rate of change of $600 \div 25 = 24 \mbox{board-feet-per-year}$. But if you wait until year 35, you'll have about 900 board feet, giving an average rate of change of $900 \div 35 = 25.7 \mbox{board-feet-per-year}$.
+The quantity of interest is the average rate of growth from seedling to harvest. Harvesting at year 25 will give a total change of 600 board feet over 25 years, giving an average rate of change of $600 \div 25 = 24\ \mbox{board-feet-per-year}$. But if you wait until year 35, you'll have about 900 board feet, giving an average rate of change of $900 \div 35 = 25.7\  \mbox{board-feet-per-year}$.
 
 It's easy to construct a diagram that shows whether year 35 is best for the harvest. Recall that our fundamental model of change is the straight-line function. So we're going to ***model the model*** of tree growth as a straight line function. Like the more realistic model, our straight-line model will start out with zero wood at the time of planting. And to be faithful to the realistic model, we'll insist that the straight-line intersect or touch the realistic model at some point in the future. 
 
-Figure \@ref(fig:aver-tree2) reiterates the realistic model of the tree but adds on to it several straight-line models that all give zero harvestable wood at planting time. Each of the green lines captures a scenario where the tree is harvested at the indicated time: $t_1$, $t_2$, and so on. For the perspective of representing the rate of growth per year from planting to harvest, the straight-line green models do not need to replicate the actual growth curve. The complexities of the curve are not relevant to the growth rate, which can be simplified down to a straight-line model connecting the output at planting time to the output at harvest time. In contrast, the red curves are not suitable models because they don't match the situation at any harvest time; they don't touch the curve anywhere after planting!
+Figure \@ref(fig:aver-tree2) reiterates the realistic model of the tree but adds on to it several straight-line models that all give zero harvest-able wood at planting time. Each of the green lines captures a scenario where the tree is harvested at the indicated time: $t_1$, $t_2$, and so on. For the perspective of representing the rate of growth per year from planting to harvest, the straight-line green models do not need to replicate the actual growth curve. The complexities of the curve are not relevant to the growth rate, which can be simplified down to a straight-line model connecting the output at planting time to the output at harvest time. In contrast, the $\color{magenta}{\text{magenta}}$ curve is not a suitable model because it doesn't match the situation at any harvest time; it doesn't touch the curve anywhere after planting!
 
 ```{r aver-tree2, echo=FALSE, fig.cap="Modeling the tree-growth model with straight lines connecting planting time to various harvest times. The slope of each line is the average rate of growth for that planting time.", warning=FALSE}
 Pts <- tibble::tibble(
-  harvest = c(15, 25, 35, 50),
+  harvest = c(15, 25, 31, 50),
   amount = tree_volume(harvest),
   label = as.expression(paste0("t[", 1:length(harvest), "]"))
 )
@@ -241,17 +238,17 @@ P %>%
   gf_text(0 ~ harvest, data = Pts, label = ~ label, parse=TRUE ) %>%
   gf_segment(0 + amount ~ 0 + harvest, data = Pts, color="green") %>%
   gf_point(amount ~ harvest, data = Pts, size=3, color="green", alpha=0.5) %>% 
-  gf_abline(intercept=0, slope=40, color="orange3") %>%
+  gf_abline(intercept=0, slope=40, color="magenta") %>%
   gf_segment(0 + amount ~ harvest + harvest, data = Pts, color="gray")
 ```
 
-To maximize average lumber volume per year, choose a harvest time that produces the steepest possible green segment. From Figure \@ref(fig:aver-tree2) you can see that it's possible to do a little better by harvesting before year 35 (shown as $t_3$ in the diagram). 
+To maximize average lumber volume per year, choose a harvest time that produces the steepest possible green segment. From Figure \@ref(fig:aver-tree2) this is the model that glances the growth curve near year 31 (shown as $t_3$ in the diagram). 
 
-It's often best to create a function that shows explicitly what one is trying to optimize. Here that's ave_growth(year) $\equiv$ volume(year)/year and is plotted in Figure \@ref(fig:aver-tree3).
+It's best to find the argmax by creating a function that shows explicitly what one is trying to optimize. (In Chapter \@ref(optim-and-shape) we'll use the name ***objective function*** to identify such function.)  Here, the objective function is ave_growth(year) $\equiv$ volume(year)/year. See Figure \@ref(fig:aver-tree3).
 
 
 ```{r aver-tree3, echo=FALSE, fig.cap="Graph of the average-growth function ave_growth(year), constructed by dividing volume(year) by year."}
-slice_plot(tree_volume(year)/year ~ year, domain(year = c(5, 50))) %>%
+slice_plot(tree_volume(year)/year ~ year, domain(year = c(2, 50))) %>%
   gf_labs(y = "Annual growth (board-feet)",
           x = "Year after planting")
 ```
@@ -261,12 +258,7 @@ The graph of ave_growth(year) makes it clear that the maximum average growth fro
 
 
 
------
 
-
-`r insert_calcZ_exercise(9.10, "HRTIX", "Exercises/Fun/lion-find-bowl.Rmd")`
-
------
 
 
 
@@ -318,7 +310,7 @@ Dlog <- makeFun((log(t+0.1) - log(t))/0.1 ~ t)
 ```
 
 
-```{r compare-pattern-book-slopes, echo=FALSE, out.width="50%", fig.show="hold", fig.cap="Comparing the pattern-book function (blue) to it's slope function (red)",warning=FALSE}
+```{r compare-pattern-book-slopes, echo=FALSE, out.width="50%", fig.show="hold", fig.cap="Comparing the pattern-book function (blue) to its slope function (tan)",warning=FALSE}
 slice_plot(sin(x) ~ x, domain(x=c(-10,10)), color="dodgerblue") %>%
   slice_plot(Dsin(x) ~ x, color="orange3", alpha=0.25, size=2) %>%
   gf_labs(title="Sinusoid")
@@ -335,16 +327,6 @@ slice_plot(1/x ~ x, domain(x=c(0.1,5)), color="dodgerblue", npts=500) %>%
   gf_lims(y=c(-2.5, 7.5))
 ```
 
------
-
-`r insert_calcZ_exercise(9.12, "CUXLR", "Exercises/Fun/slope-web-1.Rmd")`
-
------
-
-`r insert_calcZ_exercise("9.13", "MW03ay", "Exercises/Fun/lamb-put-bulb.Rmd")`
-
------
-
 ::: {.why}
 Why did you plot both the function and the slope function in the same graphics frame?  `r mark(1160)`
 
@@ -352,7 +334,7 @@ Excellent question! In general, it is illegitimate to plot a function and it's s
 
 An exception is for the pattern-book functions. These always take a number as input and produce a number as output. The slope function of a pattern-book function also produces a number as output. 
 
-This exception is not a good excuse for indulging a bad practice. Perhaps you'll forgive me if I point out that I wanted to emphasize the point by demonstrating it.
+This exception is not a good excuse for indulging a bad practice. Perhaps you'll forgive the authors if they claim they wanted to emphasize the point by demonstrating it.
 :::
 
 ::: {.takenote}
@@ -362,6 +344,8 @@ $$\require{color}{\cal D}_{\color{blue}x} g(x, t) \equiv \frac{g({\color{blue}x 
 {\cal D}_{\color{red}t} g(x, t) \equiv \frac{g(x, {\color{red}t + 0.1}) - g(x, t)}{0.1}$$
 The input referred to in the subscript following ${\cal D}$ is called the ***with-respect-to input***.
 :::
+
+The idealization of the slope function involves replacing $h=0.1$ with something much smaller. What "much smaller" means has been a complicated issue in the history of calculus. Today, we write $h \rightarrow 0$ to signify the process of making $h$ smaller and smaller, but never zero. When $h$ has this "much smaller" value, the rate of change over the interval $x$ to $x+h$ becomes a rate of change "at $x$", also called the ***instantaneous rate of change*** at $x$. For the pattern-book functions, $h=0.1$ or smaller gives a pretty good approximation to the instantaneous rate of change. Later, in Block 2, we'll see how to arrange $h$ so that it's "much smaller" for functions in general.
 
 
 ::: {.intheworld}
@@ -392,4 +376,16 @@ Early in the tree's life, the growth is high compared to the volume of the tree.
 The best time to harvest is when the annual "interest rate" paid by the growing tree falls to the level of the next best available investment. Suppose that investment would pay 10% per year. Then harvest the tree when the function values falls below 10%. That happens at year 24. If the next best investment paid only 5% (blue horizontal line), the harvest should be made at about year 29. If money could be borrowed at 2%, it would be worthwhile to harvest the tree still later.
 :::
 
+`r insert_calcZ_exercise("9.10", "HRTIX", "Exercises/Fun/lion-find-bowl.Rmd")`
 
+
+
+-----
+
+`r insert_calcZ_exercise(9.12, "CUXLR", "Exercises/Fun/slope-web-1.Rmd")`
+
+-----
+
+`r insert_calcZ_exercise("9.13", "MW03ay", "Exercises/Fun/lamb-put-bulb.Rmd")`
+
+-----

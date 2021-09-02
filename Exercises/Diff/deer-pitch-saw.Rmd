@@ -6,6 +6,7 @@ date: 2021-06-09
 version: 0.1
 tags: [first, second, third]
 id: deer-pitch-saw
+global-id: "helxs"
 ---
 
 ```{r deer-pitch-saw-default, include = FALSE}
@@ -71,16 +72,21 @@ F10 <- antiD(f10(x) ~ x)
 ```
 
 
-```{r echo=FALSE, out.width = "50%", fig.show="hold"}
+```{r echo=FALSE, out.width = "100%",  fig.show="hold"}
 dom <- domain(x = c(-5, 5))
-slice_plot(f5(x) ~ x, dom) %>% gf_labs(title = "Function A()")
-slice_plot(ddf8(x) ~ x, dom) %>% gf_labs(title = "Function dd1()") 
-slice_plot(f2(x) ~ x, dom) %>% gf_labs(title = "Function B()")
-slice_plot(ddf2(x) ~ x, dom) %>% gf_labs(title = "Function dd2()")
-slice_plot(f3(x) ~ x, dom) %>% gf_labs(title = "Function C()")
-slice_plot(ddf9(x) ~ x, dom) %>% gf_labs(title = "Function dd3()")
-slice_plot(f8(x) ~ x, dom) %>% gf_labs(title = "Function D()")
-slice_plot(ddf5(x) ~ x, dom) %>% gf_labs(title = "Function dd4()")
+ggpubr::ggarrange(
+  slice_plot(f5(x) ~ x, dom) %>% gf_labs(title = "Function A()"),
+  slice_plot(ddf8(x) ~ x, dom) %>% gf_labs(title = "Function dd1()") , ncol=2)
+ggpubr::ggarrange(
+  slice_plot(f2(x) ~ x, dom) %>% gf_labs(title = "Function B()"),
+  slice_plot(ddf3(x) ~ x, dom) %>% gf_labs(title = "Function dd2()"), ncol=2)
+ggpubr::ggarrange(
+  slice_plot(f3(x) ~ x, dom) %>% gf_labs(title = "Function C()"),
+  slice_plot(ddf2(x) ~ x, dom) %>% gf_labs(title = "Function dd3()"), ncol=2)
+ggpubr::ggarrange(
+  slice_plot(f8(x) ~ x, dom) %>% gf_labs(title = "Function D()"),
+  slice_plot(ddf5(x) ~ x, dom) %>% gf_labs(title = "Function dd4()"),
+  ncol=2)
 ```
 
 ```{r deer-pitch-saw-QA1, echo=FALSE}
@@ -90,7 +96,6 @@ askMC(
     "dd2()" = "",
     "dd3()" = "",
     "+dd4()+" = "",
-    "not shown" = "",
     random_answer_order = FALSE
 )
 ```
@@ -100,10 +105,9 @@ askMC(
 askMC(
   prompt = "The second derivative of Function B() is which of the following:",
     "dd1()" = "",
-    "+dd2()+" = "",
-    "dd3()" = "",
+    "dd2()" = "",
+    "+dd3()+" = "",
     "dd4()" = "",
-    "not shown" = "",
     random_answer_order = FALSE
 )
 ```
@@ -112,10 +116,9 @@ askMC(
 askMC(
   prompt = "The second derivative of Function C() is which of the following:",
     "dd1()" = "",
-    "dd2()" = "",
+    "+dd2()+" = "",
     "dd3()" = "",
     "dd4()" = "",
-    "+not shown+" = "",
     random_answer_order = FALSE
 )
 ```
@@ -127,7 +130,6 @@ askMC(
     "dd2()" = "",
     "dd3()" = "",
     "dd4()" = "",
-    "not shown" = "",
     random_answer_order = FALSE
 )
 ```

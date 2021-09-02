@@ -40,7 +40,7 @@ slice_plot(log(x) ~ x, domain(x=c(-5,5)))
 ```
 :::
 
-In a purely mathematical sense, the problem with functions being undefined over an extended part of a domain has been handled with cunning and imagination. But the solution---the invention of complex numbers---is not our concern here. Instead, we're going to embrace functions that have a domain smaller than the whole number line and see what we can do with them. 
+In a purely mathematical sense, the problem with functions being undefined over an extended part of a domain has been handled with cunning and imagination, but the solution---the invention of complex numbers---is not our concern here. Instead, we're going to embrace functions that have a domain smaller than the whole number line and see what we can do with them. 
 
 To illustrate, let's use computer notation to create a function whose domain is $x < 1$. To do this, we need a way to write "if," as in, "If $x$ is 1 or greater, return `NaN`." We'll use a function in R that let's us ask a TRUE/FALSE question and, depending on the answer, do one or another calculation. The question-answering R function is `ifelse()` whose name is remarkably descriptive. The `ifelse()` function takes three arguments. The first is the question to be asked, the second is the value to return if the answer is "yes," and the third is the value to return for a "no" answer.
 
@@ -66,7 +66,7 @@ R notation              | English
 
 Having an ability to split up the domain of a function and provide different formula for each of the pieces allows us to
 construct ***piecewise functions***. To illustrate, the function $h(x) \equiv |x|$. You'll recognize this as the "absolute value" function. The intuitive algorithm is to "strip the negative sign, if any" from the input. But with the ability to divide the domain into pieces, we gain access to a less mysterious sort of arithmetic operation and can re-write $$h(x) \equiv \left\{ 
-\begin{array}{cl} x & \text{for}\ 0 \leq x\\ -x & \mbox{otherwise}\end{array}
+\begin{array}{ll}  x & \text{for}\ 0 \leq x \\ \text{- x} & \mbox{otherwise}\\\end{array}
 \right.$$ 
 Or, in computer notation
 ```{r}
@@ -126,7 +126,7 @@ $$\text{other_ccf}(x) \equiv 15$$.
 :::
 
 
-Our last example concerns a bit of familiar technology: music synthesis. Generating a pure tone electronically is easy done using a sinusoid. Generating a note with rich instrumental timbre can be accomplished by a linear combination of sinusoids. Of course, the note will be localized in time. This could be accomplished by multiplying the sinusoids by a gaussian function envelope.  `r mark(1540)` 
+Our last example concerns a bit of familiar technology: music synthesis. Generating a pure tone electronically is easily done using a sinusoid. Generating a note with rich instrumental timbre can be accomplished by a linear combination of sinusoids. Of course, the note will be localized in time. This could be accomplished by multiplying the sinusoids by a gaussian function envelope.  `r mark(1540)` 
 
 It turns out that the gaussian function, `dnorm()`, does not generate a realistic sound. Instead, a more complicated envelope is used, such as the [ADSR function](https://en.wikipedia.org/wiki/Envelope_(music)) shown in Figure \@ref(fig:ADSR). The function has six (!) parameters: the time the key is pressed, the duration A of the "attack" phase when the sound amplitude is increasing in response to the impulse imposed on the key, a decay of duration D to an output level S that lasts until the key is released, then a decay to zero over duration R. It's reasonable to think of the D and S phases as a piecewise linear approximation to exponential decay.
 
@@ -155,5 +155,5 @@ adsr <- function(a,d,ts, s,r) {
 ```
 
 
-
+`r insert_calcZ_exercise(13.3, "EDKYV", "Exercises/Fun/bigger-two.Rmd")`
 

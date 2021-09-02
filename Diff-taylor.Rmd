@@ -143,7 +143,7 @@ a_4 = \frac{1}{2 \cdot 3 \cdot 4}
 $$
 So the 4th-order Taylor polynomial approximation to the exponential at $x=0$ is $$g(x) = 1 + x + \frac{1}{2} x + \frac{1}{2\cdot 3} x^2 + \frac{1}{2\cdot 3} x^3 +\frac{1}{2\cdot 3\cdot 4} x^4$$
 
-Figure \@ref{fig:taylor-exp-4} shows the exponential function $e^x$ and its 4th-order Taylor polynomial approximation near $x=0$:
+Figure \@ref(fig:taylor-exp-4) shows the exponential function $e^x$ and its 4th-order Taylor polynomial approximation near $x=0$:
 
 ```{r taylor-exp-4, echo=FALSE, class.source="code-hide", fig.cap="The 4th-order Taylor polynomial approximation to $e^x$ arount $x=0$"}
 slice_plot(exp(x) ~ x, domain(x=c(-2,2)), size=3, alpha = 0.25) %>%
@@ -152,7 +152,7 @@ slice_plot(exp(x) ~ x, domain(x=c(-2,2)), size=3, alpha = 0.25) %>%
 
 The polynomial is exact at $x=0$ but the ***error*** ${\cal E}(x)$ grows with increasing distance from $x=0$:
 
-```{r taylor-exp-4, echo=FALSE, class.source="code-hide", fig.cap="The error from a 4th-order Taylor polynomial approximation to $e^x$ around $x=0$.", out.width="50%", fig.show="hold"}
+```{r taylor-exp-5, echo=FALSE, class.source="code-hide", fig.cap="The error from a 4th-order Taylor polynomial approximation to $e^x$ around $x=0$.", out.width="50%", fig.show="hold"}
 Pts <- tibble(x = seq(-2, 2, length=100),
               y = exp(x),
               y_approx = 1 + x + x^2/2 + x^3/6 + x^4/24,
@@ -166,7 +166,7 @@ gf_path(log10(y_error) ~ log10(x_abs), data = Pts, color=~sign(x)) %>%
   gf_refine(scale_color_continuous(guide = 'none'))
 ```
 
-From the plot of $\log_{10} {\cal E}(x)$ versus $\log_{10} | x |$ you can see that the error grows from zero at $x=0$ as a power-law function. Measuring the exponent of the power-law from the slope of the graph on log-log axes give ${\cal E}(|x|) = a |x|^5$. This is typical of Taylor polynomials: for a polynomial of degree $n$, the error will grow as a power-law with exponent $n+1$. This means that the higher is $n$, the faster $\lim_{x\rightarrow x_0}{\cal E}(x) \rightarrow 0$. On the other hand, since ${\cal E}_x$ is a power law function, as $x$ gets further from $x_0$ the error grows as as $\left(x-x_0\right)^{n+1}$
+From the plot of $\log_{10} {\cal E}(x)$ versus $\log_{10} | x |$ in Figure \@ref(fig:taylor-exp-5)you can see that the error grows from zero at $x=0$ as a power-law function. Measuring the exponent of the power-law from the slope of the graph on log-log axes give ${\cal E}(|x|) = a |x|^5$. This is typical of Taylor polynomials: for a polynomial of degree $n$, the error will grow as a power-law with exponent $n+1$. This means that the higher is $n$, the faster $\lim_{x\rightarrow x_0}{\cal E}(x) \rightarrow 0$. On the other hand, since ${\cal E}_x$ is a power law function, as $x$ gets further from $x_0$ the error grows as as $\left(x-x_0\right)^{n+1}$
 :::
 
 
@@ -499,6 +499,20 @@ the second edition of 1716.
 knitr::include_graphics("www/lhopital-cover.png")
 ```
 
+::: {.intheworld}
+[Brooke Taylor](https://en.wikipedia.org/wiki/Brook_Taylor) (1685-1731), a near contemporary of Newton, published his work on approximating polynomials in 1715. Wikipedia reports: "[T]he importance of [this] remained unrecognized until 1772, when Joseph-Louis Lagrange realized its usefulness and termed it 'the main [theoretical] foundation of differential calculus'."
+
+```{r brook-taylor, echo=FALSE, fig.cap="Brook Taylor [Source](https://en.wikipedia.org/wiki/Brook_Taylor#/media/File:Taylor_Brook_Goupy_NPG.jpg)", out.width = "40%", fig.align="center"}
+knitr::include_graphics(normalizePath("www/Brook_Taylor.jpg"))
+```
+
+Taylor's work preceded by about a century the development of techniques for working with data. One of the pioneers in these new techniques was Carl Friedrich Gauss (1777-1855), after whom the gaussian function is named. Gauss's techniques are the foundation of an incredibly important statistical method that is ubiquitous today: ***least squares***. Least squares provides an entirely different way to find the coefficients on approximating polynomials (and an infinite variety of other function forms). The R/mosaic `fitModel()` function for polishing parameter estimates is based on least squares. In Block 5, we'll explore least squares and the mathematics underlying the calculations of least-squares estimates of parameters.
+
+Due to the importance of Taylor polynomials in the development of calculus, many students assume their use extends to constructing models from data. They also assume that third- and higher-order monomials are a good basis for modeling data. Both these assumptions are wrong. Least squares is the proper foundation for working with data.
+
+:::
+
+<!--
 ## Fitting polynomials
 
 Taylor polynomials provide a means to approximate continuous and smooth functions around a center $x_0$. So long as $x$ is very close to $x_0$, the approximation will be excellent. But Taylor polynomials aren't a solution to every problem. Consider the piecewise continuous function, $ramp(x-1)$, in Figure \@ref(fig:ramp-Taylor).
@@ -527,4 +541,4 @@ slice_plot(sin(x) - fmod(x) ~ x, domain(x=c(0, pi/2))) %>%
   slice_plot(sin(x) - (x - x^3/6) ~ x, color="green")
 ```
 
-
+-->

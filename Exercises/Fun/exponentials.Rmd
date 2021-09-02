@@ -10,15 +10,13 @@ library(mosaic)
 library(mosaicCalc)
 ```
 
-Some years ago, you learned to calculate the slope of a straight-line function. If you had a graph, you would mark out a **run** and the corresponding **rise**, then compute rise/run. If you had a formula definition, e.g. $f(x) \equiv 3 - 4 x$, you would simply read the slope off as the **coefficient** on the function input. Here, the input is named $x$ and its coefficient in the formula is $-4$. 
-
 In this question, we ask you to estimate the slope from a graph of the function. But the function is **exponential**, so not a straight line. 
 
 A fundamental idea in calculus is that even a function with a curved graph, if you zoom in closely around a given point, will look like a straight line. And you know how to calculate the slope of a straight line.
 
 When the graph is curved, the slope will be different at different points along the graph. So there's not a single slope for the function. Still, we can talk about the "slope at a point."
 
-One way to specify a point on a function's graph is to give the horizontal coordinate: the **input** to the function. But here we're going to give you the **output** of the function.  
+One way to specify a point on a function's graph is to give the horizontal coordinate: the **input** to the function. But here we're going to give you the **output** of the function. So long as the function passes the ***horizontal-line test***, as the exponential does, specifying any particular output in the function's range *uniquely* identifies a corresponding input. 
 
 Estimate the slope of the exponential function $g(x) \equiv e^x$ at several inputs, which we'll call $x_1$, $x_2$, $x_3$ and $x_4$. We won't give you numerical values for the $x_i$ points, but we will tell you the output of the function at each of those inputs. the values of $x$ where:
 
@@ -27,11 +25,8 @@ b. $g(x_2) = 5$
 c. $g(x_3) = 10$
 d. $g(x_4) = 0.1$
 
-The code sandbox below already contains an R command to plot out the mathematical exponential function over the domain $-3 \leq x \leq 3$. For each of (a)-(d), modify the command to zoom in on the domain around around the appropriate value of $x_i$.  Then calculate the slope  of  the curve at that $x_i$.
+For each of (a)-(d), use a sandbox to plot the exponential function $e^x$ on a domain zoomed in  around around the appropriate value of $x_i$.  Then calculate the slope  of  the curve at that $x_i$.
 
-```{r daily-digital-02-sandbox1, exercise=TRUE, exercise.cap="Zooming in on exp(x)", exercise.eval=FALSE, exercise.lines=4, exercise.completion=FALSE, exercise.startover=TRUE, exercise.diagnostics=TRUE}
-slice_plot(exp(x) ~ x, domain(x = c(-3, 3)))
-```
 
 ```{r daily-digital-02-QA1, echo=FALSE}
 # indicate correct choices with +_+ in the name of the list item.
@@ -43,10 +38,4 @@ askMC(
     "The slope at each value of $x$ is the same as $\\sqrt{x}.$" = "That would being saying the slope at the $x_i$ is $\\approx 1.52$. Is that what you got?"
 )
 ```
-
-Now that you've found the answer and seen how to specify the domain on a slice plot, here's a technique that can make your work a bit easier. Add this to the command that plots $e^x$ on the domain $-3 \leq x \leq 3$
-
-    %>% plotly::ggplotly()
-
-Make sure the `%>%` is on the *same line* as the `slice_plot()` expression itself. Run the amended command then hover the cursor over the graph.
 
