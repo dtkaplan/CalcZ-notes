@@ -98,6 +98,7 @@
 <li><a class="" href="optim-and-shape.html"><span class="header-section-number">23</span> Optimization</a></li>
 <li><a class="" href="partial-change.html"><span class="header-section-number">24</span> Partial change</a></li>
 <li><a class="" href="local-approximations.html"><span class="header-section-number">25</span> Local approximations</a></li>
+<li><a class="" href="taylor-polynomial.html"><span class="header-section-number">26</span> Approximation near a reference input</a></li>
 </ul>
 
         <div class="book-extra">
@@ -142,9 +143,9 @@ Each of the functions is being scaled by a quantity—3, 5, and -2 in this examp
 <p>Even better, there is an automatic, reliable, and fast algorithm for finding the scalars for a set of functions that are to be combined to match data as closely as possible. So the modeler just has to select the functions to be used, the computer can find the coefficients. (We’ll explore the mathematics and methods of linear combinations, usually called <strong><em>linear algebra</em></strong>, in Block 5.)</p>
 <details><summary><strong>Exercise 11.1</strong>: <span><a name="File:%20Exercises/Fun/combining-hump-funs.Rmd" href="#JWUVA"><img src="www/icons8-signpost.png" title="Location: Exercises/Fun/combining-hump-funs.Rmd" width="12px"></a><span style="color: red; font-size: 9pt;">JWUVA</span>
 </span></summary><p>The graph shows two gaussian functions, <span class="math inline">\(g_1(t)\)</span> and <span class="math inline">\(g_2(t)\)</span></p>
-<div class="inline-figure"><img src="CalcZ-notes_files/figure-html/unnamed-chunk-174-1.png" width="90%" style="display: block; margin: auto;"></div>
+<div class="inline-figure"><img src="CalcZ-notes_files/figure-html/unnamed-chunk-185-1.png" width="90%" style="display: block; margin: auto;"></div>
 <p>A linear combination of the gaussian functions is shown in Graph (A).</p>
-<div class="inline-figure"><img src="CalcZ-notes_files/figure-html/unnamed-chunk-175-1.png" width="90%" style="display: block; margin: auto;"></div>
+<div class="inline-figure"><img src="CalcZ-notes_files/figure-html/unnamed-chunk-186-1.png" width="90%" style="display: block; margin: auto;"></div>
 <pre>What is the linear combination of  $$g_1(t)$$ and $$g_2(t)$$  shown in Graph (A)? 
 
 
@@ -157,7 +158,7 @@ Each of the functions is being scaled by a quantity—3, 5, and -2 in this examp
 
 </pre>
 <p>Another linear combination of the gaussian functions is shown in Graph (B).</p>
-<div class="inline-figure"><img src="CalcZ-notes_files/figure-html/unnamed-chunk-176-1.png" width="90%" style="display: block; margin: auto;"></div>
+<div class="inline-figure"><img src="CalcZ-notes_files/figure-html/unnamed-chunk-187-1.png" width="90%" style="display: block; margin: auto;"></div>
 <pre>Which  linear combination of $$g_1(t)$$ and $$g_2(t)$$ is shown in Graph (B)? 
 
 
@@ -446,7 +447,7 @@ Figure 11.5: Subscriptions to the web messaging service Yik Yak grew exponential
 </div>
 <details><summary><strong>Exercise 11.6</strong>: <span><a name="File:%20Exercises/Fun/maple-pitch-jacket.Rmd" href="#LPhyTb"><img src="www/icons8-signpost.png" title="Location: Exercises/Fun/maple-pitch-jacket.Rmd" width="12px"></a><span style="color: red; font-size: 9pt;">LPhyTb</span>
 </span></summary><p>The graph shows (in black) a function constructed as the product of two basic modeling functions. The graph also shows a pair of blue curves that encompass the black function. These are called the <strong><em>envelope</em></strong> of the black function.</p>
-<div class="inline-figure"><img src="CalcZ-notes_files/figure-html/unnamed-chunk-179-1.png" width="90%" style="display: block; margin: auto;"></div>
+<div class="inline-figure"><img src="CalcZ-notes_files/figure-html/unnamed-chunk-190-1.png" width="90%" style="display: block; margin: auto;"></div>
 <pre>What are the two basic modeling functions being multiplied? 
 
 
@@ -487,11 +488,11 @@ The 2/15 is scaling the output of <span class="math inline">\(\arccos()\)</span>
                   <span class="fl">10</span><span class="op">*</span><span class="fu"><a href="https://rdrr.io/r/base/Trig.html">sin</a></span><span class="op">(</span><span class="fl">2</span><span class="op">*</span><span class="va">pi</span><span class="op">*</span><span class="va">t</span><span class="op">/</span><span class="fl">1</span><span class="op">)</span> <span class="op">+</span> <span class="fl">50</span> <span class="op">~</span> <span class="va">t</span><span class="op">)</span>
 <span class="fu">slice_plot</span><span class="op">(</span><span class="fu">temp</span><span class="op">(</span><span class="va">day</span><span class="op">)</span> <span class="op">~</span> <span class="va">day</span>, <span class="fu">domain</span><span class="op">(</span>day<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">90</span>, <span class="fl">180</span><span class="op">)</span><span class="op">)</span>,  npt<span class="op">=</span><span class="fl">1000</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu">gf_labs</span><span class="op">(</span>y <span class="op">=</span> <span class="st">"Temperature  (F)"</span>, x <span class="op">=</span> <span class="st">"Day of year"</span><span class="op">)</span></code></pre></div>
-<div class="inline-figure"><img src="CalcZ-notes_files/figure-html/unnamed-chunk-181-1.png" width="90%" style="display: block; margin: auto;"></div>
+<div class="inline-figure"><img src="CalcZ-notes_files/figure-html/unnamed-chunk-192-1.png" width="90%" style="display: block; margin: auto;"></div>
 <p>You can see in the graph the slow seasonal change in temperature represented by a sine function with a period of 365 days, as well as the relatively rapid hour-by-hour variation over the course of 24 hours. There are two different mechanisms at work, 1) the annual orbit of the Earth around the Sun which creates the seasons, 2) the daily rotation of the Earth around its axis. Each mechanism is approximated by a simple function. The overall pattern can be represented by a sum of functions.</p>
 <p>We are going to use this strategy of modeling complex phenomena as a sum of two or more simple functions.</p>
 <p><strong>Problem 1</strong> Epidemics are often modeled as a series of “waves.” Each wave involves different people. Let’s imagine two epidemic waves, one passing through the “dodgerblue” population and a smaller one through the “orange3” population, like this:</p>
-<div class="inline-figure"><img src="CalcZ-notes_files/figure-html/unnamed-chunk-182-1.png" width="90%" style="display: block; margin: auto;"></div>
+<div class="inline-figure"><img src="CalcZ-notes_files/figure-html/unnamed-chunk-193-1.png" width="90%" style="display: block; margin: auto;"></div>
 <pre>Assuming that there were no way to distinguish between red and blue cases, the epidemic would look like just one curve. Which of the following curves would the overall epidemic look like? (The colors are just  to  help you  distinguish the different functions) 
 
 
@@ -504,7 +505,7 @@ The 2/15 is scaling the output of <span class="math inline">\(\arccos()\)</span>
 [[Yes. Each wave adds another layer to the cumulative number of cases]]
 
 </pre>
-<div class="inline-figure"><img src="CalcZ-notes_files/figure-html/unnamed-chunk-183-1.png" width="90%" style="display: block; margin: auto;"></div>
+<div class="inline-figure"><img src="CalcZ-notes_files/figure-html/unnamed-chunk-194-1.png" width="90%" style="display: block; margin: auto;"></div>
 <p>Each of the functions shown in the above graph is a “linear combination” of the red function and the blue function. The real total cumulative cases is “wave1(t)” plus “wave2(t).” The other functions are made up and are irrelevant to the real epidemic. Still, we can ask what arithmetic combination of “wave1(t)” and “wave2(t)” was used to create the made-up function.</p>
 <pre>For made-up function (A) in  the graph, what was the linear combination? 
 
@@ -520,7 +521,7 @@ The 2/15 is scaling the output of <span class="math inline">\(\arccos()\)</span>
 </details><details><summary><strong>Exercise 11.8</strong>: <span><a name="File:%20Exercises/Fun/multiplying-functions.Rmd" href="#MWDKVA"><img src="www/icons8-signpost.png" title="Location: Exercises/Fun/multiplying-functions.Rmd" width="12px"></a><span style="color: red; font-size: 9pt;">MWDKVA</span>
 </span></summary><p>It’s very common in communications systems to have a signal that is a sine-wave <em>carrier</em> that is <em>modulated</em> by another function. That is, the carrier is <em>multiplied</em> by the other function: <code>waveform(t) = modulator(t)</code> <span class="math inline">\(\times\)</span> <code>carrier(t)</code>.</p>
 <p>Here are four examples in each of which a sine with a period of about 2 units is modulated by another function. In each case, that other function is one of the modeling functions we have studied.</p>
-<div class="inline-figure"><img src="CalcZ-notes_files/figure-html/unnamed-chunk-185-1.png" width="90%" style="display: block; margin: auto;"></div>
+<div class="inline-figure"><img src="CalcZ-notes_files/figure-html/unnamed-chunk-196-1.png" width="90%" style="display: block; margin: auto;"></div>
 <pre>(A) Of what sort is the function  that is  modulating  the carrier? 
 
 
@@ -533,7 +534,7 @@ The 2/15 is scaling the output of <span class="math inline">\(\arccos()\)</span>
 [[Correct.]]
 
 </pre>
-<img src="CalcZ-notes_files/figure-html/unnamed-chunk-186-1.png" width="90%" style="display: block; margin: auto;"><pre>(B) Of what sort is the function  that is  modulating  the carrier? 
+<img src="CalcZ-notes_files/figure-html/unnamed-chunk-197-1.png" width="90%" style="display: block; margin: auto;"><pre>(B) Of what sort is the function  that is  modulating  the carrier? 
 
 
 
@@ -545,7 +546,7 @@ The 2/15 is scaling the output of <span class="math inline">\(\arccos()\)</span>
 [[Good.]]
 
 </pre>
-<div class="inline-figure"><img src="CalcZ-notes_files/figure-html/unnamed-chunk-187-1.png" width="90%" style="display: block; margin: auto;"></div>
+<div class="inline-figure"><img src="CalcZ-notes_files/figure-html/unnamed-chunk-198-1.png" width="90%" style="display: block; margin: auto;"></div>
 <pre>(C) Of what sort is the function  that is  modulating  the carrier? 
 
 
@@ -558,7 +559,7 @@ The 2/15 is scaling the output of <span class="math inline">\(\arccos()\)</span>
 [[Right!]]
 
 </pre>
-<img src="CalcZ-notes_files/figure-html/unnamed-chunk-188-1.png" width="90%" style="display: block; margin: auto;"><pre>(D) Of what sort is the function that is modulating  the carrier? 
+<img src="CalcZ-notes_files/figure-html/unnamed-chunk-199-1.png" width="90%" style="display: block; margin: auto;"><pre>(D) Of what sort is the function that is modulating  the carrier? 
 
 
 
@@ -726,7 +727,7 @@ Use the `mosaicData::Births_CDC` data and find a segment with a linear secular t
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>CalcZ Student Notes</strong>" was written by Daniel Kaplan. It was last built on 2021-08-26.</p>
+    <p>"<strong>CalcZ Student Notes</strong>" was written by Daniel Kaplan. It was last built on 2021-09-01.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">
