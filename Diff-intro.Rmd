@@ -103,7 +103,7 @@ A car's speedometer shows the speed at each moment---or ***instant***---of the t
 
 You can easily judge from a graph of $f()$ whether the instantaneous speed is faster or slower than the average speed. Better, however, if we simply record the speedometer reading and graph that, as in \@ref(fig:instant-speed). You can read off the speed from the graph at any instant simply by reference to the vertical axis.
 
-```{r instant-speed, echo=FALSE, fig.cap="The ***instantaneous*** velocity of the car whose position vs time is shown in Figure \\@ref(fig:stop-and-go2)."}
+```{r instant-speed, echo=FALSE, fig.cap="The ***instantaneous*** velocity of the car whose position vs time is shown in Figure @@ref(fig:stop-and-go2)."}
 f <- rfun(~ t, seed=105, n=5)
 raw <- function(t) 
         f(t) - t - 30*dnorm(t, 0, 3) + 60*dnorm(t,7,1)
@@ -157,11 +157,11 @@ In this book, we will mainly use the one-line notation, $\partial_x f$, but it m
 
 If you've studied calculus before, you have likely seen the $f'$ notation. This is admirably concise but is only viable in a narrow circumstance: functions that take a single input. What $f'$ leaves out is a means to specify a crucial aspect of differentiation, the **with-respect-to variable**. The general situation for differentiation involves functions of one or more variables, for example, $g(x, y, z)$. For such functions, you need to specify which is the with-respect-to variable. For instance, we can differentiate $g()$ three different ways, each way incrementing one or another of the three inputs: `r mark(2075)`
 
-$$\partial_z g(x, y, z) \equiv \frac{g(x, y, z+h) - g(x, y, z)}{h}\\ 
-\ \\
-\partial_x g(x, y, z) \equiv \frac{g(x+h, y, z) - g(x, y, z)}{h}\\ 
-\ \\
-\partial_y g(x, y, z) \equiv \frac{g(x, y+h, z) - g(x, y, z)}{h}$$
+$$\partial_z g(x, y, z) \equiv \frac{g(x, y, z+h) - g(x, y, z)}{h}$$ 
+
+$$\partial_x g(x, y, z) \equiv \frac{g(x+h, y, z) - g(x, y, z)}{h}$$
+
+$$\partial_y g(x, y, z) \equiv \frac{g(x, y+h, z) - g(x, y, z)}{h}$$
 
 At this point in your studies, you haven't seen why you might choose to differentiate a function with respect to one variable or another. That will come in time. But we want to set you up with notation that won't narrow your options. `r mark(2080)`
 
@@ -249,40 +249,49 @@ Segs <- create_segments(sin(x) ~ x, domain(x=c(-.1,pi)), nsegs=100)
 
 Figure \@ref(fig:slope-visualization-examples) shows several examples of the slope function visualization.
 
-```{r slope-visualization-examples, echo=FALSE, fig.cap="Slope-function visualizations (left) of several pattern-book functions (right).", fig.height=3, fig.width=7, fig.show="hold", out.width="50%"}
+```{r slope-visualization-examples, echo=FALSE, fig.cap="Slope-function visualizations (left) of several pattern-book functions (right).", fig.height=3, fig.width=7, fig.show="hold", out.width="100%"}
 Segs <- create_segments(exp(x) ~ x, domain(x=c(-pi,pi)), nsegs=30)
-slice_plot(exp(x) ~ x, domain(x=c(-pi, pi))) %>%
-    gf_labs(title="exp(x)")
+
+ggpubr::ggarrange(
+  slice_plot(exp(x) ~ x, domain(x=c(-pi, pi))) %>%
+    gf_labs(title="exp(x)"),
 gf_segment(y + yend ~ x + xend, data = Segs, 
            color=~slope,size=1.3, lineend="round") %>%
   gf_point(0 ~ start, size=1, color="green") %>%
     gf_labs(title="exp(x) slope-function visualization")  %>%
-    gf_refine(scale_color_viridis_c())
+    gf_refine(scale_color_viridis_c()) %>%
+  gf_theme(theme(legend.position = "none")), ncol = 2)
 Segs <- create_segments(log(x) ~ x, domain(x=c(.2,pi)), nsegs=30)
-slice_plot(log(x) ~ x, domain(x=c(.2, pi))) %>%
-    gf_labs(title="log(x)")
+ggpubr::ggarrange(
+  slice_plot(log(x) ~ x, domain(x=c(.2, pi))) %>%
+    gf_labs(title="log(x)"),
 gf_segment(y + yend ~ x + xend, data = Segs, 
            color=~slope,size=1.3, lineend="round") %>%
   gf_point(0 ~ start, size=1, color="green") %>%
     gf_labs(title="log(x) slope-function visualization")  %>%
-    gf_refine(scale_color_viridis_c())
+    gf_refine(scale_color_viridis_c()) %>%
+  gf_theme(theme(legend.position = "none")), ncol = 2)
 Segs <- create_segments(x^2 ~ x, domain(x=c(-pi,pi)), nsegs=30)
-slice_plot(x^2 ~ x, domain(x=c(-pi, pi))) %>%
-    gf_labs(title=expression(x^2))
+ggpubr::ggarrange(
+  slice_plot(x^2 ~ x, domain(x=c(-pi, pi))) %>%
+    gf_labs(title=expression(x^2)),
 gf_segment(y + yend ~ x + xend, data = Segs, 
            color=~slope,size=1.3, lineend="round") %>%
   gf_point(0 ~ start, size=1, color="green") %>%
     gf_labs(title=expression(paste("x^2 slope-function visualization")))  %>%
-    gf_refine(scale_color_viridis_c())
+    gf_refine(scale_color_viridis_c()) %>%
+  gf_theme(theme(legend.position = "none")), ncol=2)
 Segs <- create_segments(2*x -4 ~ x, domain(x=c(-pi,pi)), nsegs=30)
-slice_plot(2*x - 4 ~ x, domain(x=c(-pi, pi))) %>%
-    gf_labs(title="2x - 4")
+ggpubr::ggarrange(
+  slice_plot(2*x - 4 ~ x, domain(x=c(-pi, pi))) %>%
+    gf_labs(title="2x - 4"),
 gf_segment(y + yend ~ x + xend, data = Segs, 
            color=~slope,size=1.3, lineend="round") %>%
   gf_point(0 ~ start, size=1, color="green") %>%
     gf_labs(title="line(x) = 2 x - 4 slope-function visualization") %>%
     gf_lims(y=c(-1,1))  %>%
-    gf_refine(scale_color_viridis_c())
+    gf_refine(scale_color_viridis_c()) %>%
+  gf_theme(theme(legend.position = "none")), ncol=2)
 ```
 `r insert_calcZ_exercise("17.10", "1kZXxT", "Exercises/Diff/titmouse-throw-sofa.Rmd")`
 
@@ -303,7 +312,7 @@ It took the industrial revolution and nearly a century of intellectual developme
 
 Once this transition is accomplished, economics students are taught essential concepts of calculus---particularly first and second derivatives, the subjects of this Block---although the names used are peculiar to economics, for instance, "elasticity", "marginal returns" and "diminishing marginal returns."
 
-```{r cournot-demand, echo=FALSE, fig.cap="Demand as a *function* of price, as first published by Antoine-Augustin Cournot in 1836."}
+```{r cournot-demand, echo=FALSE, fig.cap="Demand as a *function* of price, as first published by Antoine-Augustin Cournot in 1836.", out.width="50%"}
 knitr::include_graphics("www/cournot-demand-curve.png")
 ```
 

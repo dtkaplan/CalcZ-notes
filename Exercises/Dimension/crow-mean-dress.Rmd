@@ -14,7 +14,6 @@ library(mosaicCalc)
 library(math141Z)
 ```
 
-$\require{cancel}$
  
 The surface area $S$ of a mammal is reasonably well approximated by the function $$S(M) \equiv k M^{2/3}$$ where $M$ is the body mass (in kg) and the constant $k$ depends on the particular species under consideration. 
 
@@ -68,10 +67,14 @@ You can't take (pounds)$^{2/3}$ or (kg)$^{2/3}$; you won't get a sensible unit i
 
 Still, there's a problem. Multiplying $k\ 154^{2/3} (\text{lbs}/\text{kg})^{2/3}$ has the right dimension, but strange-looking units that have nothing to do with skin area.
 
-The resolution to this paradox is to multiply $\frac{154\ \text{lbs}}{1\  \text{kg}}$ by an appropriate flavor of 1 to render the dimensionless quantity unitless as well as dimensionless. This flavor will be $\frac{1 \text{kg}}{2.2 lbs}$, giving a formula for skin area  in square inches 
+The resolution to this paradox is to multiply $\frac{154\ \text{lbs}}{1\  \text{kg}}$ by an appropriate flavor of 1 to render the dimensionless quantity unitless as well as dimensionless. This flavor will be $\frac{1 \text{kg}}{2.2 lbs}$, giving a formula for skin area  in square inches: 
 
+<!--
 $$S_{in}(M)= \frac{k}{2.6^2}\left(\frac{154\ \bcancel{\text{lbs}}}{1\ \cancel{\text{kg}}}\ \underbrace{\frac{1\ \cancel{\text{kg}}}{2.2\ \bcancel{\text{lbs}}}}_\text{flavor of 1}\right)^{2/3} = \underbrace{\frac{k}{2.6^2}\ \left(\frac{1}{2.2}\right)^{2/3}}_{k'\ \text{for inches and pounds}} 154^{2/3}$$
-
+-->
+```{r echo=FALSE}
+knitr::include_graphics(normalizePath("www/EQ-cancel.png"))
+```
 
 ```{r crow-mean-dress-5, echo=FALSE, results="markup"}
 askMC(

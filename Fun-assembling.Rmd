@@ -48,7 +48,7 @@ It's important to distinguish the above time $\rightarrow$ Kelvin function from 
 
 Here is a simple, approximate formula for the length of day (in hours) as a function of latitude $L$ and the declination angle $\delta$ of the sun. 
 
-$$\text{day_length}(L, \delta) \equiv \frac{2}{15} \arccos\left(-\tan(L)*\tan(δ)\right)$$
+$$\text{day_length}(L, \delta) \equiv \frac{2}{15} \arccos\left(-\tan(L)*\tan(\delta)\right)$$
 The declination angle is the latitude of the point on the earth's surface pierced by an imagined line connecting the centers of the earth and the sun. On the summer solstice, the longest day of the year, it is $23.44^\circ$. 
 
 A computer implementation must look different, since $L$ and $\delta$ are typically provided in degrees while the `tan()` and other trigonometric functions in most computer languages expect units of radians. The conversion is easy: $\text{deg2rad}(d) \equiv \frac{\pi}{180} d$. The conversion the other way is $\text{rad2deg}(r) \equiv \frac{180}{\pi} r$.
@@ -215,7 +215,7 @@ slice_plot(wave_packet(x, A=2, center=3, width  = 4, P  = 10/5 ) ~ x,
 ```
 This is the product of two simple functions: a gaussian times a sinusoid.
 
-```{r making-wave-packet, echo=FALSE, out.width="50%", fig.show="hold", fig.cap="The two components of the wave packet in Figure \\@ref(fig:wave-packet)"}
+```{r making-wave-packet, echo=FALSE, out.width="50%", fig.show="hold", fig.cap="The two components of the wave packet in Figure @@ref(fig:wave-packet)"}
 sinusoid <- makeFun(sin(2*pi*x/P) ~ x, P=10/5)
 envelope <- makeFun(2*dnorm((x - center)/width) ~ x, center=3, width=4)
 slice_plot(envelope(x) ~ x, domain(x = c(-15, 15)), color="dodgerblue") %>%
@@ -253,7 +253,7 @@ slice_plot(yikyak(year) ~ year, domain(year=c(2010,2018)))
 Two or all three of the techniques for combining functions---linear combinations, function composition, and function multiplication---can be used in the same function.  `r mark(1370)`
 
 Consider the function for the length of the day
-$$\text{day_length}(L, \delta) \equiv \frac{2}{15} \arccos\left(-\tan(L)*\tan(δ)\right)$$
+$$\text{day_length}(L, \delta) \equiv \frac{2}{15} \arccos\left(-\tan(L)*\tan(\delta)\right)$$
 The 2/15 is scaling the output of $\arccos()$. The $\arccos()$ is being composed with an interior function that is itself a scaled product of two functions. 
 
 -----

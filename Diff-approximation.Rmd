@@ -37,7 +37,7 @@ Note that the three questions all have to do with derivatives. An "optimal gear"
 
 In many modeling situations with a single input, you can get very close to a good modeling function $f(x)$ by selecting one of ***eight simple shapes***, shown in Figure \@ref(fig:eight-simple-shapes). `r mark(2790)`
 
-```{r eight-simple-shapes, echo=FALSE, out.width="40%", fig.show="keep", fig.cap="The ***eight simple shapes***, locally, of functions with one input. (See Chapter \\@ref(local-approximations).)"}
+```{r eight-simple-shapes, echo=FALSE, out.width="40%", fig.show="keep", fig.cap="The ***eight simple shapes***, locally, of functions with one input. (See Chapter @@ref(local-approximations).)"}
 g <- makeFun(a + b*x + c*x^2 ~ x, a=-1, b=2, c=1)
 slice_plot(-g(x, c=0) ~ x, domain(x=c(-3,1)), size=2  ) %>%
   gf_labs(y="Output", x="Input", title="(A) downward sloping line")
@@ -100,7 +100,7 @@ Consider what happens if $c = 0$. The function becomes simply $a + bx$, the stra
 
 With the appropriate choice of parameters, the form $a + bx + cx^2$ is  capable of representing four of the ***eight simple shapes***. What about the remaining four? This is where the idea of ***local*** becomes important. Those remaining four shapes are the sides of parabolas, as in Figure \@ref(fig:four-shapes). `r mark(2830)`
 
-```{r four-shapes, echo=FALSE, fig.cap="Four of the ***eight simple shapes*** correspond to the sides of the parabola. The labels refer to the graphs in Figure \\@ref(fig:eight-simple-shapes)."}
+```{r four-shapes, echo=FALSE, fig.cap="Four of the ***eight simple shapes*** correspond to the sides of the parabola. The labels refer to the graphs in Figure @@ref(fig:eight-simple-shapes)."}
 f1 <- makeFun(a + b*x + c*x^2 ~ x, a=-2, b=1, c=1)
 f2 <- makeFun(a + b*x + c*x^2 ~ x, a=-2, b=1, c=-1)
 graph_with_boxes(f1, domain = c(-1.1,0.1), my_letters = c("C", "D"), 
@@ -144,8 +144,13 @@ show_poly2 <- function(seed=1, domain=list(x=c(-2, 2), y=c(-2, 2))) {
 
 
 Four <- show_poly2(104)
+
 Four$P1
-Four$P2
+if (knitr::is_html_output()) {
+  Four$P2
+} else {
+  knitr::include_graphics(normalizePath("www/show_poly2_104.png"))
+}
 ```
 
 ::: {.example}
@@ -192,7 +197,11 @@ Low-order polynomials are often used for constructing functions from data. In th
 
 The data I'll use for the demonstration is a set of physical measurements of height, weight, abdominal circumference, etc. on 252 human subjects. These are contained in the `Body_fat` data frame, shown below. 
 ```{r echo=FALSE}
-math141Z::Body_fat %>% DT::datatable()
+if (knitr::is_html_output()) {
+  math141Z::Body_fat %>% DT::datatable()
+} else {
+  knitr::kable(math141Z::Body_fat %>% head(10))
+}
 ```
 
 One of the variables records the body-fat percentage, that is, the fraction of the body's mass that is fat. This is thought to be an indicator of fitness and health, but it is extremely hard to measure and involves weighing the person when they are fully submerged in water. This difficulty motivates the development of a method to approximation body-fat percentage from other, easier to make measurements such as height, weight, and so on.
@@ -200,7 +209,7 @@ One of the variables records the body-fat percentage, that is, the fraction of t
 For the purpose of this demonstration, we'll build a local polynomial model of body-fat percentage as a function of height (in inches) and weight (in pounds). 
 
 The polynomial we choose will omit the quadratic terms. It will contain the constant, linear, and interaction terms only. That is
-$$\text{body_fat}(h, w) \equiv c_0 + c_h h + c_w w + c_{hw} h w$$
+$$\text{body.fat}(h, w) \equiv c_0 + c_h h + c_w w + c_{hw} h w$$
 The process of finding the best coefficients in the polynomial is called ***linear regression***. Without going into the details, we'll use linear regression to build the body-fat model and then display the model function as a contour plot.
 
 ```{r bodyfat-mod, fig.cap="A low order polynomial model of body fat percentage as a function of height (inches) and weight (lbs)."}

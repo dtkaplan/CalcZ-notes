@@ -167,7 +167,7 @@ This process reconstructs the ***shape*** of $f(x)$ from $\partial_x f(x)$. But 
 ::: {.workedexample}
 In the population example that started this chapter, we constructed a model for $\partial_t f(t)$, where $f(t) = \ln(P(t))$. We can plot $\partial_t f(t)$ using an ordinary graph as we did in Figure \@ref(fig:pop-growth), but let's use the slope-function representation instead. `r mark(3175)`
 
-```{r pop-slope-fun, echo=FALSE, fig.cap="The slope-function visualization corresponding to the plot of $\\partial_t f(t)$ in Figure \\@ref(fig:pop-growth)."}
+```{r pop-slope-fun, echo=FALSE, fig.cap="The slope-function visualization corresponding to the plot of $\\partial_t f(t)$ in Figure @@ref(fig:pop-growth)."}
 G <- antiD(growth_fun(t) ~ t, lower.bound = 2020)
 Segs <- create_segments(G(t) ~ t, domain(t=c(2020-1.5, 2100)), nsegs=30)
 gf_segment(y + yend ~ x + xend, data = Segs, 
@@ -178,7 +178,7 @@ gf_segment(y + yend ~ x + xend, data = Segs,
 
 To construct the original function $f(t)$, just connect the segments in Figure \@ref(fig:pop-slope-fun). 
 
-```{r accum-pop-growth, echo=FALSE, fig.cap="Accumulating the annual growth in Figure \\@ref(fig:pop-slope-fun)."}
+```{r accum-pop-growth, echo=FALSE, fig.cap="Accumulating the annual growth in Figure @@ref(fig:pop-slope-fun)."}
 gf_segment(yf + yfend ~ x + xend, data = Segs, 
            color=~slope,size=1.3, lineend="round") %>%
   gf_point(0 ~ start, size=1, color="green") %>%

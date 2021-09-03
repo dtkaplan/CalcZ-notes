@@ -30,7 +30,7 @@ The task of answering such a question is often called ***solving*** a ***word pr
 You don't need calculus to solve this problem, but insofar as the format is familiar to you, it might help to depict how it would be addressed as a modeling task and how to use the model created to guide the mathematical work of getting a numerical answer to the problem.
 
 **Modeling Phase**: The objective is to create a function that represents snow plowing and that will let us answer the question about how much plowing activity is needed. Here's a function that takes as input $x$ a number of plows and provides as output the number of miles that can be serviced in a day.
-$$\text{miles_plowed}(x) \equiv 7 \ \text{mph} \times 24 \ \text{hours-per-day}\times x\ \text{plows}$$
+$$\text{miles.plowed}(x) \equiv 7 \ \text{mph} \times 24 \ \text{hours-per-day}\times x\ \text{plows}$$
 In reality, "miles plowed" depends on the amount of snow, the safe speed limit of the plows, the number of rest breaks needed by the drivers, how far the snowplow terminus is from the road system, how many cars are parked on the road and the available number of tow trucks, and the day of the week and the time of day. (Remember, there might be other traffic on the road. Plowing at rush hour is bound to be slow! And the reduced visibility at night calls for extra care!) It seems that textbook "word problems" never mention such issues, having been written in a world where plowing snow is exactly the same as doing simple arithmetic.
 
 Likely, we're going to have to use the ***modeling cycle*** to end up with a genuinely useful model. Still, we have to start somewhere, so let's start with $7 \times 24 \times x$.
@@ -49,7 +49,7 @@ $\vdots$ | ... and so on.
 
 We really don't need all the scratch work crowding up the table, so let's streamline it, keeping the essentials:
 
-input $x$ | output $\text{miles_plowed}(x)$
+input $x$ | output $\text{miles.plowed}(x)$
 ----------|----------
 1 | 168
 2 | 336
@@ -62,7 +62,7 @@ Our purpose in constructing miles_plowed() is not to figure out the output given
 
 If you have a graph of a function, it can be easy to calculate what the input should be for a given output. Just reverse the finger action, looking up the output on the vertical axis, tracing horizontally to the function graph, then reading off the result from the input axis. 
 
-Now let's write the problem using math notation rather than a table. We're looking for a value of $x$ such that $$\text{miles_plowed}(x) = 400$$ This is an ***equation*** as opposed to a ***function definition***. We write equations with $=$ and definitions with $\equiv$. The point of writing equations is often to signal to us that the task is to "solve for $x$." 
+Now let's write the problem using math notation rather than a table. We're looking for a value of $x$ such that $$\text{miles.plowed}(x) = 400$$ This is an ***equation*** as opposed to a ***function definition***. We write equations with $=$ and definitions with $\equiv$. The point of writing equations is often to signal to us that the task is to "solve for $x$." 
 
 An algebraic solution relies on replacing miles_plowed($x$) with the function's formula and then re-arranging numbers and possibly other symbols until we have an equation of the form $x = \ldots$. Here, that's easy:
 
@@ -78,7 +78,7 @@ $$7 \times 24\, x = M\ \ \implies\ \ x = M/168$$
 
 All that remains is to give a more informative name in place of $x$ and to write it as a proper function: $n_{plows}(M) \equiv M/168$.
 
-This process of starting with a function like $\text{miles_plowed(x)}$ and transforming it into a function in a more convenient format for the task at hand $n_{plows}(M)$ is called ***inverting the function***.
+This process of starting with a function like $\text{miles.plowed(x)}$ and transforming it into a function in a more convenient format for the task at hand $n_{plows}(M)$ is called ***inverting the function***.
 
 High-school algebra emphasizes techniques for inverting functions by moving symbols around. This is great when it can be done, but it's often impossible in real science and engineering problems. The ***guess and check*** method that was used in the snowplow mileage table is very simple. particularly when it's paired with a process for refining the guess after every check. ***Newton's method*** is one such method, it makes use of the idea of slope functions, particularly those introduced in Block 2.
 
@@ -152,8 +152,8 @@ remaining members had to pay $50
 more apiece. How many members
 are in the club?*^[This translates to an equation, where $x$ is the number of members: $$(x-2)(9000/x + 50) = 9000$$ [Source](https://www.ams.org/notices/201005/rtx100500608p.pdf)] 
 
-Let's pose the problem in terms of a function, money_raised$(x)$ where $x$ is the original number of members in the investment club. Originally, the members were each going to pay $9000/x$. But after the two people drop out, each of the remaining members has to pay $9000/x + 50$. Since there are $x-2$ remaining members, the total amount raised is $$\text{money_raised}(x) \equiv (x-2) \left(\frac{9000}{x} + 50\right)$$
-Figure \@ref(fig:money-raised) graphs $\text{money_raised}(x)$
+Let's pose the problem in terms of a function, money_raised$(x)$ where $x$ is the original number of members in the investment club. Originally, the members were each going to pay $9000/x$. But after the two people drop out, each of the remaining members has to pay $9000/x + 50$. Since there are $x-2$ remaining members, the total amount raised is $$\text{money.raised}(x) \equiv (x-2) \left(\frac{9000}{x} + 50\right)$$
+Figure \@ref(fig:money-raised) graphs $\text{money.raised}(x)$
 ```{r money-raised}
 money_raised <- makeFun((x-2)*(9000/x + 50) ~ x)
 slice_plot(money_raised(x) ~ x, domain(x=c(10,25)))

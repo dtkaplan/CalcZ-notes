@@ -4,9 +4,7 @@ origin: "141 DD29"
 ---
 
 ```{r include=FALSE}
-library(etude2)
-library(mosaic)
-library(mosaicCalc)
+library(Zcalc)
 ```
 
 
@@ -19,9 +17,13 @@ g <- rfun( ~ x + y, seed = 802, n = 15)
 x0 <-  0
 y0 <-  0
 size <- 5
-interactive_plot(g(x, y) ~ x + y,
+if (knitr::is_html_output()) {
+  interactive_plot(g(x, y) ~ x + y,
              domain(x = x0 + size*c(-1, 1),
                     y = y0 + size*c(-1, 1)))
+} else {
+  knitr::include_graphics(normalizePath("www/partial-purple.png"))
+}
 contour_plot(g(x, y) ~ x + y,
              domain(x = x0 + size*c(-1, 1),
                     y = y0 + size*c(-1, 1)))
