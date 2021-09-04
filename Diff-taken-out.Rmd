@@ -244,7 +244,7 @@ Name $f(x)$|           $f(x)$  | $\partial f(x)$ | name $\partial_x f(x)$
 sinusoid   | $\sin(x)$  | $\cos(x) = \sin(x+\pi/2)$ | sinusoid
 sinusoid   | $\cos(x)$  | $-\sin(x) = \cos(x + \pi/2) =  \sin(x+\pi)$ | sinusoid
 
-::: {.takenote}
+::: {.takenote  data-latex=""}
 Memorizing the derivatives of the short list of pattern-book functions will make it much easier to follow the rest of the section. Do that now.
 :::
 
@@ -319,7 +319,7 @@ g <- makeFun(dx_f(x)*sin(x) ~ x) # Build a new function with it
 slice_plot(dx_f(x) ~ x, domain(x=c(-3,3))) # Plot it
 findZeros(dx_f(x) ~ x)  # Find the zero crossings
 ```
-::: {.tip}
+::: {.tip }
 As a matter of good computing style ... 
 
 Since we had already defined `f()`, in computing its derivative a good practice is to use `f()` itself rather than copying over the tilde formula for use in `D()`. The function created by `D()` will inherit all the same default parameters used in `f()`.
@@ -397,7 +397,7 @@ power-law     | $\text{pow}(ax+b,p)$ | $a\,p\, \text{pow}(a x + b, p\!\!-\!\!1)$
 logarithm     | $\log(a x + b)$      | $a\, \text{pow}(ax + b, -1)$
 sigmoid       | $\text{pnorm}(a x + b, mn, sd)$ | $a\, \text{dnorm}(a x + b, mn, sd)$
 
-::: {.why}
+::: {.why  data-latex=""}
 
 I wrote most of the basic modeling functions in their traditional mathematical notation except for $e^x$ and $x^p$. In the table, I wrote those as $\exp(x)$ and $\text{power}(x, p)$. This is similar in form to $\text{pnorm}(x, mn, sd)$ and $\text{dnorm}(x, mn, sd)$.
 
@@ -623,7 +623,7 @@ $${\cal D}_x \sin(x) = \frac{1}{h} \left[\strut\sin(x)(- h^2)  +\cos(x)h\right] 
 With the division by $h$ safely removed, we cn now apply the limit:
 $$\partial_x \sin(x) = \lim_{h\rightarrow 0} \left[\strut \cos(x) - h \sin(x)\right] = \cos(x) - \sin(x) \left[\lim_{h\rightarrow 0}h\right] = \cos(x)$$
 
-::: {.takenote}
+::: {.takenote  data-latex=""}
 We write the differentiation operator (with respect to input $x$) as $\partial_x$. We wrote the slope-function operator (again, with respect to $x$) as ${\cal D}_x$. 
 
 The slope-function operator ${\cal D}_x$ is only a stepping stone on the path toward the real destination: differentiation. We're defining differentiation as a limit:
@@ -684,7 +684,7 @@ state_objective("Deriv-7a-2", "Apply the basic derivative shortcuts to find the 
 
 We're going to leave $\partial_x \text{hump}(x)$ alone for now until we have a more complete understanding of derivatives. But other than that, notice that the derivative of every one of these mathematical functions---exponential, power-law, sinusoid---is also in the set of the basic functions.
 
-::: {.workedexample latex-data=""}
+::: {.workedexample data-latex=""}
 How can we know that these formulas are right? Let's start by comparing them to the functions computed from the ${\cal D}_x$ formula when $h$ is very small.
 
 Consider $\partial_x e^x$, which is claimed to be $e^x$. Figure \@ref(fig:exp-h_ plots $e^x$ (in green) as well as a function ARC$(x, h)$ (**A**verage **R**ate of **C**hange) that takes both $x$ and $h$ as inputs: $$\text{ARC}(x, h) \equiv {\cal D}_x e^x = \frac{e^{x+h} - e^x}{h} = e^x \frac{e^h - 1}{h}$$
@@ -794,7 +794,7 @@ For instance:
 - $\Delta(x^2) = \frac{(x+h)^2 - x^2}{h}$
 - $\Delta(a + b x) = \frac{a + b(x + h) - \left(a + b x\right)}{h}$
 
-::: {.why latex-data=""}
+::: {.why data-latex=""}
 Why did you use $=$ in the above statements rather than the $\equiv$ ?
 
 $\equiv$ means "is defined as" or "is the name of." When we wrote $$\Delta(f) \equiv \frac{f(x+h) - f(x)}{h}$$ we were giving a name to a function. But writing $\Delta(a + b x)$ means to apply the already defined function $\Delta$ to an input, that input being the straight-line function $a + b x$. Rather than *defining* what is $\Delta(a + b x)$ we are *deducing* it from objects that have already been defined.
@@ -1173,7 +1173,7 @@ derivatives evaluated at $x_0$ will be zero, $-1$, or $1$. The Taylor
 polynomial (to 5th order) of $\sin(x)$ is:
 $$\sin(x) \approx 0 + \frac{1}{1!}[x] + \frac{0}{2!} [x]^2 - \frac{1}{3!} [x]^3 + \frac{0}{4!} [x]^4 + \frac{1}{5!} [x]^5 = x - \frac{x^3}{3!} + \frac{x^5}{5!}$$
 
-::: {.why}
+::: {.why  data-latex=""}
 Why say "smooth, continuous function" instead of just function when
 talking about the kinds of functions Taylor polynomials can approximate?
 

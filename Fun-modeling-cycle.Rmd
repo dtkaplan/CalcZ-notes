@@ -12,7 +12,7 @@ Thus, modeling is a cyclic process of creating a model, assessing the model, and
 
 Looking back on the exponential fitted to the cooling water data in Section \@ref(fit-exponential), it looks like our original estimate of the half-life is a bit too small; the data doesn't seem to decay at the rate implied by $k = -0.0277$. Perhaps we should try a somewhat slower decay, say $k = -0.2$ and see if that improves things.
 
-::: {.scaffolding}
+::: {.scaffolding  data-latex=""}
 In the cooling water example, we're using only a subset of the data collected by Prof. Wagon. The next commands re-create that subset so that you can work with it. They also plot the data and an exponential model.  `r mark(1565)`
 ```{r results="hide"}
 # reconstruct the sample
@@ -148,7 +148,7 @@ The data frame `SunsetLA` records the number of minutes after 4 pm until the sun
 
 Open a sandbox and make a plot of sunset time versus month.
 
-::: {.scaffolding}
+::: {.scaffolding  data-latex=""}
 ```{r results="hide"}
 gf_point(Minutes ~ Month, data = SunsetLA) %>%
   gf_line()
@@ -187,7 +187,7 @@ The two functions are scaled by $C$ and $A$, respectively.
 
 Make rough but reasonable numeric estimates for $C$ and $A$ from the data. Then, in the sandbox, define the `sunset()` function using the numerical estimates in the linear combination. Plot your function as a layer on  top of the data. (Pipe  the `gf_point()` layer  to `slice_plot()`.)
 
-::: {.scaffolding}
+::: {.scaffolding  data-latex=""}
 ```{r results="hide", eval=FALSE}
 sunset <- makeFun(A + C*sin(2*pi*(Month - offset)/12), 
                   A = __your estimate__, 
@@ -229,7 +229,7 @@ Plot out the modified `sunset()` function and confirm that it is a much better m
 
 Alternatively, you can use `fitModel()` to do the tuning for you. Plug in your estimates (a.k.a. "guesses") for the parameters in place of the `___` in  the following. Then run the code. You'll  see your estimate  of  the function compared to the result of having  the computer refine your estimate. Chances are, the computer does a better job of stringing the function through the data.
 
-::: {.scaffolding}
+::: {.scaffolding  data-latex=""}
 ```{r eval=FALSE}
 ## rough estimates from graph
 rough_A <- __estimated_A__

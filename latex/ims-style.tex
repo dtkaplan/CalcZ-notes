@@ -251,22 +251,104 @@
 % intheworld
 
 \newenvironment{intheworld}{
-MATH IN THE WORLD
 \vspace{4mm}
-\begin{mdframedwithfootGPWE}
+\begin{mdframedwithfootChapterintro}
 \begin{minipage}[t]{0.10\textwidth}
-{$\:$ \\ \setkeys{Gin}{width=2.5em,keepaspectratio}\includegraphics{www/magnifier.png}}
+{$\:$ \\ \setkeys{Gin}{width=2.5em,keepaspectratio}\includegraphics{www/observation-icon.png}}
 \end{minipage}
 \hfill
 \begin{minipage}[t]{0.90\textwidth}
-\vspace{-2mm}
 \setlength{\parskip}{1em}
-\noindent\textbf{\color{oiB}\small\fontfamily{phv}\selectfont{\MakeUppercase{Math in the world}}} $\:$ \\ \\
-}{\end{minipage}
-\end{mdframedwithfootGPWE}
+\large
+\noindent\textbf{\color{oiB}\small\fontfamily{phv}\selectfont{\MakeUppercase{Math in the World}}}}{\end{minipage}
+\end{mdframedwithfootChapterintro}
 \vspace{4mm}
 }
 
+% takenote environment
+
+% You have to change the third line of the macro to get
+% a different color
+
+\newenvironment{takenote}{
+\vspace{4mm}
+\begin{mdframedwithfootChapterintro}
+\begin{minipage}[t]{0.10\textwidth}
+{$\:$ \\ \setkeys{Gin}{width=2.5em,keepaspectratio}\includegraphics{www/important.png}}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.90\textwidth}
+\setlength{\parskip}{1em}
+\large
+\noindent\textbf{\color{oiB}\small\fontfamily{phv}\selectfont{\MakeUppercase{Take note}}}}{\end{minipage}
+\end{mdframedwithfootChapterintro}
+\vspace{4mm}
+}
+
+% scaffolding
+
+\newenvironment{mdframedwithfootScaffolding}
+{
+    \savenotes
+    \begin{mdframed}[%
+    topline=true, bottomline=true, linecolor=oiY, linewidth=1.4pt,
+    rightline=false, leftline=false,
+    backgroundcolor=white]
+    %\stepcounter{footnote} % don't increment footnote counter
+    \renewcommand{\thempfootnote}{\arabic{footnote}}
+    }
+{
+    \end{mdframed}
+    \spewnotes
+}
+
+\newenvironment{scaffolding}{
+\vspace{4mm}
+\begin{mdframedwithfootScaffolding}
+\begin{minipage}[t]{0.10\textwidth}
+{$\:$ \\ \setkeys{Gin}{width=2.5em,keepaspectratio}\includegraphics{www/sandbox.png}}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.90\textwidth}
+\setlength{\parskip}{1em}
+\large
+\noindent\textbf{\color{orange}\small\fontfamily{phv}\selectfont{\MakeUppercase{Sandbox}}}}{\end{minipage}
+\end{mdframedwithfootScaffolding}
+\vspace{4mm}
+}
+
+
+% scaffolding
+
+\newenvironment{mdframedwithfootWhy}
+{
+    \savenotes
+    \begin{mdframed}[%
+    topline=true, bottomline=true, linecolor=oiGray, linewidth=1.4pt,
+    rightline=false, leftline=false,
+    backgroundcolor=oiLGray]
+    %\stepcounter{footnote} % don't increment footnote counter
+    \renewcommand{\thempfootnote}{\arabic{footnote}}
+    }
+{
+    \end{mdframed}
+    \spewnotes
+}
+
+\newenvironment{why}{
+\vspace{4mm}
+\begin{mdframedwithfootWhy}
+\begin{minipage}[t]{0.10\textwidth}
+{$\:$ \\ \setkeys{Gin}{width=2.5em,keepaspectratio}\includegraphics{www/question-mark.png}}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.90\textwidth}
+\setlength{\parskip}{1em}
+\large
+\noindent\textbf{\color{teal}\small\fontfamily{phv}\selectfont{\MakeUppercase{Why?}}}}{\end{minipage}
+\end{mdframedwithfootWhy}
+\vspace{4mm}
+}
 
 % guidedpractice
 

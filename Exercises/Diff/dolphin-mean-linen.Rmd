@@ -1,0 +1,24 @@
+---
+id: "dolphin-mean-linen"
+created: "Fri Sep  3 17:14:25 2021"
+global_id: "cQT2v6"
+---
+
+
+```{r zoz1-7, exercise=TRUE, exercise.cap="Just plot the function", exercise.nlines=5, eval=FALSE}
+g <- makeFun(x * log(x) ~ x)
+slice_plot(g(x) ~ x, domain(x=c(0, 0.5)))
+```
+
+Many indeterminate forms are made readily accessible due to two features of R: divide by zero returns `Inf` but zero divided by zero returns `NaN`. Plotting software simply discards the `NaN` as unplottable leaving a perfectly coherent graph.
+
+You may have to zoom in on the domain to get a clear read of the
+function value at $x=0$ singularity.
+
+```{r zoz1-8, echo=FALSE, results="markup"}
+askMC(
+  "From the graph, determine $\\lim_{x\\rightarrow 0} x \\ln(x()$. Choose the correct answer.",
+  -0.2, "+0+", 0.1, 0.5,
+  random_answer_order = FALSE
+)
+```
