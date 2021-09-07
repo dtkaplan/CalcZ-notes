@@ -21,10 +21,6 @@ USPop <- USPop %>%
 
 In the 230 years spanned by the census data, the US population has grown 100-fold, from about 4 million in 1790 to about 330,000,000 in 2020.
 
-
-`r mark(population)`
-
- 
 ```{r pop-graph, echo=FALSE, fig.cap="US population since 1790.", fig.margin=TRUE}
 popfun <- spliner(population ~ year, data = USPop)
 USPop <- USPop %>%
@@ -36,6 +32,9 @@ gf_point(population ~ year, data = USPop) %>%
   gf_labs(y="Population (millions)") %>%
   gf_lims(x = c(1790, 2100), y=c(0,500))
 ```
+
+
+
 
 It's always tempting to look for simple patterns in such data. Perhaps the US population has been growing exponentially. A semi-log plot of the same data suggests that the growth is only very roughly exponential. (See Figure \@ref(fig:pop-graph-log).) A truly exponential process would present as a curve with a constant derivative, but the derivative of the function in the graphed is decreasing over the centuries. 
 
@@ -61,6 +60,16 @@ gf_point(yearly_growth_rate ~ year, data = USPop) %>%
 ```
 
 The dots in the graph are a direct calculation from the census data.  There's a lot of fluctuation, but an overall trend stands out: the population growth rate has been declining since the mid-to late 1800s. The deviations from the trend are telling and correspond to historical events. There's a relatively low growth rate seen from 1860 to 1870: that's the effect of the US Civil War. The Great depression is seen in the very low growth from 1930 to 1940. Baby Boom: look at the growth from 1950-1960. The bump from 1990 to 2000? Not coincidentally, the 1990 Immigration Act substantially increased the yearly rate of immigration. 
+<<<<<<< HEAD
+
+If the trend in the growth rate continues, the US will reach zero net growth about 2070, then continue with negative growth. Of course, negative growth is just decline. A simple prediction from Figure \@ref(fig:pop-growth) is that the argmax of the US population will be around 2070.
+
+How large will the population be when it reaches its maximum? 
+
+In Block 2, we dealt with situations where we know the function $f(t)$ and want to find the rate of change $\partial_t f(t)$. Here, we know the rate of change of the population and we need to figure out the population itself, in other words to figure out from a known $\partial_t f(t)$ what is the (as yet) unknown function $f(t)$.  
+
+The process of figuring out $f(t) \longrightarrow \partial_t f(t)$ is, of course, called ***differentiation***. The opposite process, $\partial_t f(t) \longrightarrow f(t)$ is called ***anti-differentiation***. 
+
 
 If the trend in the growth rate continues, the US will reach zero net growth about 2070, then continue with negative growth. Of course, negative growth is just decline. A simple prediction from Figure \@ref(fig:pop-growth) is that the argmax of the US population will be around 2070.
 
