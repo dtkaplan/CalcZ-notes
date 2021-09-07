@@ -1,0 +1,59 @@
+# Testing environments
+
+
+
+\newenvironment{col}[1]{\begin{minipage}{#1}\includegraphics{www/stop-sign.png}Now is the tme \ignorespaces}{%
+\end{minipage}
+\ifhmode\unskip\fi
+\aftergroup\useignorespacesandallpars}
+
+\def\useignorespacesandallpars#1\ignorespaces\fi{%
+#1\fi\ignorespacesandallpars}
+
+\makeatletter
+\def\ignorespacesandallpars{%
+  \@ifnextchar\par
+    {\expandafter\ignorespacesandallpars\@gobble}%
+    {}%
+}
+\makeatother
+
+
+::: {.intheworld data-latex=""} 
+[Brooke Taylor](https://en.wikipedia.org/wiki/Brook_Taylor) (1685-1731), a near contemporary of Newton, published his work on approximating polynomials in 1715. Wikipedia reports: "[T]he importance of [this] remained unrecognized until 1772, when Joseph-Louis Lagrange realized its usefulness and termed it 'the main [theoretical] foundation of differential calculus'." [Source](https://en.wikipedia.org/wiki/Brook_Taylor#/media/File:Taylor_Brook_Goupy_NPG.jpg)
+
+```{r brook-taylor, echo=FALSE, out.width = "40%", fig.align="center"}
+knitr::include_graphics(normalizePath("www/Brook_Taylor.jpg"))
+```
+
+Taylor's work preceded by about a century the development of techniques for working with data. One of the pioneers in these new techniques was Carl Friedrich Gauss (1777-1855), after whom the gaussian function is named. Gauss's techniques are the foundation of an incredibly important statistical method that is ubiquitous today: ***least squares***. Least squares provides an entirely different way to find the coefficients on approximating polynomials (and an infinite variety of other function forms). The R/mosaic `fitModel()` function for polishing parameter estimates is based on least squares. In Block 5, we'll explore least squares and the mathematics underlying the calculations of least-squares estimates of parameters.
+
+Due to the importance of Taylor polynomials in the development of calculus, many students assume their use extends to constructing models from data. They also assume that third- and higher-order monomials are a good basis for modeling data. Both these assumptions are wrong. Least squares is the proper foundation for working with data.
+
+
+:::
+
+
+
+
+
+
+
+
+
+
+::: {.intheworld data-latex=""}
+When in the course of human events, it becomes necessary for one people to dissolve ...When in the course of human events, it becomes necessary for one people to dissolve ...When in the course of human events, it becomes necessary for one people to dissolve ...When in the course of human events, it becomes necessary for one people to dissolve ...When in the course of human events, it becomes necessary for one people to dissolve ...When in the course of human events, it becomes necessary for one people to dissolve ...When in the course of human events, it becomes necessary for one people to dissolve ...
+:::
+
+::: {.scaffolding data-latex=""}
+```{r}
+2+3
+```
+:::
+
+
+
+::: {.why data-latex=""}
+Why did you do this?
+:::

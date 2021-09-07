@@ -1,26 +1,31 @@
 # Change and accumulation {#change-accumulation}
 
-Consider this table of **population** versus **year**, which records the overall results of the every-10-year US Census since 1790
+Every 10 years, starting in 1790, the US Census Bureau carries out a constitutionally mandated census: a count of the current population. The overall count as a function of year is shown in Figure \@ref(fig:pop-graph). [[Source](https://en.wikipedia.org/wiki/Demographic_history_of_the_United_States)
+]
 
-```{r pop-table, echo=FALSE, message=FALSE, warning=FALSE, fig.cap="US Population as counted by the US Census Bureau: 1790-2020"}
+
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
 USPop <- readr::read_csv("www/census-totals.csv")
 Tmp <- USPop %>% 
   mutate(population=prettyNum(population, big.mark=",")) %>%
   select(-growth_rate)
-if (knitr::is_html_output()) {
-DT::datatable(Tmp) 
+Table <- if (knitr::is_html_output()) {
+  DT::datatable(Tmp) 
 } else {
-  knitr::kable(head(Tmp, 10))
+  knitr::kable(Tmp)
 }
 USPop <- USPop %>% 
   mutate(population = population/1e6)
 ```
 
+In the 230 years spanned by the census data, the US population has grown 100-fold, from about 4 million in 1790 to about 330,000,000 in 2020.
+
+
 `r mark(population)`
 
-These are ***discrete-time*** data, but nobody would dispute that the population is a continuous function of time and that we are entitled to graph it as in Figure \@ref(fig:pop-graph). [Source](https://en.wikipedia.org/wiki/Demographic_history_of_the_United_States)
-
-```{r pop-graph, echo=FALSE, fig.cap="US population since 1790."}
+ 
+```{r pop-graph, echo=FALSE, fig.cap="US population since 1790.", fig.margin=TRUE}
 popfun <- spliner(population ~ year, data = USPop)
 USPop <- USPop %>%
   mutate(yearly_growth_rate = 100*((1+growth_rate/100)^(1/10) - 1))
@@ -31,42 +36,20 @@ gf_point(population ~ year, data = USPop) %>%
   gf_labs(y="Population (millions)") %>%
   gf_lims(x = c(1790, 2100), y=c(0,500))
 ```
-Many of the student readers of this book will have children who will be about 70 years old in the year 2100. Use Figure \@ref(fig:pop-growth) to make a prediction of the population in 2100. 
 
-From the graph itself, you might just sketch out what you think is the trend. Or, more formally, and based on the ideas introduced in Block 1, you might seek an exponential or power-law function, fit it to the data, and extrapolate out to year 2100. The next figure does exactly that, but you'll have to click on "Show model prediction" to see the results. `r mark(3100)`
+It's always tempting to look for simple patterns in such data. Perhaps the US population has been growing exponentially. A semi-log plot of the same data suggests that the growth is only very roughly exponential. (See Figure \@ref(fig:pop-graph-log).) A truly exponential process would present as a curve with a constant derivative, but the derivative of the function in the graphed is decreasing over the centuries. 
 
 
-Show model prediction
-```{r pop-prediction-bad, echo=FALSE, warning=FALSE, fig.cap="Predicted US population using an exponential function (tan) and a power-law function (green)"}
-powermod <- fitModel(population ~ A * ((year-1750)/100)^b, data = USPop, start=list(b=2))
-expmod <- fitModel(population ~ A*exp(k*(year-1750)/100), data = USPop, start=list(k=0.2))
-fpower <- makeFun(powermod)
-fexp <- makeFun(expmod)
-growth_mod <- lm(yearly_growth_rate ~ year, data = USPop)
-growth_fun <- makeFun(growth_mod)
-accum <- tibble(year = 2021:2100,
-                pop = 331 * cumprod(1 + growth_fun(2021:2100)/100))
-
-gf_point(population ~ year, data = USPop) %>%
+```{r pop-graph-log, echo=FALSE, fig.cap="Population since 1790.", fig.margin=TRUE}
+P <- gf_point(population ~ year, data = USPop) %>%
+  gf_line(population ~ year) %>%
   gf_labs(y="Population (millions)") %>%
-  gf_lims(x = c(1790, 2100), y=c(0,700)) %>%
-  slice_plot(fexp(year) ~ year, domain(year=c(1790, 2100)), color="orange3",
-             label_text = "Exponential", label_x=0.9, label_color="orange3") %>%
-  slice_plot(fpower(year) ~ year, domain(year=c(1790, 2100)), color="green",
-             label_text = "\nPower-law\np=2.56", label_x=0.92, label_color="green") %>%
-  gf_line(pop ~ year, data = accum, color="gray") %>%
-  gf_point(404.4 ~ 2060, color="dodgerblue", size=1)
+  gf_refine(scale_y_log10())
 ```
 
-The power-law function with power 2.56 is an excellent match to the historical data up through the present. But ...
-
-
-
-There are occasions where the modeler has no alternative to curve fitting. However, it's best when the modeler knows as much as possible about the mechanisms of the process being modeled and can somehow incorporate those processes into the model. `r mark(3105)`
-
-With population, you know an awful lot about the mechanisms involved: birth, death, and immigration. As for births .... this is a personal matter. What I mean is that it's appropriate to look at the mechanism in terms of births per person. And if we're interested in the yearly growth of the population, what's relevant is the rate of births per person per year. That's a complicated rate, but when you multiply it by the population it turns into births per year, which is exactly right for studying population. The trend in births per person per year has been downward since 1900.  Immigration has fluctuated over the decades. That's going to be hard to predict. And death ... Old age is still the primary risk factor for death. The population is getting older, so deaths per year may be going up. `r mark(3110)`
-
-Births, deaths, and immigration are the components of the population rate of growth per year. The statements in the previous paragraph suggest that the population rate of growth per year is going down. The census data don't break down population change into its components. Still, we can check for patterns over the decades, as in Figure \@ref(fig:pop-growth). `r mark(3115)`
+Insofar as the slope over the semi-log graph is informative, it amounts to this quantity:
+$$\partial_t \ln(\text{pop}(t)) = \frac{\partial_t\, \text{pop}(t)}{\text{pop}}$$
+This is the *per-capita* rate of growth, that is, the rate of change in the population divided by the population. Conventionally, this fraction is presented as a percentage: percentage growth in the population per year, as in Figure \@ref(fig:pop-growth).
 
 ```{r pop-growth, echo=FALSE, fig.cap="Annual growth rate of the US population (percent)"}
 growth_mod <- lm(yearly_growth_rate ~ year, data = USPop)
@@ -77,15 +60,41 @@ gf_point(yearly_growth_rate ~ year, data = USPop) %>%
   gf_labs(y = "Growth rate (% per year)") 
 ```
 
-There's a lot of fluctuation, but an overall trend stands out: the population growth rate has been declining since the mid-to late 1800s. The deviations from the trend are telling. There's a relatively low growth rate seen in the 1870 census: that's the effect of the US Civil War. The Great depression is seen in the very low growth from 1930 to 1940. Baby Boom: look at the growth from 1950-1960. The bump from 1990 to 2000? Not coincidentally, the 1990 Immigration Act substantially increased the yearly rate of immigration.  `r mark(3120)`
+The dots in the graph are a direct calculation from the census data.  There's a lot of fluctuation, but an overall trend stands out: the population growth rate has been declining since the mid-to late 1800s. The deviations from the trend are telling and correspond to historical events. There's a relatively low growth rate seen from 1860 to 1870: that's the effect of the US Civil War. The Great depression is seen in the very low growth from 1930 to 1940. Baby Boom: look at the growth from 1950-1960. The bump from 1990 to 2000? Not coincidentally, the 1990 Immigration Act substantially increased the yearly rate of immigration. 
 
-The extrapolation of the historical pattern in annual growth rate has a zero crossing at about 2075. As you know from Block 2, a zero crossing of the rate of change corresponds to a local maximum. A reasonable prediction is therefore that the US population will max out in the second half of the 21st century and decline thereafter. `r mark(3125)`
+If the trend in the growth rate continues, the US will reach zero net growth about 2070, then continue with negative growth. Of course, negative growth is just decline. A simple prediction from Figure \@ref(fig:pop-growth) is that the argmax of the US population will be around 2070.
 
-What will that maximum population be? The derivative tells us only about the argmax, not the max. What we need to do to make a prediction of the future population is to ***accumulate*** the yearly change in the population on top of the known, current population. In other words, rather than going from the population vs time to the rate of change in population versus time, we need to go the other way. This process of knowing a derivative $\partial_x f()$ and finding the unknown function $f()$ from which it was derived is called ***anti-differentiation***. Just as the name suggests, anti-differentiation is the opposite of differentiation. But how to do it? `r mark(3130)`
+How large will the population be when it reaches its maximum? 
 
-::: {.intheworld  data-latex=""}
-The predictions from the accumulate-population-growth model are shown as a thin gray line in Figure \@ref(fig:pop-prediction-bad) along with the exponential and power law models fit directly to the population vs year data. According to the accumulation model, the population peaks in 2075 at 390 million. Professional demographers make much more sophisticated models using data from many sources. The demographers at the US Census Bureau predict that the population will reach a maximum of 404 million in 2060, shown by the little blue dot in Figure \@ref(fig:pop-prediction-bad). `r mark(3135)`
+In Block 2, we dealt with situations where we know the function $f(t)$ and want to find the rate of change $\partial_t f(t)$. Here, we know the rate of change of the population and we need to figure out the population itself, in other words to figure out from a known $\partial_t f(t)$ what is the (as yet) unknown function $f(t)$.  
+
+The process of figuring out $f(t) \longrightarrow \partial_t f(t)$ is, of course, called ***differentiation***. The opposite process, $\partial_t f(t) \longrightarrow f(t)$ is called ***anti-differentiation***. 
+
+In this block we'll explore the methods for calculating anti-derivatives and some of the settings in which anti-derivative problems arrive. 
+
+
+::: {.intheworld data-latex=""}
+The predictions from the accumulate-population-growth model are shown as a $\color{magenta}{\text{magenta}}$ line in Figure \@ref(fig:pop-prediction-bad).
+
+```{r pop-prediction-bad, echo=FALSE, warning=FALSE, fig.cap="Predicted US population based on the historical linear decline in per-capita growth."}
+growth_mod <- lm(yearly_growth_rate ~ year, data = USPop)
+growth_fun <- makeFun(growth_mod)
+accum <- tibble(year = 2021:2100,
+                pop = 331 * cumprod(1 + growth_fun(2021:2100)/100))
+
+gf_point(population ~ year, data = USPop) %>%
+  gf_labs(y="Population (millions)") %>%
+  gf_lims(x = c(1790, 2100), y=c(0,450)) %>%
+  gf_line(pop ~ year, data = accum, color="magenta") %>%
+  gf_point(404.4 ~ 2060, color="dodgerblue", size=1)
+```
+
+According to the accumulation model, the population peaks in 2075 at 390 million. Professional demographers make much more sophisticated models using data from many sources. The demographers at the US Census Bureau predict that the population will reach a maximum of 404 million in 2060, shown by the little blue dot in Figure \@ref(fig:pop-prediction-bad). `r mark(3135)`
 :::
+
+
+
+
 
 ## Differentiation and anti-differentiation
 
@@ -248,13 +257,6 @@ But unlike differentiation, anti-differentiation has no easy equivalents of the 
 
 Recall that every smooth, continuous function has a derivative defined everywhere in the function's domain. Similarly, every function has an anti-derivative, and even discontinuous, un-smooth functions have nicely behaved anti-derivatives. In this sense anti-differentiation is easy. It's only the algebra of anti-differentiation that can be hard or often literally impossible. `r mark(3215)`
 
-`r insert_calcZ_exercise("XX.XX", "KEsll","Exercises/Accum/what-is.Rmd")`
-
-`r insert_calcZ_exercise("XX.XX", "9k3s","Exercises/Accum/MMAC-1.Rmd")`
-
-`r insert_calcZ_exercise("XX.XX", "Rr2ds","Exercises/Accum/ups-and-downs.Rmd")`
-
-`r insert_calcZ_exercise("XX.XX", "JKLes","Exercises/Accum/u-on-the-bottom.Rmd")`
 
 
 ::: {.objectives}
@@ -277,7 +279,7 @@ state_objective("Int-5c", "Know common scientific application relationships betw
 
 
     
-::: {.intheworld  data-latex=""}
+::: {.todo}
 
 Calculation of luminance using light intensity at different wavelengths integrated over the luminance function. https://en.wikipedia.org/wiki/Luminous_efficiency_function
 :::
@@ -288,11 +290,6 @@ Pick up on the Lorenz curve `{.intheworld  data-latex=""}` in Blocks 1 and 2. In
 
 -----
 
-
-`r insert_calcZ_exercise("XX.XX", "NYPDR", "Exercises/Accum/horse-takes-pillow.Rmd")`
-
-
-`r insert_calcZ_exercise("XX.XX", "GHNDR", "Exercises/Accum/integrals-of-the-day.Rmd")`
 
 ## Numerical anti-derivatives
 
@@ -319,12 +316,33 @@ When `antiD()` does not recognize its argument as a basic modeling function, the
 
 We're going to use `antiD()` in this daily digital simply because we want to focus on the process of differential modeling. The integrals you encounter will sometimes be ones you know how to handle algebraically. It's a good idea to do such integrals by hand and then compare to the results of `antiD()` to check your work. `r mark(3255)`
 
+## Exercises
+
+
+`r insert_calcZ_exercise("XX.XX", "JKLes","Exercises/Accum/u-on-the-bottom.Rmd")`
+
+
+`r insert_calcZ_exercise("XX.XX", "NYPDR", "Exercises/Accum/horse-takes-pillow.Rmd")`
+
+
+`r insert_calcZ_exercise("XX.XX", "GHNDR", "Exercises/Accum/integrals-of-the-day.Rmd")`
+
+`r insert_calcZ_exercise("XX.XX", "KEsll","Exercises/Accum/what-is.Rmd")`
+
+`r insert_calcZ_exercise("XX.XX", "9k3s","Exercises/Accum/MMAC-1.Rmd")`
+
+`r insert_calcZ_exercise("XX.XX", "Rr2ds","Exercises/Accum/ups-and-downs.Rmd")`
+
+
 **Example**: Find the numerical value of this definite integral.
 
 $$\int^{7}_{3} e^{x^{2}} dx$$
 **Example Solution in R**: 
-`F<-antiD(exp(x^2)~x)`
-`F(7)-F(3)`
+```{r}
+F<-antiD(exp(x^2)~x)
+F(7)-F(3)
+```
+
 
 **Problem 1**: Find the numerical value of this definite integral.
 
@@ -333,9 +351,6 @@ $$\int^{5}_{2} x^{1.5} dx$$
 Recall that for a definite integral of function $f()$, you find the anti-derivative $F(x) \equiv \int f(x) dx$ and evaluate it at the limits of integration. Here that will be $F(5) - F(2)$.
 
 
-```{r tbf1, exercise=TRUE, exercise.cap="Sandbox for Problems", eval=FALSE}
-
-```
 
 ```{r tbf1-solution}
 f <- antiD( x^1.5 ~ x )
@@ -392,3 +407,5 @@ This needs to be reconfigured to match the new pattern-book function/basic model
 :::
 
 `r insert_calcZ_exercise("XX.XX", "EOSLE", "Exercises/Accum/basic-modeling-functions.Rmd")`
+
+

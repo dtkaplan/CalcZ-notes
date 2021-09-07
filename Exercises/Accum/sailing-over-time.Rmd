@@ -24,7 +24,12 @@ How far did the boat travel during the 0.2-hour recording? Distance equals veloc
 
 
 Suppose we set $dt = 0.05$ hour. There would be 5 such 0.05-hour-long intervals over the entire 0.2-hour recording, shown as colored segments in the graph. In the first interval, the boat has velocity that we'll approximate as $\text{vel}(0)$ and travels roughly $\text{vel}(0) dt$. During the second 0.05-hour-long interval, the boat's velocity is $\text{vel}(0.05)$ and  travels $\text{vel}(0.05) dt$. During the third interval, the velocity is $\text{vel}(0.15)$ and travels $\text{vel}(0.15) dt$. The total distance travelled is
-$$\text{vel}(0.00)dt + \text{vel}(0.05)dt + \text{vel}(0.10)dt + \ldots + \text{vel}(0.15)dt = \\\left[\text{vel}(0.00) + \text{vel}(0.05) + \text{vel}(0.10) + \ldots + \text{vel}(0.15)\right] dt = \\14.01\ \text{miles/hour} \times 0.05  \text{hour}$$
+$$\text{vel}(0.00)dt + \text{vel}(0.05)dt + \text{vel}(0.10)dt + \ldots + \text{vel}(0.15)dt = $$
+$$\left[\text{vel}(0.00) + \text{vel}(0.05) + \text{vel}(0.10) + \ldots + \text{vel}(0.15)\right] dt = $$
+
+$$14.01\ \text{miles/hour} \times 0.05\   \text{hour}$$
+
+
 
 
 
@@ -38,7 +43,7 @@ The sum above amounts to adding up all those rectangular "areas," each of which 
 
 
 
-```{r boat-dim1}
+```{r boat-dim1, echo=FALSE, results="markup"}
 askMC(
   "What is the dimension of the quantity $14.01\\ \\text{miles/hour} \\times 0.05  \\text{hour}$?",
   "LT^2", "+L+"= "Or, if you like $(L/T) T = L$.", "L/T", "T", "T/L"
@@ -46,7 +51,7 @@ askMC(
 ```
 
 
-### Making dt small
+***Making dt small***
 
 Another way to write the formula given in the previous section uses the mathematical "sum" symbol:
 $$\text{vel}(0.00)dt + \text{vel}(0.05)dt + \text{vel}(0.10)dt + \ldots + \text{vel}(0.15)dt = \sum_{i=0}^{4} \text{vel}(t_i) dt$$
@@ -134,7 +139,7 @@ VEL <- antiD(vel(t) ~ t)
 
 ```
 
-### AntiD as notation for Euler
+***AntiD as notation for Euler***
 
 At minute 4:26 (that is, hour 0.0710), the boat sailed by a red marker buoy. Then at minute 6:45 (that is, hour 0.1075), the boat passed a blue marker bouy. How far apart are the red and blue bouys?
 
