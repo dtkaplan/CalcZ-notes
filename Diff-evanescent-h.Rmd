@@ -6,14 +6,8 @@ $${\cal D}_t f(t) \equiv \frac{f(t+h) - f(t)}{h}$$ where $h$ is the length of th
 In the very early days of calculus, the vanishing $h$ was described as "evanescent." (Dictionary definition: "tending to vanish like vapor."^[[Source](https://www.merriam-webster.com/dictionary/evanescent)]) Another good image of $h$ becoming as small as possible comes from the same University of Oxford mathematician whose poem *The Jabberwocky* we considered earlier. In *Alice in Wonderland*, Dodgson introduced the character of the Cheshire Cat. `r mark(2370)`
 
 ```{r cheshire-cat, echo=FALSE, fig.cap="Vanishing $h$ in the form of the Chesire Cat from *Alice in Wonderland*."}
-knitr::include_graphics(normalizePath("images/cheshire-cat.jpeg"))
+knitr::include_graphics(normalizePath("www/Cheshire-cat.png"))
 ```
-
-> *"All right," said the Cat; and this time it vanished quite slowly, beginning with the end of the tail, and ending with the grin, which remained some time after the rest of it had gone.*
-    
-> *"Well! I've often seen a cat without a grin," thought Alice; "but a grin without a cat! It's the most curious thing I ever saw in my life!"*
-
-
 
 Start our story with two of the basic modeling functions that, like the characters from *Alice in Wonderland*, have considerable "personality": the sinusoid (`sin()`) and the sigmoid (`pnorm()`).
 
@@ -36,7 +30,7 @@ In the tilde expression handed to `makeFun()`, we've identified `t` as the name 
 Dsin
 Dsigma
 ```
-This is a nuisance, since when using the slope functions we will need always to think about `h`, a number that we'd like to describe simply as "small," but for which we always need to provide a numerical value. A surprisingly important question in the development of calculus is, "What can we do to avoid the nuisance?" To find out, let's look at `Dsin()` and `Dsigma()` for a range of values of `h`, as in Figure \@ref(fig:sin-sig-many-h). `r mark(2372)`
+This is a nuisance, since when using the slope functions we will always need to think about `h`, a number that we'd like to describe simply as "small," but for which we always need to provide a numerical value. A surprisingly important question in the development of calculus is, "What can we do to avoid the nuisance?" To find out, let's look at `Dsin()` and `Dsigma()` for a range of values of `h`, as in Figure \@ref(fig:sin-sig-many-h). `r mark(2372)`
 
 ```{r sin-sig-many-h, echo=FALSE, fig.show = "hold", fig.cap="The slope functions of the sinusoid and sigmoid. Each curve shows the slope function for a particular numerical choice of `h`. Both panels show $h=2, 1, 0.5, 0.1, 0.01, 0.001, 0.0001, 0.00001, 0.000001$.", warning=FALSE, message=FALSE}
 rain <- rev(hcl.colors(12)[-(1:3)])

@@ -18,7 +18,7 @@ $t$ | $x(t)$ | first increment | second increment
 4   | 16     |          |
 
 
-Galileo had neither the mathematics nor the equipment to measure motion continuously in time. So what might be obvious to us now, that position is a function of time $x(t)$, would have had little practical significance to him. But we discover in his first increments of $x$ something very much like the ***slope function*** in Chapter \@ref(slope-function).  `r mark(2010)`
+Galileo had neither the mathematics nor the equipment to measure motion continuously in time. So what might be obvious to us now, that position is a function of time $x(t)$, would have had little practical significance to him. But we discover in his first increments of $x$ something very much like the ***slope function*** in Chapter \@ref(fun-slopes).  `r mark(2010)`
 
 $${\cal D}_t\, x(t) \equiv \frac{x(t + 1) - x(t)}{1}$$
 From his data, he observed that ${\cal D}_t\, x(t)$ increases linearly in $t$: $${\cal D}_t x(t) = 2 t + 1$$
@@ -41,7 +41,6 @@ Over the next three centuries, calculus evolved from a set of techniques for des
 - Disease incidence is one component of the change with respect to time of disease prevalence.
 - Force is the change with respect to position of energy.
 
-`r insert_calcZ_exercise("17.2", "slwdkw", "Exercises/Diff/kid-mean-table.Rmd")`
 
 ## Instantaneous rate of change
 
@@ -99,11 +98,11 @@ Of course, when you're driving you are aware of the car's speed at any instant. 
 
 In terms of Figure \@ref(fig:stop-and-go2), the speedometer reading is the **slope** of $f(t)$ at the given instant. You can see from the Figure that at instant A the speed is very close to the average speed for the entire trip. At instant B the car is going faster; the slope is much steeper. On the other hand, at instant C the car is at a standstill; its position doesn't change at all. `r mark(2040)`
 
-A car's speedometer shows the speed at each moment---or ***instant***---of the trip. As you can see in Figure \@ref(fig:stop-and-go), the speed varies and is sometimes less than the average speed, sometimes greater, and occasionally equal to the average speed over the trip.  `r mark(2045)`
+A car's speedometer shows the speed at each moment---or ***instant***---of the trip. As you can see in Figure \@ref(fig:stop-and-go2), the speed varies and is sometimes less than the average speed, sometimes greater, and occasionally equal to the average speed over the trip.  `r mark(2045)`
 
-You can easily judge from a graph of $f()$ whether the instantaneous speed is faster or slower than the average speed. Better, however, if we simply record the speedometer reading and graph that, as in \@ref(fig:instant-speed). You can read off the speed from the graph at any instant simply by reference to the vertical axis.
+You can easily judge from a graph of $f()$ whether the instantaneous speed is faster or slower than the average speed. Better, however, if we simply record the speedometer reading and graph that, as in \@ref(fig:instant-speed). You can read off the speed from the graph at any instant of time simply by reference to the vertical axis.
 
-```{r instant-speed, echo=FALSE, fig.cap="The ***instantaneous*** velocity of the car whose position vs time is shown in Figure @@ref(fig:stop-and-go2)."}
+```{r instant-speed, echo=FALSE, fig.cap="The ***instantaneous*** speed of the car whose position vs time is shown in Figure @@ref(fig:stop-and-go2)."}
 f <- rfun(~ t, seed=105, n=5)
 raw <- function(t) 
         f(t) - t - 30*dnorm(t, 0, 3) + 60*dnorm(t,7,1)
@@ -188,13 +187,6 @@ It is a fact of mathematical and scientific life that a variety of notations are
 
 In the days when carriages where pulled by horses, the phrase "horseless carriage" made a useful distinction. Today, when horses are rarely seen on the road, it make sense to trim down the notation to its essentials: ~~horseless~~ **car**~~iage~~. Think of $\partial_x$ as this sort of minification of older notations.^[Yes, ["minification" is a word!](https://en.wikipedia.org/wiki/Minification_(programming))]   
 :::
-
-`r insert_calcZ_exercise("17.04", "eodlt", "Exercises/Diff/pine-lead-car.Rmd")`
-
-`r insert_calcZ_exercise("17.06", "iclcws", "Exercises/Diff/robin-row-boat.Rmd")`
-
-
-`r insert_calcZ_exercise("17.08", "helxs", "Exercises/Diff/deer-pitch-saw.Rmd")`
 
 
 
@@ -293,7 +285,7 @@ gf_segment(y + yend ~ x + xend, data = Segs,
     gf_refine(scale_color_viridis_c()) %>%
   gf_theme(theme(legend.position = "none")), ncol=2)
 ```
-`r insert_calcZ_exercise("17.10", "1kZXxT", "Exercises/Diff/titmouse-throw-sofa.Rmd")`
+
 
 ::: {.intheworld  data-latex=""}
 Calculus and the *Wealth of Nations*
@@ -335,13 +327,23 @@ Another example: Suppose the function `pressure()` takes as input altitude input
 
 The derivative function, let's call it `\partial_{altitude} pressure()`, also takes an input in km, but produces an output in kPA per km: a rate.
 
+## Exercises
 
+`r insert_calcZ_exercise("17.2", "slwdkw", "Exercises/Diff/kid-mean-table.Rmd")`
 
-`r insert_calcZ_exercise("17.10", "eyded", "Exercises/Diff/kitten-put-kayak.Rmd")`
+`r insert_calcZ_exercise("17.04", "eodlt", "Exercises/Diff/pine-lead-car.Rmd")`
 
-`r insert_calcZ_exercise("17.12", "elclvd", "Exercises/Diff/rat-take-fork.Rmd")`
+`r insert_calcZ_exercise("17.06", "iclcws", "Exercises/Diff/robin-row-boat.Rmd")`
 
-`r insert_calcZ_exercise("17.14", "nsmx8w3", "Exercises/Diff/SIR-dimensions.Rmd")`
+`r insert_calcZ_exercise("17.08", "helxs", "Exercises/Diff/deer-pitch-saw.Rmd")`
+
+`r insert_calcZ_exercise("17.10", "1kZXxT", "Exercises/Diff/titmouse-throw-sofa.Rmd")`
+
+`r insert_calcZ_exercise("17.12", "eyded", "Exercises/Diff/kitten-put-kayak.Rmd")`
+
+`r insert_calcZ_exercise("17.14", "elclvd", "Exercises/Diff/rat-take-fork.Rmd")`
+
+`r insert_calcZ_exercise("17.16", "nsmx8w3", "Exercises/Diff/SIR-dimensions.Rmd")`
 
 
 

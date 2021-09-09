@@ -55,11 +55,11 @@ askMC(
 dist <- 60000
 alt <- makeFun(20000*pnorm(dist-v* t, dist/2, dist/6) ~ t, v = 293.33)
 slice_plot(alt(t) ~ t, domain(t=c(-0, 200)))
-dd_alt <- numD(alt(t) ~ t + t)
+dd_alt <- numD(alt(t) ~ t & t)
 slice_plot(dd_alt(t) ~ t, domain(t=c(-0,200)))
 ```
 
-A rule of thumb is that a vertical acceleration up to $5\, \text{ft}\, \text{s}^{-2}$ is not discomfiting. Regrettably, the descent path we described doesn't meet the standard! So we have to re-design the descent path. Since both the altitude and velocity are set, the only parameter you can change is the distance from the foot of the runway where descent commences. Of course, for the parameters "mean" and "sd" need to be set accordingly.
+A rule of thumb is that a vertical acceleration up to $5\, \text{ft}\, \text{s}^{-2}$ is acceptable in terms of passenger comfort. Regrettably, the descent path we described doesn't meet the standard! So we have to re-design the descent path. Since both the altitude and velocity are set, the only parameter you can change is the distance from the foot of the runway where descent commences. Of course, for the parameters "mean" and "sd" need to be set accordingly.
 
 ```{r dp3-2, echo=FALSE, results="markup"}
 askMC(

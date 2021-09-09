@@ -443,7 +443,7 @@ Approximate a function $f(x)$ around a selected point $x=x_0$.
 f <- makeFun(exp(-0.5*x)*sin(2*pi*x/3) ~ x)
 x0 <- 0.9
 df <- D(f(x) ~ x)
-ddf <- D(df(x) ~ x) # alternatively, D(f(x) ~ x + x)
+ddf <- D(df(x) ~ x) # alternatively, D(f(x) ~ x & x)
 lin_approx <- makeFun(f(x0) + df(x0)*(x-x0) ~ x)
 quad_approx <- makeFun(lin_approx(x) + 0.5*ddf(x0)*(x-x0)^2 ~ x)
 slice_plot(f(x) ~ x, domain(x=c(0, 1.5)), size=2) %>%

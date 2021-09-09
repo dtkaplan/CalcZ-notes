@@ -77,7 +77,7 @@ slice_plot(g(x) ~ x, domain(x=c(-5,5)), npts=500) %>%
 Look very closely at Figure \@ref(fig:check-dg), particularly at the places where the blue vertical markers cross the function $g(x)$ (black). They should cross exactly at the flat zone, but they are a little shifted to the left. (You might have to zoom in on the plot to see the offset between the vertical blue marker and the local maximum of the function.) That's the sense in which the finite-difference approach gives an approximation. The small left-shift stems from the use of 0.1 in the definition of the zero function. Use a smaller value, say 0.01 or 0.001, and you won't be able to see the shift at all. `r mark(2185)`
 
 ::: {.takenote  data-latex=""}
-In modeling work, there's nothing wrong with an approximation so long as it is good enough for your purposes. We picked the value 0.1 for our definition of the slope function because it works very well with the pattern-book functions. Here, "very well" means you can't easily see in the graph any deviation compared the the exact derivative. `r mark(2190)`
+In modeling work, there's nothing wrong with an approximation so long as it is good enough for your purposes. We picked the value 0.1 for our definition of the slope function because it works very well with the pattern-book functions. Here, "very well" means you can't easily see in the graph any deviation compared to the exact derivative. `r mark(2190)`
 
 When a calculation can be done exactly (without outrageous effort) it certainly makes sense to use the exact method. However:
 
@@ -98,39 +98,58 @@ Take a look at the statement we used to construct the slope function of `g()`:
 dg <- makeFun((g(x+0.1) - g(x))/0.1 ~ x)
 ```
 
-There's almost nothing about this statement that has anything to do with the specifics of how we defined `g()`; we could have used any $g()$. The "almost" in the previous sentence is about the choice of 0.1, which isn't guaranteed to be small enough. `r mark(2200)`
+There is almost nothing about this statement that has anything to do with the specifics of how we defined `g()`; we could have used any $g()$. The "almost" in the previous sentence is about the choice of 0.1, which isn't guaranteed to be small enough. `r mark(2200)`
 
-It would be convenient to have an ***operator*** that automates the process of constructing a slope function. This is a programming task and in that sense beyond the scope of this course. Still, it's a good idea to get in the habit of reading programming code. So here goes ... creating a `slopeFun()` operator: `r mark(2205)`
+::: {.intheworld data-latex=""}
 
-1. Remember the `function(){}` syntax for creating an operator. (If I were speaking to experienced programmers, I would have said "function" instead of "operator." )
-2. We're going to use a ***tilde expression*** as the input to `slopeFun()`. This is how the other R/mosaic operators work. That will be easier to the user and will also give us access to those other operators if we need them in writing `slopeFun()`.
+In today's world, considerable mathematical content is conveyed to users not directly with formulas but with ***software*** that implements the formulas. And in software, it's a good idea to have a *name* for each operation so that the readers and authors of software have a completely explicit indication that a particular operation is being used. 
+
+When you have many slope functions to compute in some application, it can be error prone to write many statements that are versions of 
+```r
+dg <- makeFun((g(x+0.1) - g(x))/0.1 ~ x)
+```
+
+It's too easy to make a mistake in copying this over, producing a wrong computation that can be hard to detect in the code. For instance, each of these statements looks a lot like the above, but all of them are different and none is constructing a slope function:
+```r
+df <- makeFun((f(x-0.1) - f(x))/0.1)
+dh <- makeFun((h(x+0.1) - f(x))/0.1)
+du <- makeFun((u(x+0.1) - u(x))/1.0)
+dg <- makeFun(g(x+0.1) - g(x)/0.1)
+```
+
+Much easier to read and more reliable would be something like this:
+```r
+df <- slopeFun(f(x) ~ x)
+dh <- slopeFun(h(x) ~ x)
+du <- slopeFun(u(x) ~ x)
+```
+
+Creating such an R ***operator*** is a programming task and in that sense *beyond the scope of this course*. Still, it's a good idea to get in the habit of reading programming code. So here goes ... 
+
+*Creating a `slopeFun()` operator:* `r mark(2205)`
+
+1. Instead of `makeFun()` which is really just maknig for mathematical functions, R programmers use a construction named `function()`. The name of the arguments goes inside the parentheses. The function algorithm goes between curly braces: `{ }`
+2. We're going to use a ***tilde expression*** as the input to `slopeFun()`. This is how the other R/mosaic operators work. That will be easier for the user and will also give us access to those other operators if we need them in writing `slopeFun()`.
 3. The object returned by the `slopeFun()` operator will be, of course, a ***function***. We've been using `makeFun()` to make our mathematical functions, so expect to see that in the code for `slopeFun()`.
 4. There's the matter of  whether 0.1 is small enough. So let's use an `h` argument in place of 0.1 that we can change when needed.
 
 Putting this together, here is a `slopeFun()` operator that takes a tilde expression (like `makeFun()` and `slice_plot()`) and produces a new mathematical function that is the slope function for the mathematical function described in the tilde expression. (There are a couple of R programming elements in `slopeFun()` that you aren't expected to understand completely. But do try reading the code to see what sense you can make of it.)
 ```{r}
-slopeFun <- function(tilde, h=0.1) { #two arguments, one with a default value
-   g <- makeFun(tilde)  # Turn the tilde expression into a function
-   
-   makeFun((g(x + h) - g(x))/h ~ x, h=h) # just like before, with h instead of 0.1
+#two arguments, one with a default value
+slopeFun <- function(tilde, h=0.1) { 
+   # Turn the tilde expression into a function
+   g <- makeFun(tilde) 
+   # just like before, with h instead of 0.1
+   makeFun((g(x + h) - g(x))/h ~ x, h=h) 
 }
 ```
 
-Figure \@ref(fig:slope-quick-check) provides a quick check of whether the function works and whether `h=0.1` is small enough. Since the tan curve runs right through the middle of the black curve, we have a good indication that $h = 0.001$ is just as good as $h = 0.00000000001$.
-
-```{r slope-quick-check, fig.cap="Checking whether the homemade `slopeFun()` operator works."}
-dx_sin <- slopeFun(sin(x) ~ x)
-slice_plot(dx_sin(x, h = 0.00000000001) ~ x, domain(x=c(-5,5)), size=2) %>%
-  slice_plot(dx_sin(x, h=0.001) ~ x, color="tan")
-```
-
-::: {.scaffolding  data-latex=""}
-You can decide for yourself whether the tan and black curves in Figure \@ref(fig:slope-quick-check) are similar enough for your purposes. Even better, do some exploring yourself in a `r sandbox_link()`. You'll have to copy and paste into your sandbox both the code defining `slopeFun()` and the graphics statements. Start by replacing `dx_sin(x, h=0.1)` by `dx_sin(x, h=0.0001)` `r mark(2210)`
-
-`r insert_calcZ_exercise("19.4", "l2ksw", "Exercises/Diff/h-too-small.Rmd")`
+Another important advantage of centralizing computations in a single operator is that the operator can be made more sophisticated without being harder to use. For instance, R/mosaic provides the `D()` operator for computing derivatives. This knows the rules for symbolic differentiation that will be introduced in Chapter \@ref(prod-comp-rules) and switches to a finite-difference method (like `slopeFun()`, but more sophisticated) when symbolic differentiation isn't applicable. 
+:::
 
 
-In practice, you won't need to use `slopeFun()`. You'll use `D()` instead, which gives the "exact" results whenever it can.
+
+In practice, instead of home-brewed functions like `slopeFun()`, you can use the R/mosaic `D()` instead, which gives the "exact" results whenever it can.
 
 ## Symbolic differentiation {#symbolic-differentiation}
 

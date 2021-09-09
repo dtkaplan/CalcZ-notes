@@ -9,25 +9,16 @@ id: finch-trim-kayak
 global-id: ykels
 ---
 
+Although we created an R function named `slopeFun()` for the purposes of demonstration, it's better to use the R/mosaic operator `D()` which calculates the derivative, sometimes using symbolic methods and sometimes using a finite-difference method.
 
-::: {.scaffolding  data-latex=""}
-The R command given below defines a new operator named `Diff()` which implements the differencing operator $\cal D_x$ for functions with one input.
-```{r}
-Diff <- function(f, h=0.001) {
-  function(x) {
-    (f(x + h) - f(x)) / h
-  }
-}
-```
-Open an R sandbox and copy the definition of `Diff()` into it. 
 
-As an example of the use of `Diff()`, here is some more R code that defines a function `f()` and finds ${\cal D}_x f()$, calling it `D_f()`. Then a slice plot is made of both `f()` and `D_f()`. (Remember to paste this code under the definition of `Diff()` in your sandbox.)
+As an example of the use of `D()`, here is some more R code that defines a function `f()` and finds $\partial_x f()$, calling it `d_f()`. Then a slice plot is made of both `f()` and `d_f()`. 
 
 ```{r}
 f   <- makeFun(sqrt(exp(x)) - x^2 ~ x)
-D_f <- Diff(f)
+d_f <- D(f(x) ~ x)
 slice_plot(f(x) ~ x, domain(x=c(0, 5))) %>%
-  slice_plot(D_f(x) ~ x, color = "orange3")
+  slice_plot(d_f(x) ~ x, color = "orange3")
 ```
 :::
 
@@ -36,43 +27,43 @@ For each of the following functions, write a brief comparison of the function to
 
 ```{r daily-digital-26-Essay1, echo=FALSE}
 etude2::etudeEssay(
-  prompt = "A. For the function $f(x) \\equiv 3 x$, compare $f()$ to $\\cal D_x f$."
+  prompt = "A. For the function $f(x) \\equiv 3 x$, compare $f()$ to $\\partial_x f$."
 )
 ```
 
 ```{r daily-digital-26-Essay2, echo=FALSE}
 etude2::etudeEssay(
-  prompt = "B. For the function $f(x) \\equiv x^2$, compare $f()$ to $\\cal D_x f$."
+  prompt = "B. For the function $f(x) \\equiv x^2$, compare $f()$ to $\\partial_x f$."
 )
 ```
 
 ```{r daily-digital-26-Essay3, echo=FALSE}
 etude2::etudeEssay(
-  prompt = "C. For the function $f(x) \\equiv \\exp(x)$, compare $f()$ to $\\cal D_x f$."
+  prompt = "C. For the function $f(x) \\equiv \\exp(x)$, compare $f()$ to $\\partial_x f$."
 )
 ```
 
 ```{r daily-digital-26-Essay4, echo=FALSE}
 etude2::etudeEssay(
-  prompt = "D. For the function $f(x) \\equiv \\exp(-0.3 x)$, compare $f()$ to $\\cal D_x f$."
+  prompt = "D. For the function $f(x) \\equiv \\exp(-0.3 x)$, compare $f()$ to $\\partial_x f$."
 )
 ```
 
 ```{r daily-digital-26-Essay5, echo=FALSE}
 etude2::etudeEssay(
-  prompt = "E. For the function $f(x) \\equiv \\sin(x)$, compare $f()$ to $\\cal D_x f$."
+  prompt = "E. For the function $f(x) \\equiv \\sin(x)$, compare $f()$ to $\\partial_x f$."
 )
 ```
 
 ```{r daily-digital-26-Essay6, echo=FALSE}
 etude2::etudeEssay(
-  prompt = "F. For the function $f(x) \\equiv \\sin(2 \\pi x)$, compare $f()$ to $\\cal D_x f$)."
+  prompt = "F. For the function $f(x) \\equiv \\sin(2 \\pi x)$, compare $f()$ to $\\partial_x f$)."
 )
 ```
 
 ```{r daily-digital-26-Essay7, echo=FALSE}
 etude2::etudeEssay(
-  prompt = "G. For the function $f(x) \\equiv \\sin(\\frac{2 \\pi}{20} x)$, compare $f()$ to $\\cal D_x f$)."
+  prompt = "G. For the function $f(x) \\equiv \\sin(\\frac{2 \\pi}{20} x)$, compare $f()$ to $\\partial_x f$)."
 )
 ```
 

@@ -387,7 +387,7 @@ The next frame of the movie will show $C_h(x)$. To construct that, we'll compute
 
 ```{r echo=FALSE}
 tmp <- spliner(y ~ x, data = C_funs[[1]])
-foo <- D(tmp(x) ~ x + x, .hstep=1)
+foo <- D(tmp(x) ~ x & x, .hstep=1)
 slice_plot(foo(x) ~ x, domain(x=c(-25, 25)), npts=500) %>%
   gf_labs(y="Net flux (deg C/cm^2)", x="Position along bar", title="Net flux at time t=0")
 ```

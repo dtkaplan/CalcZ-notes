@@ -194,9 +194,9 @@ server <- function(input, output) {
         K <- knot_locations()
         dom <- domain(x=extendrange(xrange(), f=0.02))
         ddfuns <- list()
-        ddfuns$linear <- D(funs$linear(x) ~ x + x)
-        ddfuns$cubic <-  D(funs$cubic(x)  ~ x + x)
-        ddfuns$global <- D(funs$global(x) ~ x + x)
+        ddfuns$linear <- D(funs$linear(x) ~ x & x)
+        ddfuns$cubic <-  D(funs$cubic(x)  ~ x & x)
+        ddfuns$global <- D(funs$global(x) ~ x & x)
         P <- ggplot()
         # if (input$linear) {
         #     P <- P %>%
