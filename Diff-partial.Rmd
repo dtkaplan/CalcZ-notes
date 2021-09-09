@@ -63,6 +63,7 @@ Better than a picture of a summer melon, pick up a hardcover book and place it o
 
 If melons and basketballs are not your style, you can play the same game on an interactive graph of a function of two variables. The snapshot below is a link to an applet that shows the graph of a function as a blue surface. You can specify a point on the surface by setting the value of the (x, y) input using the sliders. Display the tangent plane at that point by check-marking the "Tangent plane" input. (Acknowledgments to Alfredo Sánchez Alberca who wrote the applet using the GeoGebra math visualization system.) `r mark(2630)`
 
+[![](www/geogebra-tangent-app.png)](https://www.geogebra.org/m/wTh7KKd3){:target="_blank"}
 
 <a href="https://www.geogebra.org/m/wTh7KKd3" target="_blank"><img src="www/geogebra-tangent-app.png" width="70%"></a>
 
@@ -125,7 +126,7 @@ P
 
 Zooming in on each of the marked points presents a simpler picture for each of them, although one that is different for each point. Each zoomed-in plot contains almost parallel, almost evenly spaced contours. If the surface had been exactly planar over the entire zoomed-in domain, the contours would be *exactly* parallel and exactly evenly spaced. We can approach such exact parallelness by zooming in more closely around the labeled point. `r mark(2645)`
 
-```{r zoomed-plot, echo=FALSE, out.width="33%", fig.show="hold", fig.cap="Zooming in on the neighborhoods of A, B, and C in Figure \\@ref(fig:whole-plot) shows a simple, almost planar, local landscape."}
+```{r zoomed-plot, echo=FALSE, out.width="33%", fig.show="hold", fig.cap="Zooming in on the neighborhoods of A, B, and C in Figure @@ref(fig:whole-plot) shows a simple, almost planar, local landscape."}
 PzC
 PzA
 PzB
@@ -136,7 +137,7 @@ Just as the function $\line(x) \equiv a x + b$ describes a straight line, the fu
 In Figure \@ref(fig:facet-plot), the facets tangent to the original surface at A, B, and C are displayed. Comparing Figures \@ref(fig:zoomed-plot) and \@ref(fig:facet-plot) you can see that each facet has the same orientation as the surface; the contours face in the same way. `r mark(2655)`
 
 
-```{r facet-plot, echo=FALSE, out.width="33%", fig.show="hold", fig.cap="The facets around the points are linear functions, each aligned with the contours near that point in Figure \\@ref(fig:whole-plot)"}
+```{r facet-plot, echo=FALSE, out.width="33%", fig.show="hold", fig.cap="The facets around the points are linear functions, each aligned with the contours near that point in Figure @@ref(fig:whole-plot)"}
 PC
 PA
 PB
@@ -148,12 +149,16 @@ One clue comes from the formula for a function whose graph is a plane oriented i
 
 $$\text{plane}(x,y) \equiv a + b x + cy$$
 
-::: {.scaffolding}
+::: {.scaffolding  data-latex=""}
 To explore the roles of the parameters $b$ and $c$ in setting the orientation of the line, open a `r sandbox_link()`. The scaffolding code generates a particular instance of $\text{plane}(x,y)$ and plots it in two ways: a contour plot and a surface plot. Change the numerical values of $b$ and $c$ and observe how the orientation of the planar surface changes in the graphs. You can also see that the value of $a$ is irrelevant to the orientation of the plane, just as the intercept of a straight-line graph is irrelevant to the slope of that line. `r mark(2665)`
 
 ```{r}
 plane <- makeFun(a + b*x + c*y ~ x + y, a = 1, b = -2.5, c = 1.6)
-interactive_plot(plane(x, y) ~ x + y, domain(x=c(-2, 2), y=c(-2, 2)))
+if (knitr::is_html_output()) {
+  interactive_plot(plane(x, y) ~ x + y, domain(x=c(-2, 2), y=c(-2, 2)))
+} else {
+  knitr::include_graphics(normalizePath("www/plane-3d.png"))
+}
 contour_plot(plane(x, y) ~ x + y, domain(x=c(-2, 2), y=c(-2, 2))) %>%
   gf_refine(coord_fixed())
 ```
@@ -191,7 +196,7 @@ Simply differentiate $g(x, y)$ with respect to $x$ in order to get parameter $b$
 $$\partial_x g(x, y) = \underbrace{\partial_x a}_{=0} + \underbrace{\partial_x b x}_{=b} + \underbrace{\partial_x cy}_{=0} = b$$
 Similarly, $$\partial_y g(x, y) = \underbrace{\partial_y a}_{=0} + \underbrace{\partial_y b x}_{=0} + \underbrace{\partial_y cy}_{=c} = c$$
 
-::: {.takenote}
+::: {.takenote  data-latex=""}
 Get in the habit of noticing the subscript on the differentiation symbol $\partial$. When taking, for instance, $\partial_y f(x,y,z, \ldots)$, all variables other than $y$ are to be ***held constant***. Some examples: `r mark(2700)`
 
 $$\partial_y 3 x^2 = 0\ \ \text{but}\ \ \ 
@@ -213,17 +218,6 @@ g(x, y+\color{brown}{dy}) = g(x,y) + \color{brown}{\partial_y} g(x,y) \times \co
 
 Each of these statements is about *changing one input* while *holding the other input(s) constant*. Or, as the more familiar expression goes, "The effect of changing one input  **all other things being equal**. `r mark(2705)`
 
-
-
-::: {.objectives}
-```{r echo=FALSE, results="asis"}
-state_objective("Deriv-4a", "Understand that there are many different slopes at any point of a non-constant function of 2 or more variables.")
-state_objective("Deriv-4b", "Calculate partial derivatives on a contour plot")
-state_objective("Deriv-4c", "Understand \"partial derivative\" as \"changing one input while holding constant all the other inputs.\"")
-state_objective("Deriv-8b", "Calculate partial derivatives by \"changing one input while holding constant all the other inputs.\"")
-state_objective("Deriv-4d", "Know the three properties of gradient vectors")
-```
-:::
 
 Everything we've said about differentiation rules applies not just to functions of one input, $f(x)$, but to functions with two or more inputs, $g(x,y)$, $h(x,y,z)$ and so on.  `r mark(2710)`
 
@@ -255,29 +249,29 @@ contour_plot(g(x, y+.2) ~ x + y, domain(x=c(-2,2), y=c(0, 4))) %>%
   gf_refine(coord_fixed())
 ```
 
-`r insert_calcZ_exercise("23.02", "9iowVB", "Exercises/Diff/partial-purple.Rmd")`
+`r insert_calcZ_exercise("24.02", "9iowVB", "Exercises/Diff/partial-purple.Rmd")`
 
-`r insert_calcZ_exercise("23.04", "qdkw", "Exercises/Diff/partial-tan.Rmd")`
+`r insert_calcZ_exercise("24.04", "qdkw", "Exercises/Diff/partial-tan.Rmd")`
 
-`r insert_calcZ_exercise("23.06", "uekses", "Exercises/Diff/partial-doctor.Rmd")`
+`r insert_calcZ_exercise("24.06", "uekses", "Exercises/Diff/partial-doctor.Rmd")`
 
-`r insert_calcZ_exercise("23.08", "wkd83", "Exercises/Diff/gradient-field-red.Rmd")`
+`r insert_calcZ_exercise("24.08", "wkd83", "Exercises/Diff/gradient-field-red.Rmd")`
 
-`r insert_calcZ_exercise("23.10", "lkwciw", "Exercises/Diff/gradient-field-blue.Rmd")`
+`r insert_calcZ_exercise("24.10", "lkwciw", "Exercises/Diff/gradient-field-blue.Rmd")`
 
-`r insert_calcZ_exercise("23.12", "xdkw", "Exercises/Diff/gradient-field-orange.Rmd")`
-
-
+`r insert_calcZ_exercise("24.12", "xdkw", "Exercises/Diff/gradient-field-orange.Rmd")`
 
 
-`r insert_calcZ_exercise("23.14", "vkdlw", "Exercises/Diff/partial-house.Rmd")`
-
-`r insert_calcZ_exercise("23.16", "72ldw", "Exercises/Diff/spider-blow-lamp.Rmd")`
 
 
-`r insert_calcZ_exercise("23.18", "oekse", "Exercises/Diff/grass-grows-red.Rmd")`
+`r insert_calcZ_exercise("24.14", "vkdlw", "Exercises/Diff/partial-house.Rmd")`
 
-`r insert_calcZ_exercise("23.20", "uifJjv", "Exercises/Diff/aspen-let-cotton.Rmd")`
+`r insert_calcZ_exercise("24.16", "72ldw", "Exercises/Diff/spider-blow-lamp.Rmd")`
+
+
+`r insert_calcZ_exercise("24.18", "oekse", "Exercises/Diff/grass-grows-red.Rmd")`
+
+`r insert_calcZ_exercise("24.20", "uifJjv", "Exercises/Diff/aspen-let-cotton.Rmd")`
 
 ## Algorithmic optimization
 
@@ -308,18 +302,18 @@ Let's lay out the algorithm for using the gradient to find an argmax. In every o
 
 **Step 2** By evaluating $g()$ at ${\mathbf X}_0$ and ${\mathbf X}_1$ we can find the gradient vector near ${\mathbf X}_1$. 
 
-$$\partial_\color{magenta}{x} g({\mathbf X}_1) \equiv \partial_\color{magenta}{x} g(x_1, y_1, z_1, \ldots) = \frac{g(\color{magenta}{x_1}, y_1, z_1, \ldots) - g(\color{magenta}{x_0}, y_1, z_1, \ldots)}{\color{magenta}{x_1 - x_0}}\\
+$$\partial_{\color{magenta}{x}} g({\mathbf X}_1) \equiv \partial_{\color{magenta}{x}} g(x_1, y_1, z_1, \ldots) = \frac{g(\color{magenta}{x_1}, y_1, z_1, \ldots) - g(\color{magenta}{x_0}, y_1, z_1, \ldots)}{\color{magenta}{x_1 - x_0}}\\
 \,\\
-\partial_\color{brown}{y} g({\mathbf X}_1) \equiv\partial_\color{brown}{y} g(x_1, y_1, z_1, \ldots) = \frac{g(x_1, \color{brown}{y_1}, z_1, \ldots) - g(x_1, \color{brown}{y_0}, z_1, \ldots)}{\color{brown}{y_1 - y_0}}\\
+\partial_{\color{brown}{y}} g({\mathbf X}_1) \equiv\partial_{\color{brown}{y}} g(x_1, y_1, z_1, \ldots) = \frac{g(x_1, \color{brown}{y_1}, z_1, \ldots) - g(x_1, \color{brown}{y_0}, z_1, \ldots)}{\color{brown}{y_1 - y_0}}\\
 \,\\
-\partial_\color{darkorange}{z} g({\mathbf X}_1) \equiv\partial_\color{darkorange}{z} g(x_1, y_1, z_1, \ldots) = \frac{g(x_1, y_1, \color{darkorange}{z_1}, \ldots) - g(x_1, y_1, \color{darkorange}{z_0}, \ldots)}{\color{darkorange}{z_1 - z_0}}\\
+\partial_{\color{purple}{z}} g({\mathbf X}_1) \equiv\partial_{\color{purple}{z}} g(x_1, y_1, z_1, \ldots) = \frac{g(x_1, y_1, \color{purple}{z_1}, \ldots) - g(x_1, y_1, \color{purple}{z_0}, \ldots)}{\color{purple}{z_1 - z_0}}\\
 \,\\
 \ldots$$
 
 **Step 3** Pick a small number $h$ and compute the coordinates of a new point $${\mathbf X}_2 \equiv (
 \color{magenta}{x_1} + h \partial_{\color{magenta}{x}} g({\mathbf X}_1), 
 \color{brown}{y_1} + h \partial_{\color{brown}{y}} g({\mathbf X}_1), 
-\color{darkorange}{z_1} + h \partial_{\color{darkorange}{z}} g({\mathbf X}_1), \ldots) $$
+\color{purple}{z_1} + h \partial_{\color{purple}{z}} g({\mathbf X}_1), \ldots) $$
 ${\mathbf X}_2$ is located a small distance from ${\mathbf X}_1$ in the direction of the gradient vector. 
 
 **Step 4** If $g({\mathbf X}_2) \approx g({\mathbf X}_1)$ then the gradient vector must be very close to zero. We can stop the algorithm, giving the argmax result as ${\mathbf X}_2$. Otherwise, go back to Step 2, but using ${\mathbf X}_1$ in place of ${\mathbf X}_0$ and using ${\mathbf{X}_2}$ in place of ${\mathbf{X}_1}$. 

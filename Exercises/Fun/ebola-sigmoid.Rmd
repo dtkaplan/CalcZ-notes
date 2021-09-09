@@ -6,54 +6,14 @@ global-id: "EKCIE"
 ---
 
 ```{r include=FALSE}
-library(etude2)
-library(mosaic)
-library(mosaicCalc)
+library(Zcalc)
 library(MMAC)
 ```
 
-A data frame named `EbolaSierraLeone`^[From the `{MMAC}` R package] records the cumulative number of Ebola cases in  Sierra Leone from May 1, 2014 to December 16, 2015. Figure \@ref(fig:ebola-data) plots the data.
-
-
-```{r ebola-data, fig.cap="Cumulative Ebola cases in Sierra Leone"}
-gf_point(Cases ~ Day, data = MMAC::EbolaSierraLeone)
-```
-
-Although the cumulative case data are roughly sigmoidal in shape, there are systematic differences in shape from a true sigmoid. For comparison, Figure \@ref{fig:true-sigmoid} is a graph of genuinely sigmoidal data.
-
-```{r true-sigmoid, echo=FALSE, warning=FALSE, fig.cap="A simulated sigmoidal growth process."}
-sigmoid <- makeFun(A * pnorm(t, center,  width) ~ t)
-Points <- tibble::tibble(
-  t = seq(0, 12, length=100),
-  y = sigmoid(t, A=15, center=5, width = 2) + runif(length(t), min=-1, max=0.5)
-) %>% 
-  mutate(y = pmin(15, cummax(y)))
-
-gf_point(y ~ t, data  = Points,  height = 0.5, alpha = 0.25) %>%
-slice_plot(sigmoid(t, A=15, center = 5, width = 2) ~ t,
-           domain(t = c(-1, 15))) %>%
-  gf_hline(yintercept  = 15, color  = "orange3",  alpha = 0.5) %>%
-  gf_vline(xintercept = 5, color = "dodgerblue", alpha = 0.5) %>%
-  gf_vline(xintercept =  c(3, 7),  color = "green", alpha = 0.5) %>%
-  gf_segment(7.5 + 7.5 ~ -1 + 5, color = "dodgerblue",  alpha = 0.5) %>%
-  gf_labs(title  = "A genuine sigmoid and its parameters")
-```
-
-Let's develop the methodology for estimating the parameters of a sigmoid graphically. 
-
-1. Sketch in a S-shaped curve that smoothly follows the data. In Figure \@ref(fig:true-sigmoid) this has already been done for you. For the Ebola data, you will have to use your judgment. 
-
-2. Find the top plateau of the S-curve. This is indicated by the red line in Figure \@ref(fig:true-sigmoid). The parameter `A` is simply the height of the plateau, in this case $y \approx 15$.
-
-3. Come down half way from the  plateau. Here, that's 15/2 or 7.5, indicated by the horizontal blue line segment.  Find the inverse of the S-curve from that half-way point onto the horizontal-axis. Here, that gives $t \approx 5$. The  parameter `center` is that value.
-
-4. From the center of the S-shaped curve, follow the curve upward about 2/3 of the way to the  plateau. In the diagram, that point is marked with a green line at $t \approx 7$. The `width` is the distance along the horizontal axis from the blue centerline to the green line. Here, that's $7 - 5$ giving 2 as the `width`.
-
-5. You might also want  to trace the S-curve *downward* from the centerline about 2/3 of the way to zero. That's indicated by the  left green line.  In the standard sigmoid, the two green lines will be equally spaced around the centerline. Of course the data may not be in the shape of the standard sigmoid, so you might find the two green lines are not equally spaced from the center.
 
 -------
 
-*Put aside for the moment that the Ebola data doesn't look exactly like the standard sigmoid function. Follow the above procedure, nevertheless.*
+*Put aside for the moment that the Ebola data plotted in Figure \@ref(fig:ebola-data) doesn't look exactly like the standard sigmoid function. Follow the fitting procedure as best you can.*
 
 ```{r daily-digital-08-QA12, echo=FALSE}
 askMC(
@@ -84,43 +44,4 @@ askMC(
     "About 2500 cases" = "The width is measured along the horizontal axis, not the vertical"
 )
 ```
-
-Open a sandbox and use the following commands to plot the Ebola data along with the sigmoid that you matched to the data by eye. The commands also generate and plot a more "refined" estimate found with `fitModel()` starting with  your by-eye parameters. (Note: You'll need to fill in the blanks at the start of the scaffolding with your by-eye parameters before running the code.)
-
-
-::: {.scaffolding}
-```{r eval=FALSE}
-A_estimate <-  _____ 
-center_estimate <- _____
-width_estimate <- ______
-
-guessed_fun <- makeFun(A* pnorm(Day, center, width) ~ Day,
-                       A = A_estimate,
-                       center = center_estimate,
-                       width = width_estimate)
-
-
-refined_fun <- fitModel(Cases ~ A * pnorm(Day, center, width),
-                 data = EbolaSierraLeone,
-                 start = list(A=A_estimate, 
-                              center=center_estimate,
-                              width=width_estimate))
-
-gf_point(Cases  ~ Day, data = MMAC::EbolaSierraLeone)  %>%
-  slice_plot(guessed_fun(Day) ~ Day, color="red") %>%
-  slice_plot(refined_fun(Day) ~ Day, color="blue")
-```
-:::
-
-
-I can't predict what you see in your graph, since it depends on what starting estimates you used for `A`, `center` and `width`.
-
-**Your task**: *Write down the estimates you  made by eye for `A`, `center` and `width`. Then  explain in words any major systematic deviations of the 'refined' model from the data."*
-
-
-This idea of fitting a sigmoidal curve *globally* to data that are only roughly sigmoidal might be forgiven since it's just a textbook exercise. But if this were a real-world problem, there are three rookie mistakes in the approach, despite its technical sophistication.
-
-1. A model is built for a  purpose. There's no statement in  the exercise about  what the purpose is.
-2. The data themselves are a  good enough representation  of the historical pattern. There's no need to adorn  them with a fitted  curve.
-3. The mathematical processes that would justify the expectation  that a sigmoid curve could be useful are based on the idea that the  underlying mechanism for the phenomenon is unchanging. For an epidemic, that mechanism is contagion. By saying the "mechanism is unchanging," we mean that person-to-person transmission of the Ebola virus happens in the same way at the beginning of the epidemic as it does in the middle and in  the end. But strong public health interventions were introduced to control the epidemic. That's a change in mechanism.
 

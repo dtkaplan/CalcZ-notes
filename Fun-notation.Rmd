@@ -2,7 +2,7 @@
 
 Part of the difficulty of mathematics for many people is making sense of the nomenclature and notation. What you were taught in high school is a highly idiomatic system that can be mastered only with extensive experience. Mathematicians are undoubtedly skilled in logic, but mathematics itself has an ancient history which has littered the language with synonyms, near synonyms, inconsistencies, diacritical marks, and letters in unfamiliar alphabets. `r mark(500)`
 
-::: {.intheworld}
+::: {.intheworld  data-latex=""}
 To illustrate the cultural admiration for abstraction in mathematics, consider this famous poem, *The Jabberwocky*, by a University of Oxford mathematician, Charles Lutwidge Dodgson (1832-1898):
 
 *’Twas brillig, and the slithy toves  
@@ -30,7 +30,7 @@ All five sentences are *equations*. That's easy, because they each have an equal
 The traditional notation is practically useless for computing. A programmer has to have a deep understanding of what the notation is intended to mean in any given circumstance before she can construct a computer expression that will carry that same meaning in the computer's work.
 
 
-::: {.scaffolding}
+::: {.scaffolding  data-latex=""}
 To illustrate, consider these statements in traditional math notation, each of which has a sensible meaning. 
 $$y = x\\
 y = \sqrt{x}\\
@@ -168,20 +168,6 @@ but this notation means that you will have to give specific numerical values for
 <!-- Relevant Blog post: CalculusBlog/post-formal-arguments.Rmd -->
 
 
-::: {.objectives data-latex=""}
-```{r echo=FALSE, results="asis"}
-state_objective("F-31-R", "Identify and create R versions of mathematical functions using `makeFun()` and tilde expressions.")
-
-
-```
-:::
-
-::: {.objectives data-latex=""}
-```{r echo=FALSE, results="asis"}
-state_objective("F-33", "Master the conventions used in CalcZ for giving names to functions and for referring to functions with \"pronouns.\"")
-```
-:::
-
 ## CalcZ naming conventions
 
 We're going to be using and creating a lot of functions in CalcZ. Some of these functions already have ***proper names***, usually written using short sequences of letters: for instance the pattern-book functions $\sin()$, $\ln()$, $\exp()$. `r mark(600)`
@@ -204,7 +190,7 @@ Long and awkward. So we'll feel free to write instead,
 
 Without the formality provided by "$g(x) \equiv$" it can be hard to know whether $\sqrt{\strut x}$ means "the square-root function" or "take the square root of a specific number $x$. The convention we will use is based on the name used in the expression. When standard argument names from the end of the alphabet are being used with a subscript (e.g. $x_0$) or with a special symbol used in a  superscript (e.g. $t^\star$), we intend the expression to be a function. However, when we want to ***apply a function*** to specific values for inputs we will write in any of the following styles:
 
-$$f(x^\star) \ \ \mbox{or}\ \ \sqrt{\strut x^\star}\ \ \mbox{or}\ \ \sqrt{\strut x=3}\ \ \mbox{or}\ \ \left.\sqrt{\strut x}\right|_{x=3}\ \ \mbox{or}\ \ \left.g(x)\strut \right|_{x=3}$$
+$$f(x^\star) \ \ \text{or}\ \ \sqrt{\strut x^\star}\ \ \text{or}\ \ \sqrt{\strut x=3}\ \ \text{or}\ \ \left.\sqrt{\strut x}\right|_{x=3}\ \ \text{or}\ \ \left.g(x)\strut \right|_{x=3}$$
 
 One of the important techniques of calculus is to take something we often think of as a number and turn it into a function whose output is a number. It will take you time to get used to the calculus notation and to be able to tell at a glance whether something is a function or a number. `r mark(620)`
 
@@ -214,7 +200,7 @@ $$\int_0^3\!\! f(t) dt\ \ \text{is a number, but }\int_0^x\!\! f(t) dt \ \ \text
 
 In high-school math notation, it can be hard to tell if an expression is intended to be a function or a number. Careful attention to the CalcZ conventions will make it easier to figure whether an expression resolves to a function or a number. When you first read a mathematical expression, a good first question to ask is, "What kind of thing is this? A function? A number?"
 
-::: {.takenote}
+::: {.takenote  data-latex=""}
 It is essential that you can apply these conventions reflexively. Being able to say what kind of thing a symbol stands for is a key to understanding what a mathematical expression means.
 :::
 
@@ -232,7 +218,7 @@ Almost all the time we will create a function using `makeFun()`. So when you see
 
 As we get deeper into calculus, you will meet additional R operators that generate functions. We'll introduce these in good time, but for someone reviewing the course, these include `D()`, `antiD()`, `compose()` and `iterate()`.
 
-::: {.why}
+::: {.why  data-latex=""}
 Some readers may have encountered R previously in a statistics or data science course. Those readers will be wondering what is the purpose of `makeFun()`. Experienced programmers know that the way you make functions in R is by using the `function` keyword. For instance:
 ```{r}
 f <- function(x) { 3 + 2*x }
@@ -297,7 +283,7 @@ Calculus is about relationships: the connection between two (or more) things. So
 
 In calculus, sometimes you have to distinguish between "$x$ is zero" and "$x$ gets closer and closer to zero." We'll need this when we want to say, "It gets smaller and smaller, but doesn't disappear entirely." The symbol for "gets closer and closer to" is $\rightarrow$, as in $x \rightarrow 0$
 
-::: {.takenote}
+::: {.takenote  data-latex=""}
 In reading math, take care to notice which of $=$, $\rightarrow$, or $\equiv$ is being used. The sign has something important to say and is intended to help you make sense of what you read.
 :::
 

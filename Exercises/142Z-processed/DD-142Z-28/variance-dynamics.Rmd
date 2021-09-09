@@ -45,7 +45,7 @@ C_funs[[1]] <- tibble::tibble(
 
 for (k in 1:500) {
   tmp <- spliner(y ~ x, data = C_funs[[k]])
-  foo <- flux_funs[[k]] <- D(tmp(x) ~ x + x, .hstep=1)
+  foo <- flux_funs[[k]] <- D(tmp(x) ~ x & x, .hstep=1)
   C_funs[[k+1]] <- tibble::tibble(
     x = xpts,
     y = tmp(x) + 0.1*foo(x)

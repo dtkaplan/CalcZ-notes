@@ -31,7 +31,7 @@ Inf + Inf
 Inf - Inf
 1/Inf
 ```
-::: {.scaffolding}
+::: {.scaffolding  data-latex=""}
 To see the benefits of the `NaN` / `Inf` system let's plot out the logarithm function over the graphics domain $-5 \leq x \leq 5$. Of course, part of that graphics domain, $-5 \leq x \leq 0$ is not in the domain of the logarithm function and the computer is entitled to give us a slap on the wrists. The `NaN` provides some room for politeness. 
 
 Open a sandbox and see what happens when you make the plot.
@@ -40,7 +40,7 @@ slice_plot(log(x) ~ x, domain(x=c(-5,5)))
 ```
 :::
 
-In a purely mathematical sense, the problem with functions being undefined over an extended part of a domain has been handled with cunning and imagination. But the solution---the invention of complex numbers---is not our concern here. Instead, we're going to embrace functions that have a domain smaller than the whole number line and see what we can do with them. 
+In a purely mathematical sense, the problem with functions being undefined over an extended part of a domain has been handled with cunning and imagination, but the solution---the invention of complex numbers---is not our concern here. Instead, we're going to embrace functions that have a domain smaller than the whole number line and see what we can do with them. 
 
 To illustrate, let's use computer notation to create a function whose domain is $x < 1$. To do this, we need a way to write "if," as in, "If $x$ is 1 or greater, return `NaN`." We'll use a function in R that let's us ask a TRUE/FALSE question and, depending on the answer, do one or another calculation. The question-answering R function is `ifelse()` whose name is remarkably descriptive. The `ifelse()` function takes three arguments. The first is the question to be asked, the second is the value to return if the answer is "yes," and the third is the value to return for a "no" answer.
 
@@ -66,7 +66,7 @@ R notation              | English
 
 Having an ability to split up the domain of a function and provide different formula for each of the pieces allows us to
 construct ***piecewise functions***. To illustrate, the function $h(x) \equiv |x|$. You'll recognize this as the "absolute value" function. The intuitive algorithm is to "strip the negative sign, if any" from the input. But with the ability to divide the domain into pieces, we gain access to a less mysterious sort of arithmetic operation and can re-write $$h(x) \equiv \left\{ 
-\begin{array}{cl} x & \text{for}\ 0 \leq x\\ -x & \mbox{otherwise}\end{array}
+\begin{array}{ll}  x & \text{for}\ 0 \leq x \\ \text{- x} & \text{otherwise}\\\end{array}
 \right.$$ 
 Or, in computer notation
 ```{r}
@@ -76,8 +76,8 @@ Note that the absolute value function is built-in to R in the form of the `abs()
 
 Less familiar is the ***Heaviside function*** which has important uses in physics and engineering:
 
-$$\mbox{Heaviside}(x) \equiv \left\{ 
-\begin{array}{cl} 0 & \text{for}\ x < 0\\1 & \mbox{otherwise}\end{array}
+$$\text{Heaviside}(x) \equiv \left\{ 
+\begin{array}{cl} 1 & \text{for}\ 0 \leq x \\0 & \text{otherwise}\end{array}
 \right.$$
 In computer notation, this is 
 ```{r}
@@ -93,8 +93,8 @@ slice_plot(0 ~ x, domain(x = c(-10, 0)), size=2) %>%
 The vertical gap between the two pieces is called a ***discontinuity***. Intuitively, you cannot draw a discontinuous function ***without lifting the pencil from the paper***. The Heaviside function has a discontinuity at $x=0$.
 
 Similarly, the ***ramp function*** (aka "ReLU") is a kind of one-sided absolute value:
-$$\mbox{ramp}(x) \equiv \left\{ 
-\begin{array}{cl} x & \text{for}\ 0 \leq x\\0 & \mbox{otherwise}\end{array}
+$$\text{ramp}(x) \equiv \left\{ 
+\begin{array}{cl} x & \text{for}\ 0 \leq x\\0 & \text{otherwise}\end{array}
 \right.$$
 Or, in computer notation:
 ```{r}
@@ -109,7 +109,7 @@ slice_plot(sig(x) ~ x, domain(x=c(-3, 3)))
 ```
 
 
-::: {.intheworld}
+::: {.intheworld  data-latex=""}
 Figure \@ref(fig:gas-use-2) is a graph of monthly natural gas use in the author's household versus average temperature during the month. (Natural gas is measured in cubic feet, appreviated *ccf*.)  `r mark(1530)` 
 
 ```{r gas-use-2, echo=FALSE, fig.cap="The amount of natural gas used for heating the author's home varies with the outside temperature."}
@@ -120,13 +120,13 @@ gf_point(ccf ~ temp, data = Home_utilities, alpha=0.5) %>%
 ```
 The graph looks somewhat like a hockey stick. A sloping straight-line dependence of ccf on temperature for temperatures below $60^\circ$F and constant for higher temperatures.  The shape originates from the dual uses of natural gas. Gas is used for cooking and domestic hot water, the demand for which is more of less independent of outdoor temperature at about 15 ccf per month. Gas is also used for heating the house, but that's needed only when the temperature is less than about $60^\circ$F.  
 
-We can accomplish the hockey-stick shape with a linear combination of the ramp() function and a constant. The ramp function represents gas used for heating, the constant is the other uses of gas (which are modeled as not depending on temperature. Overall, the model is  $$\text{gas_ccf}(x) \equiv 4.3\,  \mbox{ramp}(62-x)  + 15$$
+We can accomplish the hockey-stick shape with a linear combination of the ramp() function and a constant. The ramp function represents gas used for heating, the constant is the other uses of gas (which are modeled as not depending on temperature. Overall, the model is  $$\text{gas_ccf}(x) \equiv 4.3\,  \text{ramp}(62-x)  + 15$$
 Even simpler is the model for the other uses of natural gas:
 $$\text{other_ccf}(x) \equiv 15$$. 
 :::
 
 
-Our last example concerns a bit of familiar technology: music synthesis. Generating a pure tone electronically is easy done using a sinusoid. Generating a note with rich instrumental timbre can be accomplished by a linear combination of sinusoids. Of course, the note will be localized in time. This could be accomplished by multiplying the sinusoids by a gaussian function envelope.  `r mark(1540)` 
+Our last example concerns a bit of familiar technology: music synthesis. Generating a pure tone electronically is easily done using a sinusoid. Generating a note with rich instrumental timbre can be accomplished by a linear combination of sinusoids. Of course, the note will be localized in time. This could be accomplished by multiplying the sinusoids by a gaussian function envelope.  `r mark(1540)` 
 
 It turns out that the gaussian function, `dnorm()`, does not generate a realistic sound. Instead, a more complicated envelope is used, such as the [ADSR function](https://en.wikipedia.org/wiki/Envelope_(music)) shown in Figure \@ref(fig:ADSR). The function has six (!) parameters: the time the key is pressed, the duration A of the "attack" phase when the sound amplitude is increasing in response to the impulse imposed on the key, a decay of duration D to an output level S that lasts until the key is released, then a decay to zero over duration R. It's reasonable to think of the D and S phases as a piecewise linear approximation to exponential decay.
 
@@ -155,5 +155,5 @@ adsr <- function(a,d,ts, s,r) {
 ```
 
 
-
+`r insert_calcZ_exercise(13.3, "EDKYV", "Exercises/Fun/bigger-two.Rmd")`
 

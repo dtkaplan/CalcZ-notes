@@ -18,18 +18,18 @@ vi. sigmoidal functions, a related function for modeling something that "builds 
 
 In terms of derivatives, exponentials, power-law functions, and sinusoids have a remarkable property:
 
-> The derivative of a $\left\{\begin{array}{c}\mbox{exponential}\\\mbox{power-law}\\\mbox{sinusoid}\end{array}\right\}$ is a $\left\{\begin{array}{c}\mbox{exponential}\\\mbox{power-law}\\\mbox{sinusoid}\end{array}\right\}$ `r mark(4500)`
+> The derivative of a $\left\{\begin{array}{c}\text{exponential}\\\text{power-law}\\\text{sinusoid}\end{array}\right\}$ is a $\left\{\begin{array}{c}\text{exponential}\\\text{power-law}\\\text{sinusoid}\end{array}\right\}$ `r mark(4500)`
 
 The same property can also be stated in terms of anti-derivatives :
 
-> The anti-derivative of a $\left\{\begin{array}{c}\mbox{exponential}\\\mbox{power-law}\\\mbox{sinusoid}\end{array}\right\}$ is a $\left\{\begin{array}{c}\mbox{exponential}\\\mbox{power-law}\\\mbox{sinusoid}\end{array}\right\}$ $+ C$. `r mark(4505)`
+> The anti-derivative of a $\left\{\begin{array}{c}\text{exponential}\\\text{power-law}\\\text{sinusoid}\end{array}\right\}$ is a $\left\{\begin{array}{c}\text{exponential}\\\text{power-law}\\\text{sinusoid}\end{array}\right\}$ $+ C$. `r mark(4505)`
 
 Logarithm functions don't have this property: the derivative of a logarithm is **not** a logarithm function. But they are not that far afield. They border on exponentials (the log function is the inverse of an exponential function) and also power-law functions; the anti-derivative of $x^{-1}$ is $\ln(x) + C$ and, of course, the derivative of $\ln(x)$ is $x^{-1}$. `r mark(4510)`
 
 Sigmoids and gaussian functions similarly do **not** have this property. The derivative of a sigmoid is not a sigmoid and the derivative of a gaussian is not a gaussian. But ...
 
-> The $\left\{\begin{array}{c}\mbox{derivative}\\\mbox{anti-derivative}\end{array}\right\}$
-derivative of a $\left\{\begin{array}{c}\mbox{sigmoid}\\\mbox{gaussian}\end{array}\right\}$ is a $\left\{\begin{array}{c}\mbox{gaussian}\\\mbox{sigmoid}\end{array}\right\}$
+> The $\left\{\begin{array}{c}\text{derivative}\\\text{anti-derivative}\end{array}\right\}$
+derivative of a $\left\{\begin{array}{c}\text{sigmoid}\\\text{gaussian}\end{array}\right\}$ is a $\left\{\begin{array}{c}\text{gaussian}\\\text{sigmoid}\end{array}\right\}$
 
 In this Daily Digital, you're going to explore gaussians and sigmoids in a specific setting: uncertainty and risk. It turns out that each gaussian and its corresponding sigmoid provide different perspectives on the same phenomenon. `r mark(4515)`
 
@@ -143,7 +143,7 @@ Calculus provides the means to assign such infinitesimal probabilities to the el
 
 Such functions are called "probability density functions." Here's one probability density function:
 
-$$\mbox{uniform} (x) \equiv \left\{\begin{array}{cl}\frac{1}{b-a} & \mbox{when} \ a \leq x \leq b\\0&\mbox{otherwise} \end{array}\right.$$
+$$\text{uniform} (x) \equiv \left\{\begin{array}{cl}\frac{1}{b-a} & \text{when} \ a \leq x \leq b\\0&\text{otherwise} \end{array}\right.$$
 Consider a question like, "What's the probability that the outcome of an event governed by the uniform probability density will be $c$?" 
 
 The answer is **not** $f(c)$. Neither is it $f(c) dx$. 
@@ -157,7 +157,7 @@ $f(c)$ is much like the concept of "density." We can meaningfully say that a mat
 
 ```{r unif1, echo=FALSE}
 askMC(
-  "What is $$\\int_a^b dx\\ \\ \\mbox{?}$$",
+  "What is $$\\int_a^b dx\\ \\ \\text{?}$$",
   "You haven't said what the function to be integrated is." = "Let's rewrite the integral in the question as $$\\int_a^b 1 dx$$. The function being integrated is the one where the output is 1, regardless of the input.",
   "+$b-a$+",
   "$b - a + C$" = "This is a **definite** integral. There will be no constant of integration. Or, said another way, the answer is $(b+C) - (a+C)$, with the constant of integration attaching to both the evaluations of the anti-derivative at the limits of integration. The two $C$ terms cancel out.",
@@ -168,7 +168,7 @@ askMC(
 
 ```{r unif2, echo=FALSE}
 askMC(
-  "According to the definition of uniform$(x)$, what is $$\\int_{-\\infty}^a \\mbox{uniform}(x) dx\\ \\ \\mbox{?}$$",
+  "According to the definition of uniform$(x)$, what is $$\\int_{-\\infty}^a \\text{uniform}(x) dx\\ \\ \\text{?}$$",
   "+0+" = "Right. The value of uniform$(x)$ is zero everywhere on the interval $- \\infty \\leq x \\leq a$.", "1"="This would be if the bounds of integration were a to b. Remember a is the lower bound of the uniform function.", "$b - a$"="Remember a is the lower bound of the uniform function.", "$a - b$"="Remember a is the lower bound of the uniform function.",
   random_answer_order = FALSE 
 )
@@ -176,9 +176,9 @@ askMC(
 
 ```{r unif3, echo=FALSE}
 askMC(
-  "According to the definition of uniform$(x)$, what is $$\\int_a^b\\mbox{uniform}(x) dx\\ \\ \\mbox{?}$$",
+  "According to the definition of uniform$(x)$, what is $$\\int_a^b\\text{uniform}(x) dx\\ \\ \\text{?}$$",
   "0"="uniform(x) by definition is a probability density function.", 
-  "+1+" = "You can see this using the fact that $$\\int_a^b  dx = b - a$$, so $\\int_a^b \\mbox{uniform}(x) dx = 1$.", "$b - a$"="uniform(x) by definition is a probability density function.", 
+  "+1+" = "You can see this using the fact that $$\\int_a^b  dx = b - a$$, so $\\int_a^b \\text{uniform}(x) dx = 1$.", "$b - a$"="uniform(x) by definition is a probability density function.", 
   "$a - b$"="uniform(x) by definition is a probability density function.", 
   "Not enough information to know."="uniform(x) by definition is a probability density function.",
   random_answer_order = FALSE 
@@ -188,7 +188,7 @@ askMC(
 
 ```{r unif4, echo=FALSE}
 askMC(
-  "Using the results from the previous questions, what is $$\\int_{-\\infty}^{\\infty} \\mbox{uniform}(x) dx\\ \\ \\mbox{?}$$",
+  "Using the results from the previous questions, what is $$\\int_{-\\infty}^{\\infty} \\text{uniform}(x) dx\\ \\ \\text{?}$$",
   "0", "+1+" = "That's part of the definition of a  probability density function, that the integral over all possible values of $x$ must be 1.", 
   "$b-a$", "$a-b$",
   random_answer_order = FALSE 
@@ -289,17 +289,17 @@ $$\int_{-\infty}^\infty x \cdot f(x) dx$$
 explain <- "The anti-derivative of $x \\cdot$ uniform$(x)$ is $$\\frac{1}{2}\\frac{1}{b-a} x^2$$."
 explain2 <- "Remember that $b^2 - a^2 = (b+a)(b-a)$"
 askMC(
-  "Recall that a *uniform* probability density is one that generates outcomes equally likely to be any number between specified lower and upper bounds. For the uniform density between $a$ and $b$, the probability density function $$\\mbox{uniform} (x) \\equiv \\left\\{\\begin{array}{cl}\\frac{1}{b-a} & \\mbox{when} \\ \\ a \\leq x \\leq b\\\\0&\\mbox{otherwise} \\end{array}\\right.$$ What is the expectation value of uniform(x), that is, what is $$\\int_{-\\infty}^{\\infty} x\\ \\mbox{uniform}(x) dx \\mbox{?}$$ Hint: you really only need to consider $$\\int_a^b x\\ \\mbox{uniform}(x) dx$$, since $$\\int_{-\\infty}^a \\mbox{uniform}(x) dx=\\int_b^{-\\infty} \\mbox{uniform}(x) dx=0$$",
+  "Recall that a *uniform* probability density is one that generates outcomes equally likely to be any number between specified lower and upper bounds. For the uniform density between $a$ and $b$, the probability density function $$\\text{uniform} (x) \\equiv \\left\\{\\begin{array}{cl}\\frac{1}{b-a} & \\text{when} \\ \\ a \\leq x \\leq b\\\\0&\\text{otherwise} \\end{array}\\right.$$ What is the expectation value of uniform(x), that is, what is $$\\int_{-\\infty}^{\\infty} x\\ \\text{uniform}(x) dx \\text{?}$$ Hint: you really only need to consider $$\\int_a^b x\\ \\text{uniform}(x) dx$$, since $$\\int_{-\\infty}^a \\text{uniform}(x) dx=\\int_b^{-\\infty} \\text{uniform}(x) dx=0$$",
   "$(b-a)/3$" = explain,
   "+$(a + b)/2$+",
   "$\\sqrt{a^2 + b^2}$" = explain,
   "$(a-b)/2$"= explain2,
-  "It involves $\\infty$." = "I think you're plugging $\\pm \\infty$ as the bounds of the definite integral. But remember that $\\mbox{uniform}(x < a) = \\mbox{uniform}(b < x) = 0.$"
+  "It involves $\\infty$." = "I think you're plugging $\\pm \\infty$ as the bounds of the definite integral. But remember that $\\text{uniform}(x < a) = \\text{uniform}(b < x) = 0.$"
 )
 ```
 
 
-::: {.scaffolding}
+::: {.scaffolding  data-latex=""}
 The sandbox below gives the probability density function for the exponential process used in the example of the time interval between successive 100 year storms. Your task is to compute the expectation value for the time between storms. In symbols, this is $$\int_{-\infty}^\infty t\times p(t)\, dt$$ You can use `antiD()` to find the antiderivative and `Inf` to stand for infinity.  `r mark(4645)`
 
 ```{r expect2, eval=FALSE, exercise.cap="Expectation value for time between 100-year storms", excercise.nlines=7}
@@ -367,7 +367,7 @@ Calculus provides the means to assign such infinitesimal probabilities to the el
 
 Such functions are called "probability density functions." Here's one probability density function:
 
-$$\mbox{uniform} (x) \equiv \left\{\begin{array}{cl}\frac{1}{b-a} & \mbox{when} \ a \leq x \leq b\\0&\mbox{otherwise} \end{array}\right.$$
+$$\text{uniform} (x) \equiv \left\{\begin{array}{cl}\frac{1}{b-a} & \text{when} \ a \leq x \leq b\\0&\text{otherwise} \end{array}\right.$$
 Consider a question like, "What's the probability that the outcome of an event governed by the uniform probability density will be $c$?" 
 
 The answer is **not** $f(c)$. Neither is it $f(c) dx$. 
@@ -381,7 +381,7 @@ $f(c)$ is much like the concept of "density." We can meaningfully say that a mat
 
 ```{r unif1, echo=FALSE}
 askMC(
-  "What is $$\\int_a^b dx\\ \\ \\mbox{?}$$",
+  "What is $$\\int_a^b dx\\ \\ \\text{?}$$",
   "You haven't said what the function to be integrated is." = "Let's rewrite the integral in the question as $$\\int_a^b 1 dx$$. The function being integrated is the one where the output is 1, regardless of the input.",
   "+$b-a$+",
   "$b - a + C$" = "This is a **definite** integral. There will be no constant of integration. Or, said another way, the answer is $(b+C) - (a+C)$, with the constant of integration attaching to both the evaluations of the anti-derivative at the limits of integration. The two $C$ terms cancel out.",
@@ -392,7 +392,7 @@ askMC(
 
 ```{r unif2, echo=FALSE}
 askMC(
-  "According to the definition of uniform$(x)$, what is $$\\int_{-\\infty}^a \\mbox{uniform}(x) dx\\ \\ \\mbox{?}$$",
+  "According to the definition of uniform$(x)$, what is $$\\int_{-\\infty}^a \\text{uniform}(x) dx\\ \\ \\text{?}$$",
   "+0+" = "Right. The value of uniform$(x)$ is zero everywhere on the interval $- \\infty \\leq x \\leq a$.", "1"="This would be if the bounds of integration were a to b. Remember a is the lower bound of the uniform function.", "$b - a$"="Remember a is the lower bound of the uniform function.", "$a - b$"="Remember a is the lower bound of the uniform function.",
   random_answer_order = FALSE 
 )
@@ -400,9 +400,9 @@ askMC(
 
 ```{r unif3, echo=FALSE}
 askMC(
-  "According to the definition of uniform$(x)$, what is $$\\int_a^b\\mbox{uniform}(x) dx\\ \\ \\mbox{?}$$",
+  "According to the definition of uniform$(x)$, what is $$\\int_a^b\\text{uniform}(x) dx\\ \\ \\text{?}$$",
   "0"="uniform(x) by definition is a probability density function.", 
-  "+1+" = "You can see this using the fact that $$\\int_a^b  dx = b - a$$, so $\\int_a^b \\mbox{uniform}(x) dx = 1$.", "$b - a$"="uniform(x) by definition is a probability density function.", 
+  "+1+" = "You can see this using the fact that $$\\int_a^b  dx = b - a$$, so $\\int_a^b \\text{uniform}(x) dx = 1$.", "$b - a$"="uniform(x) by definition is a probability density function.", 
   "$a - b$"="uniform(x) by definition is a probability density function.", 
   "Not enough information to know."="uniform(x) by definition is a probability density function.",
   random_answer_order = FALSE 
@@ -412,7 +412,7 @@ askMC(
 
 ```{r unif4, echo=FALSE}
 askMC(
-  "Using the results from the previous questions, what is $$\\int_{-\\infty}^{\\infty} \\mbox{uniform}(x) dx\\ \\ \\mbox{?}$$",
+  "Using the results from the previous questions, what is $$\\int_{-\\infty}^{\\infty} \\text{uniform}(x) dx\\ \\ \\text{?}$$",
   "0", "+1+" = "That's part of the definition of a  probability density function, that the integral over all possible values of $x$ must be 1.", 
   "$b-a$", "$a-b$",
   random_answer_order = FALSE 
@@ -513,12 +513,12 @@ $$\int_{-\infty}^\infty x \cdot f(x) dx$$
 explain <- "The anti-derivative of $x \\cdot$ uniform$(x)$ is $$\\frac{1}{2}\\frac{1}{b-a} x^2$$."
 explain2 <- "Remember that $b^2 - a^2 = (b+a)(b-a)$"
 askMC(
-  "Recall that a *uniform* probability density is one that generates outcomes equally likely to be any number between specified lower and upper bounds. For the uniform density between $a$ and $b$, the probability density function $$\\mbox{uniform} (x) \\equiv \\left\\{\\begin{array}{cl}\\frac{1}{b-a} & \\mbox{when} \\ \\ a \\leq x \\leq b\\\\0&\\mbox{otherwise} \\end{array}\\right.$$ What is the expectation value of uniform(x), that is, what is $$\\int_{-\\infty}^{\\infty} x\\ \\mbox{uniform}(x) dx \\mbox{?}$$ Hint: you really only need to consider $$\\int_a^b x\\ \\mbox{uniform}(x) dx$$, since $$\\int_{-\\infty}^a \\mbox{uniform}(x) dx=\\int_b^{-\\infty} \\mbox{uniform}(x) dx=0$$",
+  "Recall that a *uniform* probability density is one that generates outcomes equally likely to be any number between specified lower and upper bounds. For the uniform density between $a$ and $b$, the probability density function $$\\text{uniform} (x) \\equiv \\left\\{\\begin{array}{cl}\\frac{1}{b-a} & \\text{when} \\ \\ a \\leq x \\leq b\\\\0&\\text{otherwise} \\end{array}\\right.$$ What is the expectation value of uniform(x), that is, what is $$\\int_{-\\infty}^{\\infty} x\\ \\text{uniform}(x) dx \\text{?}$$ Hint: you really only need to consider $$\\int_a^b x\\ \\text{uniform}(x) dx$$, since $$\\int_{-\\infty}^a \\text{uniform}(x) dx=\\int_b^{-\\infty} \\text{uniform}(x) dx=0$$",
   "$(b-a)/3$" = explain,
   "+$(a + b)/2$+",
   "$\\sqrt{a^2 + b^2}$" = explain,
   "$(a-b)/2$"= explain2,
-  "It involves $\\infty$." = "I think you're plugging $\\pm \\infty$ as the bounds of the definite integral. But remember that $\\mbox{uniform}(x < a) = \\mbox{uniform}(b < x) = 0.$"
+  "It involves $\\infty$." = "I think you're plugging $\\pm \\infty$ as the bounds of the definite integral. But remember that $\\text{uniform}(x < a) = \\text{uniform}(b < x) = 0.$"
 )
 ```
 

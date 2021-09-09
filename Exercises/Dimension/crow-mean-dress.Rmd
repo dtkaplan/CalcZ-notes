@@ -14,11 +14,10 @@ library(mosaicCalc)
 library(math141Z)
 ```
 
-$\require{cancel}$
  
 The surface area $S$ of a mammal is reasonably well approximated by the function $$S(M) \equiv k M^{2/3}$$ where $M$ is the body mass (in kg) and the constant $k$ depends on the particular species under consideration. 
 
-Note that $M^{2/3}$ is **not an allowed arithmetic operation**. $[M] = \mbox{mass}$, and mass, like any other dimension, cannot be raised to a non-integer power. More properly, the expression should be written $$\left(\frac{M}{1\  kg}\right)^{2/3}$$ The division by "1 kg" renders dimensionless the quantity in the parentheses: $$\left[\frac{M}{1\  kg}\right] = 1$$ 
+Note that $M^{2/3}$ is **not an allowed arithmetic operation**. $[M] = \text{mass}$, and mass, like any other dimension, cannot be raised to a non-integer power. More properly, the expression should be written $$\left(\frac{M}{1\  kg}\right)^{2/3}$$ The division by "1 kg" renders dimensionless the quantity in the parentheses: $$\left[\frac{M}{1\  kg}\right] = 1$$ 
 In order to render the quantity both dimensionless and *unitless*, $M$ should be specified in kg. The usual practice is to skip the "1 kg" business and simply say, "Where $M$ is in kg." You will see such notation frequently in your career and should take care to use the indicated units.
 
 You'll need to open a computing sandbox to do the calculations.
@@ -68,10 +67,14 @@ You can't take (pounds)$^{2/3}$ or (kg)$^{2/3}$; you won't get a sensible unit i
 
 Still, there's a problem. Multiplying $k\ 154^{2/3} (\text{lbs}/\text{kg})^{2/3}$ has the right dimension, but strange-looking units that have nothing to do with skin area.
 
-The resolution to this paradox is to multiply $\frac{154\ \text{lbs}}{1\  \text{kg}}$ by an appropriate flavor of 1 to render the dimensionless quantity unitless as well as dimensionless. This flavor will be $\frac{1 \text{kg}}{2.2 lbs}$, giving a formula for skin area  in square inches 
+The resolution to this paradox is to multiply $\frac{154\ \text{lbs}}{1\  \text{kg}}$ by an appropriate flavor of 1 to render the dimensionless quantity unitless as well as dimensionless. This flavor will be $\frac{1 \text{kg}}{2.2 lbs}$, giving a formula for skin area  in square inches: 
 
+<!--
 $$S_{in}(M)= \frac{k}{2.6^2}\left(\frac{154\ \bcancel{\text{lbs}}}{1\ \cancel{\text{kg}}}\ \underbrace{\frac{1\ \cancel{\text{kg}}}{2.2\ \bcancel{\text{lbs}}}}_\text{flavor of 1}\right)^{2/3} = \underbrace{\frac{k}{2.6^2}\ \left(\frac{1}{2.2}\right)^{2/3}}_{k'\ \text{for inches and pounds}} 154^{2/3}$$
-
+-->
+```{r echo=FALSE}
+knitr::include_graphics(normalizePath("www/EQ-cancel.png"))
+```
 
 ```{r crow-mean-dress-5, echo=FALSE, results="markup"}
 askMC(

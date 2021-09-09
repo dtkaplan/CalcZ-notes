@@ -54,9 +54,9 @@ make_dist_fun <- function(..., method=c("euclidean", "sphere", "minkowski")) {
 
 Suppose you have a function $f(x)$ whose graph represents the path of a road through the jungle. There is a lion at coordinates $(3, 2)$ in the jungle. At what point as you travel along the road will you be closest to the lion.
 
-The trick here is to see that your position on the road at any value of $x$ is $(x, f(x))$. The distance to the lion as a function of $x$ is $$ \text{lion_dist}(x) \equiv \sqrt{(x - 3)^2 + (f(x)-2)^2} .$$
+The trick here is to see that your position on the road at any value of $x$ is $(x, f(x))$. The distance to the lion as a function of $x$ is $$ \text{lion.dist}(x) \equiv \sqrt{(x - 3)^2 + (f(x)-2)^2} .$$
 
-The road and the lion are graphed in the sandbox for the road $f(x) \equiv x^2 e^{-x}$. You can see that the road comes closest to the lion at roughly $x=3$. When you implement the $\text{lion_dist}(x)$ function, you'll be able to find the *argmin*, that is, the value of the input $x$ for which the output $\text{lion_dist}(x)$ is minimal. The value of the function $\text{lion_dist}(x)$ at the argmin is the *min* of the function.
+The road and the lion are graphed in the sandbox for the road $f(x) \equiv x^2 e^{-x}$. You can see that the road comes closest to the lion at roughly $x=3$. When you implement the lion.dist$(x)$ function, you'll be able to find the *argmin*, that is, the value of the input $x$ for which the output lion_dist$(x)$ is minimal. The value of the function lion_dist$(x)$ at the argmin is the *min* of the function.
 
 ```{r}
 slice_plot(x^2 * exp(-x) ~ x, domain(x=c(0,5))) %>%
@@ -65,7 +65,7 @@ slice_plot(x^2 * exp(-x) ~ x, domain(x=c(0,5))) %>%
 
 ```
 
-To find the argmin of the distance to the lion more precisely, implement the $\text{lion_dist}(x)$ function in the sandbox. Plot this out and look for the minimum. Alternatively, find $\partial_x \text{lion_dist}(x)$ and find the $x$ of the zero crossing.
+To find the argmin of the distance to the lion more precisely, implement the $\text{lion.dist}(x)$ function in the sandbox. Plot this out and look for the minimum. Alternatively, find $\partial_x \text{lion.dist}(x)$ and find the $x$ of the zero crossing.
 
 
 

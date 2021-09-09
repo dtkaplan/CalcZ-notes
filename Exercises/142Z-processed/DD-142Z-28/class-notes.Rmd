@@ -113,7 +113,7 @@ P %>%
 # Tools for understanding such randomness
 
 1. The "normal" distribution, which we have adopted in CalcZ for our standard hump function.
-    a. parameters: mean and variance (and standard deviation $= \sqrt{\strut\mbox{variance}}$)
+    a. parameters: mean and variance (and standard deviation $= \sqrt{\strut\text{variance}}$)
     b. shape: bell-shaped, characteristic length of tails. Z-scores
 2. A new differential equation, the **diffusion equation**: $\partial_t C(x, t) = \partial_{xx} C(x, t)$
     a. The shape of the "normal" distribution is like a fixed point: It stays the same. But the variance changes with time in a simple, characteristic way.
@@ -128,7 +128,7 @@ P %>%
 
 Hump functions are all of a kind, so as long as they are smooth and local there's not much reason to worry about the details.
 
-- The hump function we have been using, which we typically call `hump()` is actually called a **Gaussian** which has this algebraic form: $$g(x) = \underbrace{\frac{1}{\sqrt{\strut2 \pi \sigma^2}}\ \ \ }_{\mbox{Just a number}}  \exp\left[- \frac{(x-m)^2}{2 \sigma^2}\right]$$
+- The hump function we have been using, which we typically call `hump()` is actually called a **Gaussian** which has this algebraic form: $$g(x) = \underbrace{\frac{1}{\sqrt{\strut2 \pi \sigma^2}}\ \ \ }_{\text{Just a number}}  \exp\left[- \frac{(x-m)^2}{2 \sigma^2}\right]$$
 
 # What you need to know ... 1. Bell shaped
 
@@ -151,7 +151,7 @@ slice_plot(g(x) ~ x, domain(x = c(-2, 6))) %>%
     
 i. mean $m$: location of peak (that is, $\arg\!\max_{x} g(x)$)
 ii. variance $\sigma^2$
-        - $\mbox{Standard deviation} = \sqrt{\strut\mbox{variance}}$ is half-width of mountain at height $exp(-1/2)$ of peak height.
+        - $\text{Standard deviation} = \sqrt{\strut\text{variance}}$ is half-width of mountain at height $exp(-1/2)$ of peak height.
 
 # 3. Often called "normal distribution"
 
@@ -334,9 +334,9 @@ gf_line(x ~ t, data = bind_rows(Trajs),
 # Volatility: $\sigma$
 
 The *volatility* of an asset (such as a stock price) is the standard deviation of the daily return over many days: 
-$$\mbox{daily return} \equiv  \mbox{price}_{t+1}/\mbox{price}_{t}$$
+$$\text{daily return} \equiv  \text{price}_{t+1}/\text{price}_{t}$$
 Or, in terms of diffusion coefficient, 
-$$\mbox{volatility} \equiv \sqrt{\strut D \cdot 1 \mbox{day}}$$
+$$\text{volatility} \equiv \sqrt{\strut D \cdot 1 \text{day}}$$
 Volatility depends on the time scale
 
 
@@ -362,9 +362,9 @@ $$\dot{x} = (\alpha + \sigma W) x$$
 
 Solving this "stochastic differential equation" is beyond the scope of this course, but you should be able to understand the result.
 
-You might think it would be $$x(t) = A e^{\alpha t + \mbox{random walk}}$$
+You might think it would be $$x(t) = A e^{\alpha t + \text{random walk}}$$
 
-But this is not the case. The actual solution is $$x(t) = A \exp\left[(\alpha - \frac{\sigma^2}{2})t\right] + \mbox{random walk}$$
+But this is not the case. The actual solution is $$x(t) = A \exp\left[(\alpha - \frac{\sigma^2}{2})t\right] + \text{random walk}$$
 Volatility takes a systematic bite out of deterministic returns.
 
 # Simulating many investments $\alpha = 0\%$ and $\sigma = 75\%$.

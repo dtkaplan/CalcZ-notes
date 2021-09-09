@@ -14,58 +14,11 @@ A Taylor polynomial, like all polynomials, is a linear combination of basic func
 ```{r ctp1-1, echo=FALSE, results="markup"}
 askMC(
   "Which of these are the basic functions being linearly combined in a Taylor polynomial?",
-  "$f(x), f^{(1)}(x), f^{(2)}(x), \\ldots$" = "You won't find any of these in the definition of $p(x)$ given above.",
+  "$f(x), f^{(1)}(x), f^{(2)}(x), \\ldots$" = "You won't find any of these in the definition of $p(x)$ given above. You're confusing $x$ with $x_0$.",
   "$f(x_0), f^{(1)}(x_0), f^{(2)}(x_0), \\ldots$" = "These are not functions of $x$. They are numbers computed by evaluating a function at the center point $x_0$.", 
   "$f(x_0), \\frac{f^{(1)}(x_0)}{1!},  \\frac{f^{(2)}(x_0)}{2!}, \\ldots$" = "These are not functions of $x$. They are numbers computed by evaluating a function at the center point $x_0$.",
   "+$(x-x_0), (x - x_0)^2, \\ldots$+" = "These are the only places where the variable $x$ appears in the Taylor formula."
 )
 ```
 
-As you recall, the Taylor polynomial for $e^x$ has an especially lovely formula: $$p(x) = 1 + \frac{x}{1!} + \frac{x^2}{2!} + \cdots$$
-
-```{r ctp1-2, echo=FALSE, results="markup"}
-askMC(
-  "In the above formula, the center $x_0$ does not appear. Why not?",
-  "Having a center is not a requirement for a Taylor polynomial." = "This is wrong. All Taylor polynomials are expansions around some fixed center value.",
-  "There is a center, $x_0 = 1$, but terms like $x_0 x^2$ were simplified to $x^2$." = "Look again at the Taylor formula at the start of this section. The basis functions are $x-x_0, (x-x_0)^2, \\ldots$, not $x_0 x, x_0 x^2, \\ldots$",
-  "+There is a center, $x_0 = 0$, but the terms like $(x-x_0)^2$ were simplified to $x^2$.+"
-)
-```
-
-Consider this Taylor polynomial: 
-$$p(x) = e + \frac{e}{1!} (x-1) + \frac{e}{2!} (x-1)^2 + \cdots$$
-A neophyte instructor is convinced that $p(x)$ is a Taylor expansion of $e^x$. 
-
-```{r ctp1-3, echo=FALSE, results="markup"}
-askMC(
-  "Could the neophyte be right?",
-  "No, a polynomial doesn't have functions like $e$." = "$e$ is not a function, it's just a number, 2.718282....",
-  "+Yes. The center is $x_0 = 1$.+",
-  "Not really. The formula suggests that the center is $x_0=1$ but the coefficients are wrong." = "The coefficients are right."
-)
-```
-
-Consider the function $f(x) \equiv (x - 3)^2$.
-
-```{r ctp1-4, echo=FALSE, results="markup"}
-askMC(
-  "Using ordinary algebra, $f(x)$ can be expanded as $(x^2 - 6 x -9)$. Is $$p(x) = -9 - 6 x + x^2$$ a Taylor polynomial expansion of $f(x)$?",
-  "+Yes, with a center at $x_0 = 0$+"= "As you can tell from solving, this works for this specific polynomial, but is uncommon among polynomials.",
-  "Yes, with a center at $x_0 = 3$",
-  "No, because there are no factorials involved" = "The factorials are part of the coefficients."
-)
-```
-
-Here's the Taylor polynomial expansion of $\sin(x)$ about a center $x_0$:
-$$p(x) = 1/2 - \frac{\sqrt{3}/{2}}{2!} (x - x_0)^2 + \frac{1/2}{4!} (x - x_0)^4 + \cdots$$
-```{r cpt5, echo=FALSE, results="markup"}
-askMC(
-  "What's the numerical value of $x_0$? (Hint: Remember that the coefficients involve the function and its derivatives evaluated at $x_0$ as described at the very top of this section.)",
-  "+$\\pi/6$+",
-  "$\\pi/3$",
-  "$\\pi/2$",
-  "$\\pi$", 
-  random_answer_order = FALSE
-)
-```
 

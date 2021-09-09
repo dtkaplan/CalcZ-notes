@@ -58,9 +58,9 @@ state_objective("Fun-4-c-2", "Recognize that composition of functions does not i
 ```
 :::
 
-Linear combination and composition of functions are often used hand-in-hand to construct models. For instance, our model of the data from cooling water was a linear combination of a constant function and a sinusoidal function $$\mbox{temperature}(t) \equiv 25.9 + 60.7\, e^{-0.019 t}$$
+Linear combination and composition of functions are often used hand-in-hand to construct models. For instance, our model of the data from cooling water was a linear combination of a constant function and a sinusoidal function $$\text{temperature}(t) \equiv 25.9 + 60.7\, e^{-0.019 t}$$
 Similarly, our model from the Providence tide data was
-$$\mbox{tide}(t) \equiv 1.02 + 0.50 \sin(2\pi (t - 15.4)/12.56)$$
+$$\text{tide}(t) \equiv 1.02 + 0.50 \sin(2\pi (t - 15.4)/12.56)$$
 In both cases, the sine part of the combination is a mathematical ($\exp(x)$ or $\sin(x)$) function composed with a linear interior function: $-0.019 t$ for the cooling water, and $2\pi (t - 15.4)/12.56$ for the tides.
 
 Each of these models was a function of one input. (Coincidentally, the input in both cases was "time", measured in minutes in the cooling-water example and hours in the tide example.)
@@ -234,9 +234,9 @@ You could draw lots of functions whose slope is an ***increasing function*** of 
 
 > The *slope* of the exponential function is alway proportional to the *value* of the exponential function.
 
-It's worth unpacking that simple statement a bit. We have an exponential function $g(x) \equiv e^x$. The slope of the exponential function is, as we have described, $$\text{slope of}\ g(x)\ \mbox{is} \ \frac{e^{x + h} - e^x}{h} = \frac{e^x e^h - e^x
+It's worth unpacking that simple statement a bit. We have an exponential function $g(x) \equiv e^x$. The slope of the exponential function is, as we have described, $$\text{slope of}\ g(x)\ \text{is} \ \frac{e^{x + h} - e^x}{h} = \frac{e^x e^h - e^x
 }{h} = e^x \frac{e^h - 1}{h}$$
-Look carefully at the term $(e^h - 1)/h$. Notice that there is no $x$ in it. Thus, the function $(e^h - 1)/h$ is *constant with respect to $x$*. In other words $$\text{slope of}\ g(x)\ \mbox{is} \ \mbox{constant} \times e^x$$.
+Look carefully at the term $(e^h - 1)/h$. Notice that there is no $x$ in it. Thus, the function $(e^h - 1)/h$ is *constant with respect to $x$*. In other words $$\text{slope of}\ g(x)\ \text{is} \ \text{constant} \times e^x$$.
 
 EXERCISE: Compute $(e^h - 1)/h$ for $h=2, 1, .1, .01, .001$. Describe what happens. (We might write, "As $h \rightarrow 0$, the quantity $\frac{e^h - 1}{h} \rightarrow 1$.")
 
@@ -367,7 +367,7 @@ Trigonometry is a standard part of the high-school mathematics curriculum, so I'
 
 Trigonometry has always been an important mathematical topic because of its use in surveying (George Washington was a trained surveyor), navigation, building and design, and other trades. It is still well worthwhile for any technical worker to master the use of trigonometry. But this is not why it's coming up here in CalcZ.
 
-Including the sinusoid in our small set of basic modeling functions has nothing to do with triangles or the many practical applications of trigonometry. Instead, we need it as a standard model for a highly important phenomena: things that repeat themselves in a cycle, over and over again. We use the word "sinusoid" rather than, say "sine" because there are two closely related functions, $\sin()$ and $\cos()$ that are more or less interchangeable when it comes to modeling. For now, we could do with just one or the other. Later in CalcZ, however, it will be useful to have them both for the purposes of keeping track of some mathematical operations. Also, we will not generally have a use directly for a function $\sin(t)$. Instead, we'll work with a parameterized function $\mbox{sinusoid}(t) \equiv \sin(2\pi t/P)$, where $P$ is called the "period" of the function. Figure \@ref(fig:Fun-3B-a) shows the graph of a sinusoid with $P=1$ and another with $P=0.3$
+Including the sinusoid in our small set of basic modeling functions has nothing to do with triangles or the many practical applications of trigonometry. Instead, we need it as a standard model for a highly important phenomena: things that repeat themselves in a cycle, over and over again. We use the word "sinusoid" rather than, say "sine" because there are two closely related functions, $\sin()$ and $\cos()$ that are more or less interchangeable when it comes to modeling. For now, we could do with just one or the other. Later in CalcZ, however, it will be useful to have them both for the purposes of keeping track of some mathematical operations. Also, we will not generally have a use directly for a function $\sin(t)$. Instead, we'll work with a parameterized function $\text{sinusoid}(t) \equiv \sin(2\pi t/P)$, where $P$ is called the "period" of the function. Figure \@ref(fig:Fun-3B-a) shows the graph of a sinusoid with $P=1$ and another with $P=0.3$
 
 ```{r Fun-3B-a, echo=FALSE, fig.show="hold", fig.height=3, fig.width=8}
 slice_plot(sin(2*pi*t/1) ~ t, domain(t=c(-2,2)), npts=500) %>%
@@ -378,13 +378,13 @@ slice_plot(sin(2*pi*t/0.3) ~ t, domain(t=c(-2,2)), color="dodgerblue", npts=500)
 
 The graphs show the same graphic domain: $-2 < t < 2$. (The mathematical domain, that is, the set of valid inputs, is $-\infty < t < \infty$. For the sinusoid of period $P=1$, four ***cycles*** are fitting in to the graphic domain we selected. For the sinusoid of period $P=0.3$, a little more than 12 cycles fit into the graphic domain. A cycle is the function over a part of the domain where the function starts at a particular value (say, sinusoid(t) = 0) and first returns back to its staring value **and to its starting slope**. 
 
-You can choose any starting value you like to define a cycle. For the purposes of measuring the period from a graph, I find it convenient to start at the peak, that is, somewhere that $\mbox{sinusoid}(t) = 1$ or the trough (that is, $\mbox{sinusoid}(t) = 1$). No matter what you choose, you will get the same answer.
+You can choose any starting value you like to define a cycle. For the purposes of measuring the period from a graph, I find it convenient to start at the peak, that is, somewhere that $\text{sinusoid}(t) = 1$ or the trough (that is, $\text{sinusoid}(t) = 1$). No matter what you choose, you will get the same answer.
 
 Examples of real-world phenomena that are roughly sinusoidal: the temperature at any location on Earth which has a period of 1 year; the brightness of the Moon which has a period of about 27.322 days; the position on a beach of the sort of bird that runs away from breaking waves and toward retreating waves (period: several seconds); any other kind of wave including radio wave. (The period of a radio wave depends on the "band," for FM radio it's roughly one one-hundred millionth of a second. For WIFI waves have a period of roughly a quarter of a billionth of a second, so about 40 times shorter than FM radio waves). Of course, the phenomena we model with sinusoids are not generally exactly periodic. The moon and the weather are pretty reliable, but breaking wave don't always come in exact rhythm. A radio wave that is exactly periodic is called a "carrier," but the transmission of information---sound, movies, documents, etc.---necessarily involves some deviation from exact periodicity. Still, a sinusoid is a pretty good place to start modeling even those phenomena that are not exactly periodic.
 
 Notice that in the above we're using $t$ for the name of the input to the sinusoid. Of course, we could use any name at all for the input. We're prompted to use $t$ rather than our usual $x$ because one of the most important uses for sinusoids is in modeling functions that repeat in *time* over and over again.  It's entirely your choice how
 
-The domain of $\mbox{sinusoid}(t)$ is the entire number line. The range is the interval from -1 to 1, and the ink in a sinusoid graph is balanced on either side of zero.
+The domain of $\text{sinusoid}(t)$ is the entire number line. The range is the interval from -1 to 1, and the ink in a sinusoid graph is balanced on either side of zero.
 
 A more general parameterization of a sinusoid is $\sin(2\pi(t-t_0)/P)$. $P$ is still the period and $t_0$ is a specific input at which the output is increasing from 0. Often, this richer parameterization is written somewhat differently: $\sin(2\pi(t-t_0)/P) = \sin(2\pi t/P - 2\pi t_0/P) = \sin(\frac{2\pi t}{P} - \phi)$. The parameter $\phi$ is called the ***phase***. For us in CalcZ, we will mostly be concerned with the period parameter and you won't see the phase appearing often.
 
@@ -398,7 +398,7 @@ state_objective("Fun-3B-c", "OPTIONAL Be aware of different formulations for the
 ```
 :::
 
-Our last two basic modeling functions express an important idea in modeling: ***localness***. To put this in concrete terms, imagine creating a function to depict the elevation above sea level of a long road as a function of distance in miles, $x$, from the start of the road. If the road were level at 1200 feet elevation, a sensible model would be $\mbox{elevation}(x) = 1200 \text{ft}$. If the road were gently sloping, a better model would be $\mbox{elevation}(x) = 1200 + 3 x$. 
+Our last two basic modeling functions express an important idea in modeling: ***localness***. To put this in concrete terms, imagine creating a function to depict the elevation above sea level of a long road as a function of distance in miles, $x$, from the start of the road. If the road were level at 1200 feet elevation, a sensible model would be $\text{elevation}(x) = 1200 \text{ft}$. If the road were gently sloping, a better model would be $\text{elevation}(x) = 1200 + 3 x$. 
 
 Now let's add a bump to the road. A bump is a local feature, often only a few feet wide. Or, perhaps the road is crossing a mountain range. That's also a local feature, but unlike a bump in the road a mountain range extends for many miles.
 
@@ -469,22 +469,22 @@ slice_plot(logistic(t, k=1.5/1, t_0=0.5) ~ t, domain(t=c(-3,3)),
   slice_plot(pnorm(t, 0.5, 1) ~ t, color="dodgerblue")
 ```
 
-The sigmoidal ***logistic function*** (drawn in red in Figure \@ref(fig:Fun-3C-3)) is a favorite among mathematicians. Its formula is $$\mbox{sigmoid}_\mbox{logistic}(x) \equiv  \frac{1}{1 + e^{-k(t-t_0)}}$$ The parameter $t_0$ is the ***center***. The ***spread*** (as we defined it earlier along the lines of half-width at half-height) is roughly $1.5/k$.
+The sigmoidal ***logistic function*** (drawn in red in Figure \@ref(fig:Fun-3C-3)) is a favorite among mathematicians. Its formula is $$\text{sigmoid}_\text{logistic}(x) \equiv  \frac{1}{1 + e^{-k(t-t_0)}}$$ The parameter $t_0$ is the ***center***. The ***spread*** (as we defined it earlier along the lines of half-width at half-height) is roughly $1.5/k$.
 
-Since the hump function is the slope of the sigmoid function, the formula for $\mbox{sigmoid}_\mbox{logistic}(x)$ gives directly the hump's formula:
-$$\mbox{hump}_\mbox{logistic}(x) \equiv \frac{k e^{-k(t-t_0)}}{(1 + e^{-k(t-t_0)})^2}$$
+Since the hump function is the slope of the sigmoid function, the formula for $\text{sigmoid}_\text{logistic}(x)$ gives directly the hump's formula:
+$$\text{hump}_\text{logistic}(x) \equiv \frac{k e^{-k(t-t_0)}}{(1 + e^{-k(t-t_0)})^2}$$
 The ***Gaussian function*** (drawn in blue) is much more widely used in science and statistics.  It's formula is
-$$\mbox{hump}_\mbox{gaussian}(x) \equiv {\small \frac{1}{\sqrt{2\pi \sigma^2}}} e^{-\frac{(t - t_0)^2}{2 \sigma^2}}$$
+$$\text{hump}_\text{gaussian}(x) \equiv {\small \frac{1}{\sqrt{2\pi \sigma^2}}} e^{-\frac{(t - t_0)^2}{2 \sigma^2}}$$
 As you can see from Figure \@ref(fig:Fun-3C-3), the logistic and the gaussian formulations are very similar. For many modeling purposes, either one would do. The important features are that the functions are smooth with gentle curves, the sigmoid rises from 0 to 1 in output, and the area under the hump is 1.
 
 
-An amazing bit of trivial is that there is no formula for $\mbox{sigmoid}_\mbox{gaussian}()$.
+An amazing bit of trivial is that there is no formula for $\text{sigmoid}_\text{gaussian}()$.
 
-You might ask, "If there is no formula, how can we use the function?" The answer is that even though there is no formula, there is an algorithm for calculating the value of $\mbox{sigmoid}_\mbox{gaussian}(t)$. We're now starting to get into the center of the realm of calculus, which provides us new concepts and notation for describing the correspondance between functions. We'll need much of CalcZ to introduce and master these concepts and their notation. For now, we will let the notation make a cameo appearance, a premonition of what is to come.  
+You might ask, "If there is no formula, how can we use the function?" The answer is that even though there is no formula, there is an algorithm for calculating the value of $\text{sigmoid}_\text{gaussian}(t)$. We're now starting to get into the center of the realm of calculus, which provides us new concepts and notation for describing the correspondance between functions. We'll need much of CalcZ to introduce and master these concepts and their notation. For now, we will let the notation make a cameo appearance, a premonition of what is to come.  
 
-To say, "the slope of the sigmoid function is the hump function," we  write $$\partial_t \mbox{sigmoid}(t) = \mbox{hump}(t)$$
+To say, "the slope of the sigmoid function is the hump function," we  write $$\partial_t \text{sigmoid}(t) = \text{hump}(t)$$
 
-To describe an *algorithm* for computing the output of the sigmoid function, we need somehow to move the $\partial_t$ from the left side of the equation to the right side. This is a subtle operation and is conventionally written $$\mbox{sigmoid}(t) = \int_{-\infty}^t \mbox{hump}(x) dx$$ 
+To describe an *algorithm* for computing the output of the sigmoid function, we need somehow to move the $\partial_t$ from the left side of the equation to the right side. This is a subtle operation and is conventionally written $$\text{sigmoid}(t) = \int_{-\infty}^t \text{hump}(x) dx$$ 
 
 If you haven't studied calculus before, $\partial_t$ and $\int$ will be new to you. You can hardly be expected at this point to understand them. But now you've seen them and will hopefully come to be friends with them.
 

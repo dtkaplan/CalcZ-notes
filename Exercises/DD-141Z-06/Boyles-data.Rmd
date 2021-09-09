@@ -18,7 +18,7 @@ https://chem.libretexts.org/Courses/University_of_California_Davis/UCD_Chem_002A
 
 Open a sandbox to carry out some calculations with Boyle's data. To see how the data frame is organized, use the `head(Boyle)` and `names(Boyle)` commands. 
 
-::: {.scaffolding}
+::: {.scaffolding  data-latex=""}
 The scaffolding here contains a command for plotting out Boyle's data. It also includes a command, `gf_lm()` that will add a graph of the best straight-line model to the plotted points. Recall that the `#` symbol turns what follows on the line into a *comment*,  which is ignored by R. By removing the `#` selectively you can turn on the display of log axes.
 
 ```{r}
@@ -41,7 +41,7 @@ askMC(
 )
 ```
 
-::: {.scaffolding}
+::: {.scaffolding  data-latex=""}
 We want to find the slope and intercept of the straight-line model. This can be hard to read off a graph with log scales, so you will use a special purpose function to find the formula for the straight-line function that fits the data. Here's an example of how to use it.
 ```{r results="hide"}
 fitModel(log(pressure) ~ a + b*volume, data = Boyle) %>%
@@ -92,7 +92,7 @@ askMC(
 ```{r daily-digital-06-QA9, echo=FALSE}
 askMC(
   "**(E)** Does the **intercept** of the  straight line found by `fitModel()` depend on which base is used?",
-  "+Yes+" = "Good. But this will come out in the wash when you calculate the parameter $C$ in $C x^b$, since $C$ will be either $2^\\mbox{intercept}$ or $10^\\mbox{intercept}$ or $e^\\mbox{intercept}$ depending on the base log you use.",
+  "+Yes+" = "Good. But this will come out in the wash when you calculate the parameter $C$ in $C x^b$, since $C$ will be either $2^\\text{intercept}$ or $10^\\text{intercept}$ or $e^\\text{intercept}$ depending on the base log you use.",
   "No" = "Are you sure you tried different bases?",
   random_answer_order = FALSE
 )

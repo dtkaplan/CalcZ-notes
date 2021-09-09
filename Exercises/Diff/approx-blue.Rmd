@@ -56,8 +56,8 @@ quad_approx <- function(f, x0,  y0) {
   a_x <- (D(f(x, y) ~ x))(x = x0, y = y0)
   a_y <- (D(f(x, y) ~ y))(x = x0, y = y0)
   a_xy <- dxy_f(x = x0, y = y0)
-  a_xx <- (D(f(x, y) ~ x + x))(x = x0, y = y0) / 2
-  a_yy <- (D(f(x, y) ~ y + y))(x = x0, y = y0) / 2
+  a_xx <- (D(f(x, y) ~ x & x))(x = x0, y = y0) / 2
+  a_yy <- (D(f(x, y) ~ y & y))(x = x0, y = y0) / 2
   function(x, y)
     a_0 + a_x*(x-x0) + a_y*(y-y0) + a_xy*(x-x0)*(y-y0) + a_xx*(x-x0)^2 + a_yy*(y-y0)^2
 }

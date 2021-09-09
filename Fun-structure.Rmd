@@ -1,6 +1,6 @@
 # Structure of a function
 
-::: {.objectives data-latex=""}
+::: {.objectives}
 ```{r echo=FALSE, results="asis"}
 state_objective("F-10",
 text="Recognize that functions are a way of representing (storing) what we know and be able to use properly the basic nomenclature of functions).")
@@ -29,11 +29,17 @@ We will be using formulas extensively, but best if you can visualize functions g
 
 ```{r engine-table, echo=FALSE, fig.cap="Various attributes of internal combustion engines, from the very small to the very large."}
 set.seed(104)
-knitr::kable(sample(Engines, size=8) %>%
+if (knitr::is_latex_output()) {
+  knitr::kable(sample(Engines, size=8) %>%
+                select(Engine, mass, BHP, RPM, bore, stroke) %>%
+                arrange(mass))
+} else {
+  knitr::kable(sample(Engines, size=8) %>%
                 select(Engine, mass, BHP, RPM, bore, stroke) %>%
                 arrange(mass),
               rownames=FALSE, autoHideNavigation=TRUE) %>%
-  kableExtra::kable_styling()
+    kableExtra::kable_styling()
+}
 ```
 
 Each row of the table reports on one, specific engine. Each column is one attribute of an engine. Using such tables can be easy. For example, if asked to report how fast the engine named "Enya 60-4C" spins, you would go down to the Enya 60-4C row and over to the "RPM" column and read off the answer: 11,800 revolutions per minute (RPM).
@@ -63,7 +69,7 @@ In the sort of function just described, all the offices were along a single corr
 
 Many functions have more than one input: two, three, four, ... tens, hundreds, thousands, millions, .... In this course, we'll work mainly with functions of two inputs, but the skills you develop will be applicable to functions of more than two inputs.
 
-What does a function of two inputs look like in our office metaphor? Imagine that the office building has many parallel corridors, each with a numeric ID. To evaluate the function, you need two numeric inputs: the number of the corridor and the number of the door along that corridor. With those two numbers in hand, you locate the appropriate door, knock on it and receive the output number in return. `r mark(330)`
+What does a function of two inputs look like in our office analogy? Imagine that the office building has many parallel corridors, each with a numeric ID. To evaluate the function, you need two numeric inputs: the number of the corridor and the number of the door along that corridor. With those two numbers in hand, you locate the appropriate door, knock on it and receive the output number in return. `r mark(330)`
 
 Three inputs? Think of a building with many floors, each floor having many parallel corridors, each corridor having many offices in sequence. Now you need three numbers to identify a particular office: floor, corridor, and door.
 
@@ -83,7 +89,7 @@ In Blocks 2 and 5 we'll discuss other widely used ways to do this that produce n
 
 ## Domain: input space
 
-As you know, there is a powerful way of thinking about numbers in terms of ***space*** and ***geometry***. For instance, a single number corresponds to a point on a line: the so-called ***number line***. A pair of inputs, say, (x, y) corresponds to a point in a plane, often called the ***Cartesian coordinate plane***. Three numbers corresponds to a point in space, perhaps organized into (x, y, z) of a Cartesian space. There are higher-dimensional spaces, but usually special training is needed to become comfortable with them. If you are having this discomfort, you might prefer to work with the office metaphor. Just for fun, here's how you can think of a 10-dimensional space: 10 numbers, one telling you which planet, the next specifying the continent on that planet, and so on for country, state, city, street, building, floor, corridor, door.
+As you know, there is a powerful way of thinking about numbers in terms of ***space*** and ***geometry***. For instance, a single number corresponds to a point on a line: the so-called ***number line***. A pair of inputs, say, (x, y) corresponds to a point in a plane, often called the ***Cartesian coordinate plane***. Three numbers corresponds to a point in space, perhaps organized into (x, y, z) of a Cartesian space. There are higher-dimensional spaces, but usually special training is needed to become comfortable with them. If you are having this discomfort, you might prefer to work with the office analogy. Just for fun, here's how you can think of a 10-dimensional space: 10 numbers, one telling you which planet, the next specifying the continent on that planet, and so on for country, state, city, street, building, floor, corridor, door.
 
 The set of inputs with which the function can be evaluated is called the ***domain*** of the function. Sometimes we describe the domain as a space, e.g. the number line, the plane, and so on. Sometimes domains including more restrictions. For instance, a particular input might have meaning only when positive, with no offices corresponding to negative values for that input. Or, an input might be restricted to be in the interval 0 to 1. Sometimes in calculus, the domain excludes an isolated point. For instance, there may be no office at the door marked 0 but the neighboring doors open into working offices. `r mark(350)`
 
@@ -97,18 +103,18 @@ The ***range*** of a function is the set of all the *outputs* that can be produc
 `r insert_calcZ_exercise(3.1, "RLUCX", "Exercises/Fun/range-domain.Rmd")`
 
 
-::: {.intheworld data-latex=""}
+::: {.intheworld  data-latex=""}
 **Weather forecasting by numerical process**
 
 *[Weather forecasting by numerical process](https://archive.org/details/weatherpredictio00richrich/page/184/mode/2up?view=theater)* is a highly influential book, from 1922, by [Lewis Fry Richardson](https://en.wikipedia.org/wiki/Lewis_Fry_Richardson). He envisioned a calculation for a weather forecast as a kind of function. The domain for the forecast is the latitude and longitude of a point on the globe, rather than the rectilinear organization of corridor.
 
-One fantastic illustration of the idea shows a building constructed in the form of an inside-out globe. At each of many points on the globe, there is a business. (You can see this most clearly in the foreground, which shows several boxes of workers.) `r mark(360)`
+One fantastic illustration of the idea shows a building constructed in the form of an inside-out globe.  [Source](https://www.cabinetmagazine.org/issues/27/foer.php) At each of many points on the globe, there is a business. (You can see this most clearly in the foreground, which shows several boxes of workers.) `r mark(360)`
 
-```{r echo=FALSE, out.width="70%", fig.align="center", fig.cap="An artist's depiction of the organization of calculations for weather forecasting by Richardson's system. [Source](https://www.cabinetmagazine.org/issues/27/foer.php)"}
+```{r echo=FALSE, out.width="70%", fig.align="center", fig.cap="An artist's depiction of the organization of calculations for weather forecasting by Richardson's system."}
 knitr::include_graphics(normalizePath("www/Richardson-globe.jpg"))
 ```
 
-Each business might work this way: In each business there is a person who will report the current air pressure at that point on the globe, another person who reports the temperature, another reporting humidity, and so on. To compute the predicted weather for the next day, the business has a staff assigned to visit the neighboring businesses to find out the pressure, temperature, humidity, etc. Still other staffers take the collected output from the neighbors and carry out the arithmetic to translate those outputs into the forecast for tomorrow. For instance, knowing the pressure at neighboring points enables the direction of wind to be calculated, thus the humidity and temperature of air coming in to and out of the region the business handles. In today's numerical weather prediction models, the globe is divided very finely by latitude, longitude, and altitude, and software handles both the storage of present conditions and the calculation from that of the future a few minutes later. Repeating the process using the forecast enables a prediction to be made for a few minutes after that, and so on.
+In each business there is a person who will report the current air pressure at that point on the globe, another person who reports the temperature, another reporting humidity, and so on. To compute the predicted weather for the next day, the business has a staff assigned to visit the neighboring businesses to find out the pressure, temperature, humidity, etc. Still other staffers take the collected output from the neighbors and carry out the arithmetic to translate those outputs into the forecast for tomorrow. For instance, knowing the pressure at neighboring points enables the direction of wind to be calculated, thus the humidity and temperature of air coming in to and out of the region the business handles. In today's numerical weather prediction models, the globe is divided very finely by latitude, longitude, and altitude, and software handles both the storage of present conditions and the calculation from that of the future a few minutes later. Repeating the process using the forecast enables a prediction to be made for a few minutes after that, and so on.
 
 Some of the most important concepts in calculus relate to the process of collecting outputs from neighboring points and combining them: for instance finding the difference or the sum. To illustrate, here is the first set of equations from Richardson's *Weather forecasting ...* written in the notation of calculus: `r mark(370)`
 
@@ -180,7 +186,7 @@ Each of these examples has been written using numbers as inputs to the mathemati
 
 Read through the above table of examples several times. Note down any that you find at all confusing. Then cover up the right side of the table and write down the R expression for each item on the left side. Similarly, cover up the left side of the table and translate the R expression into traditional notation.
 
-::: {.scaffolding}
+::: {.scaffolding  data-latex=""}
 Open a `r sandbox_link()` and, one at a time, write and run the R expression for each of these traditional-notation expressions. We give the numerical result for each of the traditional expressions to let you confirm that your R version is correct.
 
 i. $(16 - 3)/2$ gives result `r (16-3)/2`
@@ -205,7 +211,7 @@ One additional note: All these examples can be written with a single line of cod
 
 When your R command is not a complete sentence, the `r sandbox_link()` will display an error like this:
 
-<span style="font-color: red;"><code>Error in parse(text = x, keep.source = TRUE) : <text>:5:0: unexpected end of input </code></span>
+    <span style="font-color: red;"><code>Error in parse(text = x, keep.source = TRUE) : <text>:5:0: unexpected end of input </code></span>
 
 The "unexpected end of input" is the computer's way of saying, "You haven't finished your sentence so I don't know what to do."
 

@@ -9,7 +9,7 @@ global_id: "4nsU0z"
 set.seed(2)
 Pts <- tibble(x=runif(6, 0, 5), y=(rnorm(length(x))))
 f <- mosaic::spliner(y ~ x, data = Pts)
-ddf <- D(f(x) ~ x + x)
+ddf <- D(f(x) ~ x & x)
 set.seed(723)
 Pts <- tibble(x=0:5, y=sort(rnorm(length(x))))
 f2 <- splinefun(Pts$x, Pts$y, method="monoH.FC")

@@ -81,7 +81,7 @@ Each object presents a read-out of what's being measured---temperature or length
 A function gives the output for any given input. We represent the input value as a position on a number line---which we call an "axis"---and the output as a position on another output line, almost always drawn perpendicular to one another. But the two number lines can just as well be parallel to one another. To evaluate the function, find the input value on the input scale and read off the corresponding output. The ***inverse function*** can be evaluated just as easily: switch the roles of the input and output scales.  `r mark(830)`
 
 Taking the traditional ("imperial"^[Called "imperial" because it was codified in an 1825 Act of the British parliament. Inches are imperial, but temperature isn't part of the Act.]) unit scale as the input and the metric scale as the output, the two functions implemented on the objects are:
-$$\underbrace{C(F) = \frac{5}{9}(F-32)}_\mbox{Fahrenheit to Celcius}\ \ \ \text{and}\ \ \ \ \underbrace{\text{cm(inches)} = 2.54 \times (\text{inches}-0}_\mbox{inches to cm})$$
+$$\underbrace{C(F) = \frac{5}{9}(F-32)}_\text{Fahrenheit to Celcius}\ \ \ \text{and}\ \ \ \ \underbrace{\text{cm(inches)} = 2.54 \times (\text{inches}-0}_\text{inches to cm})$$
 These are very simple, straight-line functions, but they play an important role in modeling. 
 
 Each conversion function can be written in the form $\line(x) \equiv m (x - x_0)$. Of course, if you multiply the $m$ through both terms in parentheses, you get $\line(x) = m x - m x_0$ which can be written even more simply as $mx + b$ by setting $b\equiv m x_0$. so the conversion function does conform to the straight-line formula we're used to. 
@@ -90,7 +90,7 @@ $m$ and $x_0$ are the ***parameters*** of the straight-line function. In terms o
 
 Often, functions can be parameterized in other ways. For instance, you likely learned the parameterization $m x + b$, in which $m$ is (still) the slope of the graph but $b$ is the **y**-intercept. (Expanding out $m(x-x_0)$ and comparing to $m x + b$, you can see that $b = m x_0$.)
 
-::: {.takenote}
+::: {.takenote  data-latex=""}
 We can call $m(x - x_0)$ the "x-intercept parameterization" and $m x + b$ the "y-intercept parameterization. They are equivalent and equally good ways of parameterizing the straight line. There are still other ways of parameterizing, each style reflecting its own format for specifying the two points that make up a line. 
 :::
 
@@ -109,7 +109,7 @@ The function being drawn is simply $e^x$: a function from the pattern book. The 
 The pattern-book function does not give a good model of the COVID case numbers. But if we scale the input before applying the pattern-book function, we are effectively laying a new axis, the blue one in Figure \@ref(fig:covid-scale), that is stretched and shifted from the pattern-book input (blackscale). Using the blue axis lets us read off the number of cases as a function of the day in March. 
 
 Input scaling empowers the pattern-book functions to model a huge variety of phenomena. There's just one exponential function and it always looks exactly the same. But there is a huge variety of ways to draw a blue axis, that is, to scale the input. With input scaling, the pattern-book function is tailored to become one of our basic modeling functions.
-$$\underbrace{e^x}_\mbox{pattern-book function}\  \text{versus}\  \underbrace{e^{k(x-x_0)}}_\mbox{basic modeling function}$$
+$$\underbrace{e^x}_\text{pattern-book function}\  \text{versus}\  \underbrace{e^{k(x-x_0)}}_\text{basic modeling function}$$
 The straight-line function $\line()$ is being written here as $k(x-x_0)$ rather than $m(x-x_0)$. It's traditional when writing exponential functions to use the letter $k$ as the multiplier, but you can use whatever name you wish for a parameter. Knowing and using the idiom of mathematical notation will help you read and write mathematics more fluently.  `r mark(850)`
 
 The table shows a of the mathematical idioms used in parameterizing the pattern-book functions. 
@@ -133,7 +133,7 @@ Straight-line | $m (x-x_0)$ | $m$ "slope" | $x_0$ "center"
 
 Just as the natural input usually needs to be scaled before it reaches the pattern-book function, so the output from the pattern-book function may need to be scaled before it presents a result suited for interpreting in the real world. 
 
-```{r scaling-nature, echo=FALSE, out.width="100%", fig.cap="Natural **quantities** must be scaled to pure numbers before being suited to the pattern-book functions. The output is a pure number which is scaled to the natural **quantity** of interest."}
+```{r scaling-nature, echo=FALSE, out.width="100%", fig.cap="Natural **quantities** must be scaled to pure numbers before being suited to the pattern-book functions. The output from the function is a pure number which is scaled to the natural **quantity** of interest."}
 knitr::include_graphics("www/scaling-nature.png")
 ```
 
@@ -146,7 +146,7 @@ exponential |  $e^x$      | $A e^{kx} + C$
 sinusoid    | $\sin(x)$   | $A \sin\left(\frac{2 \pi}{P} (x-x_0)\right) + C$
 proportional | $x$        | $a x + b$
 
-::: {.takenote}
+::: {.takenote  data-latex=""}
 The parameter $C$ is often called the ***baseline*** or the ***offset***. Statisticians call it the "intercept," because it plays the same role as $b$ in the straight-line function.
 
 When working with sinusoids, parameter $A$ is called the ***amplitude***.
@@ -172,8 +172,8 @@ slice_plot(exp(x) ~ x, domain(x=c(-2, 2))) %>%
 ```
 :::
 
-::: {.why}
-Our prefered form for the input scaling in the basic modeling functions is $m(x - x_0)$. Sometimes it can be a little hard to see this form given the conventions for parameterization. For instance, in the basic modeling sinusoid $$\sin\left(\underbrace{\frac{2 \pi}{P}}_m\ \ (x-x_0)\right)$$ the multiplier is written $\frac{2\pi}{P}$ rather than $m$.
+::: {.why  data-latex=""}
+Our prefered form for the input scaling in the basic modeling functions is $m(x - x_0)$. Sometimes it can be a little hard to see this form given the conventions for parameterization. For instance, in the basic modeling sinusoid $$\sin\left(\underbrace{\frac{2 \pi}{P}}_m\ \ (x-x_0)\right)$$ the multiplier is written $\frac{2\pi}{P}$ rather than $m$. `r mark(863)`
 
 In the basic modeling exponential and straight line functions $$A e^{kx} + C \ \ \ \text{and}\ \ \ a x + b$$
 The $x_0$ does not appear. Why not?
@@ -211,9 +211,14 @@ This is being moved to drill.
 `r insert_calcZ_exercise(7.3, "BLECL", "Exercises/Fun/scale-input-2.Rmd")`
 
 
+
+`r insert_calcZ_exercise(7.4, "ILESX", "Exercises/Fun/cat-lend-futon.Rmd")`
+
+
+
 ## Linear combinations
 
-We've discussed ***shifting the baseline*** of the exponential and sinusoid functions by adding a constant to the basic modeling function, like this:
+We've discussed ***shifting the baseline*** of the exponential and sinusoid functions by adding a constant to the basic modeling function, like this:`r mark(864)`
 
 $$f(t) \equiv A e^{kt} + C\\
 \ \\
@@ -229,7 +234,7 @@ The quantities $A_1$ and $A_2$ are called ***scalars*** because they **scale** t
 It's common to take linear combinations of functions with different inputs, for example
 $$h(x, y, t) \equiv 4 e^{-kt} + 7 y + 2\,\pnorm(x-3) - 19$$
 
-In fields like statistics and economics and other social sciences, as well as clinical medical research, a great number of modeling techniques involve such combinations of functions of various inputs. 
+In fields like statistics and economics and other social sciences, as well as clinical medical research, a great number of modeling techniques involve such combinations of functions of various inputs. `r mark(866)`
 
 In engineering and physics, an important class of functions involves a linear combination of many sinusoids of different periods, e.g. 
 
@@ -245,5 +250,5 @@ Polynomials are an important example of linear combinations. Something like $p(x
 
 
 
-`r insert_calcZ_exercise(7.4, "FKLEU", "Exercises/Fun/two-sines.Rmd")`
+`r insert_calcZ_exercise(7.5, "FKLEU", "Exercises/Fun/two-sines.Rmd")`
 

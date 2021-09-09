@@ -1,19 +1,27 @@
 # Change and accumulation {#change-accumulation}
 
-Consider this table of **population** versus **year**, which records the overall results of the every-10-year US Census since 1790
+Every 10 years, starting in 1790, the US Census Bureau carries out a constitutionally mandated census: a count of the current population. The overall count as a function of year is shown in Figure \@ref(fig:pop-graph). [[Source](https://en.wikipedia.org/wiki/Demographic_history_of_the_United_States)
+]
 
-```{r pop-table, echo=FALSE, message=FALSE, warning=FALSE, fig.cap="US Population as counted by the US Census Bureau: 1790-2020"}
+
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
 USPop <- readr::read_csv("www/census-totals.csv")
-DT::datatable(USPop %>% mutate(population=prettyNum(population, big.mark=",")) %>% select(-growth_rate))
+Tmp <- USPop %>% 
+  mutate(population=prettyNum(population, big.mark=",")) %>%
+  select(-growth_rate)
+Table <- if (knitr::is_html_output()) {
+  DT::datatable(Tmp) 
+} else {
+  knitr::kable(Tmp)
+}
 USPop <- USPop %>% 
   mutate(population = population/1e6)
 ```
 
-`r mark(population)`
+In the 230 years spanned by the census data, the US population has grown 100-fold, from about 4 million in 1790 to about 330,000,000 in 2020.
 
-These are ***discrete-time*** data, but nobody would dispute that the population is a continuous function of time and that we are entitled to graph it as in Figure \@ref(fig:pop-graph).
-
-```{r pop-graph, echo=FALSE, fig.cap="US population since 1790. [Source](https://en.wikipedia.org/wiki/Demographic_history_of_the_United_States)"}
+```{r pop-graph, echo=FALSE, fig.cap="US population since 1790.", fig.margin=TRUE}
 popfun <- spliner(population ~ year, data = USPop)
 USPop <- USPop %>%
   mutate(yearly_growth_rate = 100*((1+growth_rate/100)^(1/10) - 1))
@@ -24,363 +32,133 @@ gf_point(population ~ year, data = USPop) %>%
   gf_labs(y="Population (millions)") %>%
   gf_lims(x = c(1790, 2100), y=c(0,500))
 ```
-Many of the student readers of this book will have children who will be about 70 years old in the year 2100. Use Figure \@ref(fig:pop-growth) to make a prediction of the population in 2100. 
-
-From the graph itself, you might just sketch out what you think is the trend. Or, more formally, and based on the ideas introduced in Block 1, you might seek an exponential or power-law function, fit it to the data, and extrapolate out to year 2100. The next figure does exactly that, but you'll have to click on "Show model prediction" to see the results. `r mark(3100)`
 
 
-Show model prediction
-```{r pop-prediction-bad, echo=FALSE, warning=FALSE, fig.cap="Predicted US population using an exponential function (red) and a power-law function (green)"}
-powermod <- fitModel(population ~ A * ((year-1750)/100)^b, data = USPop, start=list(b=2))
-expmod <- fitModel(population ~ A*exp(k*(year-1750)/100), data = USPop, start=list(k=0.2))
-fpower <- makeFun(powermod)
-fexp <- makeFun(expmod)
-growth_mod <- lm(yearly_growth_rate ~ year, data = USPop)
-growth_fun <- makeFun(growth_mod)
-accum <- tibble(year = 2021:2100,
-                pop = 331 * cumprod(1 + growth_fun(2021:2100)/100))
 
-gf_point(population ~ year, data = USPop) %>%
+
+It's always tempting to look for simple patterns in such data. Perhaps the US population has been growing exponentially. A semi-log plot of the same data suggests that the growth is only very roughly exponential. (See Figure \@ref(fig:pop-graph-log).) A truly exponential process would present as a curve with a constant derivative, but the derivative of the function in the graphed is decreasing over the centuries. 
+
+
+```{r pop-graph-log, echo=FALSE, fig.cap="Population since 1790.", fig.margin=TRUE}
+P <- gf_point(population ~ year, data = USPop) %>%
+  gf_line(population ~ year) %>%
   gf_labs(y="Population (millions)") %>%
-  gf_lims(x = c(1790, 2100), y=c(0,700)) %>%
-  slice_plot(fexp(year) ~ year, domain(year=c(1790, 2100)), color="orange3",
-             label_text = "Exponential", label_x=0.9, label_color="orange3") %>%
-  slice_plot(fpower(year) ~ year, domain(year=c(1790, 2100)), color="green",
-             label_text = "\nPower-law\np=2.56", label_x=0.92, label_color="green") %>%
-  gf_line(pop ~ year, data = accum, color="gray") %>%
-  gf_point(404.4 ~ 2060, color="dodgerblue", size=1)
+  gf_refine(scale_y_log10())
 ```
 
-The power-law function with power 2.56 is an excellent match to the historical data up through the present. But ...
+Insofar as the slope over the semi-log graph is informative, it amounts to this quantity:
+$$\partial_t \ln(\text{pop}(t)) = \frac{\partial_t\, \text{pop}(t)}{\text{pop}}$$
+This is the *per-capita* rate of growth, that is, the rate of change in the population divided by the population. Conventionally, this fraction is presented as a percentage: percentage growth in the population per year, as in Figure \@ref(fig:pop-growth).
 
-
-There are occasions where the modeler has no alternative to curve fitting. However, it's best when the modeler knows as much as possible about the mechanisms of the process being modeled and can somehow incorporate those processes into the model. `r mark(3105)`
-
-With population, you know an awful lot about the mechanisms involved: birth, death, and immigration. As for births .... this is a personal matter. What I mean is that it's appropriate to look at the mechanism in terms of births per person. And if we're interested in the yearly growth of the population, what's relevant is the rate of births per person per year. That's a complicated rate, but when you multiply it by the population it turns into births per year, which is exactly right for studying population. The trend in births per person per year has been downward since 1900.  Immigration has fluctuated over the decades. That's going to be hard to predict. And death ... Old age is still the primary risk factor for death. The population is getting older, so deaths per year may be going up. `r mark(3110)`
-
-Births, deaths, and immigration are the components of the population rate of growth per year. The statements in the previous paragraph suggest that the population rate of growth per year is going down. The census data don't break down population change into its components. Still, we can check for patterns over the decades, as in Figure \@ref(fig:pop-growth). `r mark(3115)`
-
-```{r pop-growth, echo=FALSE, fig.cap="Annual growth rate of the US population (%)"}
+```{r pop-growth, echo=FALSE, fig.cap="Annual per capita growth rate of the US population (percent)"}
 growth_mod <- lm(yearly_growth_rate ~ year, data = USPop)
 growth_fun <- makeFun(growth_mod)
 gf_point(yearly_growth_rate ~ year, data = USPop) %>%
   gf_lims(x = c(1790, 2100), y=c(-.5,4)) %>%
   gf_lm() %>%
-  gf_labs(y = "Growth rate (% per year)") 
+  gf_labs(y = "Per capita growth rate (% per year)") 
 ```
 
-There's a lot of fluctuation, but an overall trend stands out: the population growth rate has been declining since the mid-to late 1800s. The deviations from the trend are telling. There's a relatively low growth rate seen in the 1870 census: that's the effect of the US Civil War. The Great depression is seen in the very low growth from 1930 to 1940. Baby Boom: look at the growth from 1950-1960. The bump from 1990 to 2000? Not coincidentally, the 1990 Immigration Act substantially increased the yearly rate of immigration.  `r mark(3120)`
+The dots in the graph are a direct calculation from the census data.  There's a lot of fluctuation, but an overall trend stands out: the population growth rate has been declining since the mid-to late 1800s. The deviations from the trend are telling and correspond to historical events. There's a relatively low growth rate seen from 1860 to 1870: that's the effect of the US Civil War. The Great depression is seen in the very low growth from 1930 to 1940. Baby Boom: look at the growth from 1950-1960. The bump from 1990 to 2000? Not coincidentally, the 1990 Immigration Act substantially increased the yearly rate of immigration. 
 
-The extrapolation of the historical pattern in annual growth rate has a zero crossing at about 2075. As you know from Block 2, a zero crossing of the rate of change corresponds to a local maximum. A reasonable prediction is therefore that the US population will max out in the second half of the 21st century and decline thereafter. `r mark(3125)`
+If the trend in the growth rate continues, the US will reach zero net growth about 2070, then continue with negative growth. Of course, negative growth is just decline. A simple prediction from Figure \@ref(fig:pop-growth) is that the argmax of the US population will be around 2070.
 
-What will that maximum population be? The derivative tells us only about the argmax, not the max. What we need to do to make a prediction of the future population is to ***accumulate*** the yearly change in the population on top of the known, current population. In other words, rather than going from the population vs time to the rate of change in population versus time, we need to go the other way. This process of knowing a derivative $\partial_x f()$ and finding the unknown function $f()$ from which it was derived is called ***anti-differentiation***. Just as the name suggests, anti-differentiation is the opposite of differentiation. But how to do it? `r mark(3130)`
+How large will the population be when it reaches its maximum? 
 
-::: {.intheworld}
-The predictions from the accumulate-population-growth model are shown as a thin gray line in Figure \@ref(fig:pop-prediction-bad) along with the exponential and power law models fit directly to the population vs year data. According to the accumulation model, the population peaks in 2075 at 390 million. Professional demographers make much more sophisticated models using data from many sources. The demographers at the US Census Bureau predict that the population will reach a maximum of 404 million in 2060, shown by the little blue dot in Figure \@ref(fig:pop-prediction-bad). `r mark(3135)`
+In Block 2, we dealt with situations where we know the function $f(t)$ and want to find the rate of change $\partial_t f(t)$. Here, we know the rate of change of the population and we need to figure out the population itself, in other words to figure out from a known $\partial_t f(t)$ what is the (as yet) unknown function $f(t)$.  
+
+The process of figuring out $f(t) \longrightarrow \partial_t f(t)$ is, of course, called ***differentiation***. The opposite process, $\partial_t f(t) \longrightarrow f(t)$ is called ***anti-differentiation***. 
+
+
+If the trend in the growth rate continues, the US will reach zero net growth about 2070, then continue with negative growth. Of course, negative growth is just decline. A simple prediction from Figure \@ref(fig:pop-growth) is that the argmax of the US population will be around 2070.
+
+How large will the population be when it reaches its maximum? 
+
+In Block 2, we dealt with situations where we know the function $f(t)$ and want to find the rate of change $\partial_t f(t)$. Here, we know the rate of change of the population and we need to figure out the population itself, in other words to figure out from a known $\partial_t f(t)$ what is the (as yet) unknown function $f(t)$.  
+
+The process of figuring out $f(t) \longrightarrow \partial_t f(t)$ is, of course, called ***differentiation***. The opposite process, $\partial_t f(t) \longrightarrow f(t)$ is called ***anti-differentiation***. 
+
+In this block we'll explore the methods for calculating anti-derivatives and some of the settings in which anti-derivative problems arrive. 
+
+
+::: {.intheworld data-latex=""}
+The predictions from the accumulate-population-growth model are shown as a $\color{magenta}{\text{magenta}}$ line in Figure \@ref(fig:pop-prediction-bad).
+
+```{r pop-prediction-bad, echo=FALSE, warning=FALSE, fig.cap="Predicted US population based on the historical linear decline in per-capita growth."}
+growth_mod <- lm(yearly_growth_rate ~ year, data = USPop)
+growth_fun <- makeFun(growth_mod)
+accum <- tibble(year = 2021:2130,
+                pop = 331 * cumprod(1 + growth_fun(2021:2130)/100))
+
+gf_point(population ~ year, data = USPop) %>%
+  gf_labs(y="Population (millions)") %>%
+  gf_lims(x = c(1790, 2130), y=c(0,450)) %>%
+  gf_line(pop ~ year, data = accum, color="magenta") %>%
+  gf_point(404.4 ~ 2060, color="dodgerblue", size=1)
+```
+
+According to the accumulation model, the population peaks in 2075 at 390 million. We'll be back down to the present population level in about 100 years. 
+
+Professional demographers make much more sophisticated models using detailed data from many sources. The demographers at the US Census Bureau predict that the population will reach a maximum of 404 million in 2060, shown by the little blue dot in Figure \@ref(fig:pop-prediction-bad).  That's not too different from what we got by analyzing just the raw census numbers. `r mark(3135)`
 :::
 
-## Differentiation and anti-differentiation
+## Accumulation
 
-Block 2 introduced the derivative of a continuous function by looking at discrete differences. Given a function $g(t)$, we quantified the rate of change using the differencing operator. We called this the
-$$\diff{t} g(t) \equiv \frac{g(t+h) - g(t)}{h}$$
-As written above, $\diff{t}$ is properly called the ***finite-difference operator***, since no suggestion is made that $h$ is anything but a small number. We moved from $\diff{t}$ to $\partial_t$ by considering the ***limit*** as $h\rightarrow 0$ This move was fraught because of the concern about dividing by zero, but in the end we found simple algebraic expressions for the derivatives of the pattern-book functions as well as a few rules for handling the basic ways of combining functions using linear combinations, products, and function combinations. These rules were the sum rule, product rule, and chain rule respectively. `r mark(3140)`
+Imagine a simple setting: water flowing out of a tap into a basin or tank. Measurement of the amount of water into the basin will be in a unit of volume, say liters. Measurement of the *flow* $f(t)$ of water from the tap into the tank has different units, say liters per second. If volume $V(t)$ is the volume of water in the tank as a function of time, $f(t)$ at any instant is $f(t) = \partial_t V(t)$. 
 
-In studying accumulation, we'll follow much the same path. The major difference is that our starting point is knowing a function like $\partial_t f(t)$: a derivative. From there will will construct a $f(t)$ from which $\partial_t f(t)$ *could have been derived, had we known it in the first place*. The idea is that sometimes information comes to us in the form of a rate of change and we need to figure out a function that could have generated that rate of change.  `r mark(3145)`
+Clearly there is a relationship between the two functions $f(t)$ and $V(t)$. With derivatives, we can give a good description of that relationship: $$f(t) = \partial_t V(t)$$ This description will be informative if we have measured the volume of water in the basin as a function of time and want to deduce the rate of flow from the tap. 
+Now suppose we have measured $f(t)$ and want to figure out the volume. The volume at any instant is the past flow accumulated to that instant. As a matter of notation, we write this view of the relationship as $$V(t) = \int f(t) dt,$$ which you can read as "volume is the accumulated flow." 
 
-It will help to keep in mind a fundamental principle of calculus, even if the mental image of this principle remains blurry: 
+Other examples of accumulation and change:
 
-> ***Accumulation*** is the reverse operation to ***differentiation***, and *vice versa*.
+- velocity is the rate of change of position *with respect to time*. Likewise, position is the accumulation of velocity *over time*.
+- force is the rate of energy *with respect to position*. Likewise energy is the accumulation of force *as position changes*. 
+- deficit is the rate of change of debt with respect to time. Likewise, debt is the accumulation of deficit over time. 
 
-To make this principle even easier to remember, let's restate it using the mathematical word used to say precisely what we mean by "accumulation":
+## Notation for anti-differentiation
 
-> ***Anti-differentiation*** is the reverse operation to ***differentation***, and *vice versa*.
+For differentiation we are using the notation $\partial_x$ as in $\partial_x f(x - a)$. Remember that the subscript on $\partial$ names the ***with-respect-to input***.  There are three pieces of information this notation:
 
-The mathematical notation for differentiation is simple: $\partial_t f(t)$. For anti-differentiation the notation is typographically very different. The anti-derivative of a function $f(t)$ is written: `r mark(3150)`
+1. The $\color{magenta}{\partial}$ symbol which identifies the operation as partial ***differentiation***.
+2. The name of the with-respect-to input $\partial_{\color{magenta}{x}}$ written as a subscript to $\partial$.
+3. The function to be differentiated, $\partial_x \color{magenta}{f(x - a)}$.
 
-$$\huge \color{blue}{\int} f(\color{blue}{t}) \color{blue}{dt}$$
-The math notation consists of several components, each of which has something to say. The components colored blue are part of the general notation. You can change the name of the input variable from $\color{blue}{t}$ to whatever you like, but you'll have to change the $\color{blue}{dt}$ accordingly.  `r mark(3155)`
+For ***anti-differentiation***, our notation must also specify the three pieces of information. It might be tempting to use the same notation as differentiation but replace the $\partial$ symbol with something else, perhaps $\eth$ or $\spadesuit$ or $\forall$, giving us something like $\spadesuit_x f(x-a)$.
 
-The R/mosaic notation for the anti-derivative has exactly the same format as the derivative: 
+Convention has something different in store. The notation for anti-differentiation is $$\large \int f(x-a) dx$$
+1. The $\color{magenta}{\int}$ is the marker for anti-differentiation.
+2. The name of the with-respect to variable is contained in the "dx" at the end of the notation: $\int f(x-a) d\color{magenta}{x}$
+3. The function being anti-differentiated is in the middle $\int \color{magenta}{f(x-a)} dx$.
 
-    antiD(f(t) ~ t)
+For those starting out with anti-differentiation, the conventional notation can be confusing, especially the $dx$ part. It's easy confuse $d$ for a constant and $x$ for part of the function being anti-differentiated. 
 
+Think of the $\int$ and the $dx$ as **brackets** around the function. You need both brackets for correct notation, the $\int$ and the $dx$ together telling you what operation to perform. 
 
-## Visualizing anti-differentiation {#anti-diff-viz}
+Remember that just as $\partial_x f(x-a)$ is a function, so is $\int f(x-a) dx$.
 
-Section \@ref(slope-fun-visualization) introduced a non-standard visualization of the slope function. We can build on that to show how the function $f(x)$ can be reconstructed from $\partial_x f(x)$. 
+## R/mosaic notation
 
-Figure \@ref(fig:euler-viz-1) shows a slope function visualization of some function $f(x)$
+Recall that the notation for differentiation in R/mosaic is `D(f(x-a) ~ x)`.
 
-```{r euler-viz-1, echo=FALSE, fig.cap="A slope function $\\partial_x f(x)$ from which we are going to reconstruct the mother function $f(x)$. Each of the sloped segments has been given a label for later reference."}
-Segs <- create_segments(sin(x) ~ x, domain(x=c(-pi,pi)), nsegs=30)
-Segs$num <- c(letters, LETTERS)[1:nrow(Segs)]
-Segs_orig <- Segs
-gf_segment(y + yend ~ x + xend, data = Segs, 
-           color=~slope,size=1.3, lineend="round") %>%
-  gf_point(0 ~ start, size=1, color="green") %>%
-  gf_text(0.25 ~ start, label=~num, size=3) %>%
-    gf_labs(title="sin(x) slope-function visualization") %>%
-    gf_lims(y=c(-1,1))
+This has the same three pieces of information as $\partial_x f(x-a)$
 
-```
-We'll reconstruct $f(x)$ one segment at a time. Recall that each of the segments shows a linear approximation to $f(x)$ at the input marked by the green dot. But in constructing the slope function, we threw away the information about the vertical placement of the segment. Now we have to recover that discarded information, as well as we can. `r mark(3160)`
+1. `D()` signifies differentiation.
+2. `~ x` identifies the with-respect-to variable.
+3. `f(x-a) ~ ` is the function on which the operation is to be performed. 
 
-The big clue for the reconstruction is that the function $f(x)$ was ***continuous***. But the piecewise function graphed in Figure \@ref(fig:euler-viz-1) is discontinuous; the endpoints of adjacent segments don't meet each other. `r mark(3165)`
+This style of notation extends beautifully to anti-differentiation: `antiD(f(x-a) ~ x)`
 
-That's easy to fix: we'll just move segment (b) vertically so that it becomes continuous with segment (a). 
+Remember that just as `D(f(x-a) ~ x)` creates a new function out of `f(x-a) ~ x`, so does `antiD(f(x-a) ~ x)`.
 
-```{r euler-viz-2, echo=FALSE, fig.cap="Moving segment (b) to become continuous with segment (a)."}
-Segs$y[2] <- Segs$y[2] -0.199
-Segs$yend[2] <- Segs$yend[2] - 0.199 
-gf_segment(y + yend ~ x + xend, data = Segs, 
-           color=~slope,size=1.3, lineend="round") %>%
-  gf_point(0 ~ start, size=1, color="green") %>%
-  gf_text(0.25 ~ start, label=~num, size=3) %>%
-    gf_labs(title="sin(x) slope-function visualization. Segment (b) moved.") %>%
-    gf_lims(y=c(-1,1))
-```
+## Exercises
 
-Now that (a) and (b) are joined, we can join (c) to that:
+`r insert_calcZ_exercise("27.02", "bcJnUq", "Exercises/Accum/wolf-beat-book.Rmd")`
 
-```{r euler-viz-3, echo=FALSE, fig.cap="Moving segment (c) to become continuous with segments (a) and (b)."}
-Segs$y[3] <- Segs$y[3] -0.4
-Segs$yend[3] <- Segs$yend[3] - 0.4
-gf_segment(y + yend ~ x + xend, data = Segs, 
-           color=~slope,size=1.3, lineend="round") %>%
-  gf_point(0 ~ start, size=1, color="green") %>%
-  gf_text(0.25 ~ start, label=~num, size=3) %>%
-    gf_labs(title="sin(x) slope-function visualization") %>%
-    gf_lims(y=c(-1,1))
-```
+`r insert_calcZ_exercise("27.04", "Ya2cVq", "Exercises/Accum/fir-lead-canoe.Rmd")`
 
-Continue this process one segment at a time to reconstruct $f(x)$.
+`r insert_calcZ_exercise("27.06", "wmyERp", "Exercises/Accum/bee-bid-knife.Rmd")`
 
-```{r euler-viz-4, echo=FALSE, fig.cap="After joining all the segments together, the picture of $f()$ is complete."}
-gf_segment(yf + yfend ~ x + xend, data = Segs_orig, 
-           color=~slope,size=1.3, lineend="round") %>%
-  gf_point(0 ~ start, size=1, color="green") %>%
-  gf_text(0.25 ~ start, label=~num, size=3) %>%
-    gf_lims(y=c(-1,1))
-```
-This process reconstructs the ***shape*** of $f(x)$ from $\partial_x f(x)$. But there is still something missing. We never touched segment (a). Its vertical location was arbitrary. So we have to qualify our claim to have reconstructed $f(x)$. What we've reconstructed is some function $\widehat{f}(x)$ whose derivative is $\partial_x f(x)$. There are other such functions; any function $\widehat{f}(x) + C$ can make a legitimate claim to being the anti-derivative of $\partial_t f(x)$.  We'll return to $C$ in later chapters, but for now we'll just name it: the ***constant of integration***. `r mark(3170)`
 
-::: {.workedexample}
-In the population example that started this chapter, we constructed a model for $\partial_t f(t)$, where $f(t) = \ln(P(t))$. We can plot $\partial_t f(t)$ using an ordinary graph as we did in Figure \@ref(fig:pop-growth), but let's use the slope-function representation instead. `r mark(3175)`
+`r insert_calcZ_exercise("27.08", "kEAW8g", "Exercises/Accum/dog-have-mattress.Rmd")`
 
-```{r pop-slope-fun, echo=FALSE, fig.cap="The slope-function visualization corresponding to the plot of $\\partial_t f(t)$ in Figure \\@ref(fig:pop-growth)."}
-G <- antiD(growth_fun(t) ~ t, lower.bound = 2020)
-Segs <- create_segments(G(t) ~ t, domain(t=c(2020-1.5, 2100)), nsegs=30)
-gf_segment(y + yend ~ x + xend, data = Segs, 
-           color=~slope,size=1.3, lineend="round") %>%
-  gf_point(0 ~ start, size=1, color="green") %>%
-  gf_labs(x="Year", y="Percent growth per year")
-```
 
-To construct the original function $f(t)$, just connect the segments in Figure \@ref(fig:pop-slope-fun). 
-
-```{r accum-pop-growth, echo=FALSE, fig.cap="Accumulating the annual growth in Figure \\@ref(fig:pop-slope-fun)."}
-gf_segment(yf + yfend ~ x + xend, data = Segs, 
-           color=~slope,size=1.3, lineend="round") %>%
-  gf_point(0 ~ start, size=1, color="green") %>%
-  gf_labs(x="Year", y="Growth accumulated versus year")
-```
-
-The accumulated annual growth graph shows that by around 2075, the accumulated growth will be about 17% above the population of 2020. 
-
-:::
-
-::: {.forinstructor}
-You may wonder why I'm introducing anti-differentiation with the "slope-function visualization" rather than the "area under a curve." One reason is that the slope-function visualization is closer to the logic of Euler's method, so in addition to showing how differentiation can be undone, we get a free introduction to Euler.  The other reasons are more fundamental to pedagogy and the challenges students have relating differentiation and anti-differentiation when presented as slope-and-area. I'll start with some history ... `r mark(3180)`
-
-Pyrrhus was a Greek king who invaded Italy in 280 B.C. and fought the Romans. His first battle, at Heraclea, was a famous victory, as was his second battle a year later at Asculum. History records Pyrrhus saying, after his second victory, “If we are victorious in one more battle with the Romans, we shall be utterly ruined.” The victories were so costly that the army could not be sustained. `r mark(3185)`
-
-Such ***pyrrhic victories*** occur throughout history: the British at Bunker Hill (1775),  Napolean at Borodino (1812), and Lee at Chancellorsville (1863).
-
-A pyrrhic victory in mathematics pedagogy: the visualization of integration as the "area under a curve." This account of integration is utterly dominant among graduates of calculus courses. It is a brilliant and successful way to give the abstract operation of anti-differentiation an easily remembered visage. But it creates costs that are simply not worth bearing.  `r mark(3190)`
-
-i. There are not so many genuine applications for finding areas under curves. Students, seeing them as emblematic of calculus, are often dis-motivated by the lack of connection between the rhetoric of the importance of calculus and the seeming unimportance of the primary application.
-ii. It's extremely difficult to make a connection between the many genuine applications of anti-differentiation and the mental image of area.
-iii. Because area is most easily shown as a fixed, delimited region, students are introduced to ***integration*** before they see ***anti-differentiation***. It can be hard for students to make the transition between "slope at a point" or "tangent line" and a slope ***function***. This cost has to be paid all over again when moving from integration to anti-differentiation.
-iv. The Yin and Yang of calculus are differentiation and anti-differentation. Students are successfully taught that if $f(x)$ is a function, the derivative is the slope of that function and the integral is the area under the function. This creates an unhelpful illusion that derivatives and anti-derivatives are related through the function, that there is an intermediary between them. Translating this image to the metaphor of family generations, the picture looks like $f(x)$ is the **parent** of $\partial_x f(x)$ and $\int f(x)dx$ is the **parent** of $f(x)$. In other words, the incorrect image is encouraged that an anti-derivative is the **grandparent** of the derivative.  In fact the anti-derivative and the derivative have a parent-child relationship.
-vi. At best, for many people, the relationship between the slope function and the area function is hard to see and sometimes mysterious. (Of course it's hard to see: the slope function is the ***second derivative*** of the area function.) This  `r mark(3195)`
-
-For these reasons, I encourage instructors to avoid defining the calculus operation as "area under the curve." Make use of areas when they are part of a genuine application of calculus. Save the Riemann Sum for courses in analysis. For demonstrating anti-differentiation, the starting point should be a function which we know to be the derivative of the sought-after function. Teach Euler as connecting together short segments of slopes. Emphasis the connections between differentiation and anti-differentiation from the start: both are relationships between one function and another function, just as every person is both a mother and a child. The anti-derivative is the mother of the child, the derivative is the child of the mother. `r mark(3200)`
-:::
-
-
-
-## Symbolic anti-derivatives
-
-The Euler method involves a ***finite*** $h$, which is just to say that $h$ must be ***non-zero***. Otherwise, $f(t_0 + h)$ would be exactly the same as $f(t_0)$. For some functions, however, it's possible to construct the anti-derivative without needing to deal with $h$ at all.  `r mark(3205)`
-
-Recall that anti-differentiation undoes differentiation, and vice versa. In the previous Block, we found the symbolic derivatives of the basic modeling functions and general methods for differentiating functions constructed by linear combination, products, and function composition. Using the techniques from Block 2, tables can be constructed of functions and their derivatives, looking like this: `r mark(3210)`
-
-$f(x)$   | $\partial_x f(x)$
----------|-------------------
-$e^{x}$  | $e^x$
-$\ln{x}$ | $1/x$
-$\sin{x}$ | $\cos{x}$
-$\pnorm(x)$ | $\dnorm(x)$
-$x^2$    | $2x$
-$\vdots$ | $\vdots$
-
-Transforming this into a table of anti-derivatives is merely a matter of re-labeling the columns:
-
-$\int g(x)dx$   | $g(x)$
----------|-------------------
-$e^{x}$  | $e^x$
-$\ln{x}$ | $1/x$
-$\sin{x}$ | $\cos{x}$
-$\pnorm(x)$ | $\dnorm(x)$
-$x^2$    | $2x$
-$x^p$    | $p x^{p-1}$
-$\vdots$ | $\vdots$
-
-But unlike differentiation, anti-differentiation has no easy equivalents of the product rule or the chain rule (for compositions of functions). 
-
-Recall that every smooth, continuous function has a derivative defined everywhere in the function's domain. Similarly, every function has an anti-derivative, and even discontinuous, un-smooth functions have nicely behaved anti-derivatives. In this sense anti-differentiation is easy. It's only the algebra of anti-differentiation that can be hard or often literally impossible. `r mark(3215)`
-
-`r insert_calcZ_exercise("XX.XX", "KEsll","Exercises/Accum/what-is.Rmd")`
-
-`r insert_calcZ_exercise("XX.XX", "9k3s","Exercises/Accum/MMAC-1.Rmd")`
-
-`r insert_calcZ_exercise("XX.XX", "Rr2ds","Exercises/Accum/ups-and-downs.Rmd")`
-
-`r insert_calcZ_exercise("XX.XX", "JKLes","Exercises/Accum/u-on-the-bottom.Rmd")`
-
-
-::: {.objectives}
-```{r echo=FALSE, results="markup"}
-state_objective("Int-2b", "Utilize your knowledge of derivatives rules to backwards solve for anti-derivatives.")
-state_objective("Int-2f", "Understand that the output of anti-differentiation is a function known as a general solution and more information is necessary to find the particular solution [DTK: This is language I associate with differential equations. How about: Find the constant of integration.]")
-state_objective("Int-2c", "Understand the notation of an indefinite integral to include a. the integral symbol; b. variable of integration (\"with respect to\" variable); c. the constant of integration")
-state_objective("Int-2d", "Understand the relationship between a (child) function  and its (parent) integral.")
-```
-:::
-
-
-::: {.objectives}
-```{r echo=FALSE, results="asis"}
-state_objective("Int-5c", "Know common scientific application relationships between base functions and anti-derivatives: a. Acceleration, Velocity, Position; b. Force, Work; c. Area, Volume; d. Cash flow, assets")
-```
-:::
-
-
-
-
-    
-::: {.intheworld}
-
-Calculation of luminance using light intensity at different wavelengths integrated over the luminance function. https://en.wikipedia.org/wiki/Luminous_efficiency_function
-:::
-
-::: {.todo}
-Pick up on the Lorenz curve `{.intheworld}` in Blocks 1 and 2. Integrate to find the Gini coefficient. Show that the Gini coefficient is the same for very different types of inequality and that therefore it's not such a good measure. How about the integral over the poorest 25% or 50% of society." `r mark(3220)`
-:::
-
------
-
-
-`r insert_calcZ_exercise("XX.XX", "NYPDR", "Exercises/Accum/horse-takes-pillow.Rmd")`
-
-
-`r insert_calcZ_exercise("XX.XX", "GHNDR", "Exercises/Accum/integrals-of-the-day.Rmd")`
-
-## Numerical anti-derivatives
-
-We will devote about a third of this block on accumulation to algebraic techniques for calculating anti-derivatives. You will see these techniques in use in some of your future classes and work in science and engineering.  `r mark(3225)`
-
-It's the nature of things that some people master the algebraic techniques and many do not. But it's easy to make mistakes. Even more fundamentally, there are many accumulation problems where the functions to be integrated do not have an algebraic form for the anti-derivative. In such cases, professionals use numerical techniques such as the Euler method. `r mark(3230)`
-
-In order to give you a simple way to construct the anti-derivative of (just about) any function, while minimizing the amount of computer programming, we have packaged up anti-differentiation techniques into one, easy to use R function. This is `antiD()`. `r mark(3235)`
-
-The `antiD()` function has the same interface as `D()` or `makeFun()`: the argument is a tilde expression of the sort `sqrt(x*sin(3*x)) ~ x`. The result returned from `antiD()` is a new R function that takes as its argument the "with respect to" variable. The sandbox provides a space to play with `antiD()` so that you feel comfortable using it. `r mark(3240)`
-
-```{r eval=FALSE}
-antiD(x^-2 ~ x)
-
-f <- makeFun(sqrt(x*sin(3*x)) ~ x)
-antiD(f(x) ~ x)
-```
-
-As you can see from the output of the sandbox, `antiD()` returns an R `function()`. The variable on the right of the tilde expression in the argument becomes the first of the arguments to that function. There is also a `C` argument: the constant of integration. `r mark(3245)`
-
-`antiD()` knows a few of the algebraic integration techniques, roughly at the level of the basic modeling functions part of the course. When `antiD()` identifies the tilde expression as something it can handle, it returns a function whose body is the algebraic formula for the anti-derivative (although sometimes written in a cumbersome way).
-
-When `antiD()` does not recognize its argument as a basic modeling function, the result is still an R function with the "with respect to" variable and `C` as arguments. But the body of the function is  unintelligible to a human reader (except perhaps for the `numerical_integration()`). The method of numerical integration is more sophisticated than Euler, and is highly precise and reliable. `r mark(3250)`
-
-We're going to use `antiD()` in this daily digital simply because we want to focus on the process of differential modeling. The integrals you encounter will sometimes be ones you know how to handle algebraically. It's a good idea to do such integrals by hand and then compare to the results of `antiD()` to check your work. `r mark(3255)`
-
-**Example**: Find the numerical value of this definite integral.
-
-$$\int^{7}_{3} e^{x^{2}} dx$$
-**Example Solution in R**: 
-`F<-antiD(exp(x^2)~x)`
-`F(7)-F(3)`
-
-**Problem 1**: Find the numerical value of this definite integral.
-
-$$\int^{5}_{2} x^{1.5} dx$$
-
-Recall that for a definite integral of function $f()$, you find the anti-derivative $F(x) \equiv \int f(x) dx$ and evaluate it at the limits of integration. Here that will be $F(5) - F(2)$.
-
-
-```{r tbf1, exercise=TRUE, exercise.cap="Sandbox for Problems", eval=FALSE}
-
-```
-
-```{r tbf1-solution}
-f <- antiD( x^1.5 ~ x )
-f(5) - f(2)
-```
-
-
-```{r tbf-a, echo=FALSE, results="markup"}
-askMC(
-  "**Problem 1**: What's the numerical value of $$\\int_2^5 x^{1.5} dx  ?$$",
-  0.58,6.32,"+20.10+",27.29,53.60,107.9,1486.8,
-  random_answer_order = FALSE,
-  id = knitr::opts_current$get()$label
-)
-```
-
-
-```{r tbf-b, echo=FALSE, results="markup"}
-askMC(
-  "**Problem 2**: What's the numerical value of $$\\int^{10}_{0} \\sin( x^2 ) dx ?$$",
-  "+0.58+",6.32,20.10,27.29,53.60,107.9,1486.8,
-  random_answer_order = FALSE,
-  id = knitr::opts_current$get()$label
-)
-```
-
-
-
-
-
-```{r tbf-c, echo=FALSE, results="markup"}
-askMC(
-  "**Problem 3**: What's the numerical value of $$\\int^{4}_{1} e^{2x} dx ?$$",
-  0.58,6.32,20.10,27.29,53.60,107.9,"+1486.8+",
-  random_answer_order = FALSE,
-  id = knitr::opts_current$get()$label
-)
-```
-
-`r insert_calcZ_exercise("XX.XX", "iLeSB", "Exercises/Accum/sailing-over-time.Rmd")`
-
-
-`r insert_calcZ_exercise("XX.XX", "Hd5zsE", "Exercises/Accum/panda-tear-cotton.Rmd")`
-
-`r insert_calcZ_exercise("XX.XX", "YLELSE", "Exercises/Accum/falcon-tell-mug.Rmd")`
-
-
-`r insert_calcZ_exercise("XX.XX", "ady5Fh", "Exercises/Accum/monkey-light-stove.Rmd")`
-
-`r insert_calcZ_exercise("XX.XX", "JEslw", "Exercises/Accum/chain-of-differentiation.Rmd")`
-
-::: {.todo}
-This needs to be reconfigured to match the new pattern-book function/basic modeling function dicotomy.
-:::
-
-`r insert_calcZ_exercise("XX.XX", "EOSLE", "Exercises/Accum/basic-modeling-functions.Rmd")`

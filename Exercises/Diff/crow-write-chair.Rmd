@@ -6,7 +6,7 @@ global_id: "iIXOYZ"
 
 We introduced concavity graphically and used the terms "concave up" and "concave down." Now we can compute the concavity quantitatively using the second derivative.
 
-In a sandbox, create this function and plot it. (`rfun()` generates random functions in the same way you might by moving a pencil smoothly on a piece of paper. The `seed = 8427` effectively chooses which of infinitely many function is being generated. Different seeds give different functions. I use `rfun()`-generated function when I want to illustrate a property of functions in general.)
+In a sandbox, create this function and plot it. (Note: `rfun()` generates random functions in the same way you might by moving a pencil smoothly on a piece of paper. The `seed = 8427` effectively chooses which of infinitely many function is being generated. Different seeds give different functions. )
 
 ```{r}
 f <- rfun( ~ z, seed = 8427)
@@ -45,15 +45,16 @@ slice_plot(dxx_f(x) ~ x, domain(x=c(-5, 5))) %>%
 askMC(
   "From reading the graph of $\\partial_{xx} f(x)$, say which of these is nearest to an inflection point for $f(x)$.",
   "$x = 0.0$",
-  "+$x = -4.0$+",
+  "+$x = -4.0$+"="The inflection point nearest $x=-4$ occurs at $x = -4.156$.",
   "$x = 2.5$",
-  "$x = -2.5$"
+  "$x = -3$"
 )
 ```
 
 ```{r cwc3-3, echo=FALSE, results="markup"}
 askMC(
   "How many inflection points are there for $f(x)$ in the domain $-5 \\leq x \\leq 5$?",
-  1, 2, "+3+", 4, 5, random_answer_order = FALSE
+  1, 2, "+3+"= "You can see this by graphing $\\partial_{xx} f(x)$ and counting the zero crossings.",
+  4, 5, random_answer_order = FALSE
 )
 ```

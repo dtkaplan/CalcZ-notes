@@ -22,8 +22,17 @@ bookdown::gitbook:
   includes:
     in_header: mathjax-definitions.html
 
-bookdown::pdf_book:
-  latex_engine: "xelatex"
-
+bookdown::tufte_book2:
+  includes:
+    in_header: ["latex/ims-style.tex", "latex/math-definitions.tex"]
+    after_body: latex/after-body.tex
+  latex_engine: pdflatex
+  citation_package: natbib
+  keep_tex: true
+  template: latex/default.latex
+  pandoc_args: --top-level-division=chapter
+  documentclass: book
+  classoption: 10pt,openany
+  extra_dependencies: ["float", "cancel", "color"]
 
 bookdown::epub_book: default

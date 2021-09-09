@@ -18,7 +18,7 @@ $t$ | $x(t)$ | first increment | second increment
 4   | 16     |          |
 
 
-Galileo had neither the mathematics nor the equipment to measure motion continuously in time. So what might be obvious to us now, that position is a function of time $x(t)$, would have had little practical significance to him. But we discover in his first increments of $x$ something very much like the ***slope function*** in Chapter \@ref(slope-function).  `r mark(2010)`
+Galileo had neither the mathematics nor the equipment to measure motion continuously in time. So what might be obvious to us now, that position is a function of time $x(t)$, would have had little practical significance to him. But we discover in his first increments of $x$ something very much like the ***slope function*** in Chapter \@ref(fun-slopes).  `r mark(2010)`
 
 $${\cal D}_t\, x(t) \equiv \frac{x(t + 1) - x(t)}{1}$$
 From his data, he observed that ${\cal D}_t\, x(t)$ increases linearly in $t$: $${\cal D}_t x(t) = 2 t + 1$$
@@ -36,12 +36,11 @@ Over the next three centuries, calculus evolved from a set of techniques for des
 
 - Electrical power is the change with respect to time of electrical energy.
 - Birth rate is one component of the change with respect to time of population.
-- Interest, as in bank interest or credit card interest, is the change with repect to time of assets. 
+- Interest, as in bank interest or credit card interest, is the change with respect to time of assets. 
 - Inflation is the change with respect to time of prices.
 - Disease incidence is one component of the change with respect to time of disease prevalence.
 - Force is the change with respect to position of energy.
 
-`r insert_calcZ_exercise("17.2", "slwdkw", "Exercises/Diff/kid-mean-table.Rmd")`
 
 ## Instantaneous rate of change
 
@@ -99,11 +98,11 @@ Of course, when you're driving you are aware of the car's speed at any instant. 
 
 In terms of Figure \@ref(fig:stop-and-go2), the speedometer reading is the **slope** of $f(t)$ at the given instant. You can see from the Figure that at instant A the speed is very close to the average speed for the entire trip. At instant B the car is going faster; the slope is much steeper. On the other hand, at instant C the car is at a standstill; its position doesn't change at all. `r mark(2040)`
 
-A car's speedometer shows the speed at each moment---or ***instant***---of the trip. As you can see in Figure \@ref{fig:stop-and-go}, the speed varies and is sometimes less than the average speed, sometimes greater, and occasionally equal to the average speed over the trip.  `r mark(2045)`
+A car's speedometer shows the speed at each moment---or ***instant***---of the trip. As you can see in Figure \@ref(fig:stop-and-go2), the speed varies and is sometimes less than the average speed, sometimes greater, and occasionally equal to the average speed over the trip.  `r mark(2045)`
 
-You can easily judge from a graph of $f()$ whether the instantaneous speed is faster or slower than the average speed. Better, however, if we simply record the speedometer reading and graph that, as in \@ref(fig:instant-speed). You can read off the speed from the graph at any instant simply by reference to the vertical axis.
+You can easily judge from a graph of $f()$ whether the instantaneous speed is faster or slower than the average speed. Better, however, if we simply record the speedometer reading and graph that, as in \@ref(fig:instant-speed). You can read off the speed from the graph at any instant of time simply by reference to the vertical axis.
 
-```{r instant-speed, echo=FALSE, fig.cap="The ***instantaneous*** velocity of the car whose position vs time is shown in Figure \\@ref(fig:stop-and-go2)."}
+```{r instant-speed, echo=FALSE, fig.cap="The ***instantaneous*** speed of the car whose position vs time is shown in Figure @@ref(fig:stop-and-go2)."}
 f <- rfun(~ t, seed=105, n=5)
 raw <- function(t) 
         f(t) - t - 30*dnorm(t, 0, 3) + 60*dnorm(t,7,1)
@@ -121,7 +120,7 @@ slice_plot(speed(t) ~ t, domain(t=c(0,1)), npts=500) %>%
     gf_text(2 ~ t, data = Pts, label=~label, color="dodgerblue") %>%
     gf_segment(5 + y ~ t + t, data = Pts[-1,], color="dodgerblue")
 ```
-The two graphs in Figures \@ref(fig:stop-and-go) and \@ref(fig:instant-speed) show exactly the same car trip. The presentation of the data in the different graphs makes it easy to see some things and hard to see others. For instance, figuring out when the car is at a stand-still is harder in the position-vs-time graph than in the speed-vs-time graph. `r mark(2050)`
+The two graphs in Figures \@ref(fig:stop-and-go2) and \@ref(fig:instant-speed) show exactly the same car trip. The presentation of the data in the different graphs makes it easy to see some things and hard to see others. For instance, figuring out when the car is at a stand-still is harder in the position-vs-time graph than in the speed-vs-time graph. `r mark(2050)`
 
 ## Acceleration
 
@@ -136,7 +135,7 @@ To take mass out of the formulation, we give a name specifically to the slope fu
 
 With acceleration as a concept, we can define net force as mass times acceleration. This is ***Newton's Second Law of Motion***.
 
-::: {.why}
+::: {.why  data-latex=""}
 We used **net force** as the quantity we related to mass and the slope function of velocity. There are different sources of forces which add up and can cancel out. Famously, Newton formulated the ***law of universal gravitation*** which ascribed the force between masses as proportional to the product of the two masses and inversely proportional to the square of the distance between them. But a mass on a table has no net force on it, since the table pushes back (push = force) on the mass to cancel out the force due to gravity. "Net force" takes such cancellation into account. `r mark(2060)`
 :::
 
@@ -157,11 +156,11 @@ In this book, we will mainly use the one-line notation, $\partial_x f$, but it m
 
 If you've studied calculus before, you have likely seen the $f'$ notation. This is admirably concise but is only viable in a narrow circumstance: functions that take a single input. What $f'$ leaves out is a means to specify a crucial aspect of differentiation, the **with-respect-to variable**. The general situation for differentiation involves functions of one or more variables, for example, $g(x, y, z)$. For such functions, you need to specify which is the with-respect-to variable. For instance, we can differentiate $g()$ three different ways, each way incrementing one or another of the three inputs: `r mark(2075)`
 
-$$\partial_z g(x, y, z) \equiv \frac{g(x, y, z+h) - g(x, y, z)}{h}\\ 
-\ \\
-\partial_x g(x, y, z) \equiv \frac{g(x+h, y, z) - g(x, y, z)}{h}\\ 
-\ \\
-\partial_y g(x, y, z) \equiv \frac{g(x, y+h, z) - g(x, y, z)}{h}$$
+$$\partial_z g(x, y, z) \equiv \frac{g(x, y, z+h) - g(x, y, z)}{h}$$ 
+
+$$\partial_x g(x, y, z) \equiv \frac{g(x+h, y, z) - g(x, y, z)}{h}$$
+
+$$\partial_y g(x, y, z) \equiv \frac{g(x, y+h, z) - g(x, y, z)}{h}$$
 
 At this point in your studies, you haven't seen why you might choose to differentiate a function with respect to one variable or another. That will come in time. But we want to set you up with notation that won't narrow your options. `r mark(2080)`
 
@@ -179,22 +178,15 @@ The names being used here are arbitrary; you can use any names you like. What's 
 
 Notice that the R/mosaic operator for differentiation is named `D()` and that it is a function. It follows the same pattern as `makeFun()` or `slice_plot()` or `contour_plot()`: the first argument is a tilde expression, for instance `g(x, y, z) ~ x`, which identifies the mathematical function to work with (`g()`) and the name of the with-respect-to input to that function. The R/mosaic notation makes it clear that differentiation is an ***operation*** on a function. The `D()` operator takes a function as input and produces as output **another function**. We've seen similar behavior with, say, `slice_plot()`, which takes a function as input and produces graphics as output. Both `D()` and `slice_plot()` need to know the identity of the with-respect-to variable as well as the function to work with. What's why both pieces of input are packaged into a tilde expression. `r mark(2090)`
 
-::: {.why}
+::: {.why  data-latex=""}
 We're calling `D()` an ***operator*** rather than a ***function***. The reason is purely for communication with other people. There are so many "functions" in a calculus course that we thought it would be helpful to distinguish between the kinds of functions that take quantities as input and produce a quantity as output, and the functions that take a *function* as input and produce a *function* as output. Both sorts are called "functions" in R terminology. But a sentence like, "Differentiation is a function that takes a function as input and produces a function as output," true though it be, is dizzying. `r mark(2095)`
 :::
 
-::: {.intheworld}
+::: {.intheworld  data-latex=""}
 It is a fact of mathematical and scientific life that a variety of notations are used for differentiation. To some extent, this reflects historical precedence and, to be honest, nationalistic European politics of the 18th century. To make sense of mathematical writing in the many areas in which calculus is used, you have to recognize all of them for what they are. Your skill will be enhanced if you also memorize the names of the different styles. It's not all that different from the pattern in English of having multiple words for the same sort of object, for instance: car, automobile, junker, ride, wheels, crate, jalopy, limo, motor car, horseless carriage.  `r mark(2100)`
 
 In the days when carriages where pulled by horses, the phrase "horseless carriage" made a useful distinction. Today, when horses are rarely seen on the road, it make sense to trim down the notation to its essentials: ~~horseless~~ **car**~~iage~~. Think of $\partial_x$ as this sort of minification of older notations.^[Yes, ["minification" is a word!](https://en.wikipedia.org/wiki/Minification_(programming))]   
 :::
-
-`r insert_calcZ_exercise("17.04", "eodlt", "Exercises/Diff/pine-lead-car.Rmd")`
-
-`r insert_calcZ_exercise("17.06", "iclcws", "Exercises/Diff/robin-row-boat.Rmd")`
-
-
-`r insert_calcZ_exercise("17.08", "helxs", "Exercises/Diff/deer-pitch-saw.Rmd")`
 
 
 
@@ -206,7 +198,7 @@ We can make things easier by taking an unconventional approach to graphing the s
 
 Recall that the ***basic model of change*** in Calculus is the straight-line function $\line(x) \equiv a x + b$. The slope $a$ of $\line(x)$ tells how the output changes for a unit change in input. In differentiation, we  `r mark(2135)`
 
-i. approximate the mother function $f(x)$ as a series of local line segments.
+i. approximate the parent function $f(x)$ as a series of local line segments.
 ii. extract the **slope** of each line segment as the value of the slope function at each input $x$. 
 
 Figure \@ref(fig:segment-approx) shows the segment by segment approximation around each of several input values (marked in green).  The ***slope function visualization*** is constructed by throwing away the vertical offset of each of the line segments and plotting them horizontally adjacent to one another. `r mark(2140)`
@@ -223,7 +215,7 @@ gf_segment(yf + yfend ~ x + xend, data = Segs,
     gf_segment(y + yend ~ x + xend, data = Segs, 
            color=~slope,size=1.3, lineend="round") %>%
     gf_point(0 ~ start, size=1, color="green") %>% 
-  gf_labs(y = "output")  
+  gf_labs(y = "f(x)")  
     
 ```
 You can see that the slopes are a function of $x$, that is, the slope changes with $x$. Because the function and it's slope function are shown on the same graph in the same way, it's easy to verify that the slope as a function of $x$ corresponds to the behavior of the function itself.
@@ -249,44 +241,53 @@ Segs <- create_segments(sin(x) ~ x, domain(x=c(-.1,pi)), nsegs=100)
 
 Figure \@ref(fig:slope-visualization-examples) shows several examples of the slope function visualization.
 
-```{r slope-visualization-examples, echo=FALSE, fig.cap="Slope-function visualizations (left) of several pattern-book functions (right).", fig.height=3, fig.width=7, fig.show="hold", out.width="50%"}
+```{r slope-visualization-examples, echo=FALSE, fig.cap="Slope-function visualizations (left) of several pattern-book functions (right).", fig.height=3, fig.width=7, fig.show="hold", out.width="100%"}
 Segs <- create_segments(exp(x) ~ x, domain(x=c(-pi,pi)), nsegs=30)
-slice_plot(exp(x) ~ x, domain(x=c(-pi, pi))) %>%
-    gf_labs(title="exp(x)")
+
+ggpubr::ggarrange(
+  slice_plot(exp(x) ~ x, domain(x=c(-pi, pi))) %>%
+    gf_labs(title="exp(x)"),
 gf_segment(y + yend ~ x + xend, data = Segs, 
            color=~slope,size=1.3, lineend="round") %>%
   gf_point(0 ~ start, size=1, color="green") %>%
     gf_labs(title="exp(x) slope-function visualization")  %>%
-    gf_refine(scale_color_viridis_c())
+    gf_refine(scale_color_viridis_c()) %>%
+  gf_theme(theme(legend.position = "none")), ncol = 2)
 Segs <- create_segments(log(x) ~ x, domain(x=c(.2,pi)), nsegs=30)
-slice_plot(log(x) ~ x, domain(x=c(.2, pi))) %>%
-    gf_labs(title="og(x)")
+ggpubr::ggarrange(
+  slice_plot(log(x) ~ x, domain(x=c(.2, pi))) %>%
+    gf_labs(title="log(x)"),
 gf_segment(y + yend ~ x + xend, data = Segs, 
            color=~slope,size=1.3, lineend="round") %>%
   gf_point(0 ~ start, size=1, color="green") %>%
     gf_labs(title="log(x) slope-function visualization")  %>%
-    gf_refine(scale_color_viridis_c())
+    gf_refine(scale_color_viridis_c()) %>%
+  gf_theme(theme(legend.position = "none")), ncol = 2)
 Segs <- create_segments(x^2 ~ x, domain(x=c(-pi,pi)), nsegs=30)
-slice_plot(x^2 ~ x, domain(x=c(-pi, pi))) %>%
-    gf_labs(title=expression(x^2))
+ggpubr::ggarrange(
+  slice_plot(x^2 ~ x, domain(x=c(-pi, pi))) %>%
+    gf_labs(title=expression(x^2)),
 gf_segment(y + yend ~ x + xend, data = Segs, 
            color=~slope,size=1.3, lineend="round") %>%
   gf_point(0 ~ start, size=1, color="green") %>%
     gf_labs(title=expression(paste("x^2 slope-function visualization")))  %>%
-    gf_refine(scale_color_viridis_c())
+    gf_refine(scale_color_viridis_c()) %>%
+  gf_theme(theme(legend.position = "none")), ncol=2)
 Segs <- create_segments(2*x -4 ~ x, domain(x=c(-pi,pi)), nsegs=30)
-slice_plot(2*x - 4 ~ x, domain(x=c(-pi, pi))) %>%
-    gf_labs(title="2x - 4")
+ggpubr::ggarrange(
+  slice_plot(2*x - 4 ~ x, domain(x=c(-pi, pi))) %>%
+    gf_labs(title="2x - 4"),
 gf_segment(y + yend ~ x + xend, data = Segs, 
            color=~slope,size=1.3, lineend="round") %>%
   gf_point(0 ~ start, size=1, color="green") %>%
     gf_labs(title="line(x) = 2 x - 4 slope-function visualization") %>%
     gf_lims(y=c(-1,1))  %>%
-    gf_refine(scale_color_viridis_c())
+    gf_refine(scale_color_viridis_c()) %>%
+  gf_theme(theme(legend.position = "none")), ncol=2)
 ```
-`r insert_calcZ_exercise("17.10", "1kZXxT", "Exercises/Diff/titmouse-throw-sofa.Rmd")`
 
-::: {.intheworld}
+
+::: {.intheworld  data-latex=""}
 Calculus and the *Wealth of Nations*
 
 1776 can be reckoned as the birth year of two revolutions: the American *Declaration of Independence* and Adam Smith's publication of the *Wealth of Nations*.
@@ -303,7 +304,7 @@ It took the industrial revolution and nearly a century of intellectual developme
 
 Once this transition is accomplished, economics students are taught essential concepts of calculus---particularly first and second derivatives, the subjects of this Block---although the names used are peculiar to economics, for instance, "elasticity", "marginal returns" and "diminishing marginal returns."
 
-```{r cournot-demand, echo=FALSE, fig.cap="Demand as a *function* of price, as first published by Antoine-Augustin Cournot in 1836."}
+```{r cournot-demand, echo=FALSE, fig.cap="Demand as a *function* of price, as first published by Antoine-Augustin Cournot in 1836.", out.width="50%"}
 knitr::include_graphics("www/cournot-demand-curve.png")
 ```
 
@@ -326,155 +327,23 @@ Another example: Suppose the function `pressure()` takes as input altitude input
 
 The derivative function, let's call it `\partial_{altitude} pressure()`, also takes an input in km, but produces an output in kPA per km: a rate.
 
+## Exercises
 
+`r insert_calcZ_exercise("17.2", "slwdkw", "Exercises/Diff/kid-mean-table.Rmd")`
 
-`r insert_calcZ_exercise("17.10", "eyded", "Exercises/Diff/kitten-put-kayak.Rmd")`
+`r insert_calcZ_exercise("17.04", "eodlt", "Exercises/Diff/pine-lead-car.Rmd")`
 
-`r insert_calcZ_exercise("17.12", "elclvd", "Exercises/Diff/rat-take-fork.Rmd")`
+`r insert_calcZ_exercise("17.06", "iclcws", "Exercises/Diff/robin-row-boat.Rmd")`
 
-`r insert_calcZ_exercise("17.14", "nsmx8w3", "Exercises/Diff/SIR-dimensions.Rmd")`
+`r insert_calcZ_exercise("17.08", "helxs", "Exercises/Diff/deer-pitch-saw.Rmd")`
 
-# Evanescent h {#evanescent-h}
+`r insert_calcZ_exercise("17.10", "1kZXxT", "Exercises/Diff/titmouse-throw-sofa.Rmd")`
 
-Recall that the slope-function operator can be written as a ratio of rise-over-run:
-$${\cal D}_t f(t) \equiv \frac{f(t+h) - f(t)}{h}$$ where $h$ is the length of the "run." The idea of the ***instantaneous slope function*** is to make $h$ as small as possible. 
+`r insert_calcZ_exercise("17.12", "eyded", "Exercises/Diff/kitten-put-kayak.Rmd")`
 
-In the very early days of calculus, the vanishing $h$ was described as "evanescent." (Dictionary definition: "tending to vanish like vapor."^[[Source](https://www.merriam-webster.com/dictionary/evanescent)]) Another good image of $h$ becoming as small as possible comes from the same University of Oxford mathematician whose poem *The Jabberwocky* we considered earlier. In *Alice in Wonderland*, Dodgson introduced the character of the Cheshire Cat. `r mark(2370)`
+`r insert_calcZ_exercise("17.14", "elclvd", "Exercises/Diff/rat-take-fork.Rmd")`
 
-```{r cheshire-cat, echo=FALSE, fig.cap="Vanishing $h$ in the form of the Chesire Cat from *Alice in Wonderland*."}
-knitr::include_graphics(normalizePath("images/cheshire-cat.jpeg"))
-```
+`r insert_calcZ_exercise("17.16", "nsmx8w3", "Exercises/Diff/SIR-dimensions.Rmd")`
 
-> *"All right," said the Cat; and this time it vanished quite slowly, beginning with the end of the tail, and ending with the grin, which remained some time after the rest of it had gone.*
-    
-> *"Well! I've often seen a cat without a grin," thought Alice; "but a grin without a cat! It's the most curious thing I ever saw in my life!"*
-
-
-
-Start our story with two of the basic modeling functions that, like the characters from *Alice in Wonderland*, have considerable "personality": the sinusoid (`sin()`) and the sigmoid (`pnorm()`).
-
-```{r sign-sig, echo=FALSE, out.width="50%", fig.show = "hold", fig.cap="The pattern-book sinusoid and sigmoidal functions. A vertical blue line has been added to mark the input $t=0$", warning=FALSE, message=FALSE}
-slice_plot(sin(t) ~ t, domain(t=c(-5, 2*pi))) %>%
-  gf_labs(title="Sinusoid") %>%
-  gf_vline(xintercept=0, color="dodgerblue", alpha=0.5)
-slice_plot(pnorm(t) ~ t, domain(t=c(-5, 2*pi))) %>%
-  gf_labs(title="Sigmoid") %>%
-  gf_vline(xintercept=0, color="dodgerblue", alpha=0.5)
-```
-The computer can easily construct the slope functions for the sinusoid and sigmoid, which we'll call `Dsin()` and `Dsigma()` respectively.
-```{r}
-Dsin   <- makeFun((  sin(t+h) -   sin(t))/h ~ t, h=0.1)
-Dsigma <- makeFun((pnorm(t+h) - pnorm(t))/h ~ t, h=0.1)
-```
-
-In the tilde expression handed to `makeFun()`, we've identified `t` as the name of the input and given a "small" default value to the `h` parameter. But R recognizes that both `Dsin()` and `Dsigma()` are functions with two inputs, `t` and `h`, as you can see in the parenthesized argument list for the functions.
-```{r}
-Dsin
-Dsigma
-```
-This is a nuisance, since when using the slope functions we will need always to think about `h`, a number that we'd like to describe simply as "small," but for which we always need to provide a numerical value. A surprisingly important question in the development of calculus is, "What can we do to avoid the nuisance?" To find out, let's look at `Dsin()` and `Dsigma()` for a range of values of `h`, as in Figure \@ref(fig:sin-sig-many-h). `r mark(2372)`
-
-```{r sin-sig-many-h, echo=FALSE, fig.show = "hold", fig.cap="The slope functions of the sinusoid and sigmoid. Each curve shows the slope function for a particular numerical choice of `h`. Both panels show $h=2, 1, 0.5, 0.1, 0.01, 0.001, 0.0001, 0.00001, 0.000001$.", warning=FALSE, message=FALSE}
-rain <- rev(hcl.colors(12)[-(1:3)])
-slice_plot(Dsin(t, h=1) ~ t, domain(t=c(-5, 2*pi)), color=rain[1], label_text="h=1", label_x=0.56) %>%
-  slice_plot(Dsin(t, h=2) ~ t, alpha = 1, label_text="h=2", label_x=.58, color=rain[1]) %>%
-  slice_plot(Dsin(t, h=0.5) ~ t, alpha = 1, label_text="h=0.5", label_x=.54, color=rain[3]) %>%
-  slice_plot(Dsin(t, h=0.1) ~ t, alpha = 1, label_text="h=0.1", label_x=.53, color=rain[4]) %>%
-  slice_plot(Dsin(t, h=0.01) ~ t, alpha = 1, label_text="h=0.01", label_x=.51, color=rain[5]) %>%
-  slice_plot(Dsin(t, h=0.001) ~ t, alpha = 1, color=rain[6], label_text="h=0.001", label_x=.5) %>%
-  slice_plot(Dsin(t, h=0.0001) ~ t, alpha = 1, color=rain[7], label_text="h=0.0001", label_x=.49) %>%
-  slice_plot(Dsin(t, h=0.00001) ~ t, alpha = 1, color=rain[8], label_text="h=0.00001", label_x=.48) %>%
-  slice_plot(Dsin(t, h=0.000001) ~ t, alpha = 1, color=rain[9], label_text="h=0.000001", label_x=.44) %>%
-  gf_labs(title="Slope functions of sinusoid") %>%
-  gf_vline(xintercept=0, color="dodgerblue", alpha=0.5)
-slice_plot(Dsigma(t, h=1) ~ t, domain(t=c(-5, 2*pi)), label_text="h=1", label_x=.28, color= rain[2]) %>%
-  slice_plot(Dsigma(t, h=2) ~ t, alpha = 1, label_text="h=2", label_x=.24, color=rain[1]) %>%
-  slice_plot(Dsigma(t, h=0.5) ~ t, alpha = 1, label_text="h=0.5", label_x=.54, color=rain[3]) %>%
-  slice_plot(Dsigma(t, h=0.1) ~ t, alpha = 1, label_text="h=0.1", label_x=.53, color=rain[4]) %>%
-  slice_plot(Dsigma(t, h=0.01) ~ t, alpha = 1, label_text="h=0.01", label_x=.51, color=rain[5]) %>%
-  slice_plot(Dsigma(t, h=0.001) ~ t, alpha = 1, color=rain[6], label_text="h=0.001", label_x=.5) %>%
-  slice_plot(Dsigma(t, h=0.0001) ~ t, alpha = 1, color=rain[7], label_text="h=0.0001", label_x=.49) %>%
-  slice_plot(Dsigma(t, h=0.00001) ~ t, alpha = 1, color=rain[8], label_text="h=0.00001", label_x=.48) %>%
-  slice_plot(Dsigma(t, h=0.000001) ~ t, alpha = 1, color=rain[9], label_text="h=0.000001", label_x=.44) %>%
-  gf_labs(title="Slope functions of sigmoid") %>%
-  gf_vline(xintercept=0, color="dodgerblue", alpha=0.5)
-```
-
-Some observations from this numerical experiment:
-
-1. As $h$ gets very small, the slope function doesn't depend on the exact value of $h$. As you can see in Figure \@ref(fig:sin-sig-many-h), the graphs of the functions with the smallest $h$ (green, with labels near the top of the graph) lie on top of one another.
-
-    This will provide a way for us, eventually, to discard $h$ so that the slope function will not need an $h$ argument.
-    
-2. For small $h$, we have ${\cal D}_t \sin(t) = \sin(t + \pi/2) = \cos(t)$. That is, taking the slope function of a sinusoid gives another sinusoid, shifted left by $\pi/2$ from the original. Or, in plain words, for small $h$ the cosine is the slope function of the sine.
-3. For small $h$, we have ${\cal D}_t \pnorm(t) = \dnorm(t)$. That is, for small $h$ the gaussian function is the slope function of the sigmoid $\dnorm()$ function.
-
-You can confirm these last two statements by comparison with the original functions, especially the alignment of the peaks of the slope functions with respect to the peak of the sinusoid and the half-way point of the sigmoid. `r mark(2374)`
-
-::: {.why}
-Here you use $t$ as the name of the input and $\partial_t$ as the notation for differentiation. Previously in this block you used $x$ as the input name and $\partial_x$ for differentiation. Are they the same? `r mark(2376)`
-
-Mathematically, the name of the input makes no difference whatsoever. We could call it $x$ or $t$ or $y$ or Josephina. What's important is that the name be used consistently on the left and right sides of $\equiv$, and that the derivative symbol $\partial$ has a subscript that identifies ***the with-respect-to*** input. All these are the same statement mathematically: `r mark(2378)`
-
-$$\partial_x\, x = 1\ \ \ \ \partial_t\, t = 1\ \ \ \ \partial_y\, y = 1\ \ \ \ \partial_\text{Josephina} \text{Josephina} = 1$$
-Admittedly, the last one is hard to read.
-
-When we look at derivatives of functions of multiple variables we will need to be thoughtful about our choice of the with-respect-to input. But we want you to get used to seeing different input names used for differentiation. `r mark(2380)`
-
-:::
-
-Now consider the slope functions of the logarithm and exponential functions.
-
-```{r log-exp-many-h, echo=FALSE, fig.show = "hold", fig.cap="The slope functions of the logarithm and exponential.", warning=FALSE, message=FALSE}
-rain <- rev(hcl.colors(12)[-(1:3)])
-Dlog <- makeFun((log(x+h) - log(x))/h ~ x)
-Dexp <- makeFun((exp(x+h) - exp(x))/h ~ x)
-slice_plot(Dlog(t, h=1) ~ t, domain(t=c(0.01, 2)), color=rain[2], label_text="h=1", label_x=0.8) %>%
-  slice_plot(Dlog(t, h=2) ~ t, domain(t=c(0.01, 2)), alpha = 1, label_text="h=2", label_x=.90, color=rain[1]) %>%
-  slice_plot(Dlog(t, h=0.5) ~ t, domain(t=c(0.02, 2)), alpha = 1, label_text="h=0.5", label_x=.7, color=rain[3]) %>%
-  slice_plot(Dlog(t, h=0.1) ~ t, alpha = 1, label_text="h=0.1", label_x=.6, color=rain[4]) %>%
-  slice_plot(Dlog(t, h=0.01) ~ t, alpha = 1, label_text="h=0.01", label_x=.5, color=rain[5]) %>%
-  slice_plot(Dlog(t, h=0.001) ~ t, domain(t=c(0.05, 2)), alpha = 1, color=rain[6], label_text="h=0.001", label_x=.4) %>%
-  slice_plot(Dlog(t, h=0.0001) ~ t, domain(t=c(0.1, 2)), alpha = 1, color=rain[7], label_text="h=0.0001", label_x=.3) %>%
-  slice_plot(Dlog(t, h=0.00001) ~ t, domain(t=c(0.125, 2)), alpha = 1, color=rain[8], label_text="h=0.00001", label_x=.2) %>%
-  slice_plot(Dlog(t, h=0.000001) ~ t, domain(t=c(0.125, 2)),alpha = 1, color=rain[9], label_text="h=0.000001", label_x=.1) %>%
-  gf_labs(title="Slope functions of logarithm") %>%
-  gf_vline(xintercept=0, color="dodgerblue", alpha=0.5) %>%
-  gf_lims(y=c(0,8))
-slice_plot(Dexp(t, h=1) ~ t, domain(t=c(-2, 2)), label_text="h=1", label_x=.4, color= rain[2]) %>%
-  slice_plot(Dexp(t, h=2) ~ t, alpha = 1, label_text="h=2", label_x=.3, color=rain[1]) %>%
-  slice_plot(Dexp(t, h=0.5) ~ t, alpha = 1, label_text="h=0.5", label_x=.5, color=rain[3]) %>%
-  slice_plot(Dexp(t, h=0.1) ~ t, alpha = 1, label_text="h=0.1", label_x=.55, color=rain[4]) %>%
-  slice_plot(Dexp(t, h=0.01) ~ t, alpha = 1, label_text="h=0.01", label_x=.6, color=rain[5]) %>%
-  slice_plot(Dexp(t, h=0.001) ~ t, alpha = 1, color=rain[6], label_text="h=0.001", label_x=.65) %>%
-  slice_plot(Dexp(t, h=0.0001) ~ t, alpha = 1, color=rain[7], label_text="h=0.0001", label_x=.75) %>%
-  slice_plot(Dexp(t, h=0.00001) ~ t, alpha = 1, color=rain[8], label_text="h=0.00001", label_x=.85) %>%
-  slice_plot(Dexp(t, h=0.000001) ~ t, alpha = 1, color=rain[9], label_text="h=0.000001", label_x=.9) %>%
-  gf_labs(title="Slope functions of exponential") %>%
-  gf_vline(xintercept=0, color="dodgerblue", alpha=0.5) %>%
-  gf_lims(y=c(0,8))
-```
-These numerical experiments with the logarithm and exponential functions are more evidence that, as $h$ gets small, the slope function doesn't depend on $h$. And, we find that:
-
-- For small $h$, the slope function of the logarithm is a power-law function: ${\cal D}_t \ln(t) = \frac{1}{t}$.
-- For small $h$, the slope function of the exponential is the exponential itself: ${\cal D}_t e^x = e^x$.
-
-You can confirm these by evaluating the slope function of the exponential at $t=0$ and $t=1$, and the slope function of the logarithm at $t= 2, 1, 1/2, 1/4, 1/8.$
-
-
-
-
-"Small" and "zero," although related, are different. In constructing a derivative, we use smaller and smaller $h$, but never zero. Let's see what happens if instead of evanescent h, we use zero h. For example, we can use the slope function `Dsin()` and `Dsigma()` that we created earlier. Setting $h$ to zero does not give a result that is the instantaneous rate of change of anything: `r mark(2384)`
-
-```{r eval=FALSE}
-Dsin(t=1, h=0)
-Dsigma(t=0, h=0)
-```
-
-In `NaN`, you can hear the echo of your fourth-grade teacher reminding you that it is illegal to divide by zero.
-
-Think of evanescent $h$ as the vapor in the definition of "evanescent": "tending to vanish like vapor." This vapor is the solvent in paint. You don't want the solvent once the paint is on the wall; wet paint is a nuisance. But getting the paint from the container to the wall absolutely needs the solvent.  `r mark(2386)`
-
-We used the solvent $h$ earlier in the chapter in the numerical experiments that led us to the derivatives of the pattern-book functions, for instance $\partial_x e^x = e^x$ or $\partial_x \sin(x) = \cos(x)$.  Eventually, we'll construct an $h$-free theory of differentiation, reducing the process to a set of algebraic rules in which $h$ never appears. With this as our goal, let's continue using $h$ for a while to find some additional useful facts about derivatives. `r mark(2388)`
 
 

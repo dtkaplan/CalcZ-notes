@@ -29,18 +29,18 @@ Calculating an average rate of change involved specifying an interval of the fun
 
 There is nothing fundamentally new here. The interval is still specified by two numbers, but now they are called $t_0$ and $h$. The width of the interval is just $h$, which is a little easier to write than $t_B - t_A$, but is still just the width.
 
-The ***average rate of change*** in the new notation is $$\frac{f(t_0 + h) - f(t_0)}{h}\ \ \mbox{rather than}\ \ \frac{f(t_B) - f(t_A)}{t_B - t_A}$$
+The ***average rate of change*** in the new notation is $$\frac{f(t_0 + h) - f(t_0)}{h}\ \ \text{rather than}\ \ \frac{f(t_B) - f(t_A)}{t_B - t_A}$$
 
 ::: {.todo}
 Write an app showing a function, the derivative of the function at a given point, and a finite-difference with $h$ defined by dragging the mouse.  Click on a point and enter that point in a plot of the derivative. Checkbox to show whole derivative function.
 :::
 
 
-::: {.why latex-data=""}
+::: {.why data-latex=""}
 Why are you using $t$ instead of $x$?
 
 Remember, the *name* of an input can be anything at all so long as you use it consistently on the left side of $\equiv$ and on the right side. All of these are the same definition:
-$$g(t) \equiv e^{kt},\ \ g(x) \equiv e^{kx},\ \ g(y) \equiv e^{ky},\ \ g(\mbox{altitude}) \equiv e^{k\,{\small{\text{altitude}}}}$$
+$$g(t) \equiv e^{kt},\ \ g(x) \equiv e^{kx},\ \ g(y) \equiv e^{ky},\ \ g(\text{altitude}) \equiv e^{k\,{\small{\text{altitude}}}}$$
 When we work with functions of two or more variables, it will be essential to give easily distinguished names to the inputs. We're trying to get you in the habit of paying attention to the names of inputs and break a *bad habit* from high-school math of calling the input $x$ and the output $y$.
 :::
 
@@ -53,7 +53,7 @@ You can pronounce ${\cal D}_t$ as "difference with respect to $t$." But remember
 
 From the way we've defined ${\cal D}_t f(t)$, it's reasonable to assume that $h$ is a ***parameter***: a symbol naming a numerical value that has to be specified before ${\cal D}_t\, f(t)$ can be evaluated at a specific $t$. 
 
-::: {.workedexample latex-data=""}
+::: {.workedexample data-latex=""}
 Find a formula for ${\cal D}_x\, g(t)$the average-rate-of-change function with respect to $x$ of $g(x) \equiv x^2$. 
 
 $${\cal D}_x g(x) = \frac{(x + h)^2 - x^2}{h}\\
@@ -70,14 +70,14 @@ knitr::include_graphics("www/tire-iron.png")
 
 Once the tire iron has done its job, it's removed and you would never know that it was ever there (except that the tire is now successfully mounted on the wheel).
 
-::: {.workedexample latex-data=""}
+::: {.workedexample data-latex=""}
 Find an average-rate-of-change function with respect to $x$ of $g(x) \equiv x^2$, but remove the tire iron $h$ when you're done. 
 
 $${\cal D}_x g(x) 
-= \frac{(x + h)^2 - x^2}{h}\ \ \mbox{stretch $x$ a bit}\\
-= \frac{x^2 + 2 x h + h^2 - x^2}{h}\ \ \mbox{pull over rim}\\
-= \frac{2 x h + h^2}{h} \ \ \mbox{still pulling ...}\\
-= 2 x + h \ \ \mbox{success!}$$
+= \frac{(x + h)^2 - x^2}{h}\ \ \text{stretch $x$ a bit}\\
+= \frac{x^2 + 2 x h + h^2 - x^2}{h}\ \ \text{pull over rim}\\
+= \frac{2 x h + h^2}{h} \ \ \text{still pulling ...}\\
+= 2 x + h \ \ \text{success!}$$
 
 Now remove the tire iron to get $${\cal D}_x g(x) = 2x$$.
 :::
@@ -86,7 +86,7 @@ But this is calculus, not bicycle mechanics. How do we know that removing the ti
 
 Still in the spirit of having fun, let's try a more serious metaphor... imagining $h$ is actually a central character in a calculus play. The character $h$ is in the middle of the story but *never appears in the play*, like the missing character Godot in the famous play *[Waiting for Godot](https://en.wikipedia.org/wiki/Waiting_for_Godot#Godot)*. 
 
-::: {.workedexample latex-data=""}
+::: {.workedexample data-latex=""}
 We said that $h$ in the finite rate of change function ${\cal D}_x g()$, so long as $h$ is small, plays both a central role and has hardly any effect. An economizing director re-writes the play to take $h$ out of it, setting $h=0$: a non-speaking, offstage role.
 
 We've already seen using legitimate algebra that $${\cal D}_x g(x) = 2 x + h$$ Re-writing by replacing $h$ with 0 streamlines the play, turning $\Delta g()$ from a dialog involving both $x$ and $h$ into a monologue with $h$ absent: $${\cal D}_x g(x) = 2 x$$ Simple.
@@ -102,7 +102,7 @@ Reading this, the director calls her lawyer. Is there a loophole for removing $h
 
 Let's put aside for the moment the issue of the disappearing $h$. 
 
-::: {.forinstructor latex-data=""}
+::: {.intheworld data-latex=""}
 Historically, such "putting aside" has incurred a great deal of criticism. In 1734, famous philosopher [George Berkeley](https://en.wikipedia.org/wiki/George_Berkeley) (1685-1753) published a long-titled book: *The Analyst: A Discourse Addressed to an Infidel Mathematician: Wherein It Is Examined Whether the Object, Principles, and Inferences of the Modern Analysis Are More Distinctly Conceived, or More Evidently Deduced, Than Religious Mysteries and Points of Faith*. In *The Analyst*, Berkeley took issue with the arguments of that time that it is legitimate to divide by $h$ when, ultimately, $h$ will be replaced by zero. Calling $h$ an "evanescent increment," he asked, 
 
 > *"And what are these same evanescent Increments? They are neither finite Quantities nor Quantities infinitely small, nor yet nothing. May we not call them the ghosts of departed quantities?"*
@@ -166,7 +166,7 @@ We're using the name `dx_f` in this example to remind you of the mathematical no
 Athena <- D(Zeus(x) ~ x)
 ```
 
-::: {.workedexample latex-data=""}
+::: {.workedexample data-latex=""}
 
 Like the leagues of Marvel superheroes in comics and movies, the Basic Modeling Functions (BMF) are an assembled collection. In the back story of how the BMFs came together, you'll read that the derivative of each of the BMFs is itself a BMF. This is no accident. 
 

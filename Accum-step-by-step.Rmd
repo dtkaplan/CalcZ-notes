@@ -46,7 +46,7 @@ Nowadays computing is roughly one-billionth the cost that it was the World War I
 
 What today seems an esoteric use for computers was in fact the prime motivation for their development. This section introduces various ways of programming the Euler method on a computer. 
 
-::: {.takenote}
+::: {.takenote  data-latex=""}
 The Euler method has been supplanted by other, more modern methods whose inner workings are based on a deeper knowledge of calculus than we have covered to date and programming methods that automatically check and adapt the size of $h$.  `r mark(3330)`
 
 However sophisticated these methods may be, they are always easy to use. For example, the R/mosaic `antiD()` operator draws on one of these methods.
@@ -54,9 +54,9 @@ However sophisticated these methods may be, they are always easy to use. For exa
 
 ### Euler as a spreadsheet
 
-Spreadsheets are popular for certain simple kinds of computer programming. The Euler method is a case in point. Figure \@ref(fig:euler-spreadsheet1) shows the formula layer of a Google Sheet implementing the Euler method for $\int \dnorm(t) dt$. In the spreadsheet, `NORMDIST()` is the equivalent of $\dnorm()$. `r mark(3335)`
+Spreadsheets are popular for certain simple kinds of computer programming. The Euler method is a case in point. Figure \@ref(fig:euler-spreadsheet1) shows the formula layer of a Google Sheet implementing the Euler method for $\int \dnorm(t) dt$. In the spreadsheet, `NORMDIST()` is the equivalent of $\dnorm()$. (The whole spreadsheet is viewable [here](https://docs.google.com/spreadsheets/d/1e3SwcNLQxoYCUedALia6XxzIlh5kY_dTohFroewbNR8/edit?usp=sharing)) `r mark(3335)`
 
-```{r euler-spreadsheet1, echo=FALSE, fig.cap="The formula layer of a spreadsheet implementing the Euler method for $\\int \\dnorm(x) dx$. The whole spreadsheet is viewable [here](https://docs.google.com/spreadsheets/d/1e3SwcNLQxoYCUedALia6XxzIlh5kY_dTohFroewbNR8/edit?usp=sharing)"}
+```{r euler-spreadsheet1, echo=FALSE, fig.cap="The formula layer of a spreadsheet implementing the Euler method for $\\int \\dnorm(x) dx$."}
 knitr::include_graphics("www/Euler-spreadsheet1.png")
 ```
 
@@ -64,7 +64,7 @@ The first argument to `NORMDIST()` is a reference to a cell in column B which st
 
 Only about 10 Euler steps are shown, out of 100 altogether. Typically in viewing a spreadsheet you don't see the formula layer. Instead, the results of the calculation in each cell are presented. (Figure \@ref(fig:euler-spreadsheet2)).  `r mark(3345)`
 
-```{r euler-spreadsheet2, echo=FALSE, fig.cap="Results from the formula layer shown in Figure \\@ref(fig:euler-spreadsheet1)."}
+```{r euler-spreadsheet2, echo=FALSE, fig.cap="Results from the formula layer shown in Figure @@ref(fig:euler-spreadsheet1)."}
 knitr::include_graphics("www/Euler-spreadsheet2.png")
 ```
 
@@ -244,7 +244,7 @@ for (item in iteration_set) {
 set_of_numbers
 ```
 
-::: {.takenote}
+::: {.takenote  data-latex=""}
 To experienced programmers, the cumulative-sum iteration code listed above will seem odd. That's because in learning to program they mastered additional features of the programming language like ***indexing***, which enables you to refer to a specific item in a set. Many, many bugs in programs originate in faulty indexing; it's not always so easy to do right.  `r mark(3435)`
 
 Here's the cumulative-sum iteration in a way that will seem more familiar to experienced programmers:
@@ -363,7 +363,7 @@ $$\partial_x f(x) \approx \frac{f(x+h) - f(x)}{h}$$
 To make it clear where the anti-derivative comes in to this, let's rewrite the finite-difference formula using a different notation: $f(x)$ will be the function to be anti-differentiated and $F(x)$ will be the result of the anti-differentiation of $f(x)$. Using this notation:
 $$f(x) \approx \frac{F(x+h) - F(x)}{h}$$
 You can see that $f(x)$ is the derivative of $F(x)$, but here we know $f(x)$ but do not (yet) know $F(x)$. To find $F(x)$ at a series of discrete values of $x$ spaced by $h$, re-arrange the equation:
-$$F(x + h) \approx F(x) + h f(x)\ \ \  \ \ \mbox{Euler method formula}$$
+$$F(x + h) \approx F(x) + h f(x)\ \ \  \ \ \text{Euler method formula}$$
 
 As an example of using this formula, let's anti-differentiate $\sin(2\pi x/0.3)$ over the domain $1 \leq x \leq 21$ with a step size of $h=0.01$
 
