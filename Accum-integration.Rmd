@@ -1,2 +1,109 @@
-# Integration
+# Integration {#net-change}
 
+Anti-derivatives are useful when you know how a quantity is changing but don't yet know the quantity itself. 
+
+It's important, of course, to keep track of which is the "quantity itself" and which is the "rate of increase in that quantity." This always depends on context and your point of view. It's convenient, then, to set some fixed examples to make it easy to keep track of which quantity is which.
+
+
+
+Context | Quantity             | Rate of increase in quantity
+--------|----------------------|--------------------
+Money   | Cash on hand ${\mathbf S}(t)$         | Cash flow $s(t)$
+Fuel    | Amount in fuel tank ${\mathbf F}(t)$ | Fuel consumption rate, e.g. kg/hour $f(t)$
+Motion  | Velocity   ${\mathbf V}(t)$          | Acceleration, i.e. force/mass $v(t)$
+notation| ${\mathbf H}(t)$               | $\partial_t {\mathbf H}(t)$
+notation| $G(t) = \int g(t) dt$| $g(t)$
+
+We'll also adopt a convention to make it simpler to recognize which quantity is the "quantity itself" and which is the "rate of increase in that quantity." We will use CAPITAL LETTERS to name functions that are the quantity itself, and *lower-case* letters for the rate of increase in that quantity. For example, if talking about velocity and how it changes over time, the velocity itself will be ${\mathbf V}(t)$ while the rate of increase of velocity will be $v(t)$. The amount of money a business has on hand at time $t$ is ${\mathbf M}(t)$ measured, say, in dollars.  The rate of increase of that money is $m(t)$, in, say, dollars per day.  
+
+Notice that we're using the phrase "rate of increase" rather than "rate of change." That's because we want to keep straight the meaning of the sign of the *lower-case* function. If $v(t)$ is positive, the velocity is increasing. If $v(t)$ is negative, then it's a "negative rate of increase," which is, of course, just a "decrease."
+
+For a business, money coming in means that $v(t)$ is positive. Expenditures of money correspond to $v(t)$ being negative. In the fuel example. ${\mathbf F}(t)$ is the amount of fuel in the tank. $f(t)$ is the rate of *increase* in the amount of fuel in the tank. Of course, engines burn fuel, removing it from the tank. So we would write the rate at which fuel is burned as $-f(t)$: removing fuel is a negative increase in the amount of fuel, an expenditure of fuel.
+
+The objective of this chapter is to introduce you to the sorts of calculations, and their notations, that let you figure out how much the CAPITAL LETTER quantity has changed over an interval of $t$ based on what you already know about the value over time of the *lower-case* function.
+
+The first step in any such calculation is to find or construct the *lower-case* function $f(t)$ or $c(t)$ or $v(t)$ or whatever it might be. This is a modeling phase. In this chapter, we'll ignore detailed modeling of the situation and just present you with the *lower-case* function. 
+
+The second step in any such calculation is to compute the anti-derivative of the *lower-case* function, giving as a result the CAPITAL LETTER function. You've already seen the notation for this, e.g.
+$${\Large F(t) = \int f(t) dt}\ \ \ \ \ \text{or}\ \ \ \ \ {\Large G(t) = \int g(t) dt}\ \ \ \ \text{and so on.}$$ In this chapter, we will not spend any time on this step; we will assume that you already have at hand the means to compute the anti-derivative. (Indeed, you already have `antiD()` available which will do the job for you.) Later chapters will look at the issues around and techniques for doing the computations by other means.
+
+The remaining steps in such calculations are to work with the CAPITAL LETTER function to compute such things as the amount of that quantity, or the change in that quantity as it is accumulated over an interval of $t$.
+
+::: {.why data-latex=""}
+Sometimes you're writing the capital letter functions in **bold-face**, e.g. ${\mathbf F}(t)$ and other times you aren't, e.g. $F(t)$. What's going on?
+
+This is a convention we're adopting for this chapter, which is when we need it the most to introduce the concepts.
+
+**Bold-face** is being used in this chapter to represent the real-world quantity of interest. So ${\mathbf F}(t)$ is the actual amount of fuel in the tank, ${\mathbf V}(t)$ is the actual velocity of the car, and ${\mathbf M}(t)$ is the actual amount of money on hand. The regular-face functions, $F(t)$ and $V(t)$ and $M(t)$ are the functions that we get by applying anti-differentiation to $f(t)$ or $v(t)$ or $m(t)$.
+
+Our broad interest is to construct the **bold-face** function knowing just the derivative of that function, which we're writing in *lower-case*. So, $f(t) \equiv \partial_t {\mathbf F}(t)$. Similarly, $v(t) \equiv \partial_t {\mathbf V}(t)$ and $m(t) \equiv \partial_t {\mathbf M}(t)$.
+
+If we knew ${\mathbf F}(t)$ or ${\mathbf V}(t)$ or ${\mathbf M}(t)$, that would be the end of the matter, since our interest is in the quantity ${\mathbf F}$ or ${\mathbf V}$ or ${\mathbf M}$.
+
+But we are working with a situation where we know $f(t)$ but not ${\mathbf F}(t)$, or we know $v(t)$ but not ${\mathbf V}(t)$, and so on.
+
+How could such a situation arise in the real world? Suppose the car's fuel gauge is broken, depriving us of direct knowledge of $\mathbf F$, but that we have a dashboard readout of the rate of fuel consumption. Then we would know $f(t)$ but not ${\mathbf F}(t)$. Or suppose you are in charge of day-to-day running of a business, collecting the income each day and paying the daily expenses. Thus, each day you know $m(t)$---the cash flow. But it's your boss who has access to the bank account; you merely deposit money as you get it and write checks or Venmo suppliers (or however it is that your business operates day to day). So your boss knows ${\mathbf M}(t)$ but you know only $m(t)$.
+
+Since you know about anti-differentiation, you can try to reconstruct the fuel level ${\mathbf F}(t)$ from the known $f(t)$, or to figure out the bank balance ${\mathbf M}(t)$ from your records of $m(t)$.
+
+But anti-differentiation, while part of the solution, is only just a part. You can apply anti-differentiation to $f(t)$, but what you get back will be $F(t)$, not ${\mathbf F}(t)$. 
+
+What's the difference between the two? It involves a constant value $C$ which, alas, you can never figure out from $f(t)$. All that you can claim, given the $F(t)$ generated by anti-differentiation, is that $${\mathbf F}(t) = F(t) + C .$$
+
+:::
+
+
+
+## Net change
+
+Perhaps it goes without saying, but once you have the CAPITAL LETTER function, e.g. $F(t)$, you can evaluate that function at any input that falls into the domain of $F(t)$. If you have a graph of $F(t)$ versus $t$, just position your finger on the horizontal axis at input $t_1$, then trace up to the function graph, then horizontally to the vertical axis where you can read off the value $F(t_1)$. If you have $F()$ in the form of a computer function, just ***apply*** $F()$ to the input $t_1$.
+
+In this regard, $F(t)$ is like any other function.
+
+However, in using and interpreting the $F(t)$ that we constructed by anti-differentiating $f(t)$, we have to keep in mind the limitations of the anti-differentiation process. In particular, any function $f(t)$ does not have a unique anti-derivative function. If we have one anti-derivative, we can always construct another by adding some constant: $F(t) + C$ is also an anti-derivative of $f(t)$.
+
+But we have a special purpose in mind when calculating $F(t_1)$. We want to figure out from $F(t)$ how much of the quantity $f(t)$ has accumulated up to time $t_1$. For example, if $f(t)$ is the rate of increase in fuel (that is, the negative of fuel consumption), we want $F(t_1)$ to be the amount of fuel in our tank at time $t_1$. **That cannot happen.** All we can say is that $F(t_1)$ is the amount of fuel in the tank at $t_1$ give or take some unknown constant C.
+
+Instead, the correct use of $F(t)$ is to say how much the quantity has changed over some interval of time, $t_0 \leq t \leq t_1$. This "change in the quantity" is called the ***net change** in $F()$. To calculate the net change in $F()$ from $t_0$ to $t_1$ we apply $F()$ to both $t_0$ and $t_1$, then subtract:
+
+$$\text{Net change in}\ F(t) \ \text{from}\ t_0 \ \text{to}\ t_1 :\\= F(t_1) - F(t_0)$$
+
+::: {.example}
+Suppose you have already constructed the rate-of-change function $v()$ and implemented it as an R function `v()`. For instance, $v(t)$ might be the amount of **acceleration** at any instant $T$ of a car, and $V(t)$ is the **accumulated acceleration**, better known as velocity. We'll assume that the input to `v()` is in seconds, and the output is in meters-per-second-squared, which has the correct dimension for acceleration.
+
+You want to find the amount of acceleration accumulated between time $t=2$ and $t=5$ seconds. 
+
+
+```{r echo=FALSE}
+vraw <- rfun( ~ t, seed=9090)
+v <- function(t) vraw(t-5)
+```
+
+```{r}
+# You've previous constructed v(t)
+V <- antiD(v(t) ~ t)
+V(5) - V(2)
+```
+To make use of this quantity, you'll need to know it's dimension and units. For this example, where the dimension [$v(t)$] is L T$^{-2}$, and [$t$] = T, the dimension [$V(t)$] will be L T$^{-1}$. In other words, if the output of $v(t)$ is meters-per-second-squared, then the output of $V(t)$ must be meters-per-second.
+:::
+
+
+
+## Initial value of the quantity
+
+We like to think of the CAPITAL LETTER functions as the amount of a quantity. For instance, we'd like to think that $F(t)$ is the amount of fuel in the tank and that $M(t)$ is the amount of cash the business has on hand. And certainly it's reasonable that there are such functions, if we know how to construct them.
+
+Keep in mind that if we construct an $F(t)$ by anti-differentiating an $f(t)$, what we get is not necessarily the amount of fuel in the tank. Rather, it's the amount of fuel in the tank plus some constant. In this section, we're going to figure out what that constant is. 
+
+```{r accum-movie-1, echo=FALSE}, fig.cap="Write the caption!!!!"}
+knitr::include_graphics("www/accum-movie-1.gif")
+```
+
+
+
+::: {.intheworld}
+Is the quantity always a function of $t$? No, but that's easy to conceptualize.  For example, a car's dashboard instrumentation conventionally reports instantaneous fuel use in liters/mile which we want to integrate to find liters. This integration must be over miles not seconds.
+
+:::
+
+PUT GIF HERE.
