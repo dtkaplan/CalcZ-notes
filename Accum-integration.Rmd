@@ -87,18 +87,68 @@ V(5) - V(2)
 To make use of this quantity, you'll need to know it's dimension and units. For this example, where the dimension [$v(t)$] is L T$^{-2}$, and [$t$] = T, the dimension [$V(t)$] will be L T$^{-1}$. In other words, if the output of $v(t)$ is meters-per-second-squared, then the output of $V(t)$ must be meters-per-second.
 :::
 
+## The "definite" integral
 
+We have described the process of calculating a net change from the *lower-case* function $f(t)$ in terms of two steps:
+
+1. Construct $F(t) = \int f(t) dt$. 
+2. Evaluate $F(t)$ at two inputs, e.g. $F(t_2) - F(t_1)$, giving a net change, which we'll write as ${\cal F}(t_1, t_2) = F(t_2) - F(t_1)$.
+
+As a matter of notation, the process of going from $f(t)$ to the net change is written as one statement.
+$${\cal F}(t_1, t_2) = F(t_2) - F(t_1) = \int_{t_1}^{t_2} f(t) dt$$
+
+The punctuation $$\int_{t_1}^{t_2} \_\_\_\_ dt$$ captures in one construction both the anti-differentiation step ($\int\_\_dt$) and the evaluation of the anti-derivative at the two bound $t_2$ and $t_1$.
+
+Several names are used to describe the overall process. It is important to become familiar with these.
+
+- $\int_a^b f(t) dt$ is called a ***definite integral*** of $f(t)$.
+- $a$ and $b$ are called, respectively, the ***lower bound of integration*** and the ***upper bound of integration***, although given the way we draw graphs it might be better to call them the "left" and "right" bounds, rather than lower and upper.
+- The pair $a, b$ is called the ***bounds of integration***. 
+
+As always, it pays to know what *kind of thing* is ${\cal F}(t_1, t_2)$.
+Assuming that $t_1$ and $t_2$ are fixed quantities, say $t_1 = 2$ seconds and $t_2 = 5$ seconds, then ${\cal F}(t_1, t_2)$ is itself a quantity. The dimension of that quantity is [$F(t)$] which in turn is [$f(t)$]$\cdot$[$t$]. So if $f(t)$ is fuel consumption in liters per second, then $F(t)$ will have units of liters, and ${\cal F}(t_1, t_2)$ will also have units of liters.
+
+Good to remember, too, that $F(t) = \int f(t) dt$ is a ***function*** whose output is a quantity, while $F(t_2) - F(t_1) = \int_{t_1}^{t_2} f(t) dt$ is a ***quantity***, not a function. And $f(t)$ is also a ***function*** whose output is a quantity, although in general $F(t)$ and $f(t)$ are different kinds of quantities. For instance, the output of $F(t)$ is liters of fuel while the output of $f(t)$ is liters per second: fuel consumption. Similarly, the output of $M(t)$ is dollars, while the output of $m(t)$ is dollars per day. 
+
+The use of the term ***definite integral*** suggests that there might be something called an ***indefinite integral***, and indeed there is. "Indefinite integral" is just a synonym for "anti-derivative." In this book we favor the use of ***anti-derivative*** because it's too easy to leave off the "indefinite" and confuse an indefinite integral with a definite integral. Also, "anti-derivative" makes it completely clear what is the relationship to "derivative."
+
+Since 1700, it's common for calculus courses to be organized into two divisions:
+
+i. Differential calculus, which is the study of derivatives and their uses.
+ii. Integral calculus, which is the study of anti-derivatives and their uses. 
+
+Mathematical notation having been developed for experts rather than for students, very small typographical changes are often used to signal very large changes in meaning. When it comes to anti-differentiation, there are two poles of fixed meaning and then small changes which modify the meaning. The poles are:
+
+i. Anti-derivative: $\int f(t) dt$, which is a function whose output is a quantity.
+ii. Definite integral $\int_a^b f(t) dt$, which is a quantity plane and simple.
+
+But you will also see some intermediate forms:
+
+a. $\int_a^t f(t) dt$, which is a **function** with input $t$.
+b. $\int_a^x f(t) dt$, which is the same function as in (a) but with the input name $x$ being used.
+c. $\int_t^b f(t) dt$, which is a **function** with input $t$.
+d. Less commonly, $\int_x^t f(t) dt$ which is a **function** with two inputs, $x$ and $t$. The same is true of $\int_x^y f(t) dt$ and similar variations.
 
 ## Initial value of the quantity
 
-We like to think of the CAPITAL LETTER functions as the amount of a quantity. For instance, we'd like to think that $F(t)$ is the amount of fuel in the tank and that $M(t)$ is the amount of cash the business has on hand. And certainly it's reasonable that there are such functions, if we know how to construct them.
+Recall that we're interested in a real quantity ${\mathbf F}(t)$, but we only know $f(t)$ and from that can calculate an anti-derivative $F(t)$. The relationship between them is
+$${\mathbf F}(t) = F(t) + C$$ where $C$ is some fixed quantity that we cannot determine directly from $f(t)$.
 
-Keep in mind that if we construct an $F(t)$ by anti-differentiating an $f(t)$, what we get is not necessarily the amount of fuel in the tank. Rather, it's the amount of fuel in the tank plus some constant. In this section, we're going to figure out what that constant is. 
+Still, even if we cannot determine $C$, there's one way we can use $F(t)$ to make definite statements about ${\mathbf F}(t)$. Consider the net change from $t_1$ to $t_2$ in the real quantity ${\mathbf F}$. This is
+$${\mathbf F}(t_2) - {\mathbf F}(t_1) =  \left[F(t_2) + C\right] - \left[F(t_1) + C\right] = F(t_2) - F(t_1)$$
+In other words, just knowing $F(t)$, we can make completely accurate statements about net changes in the value of ${\mathbf F}(t)$.
+
+Let's develop our understanding of this unknown constant $C$, which is called the ***constant of integration***. To do so, watch the following movie which attempts to show the process of constructing the anti-derivative of a function $f(t)$.
 
 ```{r accum-movie-1, echo=FALSE}, fig.cap="Write the caption!!!!"}
 knitr::include_graphics("www/accum-movie-1.gif")
 ```
 
+1. Focus first on the top graph. $f(t)$ is the rate of increase in $F(t)$ (or ${\mathbf F}(t)$ for that matter). From the graph, you can read using the vertical axis the value of $f(t)$ for any input $t$. But since $f(t)$ is a rate of increase, we can also depict $f(t)$ as a slope. That slope is being drawn as a $\color{magenta}{\text{magenta}}$ arrow. Notice that when $f(t)$ is positive, the arrow slopes upward and when $f(t)$ is negative, the arrow slopes downward. The steepness of the arrow is the value of $f(t)$, so for values of $f(t)$ far from zero the arrow is steeper than for it is for values of $f(t)$ that are near zero.
+
+2. Now look at both graphs, but concentrate just on the arrows in the two graphs. They are always the same: carbon copies of one another.
+
+3. Finally the bottom graph.
 
 
 ::: {.intheworld}
@@ -106,4 +156,34 @@ Is the quantity always a function of $t$? No, but that's easy to conceptualize. 
 
 :::
 
-PUT GIF HERE.
+::: {.intheworld}
+The universe and the atom
+
+In the 1920s, astronomers and cosmologists started to question the idea that the large-scale universe is static and unchanging. This traditional belief was undermined both by theory (e.g. General Relativity) and observations. The most famous of these were collected and published by Edwin Hubble, starting in 1929 and continuing over the next decade as improved techniques and larger telescopes became available. In recent years, with the availability of the space telescope named in honor of Hubble data has expanded in availability and quality. Figure \@ref(fig:hubble-curve) shows a version of [Hubble's 1929 graph](https://www.pnas.org/content/15/3/168) based on [contemporary data](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC314128/).
+
+```{r hubble-curve, echo=FALSE, fig.cap="}
+knitr::include_graphics("www/hubble-curve.png")
+```
+Each dot in Figure \@ref(fig:hubble-curve) is an exploding star called a *supernova*. The graph shows the relationship between the distance of the star from our galaxy and the outward velocity of that star. The velocities are large, $3 \times 10^4$ km/s is about one-tenth the speed of light. Similarly, the distances are big; light from the furthest star shown took about 2 billion years to reach Earth. 
+
+For each star, we know the "current" velocity and the "current" position.^["Current" is in quotes because the measurements reflect the situation 100s of millions of years ago, when the light was emitted from the star.] For cosmologists constructing theories of the origin of the universe, an important question is the location of the star in the remote past. 
+
+The location of each star can be found by integrating the velocity backwards in time.
+
+$$D(t) = D_\text{now} - \int_t^\text{now} v(t) dt$$
+
+Ideally we would have measurements of the function $v(t)$, but nobody was around to record them 500 million years ago. So, to model $v(t)$ we can use theories of the evolution of the universe or ... we can start simply and imagine that $v(t)$ is constant. Let's play out the consequences of that assumption.
+
+From the Hubble diagram, we can compute $v$ as a function of $D$---the data show a simple straight-line relationship. The slope is (as always) rise-over-run: the rise is 40000 km/s and the run is 700 megaparsecs, which is $2.2 \times 10^{22}$ km, so the slope is $1.8 \times 10^{-18}$ $s$^{-1}$. Consequently, the straight-line relationship is $$v(D_{now}) = 1.8 \times 10^{-18}\ D_{now} .$$
+
+Since $v$ is assumed not to depend on $t$, the anti-derivative itself is trivial: $\int_t^\text{now} v dt = t v$. Evaluating the anti-derivative at the limits of integration gives, for each star, 
+$$D(t) = D_\text{now} - 1.8\times 10^{-18} D_\text{now} \left[\text{now} - t\right]$$
+Let's define now$=0$ and ask what might be a obvious question for people interested in the origin of the universe: At what $t+0$ was each star at distance zero from the Milky Way? That is, what is the $t_0$ at which $D(t_0) = 0$?
+
+Re-arranging the equation gives $$0 = D_\text{now} \left[1 - 1.8\times 10^{-18} t_0\right]\ \ \implies \ \ t_0 = \frac{1}{1.8\times 10^{-18}} \approx 5.5 \times 10^{17} \text{seconds}.$$
+
+Notice that time $t_0$ does not depend on $D_\text{now}$. According to the theory that the star's velocity $v(t)$ is constant, all of the stars, now spaced apart across 2 billion light years, were at the same position at $t_0 = 5.5 \times 10^{17}$ seconds ago. Converting seconds to years, we get that this grand (but hypothetical) meeting of the stars occurred 17 billion years ago. Pretty crowded to have all the mass in the universe in one place at the same time. No wonder they call it the Big Bang! 
+
+
+:::
+
