@@ -228,17 +228,65 @@ In the (fictional) account of the 1690 experiment, we had Galileo release the ba
 A remarkable feature of integrals is that it doesn't matter what we use as the lower bound of integration, so long as we set the initial value to correspond to that bound. 
 
 
-::: {.intheworld}
-Is the quantity always a function of $t$? No, but that's easy to conceptualize.  For example, a car's dashboard instrumentation conventionally reports instantaneous fuel use in liters/mile which we want to integrate to find liters. This integration must be over miles not seconds.
+::: {.why}
+For a while you were writing integrals like this: $\int_a^b f(t) dt$. Then you replaced $b$ with the input name $t$ to get $\int_a^t f(t) dt$. But then you switched everything up by writing $\int_a^t f(x) dx$. Is that the same as $\int_a^t f(t) dt$? If so, why do you get to replace the $t$ with $x$ in some places but not in others?
+
+Recall from Chapter \@ref(fun-notation) that the names used for inputs to a function definition don't matter so long as they are used consistently on the left and right sides of $\equiv$. For instance, all these are the same function:
+
+- $f(x) \equiv m x + b$
+- $g(t) \equiv m t + b$
+- $h(\text{wind}) \equiv m \text{wind} + b$
+
+Now think about the integral $\int_a^b f(t) dt$:
+$$\int_a^b f(t) dt = F(b) - F(a)\ .$$
+
+On the left-hand side, the input name $t$ is prominant, appearing in two places: $f(\color{magenta}{t}) d\color{magenta}{t}$. But $t$ is nowhere on the right-hand side. We could have equally well written this as $\int_a^b f(x) dx$ or $\int_a^b f(\text{wind}) d\text{wind}$. The name we use for the input to $f()$ doesn't matter so long as it is consistent with the name used in the $d\_\_$ part of the notation. Often, the name placed in the blanks in $\int f(\_\_) d\_\_$ is called a ***dummy variable***.
+
+Writing $\int_a^t f(t) dt$ is perfectly reasonable, but many authors dislike the multiple appearance of $t$. So they write something like $\int_a^t f(x) dx$ instead.
 :::
 
 ## Integrals from bottom to top
 
+The bounds of integration appear in different arrangements. None of these are difficult to derive from the basic forms:
 
-This is where we divide up integrals, reverse limits to get a minus sign, and adjust the initial condition to correspond to the lower bound of integration.
+- The relationship between an integral and its corresponding anti-derivative function: $$\int_a^b f(x) dx = F(b) - F(a)$$ This relationship has a fancy-sounding name: the ***second fundamental theorem of calculus***.
+- The accumulation from an initial-value $${\mathbf F}(b)\  =\  {\mathbf F}(a) + \int_a^b f(x) dx\  = \ {\mathbf F}(a) + F(b) - F(a)$$
+For many modeling situations, $a$ and $b$ are fixed quantities, so $F(a)$ and $F(b)$ are also quantities; the output of the anti-derivative function at inputs $a$ and $b$. But either the lower-bound or the upper-bound can be input names, as in $$\int_0^t f(x) dx = F(t) - F(0)$$
+
+Note that $F(t)$ is not a quantity but a function of $t$.
+
+On occasion, you will see forms like $\int_t^0 f(x)dx$. You can think of this in either of two ways:
+
+1. The accumulation from a time $t$ less than 0 up until 0.
+2. The *reverse* accumulation from 0 until time $t$.
+
+Reverse accumulation can be a tricky concept because it violates everyday intuition. Suppose you were harvesting a row of ripe strawberries. You start at the beginning of the row---position zero. Then you move down the row, picking strawberries and placing them in your basket. When you have reached position $B$ your basket holds the accumulation $\int_0^B s(x)\, dx$, where $s(x)$ is the lineal density of strawberries---units: berries per meter of row.
+
+But suppose you go the other way, starting with an empty basket at position $B$ and working your way back to position 0. Common sense says your basket will fill to exactly the same amount as in the forward direction, and indeed this is the case. But integrals work differently. The integral $\int_B^0 s(x) dx$ will be the **negative** of $\int_0^B s(x) dx$. You can see this from the relationship between the integral and the anti-derivative:
+$$\int_B^0 s(x) dx \ = \ S(0) - S(B) \ =\ -\left[{\large\strut}S(B) - S(0)\right]\ = \ -\int_0^B s(x) dx$$
+
+This is not to say that there is such a thing as a negative strawberry. Rather, it means that harvesting strawberries is similar to an integral in some ways (accumulation) but not in other ways. In farming, harvesting from 0 to $B$ is much the same as harvesting from $B$ to 0, but integrals don't work this way. 
+
+Another property of integrals is that the interval between bounds of integration can be broken into pieces. For instance:
+
+$$\int_a^c f(x) dx \ = \ \int_a^b f(x) dx + \int_b^c f(x) dx$$
+You can confirm this by noting that 
+$$\int_a^b f(x) dx + \int_b^c f(x) dx \ = \ F(b) - F(a) + \left[{\large\strut}F(c) - F(b)\right] = F(c) - F(a) \ = \ \int_a^c f(x) dx\ .$$
+
+Finally, consider this function of $t$:
+$$\partial_t \int_a^t f(x) dx\ .$$
+First, how do we know it is a function of $t$. Well, $$\int_a^t f(x) dx = F(t) - F(a)$$is a function of $t$. Differentiating the function $\int_a^t f(x) dx$, as with every other function, produces a new function. 
+
+Second, there is a shortcut for calculating $\partial_t \int_a^t f(x) dx$:
+$$\partial_t \int_a^t f(x) dx\ =\ \partial_t \left[{\large\strut}F(t) - F(a)\right]\ .$$
+Since $F(a)$ is a quantity and not a function, $\partial_t F(a) = 0$. That simplies things. Even better, we know that the derivative of $F(t)$ is simply $f(t)$: that's just the nature of the derivative/anti-derivative relationship between $f(t)$ and $F(t)$. Put together, we have:
+$$\partial_t \int_a^t f(x) dx\ =\ f(t)\ .$$
+
+
+This complicated-looking identity has a fancy name: the ***first fundamental theorem of calculus***. 
 
 ::: {.intheworld}
-Where did the stars come from?
+Backtracking the stars.
 
 In the 1920s, astronomers and cosmologists started to question the idea that the large-scale universe is static and unchanging. This traditional belief was undermined both by theory (e.g. General Relativity) and observations. The most famous of these were collected and published by Edwin Hubble, starting in 1929 and continuing over the next decade as improved techniques and larger telescopes became available. In recent years, with the availability of the space telescope named in honor of Hubble data has expanded in availability and quality. Figure \@ref(fig:hubble-curve) shows a version of [Hubble's 1929 graph](https://www.pnas.org/content/15/3/168) based on [contemporary data](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC314128/).
 
@@ -264,7 +312,8 @@ Let's define now$=0$ and ask what might be a obvious question for people interes
 Re-arranging the equation gives $$0 = D_\text{now} \left[1 - 1.8\times 10^{-18} t_0\right]\ \ \implies \ \ t_0 = \frac{1}{1.8\times 10^{-18}} \approx 5.5 \times 10^{17} \text{seconds}.$$
 
 Notice that time $t_0$ does not depend on $D_\text{now}$. According to the theory that the star's velocity $v(t)$ is constant, all of the stars, now spaced apart across 2 billion light years, were at the same position at $t_0 = 5.5 \times 10^{17}$ seconds ago. Converting seconds to years, we get that this grand (but hypothetical) meeting of the stars occurred 17 billion years ago. Pretty crowded to have all the mass in the universe in one place at the same time. No wonder they call it the Big Bang! 
-
-
 :::
+
+## Exercises
+
 
