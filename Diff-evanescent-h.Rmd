@@ -1,7 +1,7 @@
 # Evanescent h {#evanescent-h}
 
-Recall that the slope-function operator can be written as a ratio of rise-over-run:
-$${\cal D}_t f(t) \equiv \frac{f(t+h) - f(t)}{h}$$ where $h$ is the length of the "run." The idea of the ***instantaneous slope function*** is to make $h$ as small as possible. 
+Recall that the local rate of change of a function  can be written as a ratio of rise-over-run:
+$$\partial_t f(t) \equiv \frac{f(t+h) - f(t)}{h}$$ where $h$ is the length of the "run." The idea of the ***instantaneous rate of change*** is to make $h$ as small as possible. 
 
 In the very early days of calculus, the vanishing $h$ was described as "evanescent." (Dictionary definition: "tending to vanish like vapor."^[[Source](https://www.merriam-webster.com/dictionary/evanescent)]) Another good image of $h$ becoming as small as possible comes from the same University of Oxford mathematician whose poem *The Jabberwocky* we considered earlier. In *Alice in Wonderland*, Dodgson introduced the character of the Cheshire Cat. `r mark(2370)`
 
@@ -64,8 +64,8 @@ Some observations from this numerical experiment:
 
     This will provide a way for us, eventually, to discard $h$ so that the slope function will not need an $h$ argument.
     
-2. For small $h$, we have ${\cal D}_t \sin(t) = \sin(t + \pi/2) = \cos(t)$. That is, taking the slope function of a sinusoid gives another sinusoid, shifted left by $\pi/2$ from the original. Or, in plain words, for small $h$ the cosine is the slope function of the sine.
-3. For small $h$, we have ${\cal D}_t \pnorm(t) = \dnorm(t)$. That is, for small $h$ the gaussian function is the slope function of the sigmoid $\dnorm()$ function.
+2. For small $h$, we have $\partial_t \sin(t) = \sin(t + \pi/2) = \cos(t)$. That is, taking the slope function of a sinusoid gives another sinusoid, shifted left by $\pi/2$ from the original. Or, in plain words, for small $h$ the cosine is the slope function of the sine.
+3. For small $h$, we have $\partial_t \pnorm(t) = \dnorm(t)$. That is, for small $h$ the gaussian function is the slope function of the sigmoid $\dnorm()$ function.
 
 You can confirm these last two statements by comparison with the original functions, especially the alignment of the peaks of the slope functions with respect to the peak of the sinusoid and the half-way point of the sigmoid. `r mark(2374)`
 
@@ -112,25 +112,22 @@ slice_plot(Dexp(t, h=1) ~ t, domain(t=c(-2, 2)), label_text="h=1", label_x=.4, c
   gf_vline(xintercept=0, color="dodgerblue", alpha=0.5) %>%
   gf_lims(y=c(0,8))
 ```
-These numerical experiments with the logarithm and exponential functions are more evidence that, as $h$ gets small, the slope function doesn't depend on $h$. And, we find that:
+These numerical experiments with the logarithm and exponential functions are more evidence that, as $h$ gets small, the slope function doesn't depend strongly on $h$. And, we find that:
 
-- For small $h$, the slope function of the logarithm is a power-law function: ${\cal D}_t \ln(t) = \frac{1}{t}$.
-- For small $h$, the slope function of the exponential is the exponential itself: ${\cal D}_t e^x = e^x$.
+- For small $h$, the slope function of the logarithm is a power-law function: $\partial_t \ln(t) = \frac{1}{t}$.
+- For small $h$, the slope function of the exponential is the exponential itself: $\partial_t e^x = e^x$.
 
 You can confirm these by evaluating the slope function of the exponential at $t=0$ and $t=1$, and the slope function of the logarithm at $t= 2, 1, 1/2, 1/4, 1/8.$
 
-
-
-
 "Small" and "zero," although related, are different. In constructing a derivative, we use smaller and smaller $h$, but never zero. Let's see what happens if instead of evanescent h, we use zero h. For example, we can use the slope function `Dsin()` and `Dsigma()` that we created earlier. Setting $h$ to zero does not give a result that is the instantaneous rate of change of anything: `r mark(2384)`
 
-```{r eval=FALSE}
+```{r}
 Dsin(t=1, h=0)
 Dsigma(t=0, h=0)
 ```
 
 In `NaN`, you can hear the echo of your fourth-grade teacher reminding you that it is illegal to divide by zero.
 
-Think of evanescent $h$ as the vapor in the definition of "evanescent": "tending to vanish like vapor." This vapor is the solvent in paint. You don't want the solvent once the paint is on the wall; wet paint is a nuisance. But getting the paint from the container to the wall absolutely needs the solvent.  `r mark(2386)`
+Think of evanescent $h$ as the vapor in the definition of "evanescent": "tending to vanish like vapor." This vapor is like the solvent in paint. You don't want the solvent once the paint is on the wall; wet paint is a nuisance. But getting the paint from the container to the wall absolutely needs the solvent.  `r mark(2386)`
 
 We used the solvent $h$ earlier in the chapter in the numerical experiments that led us to the derivatives of the pattern-book functions, for instance $\partial_x e^x = e^x$ or $\partial_x \sin(x) = \cos(x)$.  Eventually, we'll construct an $h$-free theory of differentiation, reducing the process to a set of algebraic rules in which $h$ never appears. With this as our goal, let's continue using $h$ for a while to find some additional useful facts about derivatives. `r mark(2388)`
