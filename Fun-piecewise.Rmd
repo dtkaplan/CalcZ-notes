@@ -40,6 +40,8 @@ slice_plot(log(x) ~ x, domain(x=c(-5,5)))
 ```
 :::
 
+## Splitting the domain
+
 In a purely mathematical sense, the problem with functions being undefined over an extended part of a domain has been handled with cunning and imagination, but the solution---the invention of complex numbers---is not our concern here. Instead, we're going to embrace functions that have a domain smaller than the whole number line and see what we can do with them. 
 
 To illustrate, let's use computer notation to create a function whose domain is $x < 1$. To do this, we need a way to write "if," as in, "If $x$ is 1 or greater, return `NaN`." We'll use a function in R that let's us ask a TRUE/FALSE question and, depending on the answer, do one or another calculation. The question-answering R function is `ifelse()` whose name is remarkably descriptive. The `ifelse()` function takes three arguments. The first is the question to be asked, the second is the value to return if the answer is "yes," and the third is the value to return for a "no" answer.
@@ -62,7 +64,7 @@ R notation              | English
 `abs(x-5) < 2` | "Is $x$ within two units of 5?"
 
 
-## Piecewise functions
+## Basic piecewise functions
 
 Having an ability to split up the domain of a function and provide different formula for each of the pieces allows us to
 construct ***piecewise functions***. To illustrate, the function $h(x) \equiv |x|$. You'll recognize this as the "absolute value" function. The intuitive algorithm is to "strip the negative sign, if any" from the input. But with the ability to divide the domain into pieces, we gain access to a less mysterious sort of arithmetic operation and can re-write $$h(x) \equiv \left\{ 
@@ -154,6 +156,8 @@ adsr <- function(a,d,ts, s,r) {
 }
 ```
 
+
+## Exercises
 
 `r insert_calcZ_exercise(13.3, "EDKYV", "Exercises/Fun/bigger-two.Rmd")`
 
