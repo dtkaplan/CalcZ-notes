@@ -77,8 +77,6 @@ slice_plot(-exp(-x) ~ x, domain(x=c(-2,2))) %>%
 
 ```
 
-`r insert_calcZ_exercise("8.0", "YLWP1", "Exercises/Fun/flipping-1.Rmd")`
-
 ## Curve fitting a periodic function {#fit-periodic}
 
 Figure \@ref(fig:Fun-4-a-3-1) shows the tide level in [Providence, Rhode Island](https://www.google.com/maps/place/Providence,+RI/@41.8071,-71.4012,14z/data=!4m5!3m4!1s0x89e444e0437e735d:0x69df7c4d48b3b627!8m2!3d41.8071!4d-71.4012), starting at midnight on April 1, 2020 and recorded every minute for four and a half days. (These data were collected by the US National Oceanic and Atmospheric Administration. [Link](https://tidesandcurrents.noaa.gov/api/datagetter?begin_date=20200401%2010:00&end_date=20200405%201:59&station=8454000&product=one_minute_water_level&datum=mllw&units=metric&time_zone=gmt&application=web_services&format=csv))   `r mark(960)`
@@ -148,12 +146,6 @@ $$\text{tide}_\text{shifted}(t) \equiv A \sin(2\pi (t - t_0)/P) + B$$
 Whether including this parameter is important depends on our purpose for the model. If the goal is to find the period of the tides, the time shift hardly matters. But if the goal is to predict a future tide level, the time shift is critical.
 
 Estimating $t_0$ can only be done once the period $P$ is known precisely. In practice, as you'll see in Chapter \@ref(modeling-cycle), we use a numerical method called ***polishing*** to estimate both $P$ and $t_0$ at the same time.
-
-
-`r insert_calcZ_exercise(8.4, "YELXG", "Exercises/Fun/lamb-talk-gloves.Rmd")`
-
-`r insert_calcZ_exercise(8.5, "VBWD", "Exercises/Fun/spirometer.Rmd")`
-
 
 
 ## Curve fitting an exponential function {#fit-exponential}
@@ -265,14 +257,6 @@ gf_point(temp ~ time, data=CoolingWater %>% sample_n(20)) %>%
 Step 5: The flat zone of the data is to the right. So we've got exponential decay and $k < 0$. 
 
 
-`r insert_calcZ_exercise("8.1", "0rvpbu", "Exercises/Fun/kid-type-boat.Rmd")`
-
-`r insert_calcZ_exercise(8.2, "vkwl4", "Exercises/Fun/chicken-choose-vase.Rmd")`
-
-`r insert_calcZ_exercise(8.3, "asevss", "Exercises/Fun/cow-type-kayak.Rmd")`
-
-
-
 
 ## Curve fitting a power-law function
 
@@ -348,19 +332,7 @@ Gaussian functions and sigmoid functions with the same center and width paramete
 
 In R, the name of the sigmoid function is `pnorm()`. The gaussian is `dnorm()`. The parameters that specify center and spread are named `mean` and `sd`. The word "mean" accurately conveys the idea of "center." It would be nice to be able to say that `sd` comes from `s`prea`d`, but in fact `sd` is short for ***standard deviation***, a term familiar to students of statistics.   `r mark(1000)`
 
-`r insert_calcZ_exercise(8.6, "IELWV", "Exercises/Fun/hump-intro.Rmd")`
 
-
-
-`r insert_calcZ_exercise(8.7, "CKSLE", "Exercises/Fun/sigmoid-intro.Rmd")`
-
-`r insert_calcZ_exercise(8.8, "bllKR", "Exercises/Fun/sigmoid-bath.Rmd")`
-
-
-
-
-
-`r insert_calcZ_exercise(8.11, "YLWP2", "Exercises/Fun/flipping-2.Rmd")`
 
 ::: {.intheworld  data-latex=""}
 Figure \@ref(fig:ebola-data) shows the cumulative number of Ebola cases during an outbreak in  Sierra Leone from May 1, 2014 to December 16, 2015.
@@ -405,7 +377,29 @@ Here's a methodology for estimating the parameters `mean` and `sd` of a sigmoid 
 
 5. You might also want  to trace the S-curve *downward* from the centerline about 2/3 of the way to zero. That's indicated by the  left green line.  In the standard sigmoid, the two green lines will be equally spaced around the centerline. Of course the data may not be in the shape of the standard sigmoid, so you might find the two green lines are not equally spaced from the center.
 
-`r insert_calcZ_exercise(8.9, "EKCIE", "Exercises/Fun/ebola-sigmoid.Rmd")`
+## Exercises
+
+`r insert_calcZ_exercise("8.1", "0rvpbu", "Exercises/Fun/kid-type-boat.Rmd")`
+
+`r insert_calcZ_exercise("8.3", "YLWP1", "Exercises/Fun/flipping-1.Rmd")`
+
+`r insert_calcZ_exercise(8.5, "YELXG", "Exercises/Fun/lamb-talk-gloves.Rmd")`
+
+`r insert_calcZ_exercise(8.7, "VBWD", "Exercises/Fun/spirometer.Rmd")`
+
+`r insert_calcZ_exercise(8.9, "vkwl4", "Exercises/Fun/chicken-choose-vase.Rmd")`
+
+`r insert_calcZ_exercise(8.11, "asevss", "Exercises/Fun/cow-type-kayak.Rmd")`
+
+`r insert_calcZ_exercise(8.13, "IELWV", "Exercises/Fun/hump-intro.Rmd")`
+
+`r insert_calcZ_exercise(8.15, "CKSLE", "Exercises/Fun/sigmoid-intro.Rmd")`
+
+`r insert_calcZ_exercise(8.17, "bllKR", "Exercises/Fun/sigmoid-bath.Rmd")`
+
+`r insert_calcZ_exercise(8.19, "YLWP2", "Exercises/Fun/flipping-2.Rmd")`
+
+`r insert_calcZ_exercise(8.21, "EKCIE", "Exercises/Fun/ebola-sigmoid.Rmd")`
 
 
 

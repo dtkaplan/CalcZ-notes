@@ -1,0 +1,29 @@
+# Symbolic anti-differentiation {#accum-symbolic}
+
+
+
+::: {.example data-latex=""}
+Galileo knew, of course, that a falling object speeds up as it falls. He also knew that the time increments of velocity were constant. He didn't know about calculus, but if he had, he would have known that "time increment" should be replaced by the derivative of velocity: a rate of change that we call "acceleration." Today, we know the value of that constant acceleration is approximately constant, and we even have units: $g = - 9.8$ m/s$^2$. Since velocity $V(t)$ is the integral of  acceleration, we even have a formula for velocity as a function of time: $$V(t) = \int g dt + C = g t + C$$. 
+
+Suppose Galileo releases a ball from the Tower of Pisa at exactly 3 seconds after noon. The velocity is $$V(t\geq 3) = g \times t + C = -9.8 \text{m/s}^2 \times t + C = -29.4 \text{m/s} + C\ .$$
+
+But what is the value of $C$? Galileo knows that at $t=3$, when he released the ball from a standstill, the velocity was zero.  $$V(3) = g \times t + C = -9.8\, \text{m/s}^2 \times 3\, \text{s} + C = - 29.4\, \text{m/s} + C \ .$$ Since $V(3) = 0 \text{m/s}$ we can deduce that $C= 29.4\, \text{m/s}$. 
+:::
+
+
+Come back to Galileo and integrate motion under constant gravity, involving two integrals: 
+$$V(t) = \int v(t) dt + C_1$ = -\int 9.8 dt + C_1 = - 9.8 t + C_1$$ What's the value of the constant of integration, which we're writing as $C_1$? If we know the initial position $x(0)$, that is, the position at $t=0$, then plugging $t=0$ into the formula for $V(t)$ gives  $C_1 = V(0)$.
+
+We also know that position $x(t)$ is
+$$x(t) = \int V(t) dt + C_2$$ There's no reason to think that the constant of integration that relates the anti-derivative $\int V(t) dt$ to $x(t)$ is the same as the constant of integration that relates $\int v(t) dt$ to $V(t)$. That's why we are writing the constant as $C_2$ here.
+
+Happily, we know $V(t) = -9.8 t + V(0)$. So we can calculate $$x(t) = \int \left[-9.8 t + V(0)\right]\,dt \\
+= \int \left[-8.8 t\right]dt + \int V(0) dt =\\
+\frac{9.8}{2} t^2 + V(0) t + C_2\ .$$
+And what is the value of the constant of integration $C_2$? Suppose we know the position of the ball at $t=0$, that is, $x(0)$. Plugging $t=0$ into the above formula gives $x(0) = C_2$.
+
+## Polynomials
+
+GO THROUGH THE LOGIC OF INTEGRATING POLYNOMIALS JUST BASED ON THEIR COEFFICIENTS.
+
+Pick up on the Taylor series for $\dnorm(x)$ defined in Exercises/Diff/birch-dig-radio.Rmd and have them integrate this out from zero to get an approximation to $\pnorm()$. Integrate out to $x=0.5$, then switch to the Taylor polynomial around $x_0=1$ and keep on integrating. Use the first integral out to $x=0.5$ as the starting value for the second integral.

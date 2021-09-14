@@ -1,4 +1,4 @@
-# Visualizing anti-differentiation
+# Totaling the little bits {#totaling-bits}
 
 Many students wonder how it is possible to reconstruct a function $F(x)$ from its derivative $f(x)$. This may be especially true for those who have studied calculus previously, who may have been taught that anti-differentiation is an advanced topic and may have struggled with the algebraic methods that are traditionally emphasized many calculus courses.
 
@@ -69,5 +69,50 @@ Each of those straight-line segments is drawn over a domain $x_i < x < x_i+h$ th
 You might continue to object, since not every one of the segments is a straight-line whose slope and height can be figured out with $\partial_x F(x)$. That's true in the figure because we made the segments fairly wide. No reason why we can't make them smaller for the calculation (although you wouldn't be able to distinguish them visually from one another very well).
 
 Or, here is another segment drawing trick. Even the curved segments in Figure \@ref(fig:F-slice-many) are essentially quadratic. The derivative of each quadratic is a function of $x$---that's why they curve. We can write that derivative using the first two derivatives of $F(x)$, that is, as $\partial_x F(x) = \partial_x F(x_i) + \partial_{xx} F(x_i) [x-x_i]$. You'll see in Chapter XXX that we have a simple formula that will construct the individual quadratically-shaped segment from $\partial_x F(x)$. 
+
+## The notation of little bits
+
+The standard notation for anti-differentiation can be interpreted in terms of putting together segments, or, in the words of Prof. Thompson in *Calculus Made Easy*, "totaling up all the little bits." (See Section \@ref(preliminary-terrors).)
+
+Let's assemble piece by piece the mathematical notation for "anti-differentiate $f(x)$ to construct $F(x)$."
+
+1. We start with the function itself: $\large f(x)$. Remember that $f(x)$, at each value of $x$ will be the *slope* of $F(x)$. Why? Because $F(x)$ is the anti-derivative of $f(x)$, so $f(x)$ is the derivative of $F(x)$.
+
+2. Now divide the domain $x$ into many little bits. Each of these sub-domains is $\large dx$, a little chunk of $x$.
+
+3. On each of the little chunks, draw in $f(x)$. Since $f(x)$ is the *slope* of $F(x)$, we will draw $f(x)$ for any given chunk as a short line segment of that slope over the chunk. We'll write these little bits each of which is a straight-line function, as $\large\color{blue}{f(x) dx}$. Here's an example where the domain $-\pi \leq x \leq \pi$ is being split into $dx$'s of length 0.2.
+
+```{r show-bits, echo=FALSE, fig.cap="Turning $f(x)$ (thin black curve) into straight-line segments whose slope is given by the value of $f()$."}
+Segs <- Znotes::create_segments(sin(x) ~ x, domain(x=c(-3,3)), nsegs=30)
+breaks <- seq(-3, 3, by=0.2)
+blabels <- rep("", length=length(breaks))
+blabels[c(1, 6, 11, 16, 21, 26, 31)] <- c("-3", "-2", "-1", "0", 1, 2, 3)
+slice_plot(cos(x) ~ x, domain(x=c(-3,3))) %>%
+  gf_text(0.6 ~ 0.5,  label = "value of f(x)") %>%
+  gf_text(-0.3 ~ 0, label = "Segments whose slope is the value of f(x)\nEach segment is an f(x)dx",
+          color="blue") %>%
+  gf_segment(y + yend ~ x + xend, data = Segs, 
+           color=~slope,size=1.3, lineend="round") %>%
+    gf_lims(y=c(-1, 1)) %>%
+  gf_refine(#coord_fixed(ratio=2),
+            scale_x_continuous(breaks=breaks,labels=blabels))
+```
+4. Assemble together all the $f(x)dx$ segments from (3) to get $F(x)$. This instruction to assemble is denoted 
+$$\Large \color{blue}\int$$
+
+```{r show-bits2, echo=FALSE, fig.cap="$\\color{blue}{\\int} f(x)dx$ means to assemble the straight-line pieces $f(x) dx$ in the manner described in the previous section."}
+slice_plot(cos(x) ~ x, domain(x=c(-3,3))) %>%
+  gf_text(0.6 ~ -0.5,  label = "f(x)") %>%
+  gf_text(0 ~ 0.4, label="F(x)", color="blue") %>%
+  gf_segment(yf + yfend ~ x + xend, data = Segs, 
+           color=~slope,size=1.3, lineend="round")
+```
+Altogether, we have:
+
+$$\Large \underbrace{\underbrace{\LARGE\color{magenta}{\int}}_{\color{magenta}{\text{assemble}}} \underbrace{\LARGE f(x) \overbrace{\strut \overset{\strut}{dx}}^{\small \text{bits of}\ x}}_{\color{blue}{\text{the slope segments}}}}_{\text{giving}\ {\LARGE F(x)}\ \text{altogether.}}$$
+
+In the figures, $f(x) \equiv \cos(x)$, so the assembly $\int f(x) dx = \sin(x)$.
+
+## Exercises
 
 `r insert_calcZ_exercise("28.02", "BhGRKU", "Exercises/Accum/camel-win-bottle.Rmd")`
