@@ -320,6 +320,25 @@ ${\mathbf X}_2$ is located a small distance from ${\mathbf X}_1$ in the directio
 
 There are many variations on this algorithm that seek to reduce the number of calculations, avoid overstepping the argmax, etc. Collectively, the algorithms are called ***gradient ascent*** or, in more familiar language, "walking uphill one step at a time."
 
+## Total derivative (optional)
+
+The name "partial derivative" suggests the existence of some kind of derivative that's not just a part, but the whole thing. The ***total derivative*** is such a whole and gratifyingly made up of it's parts, that is, the partial derivatives.
+
+Suppose you are modeling the temperature of some volume of the atmosphere, given as $T(t, x, y, z)$. This merely says that the temperature depends on both time and location, something that is familiar from everyday life.
+
+The partial derivatives have an easy interpretation: $\partial_t T()$ tells how the temperature is changing over time at a given location, perhaps because of the evaporation or condensation of water vapor. $\partial_x T()$ tells how the temperature changes in the $x$ direction, and so on.
+
+The total derivative gives an overall picture of the changes in a parcel of air, which you can thnk of as a tiny balloon-like structure but without the balloon membrane. The temperature inside the "balloon" may change with time (e.g. condensation or evaporation of water), but as the ballon drifts along with the motion of the air (that is, the wind), the evolving location can change the temperature as well. Think of a balloon caught in an updraft: the temperature goes down as the balloon ascends. 
+
+For an imaginary observer located in the balloon, the temperature is changing with time. Part of this change is the instrinsic change measured by $\partial_t T$ but we need to add to that the changes induces by the evolving location of the balloon.  The partial change in temperature due to a change in altitude is $\partial_z T$, but it's important to realize that the coordinates of the location are themselves functions of time: $x(t), y(t), z(t)$. Seeing the function $T()$ for the observer in the balloon as a function of $t$, we have $T(t, x(t), y(t), z(t))$.  This is a function composition: $T()$ composed with each of $x()$, $y()$, and $z()$. Recall in the chain rule $\partial_v f(g(v)) = \partial_v f(g(v)) \partial_v g(v)$ that the derivative of the composed quantity is the product of two derivatives.
+
+Likewise, the total derivative of temperature with respect to the observer riding in the balloon will be add together the parts due to changes in time (holding position constant), x-coordinate (holding time and the other space coordinates constant), and the like. Signifying the total differentiation with a capital $D$, we have
+$$D\, T(t) = \partial_t T() + \partial_x T() \cdot\partial_t x + \partial_y T()\cdot \partial_t y + \partial_z T() \cdot\partial_t z$$
+Note that $\partial_t x$ is the velocity of the balloon in the x-direction, and similarly for the other coordinate directions. Writing these velocities as $v_x, v_y, v_z$, the total derivative for temperature of a parcel of air embedded in a moving atmosphere is
+
+$$D\ T(t) = \partial_t T + v_x\, \partial_x T + v_y\, \partial_y T + v_z\, \partial_z T$$
+Formulations like this, which put the parts of change together into a whole, are often seen in the mathematics of fluid flow as applied in meteorology and oceanology.
+
 <!-- ## Other optimization algorithms
 
 Nelder-Mead, etc.
