@@ -4,12 +4,19 @@ created: "Thu Aug 12 16:28:24 2021"
 global_id: "bHacc6"
 ---
 
-The graph of the function $g(x) \equiv \sqrt{R^2 - x^2}$ has the shape of a circle of radius $R$, e.g.
+The graph of the function $g(x) \equiv \sqrt{\strut R^2 - x^2}$ has the shape of a semi-circle of radius $R$, e.g.
 
-```{r}
+```{r results="hide"}
 g <- makeFun(sqrt(R^2 - x^2) ~ x, R=2)
 slice_plot(g(x) ~ x, domain(x=c(-2, 2)), npts=300)
 ```
+
+```{r echo=FALSE}
+g <- makeFun(sqrt(R^2 - x^2) ~ x, R=2)
+slice_plot(g(x) ~ x, domain(x=c(-2, 2)), npts=300) %>%
+  gf_refine(coord_fixed())
+```
+
 
 Intuition suggests that the radius of an enscribed circle for $g()$ should match the radius of the graph of the function.
 

@@ -24,11 +24,11 @@ $${\cal D}_t\, x(t) \equiv \frac{x(t + 1) - x(t)}{1}$$
 From his data, he observed that ${\cal D}_t\, x(t)$ increases linearly in $t$: $${\cal D}_t x(t) = 2 t + 1$$
 
 Calculating the second increments of $x$ is done by the "slope function of the slope function," which we can call ${\cal D}_{tt}$:
-$${\cal D}_{tt} x \equiv {\cal D}_t \left[{\cal D}_t x(t)\right] = 2(t+1) + 1 - (2 t + 1) = 2$$
+$${\cal D}_{tt} x(t) \equiv {\cal D}_t \left[{\cal D}_t x(t)\right] = {\cal D_t} \left[\strut 2t+1\right] = \frac{\left[\strut2(t+1) + 1\right] - \left[\strut 2 t + 1\right]}{1} = 2$$
 
 ## Continuous time
 
-Newton considered the problem for continuous time rather than Galileo's discrete time. He reframed the slope function from the big increments of the slope operator ${\cal D}_t$ to imagined vanishingly small increments of a operator that we shall denote $\partial_t$ and call ***differentiation***. `r mark(2015)`
+Newton placed the motion in continuous time rather than Galileo's discrete time. He reframed the slope function from the big increments of the slope operator ${\cal D}_t$ to imagined vanishingly small increments of a operator that we shall denote $\partial_t$ and call ***differentiation***. `r mark(2015)`
 
 The kind of question for which Newton wanted to be able to calculate the answer was, "How to find the function $x(t)$ whose second increment, $\partial_{tt} x(t) = 2$?" His approach, which he called the "method of fluxions," became so important that its name became, simply, "Calculus." `r mark(2020)`
 
@@ -44,9 +44,9 @@ Over the next three centuries, calculus evolved from a set of techniques for des
 
 ## Instantaneous rate of change
 
-On the radio once, I heard a baseball fanatic describing the path of a home run slammed just inside the left-field post. "Coming off the bat, the ball screamed upwards, passing five stories over the head of the first baseman and still gaining altitude. Then, somewhere over mid left-field, gravity caught up of the ball, forcing it down faster and faster until it crashed into the cheap seats." A nice image, perhaps, but wrong about the physics. Gravity doesn't suddenly catch hold of the ball; even when upward bound, gravity influences the ball to exactly the same extent as it does at the peak of the flight and as the ball falls back down. The vertical velocity of the ball is positive while climbing and negative on descent, but that velocity is steadily changing all through the flight: a smooth, almost linear numerical decrease in velocity from the time the ball leaves the bat to when it lands in the bleachers.
+On the radio once, I heard a baseball fanatic describing the path of a home run slammed just inside the left-field post. "Coming off the bat, the ball screamed upwards, passing five stories over the head of the first baseman and still gaining altitude. Then, somewhere over mid left-field, gravity caught up with the ball, forcing it down faster and faster until it crashed into the cheap seats." A nice image, perhaps, but wrong about the physics. Gravity doesn't suddenly catch hold of the ball; even when upward bound, gravity influences the ball to exactly the same extent as it does at the peak of the flight and as the ball falls back down. The vertical velocity of the ball is positive while climbing and negative on descent, but that velocity is steadily changing all through the flight: a smooth, almost linear numerical decrease in velocity from the time the ball leaves the bat to when it lands in the bleachers.
 
-At each instant of time, the vertical velocity of the ball has a numerical value in feet-per-second. That value changes continuously and is never the same at any two points in the ball's flight. If $Z(t)$ is the height of the ball, and $v_Z(t)$ is the vertical velocity, then the slope function $${\cal D}_t Z(t) \equiv \frac{Z(t+h) - Z(t)}{h}$$ tells us the average velocity of the ball over an time interval of $h$.
+At each instant of time, the vertical velocity of the ball has a numerical value in feet-per-second. That value changes continuously and is never the same at any two points in the ball's flight. If $Z(t)$ is the height of the ball at time $t$, and $v_Z(t)$ is the vertical velocity at time $t$, then the slope function $${\cal D}_t Z(t) \equiv \frac{Z(t+h) - Z(t)}{h}$$ tells us the average velocity of the ball over a time interval of $h$.
 
 The "average velocity" is a human construction. At each instant in time the ball has a velocity that is constantly changing. The reality of the ball is that it has only an instantaneous velocity. The average velocity is merely a concession to the way we might measure the velocity, by recording the height at two different times and computing the difference in height divided by the difference in time.
 
@@ -56,15 +56,15 @@ One thing that happens when we make $h = 0$ is that the formula for ${\cal D}_t 
 
 The mystery of 0/0 baffled mathematicians and philosophers for thousands of years. It was Newton who turned it into a computational reality, although his reasoning was regarded with suspicion for two hundred years.
 
-The world's best mathematicians struggled for centuries with the logic of finding a mathematical framework for making sense of what a baseball and gravity do naturally. Rather than ourselves dealing with the intricacies of of mathematical logic, we can gain an adequate understanding of the situation by avoiding $h=0$ in favor of a gentler, gradual, ***evanescent h***.
+The world's best mathematicians struggled for centuries with the logic of finding a mathematical framework for making sense of what a baseball and gravity do naturally. Rather than ourselves dealing with the intricacies of mathematical logic, we can gain an adequate understanding of the situation by avoiding $h=0$ in favor of a gentler, gradual, ***evanescent h***.
 
 The type of slope function calculated with this (as yet undefined) evanescent h is called a ***derivative*** and corresponds to the instantaneous rate-of-change function. The process of constructing the derivative of a function $f(t)$ is called ***differentiation***. And to help us keep track of things, whenever we construct a derivative of $f(t)$, we will name the constructed function $\partial_t f(t)$. Similarly, the name of the function that is the derivative of $g(x)$ will be $\partial_x g(x)$
 
 ## Slopes and motion
 
-Consider a graph of the position of a car along a road as in Figure \@ref(fig:stop-and-go2).  Over the course of an hour, the car traveled about 25 miles. In other words, the ***average*** speed is 25 miles/hour: the *slope* of the tan line segment. Given the traffic, sometimes the car was stopped (time C), sometimes crawling (time D) and sometimes much faster than average (time B).   `r mark(2030)`
+Consider a graph of the position of a car along a road as in Figure \@ref(fig:stop-and-go2).  Over the course of an hour, the car traveled about 25 miles. In other words, the ***average*** speed is 25 miles/hour: the *slope* of the tan-colored line segment. Given the traffic, sometimes the car was stopped (time C), sometimes crawling (time D) and sometimes much faster than average (time B).   `r mark(2030)`
 
-```{r stop-and-go2, echo=FALSE, fig.cap="The position of an imagined car over an hour of time. (black) The tan line shows what the position would have been if the car had travelled steadily at the average speed for the hour."}
+```{r stop-and-go2, echo=FALSE, fig.cap="The position of an imagined car over an hour of time. (black) The tan-colored line shows what the position would have been if the car had travelled steadily at the average speed for the hour."}
 f <- rfun(~ t, seed=105, n=5)
 raw <- function(t) 
         f(t) - t - 30*dnorm(t, 0, 3) + 60*dnorm(t,7,1)
@@ -85,22 +85,23 @@ Intervals <- tibble::tribble(
     # .4, .54, "brown",
 ) %>%
     mutate(y0=position(t0), y1=position(t1))
-slice_plot(position(t) ~ t, domain(t = c(0, 1)), size=2) %>%
+FigA <- slice_plot(position(t) ~ t, domain(t = c(0, 1)), size=2) %>%
     gf_labs(y = "f(t): distance traveled (miles)",
             x = "Time since start (hours)") %>%
     gf_text(0 ~ t, data = Pts, label=~label, color="dodgerblue") %>%
     gf_segment(2 + y ~ t + t, data = Pts[-6,], color="dodgerblue") %>%
     gf_segment(y0 + y1 ~ t0 + t1, data = Intervals, color=~color, alpha=0.5, size=3) %>%
     gf_refine(scale_color_identity())
+FigA
 ```
 
-Of course, when you're driving you are aware of the car's speed at any instant. You need only look at the speedometer to read off the value (in miles per hour). Speedometers don't show the average speed for the entire trip. The average speed is the slope of the tan line in Figure \@ref(fig:stop-and-go2), 25 miles in one hour, usually stated 25 miles-per-hour. `r mark(2035)`
+Of course, when you're driving you are aware of the car's speed at any instant. You need only look at the speedometer to read off the value (in miles per hour). Speedometers don't show the average speed for the entire trip. The average speed is the slope of the tan-colored line in Figure \@ref(fig:stop-and-go2), 25 miles in one hour, usually stated 25 miles-per-hour. `r mark(2035)`
 
 In terms of Figure \@ref(fig:stop-and-go2), the speedometer reading is the **slope** of $f(t)$ at the given instant. You can see from the Figure that at instant A the speed is very close to the average speed for the entire trip. At instant B the car is going faster; the slope is much steeper. On the other hand, at instant C the car is at a standstill; its position doesn't change at all. `r mark(2040)`
 
 A car's speedometer shows the speed at each moment---or ***instant***---of the trip. As you can see in Figure \@ref(fig:stop-and-go2), the speed varies and is sometimes less than the average speed, sometimes greater, and occasionally equal to the average speed over the trip.  `r mark(2045)`
 
-You can easily judge from a graph of $f()$ whether the instantaneous speed is faster or slower than the average speed. Better, however, if we simply record the speedometer reading and graph that, as in \@ref(fig:instant-speed). You can read off the speed from the graph at any instant of time simply by reference to the vertical axis.
+You can easily judge from a graph of $f(t)$ whether the instantaneous speed is faster or slower than the average speed. Better, however, if we simply record the speedometer reading and graph that, as in \@ref(fig:instant-speed). You can read off the speed from the graph at any instant of time simply by reference to the vertical axis.
 
 ```{r instant-speed, echo=FALSE, fig.cap="The ***instantaneous*** speed of the car whose position vs time is shown in Figure @@ref(fig:stop-and-go2)."}
 f <- rfun(~ t, seed=105, n=5)
@@ -114,24 +115,25 @@ Pts <- tibble::tibble(
     y = speed(t) + 5,
     label=c("", "A", "B", "C", "D", "")
 )
-slice_plot(speed(t) ~ t, domain(t=c(0,1)), npts=500) %>%
+FigB <- slice_plot(speed(t) ~ t, domain(t=c(0,1)), npts=500) %>%
     gf_labs(y = "Instantaneous speed (miles/hour)", 
            x = "Time since start of trip.") %>%
     gf_text(2 ~ t, data = Pts, label=~label, color="dodgerblue") %>%
     gf_segment(5 + y ~ t + t, data = Pts[-1,], color="dodgerblue")
+FigB
 ```
-The two graphs in Figures \@ref(fig:stop-and-go2) and \@ref(fig:instant-speed) show exactly the same car trip. The presentation of the data in the different graphs makes it easy to see some things and hard to see others. For instance, figuring out when the car is at a stand-still is harder in the position-vs-time graph than in the speed-vs-time graph. `r mark(2050)`
+The two graphs in Figures \@ref(fig:stop-and-go2) and \@ref(fig:instant-speed) show exactly the same car trip. For each of the two graphs, the presentation of the data  makes it easy to see some things and hard to see others. For instance, figuring out when the car is at a stand-still is harder in the position-vs-time graph than in the speed-vs-time graph. `r mark(2050)`
 
 ## Acceleration
 
 Having worked out a theory of slope functions, Newton was ready to express the laws of motion in continuous time. He did this by denoting position as $x(t)$. The familiar concepts of velocity and force could then be defined in terms of slope functions of position and the "quantity of matter," which we call "mass."  `r mark(2055)`
 
 - Velocity is the slope function of position: $v(t) \equiv {\cal D}_t x(t)$.
-- Net force is the slope function of velocity times mass: $F(t) \equiv m {\cal D}_t v(t)$
+- Net force is the slope function of velocity times mass: $F(t) \equiv m {\cal D}_t v(t) = m {\cal D}_{tt} x(t)$ 
 
 To take mass out of the formulation, we give a name specifically to the slope function of velocity: ***acceleration***. 
 
-- Acceleration is the slope function of velocity: $a(t) \equiv {\cal D}_t v(t)$.
+- Acceleration is the slope function of velocity: $a(t) \equiv {\cal D}_t v(t) = {\cal D}_{tt} x(t)$.
 
 With acceleration as a concept, we can define net force as mass times acceleration. This is ***Newton's Second Law of Motion***.
 
@@ -148,21 +150,28 @@ There are several traditional notations for differentiation of a function named 
 - Leibnitz: $\frac{df}{dx}$
 - Partial: $\frac{\partial f}{\partial x}$
 - Euler: $D_x f$
-- One-line: $\partial_x f$ (a hybrid of partial and Euler notation.)
 - Newton (or "dot"): $\dot{f}$
 - Lagrange (or "prime"): $f'$
+- One-line: $\partial_x f$ (This hybrid of partial and Euler notation, will be the main differential notation used in this book.)
 
-In this book, we will mainly use the one-line notation, $\partial_x f$, but it means exactly the same as the Leibnitz and Partial notations, which are much more widely used in textbooks. 
+::: {.intheworld  data-latex=""}
+It is a fact of mathematical and scientific life that a variety of notations are used for differentiation. To some extent, this reflects historical precedence and, to be honest, nationalistic European politics of the 18th century. To make sense of mathematical writing in the many areas in which calculus is used, you have to recognize all of them for what they are. Your skill will be enhanced if you also memorize the names of the different styles. It's not all that different from the pattern in English of having multiple words for the same sort of object, for instance: car, automobile, junker, ride, wheels, crate, jalopy, limo, motor car, horseless carriage.  `r mark(2100)`
+
+In the days when carriages where pulled by horses, the phrase "horseless carriage" made a useful distinction. Today, when horses are rarely seen on the road, it makes sense to trim down the notation to its essentials: ~~horseless~~ **car**~~iage~~. Think of $\partial_x$ as this sort of minification of older notations.^[Yes, ["minification" is a word!](https://en.wikipedia.org/wiki/Minification_(programming))]   
+:::
 
 If you've studied calculus before, you have likely seen the $f'$ notation. This is admirably concise but is only viable in a narrow circumstance: functions that take a single input. What $f'$ leaves out is a means to specify a crucial aspect of differentiation, the **with-respect-to variable**. The general situation for differentiation involves functions of one or more variables, for example, $g(x, y, z)$. For such functions, you need to specify which is the with-respect-to variable. For instance, we can differentiate $g()$ three different ways, each way incrementing one or another of the three inputs: `r mark(2075)`
 
-$$\partial_z g(x, y, z) \equiv \frac{g(x, y, z+h) - g(x, y, z)}{h}$$ 
+
 
 $$\partial_x g(x, y, z) \equiv \frac{g(x+h, y, z) - g(x, y, z)}{h}$$
 
 $$\partial_y g(x, y, z) \equiv \frac{g(x, y+h, z) - g(x, y, z)}{h}$$
+$$\partial_z g(x, y, z) \equiv \frac{g(x, y, z+h) - g(x, y, z)}{h}$$ 
 
-At this point in your studies, you haven't seen why you might choose to differentiate a function with respect to one variable or another. That will come in time. But we want to set you up with notation that won't narrow your options. `r mark(2080)`
+
+At this point in your studies, you haven't seen why you might choose to differentiate a function with respect to one variable or another. That will come in time. But we want to set you up with a notation that won't narrow your options. In this book, we will mainly use the one-line notation, $\partial_x f$, but it means exactly the same as the Leibnitz and Partial notations, which are much more widely used in textbooks. 
+ `r mark(2080)`
 
 Both the Leibnitz and Partial notations are explicit in identifying the function and the with-respect-to-variable. For example, using the Partial differentiation notation, the three ways of differentiating our example function $g(x, y, z)$ are labeled : `r mark(2085)`
 
@@ -170,29 +179,31 @@ $$\frac{\partial f}{\partial x},\ \ \ \frac{\partial f}{\partial y},\ \ \text{an
 
 Our R/mosaic computer differentiation is longer but explicit:
 ```r
+g <- makeFun(__formula__ ~ x & y & z) # define a function
 dx_g <- D(g(x, y, z) ~ x)
 dy_g <- D(g(x, y, z) ~ y)
 dz_g <- D(g(x, y, z) ~ z)
 ```
-The names being used here are arbitrary; you can use any names you like. What's nice about `dx_g` and the others is that it mimics the math notation $\partial_x g()$.
+The names assigned to the result of the `D()` operator can be any names you like. What's nice about `dx_g` and the others is that it mimics the math notation $\partial_x g()$.
 
-Notice that the R/mosaic operator for differentiation is named `D()` and that it is a function. It follows the same pattern as `makeFun()` or `slice_plot()` or `contour_plot()`: the first argument is a tilde expression, for instance `g(x, y, z) ~ x`, which identifies the mathematical function to work with (`g()`) and the name of the with-respect-to input to that function. The R/mosaic notation makes it clear that differentiation is an ***operation*** on a function. The `D()` operator takes a function as input and produces as output **another function**. We've seen similar behavior with, say, `slice_plot()`, which takes a function as input and produces graphics as output. Both `D()` and `slice_plot()` need to know the identity of the with-respect-to variable as well as the function to work with. What's why both pieces of input are packaged into a tilde expression. `r mark(2090)`
+Notice that the R/mosaic operator for differentiation is named `D()` and that it is a function. It follows the same pattern as `makeFun()` or `slice_plot()` or `contour_plot()`: the first argument is a tilde expression, for instance `g(x, y, z) ~ x`, which identifies the mathematical function to work with (`g()`) and the name of the with-respect-to input to that function. The R/mosaic notation makes it clear that differentiation is an ***operation*** on a function. The `D()` operator takes a function as input and produces as output **another function**. We've seen similar behavior with, say, `slice_plot()`, which takes a function as input and produces graphics as output. Both `D()` and `slice_plot()` need to know the identity of the with-respect-to variable as well as the function to work with. That's why both pieces of input are packaged into a tilde expression. `r mark(2090)`
 
 ::: {.why  data-latex=""}
-We're calling `D()` an ***operator*** rather than a ***function***. The reason is purely for communication with other people. There are so many "functions" in a calculus course that we thought it would be helpful to distinguish between the kinds of functions that take quantities as input and produce a quantity as output, and the functions that take a *function* as input and produce a *function* as output. Both sorts are called "functions" in R terminology. But a sentence like, "Differentiation is a function that takes a function as input and produces a function as output," true though it be, is dizzying. `r mark(2095)`
+We're calling `D()` an ***operator*** rather than a ***function***. The reason is purely for communication with other people. There are so many "functions" in a calculus course that we thought it would be helpful to distinguish between the kinds of functions that take quantities as input and produce a quantity as output and the functions that take a *function* as input and produce a *function* as output.^[It's pretty easy to see in an expression like $f(x,y)$ why we call $f()$ a function. But an expression like $3+2$ also involves a function of two inputs. It's just that we write the name of the function (`+`) in between the two inputs. This is called ***infix*** notation.] Both sorts are called "functions" in R terminology. But a sentence like, "Differentiation is a function that takes a function as input and produces a function as output," true though it be, is dizzying. `r mark(2095)`
 :::
 
-::: {.intheworld  data-latex=""}
-It is a fact of mathematical and scientific life that a variety of notations are used for differentiation. To some extent, this reflects historical precedence and, to be honest, nationalistic European politics of the 18th century. To make sense of mathematical writing in the many areas in which calculus is used, you have to recognize all of them for what they are. Your skill will be enhanced if you also memorize the names of the different styles. It's not all that different from the pattern in English of having multiple words for the same sort of object, for instance: car, automobile, junker, ride, wheels, crate, jalopy, limo, motor car, horseless carriage.  `r mark(2100)`
 
-In the days when carriages where pulled by horses, the phrase "horseless carriage" made a useful distinction. Today, when horses are rarely seen on the road, it make sense to trim down the notation to its essentials: ~~horseless~~ **car**~~iage~~. Think of $\partial_x$ as this sort of minification of older notations.^[Yes, ["minification" is a word!](https://en.wikipedia.org/wiki/Minification_(programming))]   
-:::
 
 
 
 ## Visualizing the slope function {#slope-fun-visualization}
 
-Look back at Figures \@ref(fig:stop-and-go2) and \@ref(fig:instant-speed). We know the two functions are closely related---one is the position of the car and the other the speed. But it's hard to see the relationship at a glance. You have to go patiently back and forth between the two graphs, comparing a slope in one graph to an output value in the other graph.
+Look back at Figures \@ref(fig:stop-and-go2) and \@ref(fig:instant-speed) (which we reproduce here). We know the two functions are closely related---one is the position of the car and the other the speed. But it's hard to see the relationship at a glance. You have to go patiently back and forth between the two graphs, comparing a slope in one graph to an output value in the other graph.
+
+```{r echo=FALSE, out.width="50%", fig.show="hold"}
+FigA
+FigB
+```
 
 We can make things easier by taking an unconventional approach to graphing the slope function. Rather than showing the slope as the vertical position on a graph, let's show the slope with an actual slope! Perhaps this non-standard visualization will give you a better way to understand slope functions. If so, good. The ultimate benefit of a way to show $\diff{x} f(x)$ and $f(x)$ in the same frame will come when we introduce the operation of ***anti-differentiation***. `r mark(2130)`
 
@@ -208,9 +219,9 @@ Figure \@ref(fig:segment-approx) shows the segment by segment approximation arou
 Segs <- create_segments(sin(x) ~ x, domain(x=c(-.1,pi)), nsegs=10)
 gf_segment(yf + yfend ~ x + xend, data = Segs, 
            color=~slope,size=2, alpha=.9) %>%
-    gf_refine(scale_color_viridis_c()) %>%
-    slice_plot(sin(x) ~ x, color="orange3", domain(x=c(0, pi)),
-               alpha = 0.5, size=1, inherit=FALSE) %>%
+    gf_refine(scale_color_viridis_c(begin=.3, end=1)) %>%
+    slice_plot(sin(x) ~ x, color="black", domain(x=c(0, pi)),
+               alpha = 0.85, size=1, inherit=FALSE) %>%
     gf_point(offset ~ start, size=1, color="green") %>%
     gf_segment(y + yend ~ x + xend, data = Segs, 
            color=~slope,size=1.3, lineend="round") %>%
@@ -220,8 +231,9 @@ gf_segment(yf + yfend ~ x + xend, data = Segs,
 ```
 You can see that the slopes are a function of $x$, that is, the slope changes with $x$. Because the function and it's slope function are shown on the same graph in the same way, it's easy to verify that the slope as a function of $x$ corresponds to the behavior of the function itself.
 
-Perhaps it will be easier to see that the slope is a function of $x$ if we show more linear segments 
-```{r finer-slope, echo=FALSE}
+
+```{r finer-slope, eval=FALSE, echo=FALSE}
+## Leaving this figure out
 Segs <- create_segments(sin(x) ~ x, domain(x=c(-.1,pi)), nsegs=100)
 # gf_segment(yf + yfend ~ x + xend, data = Segs, 
 #            color=~slope,size=2, alpha=.9) %>%
@@ -251,7 +263,7 @@ gf_segment(y + yend ~ x + xend, data = Segs,
            color=~slope,size=1.3, lineend="round") %>%
   gf_point(0 ~ start, size=1, color="green") %>%
     gf_labs(title="exp(x) slope-function visualization")  %>%
-    gf_refine(scale_color_viridis_c()) %>%
+    gf_refine(scale_color_viridis_c(begin=.3, end=1)) %>%
   gf_theme(theme(legend.position = "none")), ncol = 2)
 Segs <- create_segments(log(x) ~ x, domain(x=c(.2,pi)), nsegs=30)
 ggpubr::ggarrange(
@@ -261,7 +273,7 @@ gf_segment(y + yend ~ x + xend, data = Segs,
            color=~slope,size=1.3, lineend="round") %>%
   gf_point(0 ~ start, size=1, color="green") %>%
     gf_labs(title="log(x) slope-function visualization")  %>%
-    gf_refine(scale_color_viridis_c()) %>%
+    gf_refine(scale_color_viridis_c(begin=.3, end=1)) %>%
   gf_theme(theme(legend.position = "none")), ncol = 2)
 Segs <- create_segments(x^2 ~ x, domain(x=c(-pi,pi)), nsegs=30)
 ggpubr::ggarrange(
@@ -271,7 +283,7 @@ gf_segment(y + yend ~ x + xend, data = Segs,
            color=~slope,size=1.3, lineend="round") %>%
   gf_point(0 ~ start, size=1, color="green") %>%
     gf_labs(title=expression(paste("x^2 slope-function visualization")))  %>%
-    gf_refine(scale_color_viridis_c()) %>%
+    gf_refine(scale_color_viridis_c(begin=.3, end=1)) %>%
   gf_theme(theme(legend.position = "none")), ncol=2)
 Segs <- create_segments(2*x -4 ~ x, domain(x=c(-pi,pi)), nsegs=30)
 ggpubr::ggarrange(
@@ -282,7 +294,7 @@ gf_segment(y + yend ~ x + xend, data = Segs,
   gf_point(0 ~ start, size=1, color="green") %>%
     gf_labs(title="line(x) = 2 x - 4 slope-function visualization") %>%
     gf_lims(y=c(-1,1))  %>%
-    gf_refine(scale_color_viridis_c()) %>%
+    gf_refine(scale_color_viridis_c(begin=.3, end=1)) %>%
   gf_theme(theme(legend.position = "none")), ncol=2)
 ```
 
@@ -292,7 +304,7 @@ Calculus and the *Wealth of Nations*
 
 1776 can be reckoned as the birth year of two revolutions: the American *Declaration of Independence* and Adam Smith's publication of the *Wealth of Nations*.
 
-Smith, considered the intellectual father of free-market economics, explored the origins of the supply and demand of commodities, labor, and money. A key figure of the Scottish Enlightenment, Smith would have been well aware of Newton, his work, and the many advances enabled by the creation of calculus. And *Wealth of Nations* lays out dozens of relationships between different quantities --- wages, labor, stock, interest, prices, profits, and coinage among others. Yet *Wealth of Nations* does not use the concepts or language of calculus. Lacking this, Smith's arguments, sophisticated though they be, are based on the Aristotelian notions of tendency toward a "natural" resting place.^[For more discussion, see Tony Aspromourgos (2007) "Adam Smith's treatment of market prices and their relationship to <<supply>> and <<demand>>" *History of Economic Ideas* , 2007, Vol. 15, No. 3 (2007), pp. 27-57 [Link](https://www.jstor.org/stable/23723287)]
+Smith, considered the intellectual father of free-market economics, explored the origins of the supply and demand of commodities, labor, and money. A key figure of the Scottish Enlightenment, Smith would have been well aware of Newton, his work, and the many advances enabled by the creation of calculus. *Wealth of Nations* lays out dozens of relationships between different quantities --- wages, labor, stock, interest, prices, profits, and coinage among others. Yet *Wealth of Nations* does not use the concepts or language of calculus. Lacking this, Smith's arguments, sophisticated though they be, are based on the Aristotelian notions of tendency toward a "natural" resting place.^[For more discussion, see Tony Aspromourgos (2007) "Adam Smith's treatment of market prices and their relationship to <<supply>> and <<demand>>" *History of Economic Ideas* , 2007, Vol. 15, No. 3 (2007), pp. 27-57 [Link](https://www.jstor.org/stable/23723287)]
 
 Consider this characteristic statement in *Wealth of Nations*:
 
@@ -323,13 +335,13 @@ Whereas the dimension of the output $f(t)$ is simply $\left[f(t)\right]$, the di
 
 Suppose $x(t)$ is the position of a car as a function of time $t$. Position has dimension L. Time has dimension T. The function $\partial_t x(t)$ will have dimension L/T; that's what velocity is, for instance miles-per-hour.
 
-Another example: Suppose the function `pressure()` takes as input altitude input (in km) and returns as output a pressure (in kPa, "kiloPascal"^[Air pressure at sea level is about 100 kiloPascal.]).
+Another example: Suppose the function pressure() takes as input altitude input (in km) and returns as output a pressure (in kPa, "kiloPascal"^[Air pressure at sea level is about 100 kiloPascal.]).
 
-The derivative function, let's call it `\partial_{altitude} pressure()`, also takes an input in km, but produces an output in kPA per km: a rate.
+The derivative function, let's call it $\partial_\text{altitude} \text{pressure}()$, also takes an input in km, but produces an output in kPA per km: a rate.
 
 ## Exercises
 
-`r insert_calcZ_exercise("17.2", "slwdkw", "Exercises/Diff/kid-mean-table.Rmd")`
+`r insert_calcZ_exercise("17.02", "slwdkw", "Exercises/Diff/kid-mean-table.Rmd")`
 
 `r insert_calcZ_exercise("17.04", "eodlt", "Exercises/Diff/pine-lead-car.Rmd")`
 
