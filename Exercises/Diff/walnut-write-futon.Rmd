@@ -52,23 +52,19 @@ askMC(
 )
 ```  
 
-Use the sandbox to plot a graph of $A(r, V)$ for $V = 1000$liters. 
-
-```{r rb2-2, exercise=TRUE, exercise.cap="Sandbox", exercise.nlines=4, eval=FALSE}
-#A <- makeFun(function here ~ r, V = 1000000)
-#slice_plot(A(r) ~ r, domain(r=c(55,70)))
+Use a sandbox to plot a graph of $A(r, V)$ versus r, setting $V = 1000$ liters. 
 
 
-```
 
 ```{r rb2-2-solution, echo=FALSE, eval=FALSE}
 A <- makeFun(2*(V - 4*pi*r^3/3)/r + 4*pi*r^2 ~ r, V = 1000000)
-slice_plot(A(r) ~ r, domain(r=c(55,70)))
+slice_plot(A(r) ~ r, domain(r=c(55,70))) %>%
+  gf_labs(y="Surface area of tank (square cm)")
 ```
 
 ```{r tb1-5, echo=FALSE, results="markup"}
 askMC(
-  "From the graph of $A(r, V)$ at $V=1000$ liters, read off a range of $r$ that produces $A$ no worse than 1% greater than the minimum. How wide is that range, approximately?",
+  "From the graph of $A(r, V)$ versus $r$ at $V=1000$ liters, read off a range of $r$ that produces $A$ no worse than 1% greater than the minimum. How wide is that range, approximately?",
   "$\\pm 0.1$cm$",
   "$\\pm 1$cm$",
   "+$\\pm 5$cm$+",
