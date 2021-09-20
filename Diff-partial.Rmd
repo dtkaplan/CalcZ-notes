@@ -33,7 +33,7 @@ graph_with_tangents(f, domain=dom,
                     touches = touches,
                     offsets=rep(1, length(touches))) %>%
   gf_text(y-1 ~ x, data=Pts, color=~slope_color, label=~ slopeval) %>%
-  gf_labs(y="f(x)", title="(A) Graph of function f(x)")
+  gf_labs(y="f(x)", title="(A) Value of function f(x)")
 
 gf_point(dy ~ x, data = Pts, color = ~ color) %>%
   gf_refine(scale_color_identity()) %>%
@@ -41,13 +41,13 @@ gf_point(dy ~ x, data = Pts, color = ~ color) %>%
   gf_lims(x = c(-3,3)) %>%
   gf_text(dy ~ I(x+0.2), data=Segments, color=~slope_color, label=~ slopeval) %>%
   gf_text(dy ~ -3, data=Segments, color=~slope_color, label=~ slopeval) %>%
-  gf_labs(y="Slope of f(x)", title="(B) Graph of derivative of f(x)") %>%
+  gf_labs(y="Slope of f(x)", title="(B) Slope of f(x)") %>%
   gf_text(I(dy+1) ~ x, data = Segments, color=~ color, label=~label)
 ```
 
-Panel (A) in Figure \@ref(fig:segment-deriv) shows a smooth function $f(x)$ (thin black curve). To find the function $\partial_x f(x)$, we take the slope of $f(x)$ at many closely spaced inputs. In Panel (A), I've drawn a short, tangent line segment at the closely points labeled A through V. The slope of each tangent line segment can be calculated by the usual rise-over-run method; the numerical value of the slope is written underneath the segment. To plot the derivative $\partial_x f(x)$, I have taken the slope information from (A) and plotted it as a function of $x$. `r mark(2620)`
+Panel (A) in Figure \@ref(fig:segment-deriv) shows a smooth function $f(x)$ (thin black curve). To find the function $\partial_x f(x)$, we take the slope of $f(x)$ at many closely spaced inputs. In Panel (A), we've highlighted short, tangent line segments at the closely-spaced points labeled A through V. The slope of each tangent line segment can be calculated by the usual rise-over-run method; the numerical value of the slope is written underneath the segment. To plot the derivative $\partial_x f(x)$, I have taken the slope information from (A) and plotted it as a function of $x$. `r mark(2620)`
 
-To restate what you already know, in the neighborhood of any input value $x_0$, the slope of any local straight-line approximation to $f(x)$ is given by the value of of $\partial_x f(x_0)$. 
+To restate what you already know, in the neighborhood of any input value $x$, the slope of any local straight-line approximation to $f(x)$ is given by the value of of $\partial_x f(x)$. 
 
 ## Calculus on two inputs
 
@@ -61,9 +61,11 @@ knitr::include_graphics("www/tangent-planes-on-melon.png")
 
 Better than a picture of a summer melon, pick up a hardcover book and place it on a curved surface such as a basketball. The book cover is a flat surface: a facet. The orientation of the cover will match the orientation of the surface at the point of tangency. Change the orientation of the cover and you will find that the point of tangency will change correspondingly.  `r mark(2625)`
 
-If melons and basketballs are not your style, you can play the same game on an interactive graph of a function of two variables. The snapshot below is a link to an applet that shows the graph of a function as a blue surface. You can specify a point on the surface by setting the value of the (x, y) input using the sliders. Display the tangent plane at that point by check-marking the "Tangent plane" input. (Acknowledgments to Alfredo Sánchez Alberca who wrote the applet using the GeoGebra math visualization system.) `r mark(2630)`
+If melons and basketballs are not your style, you can play the same game on an interactive graph of a function of two variables. The snapshot below is a link to an applet that shows the graph of a function as a **blue** surface. You can specify a point on the surface by setting the value of the (x, y) input using the sliders. Display the tangent plane (which will be **green**) at that point by check-marking the "Tangent plane" input. (Acknowledgments to Alfredo Sánchez Alberca who wrote the applet using the GeoGebra math visualization system.) `r mark(2630)`
 
+<!--
 [![](www/geogebra-tangent-app.png)](https://www.geogebra.org/m/wTh7KKd3){:target="_blank"}
+-->
 
 <a href="https://www.geogebra.org/m/wTh7KKd3" target="_blank"><img src="www/geogebra-tangent-app.png" width="70%"></a>
 
@@ -83,7 +85,7 @@ Pts <- tibble::tribble(
   -1.7, -1.7, "C"
 )
 P <- contour_plot(g(x, y) ~ x + y, domain(x=c(-3,3), y=c(-3,3))) %>%
-  gf_text(y ~ x, data = Pts, color="orange3", label=~label) %>%
+  gf_text(y ~ x, data = Pts, color="magenta", label=~label) %>%
   gf_refine(coord_fixed())
 dx <- D(g(x, y) ~ x)
 dy <- D(g(x, y) ~ y)
@@ -91,30 +93,30 @@ xA <- -1
 yA <- 1
 gA <- function(x, y) {g(xA, yA) + dx(xA, yA)*(x-xA) + dy(xA,yA)*(y-yA)}
 PA <- contour_plot(gA(x, y) ~ x + y, domain(x=xA + 3*c(-.1, .1), y=yA +3*c(-.1, .1))) %>%
-  gf_text(y ~ x, data = Pts %>% filter(label=="A"), label=~label, color="orange3", size=12)%>%
+  gf_text(y ~ x, data = Pts %>% filter(label=="A"), label=~label, color="magenta", size=12)%>%
   gf_refine(coord_fixed())
 PzA <- contour_plot(g(x, y) ~ x + y, domain(x=xA + 3*c(-.1, .1), y=yA +3*c(-.1, .1))) %>%
-  gf_text(y ~ x, data = Pts %>% filter(label=="A"), label=~label, color="orange3", size=12)%>%
+  gf_text(y ~ x, data = Pts %>% filter(label=="A"), label=~label, color="magenta", size=12)%>%
   gf_refine(coord_fixed())
 
 xB <- 1.5
 yB <- 1.2
 gB <- function(x, y) {g(xB, yB) + dx(xB, yB)*(x-xB) + dy(xB,yB)*(y-yB)}
 PB<-   contour_plot(gB(x, y) ~ x + y, domain(x=c(xB-.1, xB+.1), y=c(yB-.1, yB+.1))) %>%
-  gf_text(y ~ x, data = Pts %>% filter(label=="B"), label=~label, color="orange3", size=12)%>%
+  gf_text(y ~ x, data = Pts %>% filter(label=="B"), label=~label, color="magenta", size=12)%>%
   gf_refine(coord_fixed())
 PzB <- contour_plot(g(x, y) ~ x + y, domain(x=xB + 1*c(-.1, .1), y=yB +1*c(-.1, .1))) %>%
-  gf_text(y ~ x, data = Pts %>% filter(label=="B"), label=~label, color="orange3", size=12)%>%
+  gf_text(y ~ x, data = Pts %>% filter(label=="B"), label=~label, color="magenta", size=12)%>%
   gf_refine(coord_fixed())
 
 xC <- -1.7
 yC <- -1.7
 gC<- function(x, y) {g(xC, yC) + dx(xC, yC)*(x-xC) + dy(xC,yC)*(y-yC)}
 PC <- contour_plot(gC(x, y) ~ x + y, domain(x=c(xC-.1, xC+.1), y=c(yC-.1, yC+.1))) %>%
-  gf_text(y ~ x, data = Pts %>% filter(label=="C"), label=~label, color="orange3", size=12)%>%
+  gf_text(y ~ x, data = Pts %>% filter(label=="C"), label=~label, color="magenta", size=12)%>%
   gf_refine(coord_fixed())
 PzC <- contour_plot(g(x, y) ~ x + y, domain(x=xC + 1*c(-.1, .1), y=yC +1*c(-.1, .1))) %>%
-  gf_text(y ~ x, data = Pts %>% filter(label=="C"), label=~label, color="orange3", size=12)%>%
+  gf_text(y ~ x, data = Pts %>% filter(label=="C"), label=~label, color="magenta", size=12)%>%
   gf_refine(coord_fixed())
 
 ```
@@ -126,24 +128,24 @@ P
 
 Zooming in on each of the marked points presents a simpler picture for each of them, although one that is different for each point. Each zoomed-in plot contains almost parallel, almost evenly spaced contours. If the surface had been exactly planar over the entire zoomed-in domain, the contours would be *exactly* parallel and exactly evenly spaced. We can approach such exact parallelness by zooming in more closely around the labeled point. `r mark(2645)`
 
-```{r zoomed-plot, echo=FALSE, out.width="33%", fig.show="hold", fig.cap="Zooming in on the neighborhoods of A, B, and C in Figure @@ref(fig:whole-plot) shows a simple, almost planar, local landscape."}
+```{r zoomed-plot, echo=FALSE, out.width="33%", fig.show="hold", fig.cap="Zooming in on the neighborhoods of A, B, and C in Figure \\@ref(fig:whole-plot) shows a simple, almost planar, local landscape."}
 PzC
 PzA
 PzB
 ```
 
-Just as the function $\line(x) \equiv a x + b$ describes a straight line, the function $\text{plane}(x, y) \equiv a + b x + c y$ describes a plane whose orientation is specified by the value of the parameters $b$ and $c$. `r mark(2650)`
+Just as the function $\line(x) \equiv a x + b$ describes a straight line, the function $\text{plane}(x, y) \equiv a + b x + c y$ describes a plane whose orientation is specified by the value of the parameters $b$ and $c$. (Parameter $a$ is about the vertical location of the plane, not it's orientation.) `r mark(2650)`
 
 In Figure \@ref(fig:facet-plot), the facets tangent to the original surface at A, B, and C are displayed. Comparing Figures \@ref(fig:zoomed-plot) and \@ref(fig:facet-plot) you can see that each facet has the same orientation as the surface; the contours face in the same way. `r mark(2655)`
 
 
-```{r facet-plot, echo=FALSE, out.width="33%", fig.show="hold", fig.cap="The facets around the points are linear functions, each aligned with the contours near that point in Figure @@ref(fig:whole-plot)"}
+```{r facet-plot, echo=FALSE, out.width="33%", fig.show="hold", fig.cap="The facets around the points are linear functions, each aligned with the contours near that point in Figure \\@ref(fig:whole-plot)"}
 PC
 PA
 PB
 ```
 
-Remember that the point of constructing such facets is to generalize the idea of a derivative from a function of one input $f(x)$ to functions of two and more inputs such as $g(x,y)$. Just as the derivative $\partial_x f(x_0)$ reflects the ***slope*** of the *line* tangent to the graph of $f(x)$ at $x=x_0$, our plan for the "derivative" of $g(x_0,y_0)$ is to represent the ***orientation*** of the facet tangent to the graph of $g(x,y)$  at $(x=x_0, y=y_0)$. The question for us now is what information is needed to specify an orientation. `r mark(2660)`
+Remember that the point of constructing such facets is to generalize the idea of a derivative from a function of one input $f(x)$ to functions of two or more inputs such as $g(x,y)$. Just as the derivative $\partial_x f(x_0)$ reflects the ***slope*** of the *line* tangent to the graph of $f(x)$ at $x=x_0$, our plan for the "derivative" of $g(x_0,y_0)$ is to represent the ***orientation*** of the facet tangent to the graph of $g(x,y)$  at $(x=x_0, y=y_0)$. The question for us now is what information is needed to specify an orientation. `r mark(2660)`
 
 One clue comes from the formula for a function whose graph is a plane oriented in a particular direction:
 
@@ -175,21 +177,21 @@ knitr::include_graphics("www/level-book.png")
 knitr::include_graphics("www/rotated-book.png")
 knitr::include_graphics("www/tipped-book.png")
 ```
-You can tip the object in one direction by raising or lowering one hand. (middle picture) And you can tip the object in the other coordinate direction by rotating the object around the line joining the points grasped by the left and right hands. (right picture) By combining these two motions, you can orient the surface of the object in a wide range of directions. `r mark(2680)`
+You can tip the object in one direction by raising or lowering one hand. (middle picture) And you can tip the object in the other coordinate direction by rotating the object around the line joining the points grasped by the left and right hands. (right picture) By combining these two motions, you can orient the surface of the object in a wide range of directions.^[In describing the orientation of aircraft and ships, three parameters are used: pitch, roll, and yaw. For a geometrical plane (as opposed to an aircraft or ship, which have distinct front and back ends), yaw isn't applicable.] `r mark(2680)`
 
 The purpose of this lesson is to show that two-numbers are sufficient to dictate the orientation of a plane. In terms of Figure \@ref(fig:hold-book) these are 1) the amount that one hand is raised relative to the other and 2) the angle of rotation around the hand-to-hand axis. `r mark(2685)`
 
 Similarly, in the formula for a plane, the orientation is set by two numbers, $b$ and $c$ in $\text{plane}(x, y) \equiv a + b x + c y$.
 
-How to find the right $b$ and $c$ for the tangent facet to a function $g(x,y)$ at a specific input $(x_0, y_0)$? Taking slices of $g(x,y)$ provides the answer. In particular, these two slices:
-$\text{slice}_1(x) \equiv g(x, y_0) = a + b\, x + c\, y_0 \\ \text{slice}_2(y) \equiv g(x_0, y) = a + b x_0 + c\, y$
+How do we find the right $b$ and $c$ for the tangent facet to a function $g(x,y)$ at a specific input $(x_0, y_0)$? Taking slices of $g(x,y)$ provides the answer. In particular, these two slices:
+$$\text{slice}_1(x) \equiv g(x, y_0) = a + b\, x + c\, y_0 \\ \text{slice}_2(y) \equiv g(x_0, y) = a + b x_0 + c\, y$$
 
 Look carefully at the formulas for the slices. In $\text{slice}_1(x)$, the value of $y$ is being held constant at $y=y_0$. Similarly, in $\text{slice}_2(y)$ the value of $x$ is held constant at $x=x_0$.  `r mark(2690)`
 
-The parameters $b$ and $c$ can be read out from the derivatives of the respective slices:
+The parameters $b$ and $c$ can be read out from the derivatives of the respective slices: $b$ is equal to the derivative of the slice$_1$ function with respect to $x$ evaluated at $x=x_0$, while $c$ is the derivative of the slice$_2$ function with respect to $y$ evaluated at $y=y_0$. Or, in the more compact mathematical notation:
 
 $$b = \partial_x \text{slice}_1(x)\left.\strut\right|_{x=x_0} \ \ \text{and}\ \ c=\partial_y \text{slice}_2(y)\left.\strut\right|_{y=y_0}$$
-These derivatives of slice functions are called ***partial derivatives***. The word "partial" refers to examining just one input at a time. Here, we're evaluating the partial derivative functions at a specific inputs, $x=x_0$ or $y=y_0$. `r mark(2695)`
+These derivatives of slice functions are called ***partial derivatives***. The word "partial" refers to examining just one input at a time. In the above formulas, the ${\large |}_{x=x_0}$ means to evaluate the derivative at $x=x_0$ and  ${\large |}_{y=y_0}$ means something similar. `r mark(2695)`
 
 You don't need to create the slices explicitly in order to calculate the partial derivatives. 
 Simply differentiate $g(x, y)$ with respect to $x$ in order to get parameter $b$ and differentiate $g(x, y)$ with respect to $y$ to get parameter $c$. To demonstrate, we'll make use of the ***sum*** rule:
@@ -210,13 +212,17 @@ $$
 
 ## All other things being equal ...
 
-Recall that the derivative of a function of one variable, say, $\partial_x f(x)$ tells you, at each possible value of the input $x$, how much the output will change proportional to a small change in the value of the input. This is exactly what the first-order polynomial approximation (that is, the ***linear approximation***), is saying: for small $dx$, $$f(x+dx) = f(x) + \partial_x f(x) \times dx$$
-The same logic applies for functions of two inputs:
+Recall that the derivative of a function of one variable, say, $\partial_x f(x)$ tells you, at each possible value of the input $x$, how much the output will change proportional to a small change in the value of the input. 
+
+Now that we are in the domain of multiple inputs, writing $h$ to stand for "a small change" is not entirely adequate. Instead, we'll write $dx$ for a small change in the $x$ input and $dy$ for a small change in the $y$ input.
+
+With this notation, we write the first-order polynomial approximation to a function of a single input $x$ as $$f(x+dx) = f(x) + \partial_x f(x) \times dx$$
+Applying this notation to functions of two inputs, we have:
 $$g(x + \color{magenta}{dx}, y) = g(x,y) + \color{magenta}{\partial_x} g(x,y) \times \color{magenta}{dx}\\
 \text{and} \\
 g(x, y+\color{brown}{dy}) = g(x,y) + \color{brown}{\partial_y} g(x,y) \times \color{brown}{dy}$$
 
-Each of these statements is about *changing one input* while *holding the other input(s) constant*. Or, as the more familiar expression goes, "The effect of changing one input  **all other things being equal**. `r mark(2705)`
+Each of these statements is about *changing one input* while *holding the other input(s) constant*. Or, as the more familiar expression goes, "The effect of changing one input  **all other things being equal** or **all other things held constant**.^[The Latin phrase for this is *ceteris paribus*, often used in economics.] `r mark(2705)`
 
 
 Everything we've said about differentiation rules applies not just to functions of one input, $f(x)$, but to functions with two or more inputs, $g(x,y)$, $h(x,y,z)$ and so on.  `r mark(2710)`
@@ -249,76 +255,6 @@ contour_plot(g(x, y+.2) ~ x + y, domain(x=c(-2,2), y=c(0, 4))) %>%
   gf_refine(coord_fixed())
 ```
 
-`r insert_calcZ_exercise("24.02", "9iowVB", "Exercises/Diff/partial-purple.Rmd")`
-
-`r insert_calcZ_exercise("24.04", "qdkw", "Exercises/Diff/partial-tan.Rmd")`
-
-`r insert_calcZ_exercise("24.06", "uekses", "Exercises/Diff/partial-doctor.Rmd")`
-
-`r insert_calcZ_exercise("24.08", "wkd83", "Exercises/Diff/gradient-field-red.Rmd")`
-
-`r insert_calcZ_exercise("24.10", "lkwciw", "Exercises/Diff/gradient-field-blue.Rmd")`
-
-`r insert_calcZ_exercise("24.12", "xdkw", "Exercises/Diff/gradient-field-orange.Rmd")`
-
-
-
-
-`r insert_calcZ_exercise("24.14", "vkdlw", "Exercises/Diff/partial-house.Rmd")`
-
-`r insert_calcZ_exercise("24.16", "72ldw", "Exercises/Diff/spider-blow-lamp.Rmd")`
-
-
-`r insert_calcZ_exercise("24.18", "oekse", "Exercises/Diff/grass-grows-red.Rmd")`
-
-`r insert_calcZ_exercise("24.20", "uifJjv", "Exercises/Diff/aspen-let-cotton.Rmd")`
-
-## Algorithmic optimization
-
-In Chapter \@ref(optim-and-shape) we explored how to find an argmin of a function $f(x)$ with one input. Finding the argmin is easy and intuitive if you have a graph of $f(x)$: just look for the top of the hill. 
-
-Figure \@ref(fig:optim-hill) shows an example. With a bit of practice you can see that the "top of the hill" is at roughly $(x=1, y=1)$ whereat the function takes on a value somewhat larger than 16. 
-
-```{r optim-hill, echo=FALSE, fig.cap="For an objective function with two inputs, the argmax can be found by looking for the location of the top of the hill. In general, the contour near the top of a hill will be a closed round shape.", cache=TRUE}
-graw <- rfun( ~ x + y, seed=68)
-g <- makeFun(-graw(x, y)  ~ x & y)
-contour_plot(g(x, y+.2) ~ x + y, domain(x=c(-2,2), y=c(-2, 2))) %>%
-  gradient_plot(g(x, y) ~ x + y, color="orange3", alpha=0.25) %>%
-  gf_refine(coord_fixed())
-```
-Many optimization problems involve objective functions with several or many inputs. Regrettably, it becomes very difficult to graph functions with 3 or more inputs. So, we can't rely on our visual intuition to find the top of the hill.
-
-The key to optimization problems with many inputs is the derivative of the function. Figure \@ref(fig:optim-hill2) shows the gradient field of the same terrain graphed in Figure \@ref(fig:optim-hill). Even without seeing the surface or the contours, you can get to the top of the hill by picking a starting point and following the contours. Since there can be many hills in a complicated terrain, this approach will get you to the one "closest" to your starting point. In practice, modelers repeat the method for many different starting points until they reach a hilltop that's high enough for their purposes.
-
-```{r optim-hill2, echo=FALSE, fig.cap="You don't need the contours to find the top of the hill. Just follow the gradient vectors!"}
-gradient_plot(g(x, y) ~ x + y, 
-  domain(x=c(-2,2), y=c(-2, 2)), 
-  color="orange3", alpha=1) %>%
-  gf_refine(coord_fixed())
-```
-Let's lay out the algorithm for using the gradient to find an argmax. In every optimization problem we assume we know the objective function $g(x, y, z, ...)$ and can compute the output of the function for any valid inputs.
-
-**Step 1** We pick two starting points near to each other: ${\mathbf X}_0 = (x_0, y_0, z_0, \ldots)$ and ${\mathbf X}_2 = (x_1, y_1, z_1, \ldots)$. (We're using the names ${\mathbf X}_0$ and ${\mathbf X}_1$ to denote the starting points, just as we might denote a place on Earth by a name like "Chicago." 
-
-**Step 2** By evaluating $g()$ at ${\mathbf X}_0$ and ${\mathbf X}_1$ we can find the gradient vector near ${\mathbf X}_1$. 
-
-$$\partial_{\color{magenta}{x}} g({\mathbf X}_1) \equiv \partial_{\color{magenta}{x}} g(x_1, y_1, z_1, \ldots) = \frac{g(\color{magenta}{x_1}, y_1, z_1, \ldots) - g(\color{magenta}{x_0}, y_1, z_1, \ldots)}{\color{magenta}{x_1 - x_0}}\\
-\,\\
-\partial_{\color{brown}{y}} g({\mathbf X}_1) \equiv\partial_{\color{brown}{y}} g(x_1, y_1, z_1, \ldots) = \frac{g(x_1, \color{brown}{y_1}, z_1, \ldots) - g(x_1, \color{brown}{y_0}, z_1, \ldots)}{\color{brown}{y_1 - y_0}}\\
-\,\\
-\partial_{\color{purple}{z}} g({\mathbf X}_1) \equiv\partial_{\color{purple}{z}} g(x_1, y_1, z_1, \ldots) = \frac{g(x_1, y_1, \color{purple}{z_1}, \ldots) - g(x_1, y_1, \color{purple}{z_0}, \ldots)}{\color{purple}{z_1 - z_0}}\\
-\,\\
-\ldots$$
-
-**Step 3** Pick a small number $h$ and compute the coordinates of a new point $${\mathbf X}_2 \equiv (
-\color{magenta}{x_1} + h \partial_{\color{magenta}{x}} g({\mathbf X}_1), 
-\color{brown}{y_1} + h \partial_{\color{brown}{y}} g({\mathbf X}_1), 
-\color{purple}{z_1} + h \partial_{\color{purple}{z}} g({\mathbf X}_1), \ldots) $$
-${\mathbf X}_2$ is located a small distance from ${\mathbf X}_1$ in the direction of the gradient vector. 
-
-**Step 4** If $g({\mathbf X}_2) \approx g({\mathbf X}_1)$ then the gradient vector must be very close to zero. We can stop the algorithm, giving the argmax result as ${\mathbf X}_2$. Otherwise, go back to Step 2, but using ${\mathbf X}_1$ in place of ${\mathbf X}_0$ and using ${\mathbf{X}_2}$ in place of ${\mathbf{X}_1}$. 
-
-There are many variations on this algorithm that seek to reduce the number of calculations, avoid overstepping the argmax, etc. Collectively, the algorithms are called ***gradient ascent*** or, in more familiar language, "walking uphill one step at a time."
 
 ## Total derivative (optional)
 
@@ -346,3 +282,33 @@ Nelder-Mead, etc.
 `rrr insert_calcZ_exercise("XX.XX", "kcblMf", "Exercises/Diff/pony-run-bed.Rmd")`
 
 -->
+
+## Exercises
+
+`r insert_calcZ_exercise("24.01", "xdkw", "Exercises/Diff/gradient-field-orange.Rmd")`
+
+`r insert_calcZ_exercise("24.02", "9iowVB", "Exercises/Diff/partial-purple.Rmd")`
+
+`r insert_calcZ_exercise("24.04", "qdkw", "Exercises/Diff/partial-tan.Rmd")`
+
+`r insert_calcZ_exercise("24.06", "uekses", "Exercises/Diff/partial-doctor.Rmd")`
+
+
+`r insert_calcZ_exercise("24.07", "RbuhMy", "child-hide-lamp.Rmd")`
+
+`r insert_calcZ_exercise("24.08", "lkwciw", "Exercises/Diff/gradient-field-blue.Rmd")`
+
+
+`r insert_calcZ_exercise("24.10", "wkd83", "Exercises/Diff/gradient-field-red.Rmd")`
+
+`r insert_calcZ_exercise("24.12", "tPsfoR", "boy-iron-dish.Rmd")`
+
+
+
+`r insert_calcZ_exercise("24.14", "vkdlw", "Exercises/Diff/partial-house.Rmd")`
+
+`r insert_calcZ_exercise("24.16", "72ldw", "Exercises/Diff/spider-blow-lamp.Rmd")`
+
+
+`r insert_calcZ_exercise("24.18", "oekse", "Exercises/Diff/grass-grows-red.Rmd")`
+
