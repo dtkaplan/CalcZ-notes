@@ -33,7 +33,7 @@ Recall from Chapter \@ref(fun-assembling) that will will be working with three i
 
 
 
-## Linear combinations and h-theory
+## Differentiating linear combinations
 
 ***Linear combination*** is one of the ways in which we make new functions from existing functions. As you recall, linear combination involves ***scaling*** functions and then ***adding*** the scaled functions as in $a f(x) + b g(x)$, alinear combination of $f(x)$ and $g(x)$. We can easily use $h$ to show what is the result of differentiating a linear combination of functions.  First, let's figure out what is $\partial_x\, a f(x)$, Going back to writing $\partial_x$ in terms of a slope function:
 $$\partial_x\, a\,f(x) = \frac{a\, f(x + h) - a\,f(x)}{h}\\
@@ -77,7 +77,7 @@ $$\partial_x h(x) = \color{brown}{0}\, \color{magenta}{a}  + \color{brown}{1}\, 
 
 
 
-## Products and h-theory
+## Product rule for multiplied functions
 
 The question at hand is how to compute the derivative $\partial_x f(x) g(x)$.  Of course, you can always use numerical differentiation. But let's look at the problem from the point of view of symbolic differentiation. And since $f(x)$ and $g(x)$ are just pronoun functions, we'll assume you are starting out already knowing  the derivatives $\partial_x f(x) $\partial_x f(x)$ and $\partial_x g(x)$.
 
@@ -127,14 +127,39 @@ The expression  $\partial_x x^3$ is exactly the same as $\partial_x \left[\strut
 $$\large\partial [\color{magenta}x \times \color{brown}{x^2}] = \color{magenta}{[\partial x]} \times \color{brown}{x^2} \ +\  \color{brown}{[\partial x^2]} \times \color{magenta}x =\color{magenta}1\times \color{brown}{x^2} + \color{brown}{2x} \times \color{magenta}x = 3 x^2$$
 :::
 
+::: {.takenote data-latex=""}
+Occasionally, mathematics gives us a situation where being more general produces simplicity.
 
-## Function composition and the chain rule
+In the case of function products, the generalization is from  products of two functions $f(x)\cdot g(x)$ to products of more than two functions, e.g. $u(x) \cdot v(x) \cdot w(x)$. 
 
-Let's start with a plain statement of the rule, then show why it's right. Written in terms of the pronoun functions $f()$ and $g()$, the ***chain rule*** for the derivative of the composition $f(g(x))$ is
+The chain rule here takes a form that makes the overall structure much clearer:
 
-$$\large\partial_x \left[\strut \color{magenta}{f\left(\strut\right.}\strut \color{brown}{g(x)}\color{magenta}{\left.\right)}\right] = [\color{magenta}{\partial_x f}](\color{brown}{g(x)}) \times [\color{brown}{\partial_xg(x)}]$$
-Or, using the Lagrange prime notation 
-$$\large\text{Lagrange shorthand:}\ \   \partial[\color{magenta}f(\color{brown}g)] = \color{magenta}{f'} (\color{brown}g) \times \color{brown}{g'}$$
+$$\partial_x \left[\strut u(x) \cdot v(x) \cdot w(x)\right] = \\
+\color{blue}{\partial_x u(x)} \cdot v(x) \cdot w(x)\ +\ u(x) \cdot \color{blue}{\partial_x v(x)} \cdot w(x)\ +\ u(x) \cdot v(x) \cdot \color{blue}{\partial_x w(x)}$$
+In the Lagrange shorthand, the pattern is even more evident:
+$$\left[ u\cdot v\cdot w\right]' = \color{blue}{u'}\cdot v\cdot w\ +\ u\cdot \color{blue}{v'}\cdot w\ +\ u\cdot v\cdot \color{blue}{w}'$$
+:::
+
+
+
+## Chain rule for function composition
+
+A function composition, as described in Section \@ref(function-composition), involves inserting the output of one function (the "interior function") as the input of the other function (the "exterior function"). As we so often do, we'll be using pronouns a lot. A list might help keep things straight:
+
+- There are two functions involved in a composition. We'll call them $f(y)$ and $g(x)$. In the composition $f(g(x))$, the ***exterior function*** is $f()$ and the ***interior function*** is $g()$.
+- Each of the two functions $f()$ and $g()$ has an input.
+In our examples, we'll use $y$ to stand for the input to the exterior function and $x$ as the pronoun for the input to the interior function.
+- As with all rules for differentiation, we'll need to compute the derivatives of the functions involved, each with respect to its own input. So these will be $\partial_y f(y)$ and $\partial_x g(x)$.
+
+A reason to use different pronouns for the inputs to $f()$ and $g()$ is to remind us that the output $g(x)$ is in general not the same kind of quantity as the input $x$. In a function composition, the $f()$ function will take the output $g(x)$ as input. But since $g(x)$ is not necessarily the same kind of thing as $x$, why would we want to use the same name for the input to $f()$ as we use for the input to $g()$.
+
+With this distinction between the names of the inputs, we can be even more explicit about the composition, writing $f(y=g(x))$ instead of $f(g(x))$. Had we used the pronound $x$ for the input to $f()$ but our explicit statement, although technically correct, would be confusing: $f(x = g(x))$!
+
+With all these pronouns in mind, here is the ***chain rule*** for the derivative $\partial_x f(g(x))$:
+
+$$\large\partial_x \left[\strut \color{magenta}{f\left(\strut\right.}\strut \color{brown}{g(x)}\color{magenta}{\left.\right)}\right] = [\color{magenta}{\partial_y f}](\color{brown}{g(x)}) \times [\color{brown}{\partial_xg(x)}]$$
+Or, using the Lagrange prime notation, where $'$ stands for the derivative of a function with respect to its input, we have 
+$$\large\text{Lagrange shorthand:}\ \   [\color{magenta}f(\color{brown}g)]' = \color{magenta}{f'} (\color{brown}g) \times \color{brown}{g}'$$
 
 The derivation of the chain rule relies on two closely related statements which are expressions of the idea that near any value $x$ a function can be expressed as a linear approximation with the slope equal to the derivative of the function :
 
@@ -143,7 +168,7 @@ The derivation of the chain rule relies on two closely related statements which 
 
 We'll now look at $\partial_x f\left({\large\strut} g(x)\right)$ by writing down the fundamental definition of the derivative. This, of course, involves the disclaimer $\lim_{h\rightarrow 0}$ until we're sure that there is no division by $h$ involved. 
 
-$$\partial_x f\left(\strut g(x)\right)  \equiv \lim_{h\rightarrow 0}\frac{\color{magenta}{f(g(x+h))} - f(g(x))}{h}$$
+$$\partial_x \left[{\large\strut} f\left(\strut g(x)\right)\right]  \equiv \lim_{h\rightarrow 0}\frac{\color{magenta}{f(g(x+h))} - f(g(x))}{h}$$
 
 Let's examine closely the expression $\color{magenta}{f\left(\strut g(x+h)\right)}$. Applying rule (1) above turns it into $$\lim_{h\rightarrow 0} f\left(\strut g(x) + \color{blue}{h g'(x)}\right)$$
 Now apply rule (2) but substituting in $g(x)$ for $y$ and $\color{blue}{h g'(x)}$ for $\epsilon$, giving  
@@ -159,7 +184,7 @@ $$\partial_x f\left(\strut g(x)\right)  \equiv \lim_{h\rightarrow 0}\frac{\color
 
 
 ::: {.example data-latex=""}
-Let's use the chain rule to find the derivative $\partial_x e^{2x}$.
+Use the chain rule to find the derivative $\partial_x e^{2x}$.
 
 Recognize that $g(x) \equiv 2x$ is the interior function in  $e^{2x}$ and $f(x) \equiv \exp(x)$ is the exterior function.  Thus $$\partial_x e^{2x} = f'(g(x)) g'(x) = \exp(g(x)) 2 = 2 e^{2x}\ .$$ Happily, this is exactly the same result as we got from using the product rule to find $\partial_x e^{2x}$.
 
@@ -167,7 +192,7 @@ Recognizing $e^{2x}$ as $e^x \times e^x$, we can apply the ***product rule***.
 :::
 
 ::: {.example data-latex=""}
-The chain rule is used in a clever way to find a formula for $\partial_x \ln(x)$. 
+The chain rule can be used in a clever way to find a formula for $\partial_x \ln(x)$. 
 
 We've already seen that the logarithm is the inverse function to the exponential, and *vice versa*. That is:
 $$e^{\ln(y)} = y \ \ \ \text{and}\ \ \ \ln(e^y) = x$$
@@ -209,7 +234,7 @@ Interesting, Berkeley believed that the ghost of $h$ yielded correct results. Hi
 
 > *"[B]y virtue of a two fold mistake you arrive, though not at science, yet truth."*
 
-Berkeley was saying that calculus had not yet been put on a solid logical foundation. It was to be more than a century after Berkeley's death until this work was accomplished. Once accomplished, the results that had been claimed true all along were confirmed. `r mark(2394)`
+Berkeley was saying that calculus had not yet been put on a solid logical foundation. It wasn't until more than a century after Berkeley's death that this work was accomplished. Once accomplished, the results that had been claimed true all along were confirmed. `r mark(2394)`
 :::
 
 ## Derivatives of the basic modeling functions {#basic-derivs}
@@ -260,7 +285,29 @@ In statistical nomenclature, $\dnorm()$ is called the "normal probability densit
 Owing to the origin of the names $\dnorm$ and $\pnorm$, we are writing the parameters of the functions---mean and sd---using the computer language notation. The pattern-book functions are just $\dnorm(x)$ and $\pnorm(x)$, without listing the parameters. But the basic modeling functions, with parameters, are written $\dnorm(x, \text{mean}, \text{sd})$ and $\dnorm(x, \text{mean}, \text{sd})$. This violates the convention that the basic modeling functions are the composition of the pattern-book functions with $\line(x)$. But $\dnorm()$ doesn't actually work this way because, by convention, the amplitude of the peak of $\dnorm()$ changes with the input parameter sd. That's not true for any other basic modeling function. 
 :::
 
+::: {.takenote}
+Composition or product?
 
+There is one family of functions for which function composition is the same thing as multiplying functions: the power-law family.
+
+Consider, for instance, the function $h(x) \equiv \left[3x\right]^4$. Let's let $g(x) \equiv 3x$ and $f(y) \equiv y^4$. With these definitions, $h(x) = f(g(x))$.
+
+Recognizing that $\partial_y f(y) = 4 y^3$ and $\partial_x g(x) = 3$, the *chain rule* gives $$\partial_x h(x) = 
+\underbrace{4 g(x)^3}_{f'(g(x))} \times \underbrace{3}_{g'(x)} = \underbrace{4 (3 x)^3}_{f'(g(x))} \times 3 = 4\cdot 3^4 \times x^3 = 324\ x^3$$
+Another way to look at the same function is $g(x)$ multiplied by itself 3 times: $$h(x) = g(x)\cdot g(x) \cdot g(x) \cdot g(x)$$
+This is a product of 4 terms. Applying the product rule gives
+$$\partial_x h(x) = \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \\\color{blue}{g'(x)}\cdot g(x)\cdot g(x) \cdot g(x) +\\
+g(x)\cdot \color{blue}{g(x)}'\cdot g(x) \cdot g(x) +\\
+g(x)\cdot g(x)\cdot \color{blue}{g(x)'} \cdot g(x) +\\
+g(x)\cdot g(x)\cdot g(x) \cdot \color{blue}{g'(x)}\ \ \ \ $$
+Since multiplication is commutative, all of these four terms are the same, each being $3^4 x^3$. The sum of all four is therefore $4 \times 3^4 x^3 = 324 x^3$. 
+
+These are two long-winded ways of getting to the result. For most people, differentiating power-law functions algebraically is simplified by using the ***rules of exponentiation*** rather than the product or chain rule. Here,
+$$h(x) \equiv \left[3x\right]^4 = 3^4 x^4$$so $\partial_x h(x)$ is easily handled as a scalar ($3^4$) times a function $x^4$. Consequently, applying the rule for differentiating power laws, 
+$$\partial_x h(x) = 3^4 \times \partial_x x^4 = 3^4 \times 4 x^3 = 324 x^3$$
+As another example, take $h(x) \equiv \sqrt[4]{\strut x^3}$. This is, of course, the composition $f(g(x))$ where $f(y) \equiv y^{1/4}$ and $g(x) \equiv x^3$. Applying the chain rule to find $\partial_x h(x)$ will work (of course!), but is more work than applying the rules of exponentiation followed by a simple power-law differentiation.
+$$h(x) = \sqrt[4]{\strut x^3} = x^{3/4}\ \ \text{so}\ \  \partial_x h(x) = \frac{3}{4} x^{(3/4 - 1)} = \frac{3}{4} x^{-1/4}$$
+:::
 
 
 
@@ -314,3 +361,4 @@ Like $e^x$, the derivatives of $10^x$ and $2^x$ are proportional to themselves. 
 
 `r insert_calcZ_exercise("22.12", "0yrIXe", "Exercises/Diff/monkey-forget-tv.Rmd")`
 
+`r insert_calcZ_exercise("22.14", "2JJoS6", "Exercises/Diff/dog-look-bottle.Rmd")`
