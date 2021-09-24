@@ -1,0 +1,317 @@
+# Symbolic anti-differentiation {#accum-symbolic}
+
+In a traditional mathematics education, students encounter (almost exclusively) basic functions from a mid-sized catalog. For instance: $\sqrt{\strut\_\_\_\ }$, $\sin()$, $\cos()$, $\tan()$, square(), cube(), recip(), $\ln()$, $\exp()$, negate(), gaussian(),  and so on. This catalog also includes some functions that take two arguments but are traditionally written without using parentheses. For instance, $a+b$ doesn't look like a function but is entirely equivalent to $+(a, b)$. Others in this class are $\times(\ ,\ )$, $\div(\ , \ )$, $-(\ ,\ )$, and ^( , ).
+
+There is a considerable body of theory for these ***cataloged functions***, which often takes the form of relating them to one another. For instance, $\ln(a \times b) = \ln(a) + \ln(b)$ demonstrates a relationship among $\ln()$, $+$ and $\times$. Along the same lines of relating the cataloged functions to one another is $\partial_x \sin(x) = \cos(x)$ and other statements about derivatives such as those listed in Section \@ref(pattern-book-derivs).
+
+The professional applied mathematician's catalog is impressive in its volume. You can see an example published by the US National Institute of Standards and Technology as the [Digital Library of Mathematical Functions](https://dlmf.nist.gov/). (Almost all of the 36 chapters in this catalog, important though they be, are highly specialized and not of general interest across fields.) 
+
+The purpose of this discussion is to help us give a name to a certain variety of functions, those found in the published catalogs and others assembled from them by composition, linear combination, and multiplication. We'll call all these functions "cataloged functions," but keeping in mind that there is an infinite number of them and therefore no physical catalog can contain them all. 
+
+Simply to illustrate, Figure \@ref(fig:table-of-integrals) shows a page from an 1899 handbook entitled [*A Short Table of Integrals*](https://archive.org/details/integralstable00peirrich/page/114/mode/2up). 
+
+```{r table-of-integrals, echo=FALSE, fig.cap="Entries 124-135 from *A Short Table of Integrals* (1899) by Benjamin Osgood Pierce. The book includes 938 such entries.", out.width="60%", fig.align="center"}
+knitr::include_graphics("www/table-of-integrals-1.png")
+```
+
+In contrast to the cataloged functions, there are functions that are created by numerical rather than algebraic operations. You've encountered numerical differentiation and integration. In Blocks 4 and 6 of this text we'll make much more intensive use of such functions. They are also a major part of the function-building techniques called ***machine learning***.
+
+In this chapter we'll look at some settings where we have a function from the cataloged functions and we want to identify another cataloged function that is the anti-derivative of the first. The elegance provided by cataloged functions is unsurpassed, but there are only limited circumstances where a cataloged function (as opposed to a numeric function) is the most suitable for modeling and fewer still where the anti-derivative of a function is available in the catalog. 
+
+The use of cataloged functions is particularly prevalent in textbooks, so the quantitatively sophisticated student will encounter anti-derivatives of these functions throughout his or her studies. Often, the textbook functions will be the basic modeling functions and linear combinations of them, so you already have what you need to understand many textbook examples. However, occasionally you will encounter textbook functions created by composition (e.g. $f(g(x))$) and multiplication (e.g. $f(x)\cdot g(x)$. Although differentiation of such functions is straightforward, anti-differentiation is not and, when even possible, requires good pattern-recognition and bookkeeping skills. Traditionally, calculus courses have emphasized techniques for anti-differentiation of compositions and multiplications. In this chapter we're going to look briefly at relatively simple cases of these techniques through which anti-differentiation can be accomplished. 
+
+More intricate techniques for anti-differentiation are not part of the everyday experience of technical workers, although many find them a good source of recreation. In a practical sense, when the techniques are needed, it's more reliable to access them via computer interface such as the one depicted in Figure \@ref(fig:wolfram-alpha-125).
+
+```{r wolfram-alpha-125, echo=FALSE, fig.cap="Pierce's entry 125 as computed by the WolframAlpha system."}
+knitr::include_graphics("www/wolfram-alpha-125.png")
+```
+
+Do keep in mind that even if the anti-derivative you seek is not among the cataloged functions, you can construct it using numerical techniques which apply both to cataloged functions and others.
+
+## Differentials
+
+Breathing some life into the symbol $dx$ will help in understanding the algebra of techniques for anti-differentiating function compositions and products. We've thusfar presented $dx$ as a bit of notionation punctuation for identifying the with-respect-to input in anti-derivatives. That is,
+in interpreting a sequence of symbols like $\int f(x,t) dx$, we've parsed the sequence of symbols into three parts:
+
+$$\underbrace{\int}_{\text{integral sign}} \overbrace{f(x, t)}^{\text{function to be anti-differentiated}} \underbrace{dx}_{\text{'with respect to'}}$$
+
+By analogy, the English sentence 
+
+$$\text{We loaded up on snacks.}$$ 
+
+consists of five parts: the five words in the sentence.
+
+But you can also see "We loaded up on snacks" as having *three* parts:
+
+$$\underbrace{\text{We}}_{\text{subject}}\  
+\overbrace{\text{loaded up on}}^{\text{verb}}\ \ \ 
+\underbrace{\text{snacks}}_{\text{object}}$$
+
+Likewise, the integrate sentence can be seen as consisting of just two parts:
+
+$$\underbrace{\int}_{\text{integral sign}} \overbrace{f(x, t) dx}^{\text{differential}}$$
+
+A differential corresponds to the little sloped segments that we add up when calculating a definite integral numerically using the ***slope function visualization***. That is
+$$\underbrace{\int}_{\text{Sum}} \underbrace{\overbrace{f(x,t)}^\text{slope of segment}\ \  \overbrace{dx}^\text{run}}_\text{rise}$$
+
+A differential is a genuine mathematical object and is used, for example, in analyzing the geometry of curved spaces, as in the Theory of General Relativity. But this is well beyond the scope of this introductory calculus course. `r mark(3710)`
+
+Our use here for differentials will be to express rules for anti-differentiation of function compositions and products. 
+
+You should be thinking in terms of differentials when you see a sentence like the following:
+
+> "In $\int \sin(x) \cos(x) dx$, make the substitution $u = \sin(x)$, implying that $du = \cos(x) dx$ and getting $\int u du$, which is simple to integrate."
+
+The table gives some examples of functions and their differentials. "w.r.t" means "with respect to."
+
+Function | derivative | w.r.t. |differential
+---------|------------|--------|-------------
+$v(x) \equiv x$      |   $\partial_x v(x) = 1$       | x |   $dv = dx$
+$u(x) \equiv x^2$    |   $\partial_x u(x) = 2x$     | x | $du = 2x dx$
+$f(x) \equiv \sin(x)$ | $\partial_x f(x) = \cos(x)$ | x | $df = \cos(x)dx$
+$u(x) \equiv e^{3 x}$ | $\partial_x u(x) = 3 e^{3 x}$ | x | $du = 3 e^{3 x} dx$ 
+$g(x) \equiv t^3$     | $\partial_t v(t) = 3 t^2$     | t | $dg = 3 t^2 dt$
+
+As you can see, the *differential* of a function is simply the derivative of that function followed by the little $dx$ or $dt$ or whatever is appropriate for the "with respect to" variable.
+
+Notice that the differential of a function is not written with parentheses: The function $u(x)$ corresponds to the differential $du$.
+
+::: {.example data-latex=""}
+What is the differential of $\sin(x)$?
+
+As we've seen, $\partial_x \sin(x) = cos(x)$. For form the differential of $\sin()$, take the derivative and suffix it with a $dx$ (since $x$ is the name of the input):
+
+$$\cos(x)\ dx$$
+:::
+
+
+
+
+## U-substitution
+
+There is little reason to use $\partial_t$ and $\int \left[\right]dt$ to cancel each other out, but it is the basis of a successful strategy for finding some anti-derivatives algebraically. Here's the differentiate/integrate algorithm behind u-substitution. `r mark(3725)`
+
+1. Pick a function $f()$ and another function $g()$. Typically $f()$ and $g()$ belong to the family of basic modeling functions, e.g. $e^x$, $\sin(t)$, $x^n$, $\ln(x)$, and so on. For the purpose of illustration, we'll use $f(x) = \ln(x)$ and $g(t) = \cos(t)$.
+2. Compose $f()$ with $g()$ to produce a new function $f(g())$ which, in our case, will be $\ln(\cos(t))$.
+3. Use the chain rule to find $\partial_t f(g(t))$. In the example, the derivative of $\ln(x)$ is $1/x$, the derivative of $g(t)$ is $-\sin(t)$. By the chain rule, $$\partial_t f(g(t)) = - \frac{1}{g(t)} \sin(t)= -  \frac{\sin(t)}{\cos(t)} = - \tan(t)$$ `r mark(3730)`
+
+In a sense, we have just watched a function give birth to another through the straightforward process of differentiation. Having witnessed the birth, we know who is the integration mother of $\tan(t)$, namely $\int \tan(t) dt = \ln(\cos(t)$. For future reference, we might write this down in our diary of integrals:
+$$\int \tan(t) dt = - \ln(\cos(t)) + C$$
+Saving this fact in your diary is helpful. The next time you need to find $\int \tan(x) dx$, you can look up the answer ($-\ln(\cos(x)) + C$) from your diary. If you use $\int \tan(x) dx$ a lot, you will probably come to memorize the answer, just as you have already memorized that $\int \cos(t) dt = \sin(t)$ (a fact that you actually will use a lot in the rest of this course). `r mark(3735)`
+
+Now for the u-substitution game. The trick is to take a problem of the form $\int h(t) dt$ and extract from $h(t)$ two functions, an $f()$ and a $g()$. You're going to do this so that $h(t) =  \partial_t F(g(t))$, where $\partial_x F(x) = f(x)$ Once you've done this, you have an answer to the original integration question: $\int h(t) dt = F(g(t)) + C$. `r mark(3740)`
+
+Here's Example 7 from the MMAC book:
+
+> Evaluate the definite integral $\int \frac{\sin(\ln(x))}{x} dx$.
+
+You don't know ahead of time that this is an integral amenable to solution by u-substitution. For all you know, it's not. So you look at the instruction manual for calculating integrals that you don't yet know: `r mark(3745)`
+
+1. Is the integrand (that is $h(x)$ in $\int h(x) dx$) one of the basic modeling functions (with, perhaps, a linear interior function)?
+
+> If so, you've already memorized the answer and you are done. If not ...
+
+2. Assume for a moment---without any guarantee that this will work, mind you---that the answer can be built using u-substitution. You will therefore look hard at $h()$ and try to see in it a plausible form that looks like the derivative of some $f(g(x))$. `r mark(3750)`
+
+In the problem at hand, we can readily see something of the form $f(g(x))$ in the $\sin(\ln(x))$. This immediately gives you a candidate for $g(x)$, namely $g(x)\equiv \ln(x)$ We don't know $f()$ yet, but if $g()$ is the right guess, and if u-substitution is going to work, we know that $f()$ has to be something that produces $\sin()$ when you differentiate it. That's $-\cos()$. So now we have a guess $$h_\text{guess}(x) = -\cos(\ln(x)) \partial_x \ln(x) = - \cos(\ln(x)) \frac{dx}{x}$$ `r mark(3755)`
+
+> If this guess matches the actual $h()$ then you win. The answer to $\int h(x) dx$ will be $f(g(x)) = -\cos(\ln(x))$. If not, see if there is any other plausible guess for $g(x)$ to try. If you can't find one that works, go on to software or Euler integration. `r mark(3760)`
+
+3. Integration by parts. We'll talk about this later.
+
+> If integration by parts doesn't work ... there is a variety of possibilities such as asking a math professor (who has a much larger set of functions at hand than you), looking through a table of integrals (which is to say, the collective calculus diary of generations of math professors), using a computer algebra system, or using numerical integration. One of these will work. `r mark(3765)`
+
+`r insert_calcZ_exercise("XX.XX", "Y7ecmI", "Exercises/Accum/frog-pitch-clock.Rmd")`
+
+`r insert_calcZ_exercise("XX.XX", "LPlcgV", "Exercises/Accum/lamb-mean-pan.Rmd")`
+
+`r insert_calcZ_exercise("XX.XX", "A0u94a", "Exercises/Accum/shark-dive-hamper.Rmd")`
+
+`r insert_calcZ_exercise("XX.XX", "kay2zx", "Exercises/Accum/pine-fight-painting.Rmd")`
+
+`r insert_calcZ_exercise("XX.XX", "nef1lB", "Exercises/Accum/cat-go-window.Rmd")`
+
+
+## Integration by parts
+
+So far in CalcZ we have developed methods for algebraically finding anti-derivatives for a small set of functions. These include basic modeling functions such as $$\int\cos(3x)dx = \frac{1}{3}\sin(3x) + C$$ and more complicated functions where we reverse the chain rule, such as $$\int x^2 \exp(x^3) dx = \frac{1}{3} \exp(x^3) + C .$$ `r mark(3770)`
+
+With a bit more work, we can extend to a broader class of functions that do not fit into the two classes of examples above. For example, consider finding the anti-derivatives of the following functions:
+$$f(x) \equiv x e^x, \ \ \ g(x)\equiv x \cos(x),\ \ \text{and}\ \ h(x) = x \ln(x)$$ None of these are basic modeling functions and none of these fit the "came from the chain rule" pattern.
+
+Now, we're going to explore a “guess and correct” method for these types of anti-derivatives. It doesn't always work, but when it does it's impressive.
+
+Note that each of the function above are products of $x$ with a basic modeling functions.  Finding the anti-derivatives of these functions will, in some sense, involve reversing the product rule. 
+
+Consider $f(x) = x e^x$. This will seem to come out of the blue, but notice that $f(x) = x \partial_x(e^x)$. Our strategy has three steps. 
+
+First, we will find a helper function by substituting $\partial_x(e^x)$ with the value produced by differentiation. In this case $\partial_x (e^x) = e^x$, so our helper function will be $x e^x$. 
+
+Second, differentiate the helper function, which we can do using the product rule: $$\partial_x (x e^x) = x e^x + e^x$$
+
+Third, take the anti-derivative of each term in the above equation. Some of them are easy, but one of them is not.
+$$\int \partial_x (x e^x)
+ = \int x e^x dx + \int e^x dx$$
+Integrating what we can ...
+$$x e^x\ \ \ \ = \int x e^x dx +\ \ \ \ e^x$$ The one we don't know how to do is the same as the original problem. So now we know how to do it, by re-arranging the previous equation:
+$$\int x e^x dx = x e^x - e^x + C$$
+We added in a constant $C$ at the end to get the entire family of anti-derivatives.
+
+Aren't sure this answer is right? You can check it by computing the derivative of the answer to see that it gives $x e^x$.
+
+`r insert_calcZ_exercise("XX.XX", "1qDQZz", "Exercises/Accum/bird-hold-jacket.Rmd")`
+
+`r insert_calcZ_exercise("XX.XX", "YMuG92", "Exercises/Accum/chicken-cost-coat.Rmd")`
+
+A giant tortoise (with very good eyesight and standing on an unobstructed plane!) spies a head of lettuce on the ground 65 meters away.  Being hungry (and knowing the shortest path between two points on the plane!), the tortoise takes off in a straight line for the lettuce. She pretty quickly reaches her top speed, but then starts to tire. If her velocity as a function of time (in meters per minute) is modeled by $v(t) = 7 t e^{-0.3t}$, how long does it take the tortoise to reach her lunch? Answer this question by finding an calculus/algebra formula for the tortoise’s displacement and then use it to approximate how long it takes to get to the lettuce.  `r mark(3775)`
+
+We're going to be looking at $\int v(t) dt = 7 \int t e^{-0.3 t} dt$.
+
+We'll call the left side of the equation "displacement(t)". 
+Use integration by parts to find displacement(t) as a simple formula in $t$.
+
+The tortoise to reach the cabbage at time $t^\star$ such that $\text{displacement}(t^\star) = 65$ meters. Graph your displacement function to find $t^\star$. You can use the sandbox. (Note that the graphics domain isn't necessarily the best choice for answering the question.) `r mark(3780)`
+
+```{r parts12, exercise=TRUE, exercise.nlines=5, exercise.cap="Solving for t_star.", eval=FALSE}
+displacement <- makeFun(77.77 * WHAT ~ t)
+slice_plot(displacement(t) ~ t, domain(t=c(0,5)))
+```
+
+```{r parts13, echo=FALSE, results="markup"}
+askMC(
+  "At what time $t^\\star$ does the tortoise reach the cabbage?",
+  "5.95 sec",
+  "+10.85 sec+",
+  "15.75 sec",
+  "Never! (That is, $t^\\star$ is infinite.",
+  random_answer_order = FALSE
+)
+```
+
+
+**Commentary**: The procedure we have been using to find these anti-derivatives can be formalized into a method called *integration by parts* (IBP).  However, rather than simply giving a formula and an algorithm, we wanted you to understand what is actually going on behind the scenes.  In a more formal IBP approach, you try to re-arrange the function you are integrating into the product of two simple functions: $$\int f(x)\, \partial_x g(x)\, dx$$ `r mark(3785)`
+
+That is, you assume part of the original function is the derivative of some function $g(x)$. Once you’ve decided how to make the re-arrangement into $f(x)$ and $\partial_x g(x)$, and calculated $g(x)$ from $\partial_x g(x)$, you can write the original integral into a new, and possibly simpler, way:
+$$\int f(x)\, \partial_x g(x)\, dx = f(x)\, g(x) - \int [\partial_x f(x)]\, g(x) dx$$ Notice that the formula replaces the integral we want to compute with another integral.  The idea is that the new integral will be easier to compute than the one you started with.  This procedure works in much more generality than for the examples we did, but it is not so easy to use.  You need to correctly assign $f(x)$ and $\partial_x g(x)$ to the parts of the original function, and you need to be able to integrate $\partial_x g(x)$ to get $g(x)$. Finally, you need to be able to integrate $[\partial_x f(x)]\, g(x)$. Perhaps you can go back and look at the previous problems with this more general description of the procedure.    `r mark(3790)`
+
+## When do I know calculus?
+
+This section is not required and has no exercises. Nevertheless, you might find it useful in understanding the "big picture."
+
+Whenever you undertake to study a field, it's helpful to be able to figure out when you have already learned enough and can apply what you know with confidence to solve the analysis and design tasks you encounter. In academia, we sidestep the heart of this important question and define "enough" in procedural terms: "enough" is when the semester has ended and you have passed the final exam. For academic institutions, especially ones based on the liberal arts, there's little point in trying to be more definitive. After all, the "analysis and design tasks you [will] encounter" are as yet unknown, even though we can make reasonable guesses what many of them will be. `r mark(3795)`
+
+You will never know all there is to know about integration. Thousands of talented and highly trained mathematicians and applied scientists have contributed to the body of knowledge over 300+ years you simply don't have enough time in your life to master all of it. Even if you devoted your life to this task, the field evolves. For instance, in 1953 (that may seem like antiquity) a hugely important integration innovation was presented [in this paper](https://bayes.wustl.edu/Manual/EquationOfState.pdf). This method, which involves using random numbers, was refined, extended, and improved. A breakthrough in 1988 led to an algorithm for solving genuinely important applied problems in statistics that had previously been thought impossible. `r mark(3800)`
+
+Since you'll never know everything about integration, you need to prioritize. But you are not yet in a position to set priorities. You're at the start of a university-level sequence of courses and don't yet know what you will encounter. Of course, your instructors know what's in that sequence of courses and can make sensible choices for you, except ... what's in those courses depends on the traditions and conventions of those fields as interpreted by by the textbook writers in those fields. That's rooted in the textbooks that those instructors used as students. In turn, those textbooks were shaped by the education of earlier textbook authors 50 and 100 years ago. `r mark(3805)`
+
+Another aspect of the prioritization we make for you has to do with the imperatives of our jobs as teachers. Instructors focus on topics that can be *assessed* successfully with the resources at hand. In practice this means topics where answers are either right or wrong and where its possible to generate new assessment questions easily. Sometimes, in some places, the cart gets put before the horse and ease of assessment becomes the highest priority. `r mark(3810)`
+
+CalcZ is motivated by a desire to start over from scratch and reframe priorities according to what skills you are likely to need in the next few years. Yet it would be a disservice to you to sweep the floor completely clean. An important part of your work in the next few years will be engaging with instructors who communicate using their own conceptions of calculus, largely formed when they were educated. `r mark(3815)`
+
+Which brings us to ... today's Daily Digital. We have already introduced you to methods of anti-differentiation based on algebraic notation, specifically anti-derivatives of basic modeling functions with a linear interior function. These are important and relatively easy to teach and learn. `r mark(3820)`
+
+Today we're going to introduce you to two more algebraic methods of anti-differentiation: "u-substitution" and "integration by parts." You may encounter these in some of your future courses. That "may" is likely enough that instructors of those courses rank them as high-priority topics for your introduction to calculus. They want us to teach these topics and the topics are without argument traditional components of introductory statistics courses. `r mark(3825)`
+
+Regrettably, an emphasis on three algebraic methods of integration will give you a picture that integration is about algebra. It is not. Integration is about functions. And there are many important and widely used function types for which there is no algebraic solution to the problem of integration. Yet *every function* can be anti-differentiated. And, a good technique for anti-differentiating any function is readily at hand via numerical techniques similar to the Euler method. These methods are implemented in a pretty simple R function: `antiD()`. Consider `antiD()` and learning to use it a fourth method of integration, and one that is much easier than either u-substitution or integration by parts. Since `antiD()` can handle all comers, while the algebraic methods can handle only a small (and hard to predict) set of functions, in terms of *using* anti-derivatives, `antiD()` would be the highest priority and would, on its own, be adequate for doing integration. The algebraic methods of integrating the basic modeling functions give you the vocabulary you need to communicate with the huge majority of people who learned calculus in the traditional, algebraic way. U-substitution and integration by parts bring you marginally further along, but not nearly so far along as computer algebra systems or even the traditional printed handbook called a "table of integrals." `r mark(3830)`
+
+Finally, as you will learn in statistics, they way you take a sample is of fundamental importance in whether you will get a faithful representation of a process. In calculus textbooks (even our own MMAC text), the sample of integration problems is highly influenced by the relatively ease for instructors to generate new and never-before-seen functions that can be anti-differentiated using u-substitution or integration by parts. It's safe to say that you would never encounter such functions in professional uses of calculus. (Uses other than teaching calculus, that is!) `r mark(3835)`
+
+If you have difficulty using u-substitution or integration by parts, you will be in the same league as the vast majority of calculus students. Think of your fellow students who master the topic in the way you think of ice dancers. It's beautiful to watch, but hardly solves every problem. People who would fall on their face if strapped to a pair of skates have nonetheless made huge contributions in technical fields, even those that involve ice.  (Prof. Kaplan once had a heart-to-heart with a 2009 Nobel-prize winner who confessed to always feeling bad and inadequate as a scientist because he had not done well in introductory calculus. It was only when he was nominated for the Nobel that he felt comfortable admitting to his "failure.") Even if you don't master u-substitution or integration by parts, remember that you can integrate any function using easily accessible resources.  `r mark(3840)`
+
+
+## Tables of integrals
+
+Although any function has an anti-derivative, that anti-derivative cannot always be presented in algebraic notation. This poses no fundamental problem to the construction of the anti-derivative, particularly when a computer is available to handle the book-keeping of numerical integration. `r mark(3845)`
+
+Still, it is convenient to have an algebraic form *when it can be found.* Many people have devoted considerable effort to constructing extensive collections of functions for which an algebraic form of anti-derivative is known. Think of such collections as a gallery of portraits of people who happen to have red hair. No matter how large the collection, you'll often have to deal who are not redheads. And unlike real redheads, it can be hard to know whether a function has an anti-derivative that can be expressed simply in algebraic form. For instance, $f(x) \equiv \exp(-x^2)$ does not, even though it is ubiquitous in fields such as statistics. `r mark(3850)`
+
+The US National Institute of Standards and Technology (NIST) has been a primary publisher for more than 50 years of information about functions encountered in applied mathematics. The work, [published originally in book form](https://www.youtube.com/watch?v=Exf02R1FnXY), is also available via the internet as the *[NIST Digital Library of Mathematical Functions](https://dlmf.nist.gov/)*. `r mark(3855)`
+
+So, how to organize the gallery of redheads? Let's take a field trip to the NIST DLMF (The US National Institute of Standards and Technology (NIST) has been a primary publisher for more than 50 years of information about functions encountered in applied mathematics. The work, [published originally in book form](https://www.youtube.com/watch?v=Exf02R1FnXY), is also available via the internet as the *[NIST Digital Library of Mathematical Functions](https://dlmf.nist.gov/)*! `r mark(3860)`
+
+Warning! Many visitors to NIST DLMF encounter dizziness, fatigue, and anxiety. Should you experience such symptoms, close your eyes and remember that DLMF is a *reference work* and that you will not be examined on its use. Nonetheless, to help you benefit maximally from the field trip, there are a few questions in this Daily Digital for you to answer from DLMF. `r mark(3865)`
+
+You should also note that the techniques in almost universal use to help you navigate through voluminous collections of data (e.g. Twitter, Facebook, Instagram, YouTube) such as ratings, subscribing, "friending," following, etc. are *entirely absent from DLMF*. There's not even a friendly introduction to each chapter saying who the material might be of interest to. `r mark(3870)`
+
+We're going to focus on Chapter 4, "Elementary Functions," and indeed just a few sections from that chapter. (A better name for the chapter would be "The Functions Most Often Used." They are not "elementary" as in "elementary school" but as in the "periodic table of elements.") `r mark(3875)`
+
+[Section 4.10](https://dlmf.nist.gov/4.10) covers integrals and anti-derivatives of logarithmic, exponential and power-law functions. 
+
+[Section 4.26](https://dlmf.nist.gov/4.26) is similar, but for trigonometric functions.
+
+1. Navigate to [equation 4.10.1](http://dlmf.nist.gov/4.10.i). This is one of the anti-derivatives you are expected to know by heart in CalcZ.
+    a. Notice that the variable name $z$ is used. They could have selected any other name; $x$ and $t$ are popular, $y$ less so, and $\xi$ even less so. The use of $z$ is a signal to the <span title="plural noun:
+people who are considered to be especially well informed about a particular subject: 'it was hailed by the cognoscenti as one of the best golf courses in Europe.;">*cognoscenti*</span> that the function can be applied to both real and complex numbers.
+    b. Look at equation 4.10.8. This is another of the functions whose anti-derivative you should know by heart. 
+    c. Perhaps it would have avoided some confusion if 4.10.1 had been written in terms of $$\int \frac{1}{az}dz$$ so that you would know what to do if you had encountered such a function.
+    
+Some exercises:
+    
+```{r DLMF1, echo=FALSE}
+askMC(
+  "Which of these is $$\\int \\frac{1}{az}dz \\ \\text{?}$$",
+  "+$$\\frac{1}{a} \\ln(z)$$+" = "The level of the DLMF is such that you would be expected to know on your own that $\\int \\frac{1}{az} dz = \\frac{1}{a}\\int \\frac{1}{z}dz$. In other words, the $\\frac{1}{a}$ here is a scalar multiple of the function $\\frac{1}{z}$ and \"the integral of a scalar multiple of a function is the scalar multiple of the integral of the function.\". Really.",
+  "There is no anti-derivative of $1/az$." = "Every function has an anti-derivative.",
+  "$$a \\ln(z)$$" = "You lost track of a reciprocal somewhere."
+)
+```
+
+```{r DLMF2}
+askMC(
+  "Use Section 4.10 of DLMF to find $$\\int \\frac{1}{3 t + 5}dt$$",
+  "+$$\\frac{1}{15}(3t - \\ln(e^{3t} + 5))$$+",
+  "There's no such function listed in Section 4.10." = "Although DLFM wrote the function using the variable name $z$, using $t$ instead is perfectly legitimate.",
+  "$$\\frac{1}{15}(5 t - \\ln(e^{5t} + 3))$$" = "Looks like you mixed up the $a$ and $b$."
+)
+```
+
+```{r DLMF3}
+askMC(
+  "Is $\\frac{1}{e^{az} + b}$ different from $e^{-(az + b)}$?",
+  "+Yes+" = "$e^{-(az + b)}$ is a simple exponential with the linear interior function $-(az + b)$.",
+  "No" = "They look similar, but $1/(e^{az} + b)$ is not an exponential function and it's not $1/e^{az} + 1/b$ either.",
+  "Depends on the value of $b$." = "A technically correct answer but misleading, since it's only for $b=0$ that the two functions are equal."
+)
+```
+
+```{r DLMF4}
+askMC(
+  "Using section 4.26, find $\\int \\tan(\\theta) d\\theta$.", 
+  "+$-\\ln(\\cos(\\theta)$+",
+  "$\\tan(\\theta)$ doesn't have an anti-derivative." = "All functions have an anti-derivative.",
+  "There's no $\\theta$ in section 4.26" = "The authors didn't use $\\theta$ as the name of the variable, but $\\theta$ (\"theta\") is every bit as good a name to use as $x$ or $t$."
+)
+```
+
+
+
+::: {.example data-latex=""}
+Galileo knew, of course, that a falling object speeds up as it falls. He also knew that the time increments of velocity were constant. He didn't know about calculus, but if he had, he would have known that "time increment" should be replaced by the derivative of velocity: a rate of change that we call "acceleration." Today, we know the value of that constant acceleration is approximately constant, and we even have units: $g = - 9.8$ m/s$^2$. Since velocity $V(t)$ is the integral of  acceleration, we even have a formula for velocity as a function of time: $$V(t) = \int g dt + C = g t + C$$. 
+
+Suppose Galileo releases a ball from the Tower of Pisa at exactly 3 seconds after noon. The velocity is $$V(t\geq 3) = g \times t + C = -9.8 \text{m/s}^2 \times t + C = -29.4 \text{m/s} + C\ .$$
+
+But what is the value of $C$? Galileo knows that at $t=3$, when he released the ball from a standstill, the velocity was zero.  $$V(3) = g \times t + C = -9.8\, \text{m/s}^2 \times 3\, \text{s} + C = - 29.4\, \text{m/s} + C \ .$$ Since $V(3) = 0 \text{m/s}$ we can deduce that $C= 29.4\, \text{m/s}$. 
+:::
+
+
+Come back to Galileo and integrate motion under constant gravity, involving two integrals: 
+$$V(t) = \int v(t) dt + C_1$ = -\int 9.8 dt + C_1 = - 9.8 t + C_1$$ What's the value of the constant of integration, which we're writing as $C_1$? If we know the initial position $x(0)$, that is, the position at $t=0$, then plugging $t=0$ into the formula for $V(t)$ gives  $C_1 = V(0)$.
+
+We also know that position $x(t)$ is
+$$x(t) = \int V(t) dt + C_2$$ There's no reason to think that the constant of integration that relates the anti-derivative $\int V(t) dt$ to $x(t)$ is the same as the constant of integration that relates $\int v(t) dt$ to $V(t)$. That's why we are writing the constant as $C_2$ here.
+
+Happily, we know $V(t) = -9.8 t + V(0)$. So we can calculate $$x(t) = \int \left[-9.8 t + V(0)\right]\,dt \\
+= \int \left[-8.8 t\right]dt + \int V(0) dt =\\
+\frac{9.8}{2} t^2 + V(0) t + C_2\ .$$
+And what is the value of the constant of integration $C_2$? Suppose we know the position of the ball at $t=0$, that is, $x(0)$. Plugging $t=0$ into the above formula gives $x(0) = C_2$.
+
+## Polynomials
+
+GO THROUGH THE LOGIC OF INTEGRATING POLYNOMIALS JUST BASED ON THEIR COEFFICIENTS.
+
+Pick up on the Taylor series for $\dnorm(x)$ defined in Exercises/Diff/birch-dig-radio.Rmd and have them integrate this out from zero to get an approximation to $\pnorm()$. Integrate out to $x=0.5$, then switch to the Taylor polynomial around $x_0=1$ and keep on integrating. Use the first integral out to $x=0.5$ as the starting value for the second integral.
+
+## Exercises
+
+`r insert_calcZ_exercise("31.03", "HoQaaq", "Exercises/Accum/owl-give-closet.Rmd")`
+

@@ -1,12 +1,11 @@
 ---
 id: "rooster-violet"
 author: "Daniel Kaplan"
+global-id: "ikdlx"
 ---
 
 ```{r include = FALSE}
-library(etude2)
-library(mosaic)
-library(mosaicCalc)
+library(Zcalc)
 ```
 
 Suppose we describe the spread of an infection in terms of three variables:
@@ -22,7 +21,7 @@ knitr::include_graphics(normalizePath("www/covid-nov-15-2020.png"))
 ```
 
 
-On November 15, 2020, $N$ was 135,187 people per day. (This is the number positive tests. The true value of $N$ is 5-10 times greater.) The news reports don't usually report $S$ on a day-by-day basis. 
+On November 15, 2020, $N$ was 135,187 people per day. (This is the number of positive tests. The true value of $N$ was, based on later information, 5-10 times greater.) The news reports don't usually report $S$ on a day-by-day basis. 
 
 But a basic strategy in modeling with calculus is to take a snapshot: Given $I$ and $S$ *today*, what is a model of $N$ for today. (Next semester, we'll study "differential equations," which provide a way of assembling from the snapshot model what the time course of the pandemic will look like.)
 
@@ -32,7 +31,7 @@ The low-order polynomial for $N(S, I)$ is $$N(S,I) = a_0 + a_1 S + a_2 I + a_{12
 
 Your job is to figure out which, if any, terms can be safely deleted from the low-order polynomial. A good way to approach this is to figure out, using common sense, what $N$ would be for either $S=0$ or $I=0$. (Note that the previous is not restricted to $S = I = 0$. Only one of them needs to be zero to produce the relevant result.)
 
-```{r daily-digital-33-QA6, echo=FALSE}
+```{r rv17-6, echo=FALSE}
 askMC(
   prompt = "Which of these is a sufficiently complete low-order polynomial given the behavior of $N$ at $S=0$ or $I=0$?",
     "$N(S,I) = a_0 + a_1 S + a_2 I + a_{12} I S$" = "We don't need all four terms. Think about it!",

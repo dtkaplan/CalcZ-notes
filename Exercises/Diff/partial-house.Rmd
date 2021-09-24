@@ -1,5 +1,7 @@
 ---
 id: "partial-house"
+author: "Daniel Kaplan"
+global-id: "vkdlw"
 ---
 
 ```{r include = FALSE}
@@ -7,7 +9,7 @@ id: "partial-house"
 
 For almost everyone, a house is too expensive to buy with cash, so people need to borrow money. The usual form of the loan is called a "mortgage".  Mortgages extend over many years and involve paying a fixed amount each month.  That amount is calculated so that, by paying it each month for the duration of the mortgage, the last payment will completely repay the amount borrowed plus the accumulated interest.
 
-The monthly mortgage payment in dollars, $P$, for a house is a function of three variables, $$P(A, r, N)$$ where $A$ is the amount borrowed in dollars, $r$ is the interest rate (per year), and $N$ is the number of years before the mortgage is paid off.
+The monthly mortgage payment in dollars, $P$, for a house is a function of three variables, $$P(A, r, N)$$ where $A$ is the amount borrowed in dollars, $r$ is the interest rate (percentage points per year), and $N$ is the number of years before the mortgage is paid off.
 
 A studio apartment is selling for $220,000. You will need to borrow $184,000 to make the purchase.
 
@@ -24,10 +26,12 @@ askMC(
 )
 ```
 
+The next two questions involve what happens to the monthly mortgage payments if you change either the amount or duration of the mortgage. (Hint: Common sense works wonders!)
+
 
 ```{r daily-digital-27-QA16, echo=FALSE}
 askMC(
-  prompt = "What would you expect about the quantity $\\partial P / \\partial A$?",
+  prompt = "What would you expect about the quantity $\\partial P / \\partial A$, the partial derivative of the monthly mortgage payment with respect to the amount of money borrowed?",
     "+It's positive+" = "If you borrow more money, holding mortgage duration and interest rate constant, you are going to have to pay more each month.",
     "It's zero" = "",
     "It's negative" = "",
@@ -38,7 +42,7 @@ askMC(
 
 ```{r daily-digital-27-QA17, echo=FALSE}
 askMC(
-  prompt = "What would you expect about the quantity $\\partial P / \\partial N$?",
+  prompt = "What would you expect about the quantity $\\partial P / \\partial N$, the partial derivative of the monthly mortgage payment with respect to the number of years the mortgage lasts?",
     "It's positive" = "",
     "It's zero" = "",
     "+It's negative+" = "If you borrow the same amount of money at the same interest rate, but have more years to pay it back, your monthly payment will be smaller.",
@@ -48,9 +52,8 @@ askMC(
 
 
 ```{r daily-digital-27-QA18, echo=FALSE}
-
 askMC(
-  prompt = "Suppose $\\partial P / \\partial r (184000,4,30) =$ $145.64.  What is the financial significance of the number $145.65??",
+  prompt = "Suppose $\\partial_r P (184000,4,30) =$ $145.65.  What is the financial significance of the number $145.65??",
     "If the interest rate $r$ went up from 4 to 5, the monthly payment would increase by $145.65." = "This is a perfectly reasonable answer, but  ... recall that the derivative gives the rate of increase in the output of the function when the input changes by a tiny amount. It turns out that a 1 percentage point increase in interest rate is a very large amount of change.",
     "If the interest rate $r$ went up from 4 to 4.001, the monthly payment would increase by $145.65." = "This is indeed a small change in interest rate, but the value of the derivative is the *rate* of increase, not the increase itself.",
     "+If the interest rate $r$ went up from 4 to 4.001, the monthly payment would increase by $0.001 \times $145.65.+" = "You might think that nobody would be concerned about such a small increase in interest rate. But knowing the result for each very small increase allows us to calculate what would be the impact of a large increase by a process  called *integration*.",

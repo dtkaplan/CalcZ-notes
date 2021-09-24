@@ -4,12 +4,6 @@ Looking at the graph of a function, our eyes immediately register the slope at a
 
 One consequence of this visual ability is that it's easy to  recognize whether a line that touches the graph at a point is tangent to the graph. `r mark(2230)`
 
------
-
-Here are some exercises to check out your own visual skills. Don't be upset if you don't get the right answer the first time. Usually it takes a bit of eye training to get proficient at the task.
-
-
-
 There are other aspects of functions, introduced in Section \@ref(word-descriptions), that
  are also readily discerned from a glance at the function graph. `r mark(2235)`
 
@@ -30,9 +24,9 @@ It turns out that quantifying these properties of functions or shapes is natural
 ::: {.intheworld  data-latex=""}
 Imagine designing a highway. Due to the terrain, part of the road is oriented east-west and another part north-south. For vehicles to use the road, those two parts need to be connected together! (In math-speak, we might say that the road has to be ***continuous***, but this is just common sense.)
 
-From your experience with highways, you know the connection will be a ***smooth*** curve. If the curve is part of a circle, then the design needs to specify the ***radius of curvature*** of the circle. Too tight a radius and the traffic won't be able to handle the centrifugal force and will drift or skid off the road. A big radius is needed for safety, but making the radius bigger than required for safety adds additional cost to road construction.
+From your experience with highways, you know the connection will be a ***smooth*** curve. If the curve is part of a circle, then the design needs to specify the ***radius of curvature*** of the circle. Too tight a radius and the traffic won't be able to handle the centrifugal force and will drift or skid off the road. A big radius is needed for safety, but making the radius bigger than required adds additional cost to road construction.
 
-But it's not as simple as finding the radius of the curve. The radius needs to **change** at the entry and exit of the curve. Why? Here's an explanation from the American Association of State Highway and Transportation Officials *Policy on Geometric Design of Highways and Streets (1994):
+It's not as simple as finding the radius of the curve. The radius needs to **change** at the entry and exit of the curve. Why? Here's an explanation from the American Association of State Highway and Transportation Officials *Policy on Geometric Design of Highways and Streets (1994):
 
 *Any motor vehicle follows a transition path as it enters or leaves a circular horizontal curve. The steering change and the consequent gain or loss of centrifugal force cannot be effected instantly. For most curves the average driver can effect a suitable transition path within the limits of normal lane width. However, with combinations of high speed and sharp curvature the resultant longer transition can result in crowding and sometimes actual occupation of adjoining lanes. In such instances transition curves would be appropriate because they make it easier for a driver to confine the vehicle to his or her own lane. The employment of transition curves between tangents and sharp circular curves and between circular curves of substantially different radii warrants consideration.*
 
@@ -40,7 +34,7 @@ Later in this chapter, you'll see the calculus concepts that relate to designing
 
 :::
 
-I'll frame the calculations in terms of a function $f(x)$. Depending on the setting, $x$ might be the price of a product and $f(x)$ the demand for that product. Or the graph of $f(x)$ might be the path of a road or the trajectory of a robot arm. Remember that $f()$ is just a *pronoun* that I'm using instead of a proper descriptive name. I use such pronouns (also, $g()$, $h()$, the "she" and "he" of mathematical language) when writing about the general properties of functions.
+Let's frame the calculations in terms of a function $f(x)$. Depending on the setting, $x$ might be the price of a product and $f(x)$ the demand for that product. Or the graph of $f(x)$ might be the path of a road drawn in $(x,y)$ coordinates or the reach of a robot arm as a function of time. Remember that $f()$ is just a *pronoun* that I'm using instead of a proper descriptive name. I use such pronouns (also, $g()$, $h()$, the "she" and "he" of mathematical language) when writing about the general properties of functions.
 
 ## Concavity {#concavity-deriv}
 
@@ -53,20 +47,20 @@ Figure \@ref(fig:changing-slope) shows a simple function that is concave down.
 ```{r changing-slope, echo=FALSE, fig.cap="A function that is concave down."}
 fraw <- rfun(~ x, seed=93872)
 f <- makeFun(fraw((x-5.5)/3) ~ x )
-slice_plot(f(x) ~ x, domain(x=c(0, 4)))
+slice_plot(f(x) ~ x, domain(x=c(0.4, 4)))
 ```
 Notice that the concavity is not about the slope. The curve in Figure \@ref(fig:changing-slope) is concave down everywhere in the domain $0 \leq x \leq 4$, but the slope is positive for $0 \leq x \leq 1$ and negative for larger $x$. Slope and concavity are two different aspects of a function.
 
-The concavity of a function depends not on the slope, but on the ***change in the slope***. Figure \@ref(fig:changing-slope2) adds some annotations on top of the graph in Fig. \@ref(fig:changing-slope). In the subdomain marked A, the function slope is positive while in the subdomain B, the function slope is negative. It is this ***transition*** from the slope in A to the slope in B that corresponds to the concavity of the function between A and B. 
+As introduced in Chapter \@ref(fun-describing), the concavity of a function depends not on the slope, but on the ***change in the slope***. Figure \@ref(fig:changing-slope2) adds some annotations on top of the graph in Fig. \@ref(fig:changing-slope). In the subdomain marked A, the function slope is positive while in the subdomain B, the function slope is negative. It is this ***transition*** from the slope in A to the slope in B that corresponds to the concavity of the function between A and B. 
 
 
 
 
 ```{r changing-slope2, echo=FALSE, fig.cap="Convexity is about how the slope *changes* from one place in the domain to another."}
 graph_with_boxes(f,
-                 interval = tibble(x=c(.0, 1.5, 3),
-                                   xend=c(.75, 2, 3.5)),
-                 domain = c(0, 4))
+                 interval = tibble(x=c(.4, 1.5, 3),
+                                   xend=c(1, 2, 3.5)),
+                 domain = c(0.4, 4))
 ```
 Similarly, the concavity of the function between B and C, reflects the ***transition*** in the slope from B to C. Even though the slope is negative in both B and C, the change in slope tells us about the concavity. 
 
@@ -74,10 +68,10 @@ Let's look at this using symbolic notation. Keep in mind that the function graph
 
 $$\text{concavity.of.f}(x) \equiv\ \text{rate of change in}\ \partial_x\, f(x) = \partial_x [\partial_x f(x)] \\
 \\
-= \frac{\partial_x f(x+h) - \partial_x f(x)}{h}$$
+= \lim_{h\rightarrow 0}\frac{\partial_x f(x+h) - \partial_x f(x)}{h}$$
 We're defining the concavity of a function $f()$ at any input $x$ to be $\partial_x [\partial_x f(x)]$. We create the concavity_of_f(x) function by applying differentiation **twice** to the function $f()$. 
 
-Such a double derivative of a function $f(x)$ is called the ***second derivative*** of $f(x)$. The second derivative is so important in applications that it has it's own compact notation:
+Such a double differentiation of a function $f(x)$ is called the ***second derivative*** of $f(x)$. The second derivative is so important in applications that it has it's own compact notation:
 $$\text{second derivative of}\ f()\ \text{is written}\ \partial_{xx} f(x)$$
 Look carefully to see the difference between the first derivative $\partial_x f(x)$ and the second derivative $\partial_{xx} f(x)$: it's all in the double subscript $_{xx}$.
 
@@ -88,12 +82,11 @@ dx_f  <- D(   f(x) ~ x)   # First deriv. of f()
 dxx_f <- D(dx_f(x) ~ x)   # Second deriv. of f()
 ```
 
-R/mosaic offers a shortcut for computing second derivatives using just one application of `D()`:
+::: {.takenote}
+As a shortcut for the two-step process above, for the second derivative you can use a notation which doubles up on the `x` on the right-hand side of the tilde: 
+`dxx_f <- D(f(x) ~ x & x)`
+:::
 
-```{r}
-dxx_f <- D(f(x) ~ x & x)
-```
-Notice that we're doubling up on the `x` in the right-hand side of the tilde expression.
 
 
 
@@ -132,7 +125,7 @@ slice_plot(x^2 ~ x, domain(x=c(-2,2))) %>%
   gf_refine(coord_fixed(xlim=c(-3,3), ylim=c(-1, 4)))
 ```
 
-Black dots have been put along the graph at those inputs and the tangent circle drawn. You can tell that each circle is tangent to the function at it's marked point; the graph of the function goes right down the center of the circle at the point of tangency.
+Black dots have been put along the graph at the points where the graph of the function is tangent to the inscribed circle. The visual sign of tangency is that the graph of the function goes right down the center of the circle.
 
 The inscribed circle at $x=0$ is tightest. The circle at $x=1$ has a somewhat larger radius. The radius of the circle at $x=-1.5$ is the largest of all. Whereas the concavity is the same at all points on the graph, the visual impression that the function is most highly curved near $x=0$ is better captured by the radius of the inscribed circle. The radius of the inscribed circle at any point is the reciprocal of a quantity ${\cal K}$ called the ***curvature***.
 

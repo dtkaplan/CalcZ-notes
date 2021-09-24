@@ -1,11 +1,6 @@
 ---
 chapter: "derivatives"
 author: "Daniel Kaplan"
-difficulty: "XX"
-output: learnr::tutorial
-tutorial:
-  id: "pine-lead-car"
-  version: 0.1
 date: 2020-10-12 
 tags: [derivatives, monotonicity]
 id: pine-lead-car
@@ -20,7 +15,7 @@ library(mosaicCalc)
 
 Recall from Section \@ref(monotonicity) that a function is ***monotonically increasing*** on a given domain when the function's slope is positive everywhere in that domain. A ***monotonically decreasing*** function, similarly, has a negative slope everywhere in the domain. When the slope is zero, or positive in some places and negative in others, the function is neither monotonically increasing or decreasing.
 
-Each of the following graphs shows the derivative of some function $f(x)$. (Note: the graph doesn't show $f()$ but rather the function $\partial_x f()$ which is the derivative of $f()$.) For each graph, say whether the function $f()$ is monotonically increasing, monotonically decreasing, or neither. (Note that the horizontal scale is the same in every graph, but the vertical scale can be different from one scale to another.)
+Each of the following graphs shows the derivative of some function $f(x)$. (Note: the graph doesn't show $f(x)$ but rather the function $\partial_x f(x)$) For each graph, say whether the function $f()$ is monotonically increasing, monotonically decreasing, or neither. (Note that the horizontal scale is the same in every graph, but the vertical scale can be different from one scale to another.)
 
 ```{r echo=FALSE}
 r1 <- rfun(~ x, seed = 101)
@@ -75,14 +70,18 @@ F10 <- antiD(f10(x) ~ x)
 ```
 
 
-```{r echo=FALSE, out.width = "50%", fig.show = "hold"}
-slice_plot(df1(x) ~ x, domain(x = c(-5,5))) %>% gf_labs(title="Derivative of function A", y="df(x)")
-slice_plot(df2(x) ~ x, domain(x = c(-5,5))) %>% gf_labs(title="Derivative of function B", y="df(x)")
-slice_plot(df3(x) ~ x, domain(x = c(-5,5))) %>% gf_labs(title="Derivative of function C", y="df(x)")
-slice_plot(df4(x) ~ x, domain(x = c(-5,5))) %>% gf_labs(title="Derivative of function D", y="df(x)")
-slice_plot(df5(x) ~ x, domain(x = c(-5,5))) %>% gf_labs(title="Derivative of function E", y="df(x)") %>%
+```{r echo=FALSE}
+P1 <- slice_plot(df1(x) ~ x, domain(x = c(-5,5))) %>% gf_labs(title="Derivative of function A", y="df(x)")
+P2 <- slice_plot(df2(x) ~ x, domain(x = c(-5,5))) %>% gf_labs(title="Derivative of function B", y="df(x)")
+P3 <- slice_plot(df3(x) ~ x, domain(x = c(-5,5))) %>% gf_labs(title="Derivative of function C", y="df(x)")
+P4 <- slice_plot(df4(x) ~ x, domain(x = c(-5,5))) %>% gf_labs(title="Derivative of function D", y="df(x)")
+P5 <- slice_plot(df5(x) ~ x, domain(x = c(-5,5))) %>% gf_labs(title="Derivative of function E", y="df(x)") %>%
   gf_theme(axis.text.y=element_blank())
-slice_plot(df6(x) ~ x, domain(x = c(-5,5))) %>% gf_labs(title="Derivative of function F", y="df(x)")
+P6 <- slice_plot(df6(x) ~ x, domain(x = c(-5,5))) %>% gf_labs(title="Derivative of function F", y="df(x)")
+```
+
+```{r echo=FALSE, out.width="50%", fig.align="center"}
+P1
 ```
 
 ```{r pine-lead-car-QA1, echo=FALSE}
@@ -97,6 +96,9 @@ askMC(
 )
 ```
 
+```{r echo=FALSE, out.width="50%", fig.align="center"}
+P2
+```
 
 ```{r pine-lead-car-QA2, echo=FALSE}
 askMC(
@@ -109,6 +111,11 @@ askMC(
   random_answer_order = FALSE
 )
 ```
+
+```{r echo=FALSE, out.width="50%", fig.align="center"}
+P3
+```
+
 ```{r pine-lead-car-QA3, echo=FALSE}
 askMC(
   prompt = "Function C is ...",
@@ -120,6 +127,11 @@ askMC(
   random_answer_order = FALSE
 )
 ```
+
+```{r echo=FALSE, out.width="50%", fig.align="center"}
+P4
+```
+
 ```{r pine-lead-car-QA4, echo=FALSE}
 askMC(
   prompt = "Function D is ...",
@@ -131,6 +143,11 @@ askMC(
   random_answer_order = FALSE
 )
 ```
+
+```{r echo=FALSE, out.width="50%", fig.align="center"}
+P5
+```
+
 ```{r pine-lead-car-QA5, echo=FALSE}
 askMC(
   prompt = "Function E is ...",
@@ -142,6 +159,11 @@ askMC(
   random_answer_order = FALSE
 )
 ```
+
+```{r echo=FALSE, out.width="50%", fig.align="center"}
+P6
+```
+
 ```{r pine-lead-car-QA6, echo=FALSE}
 askMC(
   prompt = "Function F is ...",

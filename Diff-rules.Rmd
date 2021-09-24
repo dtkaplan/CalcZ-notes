@@ -4,11 +4,11 @@
 magenta, brown, darkorange
 -->
 
-In Section \@ref(symbolic-differentiation) we used h-theory to confirm our claims about the derivatives of many of the pattern-book functions. In this chapter, we're going to use h-theory to find algebraic ***rules*** to calculate the derivatives of linear combinations of functions, products of functions, and composition of functions. Remarkably, we can figure out these rules without having to say specifically which functions are being combined. So the rules can be written in terms of abstractions: $f()$, $g()$, and $h()$. Later, we'll apply those rule to specific functions, to show how the rules are used in practical work.
+In Section \@ref(symbolic-differentiation) we used the rules associated with $\lim_{h\rightarrow 0}$ to confirm our claims about the derivatives of many of the pattern-book functions. We'll call these rules ***h-theory*** for short. In this chapter, we're going to use h-theory to find algebraic ***rules*** to calculate the derivatives of linear combinations of functions, products of functions, and composition of functions. Remarkably, we can figure out these rules without having to say specifically which functions are being combined. So the rules can be written in terms of abstractions: $f()$, $g()$, and $h()$. Later, we'll apply those rules to specific functions, to show how the rules are used in practical work.
 
 ## Using the rules {#using-the-rules}
 
-When you encounter a function that you want to differentiate, you first have to examine the function to decide which rule you want to apply. In the following, I'm going to use the names $f()$ and $g()$, but in practice the functions will often be basic modeling functions, for instance $e^{kx}$ or $\sin\left(\frac{2\pi}{P}t\right)$ or $\ln(x/x_0)$, etc. 
+When you encounter a function that you want to differentiate, you first have to examine the function to decide which rule you want to apply. In the following, we'll to use the names $f()$ and $g()$, but in practice the functions will often be basic modeling functions, for instance $e^{kx}$ or $\sin\left(\frac{2\pi}{P}t\right)$, etc. 
 
 ***Step 1***: Identify f() and g() 
 
@@ -33,13 +33,13 @@ Recall from Chapter \@ref(fun-assembling) that will will be working with three i
 
 
 
-## Linear combinations and h-theory
+## Differentiating linear combinations
 
-***Linear combination*** is one of the ways in which we make new functions from existing functions. As you recall, linear combination involves ***scaling*** functions and then ***adding*** the scaled functions. We can easily use $h$ to show what is the result of differentiating a linear combination of functions. We'll use $f(x)$ and $g(x)$ as the names that could stand for any function whatsoever. And we'll let $b$ be the name of a scalar. First, let's figure out what is $\partial_x\, b f(x)$, Going back to writing $\partial_x$ in terms of a slope function:
-$$\partial_x\, b\,f(x) = \frac{b\, f(x + h) - b\,f(x)}{h}\\
+***Linear combination*** is one of the ways in which we make new functions from existing functions. As you recall, linear combination involves ***scaling*** functions and then ***adding*** the scaled functions as in $a f(x) + b g(x)$, alinear combination of $f(x)$ and $g(x)$. We can easily use $h$ to show what is the result of differentiating a linear combination of functions.  First, let's figure out what is $\partial_x\, a f(x)$, Going back to writing $\partial_x$ in terms of a slope function:
+$$\partial_x\, a\,f(x) = \frac{a\, f(x + h) - a\,f(x)}{h}\\
 \ \\
-= b \frac{f(x+h) - f(x)}{h} = b\, \partial_x f(x)$$
-In other words, if we know the derivative $\partial_x\, f(x)$, we can easily find the derivative of any scaled version of $f()$. Notice that even though $h$ was used in the derivation, it appears nowhere in the result $\partial_x\, b\,f(x) = b\, \partial_x\, f(x)$. The $h$ is solvent to get the paint on the wall and evaporates once its job is done.
+= a \frac{f(x+h) - f(x)}{h} = a\, \partial_x f(x)$$
+In other words, if we know the derivative $\partial_x\, f(x)$, we can easily find the derivative of $a\, f()$. Notice that even though $h$ was used in the derivation, it appears nowhere in the result $\partial_x\, b\,f(x) = b\, \partial_x\, f(x)$. The $h$ is solvent to get the paint on the wall and evaporates once its job is done.
 
 Now consider the derivative of the sum of two functions, $f(x)$ and $g(x)$:
 $$\partial_x\, \left[f(x) + g(x)\right] =\\
@@ -52,15 +52,9 @@ $$\partial_x\, \left[f(x) + g(x)\right] =\\
 \ \\
 = \partial_x\, f(x) + \partial_x\, g(x)$$
 
-Using these two rules together, we can differentiate any linear combination of functions in terms of the differentiated functions themselves:
-
-$$\partial_x\ \left[\strut a_1 g_1(x) + a_2 g_2(x) + a_3 g_3(x) + \cdots\right] =\ \ \ \ \ \ \ \ \ \ \\
-\ \\
-\ \ \ \ \ \ \ \ \ a_1 \partial_x\, g_1(x) + a_2 \partial_x\, g_2(x) + a_3 \partial_x\, g_3(x) + \cdots$$
 
 
-
-Because of the way that $\partial_x$ can be "passed through" a linear combination, mathematicians say that differentiation is a ***linear operator***. Consider this new fact about differentiation as a down payment on what will eventually become a complete theory telling us how to differentiate a ***product of two functions*** or the ***composition of two functions***. We'll lay out the $h$-based algebra of this in the next two sections.  `r mark(2390)`
+Because of the way that $\partial_x$ can be "passed through" a linear combination, mathematicians say that differentiation is a ***linear operator***. Consider this new fact about differentiation as a down payment on what will eventually become a complete theory telling us how to differentiate a ***product of two functions*** or the ***composition of two functions***. We'll lay out the $h$-theory based algebra of this in the next two sections.  `r mark(2390)`
 
 We can summarize the h-theory result for linear combinations this way:
 
@@ -69,23 +63,29 @@ We can summarize the h-theory result for linear combinations this way:
 That is:
 
 $$\partial_x \left[\strut \color{magenta}{a} \color{brown}{f(x)} + \color{magenta}{b} \color{brown}{g(x)}\right] = \color{magenta}{a} {\large\color{brown}{f'(x)}} + \color{magenta}{b} {\large\color{brown}{g'(x)}}$$
-::: {.workedexample   data-latex=""}
+as well as 
+$$\partial_x \left[\strut \color{magenta}{a}\, \color{brown}{f(x)} + \color{magenta}{b}\, \color{brown}{g(x)}  + \color{magenta}{c}\, \color{brown}{h(x)} + \cdots\right] = \color{magenta}{a}\, {\large\color{brown}{f'(x)}} + \color{magenta}{b}\, {\large\color{brown}{g'(x)}} + \color{magenta}{c}\, {\large\color{brown}{h'(x)}} + \cdots$$
+
+
+::: {.example data-latex=""}
 The derivative of a polynomial is a polynomial of a lower order. 
 
 Consider the polynomial $$h(x) = \color{magenta}{a}\color{brown}{x^0}  + \color{magenta}{b} \color{brown}{x^1} + \color{magenta}{c} \color{brown}{x^2}$$ The derivative is 
-$$\partial_x h(x) = \color{magenta}{a}\color{brown}{0}  + \color{magenta}{b}\, \color{brown}{1} + \color{magenta}{c}\, \color{brown}{2 x} = \color{magenta}{b} +  \color{magenta}{2 c}\  x$$
+$$\partial_x h(x) = \color{brown}{0}\, \color{magenta}{a}  + \color{brown}{1}\, \color{magenta}{b}  + \color{magenta}{c}\, \color{brown}{2 x} = \color{magenta}{b} +  \color{magenta}{2 c}\  x$$
 :::
 
 
-## Products and h-theory
 
-The question at hand is how to compute the derivative $\partial_x f(x) g(x)$.  Needless to say, $f(x) g(x)$ is just a function so it's perfectly appropriate to use numerical methods in exactly the same way you would for any other function. So let's make the question more specific by asking how to compute the derivative $\partial_x f(x) g(x)$ **if you already know** $\partial_x f(x)$ and $\partial_x g(x)$.
+
+## Product rule for multiplied functions
+
+The question at hand is how to compute the derivative $\partial_x f(x) g(x)$.  Of course, you can always use numerical differentiation. But let's look at the problem from the point of view of symbolic differentiation. And since $f(x)$ and $g(x)$ are just pronoun functions, we'll assume you are starting out already knowing  the derivatives $\partial_x f(x) $\partial_x f(x)$ and $\partial_x g(x)$.
 
 This situation arises particularly when $f(x)$ and $g(x)$ are pattern-book functions for which you already have memorized $\partial_x f(x)$ and $\partial_x g(x)$ or are basic modeling functions whose derivatives you will memorize in Section \@ref(basic-derivs).
 
 The purpose of this section is to **derive** the formula for $\partial_x f(x) g(x)$ in terms of $f(x)$, $g(x)$, $\partial_x f(x)$ and $\partial_x g(x)$. This formula is called the ***product rule***. The point of showing a derivation of the product rule is to let you see how the logic of evanescent $h$ plays a role. In practice, everyone simply memorizes the rule, which has a beautiful, symmetric form:
 
-$$\text{Product rule:}\ \ \ \ \partial_x \left[\strut f(x)g(x)\right] = \left[\strut \partial_x f(x)\right]\, g(x) + f(x)\, \left[\strut\partial_x g(x)\right]$$ and is even prettier in Lagrange notation (where $\partial_x f(x)$ is written $f'$): $$ \left[\strut f g\right]' = f' g + f g'$$
+$$\text{Product rule:}\ \ \ \ \partial_x \left[\strut f(x)g(x)\right] = \left[\strut \partial_x f(x)\right]\, g(x) + f(x)\, \left[\strut\partial_x g(x)\right]$$ and is even prettier in Lagrange notation (where $\partial_x f(x)$ is written $f'$): $$ \left[\strut f g\right]' = f' g + g' f$$
 
 As with all derivatives, the product rule is based on the instantaneous rate of change $$F'(x) \equiv \lim_{h\rightarrow 0} \frac{F(x+h) - F(x)}{h}$$ introduced in Section \@ref(instantaneous-rate-of-change).
 
@@ -94,90 +94,132 @@ We also need two other statements about $h$ and functions:
 1. The derivative $F'(x)$ is the slope of of $F()$ at input $x$. Taking a step of size $h$ from $x$ will induce a change of output of $h F'(x)$, so $$F(x+h) = f(x) + h F'(x)\ .$$
 2. Any result of the form $h F(x)$, where $F(x)$ is finite, gives 0. More precisely, $\lim_{h\rightarrow 0} h F(x) = 0$
 
-For simplicity, we'll leave out the $\lim_{h\rightarrow 0}$ until the last step; you can imagine that it's being written in every step. We do some algebraic manipulation of the instantaneous rate of change.
+As before, we'll put the standard $\lim_{h\rightarrow 0}$ disclaimer against dividing by $h$ until there are no such divisions at all, at which point we can safely use the equality $h = 0$. 
 
 Suppose the function $F(x) \equiv f(x) g(x)$, a product of the two functions $f(x)$ and $g(x)$.
 
-$$\require{cancel} F'(x) = \partial_x \left[\strut f(x) g(x) \right] \equiv \frac{f(x+h) g(x+h) - f(x) g(x)}{h}$$
-$$= \frac{f(x+h) \left[\strut g(x) + h g'(x) \right] - f(x) g(x)}{h} $$
-$$=\frac{\left[\strut f(x+ h) - f(x)\right]  g(x) + f(x+h) h\, g'(x)}{h}$$
-$$=\left[\strut \frac{f(x+h) - f(x)}{h}\right] g(x) + \frac{\left[\strut f(x) + h f'(x)\right]h\,g'(x)}{h}$$
-$$= f'(x) g(x) + \frac{f(x) h g'(x)}{h} + \frac{h f'(x) h g'(x)}{h}$$
+$$\require{cancel} F'(x) = \partial_x \left[\strut f(x) g(x) \right] \equiv \lim_{h\rightarrow 0}\frac{f(x+h) g(x+h) - f(x) g(x)}{h}$$
+We'll replace $g(x_h)$ with its equivalent $g(x) + h g'(x)$ giving
 
+$$= \lim_{h\rightarrow 0} \frac{f(x+h) \left[\strut g(x) + h g'(x) \right] - f(x) g(x)}{h} $$
+$g(x)$ appears in both terms in the numerator, once multiplied by $f(x+h)$ and once by $f(x)$. Collecting those terms give:
+
+$$=\lim_{h\rightarrow 0}\frac{\left[\strut f(x+ h) - f(x)\right]  g(x) + \left[\strut f(x+h) h\, g'(x)\right]}{h}$$
+This has two bracketed terms added together over a common denominator. Let's split them into separate terms:
+
+$$=\lim_{h\rightarrow 0}\underbrace{\left[\strut \frac{f(x+h) - f(x)}{h}\right]}_{f'(x)} g(x) + \lim_{h\rightarrow 0}\frac{\left[\strut f(x) + h f'(x)\right]h\,g'(x)}{h}$$
+
+The first term is $g(x)$ multiplied by  the familiar form for the derivative of $f(x)$ 
+$$= f'(x) g(x) + \lim_{h\rightarrow 0}\frac{f(x) h g'(x)}{h} + \lim_{h\rightarrow 0}\frac{h f'(x) h g'(x)}{h}$$
+In each of the last two terms there is an $h/h$ involved. This is safely set to 1, since the $\lim_{h\rightarrow 0}$ implies that $h$ will not be exactly zero. There remain no divisions by $h$ so we can drop the $\lim_{h\rightarrow 0}$ in favor of $h=0$:
 $$= f'(x) g(x) + f(x) g'(x) + \cancel{h f'(x) g'(x)}$$
 
-$$=f'(x) g(x) + f(x) g'(x)$$
+$$=f'(x) g(x) + g'(x) f(x)$$
 
 The last step relies on statement (2) above.
 
-The formula that emerges from h-theory applied to products of functions is called, naturally enough, the ***product rule***. Written in terms of the pronoun functions $f()$ and $g()$, the product rule is
-
-
-$$\Large\partial_x \left[\strut \color{magenta}{f(x)}\times \color{brown}{g(x)}\right] = \color{magenta}{[\partial_x f(x)]} \times \color{brown}{g(x)}\ \  {\mathbf +}
-\ \ \color{magenta}{[\partial_x g(x)]} \times \color{brown}{f(x)}$$
 Some people find it easier to read the rule in Lagrange shorthand, where $f$ and $g$ stand for $f(x)$ and $g(x)$ respectivly, and $f'$ ("f-prime") and $g'$ ("g-prime") stand for $\partial f()$ and $\partial g()$. `r mark(2415)`
 
-$$\Large\text{Lagrange shorthand:}\ \   \partial[\color{magenta}f \times \color{brown}g] = [\color{magenta}f \times \color{brown}g]' = \color{magenta}{f'}\color{brown}g + \color{brown}{g'}\color{magenta}f$$
-Let's start with some very simple examples where we already know the answer:
+$$\large\text{Lagrange shorthand:}\ \   \partial[\color{magenta}f \times \color{brown}g] = [\color{magenta}f \times \color{brown}g]' = \color{magenta}{f'}\color{brown}g + \color{brown}{g'}\color{magenta}f$$
 
-- We know $\partial_x x^3 = 3 x^2$ so lets check when we write $x^3$ as $x^2 x$:
+::: {.example data-latex=""}
+The expression  $\partial_x x^3$ is exactly the same as $\partial_x \left[\strut x\  x^2\right]$. Since we already know $\partial_x x$ (it's 1) and $\partial_x x^2$ (it's $2x$) let's apply the product rule to find $\partial_x x^3$:
 $$\large\partial [\color{magenta}x \times \color{brown}{x^2}] = \color{magenta}{[\partial x]} \times \color{brown}{x^2} \ +\  \color{brown}{[\partial x^2]} \times \color{magenta}x =\color{magenta}1\times \color{brown}{x^2} + \color{brown}{2x} \times \color{magenta}x = 3 x^2$$
+:::
+
+::: {.takenote data-latex=""}
+Occasionally, mathematics gives us a situation where being more general produces simplicity.
+
+In the case of function products, the generalization is from  products of two functions $f(x)\cdot g(x)$ to products of more than two functions, e.g. $u(x) \cdot v(x) \cdot w(x)$. 
+
+The chain rule here takes a form that makes the overall structure much clearer:
+
+$$\partial_x \left[\strut u(x) \cdot v(x) \cdot w(x)\right] = \\
+\color{blue}{\partial_x u(x)} \cdot v(x) \cdot w(x)\ +\ u(x) \cdot \color{blue}{\partial_x v(x)} \cdot w(x)\ +\ u(x) \cdot v(x) \cdot \color{blue}{\partial_x w(x)}$$
+In the Lagrange shorthand, the pattern is even more evident:
+$$\left[ u\cdot v\cdot w\right]' = \color{blue}{u'}\cdot v\cdot w\ +\ u\cdot \color{blue}{v'}\cdot w\ +\ u\cdot v\cdot \color{blue}{w}'$$
+:::
 
 
 
-## Function compositions and h-theory
+## Chain rule for function composition
 
-The formula for the derivative of the composition $\partial_x \left[\strut f(g(x))\right]$ in terms of $f(y)$, $g(x)$, $f'(y)$ and $g'(x)$ is usually called the ***chain rule*** rather than the "composition rule." It is:
-$$\partial_x \left[\strut f(g(x))\right] = \left[\strut f(g(x))\right]' = f'(g(x)) g'(x)$$
-The derivation relies on two closely related statements:
+A function composition, as described in Section \@ref(function-composition), involves inserting the output of one function (the "interior function") as the input of the other function (the "exterior function"). As we so often do, we'll be using pronouns a lot. A list might help keep things straight:
 
-1. $g(x + h) = g(x) + h g'(x)$
-2. $f\left[\strut(g(x + h)\right) = f\left[\strut g(x) + hg'(x)\right] = f(g(x)) + f'(g(x)) h g'(x)$
+- There are two functions involved in a composition. We'll call them $f(y)$ and $g(x)$. In the composition $f(g(x))$, the ***exterior function*** is $f()$ and the ***interior function*** is $g()$.
+- Each of the two functions $f()$ and $g()$ has an input.
+In our examples, we'll use $y$ to stand for the input to the exterior function and $x$ as the pronoun for the input to the interior function.
+- As with all rules for differentiation, we'll need to compute the derivatives of the functions involved, each with respect to its own input. So these will be $\partial_y f(y)$ and $\partial_x g(x)$.
 
-Apply these statements to the instantaneous rate of change of $f(x)g(x)$:
+A reason to use different pronouns for the inputs to $f()$ and $g()$ is to remind us that the output $g(x)$ is in general not the same kind of quantity as the input $x$. In a function composition, the $f()$ function will take the output $g(x)$ as input. But since $g(x)$ is not necessarily the same kind of thing as $x$, why would we want to use the same name for the input to $f()$ as we use for the input to $g()$.
 
-$$\partial_x f(x) g(x) \equiv \frac{f(g(x+h)) - f(g(x))}{x}$$
-$$= \frac{\cancel{f(g(x))} + f'(g(x))h g'(x) - \cancel{f(g(x))}}{h}$$
-$$= f'(g(x)) g'(x)$$
+With this distinction between the names of the inputs, we can be even more explicit about the composition, writing $f(y=g(x))$ instead of $f(g(x))$. Had we used the pronound $x$ for the input to $f()$ but our explicit statement, although technically correct, would be confusing: $f(x = g(x))$!
 
+With all these pronouns in mind, here is the ***chain rule*** for the derivative $\partial_x f(g(x))$:
 
+$$\large\partial_x \left[\strut \color{magenta}{f\left(\strut\right.}\strut \color{brown}{g(x)}\color{magenta}{\left.\right)}\right] = [\color{magenta}{\partial_y f}](\color{brown}{g(x)}) \times [\color{brown}{\partial_xg(x)}]$$
+Or, using the Lagrange prime notation, where $'$ stands for the derivative of a function with respect to its input, we have 
+$$\large\text{Lagrange shorthand:}\ \   [\color{magenta}f(\color{brown}g)]' = \color{magenta}{f'} (\color{brown}g) \times \color{brown}{g}'$$
 
+The derivation of the chain rule relies on two closely related statements which are expressions of the idea that near any value $x$ a function can be expressed as a linear approximation with the slope equal to the derivative of the function :
 
+1. $g(x + h) = g(x) + h g'(x)$ 
+2. $f(y + \epsilon) = f(y) + \epsilon f'(y)$, which is the same thing as (1) but uses $y$ as the argument name and $\epsilon$ to stand for the small quantity we usually write with an $h$. 
 
+We'll now look at $\partial_x f\left({\large\strut} g(x)\right)$ by writing down the fundamental definition of the derivative. This, of course, involves the disclaimer $\lim_{h\rightarrow 0}$ until we're sure that there is no division by $h$ involved. 
 
+$$\partial_x \left[{\large\strut} f\left(\strut g(x)\right)\right]  \equiv \lim_{h\rightarrow 0}\frac{\color{magenta}{f(g(x+h))} - f(g(x))}{h}$$
 
-## The chain rule
-
-The rule that results from applying h-theory to function compositions is called the ***chain rule***, presumably because the result involves a chain of derivatives. It is used so often that models simply memorize it. 
-
-Written in terms of the pronoun functions $f()$ and $g()$, the rule for the composition $f(g(x))$ is
-
-$$\large\partial_x \left[\strut \color{magenta}{f\left(\strut\right.}\strut \color{brown}{g(x)}\color{magenta}{\left.\right)}\right] = [\color{magenta}{\partial_x f}](\color{brown}{g(x)}) \times [\color{brown}{\partial_xg(x)}]$$
-Or, using the Lagrange prime notation 
-$$\large\text{Lagrange shorthand:}\ \   \partial[\color{magenta}f(\color{brown}g)] = \color{magenta}{f'} (\color{brown}g) \times \color{brown}{g'}$$
-
-We'll practice with some simple examples where we already know the result:
-
-- $e^{2x}$. Recognizing this as $e^x \times e^x$, we can apply the ***product rule***. 
-
-$\partial_x [\color{magenta}{e^x} \times \color{brown}{e^x}] = \color{magenta}{[\partial_x e^x]} \times \color{brown}{e^x} \ + \ \color{brown}{[\partial_x e^x]} \times \color{magenta}{e^x} = 2 e^x e^x = 2 e^{2x}$. 
-
-For the chain rule, recognize that $g(x) \equiv 2x$ is the interior function in  $e^{2x}$ and $f(x) \equiv \exp(x)$ is the exterior function.  Thus $\partial_x e^{2x} = f'(g(x)) g'(x) = \exp(g(x)) 2 = 2 e^{2x}$.
+Let's examine closely the expression $\color{magenta}{f\left(\strut g(x+h)\right)}$. Applying rule (1) above turns it into $$\lim_{h\rightarrow 0} f\left(\strut g(x) + \color{blue}{h g'(x)}\right)$$
+Now apply rule (2) but substituting in $g(x)$ for $y$ and $\color{blue}{h g'(x)}$ for $\epsilon$, giving  
+$$\lim_{h\rightarrow 0} \color{magenta}{f\left(\strut g(x+h)\right)} = \lim_{h\rightarrow 0} \color{brown}{\left[{\large\strut} f\left(g(x)\right) + \color{blue}{h g'(x)}f'\left(g(x)\right)\right]}$$
+We'll substitute the $\color{blue}{blue}$ and $\color{brown}{brown}$ expression for the $\color{magenta}{magenta}$ expression in 
+$$\partial_x f\left(\strut g(x)\right)  \equiv \lim_{h\rightarrow 0}\frac{\color{magenta}{f(g(x+h))} - f(g(x))}{h}$$ giving 
+$$\partial_x f\left(\strut g(x)\right)  \equiv \lim_{h\rightarrow 0}\frac{\color{brown}{f\left(g(x)\right) + \color{blue}{h g'(x)}f'\left(g(x)\right)} - f\left(g(x)\right)}{h}$$
+In the denominator, $f\left(g(x)\right)$ appears twice and cancels itself out. That leaves a single term with an $h$ in the numerator and an $h$ in the denominator. Those $h$'s cancel out, at the same time obviating the need for $\lim_{h\rightarrow 0}$ and leaving us with the chain rule:
+$$\partial_x f\left(\strut g(x)\right)  \equiv \lim_{h\rightarrow 0}\frac{\color{brown}{ \color{blue}{h g'(x)} f'\left(g(x)\right)}}{h} = f'\left(g(x)\right)\ g'(x)$$
 
 
-- $\partial_x [\exp\left(\ln(x)\right)] = [\partial_x \exp](\ln(x))  \times \partial_x \ln(x) = \exp\left(\ln(x)\right) \times 1/x$
 
-    Since $\exp\left(\ln(x)\right) = x$ we can simplify the above $$\partial_x [\exp\left(\ln(x)\right)] = \exp\left(\ln(x)\right) \times 1/x = x/x = 1$$ which is consistent with what we know about $\partial_x x$. `r mark(2420)`
 
-- $\partial[ \recip(x^2)] = [\partial \recip](x^2) \times \partial_x x^2 = [\partial_x\, \recip](x^2) \times 2 x$  
 
-   Since $\partial_x \recip(x) = \partial_x [1/x] = \partial_x x^{-1} = -x^{-2} = - \frac{1}{x^2}$, we can simplify the above to 
-$\partial_x[ \recip(x^2)] = [\partial_x \recip](x^2) \times \partial_x x^2 =  - \frac{1}{(x^2)^2} \times 2 x = -2 \frac{x}{x^4} = -2 x^{-3}$  
+::: {.example data-latex=""}
+Use the chain rule to find the derivative $\partial_x e^{2x}$.
 
-The chain rule lets us use what we know about the derivatives of the pattern-book functions to figure out the derivatives of the basic modeling functions. Remember, that each of the basic modeling functions is the composition of a pattern-book function with $\line(x) \equiv ax + b$.  `r mark(2425)`
+Recognize that $g(x) \equiv 2x$ is the interior function in  $e^{2x}$ and $f(x) \equiv \exp(x)$ is the exterior function.  Thus $$\partial_x e^{2x} = f'(g(x)) g'(x) = \exp(g(x)) 2 = 2 e^{2x}\ .$$ Happily, this is exactly the same result as we got from using the product rule to find $\partial_x e^{2x}$.
+
+Recognizing $e^{2x}$ as $e^x \times e^x$, we can apply the ***product rule***. 
+:::
+
+::: {.example data-latex=""}
+The chain rule can be used in a clever way to find a formula for $\partial_x \ln(x)$. 
+
+We've already seen that the logarithm is the inverse function to the exponential, and *vice versa*. That is:
+$$e^{\ln(y)} = y \ \ \ \text{and}\ \ \ \ln(e^y) = x$$
+Since $\ln(e^y)$ is the same function as $y$, the derivative $\partial_y \ln(e^y) = \partial_y y = 1$. 
+
+Let's differentiate the second form using the chain rule:
+$$\partial_y \ln(e^y) = \left[\partial_y\! \ln\right]\!(e^y)\, e^x = 1$$ giving $$\left[\partial_y\! \ln\right]\!(e^y) = \frac{1}{e^y} = \recip(e^y)$$
+Whatever the function $\partial_x \ln()$ might be, it takes its input and produces as output the reciprocal of that input. In other words:
+$$\partial_x \ln(x) = \frac{1}{x}\ .$$
+:::
+
+::: {.example data-latex=""}
+Knowing that $\partial_x \ln(x) = 1/x$ and the chain rule, we're in a position to demonstrate the ***power-law rule*** $\partial_x x^p = p\, x^{p-1}$. The key is to use the identity $e^{\ln(x)} = x$. 
+
+$$\partial_x x^p = \partial_x \left[e^{\ln(x)}\right]^p$$
+The rules of exponents allow us to recognize $$\left[e^{\ln(x)}\right]^p = e^{p \ln(x)}$$
+Thus, $x^p$ can be seen as a composition of the exponential function onto the logarithm function. 
+
+Applying the chain rule to this composition gives
+$$\partial_x e^{p \ln(x)} = e^{p\ln(x)}\partial_x [p \ln(x)] =
+e^{p\ln(x)} \frac{p}{x}\ .$$ Of course, we already know that $e^{p \ln(x)} = x^p$, so we have 
+$$\partial_x x^p = x^p \frac{p}{x} = p x^{p-1}\ .$$
+:::
+
+
 
 - $\large\partial_x [\color{brown}\sin(\color{magenta}{a x + b})] = [\partial_x \color{brown}{\sin}](\color{magenta}{a x + b}) \times \partial_x [\color{magenta}{ax + b}] = \color{brown}{\cos}(\color{magenta}{ax + b}) \times \color{magenta}a$.
-
 
 
 <!-- `rrr insert_calcZ_exercise("XX.XX", "YbPAf1", "Exercises/Diff/sheep-draw-clock.Rmd")`-->
@@ -192,7 +234,7 @@ Interesting, Berkeley believed that the ghost of $h$ yielded correct results. Hi
 
 > *"[B]y virtue of a two fold mistake you arrive, though not at science, yet truth."*
 
-Berkeley was saying that calculus had not yet been put on a solid logical foundation. It was to be more than a century after Berkeley's death until this work was accomplished. Once accomplished, the results that had been claimed true all along were confirmed. `r mark(2394)`
+Berkeley was saying that calculus had not yet been put on a solid logical foundation. It wasn't until more than a century after Berkeley's death that this work was accomplished. Once accomplished, the results that had been claimed true all along were confirmed. `r mark(2394)`
 :::
 
 ## Derivatives of the basic modeling functions {#basic-derivs}
@@ -243,15 +285,39 @@ In statistical nomenclature, $\dnorm()$ is called the "normal probability densit
 Owing to the origin of the names $\dnorm$ and $\pnorm$, we are writing the parameters of the functions---mean and sd---using the computer language notation. The pattern-book functions are just $\dnorm(x)$ and $\pnorm(x)$, without listing the parameters. But the basic modeling functions, with parameters, are written $\dnorm(x, \text{mean}, \text{sd})$ and $\dnorm(x, \text{mean}, \text{sd})$. This violates the convention that the basic modeling functions are the composition of the pattern-book functions with $\line(x)$. But $\dnorm()$ doesn't actually work this way because, by convention, the amplitude of the peak of $\dnorm()$ changes with the input parameter sd. That's not true for any other basic modeling function. 
 :::
 
+::: {.takenote}
+Composition or product?
 
+There is one family of functions for which function composition is the same thing as multiplying functions: the power-law family.
+
+Consider, for instance, the function $h(x) \equiv \left[3x\right]^4$. Let's let $g(x) \equiv 3x$ and $f(y) \equiv y^4$. With these definitions, $h(x) = f(g(x))$.
+
+Recognizing that $\partial_y f(y) = 4 y^3$ and $\partial_x g(x) = 3$, the *chain rule* gives $$\partial_x h(x) = 
+\underbrace{4 g(x)^3}_{f'(g(x))} \times \underbrace{3}_{g'(x)} = \underbrace{4 (3 x)^3}_{f'(g(x))} \times 3 = 4\cdot 3^4 \times x^3 = 324\ x^3$$
+Another way to look at the same function is $g(x)$ multiplied by itself 3 times: $$h(x) = g(x)\cdot g(x) \cdot g(x) \cdot g(x)$$
+This is a product of 4 terms. Applying the product rule gives
+$$\partial_x h(x) = \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \\\color{blue}{g'(x)}\cdot g(x)\cdot g(x) \cdot g(x) +\\
+g(x)\cdot \color{blue}{g(x)}'\cdot g(x) \cdot g(x) +\\
+g(x)\cdot g(x)\cdot \color{blue}{g(x)'} \cdot g(x) +\\
+g(x)\cdot g(x)\cdot g(x) \cdot \color{blue}{g'(x)}\ \ \ \ $$
+Since multiplication is commutative, all of these four terms are the same, each being $3^4 x^3$. The sum of all four is therefore $4 \times 3^4 x^3 = 324 x^3$. 
+
+These are two long-winded ways of getting to the result. For most people, differentiating power-law functions algebraically is simplified by using the ***rules of exponentiation*** rather than the product or chain rule. Here,
+$$h(x) \equiv \left[3x\right]^4 = 3^4 x^4$$so $\partial_x h(x)$ is easily handled as a scalar ($3^4$) times a function $x^4$. Consequently, applying the rule for differentiating power laws, 
+$$\partial_x h(x) = 3^4 \times \partial_x x^4 = 3^4 \times 4 x^3 = 324 x^3$$
+As another example, take $h(x) \equiv \sqrt[4]{\strut x^3}$. This is, of course, the composition $f(g(x))$ where $f(y) \equiv y^{1/4}$ and $g(x) \equiv x^3$. Applying the chain rule to find $\partial_x h(x)$ will work (of course!), but is more work than applying the rules of exponentiation followed by a simple power-law differentiation.
+$$h(x) = \sqrt[4]{\strut x^3} = x^{3/4}\ \ \text{so}\ \  \partial_x h(x) = \frac{3}{4} x^{(3/4 - 1)} = \frac{3}{4} x^{-1/4}$$
+:::
 
 
 
 ## Exponentials and logarithms (optional)
     
-The ***natural logarithm*** function, $\ln(x)$, is one of our basic modeling functions. The digit() function, introduced in Chapter \@ref(magnitudes) is different, the logarithm-base-10, written $\log_{10}(x)$ or `log10(x)`. Ten is an integer, and a nice number to use in arithmetic. So in practice, it's "natural" to use $\log_{10}()$. The "natural" in the "natural logarithm" means something different. `r mark(2430)`
+The ***natural logarithm*** function, $\ln(x)$, is one of our basic modeling functions. As you know, there are other logarithmic functions. The one most often used is the logarithm-base-10, written $\log_{10}(x)$ or `log10(x)`. Ten is an integer, and a nice number to use in arithmetic. So in practice, it's sensible to use $\log_{10}()$. (Indeed, $\log_{10}()$ is the  digit() function, introduced in Chapter \@ref(magnitudes).
 
-The base of the natural logarithm is the number called ***Euler's constant*** and written $e$. As a celebrity number, $e$ is right up there with $\pi$ and $-1$. Just as $\pi$ has a decimal expansion that is infinitely long, the familiar $\pi = 3.14159265358979...$, Euler's constant has an infinitely long decimal representation: $e = 2.71828182845905...$  `r mark(2435)`
+The "natural" in the "natural logarithm" means something different. `r mark(2430)`
+
+The base of the natural logarithm is the number called ***Euler's constant*** and written $e$. As a celebrity number, $e$ is right up there with $\pi$ and $i$. Just as $\pi$ has a decimal expansion that is infinitely long, the familiar $\pi = 3.14159265358979...$, Euler's constant has an infinitely long decimal representation: $e = 2.71828182845905...$  `r mark(2435)`
 
 It's not obvious at first glance why $e = 2.71828182845905...$ should be called "natural" by mathematicians. The reason is not the number itself, but 
 
@@ -265,9 +331,9 @@ This implies that the base-10 and base-2 exponential functions can be written
 $$10^x = \left[\strut e^{\strut\ln(10)}\right]^x = e^{\ln(10)x} \ \ \ \text{and}\ \ \ 2^x = \left[\strut e^{\strut\ln(2)}\right]^x = e^{\ln(2) x}$$
 Calculating $\partial_x 10^x$ or $\partial_x 2^x$ is a matter of applying the chain rule:
 
-$$\partial_x [10^x] = \partial_x [e^{\ln(10)x}] = e^{\ln(10)x} \times \ln(10) \ =\  2.3026 \times 10^x$$ 
+$$\partial_x [10^x] = \partial_x [e^{\ln(10)x}] = e^{\ln(10)x} \times \ln(10) \ =\  10^x \times 2.3026$$ 
 and
-$$\partial_x [2^x] = \partial_x [e^{\ln(2)x}] = e^{\ln(2)x} \times \ln(2) \ = \ 0.6931 \times 2^x$$
+$$\partial_x [2^x] = \partial_x [e^{\ln(2)x}] = e^{\ln(2)x} \times \ln(2) \ = \ 2^x \times 0.6931$$
 Like $e^x$, the derivatives of $10^x$ and $2^x$ are proportional to themselves. For $e^x$ the constant of proportionality is 1, a very natural number indeed. 
     
 ## Exercises
@@ -295,3 +361,4 @@ Like $e^x$, the derivatives of $10^x$ and $2^x$ are proportional to themselves. 
 
 `r insert_calcZ_exercise("22.12", "0yrIXe", "Exercises/Diff/monkey-forget-tv.Rmd")`
 
+`r insert_calcZ_exercise("22.14", "2JJoS6", "Exercises/Diff/dog-look-bottle.Rmd")`

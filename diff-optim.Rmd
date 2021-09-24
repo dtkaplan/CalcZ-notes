@@ -9,17 +9,19 @@ To "optimize" means to make something as good as possible with the available res
 
 ## Structure of the problem
 
-In an optimization problem, there is one or more input quantity whose value you have to choose. The amount of salt; the years to wait from planting to harvesting a tree; the angle of the trail with respect to the slope. We'll call this the ***decision quantity***.  `r mark(2450)`
+In an optimization problem, there is one or more input quantities whose value you have to choose. The amount of salt; the years to wait from planting to harvesting a tree; the angle of the trail with respect to the slope. We'll call this the ***decision quantity***.  `r mark(2450)`
 
-Similarly, there is one or more output quantity that you value and want to make as good as possible. The taste of the stew; the income produced by selling the lumber; the time it takes to walk up the hill. The output quantity is called the ***objective***.  `r mark(2455)`
+Similarly, there is one or more output quantity that you value and want to make as good as possible. The taste of the stew; the amount of usable wood harvested; the time it takes to walk up the hill. The output quantities are called the ***objectives***.  `r mark(2455)`
 
-The model that relates to inputs to the objective output is called the ***objective function***. Solving an optimization problem---once the modeling phase is complete---amounts to finding a value for the decision quantity (the input to the objective function) that produces the best level of the objective (the output from the objective function). `r mark(2460)`
+In this chapter, we will deal with optimization problems that involve only a single objective. Problems with multiple objectives are among the most interesting and important in real-world decision making. Single-objective optimization techniques are a component of the more complex decision making, but they are a good place to get started. 
+
+The model that relates inputs to the objective output is called the ***objective function***. Solving an optimization problem---once the modeling phase is complete---amounts to finding a value for the decision quantity (the input to the objective function) that produces the best output from the objective function. `r mark(2460)`
 
 Sometimes the objective is something that you want to ***minimize***, make as small as possible. In the hiking trail problem, we seek to minimize the amount of time it takes to walk up the trail. Sometimes you want to ***maximize*** the objective, as in the wood-harvest problem where the objective is to harvest the most wood per year. `r mark(2465)`
 
-Mathematically, maximization and minimization are the same thing. Every minimization problem can be turned into a maximization problem by putting a negative sign in front of the objective function. To simplify the discussion, in talking about finding the solution to an optimization problem we'll imagine that the goal is to maximize. But keep in mind that many circumstances in the real world, "best" can mean to minimization.   `r mark(2470)`
+Mathematically, maximization and minimization are the same thing. Every minimization problem can be turned into a maximization problem by putting a negative sign in front of the objective function. To simplify the discussion, in talking about finding the solution to an optimization problem we'll imagine that the goal is to maximize. But keep in mind that many circumstances in the real world, "best" can mean minimization.   `r mark(2470)`
 
-The solution you seek in a maximization problem is called the ***argmax***. This is a contraction of two words: the *argument* (that is, input) that produces the *maximum* output. (For minimization, the solution is the ***argmin***.) `r mark(2475)`
+Recall from Section \@ref(local-extremes) that there are two components to the task of maximization or minimization. The ***argmax*** is the **input** to the objective function which produces the largest output. The ***maximum*** is the value of that output.^[Another word for an "input" is "argument." Argmax is the contraction of **arg**ument producing the **max**imum output.] ***Argmin*** and ***minimum*** are the words used in a situation where you seek the smallest value of the objective function.`r mark(2475)`
 
 Once you have found the argmax you can plug that value into the objective function to find the value of the output. That value is the ***maximum***. 
 
@@ -46,10 +48,10 @@ The best choice of $\theta$ will make the quantity $\cos(\theta)\sin(\theta)$ as
 
 Finding the argmax can be accomplished simply by plotting the function $\cos(\theta)\sin(\theta)$. We'll implement the function so that the input is in units of *degrees*.
 
-```{r ball-theta, fig.cap="The distance travelled by a ball launched at an angle of $\\theta$, according to the simple model is duration of flight and distance travelled.", echo=FALSE, fig.show="hold"}
+```{r ball-theta, fig.cap="In the simple model of  a tennis ball launched at an angle $\\theta$ from the horizontal, the distance travelled  is $2 v_0^2 / g$ times $\\cos(\\theta)\\sin(\\theta)$.", echo=FALSE, fig.show="hold"}
 f <- makeFun(cos(pi*theta/180)*sin(pi*theta/180) ~ theta)
 slice_plot(f(theta) ~ theta, domain(theta=c(0,90))) %>%
-  gf_labs(x = expression(theta))
+  gf_labs(x = expression(theta), y= expression(cos(theta)* sin(theta)))
 ```
 
 You can see that the maximum value is about 0.5 and that this occurs at an argmax $\theta$ that's a little bit less than 50$^\circ$.
@@ -68,7 +70,7 @@ From the graph, especially the zoomed-in version, you can read off the argmax as
 Finding the argmax solves the problem. You may also want to present your solution by saying what the value of the output of hdist() is when the argmax is given as input. You can read off the graph that the maximum of $\cos(\theta)\sin(\theta)$ is 0.5 at $\theta = 45^\circ$, so overall the distance will be $v_0^2 / g$ `r mark(2495)`
 
 
-`r insert_calcZ_exercise("23.02", "0zyL02", "Exercises/Diff/child-iron-laundry.Rmd")`
+
 
 ## Interpreting the argmax
 
@@ -76,9 +78,9 @@ The graphical solution given to the slingshot problem is entirely satisfactory. 
 
 Solving the optimization problem has prepared us to go out in the field and test the result. Perhaps we'll find that the real-world optimum angle is somewhat steeper or shallower than $\theta = 45^\circ$. `r mark(2505)`
 
-Besides the argmax, another important quantity to read from the graph in Figure \@ref(fig:ball-theta) is the ***precision*** of the argmax. In strict mathematical terms, the argmax is exactly 45 degrees. But in practical terms, it may not matter so much to the outcome if we are a little away from $45^\circ$. For example, according to the model, any angle in the range $40^\circ < \theta < 50^\circ$ would produce an output that is within 1% of the distance reached at the argmax. `r mark(2510)`
+Besides the argmax, another important quantity to read from the graph in Figure \@ref(fig:ball-theta) is the ***precision*** of the argmax. In strict mathematical terms, the argmax for the tennis-ball problem is exactly 45 degrees at which point $\cos(\theta)\sin(\theta) = 0.5$. Suppose, however, that the ball were launched at only 40 degrees. Five degrees difference is apparent to the eye, but the result will be essentially the same as for 45 degrees: $\cos(\theta)\sin(\theta) = 0.492$.  The same is true for a launch angle of 50 degrees. For both "sub-optimal" launch angles, the output is within 2 percent of the 45-degree result. It's easy to imagine that a factor outside the scope of the simple model---the wind, for instance---could change the result by as much or more than 2 percent, so a practical report of the argmax should reasonable be "40 to 50 degrees" rather than "exactly 45 degrees."  `r mark(2510)`
 
-Contests are won or lost by margins of less than 1%, so you should not casually deviate from the argmax. On the other hand, $45^\circ$ is the argmax of the *model*. Reality may deviate from the model. For instance, suppose that air resistance or wind might might have an effect of about 1% on the distance. Since the real-world function might deviate by as much as 1% of the model value, we shouldn't expect the real-world argmax to be any closer to 45$^\circ$ than $\pm 5^\circ$, since anywhere in that input domain generates an output that is within 1% of the maximum output for the model. `r mark(2515)`
+Contests are won or lost by margins of less than 1%, so you should not casually deviate from the argmax. On the other hand, $45^\circ$ is the argmax of the *model*. Reality may deviate from the model. For instance, suppose that air resistance or wind might have an effect of about 1% on the distance. Since the real-world function might deviate by as much as 1% of the model value, we shouldn't expect the real-world argmax to be any closer to 45$^\circ$ than $\pm 5^\circ$, since anywhere in that input domain generates an output that is within 1% of the maximum output for the model. `r mark(2515)`
 
 ## Derivatives and optimization
 
@@ -97,34 +99,34 @@ Inputs $x^\star$ such that $\partial_x f(x^\star) = 0$ are called ***critical po
 
 At this point, we know that values $x^\star$ that give $\partial_x f(x^\star) = 0$ are "critical points," but we haven't said how to figure out whether a given critical point is an argmax, an argmin, or neither. This is where the behavior of $\partial_x f(x)$ *near* $x=x^\star$ is important. If $x^\star$ is an argmax, then $\partial_x f(x)$ will be positive to the left of $x^\star$ and negative to the right of $x^\star$; walk up the hill to get to $x^\star$, at the top the hill is flat, and just past the top the hill has a negative slope. `r mark(2540)`
 
-For an argmin, changing $x$ from less than $x^\star$ to greater than $x\star$;  you will be walking down into the valley, then level at the very bottom $x=x^\star$, then back up the other side of the valley after you pass $x=x^\star$. Figure \@ref(fig:d2-hill) shows the situation.  `r mark(2545)`
+For an argmin, changing $x$ from less than $x^\star$ to greater than $x^\star$;  you will be walking down into the valley, then level at the very bottom $x=x^\star$, then back up the other side of the valley after you pass $x=x^\star$. Figure \@ref(fig:d2-hill) shows the situation.  `r mark(2545)`
 
-```{r d2-hill, echo=FALSE, warning=FALSE, fig.show="hold", out.width="50%", fig.cap="Top row: An objective function near an argmax (left) and an argmin (right). Bottom row: The derivative of the objective function"}
+```{r d2-hill, echo=FALSE, warning=FALSE, fig.show="hold", out.width="50%", fig.cap="Top row: An objective function near an argmax (left) and an argmin (right). Bottom row: The derivative of the objective function. A horizontal line (orange) has been added to mark zero on the vertical axis."}
 f <- makeFun(sin(2*pi*x/4)~ x)
 f2 <- D(f(x) ~ x)
 slice_plot(f(x) ~ x, domain(x=c(0.5, 1.5))) %>%
   gf_labs(title="Argmax x* = 1") %>%
   gf_vline(xintercept = ~ 1, color="dodgerblue", alpha = 0.25, size=2) %>%
-  gf_text(.7 ~ 1, label="x*", size=6, color="dodgerblue")
+  gf_text(.9 ~ 0.95, label="x*", size=6, color="dodgerblue")
 slice_plot(f(x) ~ x, domain(x=c(2.5, 3.5))) %>%
   gf_labs(title="Argmin x* = 3") %>%
   gf_vline(xintercept = ~ 3, color="dodgerblue", alpha = 0.25, size=2) %>%
-  gf_text(-1 ~ 3, label="x*", size=6, color="dodgerblue")
+  gf_text(-0.8 ~ 2.97, label="x*", size=6, color="dodgerblue")
 slice_plot(f2(x) ~ x, domain(x=c(0.5, 1.5))) %>%
   gf_labs(title="Argmax x* = 1", y="Derivative of f(x)") %>%
   gf_vline(xintercept = ~ 1, color="dodgerblue", alpha = 0.25, size=2) %>%
-  gf_text(-1 ~ 1, label="x*", size=6, color="dodgerblue")
+  gf_text(0.96 ~ 0.95, label="x*", size=6, color="dodgerblue") %>%
+  gf_hline(yintercept = ~ 0, color="orange")
 slice_plot(f2(x) ~ x, domain(x=c(2.5, 3.5))) %>%
   gf_labs(title="Argmin x* = 3", y="Derivative of f(x)") %>%
   gf_vline(xintercept = ~ 3, color="dodgerblue", alpha = 0.25, size=2) %>%
-  gf_text(-1 ~ 3, label="x*", size=6, color="dodgerblue")
+  gf_text(.85 ~ 2.97, label="x*", size=6, color="dodgerblue") %>%
+  gf_hline(yintercept = ~ 0, color="orange")
 ```
 
 The bottom row of graphs in Figure \@ref(fig:d2-hill) shows the derivative of the objective function $f(x)$, that is, $\partial_x f(x)$. You can see that for the argmax of $f(x)$, the derivative $\partial_x f(x)$ is positive to the left and negative to the right. Similarly, near the argmin of $f(x)$, the derivative $\partial_x f(x)$ is negative to the left and positive to the right.  `r mark(2550)`
 
-Stated another way, the derivative $\partial_x f(x)$ has a positive slope near an argmin and a negative slope near an argmax. 
-
-Just as we differentiate $f(x)$ to find it's slope, so to find the slope of the function $\partial_x f(x)$ we can differentiate it. The result is called the ***second derivative***. We could write it $\partial_x \left[\partial_x f(x)\right]$, but for brevity we write it $\partial_{xx} f(x)$.  `r mark(2555)`
+Stated another way, the derivative $\partial_x f(x)$ has a positive slope just to the left of an argmin and a negative slope to the left of an argmax.  `r mark(2555)`
 
 The second derivative of the objective function $f(x)$ at a critical point $x^\star$ is what tells us whether the critical point is an argmax, an argmin, or neither. 
 
@@ -135,23 +137,16 @@ argmin | 0 | positive
 neither| 0 | 0
 
 
-Graphically, we can read the second derivative $\partial_{xx} f(x)$ as the slope of the first derivative $\partial_x f(x)$ or as the ***concavity*** of the function $f(x)$ itself. When $\partial_{xx} f(x) < 0$, then $f(x)$ is ***concave down*** (a frown). Likewise, when $\partial_{xx} f(x) >0$ the $f(x)$ is ***concave up*** (a smile). When $\partial_{xx} f(x) = 0$, then $f(x)$ has no curvature. `r mark(2570)`
-
 ::: {.takenote  data-latex=""}
 Throughout Block 2, we have translated features of functions that are evident on a graph into the language of derivatives:
 
 i. The **slope** of a function $f(x)$ at any input $x$ is the **value** of the derivative function $\partial_x f(x)$ at that same $x$.
-ii. The  **concavity** of a function $f(x)$ at any input is the **slope** of the derivative function, that is, $\partial_x f(x)$.
+ii. The  **concavity** of a function $f(x)$ at any input is the **slope** of the derivative function, that is, $\partial_{xx} f(x)$.
 iii. Putting (i) and (ii) together, we get that the **concavity** of a function $f(x)$ at any input $x$ is the **value of the second derivative** function, that is, $\partial_{xx} f(x)$.
-iv. At an argmax $x^\star$ of $f(x)$, the value of the derivative function $\partial_x f(x^\star)$ is zero and the value of the second derivative function $\partial_{xx} f(x^\star)$ is **negative**. (The situation at an argmin is similar, the derivative of the objective function is zero and the second derivative is **positive**.) `r mark(2575)`
+iv. At an argmax $x^\star$ of $f(x)$, the value of the derivative function $\partial_x f(x^\star)$ is zero and the value of the second derivative function $\partial_{xx} f(x^\star)$ is **negative**. The situation at an argmin is along the same lines, the derivative of the objective function is zero and the second derivative is **positive**. `r mark(2575)`
 :::
 
 
-`r insert_calcZ_exercise("23.04", "FbJynV", "Exercises/Diff/calf-bring-pants.Rmd")`
-
-`r insert_calcZ_exercise("23.06", "ykelx", "Exercises/Diff/concavity.Rmd")`
-
-`r insert_calcZ_exercise("23.08", "lexkd", "Exercises/Diff/tree-loves-fish.Rmd")`
 
 
 
@@ -161,22 +156,18 @@ What's the critical point?
 You're familiar with the quadratic polynomial: $$g(x) = a_0 + a_1 x + a_2 x^2$$
 The graph of a quadratic polynomial is a ***parabola***, which might be concave up or concave down. As you know, a parabola has only one critical point, which might be an argmin or an argmax. `r mark(2580)`
 
-Let's find the critical point. We know that the critical point is $x^\star$ such that $\partial_x g(x_0) = 0$. Since we know how to differentiate a power law, we can see that
+Let's find the critical point. We know that the critical point is $x^\star$ such that $\partial_x g(x^\star) = 0$. Since we know how to differentiate a power law, we can see that
 $$\partial_x g(x) = a_1 + 2 a_2 x$$ and, more specifically, at the critical point $x^\star$ the derivative will be
 $$a_1 + 2 a_2 x^\star = 0$$
 The above is an equation, not a definition. It says that whatever $x^\star$ happens to be, the quantity $a_1 + 2 a_2 x^\star$ must be zero. Using plain old algebra, we can find the location of the critical point $$x^\star = -\frac{a_1}{2 a_2}$$ `r mark(2585)`
 
 :::
 
-`r insert_calcZ_exercise("23.10", "dwes", "Exercises/Diff/optim-violet.Rmd")`
-
-`r insert_calcZ_exercise("23.12", "whfrt", "Exercises/Diff/optim-pink.Rmd")`
 
 
-`r insert_calcZ_exercise("23.14", "jgtrds", "Exercises/Diff/optim-red.Rmd")`
-
+<!--
 `r insert_calcZ_exercise("23.16", "eberg", "Exercises/Diff/optim-blue.Rmd")`
-
+Save for after approximations have been introduced. --> 
 
 <!--
 ::: {.todo}
@@ -190,18 +181,18 @@ This is probably misplaced. and the `plot_lens()` function would have to be prov
 
 In economics, a monopoly or similar arrangement can set the price for a good or commodity. Monopolists can set the price at a level that generates the most income for themselves. 
 
-```{r cournot-demand2, echo=FALSE, fig.cap="Demand as a *function* of price, as first published by Cournot in 1836. (Reproduced from Figure \\@(ref:cournot-demand2).)", out.width="50%"}
+```{r cournot-demand2, echo=FALSE, fig.cap="Demand as a *function* of price, as first published by Antoine-Augustin Cournot in 1836. [Source](https://www.richmondfed.org/~/media/richmondfedorg/publications/research/economic_review/1992/pdf/er780201.pdf))", out.width="50%"}
 knitr::include_graphics("www/cournot-demand-curve.png")
 ```
 
-In 1836, early economist Antoine-Augustin Cournot published a theory of revenue versus demand based on his conception that demand will be a monotonically decreasing function of price. (That is, higher price means lower demand.) We'll write as $D(p)$ demand as a function of price.
+In 1836, early economist Antoine-Augustin Cournot published a theory of revenue versus demand based on his conception that demand will be a monotonically decreasing function of price. (That is, higher price means lower demand.) We'll write as $\text{Demand}(p)$ demand as a function of price.
 
-The ***revenue*** generated at price $p$ is $R(p) \equiv p D(p)$: price times demand.
+The ***revenue*** generated at price $p$ is $R(p) \equiv p \text{Demand}(p)$: price times demand.
 
 To find the revenue-maximizing demand, differentiate $R(p)$ with respect to $p$ and find the argmax $p^\star$ at with $\partial_p R(p^\star) = 0).$ This can be done with the product rule.
 
-$$\partial_p R(p) = p \ \partial_p D(p) + D(p)$$
-At the argmax $p^\star$ we have: $$p^\star \partial_p D(p^\star) + D(p^\star) = 0 \ \ \implies \ \ p^\star = - \frac{D(p^\star)}{\partial_p D(p^\star)}$$
+$$\partial_p R(p) = p \ \partial_p \text{Demand}(p) + \text{Demand}(p)$$
+At the argmax $p^\star$ we have: $$p^\star \partial_p \text{Demand}(p^\star) + \text{Demand}(p^\star) = 0 \ \ \stackrel{\text{solving for}\ p^\star}{\Longrightarrow} \ \ p^\star = - \frac{\text{Demand}(p^\star)}{\partial_p \text{Demand}(p^\star)}$$
 
 If the monopolist knows the demand function $D(p)$, finding the revenue maximizing price is a simple matter. But in general, the monopolist does not know the demand function in advance. Instead, an informed guess is made to set the initial price $p_0$. Measuring sales $D(p_0)$ gives one point on the demand curve. Then, try another price $p_1$. This gives another point on the demand curve as well as an estimate 
 $$\partial_p D(p_0) = \frac{D(p_1) - D(p_0)}{p_1 - p_0}$$
@@ -228,16 +219,16 @@ with respect to price. (Note that the product rule applies here.) He obtained th
 
 ## Be practical! {#flat-on-top}
 
-Decision making is about choosing among alternatives. In some engineering or policy contexts, this can mean finding the setting for an input variable that will produce the "best" outcome. For those who have studied calculus, it's natural to believe that calculus-based techniques for optimization are the route to solving the problem.
+Decision making is about choosing among alternatives. In some engineering or policy contexts, this can mean finding a value for an input variable that will produce the "best" outcome. For those who have studied calculus, it's natural to believe that calculus-based techniques for optimization are the route to making the decision.
 
-I want to emphasize that the optimization techniques covered in this chapter are **only part** of a broader set of techniques for real-world decision-making problems. In particular, most policy contexts involve ***multiple objectives***. For example, in designing a car one goal is to make it cheap to manufacture, another to make it attractive, and still another to make it safe. These different objectives are often at odds with one another. In Block 4, we'll discuss some calculus techniques that help policy-makers in multi-objective settings. 
+We emphasize that the optimization techniques covered in this chapter are **only part** of a broader set of techniques for real-world decision-making problems. In particular, most policy contexts involve ***multiple objectives***. For example, in designing a car one goal is to make it cheap to manufacture, another to make it attractive, and still another to make it safe. These different objectives are often at odds with one another. In Block 4 of this text, we'll discuss some calculus techniques that help policy-makers in multi-objective settings. 
 
 For now, sticking with the idealized (and often unrealistic) setting of maximizing a single objective, with one or more inputs.
 Recall the setting for calculus-type maximization. You have a function with one or more inputs, say, $f(x)$ or $g(x,y)$ or, often, $h(x, y, z, \ldots)$ where $\ldots$ might be standing for tens or hundreds or thousands of variables or more.
 
-If you can graph the function (feasible for one- or two-input functions), you can often easily scan the graph by eye to find the peak. The calculus-based techniques were developed for situations where such graphing is not possible and, instead, you have a formula for the function. (Such occasions are of great theoretical interest but not all that common in practice.) The basis of the calculus techniques is the observation that, at the argmax of a smooth function, the derivative of the function is 0. (This applies equally well to functions of multiple variables, where we say that the "gradient is zero" which means that each and every component of the gradient vector is zero.)
+If you can graph the function (feasible for one- or two-input functions), you can often easily scan the graph by eye to find the peak. The calculus-based techniques were developed for situations where such graphing is not possible and, instead, you have a formula for the function. (Such occasions are of great theoretical interest but not all that common in practice.) The basis of the calculus techniques is the observation that, at the argmax of a smooth function, the derivative of the function is 0. 
 
-As an example, consider a problem that often appears in calculus textbooks. ([Example](https://www.dummies.com/education/math/calculus/calculate-the-optimum-volume-of-a-soup-can-practice-question/) You have been tasked to design a container for a volume V of liquid. It is desired to make the weight of the container as little as possible. (This is a *minimization* problem, then.) In classical textbook fashion, you are told that the container is to be a cylinder made out of a particular metal of a particular thickness. 
+As an example, consider [a style problem that often appears in calculus textbooks](https://www.dummies.com/education/math/calculus/calculate-the-optimum-volume-of-a-soup-can-practice-question/).  You have been tasked to design a container for a large volume V of liquid. It is desired to make the weight of the container as little as possible. (This is a *minimization* problem, then.) In classical textbook fashion, you are told that the container is to be a cylinder made out of a particular metal of a particular thickness. 
 
 This is a lovely geometry/calculus problem. Whether it is relevant to any genuine, real-world problem is another question.
 
@@ -255,22 +246,19 @@ Suppose $V$ were specified as 1000 liters. A good first step is to choose approp
 ```{r}
 A <- makeFun(2*pi*r^2 + 2*V/r ~ r, V=1000000)
 slice_plot(A(r) ~ r, domain(r=c(10, 100))) %>%
-  gf_labs(x = "radius (cm)")
+  gf_labs(x = "radius (cm)", y = "Surface area of container (square cm)")
 ```
 
-You can easily see that the minimum is near $r=50$cm. Since $h(r,V) = V/\pi r^2$, the required height of cylinder will be near $10^6 / \pi 50^2 = 127$cm. And, as is clear from the graph, the function's derivative is zero at the optimal $r$.
+As always, the function's derivative is zero at the optimal $r$. In the graph, the argmin is near $r=50$ cm at which point the minimum is about 50,000 cm$^2$. Since $h(r,V) = V/\pi r^2$, the required height of cylinder will be near $10^6 / \pi 50^2 = 127$cm. 
 
 In calculus courses, the goal is often to find a **formula** for the optimal radius as a function of $V$. So we differentiate the objective function---that is, the area function for any $V$ and $r$ with respect to $r$,
 $$\partial_r A(r, V) = 4 \pi r - 2 V / r^2$$
-Setting this to zero (which will be true at the optimal $r^\star$) we can solve for $r$ in terms of $V$:
-$$4 \pi r^\star - 2 V/(r^
-\star)^2 = 0 \ \ \ \implies\ \ \  (r^\star)^3 = \frac{1}{2\pi} V \ \ \ \implies\ \ \  r^\star = \sqrt[3]{V/2\pi}$$
+Setting this to zero (which will be true at the optimal $r^\star$) we can solve for $r^\star$ in terms of $V$:
+$$4 \pi r^\star - 2 \frac{V}{\left[r^\star\right]^2} = 0 \ \ \ \Longrightarrow\ \ \ 4\pi r^\star = 2\frac{V}{\left[r^\star\right]^2} \Longrightarrow\ \ \ \left[r^\star\right]^3 = \frac{1}{2\pi} V \ \ \ \Longrightarrow\ \ \  r^\star = \sqrt[3]{V/2\pi}$$
 
-For $V = 1,000,000 cm^3$, this gives $r^\star = 54.1926 cm$ which in turn implies that the corresponding height $h^\star = V/\pi (r^\star)^2 = 108.3852 cm$. 
+For $V = 1,000,000$ cm$^3$, this gives $r^\star = 54.1926$ cm which in turn implies that the corresponding height $h^\star = V/\pi (r^\star)^2 = 108.3852$ cm. 
 
-We've presented the optimum $r^\star$ and $h^\star$ to the nearest **micron**. Does that make sense? Think about it for a moment before reading on. 
-
-## Meaningless precision
+We've presented the optimum $r^\star$ and $h^\star$ to the nearest **micron**. (Does that make sense to you? Think about it for a moment before reading on.) 
 
 A good rule of thumb in modeling is this: "If you don't know what a sensible precision is for reporting your result, you don't have a complete grasp of the problem." Here are two reasonable ways to sort out a suitable precision.
 
@@ -282,12 +270,12 @@ Approach (2) is always at hand, since you already know the objective function. L
 ```{r echo=FALSE}
 slice_plot(A(r) ~ r, domain(r=c(50, 60))) %>%
   gf_point(A(54.1926) ~ 54.1926, shape="*", size=10) %>%
-  gf_labs(x = "radius (cm)")
+  gf_labs(x = "radius (cm)", y="Container surface area (square cm)")
 ```
 
 Look carefully at the axes scales. Deviating from the mathematical optimum by about 5cm (that is, 50,000 microns) produces a change in the output of the objective function by about 400 units **out of 55,000**. In other words, about 0.7%. 
 
-It's true that $r^\star = 54.1926$ cm gives the "best" outcome. And sometimes such precision is warranted. For example, improving the speed of an elite marathon racer by even 0.1% would give her a 7 second advantage: easily the difference between silver and gold!
+It's true that $r^\star = 54.1926$ cm gives the "best" outcome. And sometimes such precision is warranted. For example, improving the speed of an elite marathon racer by even 0.1% would give her a 7 second advantage: often the difference between silver and gold!
 
 What's different is that you know exactly what is the ultimate objective of a marathon: finish faster. But you may not know the ultimate objective of the system your "optimal" tank will be a part of. For instance, your tank may be part of an external fuel pod on an aircraft. Certainly the designers of the aircraft want the tank to be as light as possible. But they also want to reduce drag as much as possible. A 54 cm diameter tube has about 17% more drag than a 50 cm tube. To save that much drag, it's probably well worth increasing weight by 0.7%.
 
@@ -301,7 +289,25 @@ knitr::include_graphics("www/hemisphere.png")
 
 Using $h$ for the length of the cylindrical portion of the tank, and $r$ for the radius, the volume and surface area are:
 $$V(r, h) = \pi r^2 h + \frac{4}{3} \pi r^3 \ \ \ \text{and}\ \ \ A(r,h) = 2 \pi r h + 4 \pi r^2$$
-Again, $V$ was specified as 1000 liters. So we can solve the $V$ formula for $h(r, V)$, then plug that in for $h$ in the area function to give $A(r, V)$.
+Again, $V$ was specified as 1000 liters. As detailed in Exercise 23.18, the surface area of this 1000-liter tank is about 48,400 cm$^2$. This is more than 10% less than for the cylindrical tank. 
+
+
+## Exercises
+
+`r insert_calcZ_exercise("23.02", "0zyL02", "Exercises/Diff/child-iron-laundry.Rmd")`
+
+`r insert_calcZ_exercise("23.04", "FbJynV", "Exercises/Diff/calf-bring-pants.Rmd")`
+
+`r insert_calcZ_exercise("23.06", "ykelx", "Exercises/Diff/concavity.Rmd")`
+
+`r insert_calcZ_exercise("23.08", "lexkd", "Exercises/Diff/tree-loves-fish.Rmd")`
+
+`r insert_calcZ_exercise("23.10", "dwes", "Exercises/Diff/optim-violet.Rmd")`
+
+`r insert_calcZ_exercise("23.12", "whfrt", "Exercises/Diff/optim-pink.Rmd")`
+
+`r insert_calcZ_exercise("23.14", "jgtrds", "Exercises/Diff/optim-red.Rmd")`
+
 
 `r insert_calcZ_exercise("23.18", "ph92lT", "Exercises/Diff/walnut-write-futon.Rmd")`
 

@@ -1,6 +1,7 @@
 ---
 id: "gradient-field-orange"
 author: "Daniel Kaplan"
+global-id: "xdkw"
 ---
 
 ```{r include = FALSE}
@@ -19,7 +20,7 @@ gradient_plot(g(x,y) ~ x + y, dom2, n = 10, alpha=1) %>%
 ```
 
 
-```{r gradient-field-orange-QA4, echo=FALSE}
+```{r gfo17-1, echo=FALSE}
 askMC(
   prompt = "What is the rule for determining $\\partial_x f(x,y)$ from the direction of the gradient vector?",
   choices = list(
@@ -32,86 +33,16 @@ askMC(
 )
 ```
 
-Using the gradient field depicted below, figure out the sign of the partial derivatives at the labeled points. We'll use "neg" to refer to negative partial derivatives, "pos" to refer to positive partial derivatives, and "zero" to refer to partials that are so small that you can't visually distinguish them from zero.
-
-```{r echo=FALSE}
-set.seed(1114)
-Points <- tibble(
-  x = 2*round(runif(15, -2, 2)),
-  y = 2*round(runif(15, -2, 2))
-) %>% 
-  group_by(x, y) %>%
-  filter(row_number() == 1) %>% 
-  head(6) 
-
-Points$label = LETTERS[1:6]
-g <- rfun(~ x + y, seed = 9823252)
-gradient_plot(g(x, y) ~ x + y, domain(x=c(-4.5, 4.5), y=c(-4.5, 4.5)), n=20) %>%
-  gf_text(y ~ x, label=~label, data = Points, color="orange3", inherit=FALSE)
-```
-
-
-```{r gradient-field-orange-QA11, echo=FALSE}
+```{r gfo17-2, echo=FALSE}
 askMC(
-  prompt = "Which is $\\partial_y f$ at point A?",
-  "+neg+", "zero", "pos",
-  inline=FALSE,
-  random_answer_order = FALSE
-)
-```
-
-
-```{r gradient-field-orange-QA12, echo=FALSE}
-askMC(
-  prompt = "Which is $\\partial_x f$ at point A?",
-  "neg", "zero", "+pos+",
-  inline=FALSE,
-  random_answer_order = FALSE
-)
-```
-
-```{r gradient-field-orange-QA13, echo=FALSE}
-askMC(
-  prompt = "Which is $\\partial_x f$ at point B?",
-  "neg", "zero", "+pos+",
-  inline=FALSE,
-  random_answer_order = FALSE
-)
-```
-
-```{r gradient-field-orange-QA14, echo=FALSE}
-askMC(
-  prompt = "Which is $\\partial_x f$ at point C?",
-  "neg", "+zero+", "pos",
-  inline=FALSE,
-  random_answer_order = FALSE
-)
-```
-
-```{r gradient-field-orange-QA15, echo=FALSE}
-askMC(
-  prompt = "Which is $\\partial_y f$ at point E?",
-  "neg", "zero", "+pos+",
-  inline=FALSE,
-  random_answer_order = FALSE
-)
-```
-
-```{r gradient-field-orange-QA16, echo=FALSE}
-askMC(
-  prompt = "Which is $\\partial_x f$ at point E?",
-  "+neg+", "zero", "pos",
-  inline=FALSE,
-  random_answer_order = FALSE
-)
-```
-
-```{r gradient-field-orange-QA17, echo=FALSE}
-askMC(
-  prompt = "At which letter are both the partial with respect to $x$ and the partial with respect to $y$ negative.?",
-  "A", "B", "C", "D", "E", "F", "+none of them+",
-  inline=FALSE,
-  random_answer_order = FALSE
+  prompt = "What is the rule for determining $\\partial_y f(x,y)$ from the direction of the gradient vector?",
+  choices = list(
+    "If the vector has a component pointing right, $\\partial_y f$ is positive." = "Left and right are about $\\partial_x f$, not $\\partial_y f$.",
+    "If the vector has a component pointing left, $\\partial_y f$ is positive." = "Left and right are about $\\partial_x f$, not $\\partial_y f$.",
+    "+If the vector has a vertical component pointing up, $\\partial_y f$ is positive.+",
+    "If the vector has a component pointing downward, the partial derivative $\\partial_y f$ is positive." = "The partial with respect to $y$ would be negative."
+  ),
+  inline=FALSE
 )
 ```
 

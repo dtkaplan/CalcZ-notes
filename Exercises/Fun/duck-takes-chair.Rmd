@@ -7,7 +7,7 @@ Each of the plots shows the graph of a function with two inputs, $A$ and $B$, ma
 
 ```{r echo=FALSE}
 f <- rfun(~ t, seed=76)
-slice_plot(f(t) ~ t, domain(t=c(-5,5))) %>%
+mosaicCalc::slice_plot(f(t) ~ t, domain(t=c(-5,5))) %>%
   gf_refine(scale_x_continuous(breaks = -5:5),
             scale_y_continuous(breaks = 6:17)) %>%
   gf_text(6 ~ 5, label=~"B", color="orange3") %>%

@@ -13,13 +13,13 @@ It's often the case that we know about or hypothesize about relationships only f
 
 In fields such as physics or engineering, there are often theories that dictate a particular form of function. For example, Newton's universal law of gravitation posits an inverse square law for the force of gravity as a function of distance. Mechanical engineers use power laws to describe the shape of a beam under load, and communications engineers (and others) make extensive use of sinusoids. Textbooks in those fields rightfully emphasize those particular function forms. 
 
-The utility of the local approximation methods is that you can move forward even in the absence of a detailed theory. Instead, you need only apply your insight to posit which quantities are related to each other and then apply the approximation methods to produce a functional form. This approach is ubiquitous in all fields. 
+The utility of the local approximation method is that you can move forward even in the absence of a detailed theory. You need only apply your insight to posit which quantities are related to each other and then apply the approximation methods to produce a functional form. This approach is ubiquitous in all fields. 
 
 Sometimes, the local approximation *becomes* the theory. This is seen, for instance, in [Newton's law of cooling](https://en.wikipedia.org/wiki/Newton%27s_law_of_cooling), in [Hooke's law](https://en.wikipedia.org/wiki/Hooke%27s_law) relating force and extension, or the chemist's [law of mass action](https://en.wikipedia.org/wiki/Law_of_mass_action). `r mark(2760)`
 
 :::
 
-The information that you have about the relationship often takes the form of a data table. Each row shows records one trial in which the values of the inputs have been measured and the corresponding output value recorded. We'll discuss the methods of constructing functions to match such data in Block 5 of this course. `r mark(2765)`
+The information that you have about the relationship often takes the form of a data table. Each row records one trial in which the values of the inputs have been measured and the corresponding output value recorded. We'll discuss the methods of constructing functions to match such data in Block 5 of this course. `r mark(2765)`
 
 Another common form for the information about the relationship is about derivatives. That is, you know something about the derivative of a relationship even though you don't (yet) have a form for the function describing the relationship. As an example, think about building a model of the sustainable speed of a bicycle as a function of the gear selected and the grade of the road---up or down. `r mark(2770)`
 
@@ -29,7 +29,7 @@ Consider these three questions that any experienced bicyclist can likely answer:
 2. Imagine that the grade of the road is described by a positive number for uphill and a negative number for downhill: that is, the slope of the road. For a positive (uphill) grade and at a fixed gear, will the bike's sustained speed be higher or lower as a function of the grade?^[It's much the same for downhill biking, but you have to keep in mind that a shallow downhill has a higher numerical slope than a steep downhill. That is, the derivative of the hill is near zero for a very shallow grade and far from zero (that is, more negative) for a steep downhill grade.]
 3. Assuming you answered "yes" to question (1): Does the optimal gear choice depend on the grade of the road? (In concrete terms, would you choose different gears for an uphill climb than for a level road or a downhill stretch?) `r mark(2775)`
 
-Using the methods in this chapter, the answers to those three questions let you choose an appropriate form for the speed(gear, grade) function. Then, using methods in Block 5, you can make a few measurements for any given rider and construct a model customized to that rider. `r mark(2780)`
+Using the methods in this chapter, the answers to those three questions let you choose an appropriate form for the speed(gear, grade) function. Then, using methods in Block 5 of this text, you can make a few measurements for any given rider and construct a model customized to that rider. `r mark(2780)`
 
 Note that the three questions all have to do with derivatives. An "optimal gear" is a gear at which $\partial_\text{gear} \text{speed}(\text{gear}, \text{grade}) = 0$. That you ride slower the higher the numerical value of the slope means that  $\partial_\text{grade} \text{speed}(\text{gear}, \text{grade}) < 0$. And we know that $\partial_\text{gear} \text{speed}(\text{gear}, \text{grade})$ depends on the grade; that's why there's a different optimal gear at each grade. `r mark(2785)`
 
@@ -37,7 +37,7 @@ Note that the three questions all have to do with derivatives. An "optimal gear"
 
 In many modeling situations with a single input, you can get very close to a good modeling function $f(x)$ by selecting one of ***eight simple shapes***, shown in Figure \@ref(fig:eight-simple-shapes). `r mark(2790)`
 
-```{r eight-simple-shapes, echo=FALSE, out.width="40%", fig.show="keep", fig.cap="The ***eight simple shapes***, locally, of functions with one input. (See Chapter @@ref(local-approximations).)"}
+```{r eight-simple-shapes, echo=FALSE, out.width="40%", fig.show="keep", fig.cap="The ***eight simple shapes***, locally, of functions with one input. (See Chapter \\@ref(local-approximations).)"}
 g <- makeFun(a + b*x + c*x^2 ~ x, a=-1, b=2, c=1)
 slice_plot(-g(x, c=0) ~ x, domain(x=c(-3,1)), size=2  ) %>%
   gf_labs(y="Output", x="Input", title="(A) downward sloping line")
@@ -100,7 +100,7 @@ Consider what happens if $c = 0$. The function becomes simply $a + bx$, the stra
 
 With the appropriate choice of parameters, the form $a + bx + cx^2$ is  capable of representing four of the ***eight simple shapes***. What about the remaining four? This is where the idea of ***local*** becomes important. Those remaining four shapes are the sides of parabolas, as in Figure \@ref(fig:four-shapes). `r mark(2830)`
 
-```{r four-shapes, echo=FALSE, fig.cap="Four of the ***eight simple shapes*** correspond to the sides of the parabola. The labels refer to the graphs in Figure @@ref(fig:eight-simple-shapes)."}
+```{r four-shapes, echo=FALSE, fig.cap="Four of the ***eight simple shapes*** correspond to the sides of the parabola. The labels refer to the graphs in Figure \\@ref(fig:eight-simple-shapes)."}
 f1 <- makeFun(a + b*x + c*x^2 ~ x, a=-2, b=1, c=1)
 f2 <- makeFun(a + b*x + c*x^2 ~ x, a=-2, b=1, c=-1)
 graph_with_boxes(f1, domain = c(-1.1,0.1), my_letters = c("C", "D"), 
@@ -110,7 +110,7 @@ graph_with_boxes(f2, domain = c(-.3,1.4), my_letters = c("E", "F"),
 ```
 
 
-## The low-order polynomial with two inputs
+## The low-order polynomial with two inputs {#low-order-two}
 
 For functions with two inputs, the low-order polynomial approximation looks like this:
 
@@ -121,7 +121,7 @@ The subscripts on the coefficients describes exactly which term in the polynomia
 
 Each of $a_0, a_x,$ $a_y,$ $a_{xy}, a_{yy}$, and $a_{xx}$ will, in the final model, be a constant quantity. Don't be confused by the use of $x$ or $y$ in the name of the coefficients. Each coefficient is a constant and not a function of the inputs. Often, your prior knowledge of the system being modeled will tell you something about one or more of the coefficients, for example, whether it is positive or negative. Finding a precise value is often based on quantitative data about the system.  `r mark(2845)`
 
-It helps to have different names for the various terms. It's not too bad say something like, "the $a_{xy}$ term." (Pronounciation: "a sub x y" or  "a x y") But the proper names are: ***linear terms***, ***quadratic terms***, and ***interaction term***. And a shout out to $a_0$, the ***constant term***. `r mark(2850)`
+It helps to have different names for the various terms. It's not too bad to say something like, "the $a_{xy}$ term." (Pronounciation: "a sub x y" or  "a x y") But the proper names are: ***linear terms***, ***quadratic terms***, and ***interaction term***. And a shout out to $a_0$, the ***constant term***. `r mark(2850)`
 
 $$g(x, y) \equiv a_0 + \underbrace{a_x x + a_y y}_\text{linear terms} \ \ \ + 
 \underbrace{a_{xy} x y}_\text{interaction term} +\ \ \  \underbrace{a_{yy} y^2 + a_{xx} x^2}_\text{quadratic terms}$$
@@ -153,7 +153,36 @@ if (knitr::is_html_output()) {
 }
 ```
 
-::: {.workedexample   data-latex=""}
+::: {.intheworld data-latex=""}
+If you're like many people, you find it harder to walk uphill than down, and find it takes more out of you to walk longer distances than shorter. Let's build a model of this, using nothing more than your intuition and the method of low-order polynomial approximations.
+
+Let's call the map distance walked $d$. ("Map distance" is the horizontal change in position, disregarding vertical changes.) The steepness of the hill will be the "grade" $g$, which is measured as the horizontal distance covered divided by the vertical climb. If you're going downhill, the grade is negative. 
+
+The key ingredient in the model: We'll measure the "difficulty" or "exertion" to walking as the ***energy consumed*** during the walk: $E(d, g)$.
+
+Some assumptions about walking and energy consumed:
+
+1. If you don't walk, you consume zero energy walking.
+2. The energy consumed should be proportional to the length of the walk. This is an assumption, and is probably valid, only for walks of short to medium distances, as opposed to forced marches over tens of miles. 
+
+
+We'll start with the full 2nd-order polynomial in two variables, and then seek to eliminate terms that aren't needed.
+
+$$E_{big}(d, g) \equiv a_0 + a_d\, d + a_g\, g + a_{dg}\, d\, g + a_{dd}\,d^2 + a_{gg}\,g^2$$
+According to assumption (1), when $E(d=0, g) = 0$. Of course, if you are walking zero distance, it doesn't matter what the grade is; the energy consumed is still zero.
+
+Consequently, we know that all terms that don't include a $d$ should go away. This leaves us with
+
+$$E_{medium}(d, g) \equiv  a_d\, d + a_{dg}\, d\, g + a_{dd}\,d^2 = d \left[\strut a_d + a_{dg}\, g + a_{dd}\,d\right]$$
+Assumption (2) says that energy consumed is proportional to $d$. The multiplier on $d$ in $E_{medium}()$ is $\left[\strut a_d + a_{dg}\, g + a_{dd}\,d\right]$ which is itself a function of $d$. A proportional relationship implies a multiplier that doesn't depend on the quantity itself. This means that $a_{dd} = 0$.
+
+This leaves us with a very simple model: $$E(d, g) \equiv \left[\strut a_1 + a_2\, g\right]\, d$$ where we have simplified the labeling on the coefficients since there are only two in the model.
+
+Perhaps assumption (2) is mis-placed and that the energy consumed per unit distance in a walk increases with the length of the walk. If so, we would need to return to the question of $a_{dd}$. This is typical of the modeling cycle. Trying to be economical with model terms highlights the question of which terms are so small they can be ignored.
+:::
+
+
+::: {.example   data-latex=""}
 In selecting cadets for pilot training, two criteria are the cadet's demonstrated flying aptitude and the leadership potential of the cadet. Let's assume that the overall merit $M$ of a candidate is a function of flying aptitude $F$ and leadership potential $L$. 
 
 Currently, the merit score is a simple function of the $F$ and $L$ scores: $$M_{current}(F, L) \equiv F + L$$
@@ -168,20 +197,20 @@ You recognize that $F + L$ is a low-order polynomial: just the linear terms are 
 
 Quadratic terms are appropriate when a model needs to feature a locally ***optimal*** level of the of the inputs. But it will never be the case that a lower flying score will be more favored than a higher score, and the same thing for the leadership score. So your model doesn't need quadratic terms. 
 
-That leaves the interaction term as the way forward. Your model will be 
-$$M_{improved}(F, L) \equiv d_0 + F + L + d_{12} FL$$
-Should $d_{12}$ be positive or negative? 
+That leaves the interaction term as the way forward. The low-order polynomial model will be 
+$$M_{improved}(F, L) \equiv d_0 + F + L + d_{FL} FL$$
+Should $d_{FL}$ be positive or negative? 
 
 Imagine a cadet Drew with acceptable and equal F and L scores. Another cadet, Blake, has scores that are $F+\epsilon$ and $L-\epsilon$, where $\epsilon$ might be positive or negative. Under the original formula for merit, Drew and Blake have equal merit. Under the new criteria, Drew should have a higher merit than Blake. In other words:
 $$M_{improved}(F, L) - M_{improved}(F+\epsilon, L-\epsilon) > 0$$
 
-Expanding out the left side of the inequality gives
-$$d_0 + F + L + d_{12} FL - d_0 - F - \epsilon - L + \epsilon - d_{12} (FL -\epsilon L + \epsilon F -  \epsilon^2)$$
-
-$$= - d_{12}(\epsilon(F-L) + \epsilon^2)$$
+Replace $M_{improved}(F, L)$ with the low-order polynomial approximation given earlier. 
+$$\underbrace{d_0 + F + L + d_{FL} FL}_{M_{improved}(F, L)} - \underbrace{\left[{\large\strut} d_0 + \left[ F + \epsilon\right] + \left[ L - \epsilon\right] + d_{FL} (FL -\epsilon L + \epsilon F -  \epsilon^2)\right]}_{M_{improved}(F+\epsilon, L-\epsilon)} > 0$$
+Collecting and cancelling terms in the above gives 
+$$- d_{FL}(\epsilon(F-L) + \epsilon^2) > 0$$
 Since $F$ and $L$ were assumed equal, this results in 
-$$M_{improved}(F, L) - M_{improved}(F+\epsilon, L-\epsilon) = d_{1,2}\, \epsilon^2 > 0$$
-Thus, $d_{1,2}$ will have to be positive.
+$$M_{improved}(F, L) - M_{improved}(F+\epsilon, L-\epsilon) = d_{FL}\, \epsilon^2 > 0$$
+Thus, $d_{FL}$ will have to be positive.
 :::
 
 
@@ -193,12 +222,12 @@ Original formulation of flying/leadership/merit
 
 ## Finding coefficients from data
 
-Low-order polynomials are often used for constructing functions from data. In this section, I'll demonstrate briefly how this can be done. The full theory will be introduced in Block 5. 
+Low-order polynomials are often used for constructing functions from data. In this section, I'll demonstrate briefly how this can be done. The full theory will be introduced in Block 5 of this text. 
 
 The data I'll use for the demonstration is a set of physical measurements of height, weight, abdominal circumference, etc. on 252 human subjects. These are contained in the `Body_fat` data frame, shown below. 
 ```{r echo=FALSE}
 if (knitr::is_html_output()) {
-  math141Z::Body_fat %>% DT::datatable()
+  Zcalc::Body_fat %>% DT::datatable()
 } else {
   knitr::kable(math141Z::Body_fat %>% head(10))
 }
@@ -221,8 +250,10 @@ contour_plot(body_fat_fun(height, weight) ~ height + weight,
   gf_labs(title = "Body fat percentage")
 ```
 
-That we can build such a model doesn't mean that it's useful for anything. In Block 5 we'll return to the question of how well a model constructed from data represents the real-world relationships that the model attempts to describe.
+That we can build such a model doesn't mean that it's useful for anything. In Block 5 of the text we'll return to the question of how well a model constructed from data represents the real-world relationships that the model attempts to describe.
 
+
+<!--
 ::: {.todo}
 Interpreting the model in terms of partial derivatives and gradients. To increase the body-fat percentage, a person can either lose height or gain weight. The former is impractical. Compare a tall person (say, 75 inches) to a short person (say, 63 inches). Who has to gain more weight to increase the body-fat percentage from 10% to 20%?
 :::
@@ -236,8 +267,10 @@ There's an exercise in DailyDigitals/ 141 DD-35 with some narrative
 and the project is in DD-37
 :::
 
+-->
 
 
+## Exercises
 
 `r insert_calcZ_exercise("25.02", "ckslw", "Exercises/Diff/rooster-pink.Rmd")`
 

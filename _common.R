@@ -79,10 +79,5 @@ drill_link <- function() {
 
 
 # For gradescope output
-#askMC <- Znotes::askGS
-mark <- function(x) NULL
-
-# Testing TUFTE FORMAT
-#askMC <- Znotes::askPDF
-
+askMC <- Znotes::askGS
 
