@@ -42,7 +42,7 @@ The following sections provide an overview of techniques of integration. We star
 
 Remember that, even if we cannot always find a symbolic anti-derivative, that we can always construct a numerical anti-derivative that will be precise enough for almost any genuine purpose.
 
-## The cataloged functions
+## The cataloged functions {#cataloged-functions}
 
 In a traditional science or mathematics education, students encounter (almost exclusively) basic functions from a mid-sized catalog. For instance: $\sqrt{\strut\_\_\_\ }$, $\sin()$, $\cos()$, $\tan()$, square(), cube(), recip(), $\ln()$, $\exp()$, negate(), gaussian(),  and so on. This catalog also includes some functions that take two arguments but are traditionally written without using parentheses. For instance, $a+b$ doesn't look like a function but is entirely equivalent to $+(a, b)$. Others in this class are $\times(\ ,\ )$, $\div(\ , \ )$, $-(\ ,\ )$, and ^( , ).
 
@@ -253,9 +253,52 @@ Prof. Kaplan once had a heart-to-heart with a 2009 Nobel-prize winner who confes
 
 ## Polynomials
 
-GO THROUGH THE LOGIC OF INTEGRATING POLYNOMIALS JUST BASED ON THEIR COEFFICIENTS.
+One of the most famous settings for integration comes from the physics of free fall under gravity.
 
-Pick up on the Taylor series for $\dnorm(x)$ defined in Exercises/Diff/birch-dig-radio.Rmd and have them integrate this out from zero to get an approximation to $\pnorm()$. Integrate out to $x=0.5$, then switch to the Taylor polynomial around $x_0=1$ and keep on integrating. Use the first integral out to $x=0.5$ as the starting value for the second integral.
+Here's the setting. An object---a ball, let's imagine---is being held at height $x_0$. At $t=0$ the ball is released. Perhaps the ball is released from a standstill in which case it's velocity at release is $v_0 = v(t=0) =0$. Or perhaps the ball has been tossed upward so that $v_0 > 0$, or downward so that $v_0 < 0$. Whichever it is, the initial velocity will be labelled $v_0$. 
+
+On release, the force that held the ball steady is removed and the object moves under the influence of only one factor: gravity. The effect of gravity near the Earth's surface is easy to describe: it accelerates the object at a constant rate of about 9.8 m/s$^2$.
+
+Acceleration is the derivative with respect to time of velocity. Since we know acceleration, to find velocity we find an anti-derivative of acceleration:
+$$v(t) = \int -9.8\ dt = -9.8\ t + C$$
+The constant of integration $C$ is not just a formality. It has physical meaning. In this case, we see that $C=v(0)$, that is, $C = v_0$.
+
+Velocity is the derivative of position: height in this case. So height is an anti-derivative of velocity. 
+$$x(t) = \int v(t) dt = \int \left[\strut -9.8\ t + v_0\right]dt = - \frac{9.8}{2} t^2 + v_0\ t + C$$
+Why is $C$ back again? It's a convention to use $C$ to denote the constant of integration. Those experienced with this convention know, from context, that the value of $C$ in the integration that produced $v(t)$ has nothing to do with the value of $C$ involved in the production of $x(t)$. The situation is a bit like the presentation of prices in US stores: to the price of the item itself, you must always add "plus taxes." Nobody with experience would assume that "taxes" is always the same number. It depends on the price and type of the item itself.^[Many jurisdictions tax food and clothing, etc. at a different rate than other items.] You won't have to deal with the taxes at the time you pick the item from the shelf, but eventually you'll see them when you check out of the store. Think of $+\ C$ as meaning, "plus some number that we'll have to deal with at some point, but not until checkout."
+
+Let's checkout the function $x(t)$ now. For that, we need to figure out the value of $C$. We can do that by noticing that $x(0) = C$.  So in the anti-differentiation producing $x()$, $C = x_0$ giving, altogether the formula for free-fall famous from physics classes
+$$x(t) =  - \frac{9.8}{2} t^2 + v_0\ t + x_0$$
+An important thing to notice about $x(t)$: it's a polynomial in $t$. Polynomials can be birthed by successive anti-differentiations of a constant. At each anti-differentiation, each of the previous terms is promoted by one order. That is, the previous constant becomes the first order term. The previous first-order term becomes the second order term, with the division by 2 familiar from anti-differentiating $t$. A previous second-order term will become the new third-order term, again with the division by 3 familiar from anti-differentiating $t^2$. 
+
+Stated generally, the anti-derivative of a polynomial is
+
+$${\Large\int} \left[\strut \underbrace{a + b t + ct^2 + \ldots}_\text{original polynomial}\right] dt = \underbrace{C + a\,t + \frac{b}{2} t^2 + \frac{c}{3} t^3 + \ldots}_\text{new polynomial}$$
+By use of the symbol $C$, it's easy to spot how the constant of integration fits in with the new polynomial. But if we were to anti-differentiate the new polynomial, we had better replace $C$ with some more specific symbol to that we don't confuse the old $C$ with the one that's going to be produced in the new anti-differentiation.
+
+::: {.intheworld data-latex=""}
+In exercise `r dereference_hash("jAOmME")$number`, we introduced a Taylor polynomial approximation to the gaussian function. That might have seemed like a mere exercise in high-order differentiation at the time, but there is something more important at work.
+
+The gaussian is one of those functions for which the anti-derivative cannot be written exactly in terms of what the mathematicians call "elementary functions." (See Section \@ref(cataloged-functions).) Yet integrals of the gaussian are very commonly used in science, especially in statistics where the gaussian is called the ***normal PDF***. 
+
+The approach we've taken in this book is simply to give a name and a computer implementation of the anti-derivative of the gaussian. This is the function we've called $\pnorm()$ with the R computer implementation `pnorm()`.
+
+We never told you the algorithm contained in `pnorm()`. Nor do we really need to. We all depend on experts and specialists to design and build the computers we use. The same is true of software implementation of functions like `pnorm()`. And for that matter, for implementations of functions like `exp()`, `log()`, `sin()`, and so on. You don't have to know about semi-conductors in order to use a computer productively, and you don't need to know about numerical algorithms in order to use those functions.
+
+One feasible algorithm for implementing $\pnorm()$ is to integrate the Taylor polynomial. It's very easy integrate polynomials. To ensure accuracy, different Taylor polynomials can be computed for different centers, say $x=0$, $x=1$, $x=2$, and so on.
+
+Another feasible algorithm is simply to integrate $\dnorm()$ numerically using an advanced algorithm such as Gauss-Hermite quadrature.
+
+In today's world, software is the means by which expert knowledge and capability is communicated and applied. Before modern computers were available, the expertise was committed to print in the form of tables. Figure \@ref(fig:pierce-pnorm-table) shows part of the table from the previously mentioned 1899 *A Short Table of Integrals*.
+
+```{r pierce-pnorm-table, echo=FALSE}
+knitr::include_graphics("www/pierce-pnorm-table.png")
+```
+
+Incredibly, such tables were a standard feature of statistics textbooks up through 2010. 
+
+In addition to software being more compact and easier to use than printed tables, the interface to numerical integrals can be presented in the same format as any other mathematical function. That's enabled us to include $\pnorm()$ among the pattern book functions. 
+:::
 
 ## Exercises
 
