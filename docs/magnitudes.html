@@ -10,7 +10,7 @@
 <link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
 <script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.2.5.1/tabs.js"></script><script src="libs/bs3compat-0.2.5.1/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
 <script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="libs/kePrint-0.0.1/kePrint.js"></script><link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet">
-<script src="libs/htmlwidgets-1.5.3/htmlwidgets.js"></script><script src="libs/plotly-binding-4.9.4/plotly.js"></script><script src="libs/typedarray-0.1/typedarray.min.js"></script><link href="libs/crosstalk-1.1.1/css/crosstalk.css" rel="stylesheet">
+<script src="libs/htmlwidgets-1.5.4/htmlwidgets.js"></script><script src="libs/plotly-binding-4.9.4.1/plotly.js"></script><script src="libs/typedarray-0.1/typedarray.min.js"></script><link href="libs/crosstalk-1.1.1/css/crosstalk.css" rel="stylesheet">
 <script src="libs/crosstalk-1.1.1/js/crosstalk.min.js"></script><link href="libs/plotly-htmlwidgets-css-1.57.1/plotly-htmlwidgets.css" rel="stylesheet">
 <script src="libs/plotly-main-1.57.1/plotly-latest.min.js"></script><link href="libs/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet">
 <script src="libs/datatables-binding-0.18/datatables.js"></script><link href="libs/dt-core-1.10.20/css/jquery.dataTables.min.css" rel="stylesheet">
@@ -90,6 +90,7 @@
 <li><a class="active" href="magnitudes.html"><span class="header-section-number">15</span> Magnitudes</a></li>
 <li><a class="" href="dimensions.html"><span class="header-section-number">16</span> Dimensions</a></li>
 <li class="book-part">Block 2: Differentiation</li>
+<li><a class="" href="prolog-differentiation-and-birth.html">Prolog: Differentiation and birth</a></li>
 <li><a class="" href="change-relationships.html"><span class="header-section-number">17</span> Change relationships</a></li>
 <li><a class="" href="evanescent-h.html"><span class="header-section-number">18</span> Evanescent h</a></li>
 <li><a class="" href="computing-derivs.html"><span class="header-section-number">19</span> Computing derivatives</a></li>
@@ -483,7 +484,7 @@ Figure 15.10: Part of the first page of Henry Briggs table of logarithms
 <code class="sourceCode R"><span class="fu">gf_point</span><span class="op">(</span><span class="va">BHP</span> <span class="op">~</span> <span class="va">displacement</span>, data <span class="op">=</span> <span class="va">Engines</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu">gf_refine</span><span class="op">(</span><span class="fu">scale_x_log10</span><span class="op">(</span><span class="op">)</span>, <span class="fu">scale_y_log10</span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu">gf_labs</span><span class="op">(</span>x <span class="op">=</span> <span class="st">"displacement (cc)"</span><span class="op">)</span></code></pre></div>
-<div class="inline-figure"><img src="CalcZ-notes_files/figure-html/unnamed-chunk-227-1.png" width="90%" style="display: block; margin: auto;"></div>
+<div class="inline-figure"><img src="CalcZ-notes_files/figure-html/unnamed-chunk-229-1.png" width="90%" style="display: block; margin: auto;"></div>
 </div>
 <p>In the plot, you’ll see that the vertical axis has labels at 1, 10, 100, 1000, 10000. These numbers are hardly spaced evenly when plotted on a linear scale, but on the log scale they are evenly spaced. Since there is a factor of ten between consecutive labels, the interval between the labels is called a <strong><em>decade</em></strong>. On the horizontal axis, the labels are at 10, 1000, 100,000, and 10,000,000. Each of those intervals spans a factor of one hundred. For instance, from 1000 is one-hundred times 10, 100,000 is one-hundred times 1000, and so on. An interval of size 100 is said to span <strong><em>two decades</em></strong>, not 20 years but a factor of 100.</p>
 <p>Based on the log-log plot, answer these questions.</p>
@@ -507,7 +508,7 @@ Figure 15.10: Part of the first page of Henry Briggs table of logarithms
 (x)  5
 ( )  100
 
-[[Right!]]
+[[Correct.]]
 
 </pre>
 </details><details><summary><strong>Exercise 15.4</strong>: <span><a name="File:%20Exercises/Fun/maple-hit-saucer.Rmd" href="#j3xe"><img src="www/icons8-signpost.png" title="Location: Exercises/Fun/maple-hit-saucer.Rmd" width="12px"></a><span style="color: red; font-size: 9pt;">j3xe</span>
@@ -521,7 +522,7 @@ Figure 15.10: Part of the first page of Henry Briggs table of logarithms
         color <span class="op">=</span> <span class="st">"orange3"</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu">gf_line</span><span class="op">(</span><span class="va">confirmed</span> <span class="op">~</span> <span class="va">date</span>, color <span class="op">=</span> <span class="st">"blue"</span><span class="op">)</span></code></pre></div>
 <div class="inline-figure">
-<img src="CalcZ-notes_files/figure-html/unnamed-chunk-229-1.png" width="90%" style="display: block; margin: auto;">
+<img src="CalcZ-notes_files/figure-html/unnamed-chunk-231-1.png" width="90%" style="display: block; margin: auto;">
 :::</div>
 <pre>As of mid June, 2020 about how many confirmed cases were there? (Note that the labeled tick marks refer to the beginning of the month, so the point labeled `Feb` is February 1.) 
 
@@ -534,7 +535,7 @@ Figure 15.10: Part of the first page of Henry Briggs table of logarithms
 (x)  about 2,000,000
 ( )  about 5,000,000
 
-[[Excellent!]]
+[[Right!]]
 
 </pre>
 <p>Here’s the same graphic as above, but taking the <em>logarithm</em> (base 10) of the number of cases (that is, <code>confirmed</code>) and of the number of deaths. Since we’re taking the logarithm of only the y-variable, this is called a “semi-log” plot.</p>
@@ -543,7 +544,7 @@ Figure 15.10: Part of the first page of Henry Briggs table of logarithms
          data <span class="op">=</span> <span class="va">Covid_US</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">date</span> <span class="op">&lt;</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html">as.Date</a></span><span class="op">(</span><span class="st">"2020-06-30"</span><span class="op">)</span><span class="op">)</span>, 
          color <span class="op">=</span> <span class="st">"dodgerblue"</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu">gf_point</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html">log10</a></span><span class="op">(</span><span class="va">deaths</span><span class="op">)</span> <span class="op">~</span> <span class="va">date</span>, color <span class="op">=</span> <span class="st">"orange3"</span><span class="op">)</span> </code></pre></div>
-<div class="inline-figure"><img src="CalcZ-notes_files/figure-html/unnamed-chunk-230-1.png" width="90%" style="display: block; margin: auto;"></div>
+<div class="inline-figure"><img src="CalcZ-notes_files/figure-html/unnamed-chunk-232-1.png" width="90%" style="display: block; margin: auto;"></div>
 <p>Up through the beginning of March in the US, it is thought that most US cases were in people travelling into the US from hot spots such as China and Italy and the UK, as opposed to contagion between people within the US. (Such contagion is called “community spread.”) So let’s look at the data representing community spread, from the start of March onward.</p>
 <p>Exponential growth appears as a straight-line on a semi-log plot. Obviously, the overall pattern of the curves is not a straight line. The explanation for this is that the exponential growth rate changes over time, perhaps due to public health measures (like business closures, mask mandates, etc.)</p>
 <p>The first (official) US death from Covid-19 was recorded was recorded on Feb. 29, 2020. Five more deaths occurred two days later, bringing the cumulative number to 6.</p>
@@ -555,7 +556,7 @@ Figure 15.10: Part of the first page of Henry Briggs table of logarithms
 (x)  Yes. The vertical scale is in log (base 10) units, so 0 corresponds to 1 death, since $$\log_{10} 1 = 0$$.
 ( )  No. The vertical scale doesn't mean anything.
 
-[[Right!]]
+[[Nice!]]
 
 </pre>
 <p>One of the purposes of making a semi-log plot is to enable you to compare very large numbers with very small numbers on the same graph. For instance, in the semi-log plot, you can easily see when the first death occurred, a fact that is invisible in the plot of the raw counts (the first plot in this exercise).</p>
@@ -582,7 +583,7 @@ Calculate what the proportion between deaths and cases was in the month of May. 
          color <span class="op">=</span> <span class="st">"dodgerblue"</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu">gf_point</span><span class="op">(</span><span class="va">deaths</span> <span class="op">~</span> <span class="va">date</span>, color <span class="op">=</span> <span class="st">"orange3"</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu">gf_refine</span><span class="op">(</span><span class="fu">scale_y_log10</span><span class="op">(</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<div class="inline-figure"><img src="CalcZ-notes_files/figure-html/unnamed-chunk-231-1.png" width="90%" style="display: block; margin: auto;"></div>
+<div class="inline-figure"><img src="CalcZ-notes_files/figure-html/unnamed-chunk-233-1.png" width="90%" style="display: block; margin: auto;"></div>
 <p>The <strong>labels</strong> on the vertical axis show the raw numbers, while the <strong>position</strong> shows the logarithm of those numbers.</p>
 <p>The next question has to do with the meaning of the interval between grid lines on the vertical axis. Note that on the <em>horizontal</em> axis, the spacing between adjacent grid lines is half a month.</p>
 <pre>What is the numerical spacing (in terms of raw counts) between adjacent grid lines on the vertical axis? (Note: Two numbers are different by a "factor of 10" when one number is 10 times the other." Similarly, "a factor of 100" means that one number is 100 times the other. 
@@ -608,7 +609,7 @@ Calculate what the proportion between deaths and cases was in the month of May. 
      <span class="co"># scale_y_log10()</span>
   <span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu">gf_lm</span><span class="op">(</span><span class="op">)</span></code></pre></div>
-<div class="inline-figure"><img src="CalcZ-notes_files/figure-html/unnamed-chunk-233-1.png" width="90%" style="display: block; margin: auto;"></div>
+<div class="inline-figure"><img src="CalcZ-notes_files/figure-html/unnamed-chunk-235-1.png" width="90%" style="display: block; margin: auto;"></div>
 </div>
 <pre>In a sandbox, plot pressure versus volume using linear, semi-log, and log-log axes. Based on the plot, and the straight-line function drawn, which of these is a good model of the relationship between pressure and volume? 
 
@@ -618,7 +619,7 @@ Calculate what the proportion between deaths and cases was in the month of May. 
 ( )  exponential
 (x)  power-law
 
-[[Nice!]]
+[[Excellent!]]
 
 </pre>
 </details><details><summary><strong>Exercise 15.6</strong>: <span><a name="File:%20Exercises/Fun/lion-jump-kitchen.Rmd" href="#gmZiWh"><img src="www/icons8-signpost.png" title="Location: Exercises/Fun/lion-jump-kitchen.Rmd" width="12px"></a><span style="color: red; font-size: 9pt;">gmZiWh</span>
@@ -638,7 +639,7 @@ To find the parameter <span class="math inline">\(n\)</span>, you can fit the mo
 ( )  About -1.5
 ( )  Slope $$&gt; 0$$
 
-[[Right!]]
+[[Nice!]]
 
 </pre>
 <p>According to the appropriate model that you found in (A) and (B), interpret the function you found relating pressure and volume.</p>
@@ -651,7 +652,7 @@ To find the parameter <span class="math inline">\(n\)</span>, you can fit the mo
 ( )  Pressure also becomes large.
 ( )  None of the above
 
-[[Correct.]]
+[[Excellent!]]
 
 </pre>
 <p>Return to your use of <code>fitModel()</code> to find the slope of the straight-line fit to the appropriately log-transformed model. When you carried out the log transformation, you used the so-called “natural logarithm” with expressions like <code><a href="https://rdrr.io/r/base/Log.html">log(pressure)</a></code>. Alternatively, you could have used the log base-10 or the log base-2, with expressions like <code><a href="https://rdrr.io/r/base/Log.html">log(pressure, base = 10)</a></code> or <code><a href="https://rdrr.io/r/base/Log.html">log(volume, base = 2)</a></code>. Whichever you use, you should use the same base for all the logarithmic transformations when finding the straight-line parameters.</p>
@@ -663,7 +664,7 @@ To find the parameter <span class="math inline">\(n\)</span>, you can fit the mo
 ( )  Yes
 ( )  There's no way to tell.
 
-[[Good.]]
+[[Excellent!]]
 
 </pre>
 <pre>**(E)** Does the **intercept** of the  straight line found by `fitModel()` depend on which base is used? 
@@ -682,7 +683,7 @@ To find the parameter <span class="math inline">\(n\)</span>, you can fit the mo
 <div class="sourceCode" id="cb125"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">gf_point</span><span class="op">(</span><span class="va">BHP</span> <span class="op">~</span> <span class="va">displacement</span>, data <span class="op">=</span> <span class="va">Engines</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu">gf_lims</span><span class="op">(</span>y  <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">30000</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<div class="inline-figure"><img src="CalcZ-notes_files/figure-html/unnamed-chunk-236-1.png" width="90%" style="display: block; margin: auto;"></div>
+<div class="inline-figure"><img src="CalcZ-notes_files/figure-html/unnamed-chunk-238-1.png" width="90%" style="display: block; margin: auto;"></div>
 </div>
 <pre>Your study partner claims that the smallest engine in the data has a displacement of 2000 cc (that is, 2.0 liters) and 100 horsepower. Based only on the graph, is this claim plausible? 
 
@@ -693,7 +694,7 @@ To find the parameter <span class="math inline">\(n\)</span>, you can fit the mo
 ( )  No, the smallest engine is close to 0 cc.
 ( )  No, my study partner is always wrong.
 
-[[Excellent!]]
+[[Good.]]
 
 </pre>
 <p><strong>Semi-log scales</strong></p>
@@ -701,7 +702,7 @@ To find the parameter <span class="math inline">\(n\)</span>, you can fit the mo
 <div class="sourceCode" id="cb126"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">gf_point</span><span class="op">(</span><span class="va">BHP</span> <span class="op">~</span> <span class="va">displacement</span>, data <span class="op">=</span> <span class="va">Engines</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu">gf_refine</span><span class="op">(</span><span class="fu">scale_x_log10</span><span class="op">(</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<div class="inline-figure"><img src="CalcZ-notes_files/figure-html/unnamed-chunk-237-1.png" width="90%" style="display: block; margin: auto;"></div>
+<div class="inline-figure"><img src="CalcZ-notes_files/figure-html/unnamed-chunk-239-1.png" width="90%" style="display: block; margin: auto;"></div>
 <pre>Using just the graph, answer this question: The engines range over how many decades of displacement? (Remember, a decade is a factor of 10.) 
 
 
@@ -711,11 +712,11 @@ To find the parameter <span class="math inline">\(n\)</span>, you can fit the mo
 ( )  $$10^7$$ decades
 ( )  About 3.5 decades
 
-[[Right!]]
+[[Nice!]]
 
 </pre>
 </details><details><summary><strong>Exercise 15.8</strong>: <span><a name="File:%20Exercises/Fun/fish-walk-green.Rmd" href="#TLEXE"><img src="www/icons8-signpost.png" title="Location: Exercises/Fun/fish-walk-green.Rmd" width="12px"></a><span style="color: red; font-size: 9pt;">TLEXE</span>
-</span></summary><div class="inline-figure"><img src="CalcZ-notes_files/figure-html/unnamed-chunk-239-1.png" width="90%" style="display: block; margin: auto;"></div>
+</span></summary><div class="inline-figure"><img src="CalcZ-notes_files/figure-html/unnamed-chunk-241-1.png" width="90%" style="display: block; margin: auto;"></div>
 <pre>Consider the axis scales shown above.  Which kind of scale is the horizontal axis? 
 
 
@@ -748,7 +749,7 @@ To find the parameter <span class="math inline">\(n\)</span>, you can fit the mo
 ( )  log-log
 ( )  linear-linear
 
-[[Good.]]
+[[Nice!]]
 
 </pre>
 </details><details><summary><strong>Exercise 15.9</strong>: <span><a name="File:%20Exercises/Dimension/tiger-have-fork.Rmd" href="#SELIX"><img src="www/icons8-signpost.png" title="Location: Exercises/Dimension/tiger-have-fork.Rmd" width="12px"></a><span style="color: red; font-size: 9pt;">SELIX</span>
@@ -763,7 +764,7 @@ To find the parameter <span class="math inline">\(n\)</span>, you can fit the mo
 <div class="sourceCode" id="cb128"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="va">SSA_2007</span><span class="op">)</span>
 <span class="fu">gf_point</span><span class="op">(</span><span class="va">Mortality</span> <span class="op">~</span> <span class="va">Age</span>, color <span class="op">=</span> <span class="op">~</span> <span class="va">Sex</span>, data <span class="op">=</span> <span class="va">SSA_2007</span><span class="op">)</span></code></pre></div>
-<p><img src="CalcZ-notes_files/figure-html/unnamed-chunk-242-1.png" width="90%" style="display: block; margin: auto;">
+<p><img src="CalcZ-notes_files/figure-html/unnamed-chunk-244-1.png" width="90%" style="display: block; margin: auto;">
 There is a <em>slight</em> mistake in the way the command is written,
 so an error message will be generated. To figure out what’s wrong, read the error message, check the variable names, and so on until you successfully make the plot.</p>
 <pre>What was the mistake in the plotting command in the above code box? 
@@ -797,7 +798,7 @@ so an error message will be generated. To figure out what’s wrong, read the er
 (x)  About 10 times as large
 ( )  About 100 times as large
 
-[[Correct.]]
+[[Nice!]]
 
 </pre>
 <pre>Near age 20, the mortality of males is how much compared to females? 
@@ -809,7 +810,7 @@ so an error message will be generated. To figure out what’s wrong, read the er
 ( )  About 8 times as large
 ( )  About 12 times as large
 
-[[Excellent!]]
+[[Correct.]]
 
 </pre>
 <pre>Between the ages of about 40 and 80, how does mortality change with age? 
@@ -821,7 +822,7 @@ so an error message will be generated. To figure out what’s wrong, read the er
 (x)  It increases exponentially.
 ( )  It increases, then decreases, then increases again.
 
-[[Right!]]
+[[Correct.]]
 
 </pre>
 <p>Remake the plot of mortality vs age once again, but this time put it on log-log axes. The sign of a power-law relationship is that it shows up as a straight line on log-log axes.</p>
@@ -853,7 +854,7 @@ Figure 15.11: Mortality rates for people aged 50+ in the US in 2009. The mortali
 (x)  semi-log
 ( )  log-log
 
-[[Nice!]]
+[[Excellent!]]
 
 </pre>
 <pre>If the age axis had been logged, which of the following would be true? 
@@ -864,7 +865,7 @@ Figure 15.11: Mortality rates for people aged 50+ in the US in 2009. The mortali
 ( )  The interval from 50 to 55 would be graphically **smaller** than the interval from 95 to 100.
 ( )  The two intervals would have the same graphical length.
 
-[[Correct.]]
+[[Excellent!]]
 
 </pre>
 <pre>At age **100**, which of these is closest to the mortality rate for men? 
@@ -899,7 +900,7 @@ Figure 15.11: Mortality rates for people aged 50+ in the US in 2009. The mortali
 ( )  120 years
 ( )  130 years
 
-[[Nice!]]
+[[Right!]]
 
 </pre>
 <pre>To judge from the graph, the function relating mortality to age is which of the following? 
@@ -952,7 +953,7 @@ Figure 15.11: Mortality rates for people aged 50+ in the US in 2009. The mortali
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>MOSAIC Calculus</strong>" was written by Daniel Kaplan. It was last built on 2021-09-14.</p>
+    <p>"<strong>MOSAIC Calculus</strong>" was written by Daniel Kaplan. It was last built on 2021-09-24.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

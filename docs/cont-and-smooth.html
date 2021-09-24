@@ -10,7 +10,7 @@
 <link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
 <script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.2.5.1/tabs.js"></script><script src="libs/bs3compat-0.2.5.1/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
 <script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="libs/kePrint-0.0.1/kePrint.js"></script><link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet">
-<script src="libs/htmlwidgets-1.5.3/htmlwidgets.js"></script><script src="libs/plotly-binding-4.9.4/plotly.js"></script><script src="libs/typedarray-0.1/typedarray.min.js"></script><link href="libs/crosstalk-1.1.1/css/crosstalk.css" rel="stylesheet">
+<script src="libs/htmlwidgets-1.5.4/htmlwidgets.js"></script><script src="libs/plotly-binding-4.9.4.1/plotly.js"></script><script src="libs/typedarray-0.1/typedarray.min.js"></script><link href="libs/crosstalk-1.1.1/css/crosstalk.css" rel="stylesheet">
 <script src="libs/crosstalk-1.1.1/js/crosstalk.min.js"></script><link href="libs/plotly-htmlwidgets-css-1.57.1/plotly-htmlwidgets.css" rel="stylesheet">
 <script src="libs/plotly-main-1.57.1/plotly-latest.min.js"></script><link href="libs/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet">
 <script src="libs/datatables-binding-0.18/datatables.js"></script><link href="libs/dt-core-1.10.20/css/jquery.dataTables.min.css" rel="stylesheet">
@@ -90,6 +90,7 @@
 <li><a class="" href="magnitudes.html"><span class="header-section-number">15</span> Magnitudes</a></li>
 <li><a class="" href="dimensions.html"><span class="header-section-number">16</span> Dimensions</a></li>
 <li class="book-part">Block 2: Differentiation</li>
+<li><a class="" href="prolog-differentiation-and-birth.html">Prolog: Differentiation and birth</a></li>
 <li><a class="" href="change-relationships.html"><span class="header-section-number">17</span> Change relationships</a></li>
 <li><a class="" href="evanescent-h.html"><span class="header-section-number">18</span> Evanescent h</a></li>
 <li><a class="" href="computing-derivs.html"><span class="header-section-number">19</span> Computing derivatives</a></li>
@@ -125,7 +126,7 @@
 </h2>
 <p>The intuition behind continuity is simple: If you can draw the graph of a function without lifting the pencil from the paper, the function is continuous.</p>
 <p>Continuity can be an important attribute of a modeling function. Often, we are modeling phenomena where a <strong><em>small change in input</em></strong> is expected to produce a <strong><em>small change in output</em></strong>. For instance, if your income changes by one penny, you would expect your lifestyle not to change by much. If the temperature of an oven changes by 1 degree, you don’t expect the quality of the cake you are baking to change in any noticeable way. <span style="float: right; padding-left: 50px;"><a name="2310" href="#2310"><img src="www/icons8-signpost.png" title="Location: 2310" width="12px"></a><span style="color: red; font-size: 6pt;">2310</span></span></p>
-<p>All of our basic modeling functions are continuous over their entire input domain.<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content='&lt;p&gt;The domain of the function &lt;span class="math inline"&gt;\(1/x\)&lt;/span&gt; is the whole number line, except 0, where the positive and negative branches fail to meet up.&lt;/p&gt;'><sup>31</sup></a> To illustrate <strong><em>discontinuity</em></strong> we’ll consider piecewise functions, as introduced in Chapter <a href="fun-piecewise.html#fun-piecewise">13</a>. The <strong><em>Heaviside function</em></strong>, graphed in Figure <a href="cont-and-smooth.html#fig:heaviside2">21.1</a> is discontinuous. <span style="float: right; padding-left: 50px;"><a name="2315" href="#2315"><img src="www/icons8-signpost.png" title="Location: 2315" width="12px"></a><span style="color: red; font-size: 6pt;">2315</span></span></p>
+<p>All of our basic modeling functions are continuous over their entire input domain.<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content='&lt;p&gt;The domain of the function &lt;span class="math inline"&gt;\(1/x\)&lt;/span&gt; is the whole number line, except 0, where the positive and negative branches fail to meet up.&lt;/p&gt;'><sup>36</sup></a> To illustrate <strong><em>discontinuity</em></strong> we’ll consider piecewise functions, as introduced in Chapter <a href="fun-piecewise.html#fun-piecewise">13</a>. The <strong><em>Heaviside function</em></strong>, graphed in Figure <a href="cont-and-smooth.html#fig:heaviside2">21.1</a> is discontinuous. <span style="float: right; padding-left: 50px;"><a name="2315" href="#2315"><img src="www/icons8-signpost.png" title="Location: 2315" width="12px"></a><span style="color: red; font-size: 6pt;">2315</span></span></p>
 <div class="figure" style="text-align: center">
 <span id="fig:heaviside2"></span>
 <img src="CalcZ-notes_files/figure-html/heaviside2-1.png" alt="The Heaviside function is piecewise constant with a discontiuity at $x=0$." width="90%"><p class="caption">
@@ -133,7 +134,7 @@ Figure 21.1: The Heaviside function is piecewise constant with a discontiuity at
 </p>
 </div>
 <p>Drawing the graph of the Heaviside function <span class="math inline">\(H(x)\)</span> involves lifting the pencil at <span class="math inline">\(x=0\)</span>.</p>
-<p>In contrast, the piecewise <strong><em>ramp function</em></strong> (Figure <a href="cont-and-smooth.html#fig:ramp2">21.2</a> is continuous, you don’t need to lift the pencil from the paper in order to draw the ramp function.</p>
+<p>In contrast, the piecewise <strong><em>ramp function</em></strong> (Figure <a href="cont-and-smooth.html#fig:ramp2">21.2</a>) is continuous; you don’t need to lift the pencil from the paper in order to draw the ramp function.</p>
 <div class="figure" style="text-align: center">
 <span id="fig:ramp2"></span>
 <img src="CalcZ-notes_files/figure-html/ramp2-1.png" alt="The ramp function is a continuous piecewise function." width="90%"><p class="caption">
@@ -142,12 +143,12 @@ Figure 21.2: The ramp function is a continuous piecewise function.
 </div>
 <p>Imagine that you were constructing a model of plant growth as a function of the amount of water (in cc) provided each day. The plant needs about 20 cc of water to thrive. Let’s say that you use the Heaviside function for the model, say <span class="math inline">\(H(W-20)\)</span>, where an output of 1 means the plant thrives and a output 0 means the plant does not. The model implies that if you provide 20.001 cc of water, the plant will thrive. But if you are stingy, and provide only 19.999 cc of water, the plant will die. In other words, a very small change in the input can lead to a large change in the output. <span style="float: right; padding-left: 50px;"><a name="2320" href="#2320"><img src="www/icons8-signpost.png" title="Location: 2320" width="12px"></a><span style="color: red; font-size: 6pt;">2320</span></span></p>
 <p>Common sense suggests that a change of 0.002 cc in the amount of water—that’s a small fraction of a drop, 2 cubic millimeters of volume, is not going to lead to a qualitative change in output. So you might prefer to use a sigmoidal function as your model rather than a Heaviside function. <span style="float: right; padding-left: 50px;"><a name="2325" href="#2325"><img src="www/icons8-signpost.png" title="Location: 2325" width="12px"></a><span style="color: red; font-size: 6pt;">2325</span></span></p>
-<p>On the other hand, sometimes a very small change in input does lead to a large change in output. For instance, a model of the hardness of water as a function of temperature sensibly would include a discontinuity at <span class="math inline">\(32^\circ\)</span>F, the temperature at which water turns to ice. <span style="float: right; padding-left: 50px;"><a name="2330" href="#2330"><img src="www/icons8-signpost.png" title="Location: 2330" width="12px"></a><span style="color: red; font-size: 6pt;">2330</span></span></p>
-<p>One of author Charles Dickens’s famous characters, Mr. Macawber, described the relationship between income, expenditure, and happiness this way:</p>
+<p>On the other hand, sometimes a very small change in input does lead to a large change in output. For instance, a sensible model of the hardness of water as a function of temperature would include a discontinuity at <span class="math inline">\(32^\circ\)</span>F, the temperature at which water turns to ice. <span style="float: right; padding-left: 50px;"><a name="2330" href="#2330"><img src="www/icons8-signpost.png" title="Location: 2330" width="12px"></a><span style="color: red; font-size: 6pt;">2330</span></span></p>
+<p>One of author Charles Dickens’s famous characters described the relationship between income, expenditure, and happiness this way:</p>
 <blockquote>
-<p>"<em>Annual income 20 pounds, annual expenditure 19 [pounds] 19 [shillings] and six [pence], result happiness. Annual income 20 pounds, annual expenditure 20 pounds ought and six, result misery."</em></p>
+<p>"<em>Annual income 20 pounds, annual expenditure 19 [pounds] 19 [shillings] and six [pence], result happiness. Annual income 20 pounds, annual expenditure 20 pounds ought and six, result misery."</em> — the character <a href="https://en.wikipedia.org/wiki/Wilkins_Micawber">Wilkins Micawber</a> in <em>David Copperfield</em></p>
 </blockquote>
-<p>Macawber was referring to the common situation in pre-20th century England of putting debtors in prison, regardless of the size of their debt. Macawber statement suggests he would model happiness as a Heaviside function <span class="math inline">\(H(\text{income}- \text{expenditure})\)</span>. <span style="float: right; padding-left: 50px;"><a name="2335" href="#2335"><img src="www/icons8-signpost.png" title="Location: 2335" width="12px"></a><span style="color: red; font-size: 6pt;">2335</span></span></p>
+<p>Macawber was referring to the common situation in pre-20th century England of putting debtors in prison, regardless of the size of their debt. Macawber’s statement suggests he would model happiness as a Heaviside function <span class="math inline">\(H(\text{income}- \text{expenditure})\)</span>. <span style="float: right; padding-left: 50px;"><a name="2335" href="#2335"><img src="www/icons8-signpost.png" title="Location: 2335" width="12px"></a><span style="color: red; font-size: 6pt;">2335</span></span></p>
 <p>Whenever the output of a function is a binary (yes-or-no) value, you can anticipate that a model will involve a discontinuous function.</p>
 </div>
 <div id="discontinuity" class="section level2" number="21.2">
@@ -156,7 +157,7 @@ Figure 21.2: The ramp function is a continuous piecewise function.
 </h2>
 <p>Recall the logical path that led us to the idea of the derivative of a function. We started with the <strong><em>differencing operator</em></strong>, which takes as input a function and a “small” value of <span class="math inline">\(h\)</span>:
 <span class="math display">\[{\cal D}_x f(x) \equiv \frac{f(x+h) - f(x)}{h}\]</span>
-Then, through algebraic manipulation and numerical experiments we found that, once <span class="math inline">\(h\)</span> is small enough, the graph of <span class="math inline">\({\cal D}_x f(x)\)</span> does not depend on <span class="math inline">\(h\)</span>. And so we defined a function <span class="math inline">\(\partial_x f(x)\)</span> where <span class="math inline">\(h\)</span> doesn’t play a role, writing <span class="math inline">\(\lim_{h\rightarrow 0}\)</span> to remember the ancestors, now departed from the scene:
+Then, through algebraic manipulation and numerical experiments we found that, once <span class="math inline">\(h\)</span> is small enough, the graph of the slope function <span class="math inline">\({\cal D}_x f(x)\)</span> does not depend on <span class="math inline">\(h\)</span>. And so we defined a function <span class="math inline">\(\partial_x f(x)\)</span> where <span class="math inline">\(h\)</span> doesn’t play a role, writing <span class="math inline">\(\lim_{h\rightarrow 0}\)</span> to remember our care to never actually divide by zero.
 <span class="math display">\[\partial_x f(x) \equiv \lim_{h\rightarrow 0} \frac{f(x+h) - f(x)}{h}\ .\]</span>
 Conveniently, we found that the derivatives of the pattern-book functions can be written in terms of the pattern-book functions <em>without making any reference to <span class="math inline">\(h\)</span></em>. For instance:</p>
 <ul>
@@ -169,7 +170,7 @@ Conveniently, we found that the derivatives of the pattern-book functions can be
 <li>and so on.</li>
 </ul>
 <p>With discontinuous functions, we have no such luck. Figure <a href="cont-and-smooth.html#fig:D-heaviside">21.3</a> shows what happens if we compute <span class="math inline">\({\cal D}_x H(x)\)</span>, the derivative of the Heaviside function, for smaller and smaller <span class="math inline">\(h\)</span>.</p>
-<div class="sourceCode" id="cb205"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb202"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">H</span> <span class="op">&lt;-</span> <span class="fu">makeFun</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="va">x</span> <span class="op">&gt;=</span><span class="fl">0</span>, <span class="fl">1</span>, <span class="fl">0</span><span class="op">)</span> <span class="op">~</span> <span class="va">x</span><span class="op">)</span>
 <span class="va">DH01</span>   <span class="op">&lt;-</span> <span class="fu">makeFun</span><span class="op">(</span><span class="op">(</span><span class="fu">H</span><span class="op">(</span><span class="va">x</span> <span class="op">+</span> <span class="fl">0.1</span><span class="op">)</span> <span class="op">-</span> <span class="fu">H</span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span><span class="op">/</span><span class="fl">0.1</span> <span class="op">~</span> <span class="va">x</span><span class="op">)</span>
 <span class="va">DH001</span>  <span class="op">&lt;-</span> <span class="fu">makeFun</span><span class="op">(</span><span class="op">(</span><span class="fu">H</span><span class="op">(</span><span class="va">x</span> <span class="op">+</span> <span class="fl">0.01</span><span class="op">)</span> <span class="op">-</span> <span class="fu">H</span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span><span class="op">/</span><span class="fl">0.01</span> <span class="op">~</span> <span class="va">x</span><span class="op">)</span>
@@ -213,7 +214,7 @@ Figure 21.4: A function whose derivative is the ramp function (hence continous) 
 <li>
 <span class="math inline">\(C^2\)</span>: the function <span class="math inline">\(\partial_x f(x)\)</span> has a derivative over its entire domain <em>and</em> that derivative is continuous. In other words, <span class="math inline">\(\partial_{xx} f(x)\)</span> exists and is continuous.</li>
 <li>
-<span class="math inline">\(C^n\)</span>: Like <span class="math inline">\(C^2\)</span>, but we’re talk about the <span class="math inline">\(n\)</span><sup>th</sup>-derivative of <span class="math inline">\(f(x)\)</span> existing and being continuous.</li>
+<span class="math inline">\(C^n\)</span>: Like <span class="math inline">\(C^2\)</span>, but we’re talking about the <span class="math inline">\(n\)</span><sup>th</sup>-derivative of <span class="math inline">\(f(x)\)</span> existing and being continuous.</li>
 <li>
 <span class="math inline">\(C^\infty\)</span>: Usually when we denote a sequence with an infinite number of terms, we write down something like <span class="math inline">\(C^0, C^1, C^2, \ldots\)</span>. It would be entirely valid to do this in talking about the <span class="math inline">\(C^n\)</span> sequence. But many of the mathematical functions we work with are <em>infinitely differentiable</em>, that is <span class="math inline">\(C^\infty\)</span>.</li>
 </ul>
@@ -226,13 +227,13 @@ Figure 21.4: A function whose derivative is the ramp function (hence continous) 
 <p><strong>Example of non-<span class="math inline">\(C^2\)</span> functions:</strong> We see these often when we take two or more different <span class="math inline">\(C^\infty\)</span> functions and split their domain, using one function for one subdomain and the other(s) for other subdomain(s).</p>
 <ul>
 <li>
-<span class="math inline">\(|x|\)</span>, the absolute value function. <span class="math inline">\(|x|\)</span> is a pasting together of two <span class="math inline">\(C^\infty\)</span> functions: <span class="math display">\[|x| \equiv \left\{\begin{array}{rcl}+x &amp; \text{for} &amp; 0 \leq x\\-x&amp;\text{for}&amp; x \leq 0\end{array} \right.\ .\]</span> The domain is split at <span class="math inline">\(x=0\)</span>.</li>
+<span class="math inline">\(|x|\)</span>, the absolute value function. <span class="math inline">\(|x|\)</span> is a pasting together of two <span class="math inline">\(C^\infty\)</span> functions: <span class="math display">\[|x| \equiv \left\{\begin{array}{rcl}+x &amp; \text{for} &amp; 0 \leq x\\-x&amp;\text{for}&amp; \text{otherwise}\end{array} \right.\ .\]</span> The domain is split at <span class="math inline">\(x=0\)</span>.</li>
 </ul>
-<!-- print rendering problem --><p>For engineering and design problems, smoothness means something substantially different than described by the mathematical concepts above. Later in the course we’ll introduce <strong><em>cubic splines</em></strong> which are continuous functions defined by a finite set of coordinate pairs, as in a data frame. Each line of the data frame corresponds to a dot in a scatter plot, but in a cubic spline it is called a “knot point.” The spline consists of cubic polynomials drawn between consecutive knot points. swe. The domain is split at each of the knot points. Between any two adjacent knot points, the function is an ordinary cubic polynomial. At a knot point, the cubics on either side have been arranged to have their first and second derivatives match. Thus, the first two derivatives are continuous. The function is at least <span class="math inline">\(C^2\)</span>. The second derivative of a cubic is a straight-line function, so the second derivative of a cubic spline is a series of straight-line functions connected at the knot points. The second derivative does not itself have a derivative at the knot points. So, a cubic spline cannot satisfy the requirements for being <span class="math inline">\(C^3\)</span>; it is <span class="math inline">\(C^2\)</span>.</p>
+<!-- print rendering problem --><p>For engineering and design problems, smoothness means something substantially different than described by the mathematical concepts above. Later in the course we’ll introduce <strong><em>cubic splines</em></strong> which are continuous functions defined by a finite set of coordinate pairs, as in a data frame. Each line of the data frame corresponds to a dot in a scatter plot, but in a cubic spline it is called a “knot point.” The spline consists of cubic polynomials drawn between consecutive knot points. The domain is split at each of the knot points. Between any two adjacent knot points, the function is an ordinary cubic polynomial. At a knot point, the cubics on either side have been arranged to have their first and second derivatives match. Thus, the first two derivatives are continuous. The function is at least <span class="math inline">\(C^2\)</span>. The second derivative of a cubic is a straight-line function, so the second derivative of a cubic spline is a series of straight-line functions connected at the knot points. The second derivative does not itself have a derivative at the knot points. So, a cubic spline cannot satisfy the requirements for being <span class="math inline">\(C^3\)</span>; it is <span class="math inline">\(C^2\)</span>.</p>
 </div>
-<div id="exercises-17" class="section level2" number="21.4">
+<div id="exercises-18" class="section level2" number="21.4">
 <h2>
-<span class="header-section-number">21.4</span> Exercises<a class="anchor" aria-label="anchor" href="#exercises-17"><i class="fas fa-link"></i></a>
+<span class="header-section-number">21.4</span> Exercises<a class="anchor" aria-label="anchor" href="#exercises-18"><i class="fas fa-link"></i></a>
 </h2>
 <details><summary><strong>Exercise 21.1</strong>: <span><a name="File:%20Exercises/Diff/spider-tug-gloves.Rmd" href="#yJKLEb"><img src="www/icons8-signpost.png" title="Location: Exercises/Diff/spider-tug-gloves.Rmd" width="12px"></a><span style="color: red; font-size: 9pt;">yJKLEb</span>
 </span></summary><ol style="list-style-type: decimal">
@@ -249,7 +250,7 @@ Figure 21.4: A function whose derivative is the ramp function (hence continous) 
 (x)  $$C^1$$
 ( )  $$C^2$$ or higher
 
-[[Good.]]
+[[Nice!]]
 
 </pre>
 <img src="Exercises/Diff/www/continuity-A.png" width="50%" style="display: block; margin: auto;"><pre>What's the smoothness level of function B(x)? 
@@ -261,7 +262,7 @@ Figure 21.4: A function whose derivative is the ramp function (hence continous) 
 ( )  $$C^1$$
 ( )  $$C^2$$ or higher
 
-[[Nice!]]
+[[Good.]]
 
 </pre>
 <div class="inline-figure"><img src="Exercises/Diff/www/continuity-B.png" width="50%" style="display: block; margin: auto;"></div>
@@ -274,7 +275,7 @@ Figure 21.4: A function whose derivative is the ramp function (hence continous) 
 ( )  $$C^1$$
 ( )  $$C^2$$ or higher
 
-[[Right!]]
+[[Nice!]]
 
 </pre>
 <div class="inline-figure"><img src="Exercises/Diff/www/continuity-C.png" width="50%" style="display: block; margin: auto;"></div>
@@ -287,7 +288,7 @@ Figure 21.4: A function whose derivative is the ramp function (hence continous) 
 ( )  $$C^1$$
 (x)  $$C^2$$ or higher
 
-[[Nice!]]
+[[Excellent!]]
 
 </pre>
 <div class="inline-figure"><img src="Exercises/Diff/www/continuity-D.png" width="50%" style="display: block; margin: auto;"></div>
@@ -295,7 +296,7 @@ Figure 21.4: A function whose derivative is the ramp function (hence continous) 
 </span></summary><p>The ramp function is defined algebraically as
 <span class="math display">\[\text{ramp}(x) \equiv \left\{\begin{array}{ll}0 &amp; \text{for}\ x &lt; 0\\ x &amp; \text{otherwise} \end{array}\right. \]</span>
 or in R as</p>
-<div class="sourceCode" id="cb206"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb203"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">ramp</span> <span class="op">&lt;-</span> <span class="fu">makeFun</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="va">x</span><span class="op">&lt;</span><span class="fl">0</span>, <span class="fl">0</span>, <span class="va">x</span><span class="op">)</span> <span class="op">~</span> <span class="va">x</span><span class="op">)</span></code></pre></div>
 <p>Evaluate these three different forms for the definition of the instantaneous rate of change at <span class="math inline">\(x=0\)</span> using <span class="math inline">\(h=0.1\)</span>.</p>
 <ul>
@@ -315,7 +316,7 @@ or in R as</p>
 ( )  Versions 1 and 2 give the same result, but 3 is different.
 (x)  All three are different
 
-[[Right!]]
+[[Nice!]]
 
 </pre>
 <pre>For much smaller $$h$$ (say, $$h=0.0001$$), do the three versions give different numerical results at $$x=0$$? 
@@ -325,14 +326,16 @@ or in R as</p>
 (x)  Yes
 ( )  No
 
-[[Nice!]]
+[[Correct.]]
 
 </pre>
 </details><details><summary><strong>Exercise 21.4</strong>: <span><a name="File:%20Exercises/Diff/camel-begin-piano.Rmd" href="#jG4rie"><img src="www/icons8-signpost.png" title="Location: Exercises/Diff/camel-begin-piano.Rmd" width="12px"></a><span style="color: red; font-size: 9pt;">jG4rie</span>
 </span></summary><p>Consider this function, defined piecewise:</p>
-<p><span class="math display">\[h(x) \equiv \left\{
-\begin{array}{lcl}0 &amp; &amp; x &lt; 0\\ &amp; \text{for} &amp; \\x^2 &amp;  &amp; 0 \leq x\end{array}\right.\ .\]</span></p>
 <!-- print rendering problem -->
+<!-- $$h(x) \equiv \left\{
+\begin{array}{ll}0 & \text{for}\ x < 0\\x^2 &  \text{otherwise}\end{array}\right.\ .$$
+-->
+<div class="inline-figure"><img src="Exercises/Diff/www/camel-fun.png" width="30%" style="display: block; margin: auto;"></div>
 <ol style="list-style-type: decimal">
 <li><p>Write the R command to create this function. (Hint: Remember <code>ifelse</code> from Chapter <a href="fun-piecewise.html#fun-piecewise">13</a>.)</p></li>
 <li><p>Using a <a href="https://maa-statprep.shinyapps.io/CalcZ-Sandbox/">SANDBOX</a>, plot <span class="math inline">\(h(x)\)</span> over the domain <span class="math inline">\(-1 \leq x \leq 1\)</span>, then sketch a copy of the graph on your paper.</p></li>
@@ -383,9 +386,10 @@ or in R as</p>
 </tbody>
 </table></details><details><summary><strong>Exercise 21.5</strong>: <span><a name="File:%20Exercises/Diff/fox-know-dress.Rmd" href="#2beqIv"><img src="www/icons8-signpost.png" title="Location: Exercises/Diff/fox-know-dress.Rmd" width="12px"></a><span style="color: red; font-size: 9pt;">2beqIv</span>
 </span></summary><p>Consider the following functions <span class="math inline">\(f_A(x)\)</span>, <span class="math inline">\(f_B(x)\)</span>, … all of which involve a domain split at <span class="math inline">\(x=0\)</span> and the pasting together of two individually <span class="math inline">\(C^\infty\)</span> functions:</p>
-<p><span class="math display">\[\begin{equation}
-f_A(x) \equiv \left\{\begin{array}{cl}{{x^2}} &amp; \text{for}\  0\leq x\\ x&amp;  \text{otherwise}\end{array} \right.
-\end{equation}\]</span></p>
+<!-- 
+$$f_A(x) \equiv \left\{\begin{array}{cl}{{x^2}} & \text{for}\  0\leq x\\ x&  \text{otherwise}\end{array} \right.$$
+-->
+<div class="inline-figure"><img src="Exercises/Diff/www/funA.png" width="30%" style="display: block; margin: auto;"></div>
 <pre>How smooth is $$f_A(x)$$? 
 
 
@@ -397,10 +401,13 @@ f_A(x) \equiv \left\{\begin{array}{cl}{{x^2}} &amp; \text{for}\  0\leq x\\ x&amp
 ( )  $$C^3$$
 ( )  $$C^\infty$$
 
-[[Excellent!]]
+[[Good.]]
 
 </pre>
-<span class="math display">\[f_B(x) \equiv \left\{\begin{array}{cl}x^3 &amp; \text{for}\ 0 \leq x\\0&amp;\text{otherwise}\end{array} \right.\]</span>
+<!--
+$$f_B(x) \equiv \left\{\begin{array}{cl}x^3 & \text{for}\ 0 \leq x\\0&\text{otherwise}\end{array} \right.$$
+-->
+<div class="inline-figure"><img src="Exercises/Diff/www/funB.png" width="30%" style="display: block; margin: auto;"></div>
 <pre>How smooth is $$f_B(x)$$? 
 
 
@@ -412,10 +419,11 @@ f_A(x) \equiv \left\{\begin{array}{cl}{{x^2}} &amp; \text{for}\  0\leq x\\ x&amp
 ( )  $$C^3$$
 ( )  $$C^\infty$$
 
-[[Right!]]
+[[Good.]]
 
 </pre>
-<span class="math display">\[f_C(x) \equiv \left\{\begin{array}{cl}{x^3} &amp;  \text{for}\ 0 \leq x\\x^3&amp; \text{otherwise}\end{array} \right.\]</span>
+<p><span class="math display">\[f_C(x) \equiv \left\{\begin{array}{cl}{x^3} &amp;  \text{for}\ 0 \leq x\\x^3&amp; \text{otherwise}\end{array} \right.\]</span></p>
+<div class="inline-figure"><img src="Exercises/Diff/www/funC.png" width="30%" style="display: block; margin: auto;"></div>
 <pre>How smooth is $$f_C(x)$$?) 
 
 
@@ -427,10 +435,13 @@ f_A(x) \equiv \left\{\begin{array}{cl}{{x^2}} &amp; \text{for}\  0\leq x\\ x&amp
 ( )  $$C^3$$
 (x)  $$C^\infty$$
 
-[[Excellent!]]
+[[Good.]]
 
 </pre>
-<p><span class="math display">\[f_D(x) \equiv \left\{\begin{array}{cl}x^3 &amp; \text{for}\ 0 \leq x\\x^2&amp;\text{otherwise}\end{array} \right.\]</span></p>
+<!-- 
+$$f_D(x) \equiv \left\{\begin{array}{cl}x^3 & \text{for}\ 0 \leq x\\x^2&\text{otherwise}\end{array} \right.$$ 
+-->
+<div class="inline-figure"><img src="Exercises/Diff/www/funD.png" width="30%" style="display: block; margin: auto;"></div>
 <pre>How smooth is $$f_D(x)$$? 
 
 
@@ -442,10 +453,13 @@ f_A(x) \equiv \left\{\begin{array}{cl}{{x^2}} &amp; \text{for}\  0\leq x\\ x&amp
 ( )  $$C^3$$
 ( )  $$C^\infty$$
 
-[[Nice!]]
+[[Excellent!]]
 
 </pre>
-<p><span class="math display">\[f_E(x) \equiv \left\{\begin{array}{cl}x^3 &amp; \text{for}\  0 \leq x\\-x^2 &amp;\text{otherwise}\end{array} \right.\]</span></p>
+<!-- 
+$$f_E(x) \equiv \left\{\begin{array}{cl}x^3 & \text{for}\  0 \leq x\\-x^2 &\text{otherwise}\end{array} \right.$$ 
+-->
+<div class="inline-figure"><img src="Exercises/Diff/www/funE.png" width="30%" style="display: block; margin: auto;"></div>
 <pre>How smooth is $$f_E(x)$$? 
 
 
@@ -457,10 +471,13 @@ f_A(x) \equiv \left\{\begin{array}{cl}{{x^2}} &amp; \text{for}\  0\leq x\\ x&amp
 ( )  $$C^3$$
 ( )  $$C^\infty$$
 
-[[Nice!]]
+[[Good.]]
 
 </pre>
-<p><span class="math display">\[f_F(x) \equiv \left\{\begin{array}{cl}\cos(x) &amp; \text{for}\ 0 \leq x\\0 &amp;\text{otherwise}\end{array} \right.\]</span></p>
+<!--
+$$f_F(x) \equiv \left\{\begin{array}{cl}\cos(x) & \text{for}\ 0 \leq x\\0 &\text{otherwise}\end{array} \right.$$ 
+-->
+<div class="inline-figure"><img src="Exercises/Diff/www/funF.png" width="30%" style="display: block; margin: auto;"></div>
 <pre>How smooth is $$f_F(x)$$? 
 
 
@@ -475,7 +492,10 @@ f_A(x) \equiv \left\{\begin{array}{cl}{{x^2}} &amp; \text{for}\  0\leq x\\ x&amp
 [[Excellent!]]
 
 </pre>
-<p><span class="math display">\[f_G(x) \equiv \left\{\begin{array}{cl}\sin(x) &amp; \text{for}\ 0 \leq x\\0 &amp;\text{otherwise}\end{array} \right.\]</span></p>
+<!--
+$$f_G(x) \equiv \left\{\begin{array}{cl}\sin(x) & \text{for}\ 0 \leq x\\0 &\text{otherwise}\end{array} \right.$$ 
+-->
+<div class="inline-figure"><img src="Exercises/Diff/www/funG.png" width="30%" style="display: block; margin: auto;"></div>
 <pre>How smooth is $$f_G(x)$$? 
 
 
@@ -487,10 +507,13 @@ f_A(x) \equiv \left\{\begin{array}{cl}{{x^2}} &amp; \text{for}\  0\leq x\\ x&amp
 ( )  $$C^3$$
 ( )  $$C^\infty$$
 
-[[Excellent!]]
+[[Right!]]
 
 </pre>
-<p><span class="math display">\[f_H(x) 7\equiv \left\{\begin{array}{cl}\sin(x) &amp; \text{for}\ 0 \leq x\\x &amp;\text{otherwise}\end{array} \right.\]</span></p>
+<!--
+$$f_H(x) \equiv \left\{\begin{array}{cl}\sin(x) & \text{for}\ 0 \leq x\\x &\text{otherwise}\end{array} \right.$$ 
+-->
+<div class="inline-figure"><img src="Exercises/Diff/www/funH.png" width="30%" style="display: block; margin: auto;"></div>
 <pre>How smooth is $$f_H(x)$$? 
 
 
@@ -519,7 +542,7 @@ f_A(x) \equiv \left\{\begin{array}{cl}{{x^2}} &amp; \text{for}\  0\leq x\\ x&amp
 <li><a class="nav-link" href="#continuity"><span class="header-section-number">21.1</span> Continuity</a></li>
 <li><a class="nav-link" href="#discontinuity"><span class="header-section-number">21.2</span> Discontinuity</a></li>
 <li><a class="nav-link" href="#smoothness"><span class="header-section-number">21.3</span> Smoothness</a></li>
-<li><a class="nav-link" href="#exercises-17"><span class="header-section-number">21.4</span> Exercises</a></li>
+<li><a class="nav-link" href="#exercises-18"><span class="header-section-number">21.4</span> Exercises</a></li>
 </ul>
 
       <div class="book-extra">
@@ -537,7 +560,7 @@ f_A(x) \equiv \left\{\begin{array}{cl}{{x^2}} &amp; \text{for}\  0\leq x\\ x&amp
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>MOSAIC Calculus</strong>" was written by Daniel Kaplan. It was last built on 2021-09-14.</p>
+    <p>"<strong>MOSAIC Calculus</strong>" was written by Daniel Kaplan. It was last built on 2021-09-24.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

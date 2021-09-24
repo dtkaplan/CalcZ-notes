@@ -10,7 +10,7 @@
 <link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
 <script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.2.5.1/tabs.js"></script><script src="libs/bs3compat-0.2.5.1/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
 <script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="libs/kePrint-0.0.1/kePrint.js"></script><link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet">
-<script src="libs/htmlwidgets-1.5.3/htmlwidgets.js"></script><script src="libs/plotly-binding-4.9.4/plotly.js"></script><script src="libs/typedarray-0.1/typedarray.min.js"></script><link href="libs/crosstalk-1.1.1/css/crosstalk.css" rel="stylesheet">
+<script src="libs/htmlwidgets-1.5.4/htmlwidgets.js"></script><script src="libs/plotly-binding-4.9.4.1/plotly.js"></script><script src="libs/typedarray-0.1/typedarray.min.js"></script><link href="libs/crosstalk-1.1.1/css/crosstalk.css" rel="stylesheet">
 <script src="libs/crosstalk-1.1.1/js/crosstalk.min.js"></script><link href="libs/plotly-htmlwidgets-css-1.57.1/plotly-htmlwidgets.css" rel="stylesheet">
 <script src="libs/plotly-main-1.57.1/plotly-latest.min.js"></script><link href="libs/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet">
 <script src="libs/datatables-binding-0.18/datatables.js"></script><link href="libs/dt-core-1.10.20/css/jquery.dataTables.min.css" rel="stylesheet">
@@ -90,6 +90,7 @@
 <li><a class="" href="magnitudes.html"><span class="header-section-number">15</span> Magnitudes</a></li>
 <li><a class="" href="dimensions.html"><span class="header-section-number">16</span> Dimensions</a></li>
 <li class="book-part">Block 2: Differentiation</li>
+<li><a class="" href="prolog-differentiation-and-birth.html">Prolog: Differentiation and birth</a></li>
 <li><a class="" href="change-relationships.html"><span class="header-section-number">17</span> Change relationships</a></li>
 <li><a class="" href="evanescent-h.html"><span class="header-section-number">18</span> Evanescent h</a></li>
 <li><a class="" href="computing-derivs.html"><span class="header-section-number">19</span> Computing derivatives</a></li>
@@ -195,9 +196,9 @@
 <p>Instead, the correct use of <span class="math inline">\(F(t)\)</span> is to say how much the quantity has changed over some interval of time, <span class="math inline">\(t_0 \leq t \leq t_1\)</span>. This “change in the quantity” is called the *<strong>net change</strong> in <span class="math inline">\(F()\)</span>. To calculate the net change in <span class="math inline">\(F()\)</span> from <span class="math inline">\(t_0\)</span> to <span class="math inline">\(t_1\)</span> we apply <span class="math inline">\(F()\)</span> to both <span class="math inline">\(t_0\)</span> and <span class="math inline">\(t_1\)</span>, then subtract:</p>
 <p><span class="math display">\[\text{Net change in}\ F(t) \ \text{from}\ t_0 \ \text{to}\ t_1 :\\= F(t_1) - F(t_0)\]</span></p>
 <div class="example">
-<p><span id="exm:unlabeled-div-1" class="example"><strong>Example 29.1  </strong></span>Suppose you have already constructed the rate-of-change function <span class="math inline">\(v()\)</span> and implemented it as an R function <code>v()</code>. For instance, <span class="math inline">\(v(t)\)</span> might be the amount of <strong>acceleration</strong> at any instant <span class="math inline">\(T\)</span> of a car, and <span class="math inline">\(V(t)\)</span> is the <strong>accumulated acceleration</strong>, better known as velocity. We’ll assume that the input to <code>v()</code> is in seconds, and the output is in meters-per-second-squared, which has the correct dimension for acceleration.</p>
+<p><span id="exm:unlabeled-div-7" class="example"><strong>Example 29.1  </strong></span>Suppose you have already constructed the rate-of-change function <span class="math inline">\(v()\)</span> and implemented it as an R function <code>v()</code>. For instance, <span class="math inline">\(v(t)\)</span> might be the amount of <strong>acceleration</strong> at any instant <span class="math inline">\(T\)</span> of a car, and <span class="math inline">\(V(t)\)</span> is the <strong>accumulated acceleration</strong>, better known as velocity. We’ll assume that the input to <code>v()</code> is in seconds, and the output is in meters-per-second-squared, which has the correct dimension for acceleration.</p>
 <p>You want to find the amount of acceleration accumulated between time <span class="math inline">\(t=2\)</span> and <span class="math inline">\(t=5\)</span> seconds.</p>
-<div class="sourceCode" id="cb238"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb237"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># You've previous constructed v(t)</span>
 <span class="va">V</span> <span class="op">&lt;-</span> <span class="fu">antiD</span><span class="op">(</span><span class="fu">v</span><span class="op">(</span><span class="va">t</span><span class="op">)</span> <span class="op">~</span> <span class="va">t</span><span class="op">)</span>
 <span class="fu">V</span><span class="op">(</span><span class="fl">5</span><span class="op">)</span> <span class="op">-</span> <span class="fu">V</span><span class="op">(</span><span class="fl">2</span><span class="op">)</span></code></pre></div>
@@ -283,24 +284,24 @@ We only need to know <span class="math inline">\({\mathbf F}(t)\)</span> at one 
 <span class="math display">\[{\mathbf F}(t) \ =\  {\mathbf F}(t_0) + \int_{t_0}^t f(t)\, dt\  = \ 
 {\mathbf F}(t_0) + \left({\large\strut}F(t) - F(t_0)\right)\]</span></p>
 <div class="intheworld">
-<p>A famous legend has Galileo at the top of the Tower of Pisa around 1590. The legend illustrates Galileo’s finding that a light object (e.g. a marble) and a heavy object (e.g. a ball) will fall at the same speed. Galileo published his mathematical findings in 1638 in <em>Discorsi e Dimostrazioni Matematiche, intorno a due nuove scienze</em>.<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content="&lt;p&gt;English: Discourses and Mathematical Demonstrations Relating to Two New Sciences&lt;/p&gt;"><sup>36</sup></a></p>
+<p>A famous legend has Galileo at the top of the Tower of Pisa around 1590. The legend illustrates Galileo’s finding that a light object (e.g. a marble) and a heavy object (e.g. a ball) will fall at the same speed. Galileo published his mathematical findings in 1638 in <em>Discorsi e Dimostrazioni Matematiche, intorno a due nuove scienze</em>.<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content="&lt;p&gt;English: Discourses and Mathematical Demonstrations Relating to Two New Sciences&lt;/p&gt;"><sup>44</sup></a></p>
 <p>In 1687, Newton published his world-changing<em>Philosophiae Naturalis Principia Mathematica</em>.^[ English: Mathematical Principles of Natural Philosophy).</p>
 <p>Let’s imagine the ghost of Galileo returned to Pisa in 1690 after reading Newton’s <em>Principia Mathematica</em>. In this new legend, Galileo holds a ball still in his hand, releases it, and figures out the position of the ball as a function of time.</p>
 <p>Although Newton famously demonstrated that gravitational attraction is a function of the distance between to objects, he also knew that at a fixed distance—the surface of the Earth—gravitational acceleration was constant. So Galileo was vindicated by Newton. But, although gravitational acceleration is constant from top to bottom of the Tower of Pisa, Galileo’s ball was part of a more complex system: a hand holding the ball still until release. Acceleration of the ball versus time is therefore approximately a Heaviside function:</p>
 <p><span class="math display">\[\text{accel}(t) \equiv \left\{\begin{array}{rl}0 &amp; \text{for}\ t \leq 3\\
 -9.8  &amp; \text{otherwise}\end{array}\right.\]</span></p>
-<div class="sourceCode" id="cb240"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb239"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">accel</span> <span class="op">&lt;-</span> <span class="fu">makeFun</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="va">t</span> <span class="op">&lt;=</span> <span class="fl">3</span>, <span class="fl">0</span>, <span class="op">-</span><span class="fl">9.8</span><span class="op">)</span> <span class="op">~</span> <span class="va">t</span><span class="op">)</span></code></pre></div>
 <p>Acceleration is the derivative of velocity. We can construct a function <span class="math inline">\(V(t)\)</span> as the anti-derivative of acceleration, but the real-world velocity function will be
 <span class="math display">\[{\mathbf V}(t) = {\mathbf V}(0) + \int_0^t \text{accel}(t) dt\]</span></p>
-<div class="sourceCode" id="cb241"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb240"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">V_from_antiD</span> <span class="op">&lt;-</span> <span class="fu">antiD</span><span class="op">(</span><span class="fu">accel</span><span class="op">(</span><span class="va">t</span><span class="op">)</span> <span class="op">~</span> <span class="va">t</span><span class="op">)</span>
 <span class="va">V</span> <span class="op">&lt;-</span> <span class="fu">makeFun</span><span class="op">(</span><span class="va">V0</span> <span class="op">+</span> <span class="op">(</span><span class="fu">V_from_antiD</span><span class="op">(</span><span class="va">t</span><span class="op">)</span> <span class="op">-</span> <span class="fu">V_from_antiD</span><span class="op">(</span><span class="fl">0</span><span class="op">)</span><span class="op">)</span> <span class="op">~</span> <span class="va">t</span>, V0 <span class="op">=</span> <span class="fl">0</span><span class="op">)</span></code></pre></div>
 <p>In the computer expression, the parameter <code>V0</code> stands for <span class="math inline">\({\mathbf V}(0)\)</span>. We’ve set it equal to zero since, at time <span class="math inline">\(t=0\)</span>, Galileo was holding the ball still.</p>
 <p>Velocity is the derivative of position, but the real-world velocity function will be the accumulation of velocity from some starting time to time <span class="math inline">\(t\)</span>, plus the position at that starting time:
 <span class="math display">\[x(t) \equiv x(0) + \int_0^t V(t) dt\]</span>
 We can calculate <span class="math inline">\(\int V(t) dt\)</span> easily enough with <code>antiD()</code>, but the function <span class="math inline">\(x(t)\)</span> involves evaluating that anti-derivative at times 0 and <span class="math inline">\(t\)</span>:</p>
-<div class="sourceCode" id="cb242"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb241"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">x_from_antiD</span> <span class="op">&lt;-</span> <span class="fu">antiD</span><span class="op">(</span><span class="fu">V</span><span class="op">(</span><span class="va">t</span><span class="op">)</span> <span class="op">~</span> <span class="va">t</span><span class="op">)</span>
 <span class="va">x</span> <span class="op">&lt;-</span> <span class="fu">makeFun</span><span class="op">(</span><span class="va">x0</span> <span class="op">+</span> <span class="op">(</span><span class="fu">x_from_antiD</span><span class="op">(</span><span class="va">t</span><span class="op">)</span> <span class="op">-</span> <span class="fu">x_from_antiD</span><span class="op">(</span><span class="fl">0</span><span class="op">)</span><span class="op">)</span> <span class="op">~</span> <span class="va">t</span>, x0 <span class="op">=</span> <span class="fl">53</span><span class="op">)</span></code></pre></div>
 <p>We’ve set the parameter <code>x0</code> to be 53 meters, the height above the ground of the top balcony on which Galileo was standing for the experiment.</p>
@@ -383,7 +384,7 @@ Figure 29.3: The relationship between velocity and distance of stars, using cont
 </p>
 </div>
 <p>Each dot in Figure <a href="net-change.html#fig:hubble-curve">29.3</a> is an exploding star called a <em>supernova</em>. The graph shows the relationship between the distance of the star from our galaxy and the outward velocity of that star. The velocities are large, <span class="math inline">\(3 \times 10^4\)</span> km/s is about one-tenth the speed of light. Similarly, the distances are big; light from the furthest star shown took about 2 billion years to reach Earth.</p>
-<p>For each star, we know the “current” velocity and the “current” position.<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content="&lt;p&gt;“Current” is in quotes because the measurements reflect the situation 100s of millions of years ago, when the light was emitted from the star.&lt;/p&gt;"><sup>37</sup></a> For cosmologists constructing theories of the origin of the universe, an important question is the location of the star in the remote past.</p>
+<p>For each star, we know the “current” velocity and the “current” position.<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content="&lt;p&gt;“Current” is in quotes because the measurements reflect the situation 100s of millions of years ago, when the light was emitted from the star.&lt;/p&gt;"><sup>45</sup></a> For cosmologists constructing theories of the origin of the universe, an important question is the location of the star in the remote past.</p>
 <p>The location of each star can be found by integrating the velocity backwards in time.</p>
 <p><span class="math display">\[D(t) = D_\text{now} - \int_t^\text{now} v(t) dt\]</span></p>
 <p>Ideally we would have measurements of the function <span class="math inline">\(v(t)\)</span>, but nobody was around to record them 500 million years ago. So, to model <span class="math inline">\(v(t)\)</span> we can use theories of the evolution of the universe or … we can start simply and imagine that <span class="math inline">\(v(t)\)</span> is constant. Let’s play out the consequences of that assumption.</p>
@@ -395,9 +396,9 @@ Let’s define now<span class="math inline">\(=0\)</span> and ask what might be 
 <p>Notice that time <span class="math inline">\(t_0\)</span> does not depend on <span class="math inline">\(D_\text{now}\)</span>. According to the theory that the star’s velocity <span class="math inline">\(v(t)\)</span> is constant, all of the stars, now spaced apart across 2 billion light years, were at the same position at <span class="math inline">\(t_0 = 5.5 \times 10^{17}\)</span> seconds ago. Converting seconds to years, we get that this grand (but hypothetical) meeting of the stars occurred 17 billion years ago. Pretty crowded to have all the mass in the universe in one place at the same time. No wonder they call it the Big Bang!</p>
 </div>
 </div>
-<div id="exercises-22" class="section level2" number="29.5">
+<div id="exercises-26" class="section level2" number="29.5">
 <h2>
-<span class="header-section-number">29.5</span> Exercises<a class="anchor" aria-label="anchor" href="#exercises-22"><i class="fas fa-link"></i></a>
+<span class="header-section-number">29.5</span> Exercises<a class="anchor" aria-label="anchor" href="#exercises-26"><i class="fas fa-link"></i></a>
 </h2>
 <details><summary><strong>Exercise 29.02</strong>: <span><a name="File:%20Exercises/Accum/calf-know-painting.Rmd" href="#DkoUjX"><img src="www/icons8-signpost.png" title="Location: Exercises/Accum/calf-know-painting.Rmd" width="12px"></a><span style="color: red; font-size: 9pt;">DkoUjX</span>
 </span></summary><p>The following exercises are based on properties of definite integrals that were discussed in class and can be found on page 621 of the MMAC textbook.</p>
@@ -761,7 +762,7 @@ Now consider a very simple machine consisting of a cylinder, closed on one end a
 <p>Our machine has no valves and no pipes. The cylinder is charged with gas when it is manufactured. After that, nothing material goes in or out of the closed cylinder/piston system.</p>
 <p>When you push on the cylinder, the volume available for the gas gets smaller and the pressure increases. When you let the cylinder push on you, the volume available gets bigger and the pressure decreases. The amount of gas, <span class="math inline">\(n\)</span>, never changes. For simplicity, we’ll imagine that <span class="math inline">\(n=1\)</span> and that the gas is N<span class="math inline">\(_2\)</span>. This means the mass of the gas is 0.028 kg.</p>
 <p>And, to simplify even more, let’s insist that the temperature of the cylinder and its gaseous content does not change from room temperature: 293<span class="math inline">\(^\circ\)</span> Kelvin.</p>
-<div class="inline-figure"><img src="CalcZ-notes_files/figure-html/unnamed-chunk-340-1.png" width="90%" style="display: block; margin: auto;"></div>
+<div class="inline-figure"><img src="CalcZ-notes_files/figure-html/unnamed-chunk-371-1.png" width="90%" style="display: block; margin: auto;"></div>
 <p>If you start in a high-volume, low-pressure state and push the piston to move to a low-volume, high-pressure state at the same temperature, you will be putting energy into the machine.</p>
 The “area” of each little box in the graph, that is, pressure times volume,
 <pre>How much energy (in Joules) corresponds to one small rectangle of area in the graph? 
@@ -817,19 +818,19 @@ The “area” of each little box in the graph, that is, pressure times volume,
 <p>In a <a href="https://maa-statprep.shinyapps.io/CalcZ-Sandbox/">SANDBOX</a>, evaluate the code below. The first line defines a function <span class="math inline">\(P(V, T)\)</span> with default <span class="math inline">\(n=1\)</span> mole of gas. Anti-differentiate <span class="math inline">\(P()\)</span> with respect to <span class="math inline">\(V\)</span> then calculate the energy needed to compress the cylinder at the low temperature, that is <span class="math display">\[\int_{7.5}^{2.5} P(V, T=300) dV .\]</span> Call this numerical result <code>compress_energy</code>.</p>
 <p>Similarly, calculate the energy done by the machine in the high-temperature expansion <span class="math display">\[\int_{2.5}^{7.5} P(V, T=1200) dV .\]</span> Call this numerical result <code>expand_energy</code>.</p>
 <p>You may want to make a graph of your <span class="math inline">\(P(V, T)\)</span> function to check that it is right. Also, check that the integrals are right by comparing them to the rough estimate you made earlier by counting squares.</p>
-<div class="sourceCode" id="cb245"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb245-1"><a href="net-change.html#cb245-1" aria-hidden="true" tabindex="-1"></a>P <span class="ot">&lt;-</span> <span class="fu">makeFun</span>( n<span class="sc">*</span><span class="fl">8.314</span><span class="sc">*</span>T<span class="sc">/</span>V <span class="sc">~</span> V <span class="sc">+</span> T, <span class="at">n=</span><span class="dv">1</span>)</span>
-<span id="cb245-2"><a href="net-change.html#cb245-2" aria-hidden="true" tabindex="-1"></a>antiP <span class="ot">&lt;-</span> <span class="fu">makeFun</span>(n<span class="sc">*</span><span class="fl">8.314</span><span class="sc">*</span>T<span class="sc">*</span><span class="fu">log</span>(V) <span class="sc">~</span> V <span class="sc">+</span> T, <span class="at">n=</span><span class="dv">1</span>)</span>
-<span id="cb245-3"><a href="net-change.html#cb245-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb245-4"><a href="net-change.html#cb245-4" aria-hidden="true" tabindex="-1"></a>compress_energy <span class="ot">&lt;-</span> ... evaluate antiP appropriately</span>
-<span id="cb245-5"><a href="net-change.html#cb245-5" aria-hidden="true" tabindex="-1"></a>expand_energy   <span class="ot">&lt;-</span> ... ditto</span>
-<span id="cb245-6"><a href="net-change.html#cb245-6" aria-hidden="true" tabindex="-1"></a>compress_energy <span class="co"># prints out the values </span></span>
-<span id="cb245-7"><a href="net-change.html#cb245-7" aria-hidden="true" tabindex="-1"></a>expand_energy</span></code></pre></div>
+<div class="sourceCode" id="cb244"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb244-1"><a href="net-change.html#cb244-1" aria-hidden="true" tabindex="-1"></a>P <span class="ot">&lt;-</span> <span class="fu">makeFun</span>( n<span class="sc">*</span><span class="fl">8.314</span><span class="sc">*</span>T<span class="sc">/</span>V <span class="sc">~</span> V <span class="sc">+</span> T, <span class="at">n=</span><span class="dv">1</span>)</span>
+<span id="cb244-2"><a href="net-change.html#cb244-2" aria-hidden="true" tabindex="-1"></a>antiP <span class="ot">&lt;-</span> <span class="fu">makeFun</span>(n<span class="sc">*</span><span class="fl">8.314</span><span class="sc">*</span>T<span class="sc">*</span><span class="fu">log</span>(V) <span class="sc">~</span> V <span class="sc">+</span> T, <span class="at">n=</span><span class="dv">1</span>)</span>
+<span id="cb244-3"><a href="net-change.html#cb244-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb244-4"><a href="net-change.html#cb244-4" aria-hidden="true" tabindex="-1"></a>compress_energy <span class="ot">&lt;-</span> ... evaluate antiP appropriately</span>
+<span id="cb244-5"><a href="net-change.html#cb244-5" aria-hidden="true" tabindex="-1"></a>expand_energy   <span class="ot">&lt;-</span> ... ditto</span>
+<span id="cb244-6"><a href="net-change.html#cb244-6" aria-hidden="true" tabindex="-1"></a>compress_energy <span class="co"># prints out the values </span></span>
+<span id="cb244-7"><a href="net-change.html#cb244-7" aria-hidden="true" tabindex="-1"></a>expand_energy</span></code></pre></div>
 </details><details><summary><strong>Exercise 29.10</strong>: <span><a name="File:%20Exercises/Accum/wind-power.Rmd" href="#ikgl"><img src="www/icons8-signpost.png" title="Location: Exercises/Accum/wind-power.Rmd" width="12px"></a><span style="color: red; font-size: 9pt;">ikgl</span>
 </span></summary><p>The function <code>windspeed(t)</code> records wind speed at the site of a wind-turbine farm over one day, that is, <span class="math inline">\(0 \leq t \leq 24\)</span> hours. The function <code>speed2power(s)</code> is the production function for the model of wind turbine used at the farm: the input is speed in miles per hour, the output is in kilowatts. (Both these functions were created for this exercise. They are not about a real turbine at a real wind farm, but are somewhat realistic.) Hint: you can nest a function inside of another function. For instance, if I had a function (‘solarpanelpower’) that calculates the amount of power a solar panel generates and another function (‘sunlight’) that tells me the amount of sunlight at time of the day (‘TOD’). I could evaluate this in one step like the following: ‘solarpanelpower(sunlight(TOD)).’ This would give me the amount of power from the solar panel based upon the time of the day.</p>
 <p>Your task, find the <em>total energy</em> generated over the 24-hour period by the turbine. Reminder: energy <span class="math inline">\(E\)</span> is electric power multiplied by time. Or, more usefully for this problem, the increment energy <span class="math inline">\(dE\)</span> generated at time <span class="math inline">\(t\)</span> is the product of power at time <span class="math inline">\(t\)</span> multiplied by the increment of time <span class="math inline">\(dt\)</span>, that is, <span class="math inline">\(dE = p(t) dt\)</span>. Consequently, <span class="math display">\[E = \int_\text{morning}^\text{night} p(t) dt\]</span> where “morning” should really be 00:00 h and night 24:00 h on the day in question.</p>
 <p>We don’t have an algebraic formula for <code>windspeed(t)</code> even though it is a function. You can use <code>antiD()</code> to find the anti-derivative of the electric power function.</p>
 <p>The answer you compute should be saved to the name <code>result</code>. The units will be in kWh – kilowatt hours.</p>
-<div class="sourceCode" id="cb246"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb245"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># ignore these definitions. They are setting up the </span>
 <span class="co"># functions for you to use</span>
 <span class="va">tmp</span> <span class="op">&lt;-</span> <span class="fu">rfun</span><span class="op">(</span><span class="op">~</span> <span class="va">t</span>, seed<span class="op">=</span><span class="fl">982</span><span class="op">)</span>
@@ -846,7 +847,7 @@ The “area” of each little box in the graph, that is, pressure times volume,
 
 <span class="fu">slice_plot</span><span class="op">(</span><span class="fu">windspeed</span><span class="op">(</span><span class="va">t</span><span class="op">)</span> <span class="op">~</span> <span class="va">t</span>, <span class="fu">domain</span><span class="op">(</span>t<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">24</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <div class="inline-figure"><img src="CalcZ-notes_files/figure-html/wind2-1.png" width="90%" style="display: block; margin: auto;"></div>
-<div class="sourceCode" id="cb247"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb246"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># # Uncomment the next lines as you figure out how to fill in the "...blanks..."</span>
 <span class="co"># antid_of_power &lt;- antiD( ....power_function_here(t)... ~ t)</span>
 <span class="co"># result &lt;- antid_of_power(...night...) - antid_of_power(...morning...) </span>
@@ -1096,7 +1097,7 @@ The “area” of each little box in the graph, that is, pressure times volume,
 <li><a class="nav-link" href="#the-definite-integral"><span class="header-section-number">29.2</span> The “definite” integral</a></li>
 <li><a class="nav-link" href="#initial-value-of-the-quantity"><span class="header-section-number">29.3</span> Initial value of the quantity</a></li>
 <li><a class="nav-link" href="#integrals-from-bottom-to-top"><span class="header-section-number">29.4</span> Integrals from bottom to top</a></li>
-<li><a class="nav-link" href="#exercises-22"><span class="header-section-number">29.5</span> Exercises</a></li>
+<li><a class="nav-link" href="#exercises-26"><span class="header-section-number">29.5</span> Exercises</a></li>
 </ul>
 
       <div class="book-extra">
@@ -1114,7 +1115,7 @@ The “area” of each little box in the graph, that is, pressure times volume,
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>MOSAIC Calculus</strong>" was written by Daniel Kaplan. It was last built on 2021-09-14.</p>
+    <p>"<strong>MOSAIC Calculus</strong>" was written by Daniel Kaplan. It was last built on 2021-09-24.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">
