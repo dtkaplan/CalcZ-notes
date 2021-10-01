@@ -15,14 +15,14 @@ The details of this regimen are determined largely by the details of whether foo
 Modeling this process---often called the ***pharmacokinetics** of the drug---is an important step in drug development. A simple but effective model of the drug concentration over time is a piecewise function: zero before you take the pill, then an exponential decay from an initial level of one unit after you take the pill.
 
 ```{r}
-drug <- makeFun(ifelse(t < 0, 0, exp(-k * t)) ~ t, k = log(2)/1.5)
+pill <- makeFun(ifelse(t < 0, 0, exp(-k * t)) ~ t, k = log(2)/1.5)
 ```
 
-The shape of the `drug()` function is seen in Figure \@ref(fig:pharma1). Another part of the model is the ***therapeutic threshold***, the minimal concentration for medical effectiveness. Keep in mind that this is a model. In reality, the drug not is absorbed instantaneously as in the model, and the medical effectiveness varies smoothly with concentration rather than being an all-or-nothing affair.
+The shape of the `pill()` function is seen in Figure \@ref(fig:pharma1). Another part of the model is the ***therapeutic threshold***, the minimal concentration for medical effectiveness. Keep in mind that this is a model. In reality, the drug not is absorbed instantaneously as in the model, and the medical effectiveness varies smoothly with concentration rather than being an all-or-nothing affair.
 
 ```{r pharma1, fig.cap="A simple illustrative model of drug availability from taking a unit dose at time zero. The therapeutic threshold depends on the drug: 0.25 is shown here."}
 
-slice_plot(drug(t) ~ t, domain(t=-2:10)) %>%
+slice_plot(pill(t) ~ t, domain(t=-2:10)) %>%
   gf_hline(yintercept = ~ 0.25, color="magenta") %>%
   gf_text(0.25 ~ 8, label="Therapeutic threshold", color="magenta", 
           vjust=0, nudge_y=0.02) %>%
@@ -54,13 +54,13 @@ askMC(
 )
 ```
 
-Let's explore a familiar-sounding directive: Take one pill every six hours. We can model this by a linear combination of time-shifted `drug()` functions. Each pill provides a dose of size `A`.
+Let's explore a familiar-sounding directive: Take one pill every six hours. We can model this by a linear combination of time-shifted `pill()` functions. Each pill provides a dose of size `A`.
 
 ```{r}
 six_hours <- 
-  makeFun(A*drug(t, k) + A*drug(t-6, k) + 
-          A*drug(t-12, k) + A*drug(t-18, k) +
-          A*drug(t-24, k) ~ t, 
+  makeFun(A*pill(t, k) + A*pill(t-6, k) + 
+          A*pill(t-12, k) + A*pill(t-18, k) +
+          A*pill(t-24, k) ~ t, 
           k=log(2)/3, A  = 1)
 slice_plot(six_hours(t) ~ t, domain(t=-1:24))
 ```
