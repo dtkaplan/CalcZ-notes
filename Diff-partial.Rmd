@@ -283,6 +283,63 @@ Nelder-Mead, etc.
 
 -->
 
+## Differentials {#differential-skier}
+
+> *A little bit of this, a little bit of that.* --- Stevie Wonder, "The Game of Love"
+
+We have framed calculus in terms of ***functions***: transformations that take one (or more!) quantities as input and return a quantity as output. This was not the original formulation. In this section, we will use the original style in order to demonstrate how you can sometimes skip the step of constructing a function before differentiating to answer a question of the sort: "If this quantity changes by a little bit, how much will another, related quantity change?"
+
+As an example, consider the textbook-style problem of a water skier being pulled along the water by a rope pulled in from the top of a tower of height $H$. The skier is distance $x$ from the tower. As the rope is winched in at a constant rate, does the skier go faster or slower as she approaches the tower.
+
+```{r echo=FALSE}
+knitr::include_graphics("www/water-skier.png")
+```
+
+In the function style of approach, we can write the position function $x(t)$ with input the length of the rope $L(t)$. Using the diagram, you can see that
+$$x(t) = \sqrt{\strut L(t)^2 - H^2}\ .$$
+
+Differentiate both sides with respect to $t$ to get the velocity of the skier: $\partial_t x(t)$ through the chain rule:
+$$\underbrace{\partial_t x(t)}_{\partial_t f(g(t))} = \underbrace{\frac{1}{2\sqrt{\strut L(t)^2 - H^2}}}_{\left[ \partial_t f \right](g(t)) } \times \underbrace{\left[2 \partial_t L(t)\right]}_{\partial_t g(t)} = \frac{\partial_t L(t)}{\strut\sqrt{L(t)^2 - H^2}}$$
+
+Now to reformulate the problem without defining a function.
+
+Newton referred to "flowing quantities" or "*fluents*" and to what today is universally called derivatives as "*fluxions*." Newton did not have a notion of ***inputs*** and ***output***.^[The meaning of "output" as "to produce" dates from more than 100 years after Newton's death.]
+
+At about the same time as Newton's inventions, very similar ideas were being given very different names by mathematicians on the European continent. There, an infinitely small change in a quantity was called a "*differential*" and the differential of $x$ was denoted $dx$. 
+
+The first calculus textbook was subtitled, *Of the Calculus of Differentials*, in other words, how to calculate differentials. (See Figure \@ref(fig:calcul-des-differences).) Section I of this 1696 text is entitled, "Where we give the rules of this calculation," those rules being recognizably the same as presented in Chapter \@ref(prod-comp-rules) of this book.
+
+
+
+```{r calcul-des-differences, echo=FALSE, out.width="70%", fig.cap="From the start of the first calculus textbook, by le marquis de l'Hôpital, 1696."}
+knitr::include_graphics("www/Hopital-part-1.png")
+```
+Definition I of Section I states, 
+
+> "*We call quantities *variable* that grow or decrease continuously; and to the contrary *constant* quantities are those that remain the same while the others change. ... The infinitely small amount by which a continuous quantity increases or decreases is called the **differential**.*"
+
+The differential is not a derivative. The differential is an ***infinitely small change*** in a quantity and a derivative is a ***rate of change***. The differential of a quantity $x$ is written $dx$ in the textbook.^[A "warning" is given in the textbook that the symbol $d$ will always be used to mark the differential of a variable quantity and that $d$ will never be used to indicate a parameter.]
+
+The point of Section I of de l'Hôpital's textbook is to present the rules by which the differentials of complex quantities can be calculated. You'll recognize the product rule in de l'Hôpital's notation: 
+
+```{r echo=FALSE, out.width="60%", fig.cap="The differential of $x\\,y$ is $y\\,dx + x\\,dy$}
+knitr::include_graphics("www/lhopitals-product-rule.png")
+```
+
+The Pythagorean theorem relates the various quantities this way: 
+
+$$L^2 = x^2 + H^2$$
+
+The differential of each side of the equation refers to "a little bit" of increase in the quantity on that side of the equation:
+$$d(L^2) = d(x^2)\ \ \ \implies\ \ \ 2 L\, dL = 2 x\, dx$$ where we've used one of the "rules" for calculating differentials. This gives us
+$$dx = \frac{L}{x} dL$$
+Think of this as a recipe for calculating $dx$. If you tell me $L$, $x$, and $dL$ then you can calculate the value of $dx$. For instance, suppose the tower is 52 feet tall and that there is $L=173$ feet of tow-rope extending to the skier. The Pythagorean theorem tells us the skier is $x=165$ feet from the base of the tower.  The rope is, let us suppose, being pulled in at the top of the tower at $dL = 10$ feet per second. How fast is $x$ changing?
+$$dx = \frac{173\ \text{ft}}{165\ \text{ft}} \times 10 \text{ft s}^{-2} = 10.05\ \text{ft s}^{-1}$$
+
+We'll return to "a little bit of this" when we explore how to add up little bits to get the whole in Chapter \@ref(accum-symbolic).
+
+
+
 ## Exercises
 
 `r insert_calcZ_exercise("24.01", "xdkw", "Exercises/Diff/gradient-field-orange.Rmd")`
@@ -312,3 +369,5 @@ Nelder-Mead, etc.
 
 `r insert_calcZ_exercise("24.18", "oekse", "Exercises/Diff/grass-grows-red.Rmd")`
 
+
+`r insert_calcZ_exercise("24.20", "ZQlUv4", "Exercises/Diff/shark-bite-sheet.Rmd")`

@@ -1,0 +1,42 @@
+---
+id: "aspen-tug-sofa"
+created: "Sun Oct  3 15:36:00 2021"
+global_id: "WOuYC3"
+---
+
+
+
+Suppose you have two straight-line functions $f()$ and $g()$ shown below.
+
+```{r echo=FALSE}
+gf_point(y ~ x, data = data.frame(x=-.5:1, y=c(-1, 0, 1, 4)), alpha=0) %>%
+  gf_refine(scale_y_continuous(breaks = -1:6, labels=c("", 0, rep("", length(1:6)))),
+            scale_x_continuous(breaks = c(-1,-2/3,-1/3,0, 1/3,2/3, 1), labels=c("", "a", rep("", 5)))) %>%
+  gf_hline(yintercept = ~ 0, color="gray") %>%
+  slice_plot(3*(x+1) - 1 ~ x, color="blue", domain(x=-1:1), label_text="f(x)") %>%
+  slice_plot(1.5*(x+1) - 0.5 ~ x, color="magenta", domain(x=-1:1), label_text="g(x)") %>%
+  gf_labs(y="output")
+```
+```{r ats5-1, echo=FALSE, results="markup"}
+askMC(
+  "Based on the graph, what is $$\\lim_{x\\rightarrow a} \\frac{f(x)}{g(x)}\\ ?$$ (Hint: Remember that $\\lim_{x \\rightarrow a}$ means \"Look at $x$ near to $a$, but not exactly at $a$.\")", 
+  "+2+", 
+  "does not exist" = "Both $f(a)=0$ and $g(a)=0, but the limit qualification means that this doesn't matter.",
+  "not enough information" = "You can find the ratio of $f(x)$ to $g(x)$ by counting tick marks.",
+  "3",
+  random_answer_order = FALSE
+)
+```
+
+```{r ats5-2, echo=FALSE, results="markup"}
+askMC(
+  "In the previous question we asked about $\\lim x \\rightarrow a$. Now we ask about $\\infty$ instead of $a$. Based on the graph, what is $$\\lim_{x\\rightarrow \\infty} \\frac{f(x)}{g(x)}\\ ?$$ (Hint: You don't have to follow $x$ all the way to $\\infty$ to see what's going on.)", 
+  "+2+", 
+  "does not exist" = "Both $f(a)=0$ and $g(a)=0, but the limit qualification means that this doesn't matter.",
+  "not enough information" = "You can find the ratio of $f(x)$ to $g(x)$ by counting tick marks.",
+  "3",
+  random_answer_order = FALSE
+)
+```
+
+

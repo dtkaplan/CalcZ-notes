@@ -161,6 +161,41 @@ $$\large\partial_x \left[\strut \color{magenta}{f\left(\strut\right.}\strut \col
 Or, using the Lagrange prime notation, where $'$ stands for the derivative of a function with respect to its input, we have 
 $$\large\text{Lagrange shorthand:}\ \   [\color{magenta}f(\color{brown}g)]' = \color{magenta}{f'} (\color{brown}g) \times \color{brown}{g}'$$
 
+
+::: {.intheworld  data-latex=""}
+In news and policy discussions, you will often hear about "inflation rate" or "birth rate" or "interest rate" or "investment rate of return."  In each case, there is a function of time combined with a derivative of that function: with the general form $$\frac{\partial_t f(t)}{ f(t)}\ .$$ 
+
+- Inflation rate: The function is cost_of_living($t$). The derivative is the rate of change with respect to time in the cost of living: $\partial_t\,$cost_of_living($t$).
+- Birth rate: The function is population($t$). The derivative is $\partial_t\,$population($t$), or at least that component of the overall $\partial_t\,$population($t$) that is related to births. (Other components are deaths and the balance of in-migration and out-migration.)
+- Interest rate: The function is account_balance($t$) and the derivative is $\partial_t\,$account_balance($t$).
+- Investment returns: The function is net_worth($t$) and the derivative is $\partial_t\,$net_worth($t$).
+
+In all these cases, The "rate" is not merely "per time" as would be the case for $\partial_t f(t)$. Instead the rate is "per unit of the whole per time." Thus the birth rate is "births ***per capita*** per year."^["Per capita" is Latin. Literally, it translates to "by head." but its modern sense is "per unit of population." The "unit of population" is, of course, a person.] Interest and return rates are "percent per year" where the "percent" understood to be the "change-in-value divided by the current value."
+
+Thanks to the chain rule, there is a shortcut way of writing these sorts of "rates per time." Exactly equivalent to the ratio $\frac{\partial_t f(t)}{ f(t)}$ is $$\partial_t \ln(f(t))\ .$$
+
+Such changes in logarithms are encountered in fields such as economics or finance, where it's common to consider the logarithm of the economic quantity in order to render changes as percent of the whole. 
+
+It's also something to keep in mind when interpreting graphs of an amount versus time, as in Figure \@ref{fig:italy-us-covid}. [Source](https://www.nytimes.com/2020/03/20/health/coronavirus-data-logarithm-chart.html)
+
+```{r italy-us-covid, echo=FALSE, fig.cap="Growth in the number of Coronavirus cases in Italy and the US early in the pandemic."}
+knitr::include_graphics("www/NYT-italy-us-corona.png")
+```
+
+Look closely at the two graphs in Figure \@ref(fig:italy-us-covid). They show exactly the same data about growing numbers of coronavirus cases, the left graph on linear axes, the right on the now-familiar semi-log axes.
+
+Most people are excellent at comparing slopes, even if they find it difficult or tedious to quantify a slope with a number and units. For instance, a glance suffices to show that in the left graph, well through mid-March the red curve (Italy) is steeper on any given date than the blue curve (US). This means that the number of people with coronavirus was growing faster (per day) in Italy.
+
+The right graph tells a different story: up until about March 1, the Italian cases were increasing faster than the US cases. Afterwards, the US sees a larger growth rate than Italy until, around March 19, the US growth rate is substantially larger than the Italy growth rate.
+
+The previous two paragraphs and their corresponding graphs may seem to contradict one another. But they are both accurate, truthful depictions of the same events. What's different between the two graphs is that the left shows one kind of rate and the right shows another kind of rate. In the left, the slope is new-cases-per-day, the output of the derivative function $${\mathbf{\text{left graph:}}} \ \ \ \  \partial_t \text{daily_new_cases}(t)\ .$$ On the right, the slope is the ***proportional increase*** in cases per day, that is, $${\mathbf{\text{right graph:}}}\ \ \ \ \frac{\partial_t \text{daily_new_cases}(t)}{\text{daily_new_cases}(t)}$$ 
+From the chain rule, we know that
+$$\partial_t \left[\strut\ln(f(t))\right] = \frac{\partial_t f(t)}{f(t)}$$
+Since the right graph is on semi-log axes, the slope we perceive visually is $\partial_t \left[\strut\ln(f(t))\right]$. That's an obscure-looking bunch of notation until the chain rule reveals it to be the rate of change at time $t$ divided by the value at time $t$.
+:::
+
+
+
 The derivation of the chain rule relies on two closely related statements which are expressions of the idea that near any value $x$ a function can be expressed as a linear approximation with the slope equal to the derivative of the function :
 
 1. $g(x + h) = g(x) + h g'(x)$ 
@@ -199,7 +234,7 @@ $$e^{\ln(y)} = y \ \ \ \text{and}\ \ \ \ln(e^y) = x$$
 Since $\ln(e^y)$ is the same function as $y$, the derivative $\partial_y \ln(e^y) = \partial_y y = 1$. 
 
 Let's differentiate the second form using the chain rule:
-$$\partial_y \ln(e^y) = \left[\partial_y\! \ln\right]\!(e^y)\, e^x = 1$$ giving $$\left[\partial_y\! \ln\right]\!(e^y) = \frac{1}{e^y} = \recip(e^y)$$
+$$\partial_y \ln(e^y) = \left[\partial_y \ln\right](e^y)\, e^x = 1$$ giving $$\left[\partial_y \ln\right](e^y) = \frac{1}{e^y} = \recip(e^y)$$
 Whatever the function $\partial_x \ln()$ might be, it takes its input and produces as output the reciprocal of that input. In other words:
 $$\partial_x \ln(x) = \frac{1}{x}\ .$$
 :::
