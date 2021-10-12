@@ -79,5 +79,5 @@ drill_link <- function() {
 
 
 # For gradescope output
-# askMC <- Znotes::askGS
+askMC <- Znotes::askGS
 
