@@ -5,7 +5,7 @@ library(thematic)
 library(gridExtra) # for arranging plots.
 
 # theme the plots to match the document
-thematic_rmd()
+thematic_rmd() #(bg="#8F8F8C", fg=NA, accent=NA)
 ggplot2::theme_set(theme_bw(base_size = 16))
 
 
@@ -79,5 +79,5 @@ drill_link <- function() {
 
 
 # For gradescope output
- askMC <- Znotes::askGS
+# askMC <- Znotes::askGS
 
