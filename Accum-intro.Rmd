@@ -36,7 +36,7 @@ gf_point(population ~ year, data = USPop) %>%
 
 
 
-It's always tempting to look for simple patterns in such data. Perhaps the US population has been growing exponentially. A semi-log plot of the same data suggests that the growth is only very roughly exponential. (See Figure \@ref(fig:pop-graph-log).) A truly exponential process would present as a curve with a constant derivative, but the derivative of the function in the graphed is decreasing over the centuries. 
+It's tempting to look for simple patterns in such data. Perhaps the US population has been growing exponentially. A semi-log plot of the same data suggests that the growth is only very roughly exponential. (See Figure \@ref(fig:pop-graph-log).) A truly exponential process would present as a curve with a constant derivative, but the derivative of the function in the graphed is decreasing over the centuries. 
 
 
 ```{r pop-graph-log, echo=FALSE, fig.cap="Population since 1790.", fig.margin=TRUE}
@@ -60,15 +60,6 @@ gf_point(yearly_growth_rate ~ year, data = USPop) %>%
 ```
 
 The dots in the graph are a direct calculation from the census data.  There's a lot of fluctuation, but an overall trend stands out: the population growth rate has been declining since the mid-to late 1800s. The deviations from the trend are telling and correspond to historical events. There's a relatively low growth rate seen from 1860 to 1870: that's the effect of the US Civil War. The Great depression is seen in the very low growth from 1930 to 1940. Baby Boom: look at the growth from 1950-1960. The bump from 1990 to 2000? Not coincidentally, the 1990 Immigration Act substantially increased the yearly rate of immigration. 
-
-If the trend in the growth rate continues, the US will reach zero net growth about 2070, then continue with negative growth. Of course, negative growth is just decline. A simple prediction from Figure \@ref(fig:pop-growth) is that the argmax of the US population will be around 2070.
-
-How large will the population be when it reaches its maximum? 
-
-In Block 2, we dealt with situations where we know the function $f(t)$ and want to find the rate of change $\partial_t f(t)$. Here, we know the rate of change of the population and we need to figure out the population itself, in other words to figure out from a known $\partial_t f(t)$ what is the (as yet) unknown function $f(t)$.  
-
-The process of figuring out $f(t) \longrightarrow \partial_t f(t)$ is, of course, called ***differentiation***. The opposite process, $\partial_t f(t) \longrightarrow f(t)$ is called ***anti-differentiation***. 
-
 
 If the trend in the growth rate continues, the US will reach zero net growth about 2070, then continue with negative growth. Of course, negative growth is just decline. A simple prediction from Figure \@ref(fig:pop-growth) is that the argmax of the US population will be around 2070.
 
@@ -104,10 +95,10 @@ Professional demographers make much more sophisticated models using detailed dat
 
 ## Accumulation
 
-Imagine a simple setting: water flowing out of a tap into a basin or tank. Measurement of the amount of water into the basin will be in a unit of volume, say liters. Measurement of the *flow* $f(t)$ of water from the tap into the tank has different units, say liters per second. If volume $V(t)$ is the volume of water in the tank as a function of time, $f(t)$ at any instant is $f(t) = \partial_t V(t)$. 
+Imagine a simple setting: water flowing out of a tap into a basin or tank. The amount of water in the basin will be measured in a unit of volume, say liters. Measurement of the *flow* $f(t)$ of water from the tap into the tank has different units, say liters per second. If volume $V(t)$ is the volume of water in the tank as a function of time, $f(t)$ at any instant is $f(t) = \partial_t V(t)$. 
 
 Clearly there is a relationship between the two functions $f(t)$ and $V(t)$. With derivatives, we can give a good description of that relationship: $$f(t) = \partial_t V(t)$$ This description will be informative if we have measured the volume of water in the basin as a function of time and want to deduce the rate of flow from the tap. 
-Now suppose we have measured $f(t)$ and want to figure out the volume. The volume at any instant is the past flow accumulated to that instant. As a matter of notation, we write this view of the relationship as $$V(t) = \int f(t) dt,$$ which you can read as "volume is the accumulated flow." 
+Now suppose we have measured the flow $f(t)$ and want to figure out the volume. The volume at any instant is the past flow accumulated to that instant. As a matter of notation, we write this view of the relationship as $$V(t) = \int f(t) dt,$$ which you can read as "volume is the accumulated flow." 
 
 Other examples of accumulation and change:
 
@@ -154,24 +145,24 @@ Remember that just as `D(f(x-a) ~ x)` creates a new function out of `f(x-a) ~ x`
 
 This entire block will be about anti-differentiation, its properties, and its uses. You already know that anti-differentiation (as the name suggests) is the inverse of differentiation. There is one consequence of this that it's helpful to keep in mind as we move on to other chapters.
 
-This being calculus, the functions that we construct and operator upon have inputs that are quantities and outputs that are also quantities. Every quantity has a dimension, as discussed in Chapter \@ref(dimensions). When you are working with any quantity, you should be sure that you know its dimension and its units.
+This being calculus, the functions that we construct and operator upon have inputs that are quantities and outputs that are also quantities. Every quantity has a dimension, as discussed in Chapter `r Chaps$dimension`. When you are working with any quantity, you should be sure that you know its dimension and its units.
 
 The dimension of the input to a function does not by any means have to be the same as the dimension of the output. For instance, we have been using many functions where the input has dimension **time** and the output is position (dimension L) or velocity (dimension L/T) or acceleration (dimension L/T$^2$).
 
-Imagine working with some function $f(y)$ that's relevant to some modeling project of interest to you. Returning to the bracket notation that we used in Chapter \@ref(dimensions), the dimension of the input quantity will be [$y$]. The dimension of the output quantity is [$f(y)$]. 
+Imagine working with some function $f(y)$ that's relevant to some modeling project of interest to you. Returning to the bracket notation that we used in Chapter `r Chaps$dimension`, the dimension of the input quantity will be [$y$]. The dimension of the output quantity is [$f(y)$]. 
 
-The function $\partial_y f(y)$ has the same input dimension [$y$] but the output will be [$f(y)$] / [$y$]. For example, suppose $f(y)$ is the mass of fuel in a rocket as a function of time $y$. The input dimension [$y$] is T. The output dimension is M.  The output of the function $\partial_y f(y)$ will be different; it has dimension [$f(y)$] / [$y$], which in this case will be M / T. (Less abstractly, if the fuel mass is given in kg, and time is measured in seconds, then $\partial_y f(y)$ will have units of kg-per-second.)
+The function $\partial_y f(y)$ has the same input dimension $[y]$ but the output will be $[f(y)] / [y]$. For example, suppose $f(y)$ is the mass of fuel in a rocket as a function of time $y$. The input dimension $[y]$ is T. The output dimension is M.  The output of the function $\partial_y f(y)$ will be different; it has dimension $[f(y)] / [y]$, which in this case will be M / T. (Less abstractly, if the fuel mass is given in kg, and time is measured in seconds, then $\partial_y f(y)$ will have units of kg-per-second.)
 
-How about the dimension of the anti-derivative $F(y) = \int f(y) dy$? The input still has input dimension T. The output ... well, whatever [$F(y)$] is, we know the dimension of $[f(y)] = [\partial_y F(y)]$ will have dimension $[F(y)]\, /\, [y] =$ M. Since the dimension [$y$] = T, it must be that [$F(y)$] = M T. 
+How about the dimension of the anti-derivative $F(y) = \int f(y) dy$? The input still has input dimension T. The output ... well, whatever [$F(y)$] is, we know the dimension of $[f(y)] = [\partial_y F(y)]$ will have dimension $[F(y)]\, /\, [y] =$ M. Since the dimension $[y]$ = T, it must be that $[F(y)]$ = M T. 
 
 To summarize: 
 
-- The dimension of derivative $\partial_y f(y)$ will be [$f(y)$] / [$y$].
-- The dimension of the anti-derivative $\int f(y) dy$ will be [$f(y)$] $\times$ [$y$].
+- The dimension of derivative $\partial_y f(y)$ will be $[f(y)] / [y]$.
+- The dimension of the anti-derivative $\int f(y) dy$ will be $[f(y)]\times [y]$.
 
 Paying attention to the dimensions (and units!) of input and output can be a boon to the calculus student. Often students have some function $f(y)$ and they are wondering which of the several calculus operations---differentiation, anti-differentiation, finding a maximum, finding an argmax or a zero---they are supposed to do. The thing to do is figure out what will be the dimension of the quantity you want. From that, you can often figure out which operation is appropriate.
 
-To illustrate, imagine that you have constructed $f(y)$ for you task and you know, say, [$f(y)$] = M and [$y$] = T$.  Look things up in the following table:
+To illustrate, imagine that you have constructed $f(y)$ for you task and you know, say, $[f(y)]$ = M and $[y]$ = T$.  Look things up in the following table:
 
 Dimension of result | Calculus operation
 --------------------|--------------------

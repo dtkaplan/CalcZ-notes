@@ -10,22 +10,22 @@ Context | Quantity             | Rate of increase in quantity
 --------|----------------------|--------------------
 Money   | Cash on hand ${\mathbf S}(t)$         | Cash flow $s(t)$
 Fuel    | Amount in fuel tank ${\mathbf F}(t)$ | Fuel consumption rate, e.g. kg/hour $f(t)$
-Motion  | Velocity   ${\mathbf V}(t)$          | Acceleration, i.e. force/mass $v(t)$
+Motion  | Momentum   ${\mathbf M}(t)$          | Force $m(t)$
 notation| ${\mathbf H}(t)$               | $\partial_t {\mathbf H}(t)$
 notation| $G(t) = \int g(t) dt$| $g(t)$
 
-We'll also adopt a convention to make it simpler to recognize which quantity is the "quantity itself" and which is the "rate of increase in that quantity." We will use CAPITAL LETTERS to name functions that are the quantity itself, and *lower-case* letters for the rate of increase in that quantity. For example, if talking about velocity and how it changes over time, the velocity itself will be ${\mathbf V}(t)$ while the rate of increase of velocity will be $v(t)$. The amount of money a business has on hand at time $t$ is ${\mathbf M}(t)$ measured, say, in dollars.  The rate of increase of that money is $m(t)$, in, say, dollars per day.  
+We'll also adopt a convention to make it simpler to recognize which quantity is the "quantity itself" and which is the "rate of increase in that quantity." We will use CAPITAL LETTERS to name functions that are the quantity itself, and *lower-case* letters for the rate of increase in that quantity. For example, if talking about motion, an important quantity is ***momentum** and how it changes over time. The momentum itself will be ${\mathbf M}(t)$ while the rate of increase of momentum will be $m(t)$.^[Momentum is velocity times mass. Newton's Second Law of Motion stipulates that force equals the rate of change of momentum.] The amount of money a business has on hand at time $t$ is ${\mathbf S}(t)$ measured, say, in dollars.  The rate of increase of that money is $s(t)$, in, say, dollars per day.  
 
-Notice that we're using the phrase "rate of increase" rather than "rate of change." That's because we want to keep straight the meaning of the sign of the *lower-case* function. If $v(t)$ is positive, the velocity is increasing. If $v(t)$ is negative, then it's a "negative rate of increase," which is, of course, just a "decrease."
+Notice that we're using the phrase "rate of increase" rather than "rate of change." That's because we want to keep straight the meaning of the sign of the *lower-case* function. If $m(t)$ is positive, the momentum is increasing. If $m(t)$ is negative then it's a "negative rate of increase," which is, of course, just a "decrease."
 
-For a business, money coming in means that $v(t)$ is positive. Expenditures of money correspond to $v(t)$ being negative. In the fuel example. ${\mathbf F}(t)$ is the amount of fuel in the tank. $f(t)$ is the rate of *increase* in the amount of fuel in the tank. Of course, engines burn fuel, removing it from the tank. So we would write the rate at which fuel is burned as $-f(t)$: removing fuel is a negative increase in the amount of fuel, an expenditure of fuel.
+For a business, money coming in means that $s(t)$ is positive. Expenditures of money correspond to $s(t)$ being negative. In the fuel example. ${\mathbf F}(t)$ is the amount of fuel in the tank. $f(t)$ is the rate of *increase* in the amount of fuel in the tank. Of course, engines burn fuel, removing it from the tank. So we would write the rate at which fuel is burned as $-f(t)$: removing fuel is a negative increase in the amount of fuel, an expenditure of fuel.
 
 The objective of this chapter is to introduce you to the sorts of calculations, and their notations, that let you figure out how much the CAPITAL LETTER quantity has changed over an interval of $t$ based on what you already know about the value over time of the *lower-case* function.
 
-The first step in any such calculation is to find or construct the *lower-case* function $f(t)$ or $c(t)$ or $v(t)$ or whatever it might be. This is a modeling phase. In this chapter, we'll ignore detailed modeling of the situation and just present you with the *lower-case* function. 
+The first step in any such calculation is to find or construct the *lower-case* function $f(t)$ or $c(t)$ or $m(t)$ or whatever it might be. This is a modeling phase. In this chapter, we'll ignore detailed modeling of the situation and just present you with the *lower-case* function. 
 
 The second step in any such calculation is to compute the anti-derivative of the *lower-case* function, giving as a result the CAPITAL LETTER function. You've already seen the notation for this, e.g.
-$${\Large F(t) = \int f(t) dt}\ \ \ \ \ \text{or}\ \ \ \ \ {\Large G(t) = \int g(t) dt}\ \ \ \ \text{and so on.}$$ In this chapter, we will not spend any time on this step; we will assume that you already have at hand the means to compute the anti-derivative. (Indeed, you already have `antiD()` available which will do the job for you.) Later chapters will look at the issues around and techniques for doing the computations by other means.
+$${\Large  F(t) = \int f(t) dt}\ \ \ \ \ \text{or}\ \ \ \ \ {\Large G(t) = \int g(t) dt}\ \ \ \ \text{and so on.}$$ In this chapter, we will not spend any time on this step; we will assume that you already have at hand the means to compute the anti-derivative. (Indeed, you already have `antiD()` available which will do the job for you.) Later chapters will look at the issues around and techniques for doing the computations by other means.
 
 The remaining steps in such calculations are to work with the CAPITAL LETTER function to compute such things as the amount of that quantity, or the change in that quantity as it is accumulated over an interval of $t$.
 
@@ -34,17 +34,15 @@ Sometimes you're writing the capital letter functions in **bold-face**, e.g. ${\
 
 This is a convention we're adopting for this chapter, which is when we need it the most to introduce the concepts.
 
-**Bold-face** is being used in this chapter to represent the real-world quantity of interest. So ${\mathbf F}(t)$ is the actual amount of fuel in the tank, ${\mathbf V}(t)$ is the actual velocity of the car, and ${\mathbf M}(t)$ is the actual amount of money on hand. The regular-face functions, $F(t)$ and $V(t)$ and $M(t)$ are the functions that we get by applying anti-differentiation to $f(t)$ or $v(t)$ or $m(t)$.
+**Bold-face** is being used in this chapter to represent the real-world quantity of interest. So ${\mathbf F}(t)$ is the actual amount of fuel in the tank, ${\mathbf M}(t)$ is the actual momentum of the car, and ${\mathbf S}(t)$ is the actual amount of money on hand. The regular-face functions, $F(t)$ and $M(t)$ and $S(t)$ are the functions that we get by applying anti-differentiation to $f(t)$ or $m(t)$ or $s(t)$.
 
-Our broad interest is to construct the **bold-face** function knowing just the derivative of that function, which we're writing in *lower-case*. So, $f(t) \equiv \partial_t {\mathbf F}(t)$. Similarly, $v(t) \equiv \partial_t {\mathbf V}(t)$ and $m(t) \equiv \partial_t {\mathbf M}(t)$.
+Our broad interest is to construct the **bold-face** function knowing just the derivative of that function, which we're writing in *lower-case*. So, $f(t) \equiv \partial_t {\mathbf F}(t)$. Similarly, $m(t) \equiv \partial_t {\mathbf M}(t)$ and $s(t) \equiv \partial_t {\mathbf S}(t)$.
 
-If we knew ${\mathbf F}(t)$ or ${\mathbf V}(t)$ or ${\mathbf M}(t)$, that would be the end of the matter, since our interest is in the quantity ${\mathbf F}$ or ${\mathbf V}$ or ${\mathbf M}$.
+If we knew ${\mathbf F}(t)$ or ${\mathbf M}(t)$ or ${\mathbf S}(t)$, that would be the end of the matter, since our interest is in the quantity ${\mathbf F}$ or ${\mathbf V}$ or ${\mathbf M}$. But we are working with a situation where we know $f(t)$ but not ${\mathbf F}(t)$, or we know $m(t)$ but not ${\mathbf M}(t)$, and so on.
 
-But we are working with a situation where we know $f(t)$ but not ${\mathbf F}(t)$, or we know $v(t)$ but not ${\mathbf V}(t)$, and so on.
+How could such a situation arise in the real world? Suppose the car's fuel gauge is broken, depriving us of direct knowledge of $\mathbf F$, but that we have a dashboard readout of the rate of fuel consumption. Then we would know $f(t)$ but not ${\mathbf F}(t)$. Or suppose you are in charge of day-to-day running of a business, collecting the income each day and paying the daily expenses. Thus, each day you know $s(t)$---the cash flow. But it's your boss who has access to the bank account; you merely deposit money as you get it and write checks or Venmo suppliers (or however it is that your business operates day to day). So your boss knows ${\mathbf S}(t)$ but you know only $s(t)$.
 
-How could such a situation arise in the real world? Suppose the car's fuel gauge is broken, depriving us of direct knowledge of $\mathbf F$, but that we have a dashboard readout of the rate of fuel consumption. Then we would know $f(t)$ but not ${\mathbf F}(t)$. Or suppose you are in charge of day-to-day running of a business, collecting the income each day and paying the daily expenses. Thus, each day you know $m(t)$---the cash flow. But it's your boss who has access to the bank account; you merely deposit money as you get it and write checks or Venmo suppliers (or however it is that your business operates day to day). So your boss knows ${\mathbf M}(t)$ but you know only $m(t)$.
-
-Since you know about anti-differentiation, you can try to reconstruct the fuel level ${\mathbf F}(t)$ from the known $f(t)$, or to figure out the bank balance ${\mathbf M}(t)$ from your records of $m(t)$.
+Since you know about anti-differentiation, you can try to reconstruct the fuel level ${\mathbf F}(t)$ from the known $f(t)$, or to figure out the bank balance ${\mathbf S}(t)$ from your records of $s(t)$.
 
 But anti-differentiation, while part of the solution, is only just a part. You can apply anti-differentiation to $f(t)$, but what you get back will be $F(t)$, not ${\mathbf F}(t)$. 
 
@@ -69,22 +67,22 @@ Instead, the correct use of $F(t)$ is to say how much the quantity has changed o
 $$\text{Net change in}\ F(t) \ \text{from}\ t_0 \ \text{to}\ t_1 :\\= F(t_1) - F(t_0)$$
 
 ::: {.example data-latex=""}
-Suppose you have already constructed the rate-of-change function $v()$ and implemented it as an R function `v()`. For instance, $v(t)$ might be the amount of **acceleration** at any instant $T$ of a car, and $V(t)$ is the **accumulated acceleration**, better known as velocity. We'll assume that the input to `v()` is in seconds, and the output is in meters-per-second-squared, which has the correct dimension for acceleration.
+Suppose you have already constructed the rate-of-change function for momentum $m()$ and implemented it as an R function `m()`. For instance, $m(t)$ might be the amount of **force** at any instant $t$ of a car, and ${\mathbf M}(t)$ is the **accumulated force**, better known as momentum. We'll assume that the input to `m()` is in seconds, and the output is in kg-meters-per-second-squared, which has the correct dimension for force.
 
-You want to find the amount of acceleration accumulated between time $t=2$ and $t=5$ seconds. 
+You want to find the amount of force accumulated between time $t=2$ and $t=5$ seconds. 
 
 
 ```{r echo=FALSE}
-vraw <- rfun( ~ t, seed=9090)
-v <- function(t) vraw(t-5)
+mraw <- rfun( ~ t, seed=9090)
+m <- function(t) mraw(t-5)
 ```
 
 ```{r}
-# You've previous constructed v(t)
-V <- antiD(v(t) ~ t)
-V(5) - V(2)
+# You've previous constructed m(t)
+M <- antiD(m(t) ~ t)
+M(5) - M(2)
 ```
-To make use of this quantity, you'll need to know it's dimension and units. For this example, where the dimension [$v(t)$] is L T$^{-2}$, and [$t$] = T, the dimension [$V(t)$] will be L T$^{-1}$. In other words, if the output of $v(t)$ is meters-per-second-squared, then the output of $V(t)$ must be meters-per-second.
+To make use of this quantity, you'll need to know it's dimension and units. For this example, where the dimension [$m(t)$] is M L T$^{-2}$, and [$t$] = T, the dimension [${\mathbf M}(t)$] will be M L T$^{-1}$. In other words, if the output of $m(t)$ is kg-meters-per-second-squared, then the output of $V(t)$ must be kg- meters-per-second.
 :::
 
 ## The "definite" integral
@@ -108,7 +106,12 @@ Several names are used to describe the overall process. It is important to becom
 As always, it pays to know what *kind of thing* is ${\cal F}(t_1, t_2)$.
 Assuming that $t_1$ and $t_2$ are fixed quantities, say $t_1 = 2$ seconds and $t_2 = 5$ seconds, then ${\cal F}(t_1, t_2)$ is itself a quantity. The dimension of that quantity is [$F(t)$] which in turn is [$f(t)$]$\cdot$[$t$]. So if $f(t)$ is fuel consumption in liters per second, then $F(t)$ will have units of liters, and ${\cal F}(t_1, t_2)$ will also have units of liters.
 
-Good to remember, too, that $F(t) = \int f(t) dt$ is a ***function*** whose output is a quantity, while $F(t_2) - F(t_1) = \int_{t_1}^{t_2} f(t) dt$ is a ***quantity***, not a function. And $f(t)$ is also a ***function*** whose output is a quantity, although in general $F(t)$ and $f(t)$ are different kinds of quantities. For instance, the output of $F(t)$ is liters of fuel while the output of $f(t)$ is liters per second: fuel consumption. Similarly, the output of $M(t)$ is dollars, while the output of $m(t)$ is dollars per day. 
+Remember also an important distinction:
+
+- $F(t) = \int f(t) dt$ is a ***function*** whose output is a quantity.
+- $F(t_2) - F(t_1) = \int_{t_1}^{t_2} f(t) dt$ is a ***quantity***, not a function. 
+
+Of course, $f(t)$ is a ***function*** whose output is a quantity. In general, the two functions $F(t)$ and $f(t)$ produce outputs that are *different kinds* of quantities. For instance, the output of $F(t)$ is liters of fuel while the output of $f(t)$ is liters per second: fuel consumption. Similarly, the output of $S(t)$ is dollars, while the output of $s(t)$ is dollars per day. 
 
 The use of the term ***definite integral*** suggests that there might be something called an ***indefinite integral***, and indeed there is. "Indefinite integral" is just a synonym for "anti-derivative." In this book we favor the use of ***anti-derivative*** because it's too easy to leave off the "indefinite" and confuse an indefinite integral with a definite integral. Also, "anti-derivative" makes it completely clear what is the relationship to "derivative."
 
@@ -120,13 +123,16 @@ ii. Integral calculus, which is the study of anti-derivatives and their uses.
 Mathematical notation having been developed for experts rather than for students, very small typographical changes are often used to signal very large changes in meaning. When it comes to anti-differentiation, there are two poles of fixed meaning and then small changes which modify the meaning. The poles are:
 
 i. Anti-derivative: $\int f(t) dt$, which is a function whose output is a quantity.
-ii. Definite integral $\int_a^b f(t) dt$, which is a quantity plane and simple.
+ii. Definite integral $\int_a^b f(t) dt$, which is a quantity, plain and simple.
 
 But you will also see some intermediate forms:
 
 a. $\int_a^t f(t) dt$, which is a **function** with input $t$.
+
 b. $\int_a^x f(t) dt$, which is the same function as in (a) but with the input name $x$ being used.
+
 c. $\int_t^b f(t) dt$, which is a **function** with input $t$.
+
 d. Less commonly, $\int_x^t f(t) dt$ which is a **function** with two inputs, $x$ and $t$. The same is true of $\int_x^y f(t) dt$ and similar variations.
 
 ## Initial value of the quantity
@@ -164,7 +170,6 @@ $${\mathbf F}(t) \ =\  {\mathbf F}(t_0) + \int_{t_0}^t f(t)\, dt\  = \
 {\mathbf F}(t_0) + \left({\large\strut}F(t) - F(t_0)\right)$$
 
 ::: {.intheworld}
-
 A famous legend has Galileo at the top of the Tower of Pisa around 1590. The legend illustrates Galileo's finding that a light object (e.g. a marble) and a heavy object (e.g. a ball) will fall at the same speed. Galileo published his mathematical findings in 1638 in  *Discorsi e Dimostrazioni Matematiche, intorno a due nuove scienze*.^[English: Discourses and Mathematical Demonstrations Relating to Two New Sciences]
 
 In 1687, Newton published his world-changing*Philosophiae Naturalis Principia Mathematica*.^[ English: Mathematical Principles of Natural Philosophy).
@@ -204,7 +209,7 @@ We've set the parameter `x0` to be 53 meters, the height above the ground of the
 
 
 
-```{r galileo-accel, echo=FALSE, fig.cap="The acceleration, velocity, and position of the ball as a function of time in Galileo's Tower of Pisa experiment. The ball is released at time $t_0$." }
+```{r galileo-accel, echo=FALSE, fig.cap="The acceleration, velocity, and position of the ball as a function of time in Galileo's Tower of Pisa experiment. The ball is released at time $t_0$.", warning=FALSE}
 P1 <- slice_plot(accel(t) ~ t, domain(t=c(0,7)), npts=501) %>%
   gf_text(-10 ~ 3, label=expression(paste(t[0]))) %>%
   gf_vline(xintercept = 3, color="brown") %>%

@@ -78,6 +78,14 @@ drill_link <- function() {
 }
 
 
+Chaps <- list(
+  dimension = 16,
+  fun_notation = 5,
+  slope_function = 9,
+  foobar = NA
+)
+
+
 # For gradescope output
 # askMC <- Znotes::askGS
 
